@@ -297,7 +297,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
     }
     default_task_runner_ = scheduler_->DefaultTaskQueue();
     compositor_task_runner_ = scheduler_->CompositorTaskQueue();
-    loading_task_runner_ = scheduler_->LoadingTaskQueue();
+    loading_task_runner_ = scheduler_->NewLoadingTaskQueue(
+        MainThreadTaskQueue::QueueType::kFrameLoading);
     loading_control_task_runner_ = scheduler_->NewLoadingTaskQueue(
         MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
@@ -707,11 +708,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
   static scoped_refptr<TaskQueue> ThrottableTaskQueue(
       WebFrameSchedulerImpl* scheduler) {
     return scheduler->ThrottleableTaskQueue();
-  }
-
-  static scoped_refptr<TaskQueue> LoadingTaskQueue(
-      WebFrameSchedulerImpl* scheduler) {
-    return scheduler->LoadingTaskQueue();
   }
 
   base::SimpleTestTickClock clock_;
@@ -3779,8 +3775,6 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->CompositorTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
-  EXPECT_EQ(scheduler_->LoadingTaskQueue()->GetTimeDomain(),
-            scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->VirtualTimeControlTaskQueue()->GetTimeDomain(),
@@ -3857,8 +3851,6 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->CompositorTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
-  EXPECT_EQ(scheduler_->LoadingTaskQueue()->GetTimeDomain(),
-            scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
@@ -3892,10 +3884,6 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
                              scheduler_->TimerTaskQueue().get());
 
   scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
-
-  LoadingTaskQueue(web_frame_scheduler.get())
-      ->PostDelayedTask(FROM_HERE, base::Bind(NullTask),
-                        TimeDelta::FromMilliseconds(10));
 
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> value =
       scheduler_->AsValue(base::TimeTicks());
