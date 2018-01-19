@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c45a96_1dc6939e",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-19T12:59:09Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with this code, but this seems wrong. If the ResourceDispatcherHost asks for the cancellation of the request, we shouldn\u0027t have to read more from the network to have it cancelled.",
+      "revId": "51de2f5f3da9e77dcca5b149940fd3ca3a72ec13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
