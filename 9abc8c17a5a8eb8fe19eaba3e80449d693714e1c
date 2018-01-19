@@ -52,6 +52,24 @@
       "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905fe0a3_4bfed85b",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-19T12:19:57Z",
+      "side": 1,
+      "message": "Okay.\nI don\u0027t really know what the Network Service path will look like, so I can\u0027t say.\n\nI took a look at ResourceDispatcherHostDelegate, it looks like it is used only for tests and for the Prerender system. It will probably be removed and not replaced.\n\nI will remove the filter and add an early exit.",
+      "parentUuid": "a3470ec5_673dab50",
+      "revId": "9abc8c17a5a8eb8fe19eaba3e80449d693714e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
