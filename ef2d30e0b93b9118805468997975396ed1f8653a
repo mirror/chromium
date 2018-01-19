@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c5bff8_750b1ca4",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6208,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:41:45Z",
+      "side": 1,
+      "message": "nit: \"aren\u0027t\"",
+      "range": {
+        "startLine": 6208,
+        "startChar": 275,
+        "endLine": 6208,
+        "endChar": 288
+      },
+      "revId": "ef2d30e0b93b9118805468997975396ed1f8653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd74ee7_7cb8cbfe",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6211,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-19T00:41:45Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 6211,
+        "startChar": 264,
+        "endLine": 6211,
+        "endChar": 277
+      },
+      "revId": "ef2d30e0b93b9118805468997975396ed1f8653a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
