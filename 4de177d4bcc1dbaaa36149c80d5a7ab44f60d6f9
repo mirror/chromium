@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "702709c0_5913d1b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-19T21:36:24Z",
+      "side": 1,
+      "message": "IS_MY_COMPONENT_IMPL\u003d1",
+      "range": {
+        "startLine": 25,
+        "startChar": 37,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db940e0e_b5600bfa",
+        "filename": "base/component_export.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-19T21:36:24Z",
+      "side": 1,
+      "message": "I\u0027m surprised its this Gnarly.  What am I missing?",
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaac18f_fe9428e5",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-19T21:36:24Z",
+      "side": 1,
+      "message": "\u003d1",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 27
+      },
+      "revId": "4de177d4bcc1dbaaa36149c80d5a7ab44f60d6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
