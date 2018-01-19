@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4dce2fb_e55025c1",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "Is it typical to include \"Chrome\" in names? I think \"Cast Socket\" is fine.",
+      "range": {
+        "startLine": 463,
+        "startChar": 19,
+        "endLine": 463,
+        "endChar": 25
+      },
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f27f5b1_da435d44",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "An auth challenge request sent to a Cast device as a part of establishing a connection to it.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991b2f37_15b02a14",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "A new Cast device has been discovered via mDNS in the local network.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7fedb7_c192d1b6",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "A serialized protobuf message containing the nonce challenge.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3666a4cd_cfb2da16",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "ditto - just \"Cast device\"",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275fe4e9_52ef6a21",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "s/Chrome//",
+      "range": {
+        "startLine": 475,
+        "startChar": 26,
+        "endLine": 475,
+        "endChar": 32
+      },
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e7a670_a19f90c6",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "Cast Socket Keep Alive Delegate",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932850e6_5c0b9ba2",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "A ping/pong message sent periodically to a Cast device to keep the connection alive.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8d22cb_f9e06c6d",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "After a connection to a Cast device is established.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44306486_0882a75a",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "A protobuf message representing a ping/pong message.",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113a2881_1fca5cd9",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "s/Chrome//",
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f7a110_c23af55b",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-19T04:08:36Z",
+      "side": 1,
+      "message": "s/Chrome//",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "a94cbe30ae2bfd5d1686719e246afeb327ce19a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
