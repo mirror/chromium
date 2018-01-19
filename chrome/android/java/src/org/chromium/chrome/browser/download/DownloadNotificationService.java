@@ -590,7 +590,9 @@ public class DownloadNotificationService extends Service {
      */
     private void stopTrackingInProgressDownload(ContentId id, boolean allowStopForeground) {
         mDownloadsInProgress.remove(id);
-        if (allowStopForeground && mDownloadsInProgress.size() == 0) stopForegroundInternal(false);
+        if (allowStopForeground && mDownloadsInProgress.size() == 0) {
+            stopForegroundInternal(false);
+        }
     }
 
     /**
@@ -633,10 +635,14 @@ public class DownloadNotificationService extends Service {
      */
     @SuppressLint("NewApi") // useForegroundService guards StatusBarNotification.getNotification
     boolean hideSummaryNotificationIfNecessary(int notificationIdToIgnore) {
-        if (mDownloadsInProgress.size() > 0) return false;
+        if (mDownloadsInProgress.size() > 0) {
+            return false;
+        }
 
         if (useForegroundService()) {
-            if (hasDownloadNotificationsInternal(notificationIdToIgnore)) return false;
+            if (hasDownloadNotificationsInternal(notificationIdToIgnore)) {
+                return false;
+            }
 
             StatusBarNotification notification = getSummaryNotification(mNotificationManager);
             if (notification != null) {
@@ -824,6 +830,7 @@ public class DownloadNotificationService extends Service {
         updateNotification(notificationId, builder.build(), id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, true, isTransient));
+
         startTrackingInProgressDownload(id);
     }
 
@@ -1138,7 +1145,8 @@ public class DownloadNotificationService extends Service {
         if (entry == null
                 && !(id != null && LegacyHelpers.isLegacyOfflinePage(id)
                            && TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_OPEN))
-                && !(TextUtils.equals(intent.getAction(), ACTION_NOTIFICATION_CLICKED))) {
+                && !(TextUtils.equals(intent.getAction(), ACTION_NOTIFICATION_CLICKED))
+                && !(TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_RESUME_ALL))) {
             handleDownloadOperationForMissingNotification(intent);
             hideSummaryNotificationIfNecessary(-1);
             return;
