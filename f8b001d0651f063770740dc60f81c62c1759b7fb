@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7816e9e_b49b4456",
+        "filename": "chrome/test/chromedriver/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-19T19:40:27Z",
+      "side": 1,
+      "message": "Rather than doing this, consider setting up a pydeps file, e.g.\n\nhttps://codesearch.chromium.org/chromium/src/PRESUBMIT.py?rcl\u003d8908693aecc9be83af9770fe71baab08b49c9765\u0026l\u003d515 (though you\u0027d want to add it to _GENERIC_PYDEPS_FILES)\nhttps://codesearch.chromium.org/chromium/src/build/android/BUILD.gn?rcl\u003d8908693aecc9be83af9770fe71baab08b49c9765\u0026l\u003d111\n\nDoing so will ensure we only isolate what\u0027s necessary to run the tests.",
+      "revId": "f8b001d0651f063770740dc60f81c62c1759b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131339a5_4349f84d",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2708,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-19T19:40:27Z",
+      "side": 1,
+      "message": "This should be implemented before this CL lands. The build system needs to know what passes and what fails. The emitted file should conform to the JSON test results format: https://chromium.googlesource.com/chromium/src/+/master/docs/testing/json_test_results_format.md",
+      "revId": "f8b001d0651f063770740dc60f81c62c1759b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f813bfa1_2a26a328",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-19T19:40:27Z",
+      "side": 1,
+      "message": "What\u0027s the motivation behind these exceptions? Do you intend for the suite to run on these bots at some point? If not, we should rework test_suites.pyl rather than adding a bunch of exceptions.",
+      "revId": "f8b001d0651f063770740dc60f81c62c1759b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
