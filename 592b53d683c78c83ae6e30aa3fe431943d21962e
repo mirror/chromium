@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a22652_19393eb0",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-19T00:32:26Z",
+      "side": 1,
+      "message": "Is it possible to lazily create this when needed at raster time?",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
