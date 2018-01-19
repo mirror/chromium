@@ -96,8 +96,12 @@ std::string* GetPasswordV11() {
   base::AutoLock auto_lock(g_cache.Get().lock);
   if (!g_cache.Get().is_password_v11_cached) {
     std::unique_ptr<KeyStorageLinux> key_storage = g_key_storage_provider();
-    g_cache.Get().password_v11_cache.reset(
-        key_storage ? new std::string(key_storage->GetKey()) : nullptr);
+    if (key_storage) {
+      std::string password(key_storage->GetKey());
+      if (!password.empty())
+        g_cache.Get().password_v11_cache =
+            std::make_unique<std::string>(std::move(password));
+    }
     g_cache.Get().is_password_v11_cached = true;
   }
   return g_cache.Get().password_v11_cache.get();

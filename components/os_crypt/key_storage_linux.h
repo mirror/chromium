@@ -31,7 +31,8 @@ class KeyStorageLinux {
       const os_crypt::Config& config);
 
   // Gets the encryption key from the OS password-managing library. If a key is
-  // not found, a new key will be generated, stored and returned.
+  // not found, a new key will be generated, stored and returned. An empty
+  // string will be returned on failure to get or create a key.
   std::string GetKey();
 
  protected:
