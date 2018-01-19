@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ec355c_69855f0c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 6563,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-19T00:56:17Z",
+      "side": 1,
+      "message": "This function can be expensive on large pages.\n\nCan we make sure the relevant computation happens only when there is touch bar?",
+      "range": {
+        "startLine": 6563,
+        "startChar": 24,
+        "endLine": 6563,
+        "endChar": 47
+      },
+      "revId": "0b8755a7d2eed206e27fb381c66f1eaef7bd03c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0e236d_57e53ab2",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-19T00:56:17Z",
+      "side": 1,
+      "message": "It\u0027s better to return a PlainTextRange, since WebRange(const EphemeralRange\u0026) ctor doesn\u0027t work when the range\u0027s start and end are in different nodes.\n\nSo it\u0027s better to:\n\nreturn PlainTextRangeForEphemeralRange(EphemeralRange(start.DE(), position.DE()));",
+      "range": {
+        "startLine": 947,
+        "startChar": 0,
+        "endLine": 947,
+        "endChar": 14
+      },
+      "revId": "0b8755a7d2eed206e27fb381c66f1eaef7bd03c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
