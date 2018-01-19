@@ -22,6 +22,30 @@
       "revId": "320760cc27ec638dfc0a615929ffbd153736f2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25825a91_21cbdc6a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-19T13:53:06Z",
+      "side": 1,
+      "message": "It\u0027s certainly doable, and I thought about it. It would be a little convoluted though IMO: the function would need to return an std::unique_ptr\u003cSubscriptionManagerImpl\u003e. So either each test does \"std::unique_ptr\u003cSubscriptionManagerImpl\u003e manager \u003d ....\", which is pretty verbose, or they do \"auto manager \u003d ...\", which is not verbose but IMO doesn\u0027t meet the bar of clarity for when you should use auto (it would really not be obvious that |manager| is a unique_ptr).",
+      "parentUuid": "e613748b_cff71a44",
+      "range": {
+        "startLine": 87,
+        "startChar": 11,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "320760cc27ec638dfc0a615929ffbd153736f2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
