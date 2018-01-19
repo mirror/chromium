@@ -63,7 +63,7 @@ class CompletionHandlerHolder {
   scoped_refptr<CompletionHandler> completion_handler_;
 };
 
-static base::LazyInstance<CompletionHandlerHolder>::DestructorAtExit
+static base::LazyInstance<CompletionHandlerHolder>::Leaky
     g_completion_handler_holder = LAZY_INSTANCE_INITIALIZER;
 
 CompletionHandler* CompletionHandler::Get() {

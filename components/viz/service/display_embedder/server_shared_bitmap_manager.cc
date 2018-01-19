@@ -62,8 +62,8 @@ class ServerSharedBitmap : public SharedBitmap {
 
 }  // namespace
 
-base::LazyInstance<ServerSharedBitmapManager>::DestructorAtExit
-    g_shared_memory_manager = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<ServerSharedBitmapManager>::Leaky g_shared_memory_manager =
+    LAZY_INSTANCE_INITIALIZER;
 
 ServerSharedBitmapManager::ServerSharedBitmapManager() = default;
 

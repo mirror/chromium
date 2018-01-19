@@ -11,7 +11,7 @@
 
 namespace {
 
-base::LazyInstance<PortableDeviceMapService>::DestructorAtExit
+base::LazyInstance<PortableDeviceMapService>::Leaky
     g_portable_device_map_service = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -20,8 +20,8 @@
 namespace content {
 
 namespace {
-base::LazyInstance<base::ThreadLocalPointer<ChildProcess>>::DestructorAtExit
-    g_lazy_tls = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::ThreadLocalPointer<ChildProcess>>::Leaky g_lazy_tls =
+    LAZY_INSTANCE_INITIALIZER;
 }
 
 ChildProcess::ChildProcess(

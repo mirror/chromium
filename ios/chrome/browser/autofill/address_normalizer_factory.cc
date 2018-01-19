@@ -28,8 +28,8 @@ std::unique_ptr<::i18n::addressinput::Storage> GetAddressInputStorage() {
 
 // static
 AddressNormalizer* AddressNormalizerFactory::GetInstance() {
-  static base::LazyInstance<AddressNormalizerFactory>::DestructorAtExit
-      instance = LAZY_INSTANCE_INITIALIZER;
+  static base::LazyInstance<AddressNormalizerFactory>::Leaky instance =
+      LAZY_INSTANCE_INITIALIZER;
   return &(instance.Get().address_normalizer_);
 }
 

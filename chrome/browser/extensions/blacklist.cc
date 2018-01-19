@@ -58,7 +58,7 @@ class LazySafeBrowsingDatabaseManager {
   scoped_refptr<SafeBrowsingDatabaseManager> instance_;
 };
 
-static base::LazyInstance<LazySafeBrowsingDatabaseManager>::DestructorAtExit
+static base::LazyInstance<LazySafeBrowsingDatabaseManager>::Leaky
     g_database_manager = LAZY_INSTANCE_INITIALIZER;
 
 // Implementation of SafeBrowsingDatabaseManager::Client, the class which is

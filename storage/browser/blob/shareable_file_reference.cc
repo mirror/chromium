@@ -62,7 +62,7 @@ class ShareableFileMap {
   DISALLOW_COPY_AND_ASSIGN(ShareableFileMap);
 };
 
-base::LazyInstance<ShareableFileMap>::DestructorAtExit g_file_map =
+base::LazyInstance<ShareableFileMap>::Leaky g_file_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
