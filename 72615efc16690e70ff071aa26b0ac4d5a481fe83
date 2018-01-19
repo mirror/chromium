@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb131d1_7a371b48",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-19T17:38:18Z",
+      "side": 1,
+      "message": "Each tuple",
+      "range": {
+        "startLine": 254,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 16
+      },
+      "revId": "72615efc16690e70ff071aa26b0ac4d5a481fe83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf2fb55_d907dac6",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-19T17:38:18Z",
+      "side": 1,
+      "message": "Nit: usually in a multiline docstring, the final \"\"\" goes on its own line.",
+      "range": {
+        "startLine": 256,
+        "startChar": 66,
+        "endLine": 256,
+        "endChar": 70
+      },
+      "revId": "72615efc16690e70ff071aa26b0ac4d5a481fe83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dd8810_d0d35135",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-19T17:38:18Z",
+      "side": 1,
+      "message": "Since len(items) is 2 here, another alternate way to express this would be:\n\n    status_tuple_list.append(tuple(items))",
+      "revId": "72615efc16690e70ff071aa26b0ac4d5a481fe83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
