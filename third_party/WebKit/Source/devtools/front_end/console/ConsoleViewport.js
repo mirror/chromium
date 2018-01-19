@@ -55,8 +55,15 @@ Console.ConsoleViewport = class {
     this.element.addEventListener('scroll', this._onScroll.bind(this), false);
     this.element.addEventListener('copy', this._onCopy.bind(this), false);
     this.element.addEventListener('dragstart', this._onDragStart.bind(this), false);
+    this.element.addEventListener('focus', this._onFocus.bind(this), false);
+    this.element.addEventListener('keydown', this._onKeyDown.bind(this), false);
+    this.element.addEventListener('focusin', this._elementFocusChanged.bind(this), false);
+    this.element.addEventListener('focusout', this._elementFocusChanged.bind(this), false);
 
-    this._firstActiveIndex = 0;
+    this.element.tabIndex = -1;
+    this._selectedMessageIndex = 0;
+
+    this._firstActiveIndex = -1;
     this._lastActiveIndex = -1;
     this._renderedItems = [];
     this._anchorSelection = null;
@@ -109,6 +116,72 @@ Console.ConsoleViewport = class {
     event.clipboardData.setData('text/plain', text);
   }
 
+  _elementFocusChanged() {
+    if (!this._itemCount || (this.element.hasFocus() && !UI.isEditing()))
+      this.element.tabIndex = -1;
+    else
+      this.element.tabIndex = 0;
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onFocus(event) {
+    // If the focus is coming from or going to outside the viewport, the selected message should be reset
+    if (event.relatedTarget && !event.relatedTarget.isSelfOrAncestor(this.element)) {
+      this._selectedMessageIndex = this._itemCount - 1;
+      this.scrollItemIntoView(this._selectedMessageIndex);
+    }
+    this._attemptToFocusSelectedMessage();
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onKeyDown(event) {
+    if (UI.isEditing())
+      return;
+    switch (event.key) {
+      case 'ArrowUp':
+      case 'ArrowLeft':
+        this._selectedMessageIndex--;
+        if (this._selectedMessageIndex < 0)
+          this._selectedMessageIndex = this._itemCount - 1;
+        break;
+      case 'ArrowDown':
+      case 'ArrowRight':
+        this._selectedMessageIndex++;
+        if (this._selectedMessageIndex >= this._itemCount)
+          this._selectedMessageIndex = 0;
+        break;
+      case 'Home':
+        this._selectedMessageIndex = 0;
+        break;
+      case 'End':
+        this._selectedMessageIndex = this._itemCount - 1;
+        break;
+      default:
+        return;
+    }
+    event.consume(true);
+    console.log('before', this._selectedMessageIndex);
+    this.scrollItemIntoView(this._selectedMessageIndex);
+    var index = this._selectedMessageIndex - this._firstActiveIndex;
+    if (this._renderedItems[index])
+      this._renderedItems[index].element().focus();
+    console.log('after', this._selectedMessageIndex);
+  }
+
+  _attemptToFocusSelectedMessage() {
+    if (this.element !== this.element.ownerDocument.deepActiveElement())
+      return;
+    if (this._selectedMessageIndex === -1)
+      return;
+    if (this._selectedMessageIndex < this._firstActiveIndex || this._selectedMessageIndex > this._lastActiveIndex)
+      return;
+    this._renderedItems[this._selectedMessageIndex - this._firstActiveIndex].element().focus();
+  }
+
   /**
    * @param {!Event} event
    */
@@ -132,6 +205,7 @@ Console.ConsoleViewport = class {
   invalidate() {
     delete this._cachedProviderElements;
     this._itemCount = this._provider.itemCount();
+    this._elementFocusChanged();
     this._rebuildCumulativeHeights();
     this.refresh();
   }
@@ -162,6 +236,18 @@ Console.ConsoleViewport = class {
       else
         height += this._provider.fastHeight(i);
       this._cumulativeHeights[i] = height;
+    }
+  }
+
+  _rebuildCumulativeHeightsIfNeeded() {
+    // Check whether current items in DOM have changed heights. Tolerate 1-pixel
+    // error due to double-to-integer rounding errors.
+    for (var i = 0; i < this._renderedItems.length; ++i) {
+      var cachedItemHeight = this._cachedItemHeight(this._firstActiveIndex + i);
+      if (Math.abs(cachedItemHeight - this._renderedItems[i].element().offsetHeight) > 1) {
+        this._rebuildCumulativeHeights();
+        break;
+      }
     }
   }
 
@@ -314,11 +400,14 @@ Console.ConsoleViewport = class {
       for (var i = 0; i < this._renderedItems.length; ++i)
         this._renderedItems[i].willHide();
       this._renderedItems = [];
+      var hadFocus = this.element.hasFocus();
       this._contentElement.removeChildren();
       this._topGapElement.style.height = '0px';
       this._bottomGapElement.style.height = '0px';
       this._firstActiveIndex = -1;
       this._lastActiveIndex = -1;
+      if (hadFocus && !this.element.hasFocus())
+        this.element.focus();
       return;
     }
 
@@ -328,15 +417,8 @@ Console.ConsoleViewport = class {
     var visibleFrom = this.element.scrollTop;
     var visibleHeight = this._visibleHeight();
 
-    for (var i = 0; i < this._renderedItems.length; ++i) {
-      // Tolerate 1-pixel error due to double-to-integer rounding errors.
-      var cachedItemHeight = this._cachedItemHeight(this._firstActiveIndex + i);
-      if (Math.abs(cachedItemHeight - this._renderedItems[i].element().offsetHeight) > 1) {
-        this._rebuildCumulativeHeights();
-        break;
-      }
-    }
     var activeHeight = visibleHeight * 2;
+    this._rebuildCumulativeHeightsIfNeeded();
     // When the viewport is scrolled to the bottom, using the cumulative heights estimate is not
     // precise enough to determine next visible indices. This stickToBottom check avoids extra
     // calls to refresh in those cases.
@@ -345,10 +427,8 @@ Console.ConsoleViewport = class {
           Math.max(this._itemCount - Math.ceil(activeHeight / this._provider.minimumRowHeight()), 0);
       this._lastActiveIndex = this._itemCount - 1;
     } else {
-      this._firstActiveIndex = Math.max(
-          Int32Array.prototype.lowerBound.call(
-              this._cumulativeHeights, visibleFrom + 1 - (activeHeight - visibleHeight) / 2),
-          0);
+      this._firstActiveIndex =
+          Math.max(this._cumulativeHeights.lowerBound(visibleFrom + 1 - (activeHeight - visibleHeight) / 2), 0);
       // Proactively render more rows in case some of them will be collapsed without triggering refresh. @see crbug.com/390169
       this._lastActiveIndex = this._firstActiveIndex + Math.ceil(activeHeight / this._provider.minimumRowHeight()) - 1;
       this._lastActiveIndex = Math.min(this._lastActiveIndex, this._itemCount - 1);
@@ -389,8 +469,13 @@ Console.ConsoleViewport = class {
     for (var i = 0; i < willBeHidden.length; ++i)
       willBeHidden[i].willHide();
     prepare();
-    for (var i = 0; i < willBeHidden.length; ++i)
+    var hadFocus = false;
+    for (var i = 0; i < willBeHidden.length; ++i) {
+      hadFocus = hadFocus || willBeHidden[i].element().hasFocus();
       willBeHidden[i].element().remove();
+    }
+    if (hadFocus)
+      this.element.focus();
 
     var wasShown = [];
     var anchor = this._contentElement.firstChild;
@@ -408,6 +493,7 @@ Console.ConsoleViewport = class {
     for (var i = 0; i < wasShown.length; ++i)
       wasShown[i].wasShown();
     this._renderedItems = Array.from(itemsToRender);
+    this._attemptToFocusSelectedMessage();
   }
 
   /**
@@ -493,23 +579,22 @@ Console.ConsoleViewport = class {
    * @return {number}
    */
   firstVisibleIndex() {
-    var firstVisibleIndex =
-        Math.max(Int32Array.prototype.lowerBound.call(this._cumulativeHeights, this.element.scrollTop + 1), 0);
-    return Math.max(firstVisibleIndex, this._firstActiveIndex);
+    if (!this._cumulativeHeights.length)
+      return -1;
+    this._rebuildCumulativeHeightsIfNeeded();
+    return this._cumulativeHeights.lowerBound(this.element.scrollTop + 1);
   }
 
   /**
    * @return {number}
    */
   lastVisibleIndex() {
-    var lastVisibleIndex;
-    if (this._stickToBottom) {
-      lastVisibleIndex = this._itemCount - 1;
-    } else {
-      lastVisibleIndex =
-          this.firstVisibleIndex() + Math.ceil(this._visibleHeight() / this._provider.minimumRowHeight()) - 1;
-    }
-    return Math.min(lastVisibleIndex, this._lastActiveIndex);
+    if (!this._cumulativeHeights.length)
+      return -1;
+    this._rebuildCumulativeHeightsIfNeeded();
+    var scrollBottom = this.element.scrollTop + this.element.clientHeight;
+    var right = this._itemCount - 1;
+    return this._cumulativeHeights.lowerBound(scrollBottom, undefined, undefined, right);
   }
 
   /**
@@ -544,7 +629,9 @@ Console.ConsoleViewport = class {
    * @param {number} index
    */
   forceScrollItemToBeFirst(index) {
+    console.assert(index >= 0 && index < this._itemCount, 'Cannot scroll item at invalid index');
     this.setStickToBottom(false);
+    this._rebuildCumulativeHeightsIfNeeded();
     this.element.scrollTop = index > 0 ? this._cumulativeHeights[index - 1] : 0;
     if (this.element.isScrolledToBottom())
       this.setStickToBottom(true);
@@ -555,7 +642,9 @@ Console.ConsoleViewport = class {
    * @param {number} index
    */
   forceScrollItemToBeLast(index) {
+    console.assert(index >= 0 && index < this._itemCount, 'Cannot scroll item at invalid index');
     this.setStickToBottom(false);
+    this._rebuildCumulativeHeightsIfNeeded();
     this.element.scrollTop = this._cumulativeHeights[index] - this._visibleHeight();
     if (this.element.isScrolledToBottom())
       this.setStickToBottom(true);
