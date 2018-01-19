@@ -259,7 +259,8 @@ HitTestResult EventHandler::HitTestResultAtPoint(
   // lead to a premature layout() happening, which could show a flash of white.
   // See also the similar code in Document::performMouseEventHitTest.
   if (!frame_->ContentLayoutObject() || !frame_->View() ||
-      !frame_->View()->DidFirstLayout())
+      !frame_->View()->DidFirstLayout() ||
+      !frame_->View()->LifecycleUpdatesActive())
     return result;
 
   frame_->ContentLayoutObject()->HitTest(result);
