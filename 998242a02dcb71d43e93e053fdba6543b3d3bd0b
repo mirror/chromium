@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a22c415_cac99b9f",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T21:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449e3d7e_829df4ae",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 40
+      },
+      "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccd9dd5d_f6921118",
         "filename": "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1352412_d528750d",
+        "filename": "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T21:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd9dd5d_f6921118",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "68fc6754_f1913c57",
+        "filename": "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T21:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4bc391_d9b05d66",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b561f6d_62572ab1",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e045f410_cdf429da",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T21:58:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b561f6d_62572ab1",
+      "range": {
+        "startLine": 336,
+        "startChar": 15,
+        "endLine": 336,
+        "endChar": 20
+      },
+      "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72eda8c4_bb0f8991",
         "filename": "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed29e5e_ce3e6c16",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-19T21:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72eda8c4_bb0f8991",
+      "range": {
+        "startLine": 13,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 47
+      },
+      "revId": "998242a02dcb71d43e93e053fdba6543b3d3bd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
