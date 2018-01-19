@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "771253ee_339c1173",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-19T15:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a4e78e_382577fa",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fc4137a_8246d770",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 39
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "960461ab_d1d96cbd",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-19T15:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc4137a_8246d770",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be0885c1_3a836654",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 39
@@ -62,6 +110,24 @@
       "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b19254_74e08b8a",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-19T15:29:38Z",
+      "side": 1,
+      "message": "requestExportProgressStatus() was introduced to address what happens with multiple tabs, where |lastStatus| would not be shared.\n\nE.g, on tab A, the user opens settings and starts to export. While that is still happening, the user opens tab B, goes to settings and tries to do the same thing. Tab B wasn\u0027t listening on events and doesn\u0027t know the current status, so it calls requestExportProgressStatus() and knows to display the appropriate in-progress view.\n\nIf there is still a simpler way to do the above, I\u0027d be happy to hear it :)",
+      "parentUuid": "be0885c1_3a836654",
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
