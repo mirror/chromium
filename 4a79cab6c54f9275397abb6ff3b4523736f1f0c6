@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0c13ba4a_8a565ade",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMDataStore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-19T10:00:15Z",
+      "side": 1,
+      "message": "If DOMDataStore inherits from TraceWrapperBase, then it gets its own mark bit, right? i.e. it becomes a real node in GC graph.\n\nMarking DOMDataStore would mark all wrappers, which will cause memory leaks (see my reply in the other comment).",
+      "parentUuid": "98cd9022_d47f6cce",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9053c3e_8d2e9cf7",
         "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-19T01:29:34Z",
       "side": 1,
       "message": "Instead of making this a static method, can we make DOMWrapperMap inherit from TraceWrapperBase and use TraceWrapperBase::TraceWrappers?\n\nScriptWrappable::TraceWrappers can iterate all wrapper maps and call visitor-\u003eTraceWrappers(wrapper_map).\n\nIf we do this, can we probably remove Visit(DOMWrapperMap\u003cScriptWrappable\u003e*, ScriptWrappable*)? (I\u0027m not fully convinced why we need a special Visit method for DOMWrapperMap.)",
+      "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21804b9_b63cf717",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-19T10:00:15Z",
+      "side": 1,
+      "message": "visitor-\u003eTraceWrappers(wrapper_map) would put wrapper_map into marking deque.\nLater when we get the wrapper_map from the marking deque and process it, we will have to mark all wrappers in the map, which is not what we want.\n\nWe want to mark only the wrappers corresponding to this script wrappable.",
+      "parentUuid": "f9053c3e_8d2e9cf7",
       "revId": "4a79cab6c54f9275397abb6ff3b4523736f1f0c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
