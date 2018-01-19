@@ -32,6 +32,10 @@ def ParseOrderfile(filename):
     lines = [line.strip() for line in f]
 
   for entry in lines:
+    # Symbols don't contains ',', ignore. We could do the opposite, but then
+    # old orderfiles would not be parsed.
+    if '.' not in entry:
+      continue
     # Example: .text.startup.BLA
     symbol_name = entry[entry.rindex('.'):]
     if symbol_name in already_seen or symbol_name == '*' or entry == '.text':
@@ -39,6 +43,18 @@ def ParseOrderfile(filename):
     already_seen.add(symbol_name)
     symbols.append(symbol_name)
   return symbols
+
+
+def CommonSymbolsToOrder(symbols, common_symbols):
+  """Returns s -> index for all s in common_symbols."""
+  result = {}
+  index = 0
+  for s in symbols:
+    if s not in common_symbols:
+      continue
+    result[s] = index
+    index += 1
+  return result
 
 
 def Compare(first_filename, second_filename):
@@ -56,8 +72,19 @@ def Compare(first_filename, second_filename):
   second_symbols = set(second_symbols)
   new_symbols = second_symbols - first_symbols
   removed_symbols = first_symbols - second_symbols
+  common_symbols = first_symbols.intersection(second_symbols)
+  # Distance between orderfiles.
+  first_to_ordering = CommonSymbolsToOrder(first_symbols, common_symbols)
+  second_to_ordering = CommonSymbolsToOrder(second_symbols, common_symbols)
+  total_distance = sum(abs(first_to_ordering[s] - second_to_ordering[s])\
+                       for s in first_to_ordering)
+  # Each distance is in [0, len(common_symbols)] and there are
+  # len(common_symbols) entries, hence the normalization.
+  average_fractional_distance = float(total_distance) / (len(common_symbols)**2)
   print 'New symbols = %d' % len(new_symbols)
   print 'Removed symbols = %d' % len(removed_symbols)
+  print 'Average fractional distance = %.2f%%' % (
+      100. * average_fractional_distance)
 
 
 def CheckOrderfileCommit(commit_hash, clank_path):
@@ -70,7 +97,8 @@ def CheckOrderfileCommit(commit_hash, clank_path):
   output = subprocess.check_output(
       ['git', 'show', r'--format=%an %s', commit_hash], cwd=clank_path)
   first_line = output.split('\n')[0]
-  assert first_line == 'clank-autoroller Update Orderfile.', (
+  # Capitalization changed at some point.
+  assert first_line.upper() == 'clank-autoroller Update Orderfile.'.upper(), (
       'Not an orderfile commit')
 
 
