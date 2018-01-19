@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.h"
 
+#include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"

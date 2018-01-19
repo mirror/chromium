@@ -7,13 +7,14 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
 #include "ui/base/ui_features.h"
 
 namespace content {
 class WebContents;
 }
+
+class ManagePasswordsBubbleModel;
 
 // Base class for all manage-passwords bubbles. Provides static methods for
 // creating and showing these dialogs. Also used to access the web contents
@@ -59,8 +60,8 @@ class ManagePasswordsBubbleDelegateViewBase
   bool ShouldShowWindowTitle() const override;
 
   // These model-accessor methods are public for testing.
-  ManagePasswordsBubbleModel* model() { return &model_; }
-  const ManagePasswordsBubbleModel* model() const { return &model_; }
+  ManagePasswordsBubbleModel* model() { return model_.get(); }
+  const ManagePasswordsBubbleModel* model() const { return model_.get(); }
 
  protected:
   ManagePasswordsBubbleDelegateViewBase(content::WebContents* web_contents,
@@ -70,15 +71,15 @@ class ManagePasswordsBubbleDelegateViewBase
 
   ~ManagePasswordsBubbleDelegateViewBase() override;
 
-  // LocationBarBubbleDelegateView:
-  void CloseBubble() override;
-
  private:
+  // WidgetObserver:
+  void OnWidgetClosing(views::Widget* widget) override;
+
   // Singleton instance of the Password bubble.The instance is owned by the
   // Bubble and will be deleted when the bubble closes.
   static ManagePasswordsBubbleDelegateViewBase* g_manage_passwords_bubble_;
 
-  ManagePasswordsBubbleModel model_;
+  std::unique_ptr<ManagePasswordsBubbleModel> model_;
 
   // Listens for WebContentsView events and closes the bubble so the bubble gets
   // dismissed when users keep using the web page.
