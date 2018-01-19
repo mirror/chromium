@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4561eb24_afcfde0f",
+        "filename": "mojo/public/tools/bindings/README.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57cd3889_28531c45",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc7703f_4fb465b1",
         "filename": "mojo/public/tools/bindings/mojom.gni",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac20872a_326f779b",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc7703f_4fb465b1",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b41df05b_206619b4",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d04aeb5_f610eaa8",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12bf8d62_6fadab03",
         "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1f93b1_76ae4c55",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12bf8d62_6fadab03",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "50293df0_71aea271",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eed4193_be297030",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66867d81_5e501faf",
         "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
         "patchSetId": 15
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-18T19:37:33Z",
       "side": 1,
       "message": "Some other test cases that may be interesting:\n- multiple EnableIf in the same attribute list?\n[EnableIf\u003dX, EnableIf\u003dY]\nstruct Foo {};\n\n- same-name fields with different EnableIf values? For example,\nenum Foo {\n  [EnableIf\u003dX]\n  kBarValue \u003d 5,\n  [EnableIf\u003dY]\n  kBarValue \u003d 6,\n}\n\nor\n\n[EnableIf\u003dX]\nconst int kFooValue \u003d 123;\n[EnableIf\u003dY]\nconst int kFooValue \u003d 456;",
+      "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ead244f_266cc247",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-19T00:24:37Z",
+      "side": 1,
+      "message": "In my design doc I stated that multiple EnableIf values wouldn\u0027t be supported. I\u0027ve now implemented a check in conditional_features.py _IsEnabled() that errors if this happens + a test for this behavior. Do you think that\u0027s the right approach?\n\nThanks so much for all your help and feedback! :)",
+      "parentUuid": "66867d81_5e501faf",
       "revId": "e88826db41ea30aee17d8cdccc5e63d14b457898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
