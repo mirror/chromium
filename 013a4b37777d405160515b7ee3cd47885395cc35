@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f60592ca_d30cc129",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T17:10:14Z",
+      "side": 1,
+      "message": "nit: Run -\u003e Wait, IMHO Wait is more clear about what this does.",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "013a4b37777d405160515b7ee3cd47885395cc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
