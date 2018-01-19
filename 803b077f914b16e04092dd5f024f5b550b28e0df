@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ccd027f_2440a2bb",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-19T00:09:11Z",
+      "side": 1,
+      "message": "Please don\u0027t use auto here as it is unclear what the type of |null_factory| is.",
+      "revId": "803b077f914b16e04092dd5f024f5b550b28e0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
