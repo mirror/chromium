@@ -365,6 +365,7 @@ void DownloadUIAdapter::ResumeDownloadContinuation(
 // Note that several LoadCache calls may be issued before the async GetAllPages
 // comes back.
 void DownloadUIAdapter::LoadCache() {
+  LOG(ERROR) << "***** DownloadUIAdapter::LoadCache";
   state_ = State::LOADING_PAGES;
   model_->GetAllPages(base::Bind(&DownloadUIAdapter::OnOfflinePagesLoaded,
                                  weak_ptr_factory_.GetWeakPtr()));
@@ -373,6 +374,7 @@ void DownloadUIAdapter::LoadCache() {
 void DownloadUIAdapter::ClearCache() {
   // Once loaded, this class starts to observe the model. Only remove observer
   // if it was added.
+  LOG(ERROR) << "***** DownloadUIAdapter::ClearCache - NOT_LOADED";
   if (state_ == State::LOADED) {
     model_->RemoveObserver(this);
     request_coordinator_->RemoveObserver(this);
@@ -430,6 +432,7 @@ void DownloadUIAdapter::OnRequestsLoaded(
   request_coordinator_->AddObserver(this);
 
   state_ = State::LOADED;
+  LOG(ERROR) << "***** DownloadUIAdapter::OnRequestsLoaded - LOADED";
   for (auto& observer : observers_)
     observer.OnItemsAvailable(this);
 }

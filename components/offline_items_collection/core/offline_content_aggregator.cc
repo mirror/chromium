@@ -13,6 +13,8 @@
 #include "components/offline_items_collection/core/offline_content_aggregator.h"
 #include "components/offline_items_collection/core/offline_item.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace offline_items_collection {
 
 namespace {
@@ -29,27 +31,36 @@ bool MapContainsValue(const std::map<T, U>& map, U value) {
 }  // namespace
 
 OfflineContentAggregator::OfflineContentAggregator()
-    : sent_on_items_available_(false), weak_ptr_factory_(this) {}
+    : observers_count_(0),
+      sent_on_items_available_(false),
+      weak_ptr_factory_(this) {}
 
 OfflineContentAggregator::~OfflineContentAggregator() = default;
 
 void OfflineContentAggregator::RegisterProvider(
     const std::string& name_space,
     OfflineContentProvider* provider) {
+  LOG(ERROR) << "RegisterProvider 1";
   // Validate that this is the first OfflineContentProvider registered that is
   // associated with |name_space|.
   DCHECK(providers_.find(name_space) == providers_.end());
 
   // Only set up the connection to the provider if the provider isn't associated
-  // with any other namespace.
-  if (!MapContainsValue(providers_, provider))
+  // with any other namespace and there are registered observers.
+  if (!MapContainsValue(providers_, provider) && observers_count_ > 0) {
+    LOG(ERROR) << "RegisterProvider 2";
     provider->AddObserver(this);
+  }
 
   providers_[name_space] = provider;
+  // TODO : this sounds like it should be set here because now we need to wait
+  // again for all providers to be available?
+  // sent_on_items_available_ = false;
 }
 
 void OfflineContentAggregator::UnregisterProvider(
     const std::string& name_space) {
+  LOG(ERROR) << "UnregisterProvider 1";
   auto provider_it = providers_.find(name_space);
 
   OfflineContentProvider* provider = provider_it->second;
@@ -57,8 +68,11 @@ void OfflineContentAggregator::UnregisterProvider(
   pending_providers_.erase(provider);
 
   // Only clean up the connection to the provider if the provider isn't
-  // associated with any other namespace.
-  if (!MapContainsValue(providers_, provider)) {
+  // associated with any other namespace and there are registered observers
+  // (otherwise the connection was already cleaned up when the last observer
+  // unregistered).
+  if (!MapContainsValue(providers_, provider) && observers_count_ > 0) {
+    LOG(ERROR) << "UnregisterProvider 2";
     provider->RemoveObserver(this);
     pending_actions_.erase(provider);
   }
@@ -201,13 +215,32 @@ void OfflineContentAggregator::GetVisualsForItem(
 
 void OfflineContentAggregator::AddObserver(
     OfflineContentProvider::Observer* observer) {
+  // LOG(ERROR) << base::debug::StackTrace().ToString();
   DCHECK(observer);
   if (observers_.HasObserver(observer))
     return;
+  LOG(ERROR) << "AddObserver 1";
 
   observers_.AddObserver(observer);
+  ++observers_count_;
+
+  // If this is the first observer then connect with all known providers.
+  if (observers_count_ == 1) {
+    LOG(ERROR) << "AddObserver 2";
+    std::set<OfflineContentProvider*> already_connected;
+    for (std::pair<std::string, OfflineContentProvider*> namespace_provider :
+         providers_) {
+      // Do not connect with the same provider twice.
+      if (already_connected.count(namespace_provider.second))
+        continue;
+      LOG(ERROR) << "AddObserver 3";
+      already_connected.insert(namespace_provider.second);
+      namespace_provider.second->AddObserver(this);
+    }
+  }
 
   if (sent_on_items_available_ || providers_.empty()) {
+    LOG(ERROR) << "AddObserver 4";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(&OfflineContentAggregator::CheckAndNotifyItemsAvailable,
@@ -220,9 +253,27 @@ void OfflineContentAggregator::RemoveObserver(
   DCHECK(observer);
   if (!observers_.HasObserver(observer))
     return;
+  LOG(ERROR) << "RemoveObserver 1";
 
   signaled_observers_.erase(observer);
   observers_.RemoveObserver(observer);
+  --observers_count_;
+
+  // If this was the last observer then disconnect from all known providers.
+  if (observers_count_ == 0) {
+    LOG(ERROR) << "RemoveObserver 2";
+    std::set<OfflineContentProvider*> already_disconnected;
+    for (std::pair<std::string, OfflineContentProvider*> namespace_provider :
+         providers_) {
+      // Do not disconnect from the same provider twice.
+      if (already_disconnected.count(namespace_provider.second))
+        continue;
+      LOG(ERROR) << "RemoveObserver 3";
+      already_disconnected.insert(namespace_provider.second);
+      namespace_provider.second->RemoveObserver(this);
+    }
+    sent_on_items_available_ = false;
+  }
 }
 
 void OfflineContentAggregator::NotifyItemsAdded(const OfflineItemList& items) {
@@ -237,11 +288,13 @@ void OfflineContentAggregator::OnItemsAvailable(
     OfflineContentProvider* provider) {
   // Flush any pending actions that should be mirrored to the provider.
   FlushPendingActionsIfReady(provider);
+  LOG(ERROR) << "OnItemsAvailable 1";
 
   // Some observers might already be under the impression that this class was
   // initialized.  Just treat this as an OnItemsAdded and notify those observers
   // of the new items.
   if (signaled_observers_.size() > 0) {
+    LOG(ERROR) << "OnItemsAvailable 2";
     provider->GetAllItems(
         base::BindOnce(&OfflineContentAggregator::NotifyItemsAdded,
                        weak_ptr_factory_.GetWeakPtr()));
@@ -268,13 +321,16 @@ void OfflineContentAggregator::OnItemUpdated(const OfflineItem& item) {
 }
 
 void OfflineContentAggregator::CheckAndNotifyItemsAvailable() {
+  LOG(ERROR) << "CheckAndNotifyItemsAvailable 1";
   // If we haven't sent out the initialization message yet, make sure all
   // underlying OfflineContentProviders are ready before notifying observers
   // that we're ready to send items.
   if (!sent_on_items_available_) {
     for (auto& it : providers_) {
-      if (!it.second->AreItemsAvailable())
+      if (!it.second->AreItemsAvailable()) {
+        LOG(ERROR) << "CheckAndNotifyItemsAvailable 2";
         return;
+      }
     }
   }
 
@@ -282,6 +338,7 @@ void OfflineContentAggregator::CheckAndNotifyItemsAvailable() {
   // are initialized.  Track the observers so that we don't notify them again.
   for (auto& observer : observers_) {
     if (!base::ContainsKey(signaled_observers_, &observer)) {
+      LOG(ERROR) << "CheckAndNotifyItemsAvailable 3";
       observer.OnItemsAvailable(this);
       signaled_observers_.insert(&observer);
     }

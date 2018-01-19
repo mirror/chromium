@@ -11,6 +11,8 @@
 #include "base/time/time.h"
 #include "components/offline_items_collection/core/offline_item.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace offline_items_collection {
 namespace {
 const int kDelayBetweenUpdatesMs = 1000;
@@ -106,6 +108,8 @@ void ThrottledOfflineContentProvider::GetVisualsForItem(
 
 void ThrottledOfflineContentProvider::AddObserver(
     OfflineContentProvider::Observer* observer) {
+  LOG(ERROR) << "$$$$$ ThrottledOfflineContentProvider::AddObserver";
+  LOG(ERROR) << base::debug::StackTrace().ToString();
   DCHECK(observer);
   observers_.AddObserver(observer);
   if (!wrapped_provider_->AreItemsAvailable())
@@ -119,6 +123,7 @@ void ThrottledOfflineContentProvider::AddObserver(
 
 void ThrottledOfflineContentProvider::RemoveObserver(
     OfflineContentProvider::Observer* observer) {
+  LOG(ERROR) << "$$$$$ ThrottledOfflineContentProvider::RemoveObserver";
   observers_.RemoveObserver(observer);
 }
 

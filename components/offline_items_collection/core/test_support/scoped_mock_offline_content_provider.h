@@ -17,6 +17,7 @@ class ScopedMockOfflineContentProvider : public MockOfflineContentProvider {
   class ScopedMockObserver : public MockObserver {
    public:
     explicit ScopedMockObserver(OfflineContentProvider* provider);
+    ScopedMockObserver(OfflineContentProvider* provider, bool auto_register);
     ScopedMockObserver();
     ~ScopedMockObserver() override;
 

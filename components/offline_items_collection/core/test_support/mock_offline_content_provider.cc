@@ -71,6 +71,8 @@ void MockOfflineContentProvider::GetItemById(const ContentId& id,
 
 void MockOfflineContentProvider::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);
+  if (items_available_)
+    observer->OnItemsAvailable(this);
 }
 
 void MockOfflineContentProvider::RemoveObserver(Observer* observer) {

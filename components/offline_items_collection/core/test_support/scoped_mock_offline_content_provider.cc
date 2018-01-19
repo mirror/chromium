@@ -15,6 +15,13 @@ ScopedMockOfflineContentProvider::ScopedMockObserver::ScopedMockObserver(
   provider_->AddObserver(this);
 }
 
+ScopedMockOfflineContentProvider::ScopedMockObserver::ScopedMockObserver(
+    OfflineContentProvider* provider, bool auto_register)
+    : provider_(provider) {
+  if (auto_register)
+    provider_->AddObserver(this);
+}
+
 ScopedMockOfflineContentProvider::ScopedMockObserver::ScopedMockObserver()
     : provider_(nullptr) {}
 

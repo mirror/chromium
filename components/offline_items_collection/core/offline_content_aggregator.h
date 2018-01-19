@@ -139,6 +139,7 @@ class OfflineContentAggregator : public OfflineContentProvider,
 
   // A list of all currently registered observers.
   base::ObserverList<OfflineContentProvider::Observer> observers_;
+  size_t observers_count_;
 
   // A set of observers that have been notified that this class is initialized.
   // We do not want to notify them of this initialization more than once, so
