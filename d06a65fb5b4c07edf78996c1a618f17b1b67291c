@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cfd5902_c814c449",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-19T14:28:53Z",
+      "side": 1,
+      "message": "Use ResetAndReturn instead of std::move()",
+      "revId": "d06a65fb5b4c07edf78996c1a618f17b1b67291c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d905c5_732e8648",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-19T14:28:53Z",
+      "side": 1,
+      "message": "Make this private. (in fact, you don\u0027t even need this setter. TestApi is already a friend, it can set it directly)",
+      "revId": "d06a65fb5b4c07edf78996c1a618f17b1b67291c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
