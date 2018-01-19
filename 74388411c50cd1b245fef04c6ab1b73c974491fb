@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d20b1683_5c2f58f1",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-19T00:16:10Z",
+      "side": 1,
+      "message": "According to\nhttps://www.chromium.org/user-experience/infobars\n\"...the user can save a password they just entered.\"\nas an example of an infobar.\n\nAre infobars even used anymore?\n\nI can rename this to \n|FocusNonModalUIForAccessibility|\nto generalize if you\u0027d like.\n\nI mostly want to re-use the accelerator which some users might already know.",
+      "parentUuid": "b4c5e6db_9b7fc6b5",
+      "range": {
+        "startLine": 1047,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 3
+      },
+      "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c1b4f9_3a933450",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4677ed6a_b3172764",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-19T00:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c1b4f9_3a933450",
+      "range": {
+        "startLine": 226,
+        "startChar": 19,
+        "endLine": 226,
+        "endChar": 33
+      },
+      "revId": "74388411c50cd1b245fef04c6ab1b73c974491fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
