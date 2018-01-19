@@ -22,6 +22,30 @@
       "revId": "03ad10d798a1b67a70407d44eb37eee8d9561e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb2d3d1_bd0c117d",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-19T21:04:22Z",
+      "side": 1,
+      "message": "Rewrote it to use FilePath::IsParent()",
+      "parentUuid": "d0d4eeea_0b2612a5",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 49
+      },
+      "revId": "03ad10d798a1b67a70407d44eb37eee8d9561e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
