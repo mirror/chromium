@@ -88,6 +88,24 @@
       "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b145d0_78812c35",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-19T19:59:15Z",
+      "side": 1,
+      "message": "So I just let ScopedRasterFlags decide whether a skia shader is required. Since the in process raster case needs to pass an image provider to generate the temp SkPicture used during raster, I had to at least pass the setting there.",
+      "parentUuid": "9feb2c98_cea4ffa3",
+      "revId": "592b53d683c78c83ae6e30aa3fe431943d21962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
