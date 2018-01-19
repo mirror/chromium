@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0eccbe74_5deb91ea",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T19:01:04Z",
+      "side": 1,
+      "message": "You know, I considered that at first, then dismissed it for some reason, but on further consideration that will be simpler. I also replaced the bool with an enum throughout.",
+      "parentUuid": "ecff718c_65684ef8",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b52698f3_363b4a55",
         "filename": "chromeos/network/network_connection_handler_impl.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "bae736ff_b240448a",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T19:01:04Z",
+      "side": 1,
+      "message": "Good catch, I also saw this when I made the change above. Done.",
+      "parentUuid": "b52698f3_363b4a55",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a4eff1c_c252117e",
         "filename": "chromeos/network/network_connection_handler_impl.cc",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-19T01:00:31Z",
       "side": 1,
       "message": "Will shill invoke success callback immediately, or wait until connection is requested, (or is it undefined).\nIf it\u0027s the first option, it might make sense to invoke success_callback only when shill request succeeds (i.e. in HandleShillConnectSuccess).",
+      "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f5ab77_82dc8b92",
+        "filename": "chromeos/network/network_connection_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-19T19:01:04Z",
+      "side": 1,
+      "message": "Good point, it will fail or succeed immeditely, moved to HandleShillConnectSuccess (which actually simplifies things).",
+      "parentUuid": "9a4eff1c_c252117e",
       "revId": "6f8651d21423c5d5f7332d03eb842297eadf8b28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
