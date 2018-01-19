@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07b21280_2a07f1ef",
+        "filename": "ui/snapshot/snapshot.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T16:50:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0717cdb_a35bef92",
+      "revId": "53522d0e0baa4563effc5816879ac3626c67818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa59b18d_2a0abb64",
         "filename": "ui/snapshot/snapshot_android.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "53522d0e0baa4563effc5816879ac3626c67818f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd34edc_280ed4ce",
+        "filename": "ui/snapshot/snapshot_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-19T16:50:21Z",
+      "side": 1,
+      "message": "Don\u0027t think so, the callsites expect the result to be non-null but empty in the case of failure.",
+      "parentUuid": "aa59b18d_2a0abb64",
+      "revId": "53522d0e0baa4563effc5816879ac3626c67818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
