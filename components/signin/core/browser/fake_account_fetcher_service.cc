@@ -46,3 +46,10 @@ void FakeAccountFetcherService::StartFetchingChildInfo(
     const std::string& account_id) {
   // In tests, don't do actual network fetch.
 }
+
+void TestImageDecoder::DecodeImage(
+    const std::string& image_data,
+    const gfx::Size& desired_image_frame_size,
+    const image_fetcher::ImageDecodedCallback& callback) {
+  callback.Run(gfx::Image());
+}
