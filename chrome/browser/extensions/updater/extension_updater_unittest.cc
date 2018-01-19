@@ -648,10 +648,9 @@ static void VerifyQueryAndExtractParameters(
 class ExtensionUpdaterTest : public testing::Test {
  public:
   ExtensionUpdaterTest()
-      : thread_bundle_(
-            content::TestBrowserThreadBundle::IO_MAINLOOP),
-        testing_local_state_(TestingBrowserProcess::GetGlobal()) {
-  }
+      : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
+        testing_local_state_(TestingBrowserProcess::GetGlobal()),
+        test_data_decoder_service_(/*delay_before_quit=*/false) {}
 
   void SetUp() override {
     prefs_.reset(new TestExtensionPrefs(base::ThreadTaskRunnerHandle::Get()));

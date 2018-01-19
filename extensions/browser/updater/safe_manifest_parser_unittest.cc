@@ -16,6 +16,9 @@ namespace {
 
 class ExtensionUpdateManifestTest : public testing::Test {
  public:
+  ExtensionUpdateManifestTest()
+      : test_data_decoder_service_(/*delay_before_quit=*/false) {}
+
   void TestParseUpdateManifest(const std::string& xml) {
     base::RunLoop run_loop;
     ParseUpdateManifest(
