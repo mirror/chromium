@@ -1,0 +1,301 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e827397_46633917",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "I wonder whether we should make |is_installing| and |percent_downloaded| part of the meta data. Otherwise, the info would be lost when we switch user because it is only stored in ash side, which does not keep per-user state.",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa63971_79854a83",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "No need to do in this CL. But we probably can group all meta data updates into one mojo call and simplify updater interface.\ne.g.\n  updater-\u003eUpdateMetaData(id(), metadata_-\u003eClone()).\n\nIcon is not part of the meta data since it could be big and we want to update it separately with others.",
+      "range": {
+        "startLine": 122,
+        "startChar": 13,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6897b2b1_758eb996",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: move body to cc",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a060e57b_c6a5c0f1",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: GetMetaData -\u003e meta_data since this is a getter",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd6cffc_7c2db84a",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: move to cc",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7856e0b8_e97c8eaf",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "I suspect this can be removed.",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315fcc17_9ad17a14",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: set_folder_id -\u003e SetFolderId since it is not just a setter.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c06acc_34985d31",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "ditto, SetPosition",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 19
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b99562_204a5cc8",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: pre-inc, i.e ++it",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 8
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040f16aa_ce09a06c",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: pre-inc, i.e. ++(*index);",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053a538d_4c04841d",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: use range based loop\n  for (auto\u0026 key_val : items_) {\n    if (key_val.second-\u003eIsBadged())\n      ...\n  }",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f562d13d_769bacf6",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "This code path should only happen when a folder is created via UI. DCHECK to make sure |item| is a folder item and create ChromeAppListItem with folder flag set.",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28b2112_ad685258",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: seems unnecessary",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367fd819_938a1d35",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "Brielf document this, esp. what is the key.",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c66b85_cf72c3a4",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-19T23:37:37Z",
+      "side": 1,
+      "message": "nit: Profile* const profile_;",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
