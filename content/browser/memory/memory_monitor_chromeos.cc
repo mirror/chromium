@@ -25,9 +25,12 @@ int MemoryMonitorChromeOS::GetFreeMemoryUntilCriticalMB() {
   base::SystemMemoryInfoKB mem_info = {};
   delegate_->GetSystemMemoryInfo(&mem_info);
 
+  LOG(ERROR) << "GetFreeMemoryUntilCriticalMB()";
   // Use available free memory provided by the OS if the OS supports it.
-  if (mem_info.available > 0)
+  if (mem_info.available > 0) {
+    LOG(ERROR) << "use system " << mem_info.available;
     return mem_info.available >> kShiftKiBtoMiB;
+  }
 
   // The kernel internally uses 50MB.
   const int kMinFileMemory = 50 * 1024;

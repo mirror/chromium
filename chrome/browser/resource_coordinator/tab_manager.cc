@@ -69,6 +69,8 @@
 #include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
 #endif
 
+#include "base/files/file_util.h"
+
 using base::TimeDelta;
 using base::TimeTicks;
 using content::BrowserThread;
@@ -615,11 +617,50 @@ void TabManager::OnAutoDiscardableStateChange(content::WebContents* contents,
     observer.OnAutoDiscardableStateChange(contents, is_auto_discardable);
 }
 
+namespace {
+
+int ReadIntFromFile(const char* file_name, const int default_val) {
+  std::string file_string;
+  if (!base::ReadFileToString(base::FilePath(file_name), &file_string)) {
+    LOG(ERROR) << "Unable to read file" << file_name;
+    return default_val;
+  }
+  int val = default_val;
+  if (!base::StringToInt(
+          base::TrimWhitespaceASCII(file_string, base::TRIM_TRAILING), &val)) {
+    LOG(ERROR) << "Unable to parse string" << file_string;
+    return default_val;
+  }
+  return val;
+}
+
+int LowMemoryMarginKB() {
+  static const int kDefaultLowMemoryMarginMb = 50;
+  static const char kLowMemoryMarginConfig[] =
+      "/sys/kernel/mm/chromeos-low_mem/margin";
+  return ReadIntFromFile(kLowMemoryMarginConfig, kDefaultLowMemoryMarginMb) *
+         1024;
+}
+
+int TargetMemoryToFreeKB() {
+  static constexpr char kLowMemAvailableEntry[] =
+      "/sys/kernel/mm/chromeos-low_mem/available";
+  const int available_mem_mb = ReadIntFromFile(kLowMemAvailableEntry, 0);
+  LOG(ERROR) << "available_mem_mb: " << available_mem_mb;
+  // available_mem_mb is rounded down in the kernel computation, so even if
+  // it's just below the margin, the difference will be at least 1 MB.  This
+  // matters because we shouldn't return 0 when we're below the margin.
+  return LowMemoryMarginKB() - available_mem_mb * 1024;
+}
+
+}  // namespace.
+
 // static
 void TabManager::PurgeMemoryAndDiscardTab(DiscardReason reason) {
   TabManager* manager = g_browser_process->GetTabManager();
   manager->PurgeBrowserMemory();
   manager->DiscardTab(reason);
+  LOG(ERROR) << "target_mem_to_free_kb: " << TargetMemoryToFreeKB();
 }
 
 // static

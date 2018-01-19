@@ -76,6 +76,7 @@ MemoryCondition MemoryConditionObserver::CalculateNextCondition() {
                                 available);
 
   int expected_renderer_count = available / kExpectedRendererSizeMB;
+  LOG(ERROR) << "CalculateNextCondition " << available << " " << kExpectedRendererSizeMB << " " << kNewRenderersUntilCritical;
   if (available <= 0 || expected_renderer_count < kNewRenderersUntilCritical)
     return MemoryCondition::CRITICAL;
   return MemoryCondition::NORMAL;

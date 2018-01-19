@@ -195,6 +195,7 @@ void MemoryPressureMonitor::CheckMemoryPressure() {
   // TODO(skuhne): Add some testing framework here to see how close the kernel
   // and the internal functions are.
   if (low_mem_file_.is_valid() && IsLowMemoryCondition(low_mem_file_.get())) {
+    LOG(ERROR) << "raising critical memory pressure";
     current_memory_pressure_level_ =
         MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL;
   } else {
