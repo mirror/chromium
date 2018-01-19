@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0093e6ad_edba4ab4",
+        "filename": "net/network_error_logging/network_error_logging_feature.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T17:41:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be in net, since it\u0027s not used in net.",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "e865083b8edd86ba57443b5c721f383adbf9598a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5566db82_2ca3cdbd",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7053,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-19T17:41:15Z",
+      "side": 1,
+      "message": "Not trailing underscore for static variable names (Unless they\u0027re class members).",
+      "range": {
+        "startLine": 7053,
+        "startChar": 27,
+        "endLine": 7053,
+        "endChar": 40
+      },
+      "revId": "e865083b8edd86ba57443b5c721f383adbf9598a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
