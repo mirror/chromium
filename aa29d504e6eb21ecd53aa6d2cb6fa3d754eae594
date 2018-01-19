@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ffce0f8_c20cacf2",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-19T16:46:19Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed, given that the StatisticsRecorder is always accessible directly or indirectly via the static |top_| variable.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "aa29d504e6eb21ecd53aa6d2cb6fa3d754eae594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
