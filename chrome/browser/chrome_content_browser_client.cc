@@ -3712,9 +3712,9 @@ void ChromeContentBrowserClient::RegisterNonNetworkNavigationURLLoaderFactories(
     content::RenderFrameHost* frame_host,
     NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  factories->emplace(
-      extensions::kExtensionScheme,
-      extensions::CreateExtensionNavigationURLLoaderFactory(frame_host));
+  factories->emplace(extensions::kExtensionScheme,
+                     extensions::CreateExtensionNavigationURLLoaderFactory(
+                         frame_host, nullptr));
 #endif
 }
 
