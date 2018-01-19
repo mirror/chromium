@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542265c6_cfcf1ba0",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 5053,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-19T20:43:43Z",
+      "side": 0,
+      "message": "Please mark this action as \u003cobsolete\u003e rather than removing it entirely.  (Though, it\u0027s actually not quite clear to me why this is being removed as part of this CL – is the added metric a generalization of this one?)",
+      "range": {
+        "startLine": 5050,
+        "startChar": 0,
+        "endLine": 5053,
+        "endChar": 9
+      },
+      "revId": "5f4139aa0f8808e1b2c87644c4bfb837c0093f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
