@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e1b45893_2ab1857b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T20:11:04Z",
+      "side": 1,
+      "message": "--login-manager flag would cause chrome to instantiate a LoginDisplayHostWebUI (despite the presence of MockLoginDisplayHost), which would accept these StartWizard calls. Now the StartWizard calls are properly redirected to MockLoginDisplayHost.",
+      "parentUuid": "0d9a09c2_8625b196",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdd9698_0c24783c",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "121c9f70_fb699018",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T20:11:04Z",
+      "side": 1,
+      "message": "Yep, creating the second LoginDisplayHost will trigger a CHECK",
+      "parentUuid": "733e992e_80adf043",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c73757c_bcdd8974",
         "filename": "chrome_debug.log",
         "patchSetId": 3
@@ -86,6 +122,24 @@
       "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a735db16_27890d98",
+        "filename": "chrome_debug.log",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-19T20:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c73757c_bcdd8974",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
