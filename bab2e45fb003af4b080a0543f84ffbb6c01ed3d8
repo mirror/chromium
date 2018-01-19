@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6173b94f_6f39520d",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-19T20:10:42Z",
+      "side": 1,
+      "message": "Added a timestamp when we start probe, now we can use the real timestamps to log.",
+      "parentUuid": "31e8f0a9_ee3ccd12",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a2e2dd_e3282789",
         "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4342e13_25920aae",
+        "filename": "net/quic/chromium/quic_connectivity_probing_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-19T20:10:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adba40bb_0a2c3878",
+      "range": {
+        "startLine": 131,
+        "startChar": 76,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "bab2e45fb003af4b080a0543f84ffbb6c01ed3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
