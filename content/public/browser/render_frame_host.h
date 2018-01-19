@@ -176,6 +176,8 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
       const JavaScriptResultCallback& callback) = 0;
   virtual void ExecuteJavaScriptWithUserGestureForTests(
       const base::string16& javascript) = 0;
+  virtual void ExecuteJavaScriptWithScopedUserGestureForTests(
+      const base::string16& javascript) = 0;
 
   // Send a message to the RenderFrame to trigger an action on an
   // accessibility object.
