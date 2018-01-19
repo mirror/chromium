@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5daa523a_fa14e364",
+        "filename": "ios/chrome/browser/ui/ui_feature_flags.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-19T17:46:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5288594d_b0448c8b",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "9db5e81bfc6d56f861c99b4356462ce58c96ce05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16539e5_6fd1d37f",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 4
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4a442dc0_8b447fa4",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-19T17:46:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8986bb_859999e9",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "9db5e81bfc6d56f861c99b4356462ce58c96ce05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c019449_0cd194fe",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 4
@@ -107,6 +155,30 @@
       "writtenOn": "2018-01-19T08:14:55Z",
       "side": 1,
       "message": "If you renamed, you probably have to renamed this method also.",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 38
+      },
+      "revId": "9db5e81bfc6d56f861c99b4356462ce58c96ce05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78dfa05a_b6eaf7d6",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-19T17:46:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c019449_0cd194fe",
       "range": {
         "startLine": 62,
         "startChar": 18,
