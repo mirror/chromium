@@ -197,7 +197,7 @@ void OmniboxViewViews::OnTabChanged(const content::WebContents* web_contents) {
   const OmniboxState* state = static_cast<OmniboxState*>(
       web_contents->GetUserData(&OmniboxState::kKey));
   model()->RestoreState(
-      controller()->GetToolbarModel()->GetFormattedURL(nullptr),
+      controller()->GetToolbarModel()->GetFormattedFullURL(nullptr),
       state ? &state->model_state : NULL);
   if (state) {
     // This assumes that the omnibox has already been focused or blurred as
@@ -220,7 +220,7 @@ void OmniboxViewViews::Update() {
   const security_state::SecurityLevel old_security_level = security_level_;
   UpdateSecurityLevel();
   if (model()->SetPermanentText(
-          controller()->GetToolbarModel()->GetFormattedURL(nullptr))) {
+          controller()->GetToolbarModel()->GetFormattedFullURL(nullptr))) {
     RevertAll();
 
     // Only select all when we have focus.  If we don't have focus, selecting
@@ -832,7 +832,7 @@ bool OmniboxViewViews::HandleAccessibleAction(
 void OmniboxViewViews::OnFocus() {
   views::Textfield::OnFocus();
   model()->SetPermanentText(
-      controller()->GetToolbarModel()->GetFormattedURL(nullptr));
+      controller()->GetToolbarModel()->GetFormattedFullURL(nullptr));
   // TODO(oshima): Get control key state.
   model()->OnSetFocus(false);
   // Don't call controller()->OnSetFocus, this view has already acquired focus.
