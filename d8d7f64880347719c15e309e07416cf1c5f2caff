@@ -22,6 +22,30 @@
       "revId": "d8d7f64880347719c15e309e07416cf1c5f2caff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d77bf3_051a6116",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-19T23:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d914cab6_b12b143c",
+      "range": {
+        "startLine": 64,
+        "startChar": 49,
+        "endLine": 64,
+        "endChar": 71
+      },
+      "revId": "d8d7f64880347719c15e309e07416cf1c5f2caff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
