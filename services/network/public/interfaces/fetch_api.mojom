@@ -56,3 +56,20 @@ enum FetchResponseType {
   // Add a new type here, then update kLast and enums.xml.
   kLast = kOpaqueRedirect
 };
+
+// Indicates whether service workers will receive fetch events.
+//  - kAll : The relevant service worker, if any, will get a fetch event for
+//           this request.
+//  - kNone: No service worker will get events for this request.
+//
+// TODO(falken): This enum made more sense when there was a foreign fetch mode.
+// Find better names or fold this into a boolean.
+enum ServiceWorkerMode {
+  kAll,
+
+  kNone,
+
+  // Update kLast if a new type is appended. Used for IPC_ENUM_TRAITS_MAX_VALUE.
+  kLast = kNone
+};
+

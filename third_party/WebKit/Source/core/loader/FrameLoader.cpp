@@ -102,6 +102,7 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/web/WebFrameLoadType.h"
 #include "public/web/WebHistoryItem.h"
+#include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
 using blink::WebURLRequest;
@@ -242,8 +243,8 @@ ResourceRequest FrameLoader::ResourceRequestForReload(
   }
   request.SetServiceWorkerMode(frame_load_type ==
                                        kFrameLoadTypeReloadBypassingCache
-                                   ? WebURLRequest::ServiceWorkerMode::kNone
-                                   : WebURLRequest::ServiceWorkerMode::kAll);
+                                   ? network::mojom::ServiceWorkerMode::kNone
+                                   : network::mojom::ServiceWorkerMode::kAll);
   return request;
 }
 

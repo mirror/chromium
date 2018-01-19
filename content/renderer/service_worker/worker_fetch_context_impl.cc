@@ -22,6 +22,7 @@
 #include "content/renderer/service_worker/service_worker_subresource_loader.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 
@@ -83,7 +84,7 @@ class WorkerFetchContextImpl::URLLoaderFactoryImpl
 
     // If the service worker mode is not all, no need to intercept the request.
     if (request.GetServiceWorkerMode() !=
-        blink::WebURLRequest::ServiceWorkerMode::kAll) {
+        network::mojom::ServiceWorkerMode::kAll) {
       return nullptr;
     }
 
@@ -175,11 +176,10 @@ void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
 
   if (!IsControlledByServiceWorker() &&
       request.GetServiceWorkerMode() !=
-          blink::WebURLRequest::ServiceWorkerMode::kNone) {
+          network::mojom::ServiceWorkerMode::kNone) {
     // TODO(falken): Is still this needed? It used to set kForeign for foreign
     // fetch.
-    request.SetServiceWorkerMode(
-        blink::WebURLRequest::ServiceWorkerMode::kNone);
+    request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
   }
 }
 

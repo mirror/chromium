@@ -15,18 +15,6 @@ static const int kInvalidServiceWorkerProviderId = -1;
 // TODO(falken): Remove this since it's always FETCH.
 enum class ServiceWorkerFetchType { FETCH, LAST = FETCH };
 
-// Indicates whether service workers will receive fetch events for this request.
-// TODO(falken): This enum made more sense when there was a foreign fetch mode.
-// Find better names or fold this into a boolean.
-enum class ServiceWorkerMode {
-  // The relevant service worker, if any, will get a fetch event for this
-  // request.
-  ALL,
-  // No service worker will get events for this request.
-  NONE,
-  LAST = NONE
-};
-
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_COMMON_SERVICE_WORKER_MODES_H_

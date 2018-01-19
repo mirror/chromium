@@ -232,6 +232,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchRedirectMode,
 IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::FetchRequestMode,
                           network::mojom::FetchRequestMode::kLast)
 
+IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::ServiceWorkerMode,
+                          network::mojom::ServiceWorkerMode::kLast)
+
 IPC_ENUM_TRAITS_MAX_VALUE(network::mojom::RequestContextFrameType,
                           network::mojom::RequestContextFrameType::kLast)
 

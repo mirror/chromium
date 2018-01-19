@@ -128,7 +128,7 @@ AssociatedResourceFetcherImpl::~AssociatedResourceFetcherImpl() {
 }
 
 void AssociatedResourceFetcherImpl::SetServiceWorkerMode(
-    blink::WebURLRequest::ServiceWorkerMode service_worker_mode) {
+    network::mojom::ServiceWorkerMode service_worker_mode) {
   DCHECK(!request_.IsNull());
   DCHECK(!loader_);
 

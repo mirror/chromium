@@ -318,7 +318,7 @@ void DocumentThreadableLoader::StartBlinkCORS(const ResourceRequest& request) {
   probe::shouldBypassServiceWorker(GetExecutionContext(),
                                    &should_bypass_service_worker);
   if (should_bypass_service_worker)
-    new_request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+    new_request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
 
   // Process the CORS protocol inside the DocumentThreadableLoader for the
   // following cases:
@@ -342,7 +342,7 @@ void DocumentThreadableLoader::StartBlinkCORS(const ResourceRequest& request) {
   // intercepted since LoadPreflightRequest() sets the flag to kNone in advance.
   if (!async_ ||
       new_request.GetServiceWorkerMode() !=
-          WebURLRequest::ServiceWorkerMode::kAll ||
+          network::mojom::ServiceWorkerMode::kAll ||
       !SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           new_request.Url().Protocol()) ||
       !loading_context_->GetResourceFetcher()->IsControlledByServiceWorker()) {
@@ -357,7 +357,7 @@ void DocumentThreadableLoader::StartBlinkCORS(const ResourceRequest& request) {
     fallback_request_for_service_worker_ = ResourceRequest(request);
     // Skip the service worker for the fallback request.
     fallback_request_for_service_worker_.SetServiceWorkerMode(
-        WebURLRequest::ServiceWorkerMode::kNone);
+        network::mojom::ServiceWorkerMode::kNone);
   }
 
   LoadRequest(new_request, resource_loader_options_);
@@ -413,7 +413,8 @@ void DocumentThreadableLoader::LoadPreflightRequest(
   // not controlled by a SW at this point, a new SW may be controlling the
   // page when this actual request gets sent later. We should not send the
   // actual request to the SW. See https://crbug.com/604583.
-  actual_request_.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+  actual_request_.SetServiceWorkerMode(
+      network::mojom::ServiceWorkerMode::kNone);
 
   // Create a ResourceLoaderOptions for preflight.
   ResourceLoaderOptions preflight_options = actual_options;
@@ -528,7 +529,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
   // intercepted by a foreign SW, even if we have the result of the preflight
   // cached already. See https://crbug.com/674370.
   cross_origin_request.SetServiceWorkerMode(
-      WebURLRequest::ServiceWorkerMode::kNone);
+      network::mojom::ServiceWorkerMode::kNone);
 
   PrepareCrossOriginRequest(cross_origin_request);
   LoadRequest(cross_origin_request, cross_origin_options);

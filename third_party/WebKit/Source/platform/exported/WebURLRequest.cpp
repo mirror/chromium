@@ -294,12 +294,12 @@ void WebURLRequest::SetKeepalive(bool keepalive) {
   resource_request_->SetKeepalive(keepalive);
 }
 
-WebURLRequest::ServiceWorkerMode WebURLRequest::GetServiceWorkerMode() const {
+network::mojom::ServiceWorkerMode WebURLRequest::GetServiceWorkerMode() const {
   return resource_request_->GetServiceWorkerMode();
 }
 
 void WebURLRequest::SetServiceWorkerMode(
-    WebURLRequest::ServiceWorkerMode service_worker_mode) {
+    network::mojom::ServiceWorkerMode service_worker_mode) {
   resource_request_->SetServiceWorkerMode(service_worker_mode);
 }
 

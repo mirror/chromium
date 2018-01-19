@@ -57,7 +57,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
 
 using blink::WebURLRequest;
 
@@ -1504,7 +1504,7 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
     // https://w3c.github.io/webappsec-suborigins/.
     const SecurityOrigin* source_origin = Context().GetSecurityOrigin();
     if (source_origin && source_origin->HasSuborigin())
-      request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
+      request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
 
     // TODO(shaochuan): Saving modified ResourceRequest back to |resource|,
     // remove once dispatchWillSendRequest() takes const ResourceRequest.

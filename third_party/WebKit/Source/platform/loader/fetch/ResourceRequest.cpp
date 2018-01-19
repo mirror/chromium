@@ -58,7 +58,7 @@ ResourceRequest::ResourceRequest(const KURL& url)
       keepalive_(false),
       should_reset_app_cache_(false),
       cache_mode_(mojom::FetchCacheMode::kDefault),
-      service_worker_mode_(WebURLRequest::ServiceWorkerMode::kAll),
+      service_worker_mode_(network::mojom::ServiceWorkerMode::kAll),
       priority_(ResourceLoadPriority::kLowest),
       intra_priority_value_(0),
       requestor_id_(0),
@@ -133,7 +133,7 @@ std::unique_ptr<ResourceRequest> ResourceRequest::CreateRedirectRequest(
     const KURL& new_site_for_cookies,
     const String& new_referrer,
     ReferrerPolicy new_referrer_policy,
-    WebURLRequest::ServiceWorkerMode service_worker_mode) const {
+    network::mojom::ServiceWorkerMode service_worker_mode) const {
   std::unique_ptr<ResourceRequest> request =
       std::make_unique<ResourceRequest>(new_url);
   request->SetHTTPMethod(new_method);

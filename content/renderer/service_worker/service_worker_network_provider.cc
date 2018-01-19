@@ -20,6 +20,7 @@
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "ipc/ipc_sync_channel.h"
 #include "mojo/public/cpp/bindings/associated_group.h"
+#include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
 #include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
@@ -78,9 +79,8 @@ class WebServiceWorkerNetworkProviderForFrame
             network::mojom::RequestContextFrameType::kNested &&
         !provider_->IsControlledByServiceWorker() &&
         request.GetServiceWorkerMode() !=
-            blink::WebURLRequest::ServiceWorkerMode::kNone) {
-      request.SetServiceWorkerMode(
-          blink::WebURLRequest::ServiceWorkerMode::kNone);
+            network::mojom::ServiceWorkerMode::kNone) {
+      request.SetServiceWorkerMode(network::mojom::ServiceWorkerMode::kNone);
     }
   }
 
@@ -127,7 +127,7 @@ class WebServiceWorkerNetworkProviderForFrame
     // S13nServiceWorker:
     // If the service worker mode is not all, no need to intercept the request.
     if (request.GetServiceWorkerMode() !=
-        blink::WebURLRequest::ServiceWorkerMode::kAll) {
+        network::mojom::ServiceWorkerMode::kAll) {
       return nullptr;
     }
 

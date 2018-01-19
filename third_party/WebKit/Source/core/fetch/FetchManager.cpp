@@ -749,8 +749,8 @@ void FetchManager::Loader::PerformHTTPFetch() {
   request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
       referrer_policy, request_->Url(), referrer_string));
   request.SetServiceWorkerMode(is_isolated_world_
-                                   ? WebURLRequest::ServiceWorkerMode::kNone
-                                   : WebURLRequest::ServiceWorkerMode::kAll);
+                                   ? network::mojom::ServiceWorkerMode::kNone
+                                   : network::mojom::ServiceWorkerMode::kAll);
 
   if (request_->Keepalive()) {
     if (!WebCORS::IsCORSSafelistedMethod(request.HttpMethod()) ||
