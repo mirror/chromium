@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c9f0b03_5e211bb4",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "nit: name these arguments\n\nWe always name them in Chromium. We only name them in Blink when they don\u0027t duplicate the type name.",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33101be8_196be9c3",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "You effectively have the same code four times here. How about adding a helper method like\n\n    bool ImagesShareDimensionsAndColor(const SkBitmap\u0026 lhs, const SkBitmap\u0026 rhs);",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283e03e8_5a8f8ab1",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "You\u0027re comparing the first action item N times here.",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9424c1a9_e8b8374f",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f793c8d7_0664f7d6",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "nit: drop `const` here too",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5740699d_1cec0084",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "Why did you decide to hardcode the values here? Could use a similar helper method as the one in the other test.",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b381235a_6b6e3107",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-19T13:56:16Z",
+      "side": 1,
+      "message": "Same bug here too re: repetition",
+      "revId": "2c0fd7d29225bec9386a9d0e9f42a05c09c8a704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
