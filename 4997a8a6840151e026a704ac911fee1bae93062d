@@ -16,6 +16,24 @@
       "revId": "4997a8a6840151e026a704ac911fee1bae93062d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcc4829_66cb0102",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_init_impl_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-19T11:54:37Z",
+      "side": 1,
+      "message": "Child process init is sufficiently inconsistent across process types that I can\u0027t see a way that isn\u0027t more of a hack than this is. In particular, the task scheduler is created after the dwrite proxy is initialized for renderers so creating the ThreadSafeInterfacePtr synchronously isn\u0027t possible in all cases.\n\nAdded a comment instead.",
+      "parentUuid": "17f2cb7f_7106b6d7",
+      "revId": "4997a8a6840151e026a704ac911fee1bae93062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
