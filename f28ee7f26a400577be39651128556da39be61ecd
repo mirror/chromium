@@ -16,6 +16,24 @@
       "revId": "f28ee7f26a400577be39651128556da39be61ecd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9def2ee5_93081d84",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-19T14:25:33Z",
+      "side": 1,
+      "message": "Done some refactoring, but we cannot use exactly the same one as the condition differs between those slightly.\nPaste into folder can also be done by clicking a directory on the directory tree view.\nIn such case the directory is not selected but found in the event.target.",
+      "parentUuid": "fd68cd32_ce50427c",
+      "revId": "f28ee7f26a400577be39651128556da39be61ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
