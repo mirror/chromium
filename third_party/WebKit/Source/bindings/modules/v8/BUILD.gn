@@ -109,6 +109,14 @@ blink_modules_sources("bindings_modules_impl") {
   deps = [
     ":bindings_modules_origin_trial_features",
     ":bindings_modules_v8_generated",
+    "//device/gamepad/public/interfaces:interfaces_blink",
+    "//device/usb/public/interfaces:interfaces_blink",
+    "//device/vr:mojo_bindings_blink",
+    "//media//capture/mojo:image_capture_blink",
+    "//services/device/public/interfaces:generic_sensor",
+    "//services/device/public/interfaces:interfaces_blink",
+    "//services/shape_detection/public/interfaces:interfaces_blink",
+    "//third_party/WebKit/public:media_devices_mojo_bindings_blink",
   ]
 
   if (!is_component_build && is_win) {
