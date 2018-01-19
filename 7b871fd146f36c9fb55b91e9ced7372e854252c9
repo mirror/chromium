@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6168abc8_a051f318",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-19T02:09:15Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/animation/BasePropertyIndexedKeyframe.idl",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "7b871fd146f36c9fb55b91e9ced7372e854252c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
