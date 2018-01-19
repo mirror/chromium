@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a487e82b_c67c5a66",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-19T22:40:27Z",
+      "side": 1,
+      "message": "Is this a code path that\u0027s actually being exercised? It looks like the allow_oobe \u003d false is only for 2 disabled tests?\n\nThere should probably be a function comment offering an explanation of what allow_oobe means?",
+      "parentUuid": "e1b45893_2ab1857b",
+      "revId": "2333bec7f1ce47ba5cc35900f88beab5863ed32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abdd9698_0c24783c",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 3
