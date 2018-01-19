@@ -84,6 +84,24 @@ class SearchFieldCancelButtonElement final : public HTMLDivElement {
   bool capturing_;
 };
 
+class AssistButtonElement final : public HTMLDivElement {
+ public:
+  class AssistButtonOwner : public GarbageCollectedMixin {
+   public:
+    virtual ~AssistButtonOwner() {}
+    virtual void AssistButtonPressed() = 0;
+  };
+
+  static AssistButtonElement* Create(Document&, AssistButtonOwner&);
+  void Trace(blink::Visitor*) override;
+
+ private:
+  explicit AssistButtonElement(Document&, AssistButtonOwner&);
+  void DefaultEventHandler(Event*) override;
+
+  Member<AssistButtonOwner> button_owner_;
+};
+
 }  // namespace blink
 
 #endif

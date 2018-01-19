@@ -32,6 +32,7 @@
 #include "core/html/forms/TextFieldInputType.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/DOMTokenList.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/editing/FrameSelection.h"
 #include "core/events/BeforeTextInsertedEvent.h"
@@ -270,6 +271,10 @@ LayoutObject* TextFieldInputType::CreateLayoutObject(
   return new LayoutTextControlSingleLine(&GetElement());
 }
 
+bool TextFieldInputType::ShouldHaveAssistButton() const {
+  return LayoutTheme::GetTheme().ShouldHaveAssistButton(&GetElement());
+}
+
 bool TextFieldInputType::ShouldHaveSpinButton() const {
   return LayoutTheme::GetTheme().ShouldHaveSpinButton(&GetElement());
 }
@@ -280,16 +285,9 @@ void TextFieldInputType::CreateShadowSubtree() {
   DCHECK(!shadow_root->HasChildren());
 
   Document& document = GetElement().GetDocument();
+  bool should_have_assist_button = ShouldHaveAssistButton();
   bool should_have_spin_button = ShouldHaveSpinButton();
   bool should_have_data_list_indicator = GetElement().HasValidDataListOptions();
-  bool creates_container = should_have_spin_button ||
-                           should_have_data_list_indicator || NeedsContainer();
-
-  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
-  if (!creates_container) {
-    shadow_root->AppendChild(inner_editor);
-    return;
-  }
 
   TextControlInnerContainer* container =
       TextControlInnerContainer::Create(document);
@@ -299,11 +297,14 @@ void TextFieldInputType::CreateShadowSubtree() {
 
   EditingViewPortElement* editing_view_port =
       EditingViewPortElement::Create(document);
+  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
   editing_view_port->AppendChild(inner_editor);
   container->AppendChild(editing_view_port);
 
   if (should_have_data_list_indicator)
     container->AppendChild(DataListIndicatorElement::Create(document));
+  if (should_have_assist_button)
+    container->AppendChild(AssistButtonElement::Create(document, *this));
   // FIXME: Because of a special handling for a spin button in
   // LayoutTextControlSingleLine, we need to put it to the last position. It's
   // inconsistent with multiple-fields date/time types.
@@ -311,11 +312,35 @@ void TextFieldInputType::CreateShadowSubtree() {
     container->AppendChild(SpinButtonElement::Create(document, *this));
 
   // See listAttributeTargetChanged too.
+  AssistConfigurationChanged();
 }
 
 Element* TextFieldInputType::ContainerElement() const {
   return GetElement().UserAgentShadowRoot()->getElementById(
       ShadowElementNames::TextFieldContainer());
+}
+
+void TextFieldInputType::AssistConfigurationChanged() {
+  DCHECK(GetElement().GetAssistanceIconType() != AssistanceType::kNone ||
+         GetElement().GetAssistanceIconVisibility() ==
+             AssistanceIconVisibility::kDisabled);
+  DCHECK(GetElement().GetAssistanceIconVisibility() !=
+             AssistanceIconVisibility::kDisabled ||
+         GetElement().GetAssistanceIconType() == AssistanceType::kNone);
+  Element* assist_button =
+      ContainerElement()->getElementById(ShadowElementNames::AssistButton());
+  switch (GetElement().GetAssistanceIconVisibility()) {
+    case AssistanceIconVisibility::kDisabled:
+      assist_button->classList().setValue(AtomicString("disabled"));
+      break;
+    case AssistanceIconVisibility::kAlwaysVisible:
+      assist_button->classList().setValue(AtomicString("always-visible"));
+      break;
+    case AssistanceIconVisibility::kVisibleOnInteraction:
+      assist_button->classList().setValue(
+          AtomicString("visible-on-interaction"));
+      break;
+  }
 }
 
 void TextFieldInputType::DestroyShadowSubtree() {
@@ -554,6 +579,13 @@ void TextFieldInputType::SpinButtonDidReleaseMouseCapture(
     SpinButtonElement::EventDispatch event_dispatch) {
   if (event_dispatch == SpinButtonElement::kEventDispatchAllowed)
     GetElement().DispatchFormControlChangeEvent();
+}
+
+void TextFieldInputType::AssistButtonPressed() {
+  AssistanceIconClickedCallback callback =
+      GetElement().GetAssistanceIconCallback();
+  if (callback)
+    callback.Run();
 }
 
 }  // namespace blink
