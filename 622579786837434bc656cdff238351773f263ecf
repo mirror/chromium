@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90636bf0_8942a05b",
+        "filename": "content/shell/browser/layout_test/test_info_extractor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-19T19:32:21Z",
+      "side": 1,
+      "message": "nit: I don\u0027t often see stdin capitalized, use lower case?",
+      "revId": "622579786837434bc656cdff238351773f263ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a000fb6_7caa4def",
+        "filename": "content/shell/browser/layout_test/test_info_extractor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-19T19:32:21Z",
+      "side": 1,
+      "message": "Can we use TCPSocket? See the TCPSocketPosix definition; there\u0027s a method for releasing the FD.",
+      "revId": "622579786837434bc656cdff238351773f263ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
