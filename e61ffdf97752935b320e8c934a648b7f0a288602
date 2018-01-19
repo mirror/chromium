@@ -16,6 +16,24 @@
       "revId": "e61ffdf97752935b320e8c934a648b7f0a288602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725cdd98_9cc406a0",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2018-01-19T16:14:12Z",
+      "side": 1,
+      "message": "Indeed! I will change the polarity of one of those pairs in a future CL so it\u0027s less confusing.",
+      "parentUuid": "889c2b4a_676bbecc",
+      "revId": "e61ffdf97752935b320e8c934a648b7f0a288602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
