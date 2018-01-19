@@ -69,6 +69,17 @@ Profile* CreateNonSyncProfile() {
   return profile_manager->GetProfileByPath(new_path);
 }
 
+Profile* CreateGuestProfile() {
+  ProfileManager* profile_manager = g_browser_process->profile_manager();
+  base::FilePath new_path = profile_manager->GetGuestProfilePath();
+  base::RunLoop run_loop;
+  profile_manager->CreateProfileAsync(
+      new_path, base::Bind(&UnblockOnProfileCreation, &run_loop),
+      base::string16(), std::string(), std::string());
+  run_loop.Run();
+  return profile_manager->GetProfileByPath(new_path);
+}
+
 // Test fixture that provides access to some UKM internals.
 class UkmBrowserTest : public SyncTest {
  public:
@@ -224,6 +235,40 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoPlusRegularCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+}
+
+// Make sure that UKM is disabled while an non-sync profile's window is open.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, RegularPlusGuestCheck) {
+  // Enable metrics recording and update MetricsServicesManager.
+  bool metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      &metrics_enabled);
+  g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(
+      false);
+
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
+
+  Browser* regular_browser = CreateBrowser(profile);
+  EXPECT_TRUE(ukm_enabled());
+  uint64_t original_client_id = client_id();
+
+  // Create browser for guest profile. Only "off the record" browsers may be
+  // opened in this mode.
+  Profile* guest_profile = CreateGuestProfile();
+  Browser* guest_browser = CreateIncognitoBrowser(guest_profile);
+  EXPECT_FALSE(ukm_enabled());
+
+  CloseBrowserSynchronously(guest_browser);
+  // TODO(crbug/746076): UKM doesn't actually get re-enabled yet.
+  // EXPECT_TRUE(ukm_enabled());
+  // Client ID should not have been reset.
+  EXPECT_EQ(original_client_id, client_id());
+
+  harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(regular_browser);
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
