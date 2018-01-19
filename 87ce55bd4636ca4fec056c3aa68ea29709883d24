@@ -16,6 +16,24 @@
       "revId": "87ce55bd4636ca4fec056c3aa68ea29709883d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be90e77a_36590fc9",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog_util.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-19T18:54:12Z",
+      "side": 1,
+      "message": "Yes, it just limits the height of the dropdown content to not exceed the height of the \u0027add-printer-dialog\u0027 (which has a fixed height of 350px).",
+      "parentUuid": "4cef023e_059a7209",
+      "revId": "87ce55bd4636ca4fec056c3aa68ea29709883d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
