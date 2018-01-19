@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b99945e_af2633eb",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBAny.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-19T08:27:18Z",
+      "side": 0,
+      "message": "This deletion appears unrelated. Let\u0027s keep a blank line between methods, please.",
+      "revId": "c725c611e6cb0ef31d9de72c2d9519bcbc9409f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
