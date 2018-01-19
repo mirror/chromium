@@ -8,6 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
+#include "crypto/sha2.h"
 #include "device/ctap/ctap_constants.h"
 
 namespace device {
@@ -30,8 +31,8 @@ CTAPMakeCredentialRequestParam& CTAPMakeCredentialRequestParam::operator=(
 
 CTAPMakeCredentialRequestParam::~CTAPMakeCredentialRequestParam() = default;
 
-base::Optional<std::vector<uint8_t>>
-CTAPMakeCredentialRequestParam::SerializeToCBOR() const {
+base::Optional<std::vector<uint8_t>> CTAPMakeCredentialRequestParam::Encode()
+    const {
   cbor::CBORValue::MapValue cbor_map;
   cbor_map[cbor::CBORValue(1)] = cbor::CBORValue(client_data_hash_);
   cbor_map[cbor::CBORValue(2)] = rp_.ConvertToCBOR();
@@ -77,6 +78,43 @@ CTAPMakeCredentialRequestParam::SerializeToCBOR() const {
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
   return cbor_request;
+}
+
+bool CTAPMakeCredentialRequestParam::CheckU2fInteropCriteria() const {
+  if (user_verification_required_ || resident_key_)
+    return false;
+
+  for (const auto& credential :
+       public_key_credentials_.public_key_credential_params()) {
+    if (std::get<1>(credential) != -7) {
+      return false;
+    }
+  }
+  return true;
+}
+
+std::vector<uint8_t>
+CTAPMakeCredentialRequestParam::GetU2FApplicationParameter() const {
+  std::vector<uint8_t> application_param(crypto::kSHA256Length);
+  crypto::SHA256HashString(rp_.rp_id(), application_param.data(),
+                           application_param.size());
+  return application_param;
+}
+
+std::vector<std::vector<uint8_t>>
+CTAPMakeCredentialRequestParam::GetU2FRegisteredKeysParameter() const {
+  std::vector<std::vector<uint8_t>> registered_keys;
+  if (exclude_list_) {
+    for (const auto& credential : *exclude_list_) {
+      registered_keys.push_back(credential.id());
+    }
+  }
+  return registered_keys;
+}
+
+std::vector<uint8_t> CTAPMakeCredentialRequestParam::GetU2FChallengeParameter()
+    const {
+  return client_data_hash_;
 }
 
 CTAPMakeCredentialRequestParam&
