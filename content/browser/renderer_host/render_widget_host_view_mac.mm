@@ -1084,6 +1084,17 @@ void RenderWidgetHostViewMac::SetTooltipText(
   }
 }
 
+void RenderWidgetHostViewMac::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& local_surface_id) {
+  LOG(ERROR) << "RESIZE " << (local_surface_id.is_valid() ? "WITH" : "WITHOUT")
+             << " LOCAL SURFACE ID";
+  browser_compositor_->WasResized(local_surface_id);
+  RenderWidgetHostViewBase::ResizeDueToAutoResize(new_size, sequence_number,
+                                                  local_surface_id);
+}
+
 void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
   browser_compositor_->WasResized();
 }

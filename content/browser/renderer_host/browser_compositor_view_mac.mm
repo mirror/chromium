@@ -341,11 +341,12 @@ void BrowserCompositorMac::SetDisplayColorSpace(
     recyclable_compositor_->compositor()->SetDisplayColorSpace(color_space);
 }
 
-void BrowserCompositorMac::WasResized() {
+void BrowserCompositorMac::WasResized(const viz::LocalSurfaceId& surface_id) {
   // In non-viz, the ui::Compositor is resized in sync with frames coming from
   // the renderer. In viz, the ui::Compositor can only resize in sync with the
   // NSView.
   if (!enable_viz_) {
+    DCHECK(!surface_id.is_valid());
     GetDelegatedFrameHost()->WasResized();
     return;
   }
@@ -365,8 +366,12 @@ void BrowserCompositorMac::WasResized() {
   if (pixel_size == old_pixel_size && scale_factor == old_scale_factor)
     return;
 
-  delegated_frame_host_surface_id_ =
-      parent_local_surface_id_allocator_.GenerateId();
+  if (surface_id.is_valid()) {
+    delegated_frame_host_surface_id_ = surface_id;
+  } else {
+    delegated_frame_host_surface_id_ =
+        parent_local_surface_id_allocator_.GenerateId();
+  }
   compositor_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
 
   root_layer_->SetBounds(gfx::Rect(dip_size));
