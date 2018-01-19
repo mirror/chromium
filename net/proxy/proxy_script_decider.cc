@@ -329,7 +329,7 @@ int ProxyScriptDecider::DoFetchPacScript() {
 
     return dhcp_proxy_script_fetcher_->Fetch(
         &pac_script_, base::Bind(&ProxyScriptDecider::OnIOCompletion,
-                                 base::Unretained(this)));
+                                 base::Unretained(this)), net_log_);
   }
 
   if (!proxy_script_fetcher_) {
