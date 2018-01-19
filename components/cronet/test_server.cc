@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/cronet/ios/test/test_server.h"
+#include "components/cronet/test_server.h"
 
 #include <memory>
 #include <utility>

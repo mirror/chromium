@@ -48,6 +48,16 @@ RawDataPtr Cronet_Buffer_GetData(Cronet_BufferPtr self) {
   return self->GetData();
 }
 
+uint64_t Cronet_Buffer_GetPosition(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetPosition();
+}
+
+void Cronet_Buffer_SetPosition(Cronet_BufferPtr self, uint64_t position) {
+  DCHECK(self);
+  self->SetPosition(position);
+}
+
 // Implementation of Cronet_Buffer that forwards calls to C functions
 // implemented by the app.
 class Cronet_BufferStub : public Cronet_Buffer {
@@ -56,11 +66,15 @@ class Cronet_BufferStub : public Cronet_Buffer {
       Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
       Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
       Cronet_Buffer_GetSizeFunc GetSizeFunc,
-      Cronet_Buffer_GetDataFunc GetDataFunc)
+      Cronet_Buffer_GetDataFunc GetDataFunc,
+      Cronet_Buffer_GetPositionFunc GetPositionFunc,
+      Cronet_Buffer_SetPositionFunc SetPositionFunc)
       : InitWithDataAndCallbackFunc_(InitWithDataAndCallbackFunc),
         InitWithAllocFunc_(InitWithAllocFunc),
         GetSizeFunc_(GetSizeFunc),
-        GetDataFunc_(GetDataFunc) {}
+        GetDataFunc_(GetDataFunc),
+        GetPositionFunc_(GetPositionFunc),
+        SetPositionFunc_(SetPositionFunc) {}
 
   ~Cronet_BufferStub() override {}
 
@@ -81,12 +95,20 @@ class Cronet_BufferStub : public Cronet_Buffer {
 
   RawDataPtr GetData() override { return GetDataFunc_(this); }
 
+  uint64_t GetPosition() override { return GetPositionFunc_(this); }
+
+  void SetPosition(uint64_t position) override {
+    SetPositionFunc_(this, position);
+  }
+
  private:
   Cronet_BufferContext context_ = nullptr;
   const Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc_;
   const Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc_;
   const Cronet_Buffer_GetSizeFunc GetSizeFunc_;
   const Cronet_Buffer_GetDataFunc GetDataFunc_;
+  const Cronet_Buffer_GetPositionFunc GetPositionFunc_;
+  const Cronet_Buffer_SetPositionFunc SetPositionFunc_;
 
   DISALLOW_COPY_AND_ASSIGN(Cronet_BufferStub);
 };
@@ -95,9 +117,12 @@ Cronet_BufferPtr Cronet_Buffer_CreateStub(
     Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
     Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
     Cronet_Buffer_GetSizeFunc GetSizeFunc,
-    Cronet_Buffer_GetDataFunc GetDataFunc) {
+    Cronet_Buffer_GetDataFunc GetDataFunc,
+    Cronet_Buffer_GetPositionFunc GetPositionFunc,
+    Cronet_Buffer_SetPositionFunc SetPositionFunc) {
   return new Cronet_BufferStub(InitWithDataAndCallbackFunc, InitWithAllocFunc,
-                               GetSizeFunc, GetDataFunc);
+                               GetSizeFunc, GetDataFunc, GetPositionFunc,
+                               SetPositionFunc);
 }
 
 // C functions of Cronet_BufferCallback that forward calls to C++
@@ -287,16 +312,21 @@ void Cronet_Engine_StartWithParams(Cronet_EnginePtr self,
   self->StartWithParams(params);
 }
 
-void Cronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
+bool Cronet_Engine_StartNetLogToFile(Cronet_EnginePtr self,
                                      CharString fileName,
                                      bool logAll) {
   DCHECK(self);
-  self->StartNetLogToFile(fileName, logAll);
+  return self->StartNetLogToFile(fileName, logAll);
 }
 
 void Cronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   DCHECK(self);
   self->StopNetLog();
+}
+
+void Cronet_Engine_Shutdown(Cronet_EnginePtr self) {
+  DCHECK(self);
+  self->Shutdown();
 }
 
 CharString Cronet_Engine_GetVersionString(Cronet_EnginePtr self) {
@@ -317,11 +347,13 @@ class Cronet_EngineStub : public Cronet_Engine {
       Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
       Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
       Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+      Cronet_Engine_ShutdownFunc ShutdownFunc,
       Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
       Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc)
       : StartWithParamsFunc_(StartWithParamsFunc),
         StartNetLogToFileFunc_(StartNetLogToFileFunc),
         StopNetLogFunc_(StopNetLogFunc),
+        ShutdownFunc_(ShutdownFunc),
         GetVersionStringFunc_(GetVersionStringFunc),
         GetDefaultUserAgentFunc_(GetDefaultUserAgentFunc) {}
 
@@ -336,11 +368,13 @@ class Cronet_EngineStub : public Cronet_Engine {
     StartWithParamsFunc_(this, params);
   }
 
-  void StartNetLogToFile(CharString fileName, bool logAll) override {
-    StartNetLogToFileFunc_(this, fileName, logAll);
+  bool StartNetLogToFile(CharString fileName, bool logAll) override {
+    return StartNetLogToFileFunc_(this, fileName, logAll);
   }
 
   void StopNetLog() override { StopNetLogFunc_(this); }
+
+  void Shutdown() override { ShutdownFunc_(this); }
 
   CharString GetVersionString() override { return GetVersionStringFunc_(this); }
 
@@ -353,6 +387,7 @@ class Cronet_EngineStub : public Cronet_Engine {
   const Cronet_Engine_StartWithParamsFunc StartWithParamsFunc_;
   const Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc_;
   const Cronet_Engine_StopNetLogFunc StopNetLogFunc_;
+  const Cronet_Engine_ShutdownFunc ShutdownFunc_;
   const Cronet_Engine_GetVersionStringFunc GetVersionStringFunc_;
   const Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc_;
 
@@ -363,11 +398,12 @@ Cronet_EnginePtr Cronet_Engine_CreateStub(
     Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
     Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
     Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+    Cronet_Engine_ShutdownFunc ShutdownFunc,
     Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
     Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc) {
   return new Cronet_EngineStub(StartWithParamsFunc, StartNetLogToFileFunc,
-                               StopNetLogFunc, GetVersionStringFunc,
-                               GetDefaultUserAgentFunc);
+                               StopNetLogFunc, ShutdownFunc,
+                               GetVersionStringFunc, GetDefaultUserAgentFunc);
 }
 
 // C functions of Cronet_UrlRequestStatusListener that forward calls to C++
@@ -491,7 +527,7 @@ void Cronet_UrlRequestCallback_OnSucceeded(Cronet_UrlRequestCallbackPtr self,
 void Cronet_UrlRequestCallback_OnFailed(Cronet_UrlRequestCallbackPtr self,
                                         Cronet_UrlRequestPtr request,
                                         Cronet_UrlResponseInfoPtr info,
-                                        Cronet_ExceptionPtr error) {
+                                        Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnFailed(request, info, error);
 }
@@ -554,7 +590,7 @@ class Cronet_UrlRequestCallbackStub : public Cronet_UrlRequestCallback {
 
   void OnFailed(Cronet_UrlRequestPtr request,
                 Cronet_UrlResponseInfoPtr info,
-                Cronet_ExceptionPtr error) override {
+                Cronet_ErrorPtr error) override {
     OnFailedFunc_(this, request, info, error);
   }
 
@@ -614,7 +650,7 @@ void Cronet_UploadDataSink_OnReadSucceeded(Cronet_UploadDataSinkPtr self,
 }
 
 void Cronet_UploadDataSink_OnReadError(Cronet_UploadDataSinkPtr self,
-                                       Cronet_ExceptionPtr error) {
+                                       Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnReadError(error);
 }
@@ -625,7 +661,7 @@ void Cronet_UploadDataSink_OnRewindSucceded(Cronet_UploadDataSinkPtr self) {
 }
 
 void Cronet_UploadDataSink_OnRewindError(Cronet_UploadDataSinkPtr self,
-                                         Cronet_ExceptionPtr error) {
+                                         Cronet_ErrorPtr error) {
   DCHECK(self);
   self->OnRewindError(error);
 }
@@ -657,13 +693,13 @@ class Cronet_UploadDataSinkStub : public Cronet_UploadDataSink {
     OnReadSucceededFunc_(this, finalChunk);
   }
 
-  void OnReadError(Cronet_ExceptionPtr error) override {
+  void OnReadError(Cronet_ErrorPtr error) override {
     OnReadErrorFunc_(this, error);
   }
 
   void OnRewindSucceded() override { OnRewindSuccededFunc_(this); }
 
-  void OnRewindError(Cronet_ExceptionPtr error) override {
+  void OnRewindError(Cronet_ErrorPtr error) override {
     OnRewindErrorFunc_(this, error);
   }
 
