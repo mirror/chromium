@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "359ff7ef_d3a42cbe",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-19T15:25:23Z",
+      "side": 1,
+      "message": "2018\n\nnit: you can use src/tools/boilerplate.py to create files with the correct copyright notice, default includes and header guards",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "dd7e043a53843d0165986c1d72419f09b6c58cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43ee259_87d50b4d",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-19T15:25:23Z",
+      "side": 1,
+      "message": "nit: blank line between copyright notice and #import",
+      "revId": "dd7e043a53843d0165986c1d72419f09b6c58cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b07b5ce_564e67e3",
+        "filename": "ios/chrome/browser/ui/settings/reauthentication_module_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-19T15:25:23Z",
+      "side": 1,
+      "message": "Many files include the following when using @try/@catch:\n\n  // When C++ exceptions are disabled, the C++ library defines |try| and\n  // |catch| so as to allow exception-expecting C++ code to build properly when\n  // language support for exceptions is not present.  These macros interfere\n  // with the use of |@try| and |@catch| in Objective-C files such as this one.\n  // Undefine these macros here, after everything has been #included, since\n  // there will be no C++ uses and only Objective-C uses from this point on.\n  #undef try\n  #undef catch\n\nSee https://cs.chromium.org/search/?q\u003d%23undef%5C+try+%23undef%5C+catch\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nWhy is this not necessary here?",
+      "revId": "dd7e043a53843d0165986c1d72419f09b6c58cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
