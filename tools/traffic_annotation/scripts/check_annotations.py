@@ -94,7 +94,7 @@ class NetworkTrafficAnnotationChecker():
     Returns:
       int Exit code of the network traffic annotation auditor.
     """
-
+    print("Running on:\n\t%s"% "\n\t".join(file_paths))
     if not TEST_IS_ENABLED:
       return 0
 
@@ -120,7 +120,7 @@ class NetworkTrafficAnnotationChecker():
     command = subprocess.Popen(args, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     stdout_text, stderr_text = command.communicate()
-
+    print("Filtered to:\n\t%s"% "\n\t".join(file_paths))
     if stderr_text:
       print("Could not run network traffic annotation presubmit check. "
             "Returned error from traffic_annotation_auditor is: %s"
