@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78c11b5e_d4213233",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "called",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2851a085_3d4c36a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "I think you should reverse paragraph 2 and 1. \nsomething like the following (not the exact words)\nWhen RenderWidgetHostImpl::SubmitCompositorFrame is called in the content unittests, it calls renderer_compositor_frame_sink_-\u003eDidReceiveCompositorFrameAck(resources) that tries to dereference a nullptr. In my change, I used a mocked version of |renderer_compositor_frame_sink_| .......",
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d41c533_64caa6d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "It\u0027s a simple change. By reading the first two paragraphs, I understand what you have done. You don\u0027t need to list the details. If you want, you can list the three test cases that you fixed.",
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5550d0f_2979b955",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "The variable that you are stubs out is called |renderer_compositor_frame_sink_|",
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b3a1c5_0c547aa9",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "I also feel that this function should not be the first function in this class. It should be closer to function with this type of returns first. I suggest you to move it down to where other mock functions are located. style guide: https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952fe32e_59d32602",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-19T17:21:38Z",
+      "side": 1,
+      "message": "if you use all lower case characters function names, the name needs to match the variable names exactly. Example: reset_new_content_rendering_timeout_fired(), the variable name is new_content_rendering_timeout_fired. In you case, you need to use upper case chars like OnTouchEventAck. style guide: https://google.github.io/styleguide/cppguide.html#Function_Names",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 56
+      },
+      "revId": "7b117c37973afba111403a725e218147ad4f0182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
