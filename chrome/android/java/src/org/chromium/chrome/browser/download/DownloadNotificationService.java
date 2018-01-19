@@ -1077,8 +1077,11 @@ public class DownloadNotificationService extends Service {
                         .setLocalOnly(true)
                         .setAutoCancel(true)
                         .setContentText(contentText)
-                        .setGroup(NotificationConstants.GROUP_DOWNLOADS)
                         .addExtras(extras);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            builder.setGroup(NotificationConstants.GROUP_DOWNLOADS);
+        }
+
         return builder;
     }
 
