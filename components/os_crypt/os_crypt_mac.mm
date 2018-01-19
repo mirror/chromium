@@ -159,8 +159,10 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
 
   std::string iv(kCCBlockSizeAES128, ' ');
   crypto::Encryptor encryptor;
-  if (!encryptor.Init(encryption_key, crypto::Encryptor::CBC, iv))
+  if (!encryptor.Init(encryption_key, crypto::Encryptor::CBC, iv)) {
+    LOG(ERROR) << "Decryption failed: corrupt key";
     return false;
+  }
 
   if (!encryptor.Decrypt(raw_ciphertext, plaintext)) {
     VLOG(1) << "Decryption failed";
