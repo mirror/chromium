@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feac77d5_a85c2c39",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71c7bebc_4ce9d6f8",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "749837a6_208fee24",
         "filename": "chrome/browser/vr/elements/text.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-19T14:17:12Z",
       "side": 1,
       "message": "what does the 1000 here mean?",
+      "range": {
+        "startLine": 276,
+        "startChar": 31,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8445ea5_00c92016",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "It\u0027s a good question. It\u0027s a bit of an arbitrary scale factor. I\u0027ll put it in a named constant.",
+      "parentUuid": "749837a6_208fee24",
       "range": {
         "startLine": 276,
         "startChar": 31,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ecb79a11_3f077312",
+        "filename": "chrome/browser/vr/platform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0ae755_ee7eaeb7",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af444b64_e4e07648",
         "filename": "chrome/browser/vr/platform_controller.h",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "bc6eebcb_66df4980",
+        "filename": "chrome/browser/vr/platform_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af444b64_e4e07648",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff256be_395a6da6",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 3
@@ -87,6 +165,24 @@
       "writtenOn": "2018-01-19T04:07:40Z",
       "side": 1,
       "message": "Are the zero initializers needed, as the default constructor sets them?",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64fd9c8_1a4427d6",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "Removed. In fact, we didn\u0027t need this constant at all.",
+      "parentUuid": "9ff256be_395a6da6",
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "1465d6d4_6c5cfb43",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "True, though we\u0027ll need to do a fair bit of generalizing to make this usable by any old element.",
+      "parentUuid": "a9de9768_30d160ae",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d63fde12_b495ad94",
         "filename": "chrome/browser/vr/ui_input_manager.h",
         "patchSetId": 3
@@ -127,6 +247,24 @@
       "writtenOn": "2018-01-19T04:07:40Z",
       "side": 1,
       "message": "Should probably explain what focused means, at this has nothing to do with input element focus.",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8766e1_bd20a33f",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "I wasn\u0027t thinking about the other \"focus\" concept when I wrote this and in retrospect, I don\u0027t like my terminology. I\u0027ve switched \"controller focus\" to \"controller resting in viewport\". It\u0027s a little more verbose, but it\u0027s unambiguous and clear.",
+      "parentUuid": "d63fde12_b495ad94",
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "276700cb_9a677846",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "Just a typo. The window size is a little arbitrary -- I just needed to build some sort of viewport for the test.",
+      "parentUuid": "4eea4fa7_5c194149",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3df593f_0a9af67d",
         "filename": "chrome/browser/vr/ui_unittest.cc",
         "patchSetId": 3
@@ -161,6 +317,24 @@
       "writtenOn": "2018-01-19T04:07:40Z",
       "side": 1,
       "message": "If we\u0027re trending toward direct model poking and away from the UI wrapper, could model_-\u003epush_mode(kModeFullscreen).  Just a thought!",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7189f2f1_fe3bf764",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-19T14:47:45Z",
+      "side": 1,
+      "message": "I was kinda hoping to avoid knowing about how the ui sets fullscreen. I\u0027d like to chat with you offline about poking ui vs model. There\u0027s a lot of both in this file, but I think if we\u0027d like to make things consistent, I\u0027d vote for talking to ui_ rather than model_. Might be needlessly awkward, though.",
+      "parentUuid": "e3df593f_0a9af67d",
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
