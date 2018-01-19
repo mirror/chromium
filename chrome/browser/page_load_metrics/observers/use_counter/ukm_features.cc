@@ -21,6 +21,8 @@ bool IsAllowedUkmFeature(blink::mojom::WebFeature feature) {
           // kDataUriHasOctothorpe may not be recorded correctly for iframes.
           // See https://crbug.com/796173 for details.
           WebFeature::kDataUriHasOctothorpe,
+          WebFeature::kApplicationCacheManifestSelectInsecureOrigin,
+          WebFeature::kApplicationCacheManifestSelectSecureOrigin,
       }));
   return opt_in_features.count(feature);
 }
