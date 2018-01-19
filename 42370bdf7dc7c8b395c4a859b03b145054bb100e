@@ -16,6 +16,24 @@
       "revId": "42370bdf7dc7c8b395c4a859b03b145054bb100e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a247bd_27598766",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-19T21:36:35Z",
+      "side": 1,
+      "message": "I updated the documentation in latest patch. There are some error cases where we fail to generate old-image-changed but it shouldn\u0027t happen during normal usage. It can happen if there\u0027s a bug or we have malicious webui. I\u0027m not sure it\u0027s worth making this code more complicated to improve UX for that? Currently, if this would happen, we end up showing the image from the camera (that can\u0027t be discarded) until the user selects another image. Let me know what you think. Happy to add some code for the error cases in change_picture_handler.cc if you think that\u0027s needed. We just need to decide what would be the right reply to send in those cases..",
+      "parentUuid": "5984bb31_35ad43f3",
+      "revId": "42370bdf7dc7c8b395c4a859b03b145054bb100e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
