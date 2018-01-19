@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d7c68b9_3453ed76",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2018-01-19T10:26:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we need such a verbose comment for this small thing really. Also the end of the comment does not make much sense to me. I\u0027ll focus on the following if any: gutters are not part of the algorithm, we substract them from available space in Setup(). However we should consider them whenever we measure sizes of spanning items.",
+      "revId": "ca6f63e26865b30b5015d23bea55b2f58ae55728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
