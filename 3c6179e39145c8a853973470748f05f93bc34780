@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aa3faf8_e7a2c0af",
+        "filename": "ui/events/ozone/evdev/event_auto_repeat_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-19T20:25:12Z",
+      "side": 1,
+      "message": "I\u0027d like to arrange this a bit differently.\n\nIMO, Delegate interface should have a function like\n\n// Requests a task to be executed after all pending keyboard input from the event source.\nvirtual bool FlushInput(base::OnceClosure closure) \u003d 0;\n\nKeyboardEvdev will override this with with the post task call, since event source is in the same address space and directly enqueues on the message loop (which means that posttask is basically sufficient here).\n\nKeyboardWayland will override this with a wl_display_sync.",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "3c6179e39145c8a853973470748f05f93bc34780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
