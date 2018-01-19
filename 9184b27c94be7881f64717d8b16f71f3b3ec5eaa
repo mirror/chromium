@@ -68,6 +68,30 @@
       "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57176a4e_e3574783",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-19T07:40:55Z",
+      "side": 1,
+      "message": "I guess this is a bug...\n\nWould you add clear() to HeapHashTable()\u0027s destructor and measure performance of blink_perf.bindings and dromaeo?",
+      "parentUuid": "cde8cf53_43a5add1",
+      "range": {
+        "startLine": 1400,
+        "startChar": 14,
+        "endLine": 1400,
+        "endChar": 19
+      },
+      "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
