@@ -708,6 +708,7 @@ void WebMediaPlayerImpl::DoSeek(base::TimeDelta time, bool time_updated) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT2("media", "WebMediaPlayerImpl::DoSeek", "target",
                time.InSecondsF(), "id", media_log_->id());
+  LOG(ERROR) << __func__;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   if (IsRemote()) {
@@ -1025,6 +1026,8 @@ blink::WebTimeRanges WebMediaPlayerImpl::Seekable() const {
 }
 
 bool WebMediaPlayerImpl::IsPrerollAttemptNeeded() {
+  return false;
+
   // TODO(sandersd): Replace with |highest_ready_state_since_seek_| if we need
   // to ensure that preroll always gets a chance to complete.
   // See http://crbug.com/671525.
@@ -1612,15 +1615,15 @@ void WebMediaPlayerImpl::CreateVideoDecodeStatsReporter() {
 void WebMediaPlayerImpl::OnProgress() {
   DVLOG(4) << __func__;
   if (highest_ready_state_ < ReadyState::kReadyStateHaveFutureData) {
-    // Reset the preroll attempt clock.
-    preroll_attempt_pending_ = true;
-    preroll_attempt_start_time_ = base::TimeTicks();
+    // // Reset the preroll attempt clock.
+    // preroll_attempt_pending_ = true;
+    // preroll_attempt_start_time_ = base::TimeTicks();
 
-    // Clear any 'stale' flag and give the pipeline a chance to resume. If we
-    // are already resumed, this will cause |preroll_attempt_start_time_| to
-    // be set.
-    delegate_->ClearStaleFlag(delegate_id_);
-    UpdatePlayState();
+    // // Clear any 'stale' flag and give the pipeline a chance to resume. If we
+    // // are already resumed, this will cause |preroll_attempt_start_time_| to
+    // // be set.
+    // delegate_->ClearStaleFlag(delegate_id_);
+    // UpdatePlayState();
   } else if (ready_state_ == ReadyState::kReadyStateHaveFutureData &&
              CanPlayThrough()) {
     SetReadyState(WebMediaPlayer::kReadyStateHaveEnoughData);
@@ -1662,6 +1665,8 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
     if (!have_reported_time_to_play_ready_) {
+      // TODO(dalecurtis): Record to a different metric if we used deferred
+      // start and some TBD amount of time has elapsed before playback starts.
       have_reported_time_to_play_ready_ = true;
       const base::TimeDelta elapsed = base::TimeTicks::Now() - load_start_time_;
       media_metrics_provider_->SetTimeToPlayReady(elapsed);
@@ -2258,7 +2263,8 @@ void WebMediaPlayerImpl::StartPipeline() {
 
     demuxer_.reset(new MediaUrlDemuxer(media_task_runner_, loaded_url_,
                                        frame_->GetDocument().SiteForCookies()));
-    pipeline_controller_.Start(demuxer_.get(), this, false, false);
+    pipeline_controller_.Start(demuxer_.get(), this, false, false,
+                               Pipeline::SuspendedStartOption::kNone);
     return;
   }
 
@@ -2308,7 +2314,14 @@ void WebMediaPlayerImpl::StartPipeline() {
   // ... and we're ready to go!
   // TODO(sandersd): On Android, defer Start() if the tab is not visible.
   seeking_ = true;
-  pipeline_controller_.Start(demuxer_.get(), this, is_streaming, is_static);
+  pipeline_controller_.Start(
+      demuxer_.get(), this, is_streaming, is_static,
+      // TODO(dalecurtis): This setting should be more explicit from HTMLME so
+      // that we don't trigger this state when play() is called.
+      (chunk_demuxer_ || preload_ != MultibufferDataSource::METADATA)
+          ? Pipeline::SuspendedStartOption::kNone
+          : (has_poster_ ? Pipeline::SuspendedStartOption::kAll
+                         : Pipeline::SuspendedStartOption::kAudioOnly));
 }
 
 void WebMediaPlayerImpl::SetNetworkState(WebMediaPlayer::NetworkState state) {
@@ -2487,8 +2500,8 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
 
   // After HaveFutureData, Blink will call play() if the state is not paused;
   // prior to this point |paused_| is not accurate.
-  bool have_future_data =
-      highest_ready_state_ >= WebMediaPlayer::kReadyStateHaveFutureData;
+  bool have_future_data = true;
+      // highest_ready_state_ >= WebMediaPlayer::kReadyStateHaveFutureData;
 
   // Background suspend is only enabled for paused players.
   // In the case of players with audio the session should be kept.
@@ -2509,6 +2522,8 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   // will be cleared when we receive data which may take us to HaveFutureData.
   bool can_stay_suspended =
       (is_stale || have_future_data) && is_suspended && paused_ && !seeking_;
+  LOG(ERROR) << "Can stay: " << can_stay_suspended << ", " << is_suspended
+             << ", " << is_stale << " , " << paused_ << ", " << seeking_;
 
   // Combined suspend state.
   result.is_suspended = is_remote || must_suspend || idle_suspended ||
@@ -2993,6 +3008,9 @@ void WebMediaPlayerImpl::SetTickClockForTest(base::TickClock* tick_clock) {
 
 void WebMediaPlayerImpl::OnFirstFrame(base::TimeTicks frame_time) {
   DCHECK(!load_start_time_.is_null());
+  // TODO(dalecurtis): Record to a different metric if we used deferred start
+  // and some TBD amount of time has elapsed before playback starts.
+
   const base::TimeDelta elapsed = frame_time - load_start_time_;
   media_metrics_provider_->SetTimeToFirstFrame(elapsed);
   RecordTimingUMA("Media.TimeToFirstFrame", elapsed);

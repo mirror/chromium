@@ -5,6 +5,7 @@
 #include "media/filters/pipeline_controller.h"
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "media/base/demuxer.h"
 
 namespace media {
@@ -38,12 +39,12 @@ PipelineController::~PipelineController() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-// TODO(sandersd): If there is a pending suspend, don't call pipeline_->Start()
-// until Resume().
-void PipelineController::Start(Demuxer* demuxer,
-                               Pipeline::Client* client,
-                               bool is_streaming,
-                               bool is_static) {
+void PipelineController::Start(
+    Demuxer* demuxer,
+    Pipeline::Client* client,
+    bool is_streaming,
+    bool is_static,
+    Pipeline::SuspendedStartOption suspended_start_type) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STOPPED);
   DCHECK(demuxer);
@@ -58,7 +59,8 @@ void PipelineController::Start(Demuxer* demuxer,
   is_static_ = is_static;
   pipeline_->Start(demuxer, renderer_factory_cb_.Run(), client,
                    base::Bind(&PipelineController::OnPipelineStatus,
-                              weak_factory_.GetWeakPtr(), State::PLAYING));
+                              weak_factory_.GetWeakPtr(), State::PLAYING),
+                   suspended_start_type);
 }
 
 void PipelineController::Seek(base::TimeDelta time, bool time_updated) {
@@ -98,6 +100,7 @@ void PipelineController::Resume() {
   DCHECK(thread_checker_.CalledOnValidThread());
   pending_suspend_ = false;
   if (state_ == State::SUSPENDING || state_ == State::SUSPENDED) {
+    base::debug::StackTrace().Print();
     pending_resume_ = true;
     Dispatch();
   }
@@ -141,7 +144,12 @@ void PipelineController::OnPipelineStatus(State state,
     // properly fixed.
     if (old_state == State::RESUMING)
       resumed_cb_.Run();
-  } else if (state == State::SUSPENDED) {
+
+    if (old_state == State::STARTING && pipeline_->WasStartSuspended())
+      state_ = State::SUSPENDED;
+  }
+
+  if (state == State::SUSPENDED) {
     // Warning: possibly reentrant. The state may change inside this callback.
     // It must be safe to call Dispatch() twice in a row here.
     suspended_cb_.Run();
@@ -233,7 +241,7 @@ void PipelineController::Dispatch() {
 
   // If |state_| is PLAYING and we didn't trigger an operation above then we
   // are in a stable state. If there is a seeked callback pending, emit it.
-  if (state_ == State::PLAYING) {
+  if (state_ == State::PLAYING || state_ == State::SUSPENDED) {
     if (pending_seeked_cb_) {
       // |seeked_cb_| may be reentrant, so update state first and return
       // immediately.
