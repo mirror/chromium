@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/elements/toast.h"
 
+#include "base/bind.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -31,6 +32,13 @@ Toast::Toast() {
 
   AddChild(std::move(background));
   AddChild(std::move(container));
+
+  EventHandlers event_handlers;
+  event_handlers.hover_enter =
+      base::BindRepeating(&Toast::HandleHoverEnter, base::Unretained(this));
+  event_handlers.hover_leave =
+      base::BindRepeating(&Toast::HandleHoverLeave, base::Unretained(this));
+  set_event_handlers(event_handlers);
 }
 
 Toast::~Toast() = default;
@@ -54,6 +62,10 @@ void Toast::AddIcon(const gfx::VectorIcon& icon,
   container_->AddChild(std::move(vector_icon));
 }
 
+void Toast::AddTooltip(std::unique_ptr<UiElement> tooltip) {
+  tooltip_ = tooltip.get();
+  AddChild(std::move(tooltip));
+}
 void Toast::AddText(const base::string16& text,
                     float font_height_dmm,
                     TextLayoutMode text_layout_mode) {
@@ -110,6 +122,11 @@ void Toast::SetForegroundColor(SkColor color) {
 void Toast::SetBackgroundColor(SkColor color) {
   DCHECK(background_);
   background_->SetColor(color);
+  background_color_ = color;
+}
+
+void Toast::SetHoverBackgroundColor(SkColor color) {
+  hover_color_ = color;
 }
 
 void Toast::NotifyClientSizeAnimated(const gfx::SizeF& size,
@@ -118,6 +135,28 @@ void Toast::NotifyClientSizeAnimated(const gfx::SizeF& size,
   if (target_property_id == BOUNDS)
     background_->SetSize(size.width(), size.height());
   UiElement::NotifyClientSizeAnimated(size, target_property_id, animation);
+}
+
+void Toast::HandleHoverEnter() {
+  hovered_ = true;
+  if (tooltip_)
+    tooltip_->SetVisible(true);
+  OnStateUpdated();
+}
+
+void Toast::HandleHoverLeave() {
+  hovered_ = false;
+  if (tooltip_)
+    tooltip_->SetVisible(false);
+  OnStateUpdated();
+}
+
+void Toast::OnStateUpdated() {
+  if (hovered()) {
+    background_->SetColor(hover_color_);
+  } else {
+    background_->SetColor(background_color_);
+  }
 }
 
 }  // namespace vr
