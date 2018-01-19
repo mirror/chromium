@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe2cc6e0_82e24ff0",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 2078,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-19T21:19:57Z",
+      "side": 1,
+      "message": "Why are you adding these platforms?  None of the experiments you\u0027ve run thus far as far as I can tell from looking in the finch config directories targeted these platforms, or used these parameters.  This seems out-of-order compared with go/finch-best-practices.",
+      "revId": "064b568ba801bd4cd9b36dd260ab0e4b0808bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
