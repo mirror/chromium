@@ -3559,6 +3559,15 @@ void WebViewImpl::RegisterViewportLayersWithCompositor() {
 
   DCHECK(document);
 
+  // We could get here before the global root scroller has been through
+  // compositing (we call into here anytime any frame gets through
+  // compositing). We'll get another chance once it finishes compositing.
+  Element* global_root_scroller =
+      GetPage()->GlobalRootScrollerController().GlobalRootScroller();
+  if (global_root_scroller->GetDocument().Lifecycle().GetState() <
+      DocumentLifecycle::kInCompositingUpdate)
+    return;
+
   // Get the outer viewport scroll layers.
   GraphicsLayer* layout_viewport_container_layer =
       GetPage()->GlobalRootScrollerController().RootContainerLayer();
