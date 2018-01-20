@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81059d99_8810a9e3",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-20T01:33:09Z",
+      "side": 1,
+      "message": "Maybe alphabetize these? Unless the current order matters.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "f56aefaba56b66f43f3f54a7ee01a0bda8b09e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7789d67_8bacce37",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-20T01:33:09Z",
+      "side": 1,
+      "message": "Nit: Maybe use includes() instead (same below).\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes",
+      "range": {
+        "startLine": 231,
+        "startChar": 39,
+        "endLine": 231,
+        "endChar": 46
+      },
+      "revId": "f56aefaba56b66f43f3f54a7ee01a0bda8b09e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b495c76_6b2a9f91",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-20T01:33:09Z",
+      "side": 1,
+      "message": "Remove logs.",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 41
+      },
+      "revId": "f56aefaba56b66f43f3f54a7ee01a0bda8b09e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bb39fe_7e0fa6a0",
+        "filename": "chrome/test/data/webui/extensions/test_kiosk_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-20T01:33:09Z",
+      "side": 1,
+      "message": "Let\u0027s make this private, now that there is a setter.",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "f56aefaba56b66f43f3f54a7ee01a0bda8b09e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab8c05c_0c068622",
+        "filename": "chrome/test/data/webui/extensions/test_kiosk_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-20T01:33:09Z",
+      "side": 1,
+      "message": "Can this be @param documented?",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "f56aefaba56b66f43f3f54a7ee01a0bda8b09e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
