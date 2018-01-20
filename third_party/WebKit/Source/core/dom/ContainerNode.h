@@ -146,7 +146,7 @@ class CORE_EXPORT ContainerNode : public Node {
 
   void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
-  LayoutRect BoundingBox() const final;
+  LayoutRect BoundingBox(bool = false) const final;
   void SetFocused(bool, WebFocusType) override;
   void SetHasFocusWithinUpToAncestor(bool, Node* ancestor);
   void FocusStateChanged();
@@ -427,8 +427,8 @@ class CORE_EXPORT ContainerNode : public Node {
                                                      ExceptionState&) const;
   inline bool IsChildTypeAllowed(const Node& child) const;
 
-  bool GetUpperLeftCorner(FloatPoint&) const;
-  bool GetLowerRightCorner(FloatPoint&) const;
+  bool GetUpperLeftCorner(FloatPoint&, bool expand_scroll_margin) const;
+  bool GetLowerRightCorner(FloatPoint&, bool expand_scroll_margin) const;
 
   TraceWrapperMember<Node> first_child_;
   TraceWrapperMember<Node> last_child_;
