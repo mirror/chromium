@@ -258,13 +258,14 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           frame_tree_node->has_committed_real_load(),
           controller->GetPendingEntryIndex() == -1,
           controller->GetIndexOfEntry(&entry),
-          controller->GetLastCommittedEntryIndex(),
-          controller->GetEntryCount());
+          controller->GetLastCommittedEntryIndex(), controller->GetEntryCount(),
+          frame_tree_node->navigator()->GetDelegate()->WasDiscarded());
   request_params.post_content_type = post_content_type;
 
   // TODO(jochen): Move suggested_filename from BeginNavigationParams to
   // CommonNavigationParams, now that it's also used here for browser initiated
   // requests.
+
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       mojom::BeginNavigationParams::New(
@@ -315,6 +316,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       -1,     // |pending_history_list_offset| is set to -1 because
               // history-navigations do not use this path. See comments above.
       current_history_list_offset, current_history_list_length,
+      false,  // was_discarded
       false,  // is_view_source
       false /*should_clear_history_list*/);
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
