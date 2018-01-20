@@ -22,6 +22,7 @@ enum ContextType {
 };
 
 GPU_EXPORT bool IsWebGLContextType(ContextType context_type);
+GPU_EXPORT bool IsWebGL2ContextType(ContextType context_type);
 GPU_EXPORT bool IsWebGL1OrES2ContextType(ContextType context_type);
 GPU_EXPORT bool IsWebGL2OrES3ContextType(ContextType context_type);
 
