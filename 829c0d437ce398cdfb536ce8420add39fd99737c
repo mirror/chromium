@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80765708_b9f77069",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "I\u0027ve updated the test to print out the comparisons that it\u0027s making.  It will now print numbers mainly when it fails, and explicitly print \u0027FAIL: expected: ..., actual: ...\u0027 whenever it mismatches.",
+      "parentUuid": "c7adf814_5ea3d5a7",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd06db74_e3b87a9a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T21:05:39Z",
       "side": 1,
       "message": "I thought hidden meant not visible, but it means removed from DOM.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872bb62a_f0b4fc95",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Maybe \u0027wasAddedToDOM\u0027 and \u0027wasRemovedFromDOM\u0027 would be clearer?",
+      "parentUuid": "cd06db74_e3b87a9a",
       "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a573530c_5d35b4db",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "312e5767_af041890",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cdd5721_0b7ca2ce",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1ae9ca9c_3c5fa5d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cdd5721_0b7ca2ce",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfad57b_4bbb2aba",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-19T21:05:39Z",
       "side": 1,
       "message": "Id like this to be visibleCount+1, and assert that exactly one message is not visible and that all are in DOM.",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f4566d_2c83089a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done as \u0027all in DOM\u0027 and \u0027visibleCount are visible\u0027, since asserting that all are in DOM and visibleCount are visible would imply that one is not visible.",
+      "parentUuid": "1cfad57b_4bbb2aba",
       "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8e21dca5_4683b267",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d6b014_7720f295",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb785e4b_23c21e99",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d6186d95_3d3e6091",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb785e4b_23c21e99",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773b339e_a0ab37e2",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e301d1_abf31204",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-viewport-control.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-20T01:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773b339e_a0ab37e2",
+      "revId": "829c0d437ce398cdfb536ce8420add39fd99737c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
