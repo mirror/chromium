@@ -45,6 +45,30 @@
       "revId": "28c17946fa229d04b6d3e75550a1e49c00eeea41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc86c4a9_f4d338cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogViewColumns.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-20T16:59:20Z",
+      "side": 1,
+      "message": "This is fine.",
+      "parentUuid": "01176b19_0391f755",
+      "range": {
+        "startLine": 544,
+        "startChar": 11,
+        "endLine": 544,
+        "endChar": 82
+      },
+      "revId": "28c17946fa229d04b6d3e75550a1e49c00eeea41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
