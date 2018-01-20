@@ -26,10 +26,14 @@ function WallpaperManager(dialogDom) {
   this.wallpaperRequest_ = null;
   this.wallpaperDirs_ = WallpaperDirectories.getInstance();
   this.preManifestDomInit_();
-  this.fetchManifest_();
   // Uses the redesigned wallpaper picker if |useNewWallpaperPicker| is true.
   this.document_.body.classList.toggle(
       'v2', loadTimeData.getBoolean('useNewWallpaperPicker'));
+
+  if (loadTimeData.getBoolean('showBackdropWallpapers'))
+    this.fetchWallpapers_();
+  else
+    this.fetchManifest_();
 }
 
 // Anonymous 'namespace'.
@@ -53,6 +57,23 @@ function WallpaperManager(dialogDom) {
  * before them. So the offset is 1.
  */
 /** @const */ var OnlineCategoriesOffset = 1;
+
+/**
+ * The interval between each fetch wallpaper attempts.
+ */
+/** @const */ var GetWallpapersInfoIntervalMs = 50;
+
+/**
+ * The maximum number of failed attempts allowed before terminating the
+ * wallpaper fetch.
+ */
+/** @const */ var MaxFailedAttempts = 3;
+
+/**
+ * The number of failed attempts in a row. Cleared when there's a successful
+ * attempt.
+ */
+var consecutiveFailedAttempts = 0;
 
 /**
  * Returns a translated string.
@@ -166,6 +187,51 @@ WallpaperManager.prototype.fetchManifest_ = function() {
     // TODO(bshe): Always loading the offline manifest first and replacing
     // with the online one when available.
     this.onLoadManifestFailed_();
+  }
+};
+
+/**
+ * Fetches wallpapers from the Backdrop server. It first calls extention API to
+ * fetch the info of the wallpapers, and then download the images.
+ * @private
+ */
+WallpaperManager.prototype.fetchWallpapers_ = function() {
+  var self = this;
+  chrome.wallpaperPrivate.getImagesInfo(function(collectionName, imagesInfo) {
+    if (collectionName.length == 0)
+      self.OnGetImagesInfoFailed_();
+    else
+      self.OnGetImagesInfoSucceeded_(collectionName, imagesInfo);
+  });
+};
+
+/**
+ * Called when the fetch attempt successed. Sets a timer to start the next fetch
+ * attempt, and uses the fetched info to initialize the wallpaper grid.
+ * @private
+ */
+WallpaperManager.prototype.OnGetImagesInfoSucceeded_ = function(
+    collectionName, imagesInfo) {
+  consecutiveFailedAttempts = 0;
+  window.setTimeout(
+      this.fetchWallpapers_.bind(this), GetWallpapersInfoIntervalMs);
+  // TODO(crbug.com/800945): Initialize the wallpaper grid using the fetched
+  // info.
+};
+
+/**
+ * Called when the fetch attempt failed. Terminates the fetch if the number of
+ * consecutive failed attempts have exceeded the maximum allowed.
+ * @private
+ */
+WallpaperManager.prototype.OnGetImagesInfoFailed_ = function() {
+  consecutiveFailedAttempts++;
+  if (consecutiveFailedAttempts != MaxFailedAttempts)
+    window.setTimeout(
+        this.fetchWallpapers_.bind(this), GetWallpapersInfoIntervalMs);
+  else {
+    // TODO(crbug.com/800945): Check if any info has ever been successfully
+    // fetched. If not, show an error message.
   }
 };
 
