@@ -22,6 +22,30 @@
       "revId": "75b25150177638921fa5ccb0ad3a76cbe722328e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aef3443_96874230",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-20T00:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "118536cb_f8e7000d",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "75b25150177638921fa5ccb0ad3a76cbe722328e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
