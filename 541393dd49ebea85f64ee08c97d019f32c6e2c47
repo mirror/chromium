@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86d8c7b0_64046ae9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-20T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b3db8b0_0505a63c",
+      "range": {
+        "startLine": 117,
+        "startChar": 47,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb86220_8bc62d96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "68242569_ffa5558e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-20T01:50:34Z",
+      "side": 1,
+      "message": "Good point. I think there should a check here. Added a test that covers this case.",
+      "parentUuid": "eeb86220_8bc62d96",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f837dcfe_db1bf297",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32af1cfd_c1357442",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-20T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f837dcfe_db1bf297",
+      "range": {
+        "startLine": 259,
+        "startChar": 16,
+        "endLine": 259,
+        "endChar": 42
+      },
+      "revId": "541393dd49ebea85f64ee08c97d019f32c6e2c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

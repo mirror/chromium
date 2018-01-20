@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4bafe81d_c26db57f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-20T01:50:34Z",
+      "side": 1,
+      "message": "Hm.. I think this is actually not needed. I added this so that VR can call cancelAllDialogs() with all the types, but we probably can have a better way of doing so, such as just having another cancelAll method without taking a type.",
+      "parentUuid": "fac3d2c5_9f0660ac",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "caeae181330541a57130bf6d5d9c1b261fe9d310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cc21499_4d063315",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 2
