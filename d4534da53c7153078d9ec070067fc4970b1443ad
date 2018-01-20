@@ -69,6 +69,29 @@
       "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cf21df_2ebeb679",
+        "filename": "base/component_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-20T00:04:41Z",
+      "side": 1,
+      "message": "worry about $ not being in the compilation character set, what matters is the airity, so maybe use \"\" or some such?",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
