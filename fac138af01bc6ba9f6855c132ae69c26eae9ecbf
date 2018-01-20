@@ -22,6 +22,29 @@
       "revId": "fac138af01bc6ba9f6855c132ae69c26eae9ecbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096a8488_2bd4e7a9",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-20T01:56:49Z",
+      "side": 1,
+      "message": "When I ran this, I got assertion error in this function.\n\n    static ModuleT\u0026 GetModule() throw()\n    {\n        auto \u0026moduleRef \u003d Create();\n        // Module must be initialized with Create method first\n        __WRL_ASSERT__(moduleRef.releaseNotifier_ !\u003d nullptr);\n        return moduleRef;\n    }",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "fac138af01bc6ba9f6855c132ae69c26eae9ecbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
