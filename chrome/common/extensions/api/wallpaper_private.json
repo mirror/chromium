@@ -266,6 +266,29 @@
             "$ref": "WallpaperSource"
           }
         ]
+      },
+      {
+        "name": "getImagesInfo",
+        "type": "function",
+        "description": "Gets wallpaper related info (url, description etc.) from the Backdrop wallpaper service.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "function",
+            "name": "callback",
+            "parameters": [
+              {
+                "type": "string",
+                "name": "collectionName"
+              },
+              {
+                "type": "object",
+                "name": "imagesInfo",
+                "additionalProperties": {"type": "any"}
+              }
+            ]
+          }
+        ]
       }
     ],
     "events": [

@@ -72,6 +72,8 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient,
   // Flushes the mojo pipe to ash.
   void FlushForTesting();
 
+  void Log(std::string log);
+
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
