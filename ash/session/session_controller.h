@@ -19,6 +19,7 @@
 #include "base/observer_list.h"
 #include "base/time/time.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 
 class AccountId;
 class PrefService;
@@ -183,6 +184,8 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
       ShowTeleportWarningDialogCallback callback) override;
   void ShowMultiprofilesSessionAbortedDialog(
       const std::string& user_email) override;
+  void AddObserver(
+      mojom::PrefServiceObserverAssociatedPtrInfo observer) override;
 
   // Test helpers.
   void ClearUserSessionsForTest();
@@ -266,6 +269,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   base::TimeTicks session_start_time_;
 
   base::ObserverList<ash::SessionObserver> observers_;
+
+  mojo::AssociatedInterfacePtrSet<mojom::PrefServiceObserver>
+      pref_service_observers_;
 
   service_manager::Connector* const connector_;
 
