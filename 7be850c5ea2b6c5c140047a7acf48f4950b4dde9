@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fe8ce28_ef47faba",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-20T05:23:58Z",
+      "side": 1,
+      "message": "nit: Please comment.  It\u0027s unclear from the function name what this does.  (The function name would make me think there\u0027s a function in this class something like IsOfficialEnabled(), but there isn\u0027t...)",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46da2f11_c530c49e",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-20T05:23:58Z",
+      "side": 1,
+      "message": "nit: If it\u0027s called on all platforms, I think you shouldn\u0027t have a platform-specific part of the name.  The comments can make it clear that it only does something on certain platforms.",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc49d3d1_e805d10c",
+        "filename": "chrome/browser/metrics/metrics_reporting_state_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-20T05:23:58Z",
+      "side": 1,
+      "message": "nit for readability: value -\u003e expected_reporting_state or expected_metrics_reported_enabled or something like that",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdab39d7_83429262",
+        "filename": "components/metrics/metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-20T05:23:58Z",
+      "side": 1,
+      "message": "Can you use the command line --force-enable-metrics-reporting instead of adding a new function and override?\n\nIf you need to keep this function, I would (nits):\n- rename the function to something like SetForceEnableMetricsReporting.\n- revise the second sentence above to something like \"Use this function to enable metrics reporting.\"\nand downstream changes in the implementation.",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
