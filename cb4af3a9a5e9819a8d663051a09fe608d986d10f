@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "965fb4ea_3dc0b86f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-20T00:44:12Z",
+      "side": 1,
+      "message": "can we keep the .hasFocus() check here?",
+      "parentUuid": "477a2b6d_a4370f51",
+      "revId": "cb4af3a9a5e9819a8d663051a09fe608d986d10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9b3545_29073f7d",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 1
