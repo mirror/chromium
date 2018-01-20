@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #import "base/mac/mac_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
@@ -51,6 +52,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_field_trial.h"
 #include "components/toolbar/vector_icons.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/variations/variations_associated_data.h"
@@ -529,6 +531,17 @@ bool LocationBarViewMac::HasSecurityVerboseText() const {
 
   security_state::SecurityLevel security =
       GetToolbarModel()->GetSecurityLevel(false);
+
+  // Security UI study (https://crbug.com/803138). Drop text if enabled.
+  if (security == security_state::EV_SECURE &&
+      base::FeatureList::IsEnabled(toolbar::kEVToLock)) {
+    return false;
+  }
+  if (security == security_state::SECURE &&
+      base::FeatureList::IsEnabled(toolbar::kSecureToLock)) {
+    return false;
+  }
+
   return security == security_state::EV_SECURE ||
          security == security_state::SECURE ||
          security == security_state::DANGEROUS ||
@@ -598,7 +611,7 @@ void LocationBarViewMac::UpdatePageInfoText() {
   base::string16 label;
   PageInfoVerboseType type = GetPageInfoVerboseType();
   if (type == PageInfoVerboseType::kEVCert) {
-    label = GetToolbarModel()->GetEVCertName();
+    label = GetToolbarModel()->GetSecureVerboseText();
   } else if (type == PageInfoVerboseType::kExtension && GetWebContents()) {
     label = extensions::ui_util::GetEnabledExtensionNameForUrl(
         GetToolbarModel()->GetURL(), GetWebContents()->GetBrowserContext());

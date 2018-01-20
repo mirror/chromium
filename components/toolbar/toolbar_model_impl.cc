@@ -12,6 +12,7 @@
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/features.h"
+#include "components/toolbar/toolbar_field_trial.h"
 #include "components/toolbar/toolbar_model_delegate.h"
 #include "components/url_formatter/elide_url.h"
 #include "components/url_formatter/url_formatter.h"
@@ -127,11 +128,24 @@ base::string16 ToolbarModelImpl::GetSecureVerboseText() const {
   if (IsOfflinePage())
     return l10n_util::GetStringUTF16(IDS_OFFLINE_VERBOSE_STATE);
 
+  // Security UI study (https://crbug.com/803138): Change EV/Secure text.
   switch (GetSecurityLevel(false)) {
     case security_state::HTTP_SHOW_WARNING:
       return l10n_util::GetStringUTF16(IDS_NOT_SECURE_VERBOSE_STATE);
+    case security_state::EV_SECURE:
+      if (base::FeatureList::IsEnabled(toolbar::kEVToSecure)) {
+        return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+      } else if (base::FeatureList::IsEnabled(toolbar::kEVToLock)) {
+        return base::string16();
+      } else {
+        return GetEVCertName();
+      }
     case security_state::SECURE:
-      return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+      if (base::FeatureList::IsEnabled(toolbar::kSecureToLock)) {
+        return base::string16();
+      } else {
+        return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+      }
     case security_state::DANGEROUS:
       return l10n_util::GetStringUTF16(delegate_->FailsMalwareCheck()
                                            ? IDS_DANGEROUS_VERBOSE_STATE

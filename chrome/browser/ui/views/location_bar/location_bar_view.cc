@@ -63,6 +63,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_field_trial.h"
 #include "components/toolbar/toolbar_model.h"
 #include "components/toolbar/vector_icons.h"
 #include "components/translate/core/browser/language_state.h"
@@ -862,10 +863,7 @@ base::string16 LocationBarView::GetLocationIconText() const {
       return extension_name;
   }
 
-  bool has_ev_cert =
-      (GetToolbarModel()->GetSecurityLevel(false) == security_state::EV_SECURE);
-  return has_ev_cert ? GetToolbarModel()->GetEVCertName()
-                     : GetToolbarModel()->GetSecureVerboseText();
+  return GetToolbarModel()->GetSecureVerboseText();
 }
 
 bool LocationBarView::ShouldShowKeywordBubble() const {
@@ -881,6 +879,17 @@ bool LocationBarView::ShouldShowLocationIconText() const {
 
   using SecurityLevel = security_state::SecurityLevel;
   const SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
+
+  // Security UI study (https://crbug.com/803138). Drop text if enabled.
+  if (level == SecurityLevel::EV_SECURE &&
+      base::FeatureList::IsEnabled(toolbar::kEVToLock)) {
+    return false;
+  }
+  if (level == SecurityLevel::SECURE &&
+      base::FeatureList::IsEnabled(toolbar::kSecureToLock)) {
+    return false;
+  }
+
   return level == SecurityLevel::EV_SECURE || level == SecurityLevel::SECURE ||
          level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
