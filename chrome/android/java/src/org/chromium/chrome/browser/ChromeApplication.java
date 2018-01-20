@@ -6,6 +6,7 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -38,6 +39,8 @@ import org.chromium.content.app.ContentApplication;
 @MainDex
 public class ChromeApplication extends ContentApplication {
     public static final String COMMAND_LINE_FILE = "chrome-command-line";
+    public static final String COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY =
+            "command_line_on_non_rooted_enabled";
     private static final String TAG = "ChromiumApplication";
 
     private static DocumentTabModelSelector sDocumentTabModelSelector;
@@ -100,7 +103,12 @@ public class ChromeApplication extends ContentApplication {
     }
 
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE, allowAlternativeFromFlag());
+    }
+
+    private boolean allowAlternativeFromFlag() {
+        SharedPreferences pref = ContextUtils.getAppSharedPreferences();
+        return pref.getBoolean(COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, false);
     }
 
     /**

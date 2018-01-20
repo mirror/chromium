@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.crash.MinidumpUploadService.ProcessType;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -504,6 +505,14 @@ public class ChromePreferenceManager {
     /** Marks that the content suggestions surface has been shown. */
     public void setSuggestionsSurfaceShown() {
         writeBoolean(CONTENT_SUGGESTIONS_SHOWN_KEY, true);
+    }
+
+    /**
+     * Set whether or not command line on non-rooted devices is enabled.
+     * @param isEnabled If command line on non-rooted devices is enabled.
+     */
+    public void setCommandLineOnNonRootedEnabled(boolean isEnabled) {
+        writeBoolean(ChromeApplication.COMMAND_LINE_ON_NON_ROOTED_ENABLED_KEY, isEnabled);
     }
 
     /** Returns whether the content suggestions surface has ever been shown. */
