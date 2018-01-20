@@ -22,6 +22,30 @@
       "revId": "b76374f95bafc592c3fc77aea779ba766256d96b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2802178b_f0d0c0e8",
+        "filename": "third_party/WebKit/Source/core/css/cssom/FilteredComputedStylePropertyMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-20T05:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3964dd_099451a4",
+      "range": {
+        "startLine": 18,
+        "startChar": 40,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "b76374f95bafc592c3fc77aea779ba766256d96b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
