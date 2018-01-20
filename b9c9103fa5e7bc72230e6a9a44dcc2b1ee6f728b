@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a25fe1c_052d49a5",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-20T01:49:51Z",
+      "side": 1,
+      "message": "should check the return value",
+      "revId": "b9c9103fa5e7bc72230e6a9a44dcc2b1ee6f728b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdeb6058_6a0b1c04",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2192,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-20T01:49:51Z",
+      "side": 1,
+      "message": "this could be std::move instead of Copy()",
+      "revId": "b9c9103fa5e7bc72230e6a9a44dcc2b1ee6f728b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbe3ede_224a80bf",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-20T01:49:51Z",
+      "side": 1,
+      "message": "need to check that the page actually loaded successfully",
+      "revId": "b9c9103fa5e7bc72230e6a9a44dcc2b1ee6f728b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
