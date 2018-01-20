@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44ebd210_ac2580bf",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Sorry, maybe my comment here is a little bit confusing.\n\n1. For convertible device that the switch kShowPowerButtonMenu is not set, since |show_power_button_menu_| is false. The logic will still go into TabletPowerButtonController.\n\n2. For the device (tablet or detachable device) that the switch kShowPowerButtonMenu is set.\n|show_power_button_menu_| is always true. It will go continue to check the current mode.\n   Tablet, which is always in TabletMode, will always show the power button menu.\n    Detachable device,\n       Detached, in tablet mode, the same as tablet.\n       Attached (I do think the detachable device can not be convertible), not in tablet mode, should not show power button menu and should act as the clamshell. So it should not go into TabletPowerButtonController but the logic in line213 instead of.",
+      "parentUuid": "6fcf2c8b_a318d081",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5afb40ae_cf326861",
         "filename": "ash/system/power/power_button_menu_item_view.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78df9b1_462650e3",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5afb40ae_cf326861",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c70aea52_02c94785",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a189ca39_a40c5647",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69badc37_95313faa",
         "filename": "ash/system/power/power_button_menu_screen_view.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c2cba3_205a1e99",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69badc37_95313faa",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2537ef50_9253c1a5",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "971fc756_c50006ba",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81bd5a3e_c50e3f1c",
         "filename": "ash/system/power/power_button_menu_screen_view.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b356a6ec_3f388ed4",
+        "filename": "ash/system/power/power_button_menu_screen_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81bd5a3e_c50e3f1c",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,42 @@
     },
     {
       "key": {
+        "uuid": "43b06522_d5b98cdb",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa99918d_3aa590e3",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99d28fec_fef10ee2",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a095478a_de333851",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69ab230c_d195ea43",
         "filename": "ash/system/power/power_button_menu_view.cc",
         "patchSetId": 2
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "a2601d76_1ff74ad9",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ab230c_d195ea43",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc18d097_ac328a8a",
         "filename": "ash/system/power/power_button_menu_view.cc",
         "patchSetId": 2
@@ -190,6 +358,24 @@
       "writtenOn": "2018-01-19T23:18:04Z",
       "side": 1,
       "message": "So IIUC, there are two cases here:\npower_off_item_ \u0026\u0026 sign_out_item_\npower_off_item_ \u0026\u0026 !sign_out_item_\n\nHowever, the if-else condition doesn\u0027t imply that. Probably DCHECK in else.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e981a960_42799d80",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "yup, only these two cases currently. power_off_item_ always exist, sign_out_item_ only exist if user is login.\nLet me add DCHECK here. Thanks.",
+      "parentUuid": "fc18d097_ac328a8a",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "83e3884f_15b32b1c",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Only two currently. May extend in the future. But switch statement requires expression of integer type, I think we may can not use |sender| directly here? Any idea that can make us use it?",
+      "parentUuid": "92cff9d0_659e6820",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e10e2f24_e3a2b27b",
         "filename": "ash/system/power/power_button_menu_view.h",
         "patchSetId": 2
@@ -230,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "608327b0_6d661868",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e10e2f24_e3a2b27b",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd54590_4fbc1023",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 2
@@ -241,6 +463,24 @@
       "writtenOn": "2018-01-19T23:18:04Z",
       "side": 1,
       "message": "Nit: do we need show_power_button_menu_ in PowerButtonController? If it is used in TPBC only, we could get it form command line here.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e651c09_c6a32b55",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "I think we need |show_power_button_menu_| in PowerButtonController to help decide whether we should go into the logic of TPBC. Please take a look of PowerButtonController Line204.",
+      "parentUuid": "ffd54590_4fbc1023",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -270,6 +510,30 @@
     },
     {
       "key": {
+        "uuid": "5a1d0d24_9cfbf374",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a7d2a3_2a10120c",
+      "range": {
+        "startLine": 179,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "792bc84f_a24e8200",
         "filename": "ash/system/power/tablet_power_button_controller.cc",
         "patchSetId": 2
@@ -284,6 +548,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ac7317_d31a454b",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "792bc84f_a24e8200",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -304,6 +586,24 @@
     },
     {
       "key": {
+        "uuid": "70226d5c_dc26f48f",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c633021_743ee5a9",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17b69289_23f091e3",
         "filename": "ash/system/power/tablet_power_button_controller.h",
         "patchSetId": 2
@@ -315,6 +615,24 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "nit: please reorder the methods in the public section so that overrides come last:\n\n  c\u0027tor\n  d\u0027tor\n\n  OnPowerButtonEvent\n  IsMenuOpened\n  DismissMenu\n  CancelTabletPowerButton\n\n  // BacklightsForcedOffSetter::Observer:\n  etc.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11e87de_38447abc",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "I see. Done.",
+      "parentUuid": "17b69289_23f091e3",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -338,6 +656,24 @@
     },
     {
       "key": {
+        "uuid": "2c4cb54c_408406c3",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fcf0166_25facf0b",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45a1157b_6642cccb",
         "filename": "ash/system/power/tablet_power_button_controller.h",
         "patchSetId": 2
@@ -355,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "1437c9e4_2d3717be",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a1157b_6642cccb",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81236f4c_af67bcb9",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.cc",
         "patchSetId": 2
@@ -366,6 +720,30 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "when is controller_ null? none of the other methods check it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68fbcf4_fa213ef9",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t quite remember why I added this here. Maybe sometime when the code is not complete and I forgot to delete it. I think we can remove it. Removed.",
+      "parentUuid": "81236f4c_af67bcb9",
       "range": {
         "startLine": 70,
         "startChar": 9,
@@ -395,6 +773,24 @@
     },
     {
       "key": {
+        "uuid": "131aee0c_0ba687c4",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "HasSignOut means whether the menu has |sign_out_item_| currently. MenuHasSignOutItem sounds better. Thanks. Done.",
+      "parentUuid": "45eb6f35_cf8968a0",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0819fe22_2524940c",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -406,6 +802,30 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "what\u0027s the specific delay that you need to advance beyond here? please make this call use the corresponding constant instead of a magic 3000 number.",
+      "range": {
+        "startLine": 698,
+        "startChar": 25,
+        "endLine": 698,
+        "endChar": 64
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9b7085_7a81b546",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "@warx, I coped this from PowerButtonScreenshotControllerTest actually. @warx, can we just make this time as kIgnorePowerButtonAfterResumeDelay + 2 (a positive number) here?",
+      "parentUuid": "0819fe22_2524940c",
       "range": {
         "startLine": 698,
         "startChar": 25,
@@ -441,6 +861,30 @@
     },
     {
       "key": {
+        "uuid": "76b22d02_f3df7371",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4324ca_7da72c7a",
+      "range": {
+        "startLine": 708,
+        "startChar": 49,
+        "endLine": 708,
+        "endChar": 53
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67a4039_0f146daa",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -452,6 +896,24 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "you don\u0027t need to check that it\u0027s running before triggering it, do you? just do this:\n\n  ASSERT_TRUE(tablet_test_api_-\u003eTriggerPowerButtonMenuTimeout());",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3aaa57f_9fbb9fa5",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "I think the |power_button_menu_timer_| should start to run just after we press the power button. No need to wait trigger its related task.",
+      "parentUuid": "c67a4039_0f146daa",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -475,6 +937,24 @@
     },
     {
       "key": {
+        "uuid": "7b9adc30_e60fe0c5",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Removed. Done.",
+      "parentUuid": "36d81609_869748cf",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4149e159_b71d1efb",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -489,6 +969,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51046e30_f1cfbf57",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4149e159_b71d1efb",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -515,6 +1013,30 @@
     },
     {
       "key": {
+        "uuid": "d52634a3_8d9b9824",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5a7c2d_4c83032d",
+      "range": {
+        "startLine": 745,
+        "startChar": 33,
+        "endLine": 745,
+        "endChar": 42
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "674abbb5_c699a66d",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -538,6 +1060,30 @@
     },
     {
       "key": {
+        "uuid": "9389b40c_1c45746a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674abbb5_c699a66d",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 13
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b082181_8f358529",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -552,6 +1098,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160f2c97_1a7bb0a6",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b082181_8f358529",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -572,6 +1136,24 @@
     },
     {
       "key": {
+        "uuid": "99866ddc_83501ad6",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e19b5fc_01b0a87a",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c9d4ecf_cb9166cd",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -589,6 +1171,24 @@
     },
     {
       "key": {
+        "uuid": "c92fcddd_e7b5abf8",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9d4ecf_cb9166cd",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbe62725_9c4fb89a",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -603,6 +1203,24 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45132e7e_649cc103",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe62725_9c4fb89a",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -629,6 +1247,30 @@
     },
     {
       "key": {
+        "uuid": "7f18e3c4_41d0ea43",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c4c731_1ee49a27",
+      "range": {
+        "startLine": 773,
+        "startChar": 42,
+        "endLine": 773,
+        "endChar": 47
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3dc16e9_ae481ac3",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -640,6 +1282,24 @@
       "writtenOn": "2018-01-19T22:37:02Z",
       "side": 1,
       "message": "was this in the mocks? the behavior of redisplaying the menu when the button is held again while the menu is already visible seems a bit surprising to me.",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b2a05e_cfe52c59",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Not in the mock. Please check comment #17, #25 and #26 here,\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d732628\nSeems that they want to have the same behavior of Android. @warx.",
+      "parentUuid": "e3dc16e9_ae481ac3",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -663,6 +1323,24 @@
     },
     {
       "key": {
+        "uuid": "b89816d8_31b98a7e",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6647db89_3d136ff9",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15eebd94_4e04570f",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -683,6 +1361,30 @@
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896331e5_504b01e9",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-20T01:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15eebd94_4e04570f",
+      "range": {
+        "startLine": 852,
+        "startChar": 49,
+        "endLine": 852,
+        "endChar": 51
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
