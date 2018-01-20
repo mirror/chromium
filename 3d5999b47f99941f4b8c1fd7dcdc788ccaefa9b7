@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1066ef4_7e2d847e",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:30:32Z",
+      "side": 1,
+      "message": "Why is this needed? If code is just being moved around where it lives in the directory structure, it should not affect what interfaces are exposed by each process.",
+      "revId": "3d5999b47f99941f4b8c1fd7dcdc788ccaefa9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
