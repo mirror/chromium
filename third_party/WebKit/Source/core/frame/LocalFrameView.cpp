@@ -2404,10 +2404,10 @@ void LocalFrameView::ScrollToFragmentAnchor() {
   if (anchor_node->GetLayoutObject()) {
     LayoutRect rect;
     if (anchor_node != frame_->GetDocument()) {
-      rect = anchor_node->BoundingBox();
+      rect = anchor_node->BoundingBox(true);
     } else if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
       if (Element* document_element = frame_->GetDocument()->documentElement())
-        rect = document_element->BoundingBox();
+        rect = document_element->BoundingBox(true);
     }
 
     Frame* boundary_frame = frame_->FindUnsafeParentScrollPropagationBoundary();

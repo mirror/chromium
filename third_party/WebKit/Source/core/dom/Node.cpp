@@ -694,10 +694,37 @@ LayoutBoxModelObject* Node::GetLayoutBoxModelObject() const {
              : nullptr;
 }
 
-LayoutRect Node::BoundingBox() const {
-  if (GetLayoutObject())
-    return LayoutRect(GetLayoutObject()->AbsoluteBoundingBoxRect());
-  return LayoutRect();
+static LayoutRect LocalToAbsolute(const LayoutObject& box, LayoutRect rect) {
+  return LayoutRect(
+      box.LocalToAbsoluteQuad(FloatQuad(FloatRect(rect)), kUseTransforms)
+          .BoundingBox());
+}
+
+static LayoutRect AbsoluteToLocal(const LayoutObject& box, LayoutRect rect) {
+  return LayoutRect(
+      box.AbsoluteToLocalQuad(FloatQuad(FloatRect(rect)), kUseTransforms)
+          .BoundingBox());
+}
+
+LayoutRect Node::BoundingBox(bool expand_scroll_margin) const {
+  if (!GetLayoutObject())
+    return LayoutRect();
+
+  LayoutRect absolute_bounding_box(
+      GetLayoutObject()->AbsoluteBoundingBoxRect());
+  if (!expand_scroll_margin)
+    return absolute_bounding_box;
+
+  const ComputedStyle* style = GetLayoutObject()->Style();
+  LayoutRectOutsets margin(style->ScrollMarginTop(), style->ScrollMarginRight(),
+                           style->ScrollMarginBottom(),
+                           style->ScrollMarginLeft());
+  LayoutRect local_bouding_box =
+      AbsoluteToLocal(*GetLayoutObject(), absolute_bounding_box);
+  local_bouding_box.Expand(margin);
+  absolute_bounding_box =
+      LocalToAbsolute(*GetLayoutObject(), local_bouding_box);
+  return absolute_bounding_box;
 }
 
 #ifndef NDEBUG

@@ -65,6 +65,8 @@ using namespace HTMLNames;
 static void DispatchChildInsertionEvents(Node&);
 static void DispatchChildRemovalEvents(Node&);
 
+enum class MarginCorner { kTopLeft, kBottomRight };
+
 namespace {
 
 // This class is helpful to detect necessity of
@@ -982,14 +984,32 @@ void ContainerNode::CloneChildNodes(ContainerNode* clone) {
     clone->AppendChild(n->cloneNode(true), exception_state);
 }
 
-bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
+static void MovePointByScrollMargin(FloatPoint& point,
+                                    const LayoutObject* layout_object,
+                                    MarginCorner corner) {
+  FloatSize offset;
+  const ComputedStyle* style = layout_object->Style();
+
+  if (corner == MarginCorner::kTopLeft)
+    offset = FloatSize(-style->ScrollMarginLeft(), -style->ScrollMarginTop());
+  else
+    offset = FloatSize(style->ScrollMarginRight(), style->ScrollMarginBottom());
+
+  point.Move(offset);
+}
+
+bool ContainerNode::GetUpperLeftCorner(FloatPoint& point,
+                                       bool expand_scroll_margin) const {
   if (!GetLayoutObject())
     return false;
 
+  point = FloatPoint();
   // FIXME: What is this code really trying to do?
   LayoutObject* runner = GetLayoutObject();
   if (!runner->IsInline() || runner->IsAtomicInlineLevel()) {
-    point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
+    if (expand_scroll_margin)
+      MovePointByScrollMargin(point, runner, MarginCorner::kTopLeft);
+    point = runner->LocalToAbsolute(point, kUseTransforms);
     return true;
   }
 
@@ -1014,7 +1034,9 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
     DCHECK(runner);
 
     if (!runner->IsInline() || runner->IsAtomicInlineLevel()) {
-      point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
+      if (expand_scroll_margin)
+        MovePointByScrollMargin(point, runner, MarginCorner::kTopLeft);
+      point = runner->LocalToAbsolute(point, kUseTransforms);
       return true;
     }
 
@@ -1028,10 +1050,12 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
       if (previous->GetNode() == this) {
         // Do nothing - skip unrendered whitespace that is a child or next
         // sibling of the anchor.
-        // FIXME: This fails to skip a whitespace sibling when there was also a
-        // whitespace child (because |previous| has moved).
+        // FIXME: This fails to skip a whitespace sibling when there was also
+        // a whitespace child (because |previous| has moved).
         continue;
       }
+      if (expand_scroll_margin)
+        MovePointByScrollMargin(point, runner, MarginCorner::kTopLeft);
       point = runner->LocalToAbsolute(FloatPoint(), kUseTransforms);
       return true;
     }
@@ -1040,6 +1064,8 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
       DCHECK(runner->IsBox());
       LayoutBox* box = ToLayoutBox(runner);
       point = FloatPoint(box->Location());
+      if (expand_scroll_margin)
+        MovePointByScrollMargin(point, box, MarginCorner::kTopLeft);
       point = runner->Container()->LocalToAbsolute(point, kUseTransforms);
       return true;
     }
@@ -1074,14 +1100,18 @@ static inline LayoutObject* EndOfContinuations(LayoutObject* layout_object) {
   return prev;
 }
 
-bool ContainerNode::GetLowerRightCorner(FloatPoint& point) const {
+bool ContainerNode::GetLowerRightCorner(FloatPoint& point,
+                                        bool expand_scroll_margin) const {
   if (!GetLayoutObject())
     return false;
 
   LayoutObject* o = GetLayoutObject();
   if (!o->IsInline() || o->IsAtomicInlineLevel()) {
     LayoutBox* box = ToLayoutBox(o);
-    point = o->LocalToAbsolute(FloatPoint(box->Size()), kUseTransforms);
+    point = FloatPoint(box->Size());
+    if (expand_scroll_margin)
+      MovePointByScrollMargin(point, o, MarginCorner::kBottomRight);
+    point = o->LocalToAbsolute(point, kUseTransforms);
     return true;
   }
 
@@ -1096,8 +1126,8 @@ bool ContainerNode::GetLowerRightCorner(FloatPoint& point) const {
       LayoutObject* prev = nullptr;
       while (!prev) {
         // Check if the current layoutObject has contiunation and move the
-        // location for finding the layoutObject to the end of continuations if
-        // there is the continuation.  Skip to check the contiunation on
+        // location for finding the layoutObject to the end of continuations
+        // if there is the continuation.  Skip to check the contiunation on
         // contiunations section
         if (start_continuation == o) {
           start_continuation = nullptr;
@@ -1132,6 +1162,8 @@ bool ContainerNode::GetLowerRightCorner(FloatPoint& point) const {
       } else {
         LayoutBox* box = ToLayoutBox(o);
         point.MoveBy(box->FrameRect().MaxXMaxYCorner());
+        if (expand_scroll_margin)
+          MovePointByScrollMargin(point, o, MarginCorner::kBottomRight);
         point = o->Container()->LocalToAbsolute(point, kUseTransforms);
       }
       return true;
@@ -1144,10 +1176,11 @@ bool ContainerNode::GetLowerRightCorner(FloatPoint& point) const {
 // InlineBox and it does not belong in ContainerNode as it reaches into
 // the layout and line box trees.
 // https://code.google.com/p/chromium/issues/detail?id=248354
-LayoutRect ContainerNode::BoundingBox() const {
+LayoutRect ContainerNode::BoundingBox(bool expand_scroll_margin) const {
   FloatPoint upper_left, lower_right;
-  bool found_upper_left = GetUpperLeftCorner(upper_left);
-  bool found_lower_right = GetLowerRightCorner(lower_right);
+  bool found_upper_left = GetUpperLeftCorner(upper_left, expand_scroll_margin);
+  bool found_lower_right =
+      GetLowerRightCorner(lower_right, expand_scroll_margin);
 
   // If we've found one corner, but not the other,
   // then we should just return a point at the corner that we did find.
