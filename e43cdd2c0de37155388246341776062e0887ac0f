@@ -46,6 +46,30 @@
       "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b87461c_1174ec8e",
+        "filename": "ui/views/animation/ink_drop_host_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-20T00:14:54Z",
+      "side": 1,
+      "message": "I\u0027m thinking if (!details.is_add \u0026\u0026 details.child-\u003eContains(this)). You can extend your test to remove to cover this by having a parent view that contains a button, removing the parent and ensure the ink drop is reset.",
+      "parentUuid": "54ed1a0f_94b158b0",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 46
+      },
+      "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
