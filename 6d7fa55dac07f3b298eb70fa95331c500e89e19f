@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4008bf28_99b52293",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-20T00:44:55Z",
+      "side": 1,
+      "message": "SetParentSequenceNumber is really what you want, right?",
+      "revId": "6d7fa55dac07f3b298eb70fa95331c500e89e19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fb09f6_83e8429a",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-20T00:44:55Z",
+      "side": 1,
+      "message": "This is missing a SetChildSequenceNumber",
+      "revId": "6d7fa55dac07f3b298eb70fa95331c500e89e19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76878eb_5708393b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2500,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-20T00:44:55Z",
+      "side": 1,
+      "message": "You definitely need to do conflict resolution here.",
+      "revId": "6d7fa55dac07f3b298eb70fa95331c500e89e19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
