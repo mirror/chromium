@@ -31,7 +31,8 @@ def Minify(source):
     (compile_error, compile_stderr) = checker.check(
         [t1.name],
         out_file=t2.name,
-        closure_args=args.closure_args)
+        closure_args=args.closure_args,
+        delete_source_map=True)
     if compile_error:
       print compile_stderr
     t2.seek(0)

@@ -163,7 +163,8 @@ class Checker(object):
     return tmp_file.name
 
   def check(self, sources, out_file, closure_args=None,
-            custom_sources=False, custom_includes=False):
+            custom_sources=False, custom_includes=False,
+            delete_source_map=False):
     """Closure compile |sources| while checking for errors.
 
     Args:
@@ -176,6 +177,7 @@ class Checker(object):
           in GYP dependency order).
       custom_includes: Whether <include>s are processed when |custom_sources|
           is True.
+      delete_source_map: Whether to delete the generated source map file.
 
     Returns:
       (found_errors, stderr) A boolean indicating whether errors were found and
@@ -262,8 +264,7 @@ class Checker(object):
     if summary.group('error_count') != "0":
       if os.path.exists(out_file):
         os.remove(out_file)
-      if os.path.exists(self._MAP_FILE_FORMAT % out_file):
-        os.remove(self._MAP_FILE_FORMAT % out_file)
+      delete_source_map = True
     elif checks_only and return_code == 0:
       # Compile succeeded but --checks_only disables --js_output_file from
       # actually writing a file. Write a file ourselves so incremental builds
@@ -281,6 +282,9 @@ class Checker(object):
       elif output:
         self._log_debug("Output: %s" % output)
 
+    if delete_source_map and os.path.exists(self._MAP_FILE_FORMAT % out_file):
+      os.remove(self._MAP_FILE_FORMAT % out_file)
+
     self._nuke_temp_files()
     return bool(errors) or return_code > 0, stderr
 
@@ -297,6 +301,8 @@ if __name__ == "__main__":
                            "using --custom_sources.")
   parser.add_argument("-o", "--out_file", required=True,
                       help="A file where the compiled output is written to")
+  parser.add_argument("--delete_source_map", action="store_true",
+                      help="Whether to delete the generated source map file.")
   parser.add_argument("-c", "--closure_args", nargs=argparse.ZERO_OR_MORE,
                       help="Arguments passed directly to the Closure compiler")
   parser.add_argument("-v", "--verbose", action="store_true",
@@ -308,7 +314,8 @@ if __name__ == "__main__":
   found_errors, stderr = checker.check(opts.sources, out_file=opts.out_file,
                                        closure_args=opts.closure_args,
                                        custom_sources=opts.custom_sources,
-                                       custom_includes=opts.custom_includes)
+                                       custom_includes=opts.custom_includes,
+                                       delete_source_map=opts.delete_source_map)
 
   if found_errors:
     if opts.custom_sources:
