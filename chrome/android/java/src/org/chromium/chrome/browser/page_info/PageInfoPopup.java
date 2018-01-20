@@ -71,6 +71,7 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.components.location.LocationUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
+import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -409,7 +410,8 @@ public class PageInfoPopup implements OnClickListener {
         }
         mSecurityLevel = SecurityStateModel.getSecurityLevelForWebContents(mTab.getWebContents());
 
-        SpannableStringBuilder urlBuilder = new SpannableStringBuilder(mFullUrl);
+        SpannableStringBuilder urlBuilder =
+                new SpannableStringBuilder(UrlFormatter.formatUrlForDisplay(mFullUrl));
         OmniboxUrlEmphasizer.emphasizeUrl(urlBuilder, mContext.getResources(), mTab.getProfile(),
                 mSecurityLevel, mIsInternalPage, true, true);
         if (mSecurityLevel == ConnectionSecurityLevel.SECURE) {
