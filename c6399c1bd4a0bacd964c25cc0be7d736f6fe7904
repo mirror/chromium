@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fee1651d_cea91308",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-20T01:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a47e533b_4bb05607",
+      "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d60fc2_911a9f75",
         "filename": "extensions/browser/updater/extension_downloader.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "This UMA will give us a way to compare the number extension update check requests between the old updater and new updater.",
       "parentUuid": "96d60fc2_911a9f75",
+      "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea6fb2a_25cdbbc2",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-20T01:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8e38a1_14d66667",
       "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
