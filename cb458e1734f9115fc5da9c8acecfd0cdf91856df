@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9f35dba8_1e5e4de5",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-20T01:10:56Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about it.",
+      "parentUuid": "b5b1a5ec_df13ea1e",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 5
+      },
+      "revId": "cb458e1734f9115fc5da9c8acecfd0cdf91856df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0127cbb_52c57976",
         "filename": "third_party/zlib/google/zip_reader.cc",
         "patchSetId": 1

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103e7e7f_1559eed4",
+        "filename": "third_party/zlib/google/zip_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-20T01:10:56Z",
+      "side": 1,
+      "message": "nit: I\u0027d still add a brief bit of documentation immediately above these fields, indicating that |owned_file_| is only set when the appropriate constructor is called, and is guaranteed to be an alias for |file_| in that case.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 42
+      },
+      "revId": "49687d07bd0330a4645ba71fe03b0a162ef480eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
