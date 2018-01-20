@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7f261a_224821b5",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T00:10:51Z",
+      "side": 1,
+      "message": "This variable and |dpi_y| are gone.",
+      "range": {
+        "startLine": 265,
+        "startChar": 48,
+        "endLine": 265,
+        "endChar": 53
+      },
+      "revId": "4b7e3a18c2667ee2e447efc94691c5dc3d0ea9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4f3c55_9f7c0fc2",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T00:10:51Z",
+      "side": 1,
+      "message": "Comment is out of sync with line 120.",
+      "revId": "4b7e3a18c2667ee2e447efc94691c5dc3d0ea9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8271248e_17d24aad",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T00:10:51Z",
+      "side": 1,
+      "message": "Pass by pointer, not non-const ref.",
+      "revId": "4b7e3a18c2667ee2e447efc94691c5dc3d0ea9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0b34f2_14472294",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T00:10:51Z",
+      "side": 1,
+      "message": "Can we calculate (dpi.width() / dpi_max) and (dpi.height() / dpi_max) once, and use the result in all the places below?",
+      "revId": "4b7e3a18c2667ee2e447efc94691c5dc3d0ea9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
