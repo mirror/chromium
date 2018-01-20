@@ -66,7 +66,7 @@ V8ScriptValueSerializer::V8ScriptValueSerializer(
       wasm_policy_(options.wasm_policy),
       for_storage_(options.for_storage == SerializedScriptValue::kForStorage) {}
 
-scoped_refptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
+std::unique_ptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
     v8::Local<v8::Value> value,
     ExceptionState& exception_state) {
 #if DCHECK_IS_ON()

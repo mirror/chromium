@@ -54,7 +54,7 @@ class MODULES_EXPORT IDBValue final {
 
   bool IsNull() const;
   Vector<String> GetUUIDs() const;
-  scoped_refptr<SerializedScriptValue> CreateSerializedValue() const;
+  std::unique_ptr<SerializedScriptValue> CreateSerializedValue() const;
   const Vector<WebBlobInfo>& BlobInfo() const { return blob_info_; }
   const IDBKey* PrimaryKey() const { return primary_key_.get(); }
   const IDBKeyPath& KeyPath() const { return key_path_; }

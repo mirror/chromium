@@ -2828,7 +2828,7 @@ bool Internals::fakeMouseMovePending() const {
 }
 
 DOMArrayBuffer* Internals::serializeObject(
-    scoped_refptr<SerializedScriptValue> value) const {
+    std::unique_ptr<SerializedScriptValue> value) const {
   base::span<const uint8_t> span = value->GetWireData();
   DOMArrayBuffer* buffer =
       DOMArrayBuffer::CreateUninitializedOrNull(span.length(), sizeof(uint8_t));
@@ -2837,7 +2837,7 @@ DOMArrayBuffer* Internals::serializeObject(
   return buffer;
 }
 
-scoped_refptr<SerializedScriptValue> Internals::deserializeBuffer(
+std::unique_ptr<SerializedScriptValue> Internals::deserializeBuffer(
     DOMArrayBuffer* buffer) const {
   String value(static_cast<const UChar*>(buffer->Data()),
                buffer->ByteLength() / sizeof(UChar));
@@ -2851,11 +2851,11 @@ DOMArrayBuffer* Internals::serializeWithInlineWasm(ScriptValue value) const {
   v8::Local<v8::Value> v8_value = value.V8Value();
   SerializedScriptValue::SerializeOptions options;
   options.wasm_policy = SerializedScriptValue::SerializeOptions::kSerialize;
-  scoped_refptr<SerializedScriptValue> obj = SerializedScriptValue::Serialize(
+  std::unique_ptr<SerializedScriptValue> ssv = SerializedScriptValue::Serialize(
       isolate, v8_value, options, exception_state);
   if (exception_state.HadException())
     return nullptr;
-  return serializeObject(obj);
+  return serializeObject(std::move(ssv));
 }
 
 ScriptValue Internals::deserializeBufferContainingWasm(

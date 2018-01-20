@@ -30,6 +30,9 @@
 
 #include "bindings/core/v8/V8Window.h"
 
+#include <memory>
+#include <utility>
+
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -261,7 +264,7 @@ void V8Window::postMessageMethodCustom(
 
   SerializedScriptValue::SerializeOptions options;
   options.transferables = &transferables;
-  scoped_refptr<SerializedScriptValue> message =
+  std::unique_ptr<SerializedScriptValue> message =
       SerializedScriptValue::Serialize(info.GetIsolate(), info[0], options,
                                        exception_state);
   if (exception_state.HadException())

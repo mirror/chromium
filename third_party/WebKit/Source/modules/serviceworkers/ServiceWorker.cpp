@@ -50,7 +50,7 @@ const AtomicString& ServiceWorker::InterfaceName() const {
 }
 
 void ServiceWorker::postMessage(ScriptState* script_state,
-                                scoped_refptr<SerializedScriptValue> message,
+                                std::unique_ptr<SerializedScriptValue> message,
                                 const MessagePortArray& ports,
                                 ExceptionState& exception_state) {
   ServiceWorkerContainerClient* client =

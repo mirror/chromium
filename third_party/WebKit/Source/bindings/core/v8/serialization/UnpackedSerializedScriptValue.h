@@ -5,7 +5,8 @@
 #ifndef UnpackedSerializedScriptValue_h
 #define UnpackedSerializedScriptValue_h
 
-#include "base/memory/scoped_refptr.h"
+#include <memory>
+
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/CoreExport.h"
 #include "platform/heap/GarbageCollected.h"
@@ -59,10 +60,11 @@ class CORE_EXPORT UnpackedSerializedScriptValue
 
  private:
   // Private so that callers use SerializedScriptValue::Unpack.
-  explicit UnpackedSerializedScriptValue(scoped_refptr<SerializedScriptValue>);
+  explicit UnpackedSerializedScriptValue(
+      std::unique_ptr<SerializedScriptValue>);
 
   // The underlying serialized data.
-  scoped_refptr<SerializedScriptValue> value_;
+  std::unique_ptr<SerializedScriptValue> value_;
 
   // These replace their corresponding members in SerializedScriptValue, once
   // set. Once the value is being deserialized, objects will be materialized

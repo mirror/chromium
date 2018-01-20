@@ -23,7 +23,7 @@ struct CORE_EXPORT BlinkCloneableMessage {
   BlinkCloneableMessage(BlinkCloneableMessage&&);
   BlinkCloneableMessage& operator=(BlinkCloneableMessage&&);
 
-  scoped_refptr<blink::SerializedScriptValue> message;
+  std::unique_ptr<blink::SerializedScriptValue> message;
   v8_inspector::V8StackTraceId sender_stack_trace_id;
 
  private:

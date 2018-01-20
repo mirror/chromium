@@ -127,7 +127,8 @@ void HistoryItem::ClearDocumentState() {
   document_state_vector_.clear();
 }
 
-void HistoryItem::SetStateObject(scoped_refptr<SerializedScriptValue> object) {
+void HistoryItem::SetStateObject(
+    std::unique_ptr<SerializedScriptValue> object) {
   state_object_ = std::move(object);
 }
 

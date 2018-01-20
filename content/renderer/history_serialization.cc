@@ -45,10 +45,8 @@ void GenerateFrameStateFromItem(const WebHistoryItem& item,
   state->referrer = WebString::ToOptionalString16(item.GetReferrer());
   state->referrer_policy = item.GetReferrerPolicy();
   state->target = WebString::ToOptionalString16(item.Target());
-  if (!item.StateObject().IsNull()) {
-    state->state_object =
-        WebString::ToOptionalString16(item.StateObject().ToString());
-  }
+  state->state_object =
+      WebString::ToOptionalString16(item.SerializedStateObject());
   state->scroll_restoration_type = item.ScrollRestorationType();
   state->visual_viewport_scroll_offset = item.VisualViewportScrollOffset();
   state->scroll_offset = item.GetScrollOffset();

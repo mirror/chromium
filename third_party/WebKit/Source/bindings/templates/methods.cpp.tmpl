@@ -462,7 +462,7 @@ static void postMessageImpl(const char* interfaceName, {{cpp_class}}* instance, 
     }
   }
 
-  scoped_refptr<SerializedScriptValue> message;
+  std::unique_ptr<SerializedScriptValue> message;
   if (instance->CanTransferArrayBuffersAndImageBitmaps()) {
     // This instance supports sending array buffers by move semantics.
     SerializedScriptValue::SerializeOptions options;

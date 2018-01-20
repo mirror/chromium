@@ -62,7 +62,7 @@ std::unique_ptr<DedicatedWorkerObjectProxy> DedicatedWorkerObjectProxy::Create(
 DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() = default;
 
 void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     const v8_inspector::V8StackTraceId& stack_id) {
   PostCrossThreadTask(
@@ -73,7 +73,7 @@ void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
 }
 
 void DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     WorkerThread* worker_thread,
     const v8_inspector::V8StackTraceId& stack_id) {
