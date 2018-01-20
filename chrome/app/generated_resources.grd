@@ -5406,6 +5406,18 @@ the Bookmarks menu.">
         Stop plugin
       </message>
 
+      <message name="IDS_BROWSER_BLOATED_FOREGROUND_TAB_INFOBAR" desc="The text of the infobar notifying the user that tab is using too much memory">
+        The web page is using too much memory.
+      </message>
+
+      <message name="IDS_BROWSER_BLOATED_BACKGROUND_TAB_INFOBAR" desc="The text of the infobar notifying the user that tab is using too much memory">
+        The web page was reloaded because it used too much memory.
+      </message>
+
+      <message name="IDS_BROWSER_BLOATED_TAB_INFOBAR_BUTTON" desc="The button on the bloated tab infobar to reload the tab">
+        Reload
+      </message>
+
       <!-- Passwords and Exceptions Dialog -->
       <message name="IDS_PASSWORDS_EXCEPTIONS_WINDOW_TITLE" desc="Title for 'Passwords and exceptions dialog'">
         Passwords

@@ -1068,6 +1068,9 @@ IPC_MESSAGE_ROUTED4(FrameHostMsg_DidAddMessageToConsole,
                     int32_t,        /* line number */
                     base::string16 /* source id */)
 
+// Sent by the renderer when it is using too much memory
+IPC_MESSAGE_ROUTED0(FrameHostMsg_BloatedTab)
+
 // Sent by the renderer when a child frame is created in the renderer.
 //
 // Each of these messages will have a corresponding FrameHostMsg_Detach message

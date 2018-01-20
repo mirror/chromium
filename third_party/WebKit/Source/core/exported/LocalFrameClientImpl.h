@@ -267,6 +267,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DidChangeContents() override;
 
+  void DispatchBloatedPage() override;
+
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
 

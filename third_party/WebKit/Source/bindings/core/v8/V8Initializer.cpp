@@ -48,6 +48,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/MainThreadDebugger.h"
@@ -89,6 +90,21 @@ static void ReportOOMErrorInMainThread(const char* location, bool is_js_heap) {
            << location << ").  Current memory usage: " << memory_usage_mb
            << " MB";
   OOM_CRASH();
+}
+
+static void ReportBloatedHeap(v8::Isolate* isolate,
+                              v8::Local<v8::Context> context) {
+  // ScriptState* script_state = ScriptState::Current(isolate);
+  // if (!script_state->ContextIsValid()) {
+  //   OOM_CRASH();
+  //   return;
+  // }
+  LocalDOMWindow* window = CurrentDOMWindow(isolate);
+  if (!window || !window->IsCurrentlyDisplayedInFrame()) {
+    OOM_CRASH();
+    return;
+  }
+  window->GetFrame()->LocalFrameRoot().Client()->DispatchBloatedPage();
 }
 
 static String ExtractMessageForConsole(v8::Isolate* isolate,
@@ -651,6 +667,7 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
   InitializeV8Common(isolate);
 
   isolate->SetOOMErrorHandler(ReportOOMErrorInMainThread);
+  isolate->SetBloatedHeapCallback(ReportBloatedHeap);
   isolate->SetFatalErrorHandler(ReportFatalErrorInMainThread);
   isolate->AddMessageListenerWithErrorLevel(
       MessageHandlerInMainThread,

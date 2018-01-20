@@ -132,6 +132,8 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
   // RenderFrameHost becomes unresponsive.
   virtual void OnRendererUnresponsive(RenderWidgetHost* render_widget_host) {}
 
+  virtual void OnRendererBloated(RenderFrameHost* render_frame_host) {}
+
   // Navigation ----------------------------------------------------------------
 
   // Called when a navigation started in the WebContents. |navigation_handle|
