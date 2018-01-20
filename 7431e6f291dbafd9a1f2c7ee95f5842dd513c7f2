@@ -22,6 +22,30 @@
       "revId": "7431e6f291dbafd9a1f2c7ee95f5842dd513c7f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929a0873_a6c163c7",
+        "filename": "media/cast/sender/performance_metrics_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-20T05:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561d474d_dbc77523",
+      "range": {
+        "startLine": 257,
+        "startChar": 10,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "7431e6f291dbafd9a1f2c7ee95f5842dd513c7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
