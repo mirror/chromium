@@ -66,7 +66,6 @@ class ProfileInfoCacheTest : public testing::Test {
 
  private:
   ProfileNameVerifierObserver name_observer_;
-  base::ScopedPathOverride user_data_dir_override_;
 };
 
 #endif  // CHROME_BROWSER_PROFILES_PROFILE_INFO_CACHE_UNITTEST_H_
