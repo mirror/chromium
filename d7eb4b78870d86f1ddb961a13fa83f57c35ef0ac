@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3606f33b_eb9d7a00",
+        "filename": "chrome/browser/background/background_contents_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-20T00:09:09Z",
+      "side": 1,
+      "message": "thank you, that\u0027s much nicer",
+      "parentUuid": "25159b6b_0cf2b81b",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 141,
+        "endChar": 69
+      },
+      "revId": "d7eb4b78870d86f1ddb961a13fa83f57c35ef0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd4c506c_3aefbbf0",
         "filename": "chrome/browser/sync/sync_error_notifier_ash_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T17:36:12Z",
       "side": 1,
       "message": "Does this need to be displayed in TearDown. I\u0027m specifically asking as I believe the way you have things here the profile() is destroyed before the tester. I think this comment applies to all uses in this patch.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "d7eb4b78870d86f1ddb961a13fa83f57c35ef0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929fce5e_1d77eaf2",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-20T00:09:09Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a problem that it outlives profile_. From reading the code it looks to handle that case gracefully. In the past, I have actually had problems destroying this class before profile shutdown because of the way SetTestingFactory() works (it won\u0027t replace the destroyed testing factory with a real one). Some code relies on the existence of a notification display service during profile shutdown.",
+      "parentUuid": "bd4c506c_3aefbbf0",
       "range": {
         "startLine": 83,
         "startChar": 4,
