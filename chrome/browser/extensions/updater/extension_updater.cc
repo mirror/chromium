@@ -35,6 +35,7 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
+#include "extensions/common/extension_updater_uma.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/manifest_constants.h"
 
@@ -412,6 +413,20 @@ void ExtensionUpdater::OnExtensionDownloadFailed(
     const PingResult& ping,
     const std::set<int>& request_ids) {
   DCHECK(alive_);
+
+  if (error == Error::MANIFEST_FETCH_FAILED ||
+      error == Error::MANIFEST_INVALID || error == Error::CRX_FETCH_FAILED) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Extensions.ExtensionUpdaterUpdateResults",
+        ExtensionUpdaterUpdateResult::UPDATE_ERROR,
+        ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+  } else if (error == Error::NO_UPDATE_AVAILABLE) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Extensions.ExtensionUpdaterUpdateResults",
+        ExtensionUpdaterUpdateResult::NO_UPDATE,
+        ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+  }
+
   UpdatePingData(id, ping);
   bool install_immediately = false;
   for (std::set<int>::const_iterator it = request_ids.begin();
@@ -564,6 +579,13 @@ void ExtensionUpdater::Observe(int type,
 
   // If installing this file didn't succeed, we may need to re-download it.
   const Extension* extension = content::Details<const Extension>(details).ptr();
+
+  UMA_HISTOGRAM_ENUMERATION("Extensions.ExtensionUpdaterUpdateResults",
+                            extension
+                                ? ExtensionUpdaterUpdateResult::UPDATE_SUCCESS
+                                : ExtensionUpdaterUpdateResult::UPDATE_ERROR,
+                            ExtensionUpdaterUpdateResult::UPDATE_RESULT_COUNT);
+
   extensions::CrxInstaller* installer =
       content::Source<extensions::CrxInstaller>(source).ptr();
   const FetchedCRXFile& crx_file = current_crx_file_;
