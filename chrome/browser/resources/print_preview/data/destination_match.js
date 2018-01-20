@@ -106,11 +106,15 @@ cr.define('print_preview', function() {
     }
 
     /**
-     * @return {?print_preview.PrinterType} The printer type of this
-     *     destination match. Will return null for Cloud destinations.
+     * @return {!Set<?print_preview.PrinterType>} The printer types of this
+     *     destination match.
      */
-    getType() {
-      return originToType(this.origins_[0]);
+    getOrigins() {
+      const set = new Set();
+      for (let origin of this.origins_) {
+        set.add(originToType(origin));
+      }
+      return set;
     }
   }
 
