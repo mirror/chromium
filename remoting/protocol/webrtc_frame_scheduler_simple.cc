@@ -146,7 +146,7 @@ bool WebrtcFrameSchedulerSimple::OnFrameCaptured(
     }
   }
 
-  params_out->duration = (now - latest_frame_encode_start_time_);
+  params_out->duration = kTargetFrameInterval;
   params_out->fps = processing_time_estimator_.EstimatedFrameRate();
 
   latest_frame_encode_start_time_ = now;
