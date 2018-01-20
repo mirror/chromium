@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d925fac_eb8d7391",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-20T03:01:45Z",
+      "side": 1,
+      "message": "True. I even put wait in the comment above.",
+      "parentUuid": "55757838_eabf44fa",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1ea16c_fb9d3b52",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T21:04:21Z",
       "side": 1,
       "message": "I\u0027d prefer document.addEventListener(\"DOMContentLoaded\", func, {once: true});",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907ffcc3_763f54bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-20T03:01:45Z",
+      "side": 1,
+      "message": "I found that attempting to use this event listener broke most of the canonicalize filter tests. I tried many things to get it to work, but ultimately window.onload is the method that worked. I research exactly what DOMContentLoaded did, and basically it waits until the HTML is loaded, but since the HTML in the tests doesn\u0027t contain the \u003cbody\u003e tags, document.body is still null at that point. That\u0027s my guess as to why it doesn\u0027t work.",
+      "parentUuid": "6a1ea16c_fb9d3b52",
       "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36565f6a_886f50ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-20T03:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149b1053_40ca1a53",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
