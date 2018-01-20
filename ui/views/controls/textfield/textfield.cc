@@ -940,12 +940,14 @@ void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   // for a textfield, even if disabled or readonly.
   node_data->AddState(ui::AX_STATE_EDITABLE);
   if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_ACTIVATE);
+    node_data->AddIntAttribute(
+        ui::AX_ATTR_DEFAULT_ACTION_VERB,
+        static_cast<int32_t>(ui::AX_DEFAULT_ACTION_VERB_ACTIVATE));
     // Only readonly if enabled. Don't overwrite the disabled restriction.
     if (read_only()) {
-      node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                                 ui::AX_RESTRICTION_READ_ONLY);
+      node_data->AddIntAttribute(
+          ui::AX_ATTR_RESTRICTION,
+          static_cast<int32_t>(ui::AX_RESTRICTION_READ_ONLY));
     }
   }
   if (text_input_type_ == ui::TEXT_INPUT_TYPE_PASSWORD) {
