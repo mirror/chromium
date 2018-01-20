@@ -8,12 +8,14 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/browser/media/router/media_router_dialog_controller.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/browser/media/router/presentation/presentation_service_delegate_impl.h"
@@ -26,7 +28,12 @@
 #include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "third_party/icu/source/common/unicode/uversion.h"
+#include "ui/base/ui_features.h"
 #include "url/gurl.h"
+
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+#include "chrome/browser/ui/webui/media_router/web_contents_display_observer.h"
+#endif
 
 namespace content {
 struct PresentationRequest;
@@ -226,8 +233,8 @@ class MediaRouterUI
   class UIMediaRoutesObserver : public MediaRoutesObserver {
    public:
     using RoutesUpdatedCallback =
-        base::Callback<void(const std::vector<MediaRoute>&,
-                            const std::vector<MediaRoute::Id>&)>;
+        base::RepeatingCallback<void(const std::vector<MediaRoute>&,
+                                     const std::vector<MediaRoute::Id>&)>;
     UIMediaRoutesObserver(MediaRouter* router,
                           const MediaSource::Id& source_id,
                           const RoutesUpdatedCallback& callback);
@@ -384,6 +391,12 @@ class MediaRouterUI
   // Returns the IssueManager associated with |router_|.
   IssueManager* GetIssueManager();
 
+  // Returns a subset of |sinks_| that should be listed in the dialog.
+  std::vector<MediaSinkWithCastModes> GetEnabledSinks() const;
+
+  // Sends the current list of enabled sinks to |handler_|.
+  void UpdateSinks();
+
   // Owned by the |web_ui| passed in the ctor, and guaranteed to be deleted
   // only after it has deleted |this|.
   MediaRouterWebUIMessageHandler* handler_ = nullptr;
@@ -454,6 +467,10 @@ class MediaRouterUI
 
   // If set, a cast mode that is required to be shown first.
   base::Optional<MediaCastMode> forced_cast_mode_;
+
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+  std::unique_ptr<WebContentsDisplayObserver> display_observer_;
+#endif
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   // Therefore |weak_factory_| must be placed at the end.
