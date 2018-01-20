@@ -16,6 +16,24 @@
       "revId": "3d5999b47f99941f4b8c1fd7dcdc788ccaefa9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399c4de8_cd1d0794",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-20T16:04:07Z",
+      "side": 1,
+      "message": "This was not needed before. I think it might because the mojo interface was in content/common. After the move, when running Chrome, it ended with the following error: \"Check failed: false. The Service Manager prevented service \"content_renderer\" from binding interface \"media::mojom::VideoCaptureHost\" in target service \"content_browser\". You probably need to update one or more service manifests to ensure that \"content_browser\" exposes \"media::mojom::VideoCaptureHost\" through a capability and that \"content_renderer\" requires that capability from the \"content_browser\" service.\" So I modified the manifest files as guided. Please let me know if I misunderstand anything.",
+      "parentUuid": "f1066ef4_7e2d847e",
+      "revId": "3d5999b47f99941f4b8c1fd7dcdc788ccaefa9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
