@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ecc4e72_beeab1a1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4583,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 1,
+      "message": "This looks a bit fragile, as it isn\u0027t clear that all the parameters specified below will be necessarily the same as the behavior before. How far are we from extending the lifetime of the NavigationRequest?",
+      "revId": "c250f953a8c2a1bac88e1e6b2e3f91e5e5bad577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeac773b_e8bfbc29",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 1,
+      "message": "nit: Technically it is not a full object, just a value.",
+      "range": {
+        "startLine": 108,
+        "startChar": 39,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "c250f953a8c2a1bac88e1e6b2e3f91e5e5bad577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece40450_d2c277b8",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 1,
+      "message": "Is this include really needed?",
+      "revId": "c250f953a8c2a1bac88e1e6b2e3f91e5e5bad577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5da9a13_dc2b888a",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 1,
+      "message": "nit: It now returns CommitResult::Ok, right?",
+      "range": {
+        "startLine": 202,
+        "startChar": 54,
+        "endLine": 202,
+        "endChar": 58
+      },
+      "revId": "c250f953a8c2a1bac88e1e6b2e3f91e5e5bad577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ac635a_022187c0",
+        "filename": "third_party/WebKit/public/web/commit_result.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 1,
+      "message": "nit: Empty lines between value and comment.",
+      "revId": "c250f953a8c2a1bac88e1e6b2e3f91e5e5bad577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

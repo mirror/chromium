@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9c298e_159f7d1e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-20T00:57:16Z",
+      "side": 0,
+      "message": "Why is this part of the condition not needed anymore?",
+      "range": {
+        "startLine": 3296,
+        "startChar": 43,
+        "endLine": 3296,
+        "endChar": 74
+      },
+      "revId": "e21c061fd4207addb26de6913693364d19585248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
