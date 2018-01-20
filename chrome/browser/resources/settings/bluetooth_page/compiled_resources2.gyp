@@ -22,6 +22,7 @@
       'target_name': 'bluetooth_subpage',
       'dependencies': [
         '../compiled_resources2.gyp:route',
+        '../prefs/compiled_resources2.gyp:prefs_behavior',
         '<(DEPTH)/ui/webui/resources/cr_elements/compiled_resources2.gyp:cr_scrollable_behavior',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:i18n_behavior',

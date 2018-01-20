@@ -35,17 +35,6 @@ Polymer({
     },
 
     /**
-     * Reflects the current state of the toggle buttons (in this page and the
-     * subpage). This will be set when the adapter state change or when the user
-     * changes the toggle.
-     * @private
-     */
-    bluetoothToggleState_: {
-      type: Boolean,
-      observer: 'bluetoothToggleStateChanged_',
-    },
-
-    /**
      * Set to true before the adapter state is received, when the adapter is
      * unavailable, and while an adapter state change is requested. This
      * prevents user changes while a change is in progress or when the adapter
@@ -139,11 +128,12 @@ Polymer({
   },
 
   /**
+   * @param {boolean} enabled
    * @return {string}
    * @private
    */
-  getIcon_: function() {
-    if (!this.bluetoothToggleState_)
+  getIcon_: function(enabled) {
+    if (!enabled)
       return 'settings:bluetooth-disabled';
     return 'settings:bluetooth';
   },
@@ -166,7 +156,6 @@ Polymer({
    */
   onBluetoothAdapterStateChanged_: function(state) {
     this.adapterState_ = state;
-    this.bluetoothToggleState_ = state.powered;
     this.bluetoothToggleDisabled_ = !state.available;
   },
 
@@ -174,18 +163,11 @@ Polymer({
   onTap_: function() {
     if (this.adapterState_.available === false)
       return;
-    if (!this.bluetoothToggleState_)
-      this.bluetoothToggleState_ = true;
+    const enabled = this.getPref('ash.user.bluetooth.adapter_enabled').value;
+    if (enabled == false)
+      this.setPrefValue('ash.user.bluetooth.adapter_enabled', !enabled);
     else
       this.openSubpage_();
-  },
-
-  /**
-   * @param {!Event} e
-   * @private
-   */
-  stopTap_: function(e) {
-    e.stopPropagation();
   },
 
   /**
@@ -195,26 +177,6 @@ Polymer({
   onSubpageArrowTap_: function(e) {
     this.openSubpage_();
     e.stopPropagation();
-  },
-
-  /** @private */
-  bluetoothToggleStateChanged_: function() {
-    if (!this.adapterState_ || this.bluetoothToggleDisabled_ ||
-        this.bluetoothToggleState_ == this.adapterState_.powered) {
-      return;
-    }
-    this.bluetoothToggleDisabled_ = true;
-    this.bluetoothPrivate.setAdapterState(
-        {powered: this.bluetoothToggleState_}, () => {
-          const error = chrome.runtime.lastError;
-          if (error && error != 'Error setting adapter properties: powered') {
-            console.error('Error enabling bluetooth: ' + error.message);
-            return;
-          }
-          this.setPrefValue(
-              'ash.user.bluetooth.adapter_enabled',
-              this.bluetoothToggleState_);
-        });
   },
 
   /** @private */

@@ -89,14 +89,13 @@ suite('Bluetooth', function() {
   });
 
   test('MainPage', function() {
-    assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
-    assertFalse(bluetoothPage.bluetoothToggleState_);
+    assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
     // Test that tapping the single settings-box div enables bluetooth.
     const div = bluetoothPage.$$('div.settings-box');
     assertTrue(!!div);
     MockInteractions.tap(div);
-    assertTrue(bluetoothPage.bluetoothToggleState_);
-    assertTrue(bluetoothApi_.getAdapterStateForTest().powered);
+    assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
+    assertTrue(bluetoothPage.$.enableBluetooth.checked);
   });
 
   suite('SubPage', function() {
@@ -111,6 +110,8 @@ suite('Bluetooth', function() {
 
     setup(function() {
       bluetoothApi_.setEnabled(true);
+      bluetoothPage.setPrefValue('ash.user.bluetooth.adapter_enabled', true);
+      assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
       Polymer.dom.flush();
       const div = bluetoothPage.$$('div.settings-box');
       MockInteractions.tap(div);
@@ -118,23 +119,22 @@ suite('Bluetooth', function() {
         subpage = bluetoothPage.$$('settings-bluetooth-subpage');
         subpage.listUpdateFrequencyMs = 0;
         assertTrue(!!subpage);
-        assertTrue(subpage.bluetoothToggleState);
+        assertTrue(subpage.$.enableBluetooth.checked);
         assertFalse(subpage.bluetoothToggleDisabled);
         assertEquals(0, subpage.listUpdateFrequencyMs);
       });
     });
 
     test('toggle', function() {
-      assertTrue(subpage.bluetoothToggleState);
+      assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
 
       const enableButton = subpage.$.enableBluetooth;
       assertTrue(!!enableButton);
       assertTrue(enableButton.checked);
 
-      subpage.bluetoothToggleState = false;
+      bluetoothPage.setPrefValue('ash.user.bluetooth.adapter_enabled', false);
       assertFalse(enableButton.checked);
-      assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
-      assertFalse(bluetoothPage.bluetoothToggleState_);
+      assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
     });
 
     // listUpdateFrequencyMs is set to 0 for tests, but we still need to wait
