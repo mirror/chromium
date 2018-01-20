@@ -711,6 +711,15 @@ void WindowSelectorItem::UpdateCannotSnapWarningVisibility() {
   caption_container_view_->SetCannotSnapLabelVisibility(visible);
 }
 
+ScopedTransformOverviewWindow::WindowDimensionsType
+WindowSelectorItem::GetWindowDimensionsType() const {
+  return transform_window_.type();
+}
+
+void WindowSelectorItem::UpdateWindowDimensionsType() {
+  transform_window_.UpdateWindowDimensionsType();
+}
+
 void WindowSelectorItem::SetDimmed(bool dimmed) {
   dimmed_ = dimmed;
   SetOpacity(dimmed ? kDimmedItemOpacity : 1.0f);
@@ -801,7 +810,8 @@ void WindowSelectorItem::SetItemBounds(const gfx::Rect& target_bounds,
   const int title_height = close_button_->GetPreferredSize().height();
   gfx::Rect selector_item_bounds =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          screen_rect, target_bounds, top_view_inset, title_height);
+          screen_rect, target_bounds, top_view_inset, title_height,
+          &transform_window_);
   gfx::Transform transform = ScopedTransformOverviewWindow::GetTransformForRect(
       screen_rect, selector_item_bounds);
   ScopedTransformOverviewWindow::ScopedAnimationSettings animation_settings;
@@ -902,7 +912,9 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
 void WindowSelectorItem::UpdateHeaderLayout(
     HeaderFadeInMode mode,
     OverviewAnimationType animation_type) {
-  gfx::Rect transformed_window_bounds(transform_window_.GetTransformedBounds());
+  gfx::Rect transformed_window_bounds =
+      transform_window_.window_selector_bounds().value_or(
+          transform_window_.GetTransformedBounds());
   ::wm::ConvertRectFromScreen(root_window_, &transformed_window_bounds);
 
   gfx::Rect label_rect(close_button_->GetPreferredSize());
