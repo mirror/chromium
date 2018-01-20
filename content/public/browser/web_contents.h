@@ -378,6 +378,8 @@ class WebContents : public PageNavigator,
   // Returns the character encoding of the page.
   virtual const std::string& GetEncoding() const = 0;
 
+  virtual void SetWasDiscarded(bool was_discarded) = 0;
+
   // Internal state ------------------------------------------------------------
 
   // Indicates whether the WebContents is being captured (e.g., for screenshots

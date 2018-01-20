@@ -340,6 +340,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   uint64_t GetUploadSize() const override;
   uint64_t GetUploadPosition() const override;
   const std::string& GetEncoding() const override;
+  void SetWasDiscarded(bool was_discarded) override;
   void IncrementCapturerCount(const gfx::Size& capture_size) override;
   void DecrementCapturerCount() override;
   bool IsBeingCaptured() const override;
@@ -664,6 +665,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void DidChangeLoadProgress() override;
   std::vector<std::unique_ptr<NavigationThrottle>> CreateThrottlesForNavigation(
       NavigationHandle* navigation_handle) override;
+  bool WasDiscarded() const override;
   std::unique_ptr<NavigationUIData> GetNavigationUIData(
       NavigationHandle* navigation_handle) override;
 
@@ -1416,6 +1418,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // hidden. Because it may outlive this WebContents, it enters a disabled state
   // when hidden or preparing for destruction.
   InterstitialPageImpl* interstitial_page_;
+
+  bool was_discarded_;
 
   // Data for current page -----------------------------------------------------
 

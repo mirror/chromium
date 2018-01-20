@@ -98,6 +98,7 @@ RequestNavigationParams::RequestNavigationParams()
       pending_history_list_offset(-1),
       current_history_list_offset(-1),
       current_history_list_length(0),
+      was_discarded(false),
       is_view_source(false),
       should_clear_history_list(false),
       should_create_service_worker(false),
@@ -118,6 +119,7 @@ RequestNavigationParams::RequestNavigationParams(
     int pending_history_list_offset,
     int current_history_list_offset,
     int current_history_list_length,
+    bool was_discarded,
     bool is_view_source,
     bool should_clear_history_list)
     : is_overriding_user_agent(is_overriding_user_agent),
@@ -133,6 +135,7 @@ RequestNavigationParams::RequestNavigationParams(
       pending_history_list_offset(pending_history_list_offset),
       current_history_list_offset(current_history_list_offset),
       current_history_list_length(current_history_list_length),
+      was_discarded(was_discarded),
       is_view_source(is_view_source),
       should_clear_history_list(should_clear_history_list),
       should_create_service_worker(false),

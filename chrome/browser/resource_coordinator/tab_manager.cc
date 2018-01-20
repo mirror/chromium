@@ -108,6 +108,7 @@ int FindWebContentsById(const TabStripModel* model, int32_t tab_id) {
 void ReloadWebContentsIfDiscarded(WebContents* contents,
                                   TabManager::WebContentsData* contents_data) {
   if (contents_data->IsDiscarded()) {
+    contents->SetWasDiscarded(true);
     contents->GetController().SetNeedsReload();
     contents->GetController().LoadIfNecessary();
     contents_data->SetDiscardState(false);
