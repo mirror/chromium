@@ -407,7 +407,7 @@ const char kForceDesktopIOSPromotion[] = "force-desktop-ios-promotion";
 // connection type.
 const char kForceEffectiveConnectionType[] = "force-effective-connection-type";
 
-// Forces metrics reporting to be enabled.
+// Forces the UkmService to be created.
 const char kForceEnableMetricsReporting[] = "force-enable-metrics-reporting";
 
 // Displays the First Run experience when the browser is started, regardless of
