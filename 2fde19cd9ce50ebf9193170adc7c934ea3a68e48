@@ -16,6 +16,24 @@
       "revId": "2fde19cd9ce50ebf9193170adc7c934ea3a68e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947a09c1_e970e21c",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/css-cascade-upgrade-from-v0-to-v1.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-20T03:19:08Z",
+      "side": 1,
+      "message": "To be consistent within this file, keep this for now, but will do in the future.\nThanks for the suggestion.",
+      "parentUuid": "34883609_f062b27b",
+      "revId": "2fde19cd9ce50ebf9193170adc7c934ea3a68e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
