@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4dddd5c3_27638a0d",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-20T03:02:50Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "ffc32dcc_10d8dc09",
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a52b145_c5a3a9c0",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 6
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "0170adb2_a08a13b8",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-20T03:02:50Z",
+      "side": 1,
+      "message": "Thanks, I see now.",
+      "parentUuid": "027a1675_fc1730c4",
+      "range": {
+        "startLine": 554,
+        "startChar": 31,
+        "endLine": 554,
+        "endChar": 40
+      },
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0405868e_76300121",
         "filename": "gpu/config/gpu_info_collector.h",
         "patchSetId": 6
@@ -128,6 +170,30 @@
       "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4593cd_680a2b0e",
+        "filename": "gpu/config/gpu_info_collector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-20T03:02:50Z",
+      "side": 1,
+      "message": "OK, never mind then.",
+      "parentUuid": "5c6928f4_45575c34",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "2e92f3907cbc567ab711519d084b24f3d0a5db5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
