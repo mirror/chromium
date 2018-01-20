@@ -224,12 +224,16 @@ int SpdyProxyClientSocket::Read(IOBuffer* buf, int buf_len,
 size_t SpdyProxyClientSocket::PopulateUserReadBuffer(char* data, size_t len) {
   return read_buffer_queue_.Dequeue(data, len);
 }
-
+#include <cstdio>
 int SpdyProxyClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
     const CompletionCallback& callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
+printf("\nSpdyProxyClientSocket::Write():\n");
+printf("length: %d\n", buf_len);
+for (int i = 0; i < buf_len; ++i) { putchar(buf->data()[i]); }
+printf("\n\n");
   DCHECK(write_callback_.is_null());
   if (next_state_ != STATE_OPEN)
     return ERR_SOCKET_NOT_CONNECTED;
