@@ -702,6 +702,7 @@ void WebMediaPlayerImpl::DoSeek(base::TimeDelta time, bool time_updated) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT2("media", "WebMediaPlayerImpl::DoSeek", "target",
                time.InSecondsF(), "id", media_log_->id());
+  LOG(ERROR) << __func__;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   if (IsRemote()) {
@@ -1616,6 +1617,8 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
     if (!have_reported_time_to_play_ready_) {
+      // TODO(dalecurtis): Record to a different metric if we used deferred
+      // start and some TBD amount of time has elapsed before playback starts.
       have_reported_time_to_play_ready_ = true;
       const base::TimeDelta elapsed = base::TimeTicks::Now() - load_start_time_;
       media_metrics_provider_->SetTimeToPlayReady(elapsed);
@@ -2205,7 +2208,8 @@ void WebMediaPlayerImpl::StartPipeline() {
 
     demuxer_.reset(new MediaUrlDemuxer(media_task_runner_, loaded_url_,
                                        frame_->GetDocument().SiteForCookies()));
-    pipeline_controller_.Start(demuxer_.get(), this, false, false);
+    pipeline_controller_.Start(demuxer_.get(), this, false, false,
+                               Pipeline::SuspendedStartOption::kNone);
     return;
   }
 
@@ -2255,7 +2259,14 @@ void WebMediaPlayerImpl::StartPipeline() {
   // ... and we're ready to go!
   // TODO(sandersd): On Android, defer Start() if the tab is not visible.
   seeking_ = true;
-  pipeline_controller_.Start(demuxer_.get(), this, is_streaming, is_static);
+  pipeline_controller_.Start(
+      demuxer_.get(), this, is_streaming, is_static,
+      // TODO(dalecurtis): This setting should be more explicit from HTMLME so
+      // that we don't trigger this state when play() is called.
+      (chunk_demuxer_ || preload_ != MultibufferDataSource::METADATA)
+          ? Pipeline::SuspendedStartOption::kNone
+          : (has_poster_ ? Pipeline::SuspendedStartOption::kAll
+                         : Pipeline::SuspendedStartOption::kAudioOnly));
 }
 
 void WebMediaPlayerImpl::SetNetworkState(WebMediaPlayer::NetworkState state) {
@@ -2435,6 +2446,8 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
 
   // If we're already suspended, see if we can wait for user interaction.
   bool can_stay_suspended = is_suspended && paused_ && !seeking_;
+  LOG(ERROR) << "Can stay: " << can_stay_suspended << ", " << is_suspended
+             << ", " << is_stale << " , " << paused_ << ", " << seeking_;
 
   // Combined suspend state.
   result.is_suspended = is_remote || must_suspend || idle_suspended ||
@@ -2916,6 +2929,9 @@ void WebMediaPlayerImpl::SetTickClockForTest(base::TickClock* tick_clock) {
 
 void WebMediaPlayerImpl::OnFirstFrame(base::TimeTicks frame_time) {
   DCHECK(!load_start_time_.is_null());
+  // TODO(dalecurtis): Record to a different metric if we used deferred start
+  // and some TBD amount of time has elapsed before playback starts.
+
   const base::TimeDelta elapsed = frame_time - load_start_time_;
   media_metrics_provider_->SetTimeToFirstFrame(elapsed);
   RecordTimingUMA("Media.TimeToFirstFrame", elapsed);

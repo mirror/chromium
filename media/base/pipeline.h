@@ -82,6 +82,15 @@ class MEDIA_EXPORT Pipeline {
 
   virtual ~Pipeline() {}
 
+  // Suspended start is an option which starts the pipeline without a renderer;
+  // pipeline initialization will stop once metadata has been retrieved. The
+  // flags below indicate when suspended start is allowed.
+  enum class SuspendedStartOption {
+    kNone,       // Suspended start is not allowed.
+    kAudioOnly,  // Allowed for audio only.
+    kAll,        // Allowed for audio-only, video-only, and audio+video.
+  };
+
   // Build a pipeline to using the given |demuxer| and |renderer| to construct
   // a filter chain, executing |seek_cb| when the initial seek has completed.
   // Methods on PipelineClient may be called up until Stop() has completed.
@@ -89,7 +98,11 @@ class MEDIA_EXPORT Pipeline {
   virtual void Start(Demuxer* demuxer,
                      std::unique_ptr<Renderer> renderer,
                      Client* client,
-                     const PipelineStatusCB& seek_cb) = 0;
+                     const PipelineStatusCB& seek_cb,
+                     SuspendedStartOption suspended_start_type =
+                         SuspendedStartOption::kNone) = 0;
+
+  virtual bool WasStartSuspended() const = 0;
 
   // |enabled_track_ids| contains track ids of enabled audio tracks.
   virtual void OnEnabledAudioTracksChanged(
