@@ -76,7 +76,7 @@ ElementsTestRunner.findNode = function(matchFunction, callback) {
       callback(null);
   }
 
-  TestRunner.domModel.requestDocument(doc => {
+  TestRunner.domModel.requestDocument().then(doc => {
     pendingRequests++;
     doc.getChildNodes(processChildren.bind(null, doc));
   });
@@ -196,7 +196,7 @@ ElementsTestRunner.firstMediaTextElementInSection = function(section) {
 };
 
 ElementsTestRunner.querySelector = async function(selector, callback) {
-  var doc = await TestRunner.domModel.requestDocumentPromise();
+  var doc = await TestRunner.domModel.requestDocument();
   var nodeId = await TestRunner.domModel.querySelector(doc.id, selector);
   callback(TestRunner.domModel.nodeForId(nodeId));
 };

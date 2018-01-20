@@ -1125,33 +1125,38 @@ SDK.DOMModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {function(!SDK.DOMDocument)} callback
+   * @return {!Promise<!SDK.DOMDocument>}
    */
-  requestDocument(callback) {
+  requestDocument() {
     if (this._document)
-      callback(this._document);
-    else
-      this.requestDocumentPromise().then(callback);
+      return Promise.resolve(this._document);
+    if (!this._pendingDocumentRequestPromise)
+      this._pendingDocumentRequestPromise = this._requestDocument();
+    return this._pendingDocumentRequestPromise;
   }
 
   /**
    * @return {!Promise<!SDK.DOMDocument>}
    */
-  requestDocumentPromise() {
-    if (this._document)
-      return Promise.resolve(this._document);
-    if (this._pendingDocumentRequestPromise)
-      return this._pendingDocumentRequestPromise;
-
-    this._pendingDocumentRequestPromise = this._agent.getDocument().then(root => {
-      if (root)
-        this._setDocument(root);
-      delete this._pendingDocumentRequestPromise;
-      if (!this._document)
-        console.error('No document');
-      return this._document;
-    });
-    return this._pendingDocumentRequestPromise;
+  async _requestDocument() {
+    var parentModel = this.parentModel();
+    if (parentModel && !this._frameOwnerNode) {
+      var response = await parentModel._agent.invoke_getFrameOwner({frameId: this.target().id()});
+      if (!response[Protocol.Error])
+        this._frameOwnerNode = parentModel.nodeForId(response.nodeId);
+    }
+    var documentPayload = await this._agent.getDocument();
+    if (documentPayload)
+      this._setDocument(documentPayload);
+    delete this._pendingDocumentRequestPromise;
+    if (!this._document) {
+      console.error('No document');
+    } else if (this._frameOwnerNode) {
+      this._frameOwnerNode._contentDocument = this._document;
+      this._document.parentNode = this._frameOwnerNode;
+      this.dispatchEventToListeners(SDK.DOMModel.Events.ChildNodeCountUpdated, this._frameOwnerNode);
+    }
+    return this._document;
   }
 
   /**
@@ -1166,7 +1171,7 @@ SDK.DOMModel = class extends SDK.SDKModel {
    * @return {!Promise<?SDK.DOMNode>}
    */
   async pushNodeToFrontend(objectId) {
-    await this.requestDocumentPromise();
+    await this.requestDocument();
     var nodeId = await this._agent.requestNode(objectId);
     return nodeId ? this.nodeForId(nodeId) : null;
   }
@@ -1176,7 +1181,7 @@ SDK.DOMModel = class extends SDK.SDKModel {
    * @return {!Promise<?Protocol.DOM.NodeId>}
    */
   pushNodeByPathToFrontend(path) {
-    return this.requestDocumentPromise().then(() => this._agent.pushNodeByPathToFrontend(path));
+    return this.requestDocument().then(() => this._agent.pushNodeByPathToFrontend(path));
   }
 
   /**
@@ -1184,7 +1189,7 @@ SDK.DOMModel = class extends SDK.SDKModel {
    * @return {!Promise<?Map<number, ?SDK.DOMNode>>}
    */
   async pushNodesByBackendIdsToFrontend(backendNodeIds) {
-    await this.requestDocumentPromise();
+    await this.requestDocument();
     var backendNodeIdsArray = backendNodeIds.valuesArray();
     var nodeIds = await this._agent.pushNodesByBackendIdsToFrontend(backendNodeIdsArray);
     if (!nodeIds)
@@ -1570,6 +1575,16 @@ SDK.DOMModel = class extends SDK.SDKModel {
    */
   dispose() {
     SDK.domModelUndoStack._dispose(this);
+  }
+
+  /**
+   * @return {?SDK.DOMModel}
+   */
+  parentModel() {
+    if (!Runtime.experiments.isEnabled('oopifInlineDOM'))
+      return null;
+    var parentTarget = this.target().parentTarget();
+    return parentTarget ? parentTarget.model(SDK.DOMModel) : null;
   }
 };
 
