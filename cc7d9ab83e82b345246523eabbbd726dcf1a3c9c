@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ad08366_f245b008",
+        "filename": "chrome/browser/extensions/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "I was unaware of that - thank you.",
+      "parentUuid": "c427db77_75499119",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8697da01_409930f9",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53019cf_60bf2bc1",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8697da01_409930f9",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4f82c72c_0d5dbd70",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9334558b_8d4e7a3f",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88136f1_617a05e4",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d254112_5e26d6b3",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88136f1_617a05e4",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b735cc75_7f39d6b4",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Windows reads from the registry. That\u0027s still OK?",
+      "parentUuid": "6f5500a2_de7cb9c0",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "777ea1dc_0d24feb0",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-16T17:24:01Z",
       "side": 1,
       "message": "Is this logic duplicated from somewhere else?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da388ec0_ec96e9e3",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Yep, from ResourceBundleFileLoader::OnMimeTypeRead() above. But I\u0027m guessing that you\u0027re really implying that those two identical chunks of code should be factored out into a helper function. I\u0027ve done that but am not sure the code is any easier to read, but you be the judge.",
+      "parentUuid": "777ea1dc_0d24feb0",
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "e68c663f_0ee0f2f8",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Yes, leftover - thx for catching that.",
+      "parentUuid": "394dab18_7678750a",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc2d0940_bfc54765",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 9
@@ -153,6 +279,24 @@
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d1d8bb_c78ae622",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Also leftover from an earlier const method. Removed.",
+      "parentUuid": "fc2d0940_bfc54765",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "6e395e9e_8cff6539",
+        "filename": "content/public/browser/file_url_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b88e216b_32099a12",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55217a1_80944b50",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 9
@@ -187,6 +349,24 @@
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5231ddcd_81acbd52",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55217a1_80944b50",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "27e21b4a_3b0256e8",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "You are correct, but unfortunately all the tests in chrome/browser/extensions/extension_protocols_unittest.cc modify an instance of InfoMap. Another solution is to create a new interface, something like extensions::InfoProxy, that would refer to either an InfoMap or to the ExtensionRegistry. That seems to add lots of complexity. Any ideas?",
+      "parentUuid": "369962b9_c456ef5d",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a97c04e_5f0a76e7",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 9
@@ -218,6 +416,24 @@
       "writtenOn": "2018-01-16T17:24:01Z",
       "side": 1,
       "message": "Is this all duplicated from somewhere else? Can we share code?",
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67a83cf_4c0c1b8b",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "I\u0027m probably just missing it. There was an opportunity to improve this code as the reply call was unnecessary.",
+      "parentUuid": "0a97c04e_5f0a76e7",
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +460,30 @@
       "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5037cc9e_525168bd",
+        "filename": "extensions/browser/extension_protocols.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-20T23:49:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f528a89a_c1ed31be",
+      "range": {
+        "startLine": 60,
+        "startChar": 51,
+        "endLine": 62,
+        "endChar": 67
+      },
+      "revId": "cc7d9ab83e82b345246523eabbbd726dcf1a3c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
