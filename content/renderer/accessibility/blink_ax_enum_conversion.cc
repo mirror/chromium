@@ -14,60 +14,60 @@ uint32_t AXStateFromBlink(const blink::WebAXObject& o) {
   blink::WebAXExpanded expanded = o.IsExpanded();
   if (expanded) {
     if (expanded == blink::kWebAXExpandedCollapsed)
-      state |= (1 << ui::AX_STATE_COLLAPSED);
+      state |= (1 << static_cast<int32_t>(ui::AX_STATE_COLLAPSED));
     else if (expanded == blink::kWebAXExpandedExpanded)
-      state |= (1 << ui::AX_STATE_EXPANDED);
+      state |= (1 << static_cast<int32_t>(ui::AX_STATE_EXPANDED));
   }
 
   if (o.CanSetFocusAttribute())
-    state |= (1 << ui::AX_STATE_FOCUSABLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_FOCUSABLE));
 
   if (o.Role() == blink::kWebAXRolePopUpButton || o.AriaHasPopup())
-    state |= (1 << ui::AX_STATE_HASPOPUP);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_HASPOPUP));
 
   if (o.IsHovered())
-    state |= (1 << ui::AX_STATE_HOVERED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_HOVERED));
 
   if (!o.IsVisible())
-    state |= (1 << ui::AX_STATE_INVISIBLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_INVISIBLE));
 
   if (o.IsLinked())
-    state |= (1 << ui::AX_STATE_LINKED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_LINKED));
 
   if (o.IsMultiline())
-    state |= (1 << ui::AX_STATE_MULTILINE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_MULTILINE));
 
   if (o.IsMultiSelectable())
-    state |= (1 << ui::AX_STATE_MULTISELECTABLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_MULTISELECTABLE));
 
   if (o.IsPasswordField())
-    state |= (1 << ui::AX_STATE_PROTECTED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_PROTECTED));
 
   if (o.IsRequired())
-    state |= (1 << ui::AX_STATE_REQUIRED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_REQUIRED));
 
   if (o.IsSelected() != blink::kWebAXSelectedStateUndefined)
-    state |= (1 << ui::AX_STATE_SELECTABLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_SELECTABLE));
 
   if (o.IsEditable())
-    state |= (1 << ui::AX_STATE_EDITABLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_EDITABLE));
 
   if (o.IsSelected() == blink::kWebAXSelectedStateTrue)
-    state |= (1 << ui::AX_STATE_SELECTED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_SELECTED));
 
   if (o.IsRichlyEditable())
-    state |= (1 << ui::AX_STATE_RICHLY_EDITABLE);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_RICHLY_EDITABLE));
 
   if (o.IsVisited())
-    state |= (1 << ui::AX_STATE_VISITED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_VISITED));
 
   if (o.Orientation() == blink::kWebAXOrientationVertical)
-    state |= (1 << ui::AX_STATE_VERTICAL);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_VERTICAL));
   else if (o.Orientation() == blink::kWebAXOrientationHorizontal)
-    state |= (1 << ui::AX_STATE_HORIZONTAL);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_HORIZONTAL));
 
   if (o.IsVisited())
-    state |= (1 << ui::AX_STATE_VISITED);
+    state |= (1 << static_cast<int32_t>(ui::AX_STATE_VISITED));
 
   return state;
 }
@@ -442,15 +442,15 @@ ui::AXTextDirection AXTextDirectionFromBlink(
 }
 
 ui::AXTextStyle AXTextStyleFromBlink(blink::WebAXTextStyle text_style) {
-  unsigned int browser_text_style = ui::AX_TEXT_STYLE_NONE;
+  uint32_t browser_text_style = static_cast<uint32_t>(ui::AX_TEXT_STYLE_NONE);
   if (text_style & blink::kWebAXTextStyleBold)
-    browser_text_style |= ui::AX_TEXT_STYLE_BOLD;
+    browser_text_style |= static_cast<int32_t>(ui::AX_TEXT_STYLE_BOLD);
   if (text_style & blink::kWebAXTextStyleItalic)
-    browser_text_style |= ui::AX_TEXT_STYLE_ITALIC;
+    browser_text_style |= static_cast<int32_t>(ui::AX_TEXT_STYLE_ITALIC);
   if (text_style & blink::kWebAXTextStyleUnderline)
-    browser_text_style |= ui::AX_TEXT_STYLE_UNDERLINE;
+    browser_text_style |= static_cast<int32_t>(ui::AX_TEXT_STYLE_UNDERLINE);
   if (text_style & blink::kWebAXTextStyleLineThrough)
-    browser_text_style |= ui::AX_TEXT_STYLE_LINE_THROUGH;
+    browser_text_style |= static_cast<int32_t>(ui::AX_TEXT_STYLE_LINE_THROUGH);
   return static_cast<ui::AXTextStyle>(browser_text_style);
 }
 

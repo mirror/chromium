@@ -769,7 +769,7 @@ bool BrowserAccessibility::IsRichTextField() const {
 
 bool BrowserAccessibility::HasExplicitlyEmptyName() const {
   return GetIntAttribute(ui::AX_ATTR_NAME_FROM) ==
-         ui::AX_NAME_FROM_ATTRIBUTE_EXPLICITLY_EMPTY;
+         static_cast<int32_t>(ui::AX_NAME_FROM_ATTRIBUTE_EXPLICITLY_EMPTY);
 }
 
 std::string BrowserAccessibility::ComputeAccessibleNameFromDescendants() const {
