@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f31e9b_d816a70e",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-20T01:18:18Z",
+      "side": 1,
+      "message": "slowercased (sic)",
+      "range": {
+        "startLine": 531,
+        "startChar": 36,
+        "endLine": 531,
+        "endChar": 46
+      },
+      "revId": "750cfc2066763815ab1168d5a12859c8b9744714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3961ff64_0603f70b",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-20T01:18:18Z",
+      "side": 1,
+      "message": "Should we add a lowercase check to PpdReferenceIsWellFormed since we\u0027ll never resolve the PPD otherwise?",
+      "range": {
+        "startLine": 538,
+        "startChar": 9,
+        "endLine": 538,
+        "endChar": 33
+      },
+      "revId": "750cfc2066763815ab1168d5a12859c8b9744714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
