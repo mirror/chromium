@@ -22,6 +22,30 @@
       "revId": "220e2ebe672a3eb52205de84e5aab89af1020738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45896140_ef1ee04e",
+        "filename": "net/quic/core/quic_error_codes.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2018-01-20T02:15:18Z",
+      "side": 1,
+      "message": "Yeah, once it\u0027s landed in chromium, it will be merged back to the internal repo.",
+      "parentUuid": "794ba520_94d5def7",
+      "range": {
+        "startLine": 265,
+        "startChar": 52,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "220e2ebe672a3eb52205de84e5aab89af1020738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
