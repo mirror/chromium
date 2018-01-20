@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cab5ce5_567bf645",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-20T20:20:07Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed193cf8_4d7bc25a",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-20T20:20:07Z",
+      "side": 1,
+      "message": "nit: There are other ways to dismiss power button menu. And this method is just tapping outside for dismissing. How about rename to TapToDismissPowerButtonMenu?",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed36014_03d8409d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-20T20:20:07Z",
+      "side": 1,
+      "message": "This test is about: dismiss menu when attaching tablet. It might worthwhile to test not showing menu attached at first place. Or maybe, (1) attaching cannot show (2) detaching can show (3) attaching close the menu.",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
