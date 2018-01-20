@@ -12,6 +12,7 @@
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/display/screen_orientation_controller_test_api.h"
 #include "ash/drag_drop/drag_drop_controller.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/screen_util.h"
@@ -36,6 +37,7 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -1827,7 +1829,7 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   gfx::Rect bounds(100, 100, 50, 50);
   gfx::Rect transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   float scale = GetItemScale(rect, bounds, 0, 0);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
@@ -1836,7 +1838,7 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
@@ -1844,7 +1846,7 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
@@ -1852,7 +1854,7 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 
@@ -1860,7 +1862,7 @@ TEST_F(WindowSelectorTest, TransformedRectMaintainsAspect) {
   scale = GetItemScale(rect, bounds, 0, 0);
   transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   EXPECT_NEAR(scale * rect.width(), transformed_rect.width(), 1);
   EXPECT_NEAR(scale * rect.height(), transformed_rect.height(), 1);
 }
@@ -1871,7 +1873,7 @@ TEST_F(WindowSelectorTest, TransformedRectIsCentered) {
   gfx::Rect bounds(100, 100, 50, 50);
   gfx::Rect transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, 0, 0);
+          rect, bounds, 0, 0, nullptr);
   EXPECT_GE(transformed_rect.x(), bounds.x());
   EXPECT_LE(transformed_rect.right(), bounds.right());
   EXPECT_GE(transformed_rect.y(), bounds.y());
@@ -1892,7 +1894,7 @@ TEST_F(WindowSelectorTest, TransformedRectIsCenteredWithInset) {
   const float scale = GetItemScale(rect, bounds, inset, header_height);
   gfx::Rect transformed_rect =
       ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-          rect, bounds, inset, header_height);
+          rect, bounds, inset, header_height, nullptr);
   // The |rect| width does not fit and therefore it gets centered outside
   // |bounds| starting before |bounds.x()| and ending after |bounds.right()|.
   EXPECT_LE(transformed_rect.x(), bounds.x());
@@ -1921,6 +1923,49 @@ TEST_F(WindowSelectorTest, OverviewWhileDragging) {
   resizer->Drag(location, 0);
   ToggleOverview();
   resizer->RevertDrag();
+}
+
+TEST_F(WindowSelectorTest, ExtremeWindowBounds) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  // Add three windows which in overview mode will be considered wide, tall and
+  // normal. Window |wide|, with size (400, 160) will be resized to (200, 160)
+  // when the 400x200 is rotated to 200x400, and should be considered a normal
+  // overview window after display change.
+  UpdateDisplay("400x200");
+  std::unique_ptr<aura::Window> wide(CreateWindow(gfx::Rect(10, 10, 400, 160)));
+  std::unique_ptr<aura::Window> tall(CreateWindow(gfx::Rect(10, 10, 50, 200)));
+  std::unique_ptr<aura::Window> normal(
+      CreateWindow(gfx::Rect(10, 10, 200, 200)));
+
+  ToggleOverview();
+  WindowSelectorItem* wide_item = GetWindowItemForWindow(0, wide.get());
+  WindowSelectorItem* tall_item = GetWindowItemForWindow(0, tall.get());
+  WindowSelectorItem* normal_item = GetWindowItemForWindow(0, normal.get());
+
+  // Verify the window dimension type is as expected after entering overview
+  // mode.
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kTooWide,
+            wide_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kTooTall,
+            tall_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kNormal,
+            normal_item->GetWindowDimensionsType());
+
+  display::Screen* screen = display::Screen::GetScreen();
+  const display::Display& display = screen->GetPrimaryDisplay();
+  display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  // Verify that |wide| has its window dimension type updated after the display
+  // change.
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kNormal,
+            wide_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kTooTall,
+            tall_item->GetWindowDimensionsType());
+  EXPECT_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kNormal,
+            normal_item->GetWindowDimensionsType());
 }
 
 class SplitViewWindowSelectorTest : public WindowSelectorTest {
