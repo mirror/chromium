@@ -22,6 +22,30 @@
       "revId": "d263ccb25f01165380c73f9295edd01c88de27f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec74c335_b47d99e8",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-20T01:58:32Z",
+      "side": 1,
+      "message": "I don\u0027t think arm_version will typically be overridden in non-ARM builds, but the documentation says that it has no effect on non-ARM builds, so I added the check.",
+      "parentUuid": "3678d5dc_b19c8837",
+      "range": {
+        "startLine": 163,
+        "startChar": 28,
+        "endLine": 163,
+        "endChar": 39
+      },
+      "revId": "d263ccb25f01165380c73f9295edd01c88de27f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
