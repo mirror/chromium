@@ -371,35 +371,6 @@ void CloudPrintProxyPolicyStartupTest::SetUp() {
   content::SetBrowserClientForTesting(browser_content_client_.get());
 
   TestingBrowserProcess::CreateInstance();
-  // Ensure test does not use the standard profile directory. This is copied
-  // from InProcessBrowserTest::SetUp(). These tests require a more complex
-  // process startup so they are unable to just inherit from
-  // InProcessBrowserTest.
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  base::FilePath user_data_dir =
-      command_line->GetSwitchValuePath(switches::kUserDataDir);
-  if (user_data_dir.empty()) {
-    ASSERT_TRUE(temp_user_data_dir_.CreateUniqueTempDir() &&
-                temp_user_data_dir_.IsValid())
-        << "Could not create temporary user data directory \""
-        << temp_user_data_dir_.GetPath().value() << "\".";
-
-    user_data_dir = temp_user_data_dir_.GetPath();
-    command_line->AppendSwitchPath(switches::kUserDataDir, user_data_dir);
-  }
-  ASSERT_TRUE(test_launcher_utils::OverrideUserDataDir(user_data_dir));
-
-#if defined(OS_MACOSX)
-  EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
-  EXPECT_TRUE(MockLaunchd::MakeABundle(temp_dir_.GetPath(),
-                                       "CloudPrintProxyTest", &bundle_path_,
-                                       &executable_path_));
-  mock_launchd_.reset(new MockLaunchd(executable_path_,
-                                      base::MessageLoopForUI::current(),
-                                      true, false));
-  scoped_launchd_instance_.reset(
-      new Launchd::ScopedInstance(mock_launchd_.get()));
-#endif
 }
 
 void CloudPrintProxyPolicyStartupTest::TearDown() {
@@ -485,6 +456,23 @@ TEST_F(CloudPrintProxyPolicyStartupTest, StartAndShutdown) {
       TestingBrowserProcess::GetGlobal();
   TestingProfileManager profile_manager(browser_process);
   ASSERT_TRUE(profile_manager.SetUp());
+
+  // The testing profile manager has set up a temp user data directory for the
+  // test. Add this to the command line switch so the child process use this
+  // directory instead of the one specified by the browser test harness.
+  base::CommandLine::ForCurrentProcess()->AppendSwitchPath(
+      switches::kUserDataDir, profile_manager.profiles_dir());
+
+#if defined(OS_MACOSX)
+  EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
+  EXPECT_TRUE(MockLaunchd::MakeABundle(temp_dir_.GetPath(),
+                                       "CloudPrintProxyTest", &bundle_path_,
+                                       &executable_path_));
+  mock_launchd_.reset(new MockLaunchd(
+      executable_path_, base::MessageLoopForUI::current(), true, false));
+  scoped_launchd_instance_.reset(
+      new Launchd::ScopedInstance(mock_launchd_.get()));
+#endif
 
   base::Process process =
       Launch("CloudPrintMockService_StartEnabledWaitForQuit");

@@ -14,6 +14,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "base/test/scoped_path_override.h"
 #include "chrome/test/base/scoped_testing_local_state.h"
 #include "chrome/test/base/testing_profile.h"
 
@@ -127,6 +128,9 @@ class TestingProfileManager {
 
   // The directory in which new profiles are placed.
   base::ScopedTempDir profiles_dir_;
+
+  // The scoped path override of path service.
+  std::unique_ptr<base::ScopedPathOverride> user_data_dir_override_;
 
   // Weak reference to the browser process on which the ProfileManager is set.
   TestingBrowserProcess* browser_process_;
