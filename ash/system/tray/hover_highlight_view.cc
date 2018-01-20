@@ -210,7 +210,8 @@ void HoverHighlightView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
   // Checkbox
   node_data->role = ui::AX_ROLE_CHECK_BOX;
-  node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+  node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
+                             static_cast<int32_t>(checked_state));
 }
 
 gfx::Size HoverHighlightView::CalculatePreferredSize() const {

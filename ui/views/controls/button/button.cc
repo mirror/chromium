@@ -388,8 +388,9 @@ void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_BUTTON;
   node_data->SetName(accessible_name_);
   if (!enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
+    node_data->AddIntAttribute(
+        ui::AX_ATTR_RESTRICTION,
+        static_cast<int32_t>(ui::AX_RESTRICTION_DISABLED));
   }
 
   switch (state_) {
@@ -397,12 +398,14 @@ void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       node_data->AddState(ui::AX_STATE_HOVERED);
       break;
     case STATE_PRESSED:
-      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                                 ui::AX_CHECKED_STATE_TRUE);
+      node_data->AddIntAttribute(
+          ui::AX_ATTR_CHECKED_STATE,
+          static_cast<int32_t>(ui::AX_CHECKED_STATE_TRUE));
       break;
     case STATE_DISABLED:
-      node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                                 ui::AX_RESTRICTION_DISABLED);
+      node_data->AddIntAttribute(
+          ui::AX_ATTR_RESTRICTION,
+          static_cast<int32_t>(ui::AX_RESTRICTION_DISABLED));
       break;
     case STATE_NORMAL:
     case STATE_COUNT:
@@ -410,8 +413,9 @@ void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       break;
   }
   if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_PRESS);
+    node_data->AddIntAttribute(
+        ui::AX_ATTR_DEFAULT_ACTION_VERB,
+        static_cast<int32_t>(ui::AX_DEFAULT_ACTION_VERB_PRESS));
   }
 }
 

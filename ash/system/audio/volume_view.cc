@@ -104,7 +104,8 @@ class VolumeButton : public ButtonListenerActionableView {
     const bool is_pressed = CrasAudioHandler::Get()->IsOutputMuted();
     node_data->AddIntAttribute(
         ui::AX_ATTR_CHECKED_STATE,
-        is_pressed ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE);
+        static_cast<int32_t>(is_pressed ? ui::AX_CHECKED_STATE_TRUE
+                                        : ui::AX_CHECKED_STATE_FALSE));
   }
 
   views::ImageView* image_;
