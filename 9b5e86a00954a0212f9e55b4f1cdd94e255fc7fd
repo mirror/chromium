@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7a3ea5_8e8ea797",
+        "filename": "third_party/WebKit/LayoutTests/rootscroller/set-rootscroller-before-load.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-20T01:45:54Z",
+      "side": 1,
+      "message": "Can we use the assertion functions from one of the test harnesses (js-test.js or testharness.js) instead of hand-rolled error reporting?",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "9b5e86a00954a0212f9e55b4f1cdd94e255fc7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b953b4_fb418b04",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-20T01:45:54Z",
+      "side": 1,
+      "message": "Are you sure this cast is needed?  Derived* and Base* should be directly comparable.",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "9b5e86a00954a0212f9e55b4f1cdd94e255fc7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
