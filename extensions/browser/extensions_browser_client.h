@@ -140,6 +140,18 @@ class ExtensionsBrowserClient {
       const std::string& content_security_policy,
       bool send_cors_header) = 0;
 
+  // Creates and starts a URLLoader to load an extension resource from the
+  // embedder's resource bundle (.pak) files. Returns false if the request is
+  // not for a resource bundle resource or if the embedder does not support
+  // this feature. Used for component extensions.
+  virtual bool MaybeLoadResourceFromResourceBundle(
+      const network::ResourceRequest& request,
+      network::mojom::URLLoaderRequest* loader,
+      const base::FilePath& directory_path,
+      const std::string& content_security_policy,
+      network::mojom::URLLoaderClientPtr* client,
+      bool send_cors_header) = 0;
+
   // Returns true if the embedder wants to allow a chrome-extension:// resource
   // request coming from renderer A to access a resource in an extension running
   // in renderer B. For example, Chrome overrides this to provide support for
