@@ -33,6 +33,24 @@
       "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8e38a1_14d66667",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-20T00:44:19Z",
+      "side": 1,
+      "message": "This UMA will give us a way to compare the number extension update check requests between the old updater and new updater.",
+      "parentUuid": "96d60fc2_911a9f75",
+      "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
