@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad558f6_3252590f",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-20T01:11:59Z",
+      "side": 0,
+      "message": "needs to be removed from header too?",
+      "range": {
+        "startLine": 2003,
+        "startChar": 26,
+        "endLine": 2003,
+        "endChar": 48
+      },
+      "revId": "aa08ad82cc3843f8522feb409442ccd53151889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8a6baa_ee7b476e",
+        "filename": "net/ssl/channel_id_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-20T01:11:59Z",
+      "side": 0,
+      "message": "this could be changed to non-braced style (elsewhere too)",
+      "range": {
+        "startLine": 285,
+        "startChar": 51,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "aa08ad82cc3843f8522feb409442ccd53151889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
