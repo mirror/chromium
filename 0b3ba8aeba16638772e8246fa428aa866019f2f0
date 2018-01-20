@@ -22,6 +22,30 @@
       "revId": "0b3ba8aeba16638772e8246fa428aa866019f2f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b5def8_c0b90e46",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/device-memory/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-20T23:54:20Z",
+      "side": 1,
+      "message": "we haven\u0027t asked them about owning device memory, but it would be a natural fit.\nTim?",
+      "parentUuid": "aa36da36_e0df7891",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "0b3ba8aeba16638772e8246fa428aa866019f2f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
