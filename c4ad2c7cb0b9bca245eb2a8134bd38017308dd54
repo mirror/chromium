@@ -104,6 +104,24 @@
       "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0519f1b_57728060",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "Yes, since it\u0027s used as an index, being 0-based makes more sense. We could even call it ticker_index to be clear about this but callers don\u0027t need to know the distinction between id and index anyways.",
+      "parentUuid": "49740ae6_d5800e39",
+      "revId": "c4ad2c7cb0b9bca245eb2a8134bd38017308dd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

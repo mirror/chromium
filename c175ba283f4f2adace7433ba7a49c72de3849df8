@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee67aacc_10352862",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "This only seems to be used by line 235, I\u0027d refer just merging this into the loop above than add additional per ticker methods.",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f752910_423ca8e7",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "I think is_ticking_player_ can be replaced by checking whether ticking_tickers_number_ is greater than 0.",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad572152_bcdc40b7",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this print all tickers rather than require a ticker id?",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f8dab7_4a463650",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "nit: We should use a typedef so that it\u0027s obvious where used that the number represents a ticker id, also because size_t is a bit of a strange type for an id but makes sense given that it maps to an index.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65e81aa_06ff4f3d",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "I worry that the meaning of ticker_id is not obvious for clients of animation. What does it mean? When do you need a new ticker? At the very least I think this needs to be carefully explained in comments, but perhaps we should consider alternative names as well such as effect number/index or have an explicit API for adding a new effect (ticker).\n\n+vollick do you have any suggestions here?",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcfad28_59dc0c35",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "With all of these *ForTicker methods, how many of them make sense to actually require a ticker_id? How often would we know the ticker id being paused? I think it may make sense to just loop over each ticker and call Pause on it.",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0406f310_deb8d578",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "s/number/count",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 28
+      },
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444ee180_efe49695",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-20T07:49:35Z",
+      "side": 1,
+      "message": "Seems like SingleAnimationPlayer isn\u0027t quite the right name given it has multiple animations. As it is right now you might call it SingleTickerPlayer but I don\u0027t think the concept of ticker is well explained / understood and perhaps SingleEffectPlayer would be a better name to relate it back to GroupEffects",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
