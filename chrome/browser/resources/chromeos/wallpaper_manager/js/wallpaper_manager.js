@@ -26,10 +26,14 @@ function WallpaperManager(dialogDom) {
   this.wallpaperRequest_ = null;
   this.wallpaperDirs_ = WallpaperDirectories.getInstance();
   this.preManifestDomInit_();
-  this.fetchManifest_();
   // Uses the redesigned wallpaper picker if |useNewWallpaperPicker| is true.
   this.document_.body.classList.toggle(
       'v2', loadTimeData.getBoolean('useNewWallpaperPicker'));
+
+  if (loadTimeData.getBoolean('showBackdropWallpapers'))
+    this.fetchWallpapers_();
+  else
+    this.fetchManifest_();
 }
 
 // Anonymous 'namespace'.
@@ -53,6 +57,12 @@ function WallpaperManager(dialogDom) {
  * before them. So the offset is 1.
  */
 /** @const */ var OnlineCategoriesOffset = 1;
+
+/** @const */ var GetWallpapersInfoIntervalMs = 50;
+
+/** @const */ var MaxFailedAttempts = 3;
+
+var consecutiveFailedAttempts = 0;
 
 /**
  * Returns a translated string.
@@ -166,6 +176,45 @@ WallpaperManager.prototype.fetchManifest_ = function() {
     // TODO(bshe): Always loading the offline manifest first and replacing
     // with the online one when available.
     this.onLoadManifestFailed_();
+  }
+};
+
+/**
+ * Fetches wallpapers from the Backdrop server.
+ * @private
+ */
+WallpaperManager.prototype.fetchWallpapers_ = function() {
+  var self = this;
+  chrome.wallpaperPrivate.getImagesInfo(function(collectionName, imagesInfo) {
+    if (collectionName.length == 0)
+      self.OnGetImagesInfoFailed_();
+    else
+      self.OnGetImagesInfoSucceeded_(collectionName, imagesInfo);
+  });
+};
+
+/**
+ *
+ * @private
+ */
+WallpaperManager.prototype.OnGetImagesInfoSucceeded_ = function(
+    collectionName, imagesInfo) {
+  consecutiveFailedAttempts = 0;
+  window.setTimeout(
+      this.fetchWallpapers_.bind(this), GetWallpapersInfoIntervalMs);
+
+};
+
+/**
+ *
+ * @private
+ */
+WallpaperManager.prototype.OnGetImagesInfoFailed_ = function() {
+  consecutiveFailedAttempts++;
+  if (consecutiveFailedAttempts != MaxFailedAttempts)
+    window.setTimeout(
+        this.fetchWallpapers_.bind(this), GetWallpapersInfoIntervalMs);
+  else {
   }
 };
 

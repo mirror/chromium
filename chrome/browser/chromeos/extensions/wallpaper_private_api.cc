@@ -27,6 +27,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h"
+#include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -205,6 +207,8 @@ ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   dict->SetBoolean("useNewWallpaperPicker",
                    base::CommandLine::ForCurrentProcess()->HasSwitch(
                        chromeos::switches::kNewWallpaperPicker));
+  dict->SetBoolean("showBackdropWallpapers",
+                   wallpaper_manager_util::ShouldShowBackdropWallpapers());
 
   return RespondNow(OneArgument(std::move(dict)));
 }
@@ -807,4 +811,25 @@ WallpaperPrivateRecordWallpaperUMAFunction::Run() {
   UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Source", source,
                             wallpaper::WALLPAPER_TYPE_COUNT);
   return RespondNow(NoArguments());
+}
+
+WallpaperPrivateGetImagesInfoFunction::WallpaperPrivateGetImagesInfoFunction() =
+    default;
+
+WallpaperPrivateGetImagesInfoFunction::
+    ~WallpaperPrivateGetImagesInfoFunction() = default;
+
+ExtensionFunction::ResponseAction WallpaperPrivateGetImagesInfoFunction::Run() {
+  base::Value collection_name(base::Value::Type::STRING);
+  base::Value images_info(base::Value::Type::DICTIONARY);
+  if (BackdropWallpaperHandler::GetInstance()->GetImagesInfo(&collection_name,
+                                                             &images_info)) {
+    // return RespondNow(OneArgument(std::make_unique<base::Value>()));
+    return RespondNow(
+        TwoArguments(std::make_unique<base::Value>(collection_name.DeepCopy()),
+                     std::make_unique<base::Value>(images_info.DeepCopy())));
+  }
+  // return RespondNow(OneArgument(std::make_unique<base::Value>()));
+  return RespondNow(TwoArguments(std::make_unique<base::Value>(),
+                                 std::make_unique<base::Value>()));
 }

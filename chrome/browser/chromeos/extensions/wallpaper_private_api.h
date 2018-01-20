@@ -301,4 +301,17 @@ class WallpaperPrivateRecordWallpaperUMAFunction
   ResponseAction Run() override;
 };
 
+class WallpaperPrivateGetImagesInfoFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("wallpaperPrivate.getImagesInfo",
+                             WALLPAPERPRIVATE_GETIMAGESINFO)
+  WallpaperPrivateGetImagesInfoFunction();
+
+ protected:
+  ~WallpaperPrivateGetImagesInfoFunction() override;
+
+  // ExtensionFunction:
+  ResponseAction Run() override;
+};
+
 #endif  // CHROME_BROWSER_CHROMEOS_EXTENSIONS_WALLPAPER_PRIVATE_API_H_

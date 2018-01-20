@@ -272,3 +272,7 @@ void WallpaperControllerClient::BindAndSetClient() {
       chromeos_custom_wallpapers_path,
       policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }
+
+void WallpaperControllerClient::Log(std::string log) {
+  LOG(ERROR) << "reach " << log;
+}
