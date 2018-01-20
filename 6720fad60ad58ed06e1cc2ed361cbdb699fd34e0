@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea02c53d_5821c3a4",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-20T01:05:05Z",
+      "side": 1,
+      "message": "I think default_state has similar logic? Can we move it to base state and share?",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5528abc5_cd047eb3",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-20T01:05:05Z",
+      "side": 1,
+      "message": "nit: Ternary operator (?:)",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0cb11a_8770c8cd",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-20T01:05:05Z",
+      "side": 1,
+      "message": "we need to add the snap state to wayland protocol and pass it from Android side.",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
