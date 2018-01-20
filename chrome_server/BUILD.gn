@@ -1,0 +1,53 @@
+# Copyright (c) 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/chrome_build.gni")
+import("//chrome/process_version_rc_template.gni")
+
+executable("chrome_server") {
+  sources = [
+    "chrome_server.cc",
+    "chrome_server.rc",
+  ]
+
+  configs -= [ "//build/config/win:console" ]
+  configs += [ "//build/config/win:windowed" ]
+
+  deps = [
+    ":lib",
+    ":version_resources",
+    "//build/win:default_exe_manifest",
+  ]
+
+  libs = [ "runtimeobject.lib" ]
+
+  ldflags = [
+    "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+    "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+    "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
+  ]
+}
+
+source_set("lib") {
+  visibility = [ ":*" ]
+  sources = [
+    "notification_activator.cc",
+    "notification_activator.h",
+    "resource.h",
+  ]
+
+  public_deps = [
+    "//base",
+    "//chrome/common:constants",
+    "//chrome/install_static:primary_module",
+    "//chrome/installer/util:with_no_strings",
+  ]
+}
+
+process_version_rc_template("version_resources") {
+  sources = [
+    "chrome_server_exe.ver",
+  ]
+  output = "$target_gen_dir/chrome_server_exe.rc"
+}
