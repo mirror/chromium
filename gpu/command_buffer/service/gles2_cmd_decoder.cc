@@ -1271,7 +1271,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
       GLuint service_id,
       bool client_visible) {
     return vertex_array_manager()->CreateVertexAttribManager(
-        client_id, service_id, group_->max_vertex_attribs(), client_visible);
+        client_id, service_id, group_->max_vertex_attribs(), client_visible,
+        feature_info_->IsWebGL2Context());
   }
 
   void DoBindAttribLocation(GLuint client_id,
@@ -3354,7 +3355,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   // out-of-bounds buffer accesses.
   bool needs_emulation = true;
   transform_feedback_manager_.reset(new TransformFeedbackManager(
-      group_->max_transform_feedback_separate_attribs(), needs_emulation));
+      group_->max_transform_feedback_separate_attribs(), needs_emulation,
+      feature_info_->IsWebGL2Context()));
 
   if (feature_info_->IsWebGL2OrES3Context()) {
     if (!feature_info_->IsES3Capable()) {
@@ -3378,9 +3380,12 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     api()->glBindTransformFeedbackFn(GL_TRANSFORM_FEEDBACK,
                                      default_transform_feedback);
     state_.bound_transform_feedback = state_.default_transform_feedback.get();
+    state_.bound_transform_feedback->SetIsBound(true);
   }
   state_.indexed_uniform_buffer_bindings = new IndexedBufferBindingHost(
-      group_->max_uniform_buffer_bindings(), needs_emulation);
+      group_->max_uniform_buffer_bindings(), GL_UNIFORM_BUFFER, needs_emulation,
+      feature_info_->IsWebGL2Context());
+  state_.indexed_uniform_buffer_bindings->SetIsBound(true);
 
   state_.InitGenericAttribs(group_->max_vertex_attribs());
   vertex_array_manager_.reset(new VertexArrayManager());
@@ -5035,7 +5040,6 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   state_.bound_copy_write_buffer = nullptr;
   state_.bound_pixel_pack_buffer = nullptr;
   state_.bound_pixel_unpack_buffer = nullptr;
-  state_.bound_transform_feedback_buffer = nullptr;
   state_.bound_uniform_buffer = nullptr;
   framebuffer_state_.bound_read_framebuffer = nullptr;
   framebuffer_state_.bound_draw_framebuffer = nullptr;
@@ -5771,10 +5775,10 @@ void GLES2DecoderImpl::BindIndexedBufferImpl(
   DCHECK(bindings);
   switch (function_type) {
     case kBindBufferBase:
-      bindings->DoBindBufferBase(target, index, buffer);
+      bindings->DoBindBufferBase(index, buffer);
       break;
     case kBindBufferRange:
-      bindings->DoBindBufferRange(target, index, buffer, offset, size);
+      bindings->DoBindBufferRange(index, buffer, offset, size);
       break;
     default:
       NOTREACHED();
@@ -6209,6 +6213,9 @@ void GLES2DecoderImpl::DoBindTransformFeedback(
     return;
   }
   LogClientServiceForInfo(transform_feedback, client_id, function_name);
+  if (state_.bound_transform_feedback) {
+    state_.bound_transform_feedback->SetIsBound(false);
+  }
   transform_feedback->DoBindTransformFeedback(target);
   state_.bound_transform_feedback = transform_feedback;
 }
@@ -6996,7 +7003,8 @@ bool GLES2DecoderImpl::GetHelper(
       *num_written = 1;
       if (params) {
         *params = GetClientId(
-            buffer_manager(), state_.bound_transform_feedback_buffer.get());
+            buffer_manager(),
+            state_.bound_transform_feedback->bound_transform_feedback_buffer());
       }
       return true;
     case GL_UNIFORM_BUFFER_BINDING:
@@ -16942,7 +16950,11 @@ void GLES2DecoderImpl::DoBindVertexArrayOES(GLuint client_id) {
 
   // Only set the VAO state if it's changed
   if (state_.vertex_attrib_manager.get() != vao) {
+    if (state_.vertex_attrib_manager)
+      state_.vertex_attrib_manager->SetIsBound(false);
     state_.vertex_attrib_manager = vao;
+    if (vao)
+      vao->SetIsBound(true);
     if (!features().native_vertex_array_object) {
       EmulateVertexArrayState();
     } else {

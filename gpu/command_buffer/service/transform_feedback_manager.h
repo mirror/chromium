@@ -22,8 +22,10 @@ class TransformFeedbackManager;
 // Info about TransformFeedbacks currently in the system.
 class GPU_GLES2_EXPORT TransformFeedback : public IndexedBufferBindingHost {
  public:
-  TransformFeedback(
-      TransformFeedbackManager* manager, GLuint client_id, GLuint service_id);
+  TransformFeedback(TransformFeedbackManager* manager,
+                    GLuint client_id,
+                    GLuint service_id,
+                    bool do_buffer_refcounting);
 
   // All the following functions do state update and call the underlying GL
   // function.  All validations have been done already and the GL function is
@@ -58,8 +60,24 @@ class GPU_GLES2_EXPORT TransformFeedback : public IndexedBufferBindingHost {
     return primitive_mode_;
   }
 
+  void BindTransformFeedbackBuffer(Buffer* buffer);
+
+  Buffer* bound_transform_feedback_buffer() const {
+    return bound_transform_feedback_buffer_.get();
+  }
+
+  void SetIsBound(bool bound) override;
+
+  void RemoveBoundBuffer(Buffer* buffer) override;
+
  private:
   ~TransformFeedback() override;
+
+  // The buffer bound to the generic binding point GL_TRANSFORM_FEEDBACK_BUFFER.
+  // TF objects own the generic binding point as well, unlike VAOs which do not
+  // own the ARRAY_BUFFER generic binding point (although they do own the
+  // non-indexed ELEMENT_ARRAY_BUFFER binding point).
+  scoped_refptr<Buffer> bound_transform_feedback_buffer_;
 
   // The manager that owns this Buffer.
   TransformFeedbackManager* manager_;
@@ -82,7 +100,8 @@ class GPU_GLES2_EXPORT TransformFeedbackManager {
   // However, we set it to true everywhere, not to trust drivers to handle
   // out-of-bounds buffer accesses.
   TransformFeedbackManager(GLuint max_transform_feedback_separate_attribs,
-                           bool needs_emulation);
+                           bool needs_emulation,
+                           bool do_buffer_refcounting);
   ~TransformFeedbackManager();
 
   void MarkContextLost() {
@@ -123,6 +142,7 @@ class GPU_GLES2_EXPORT TransformFeedbackManager {
 
   bool needs_emulation_;
   bool lost_context_;
+  bool do_buffer_refcounting_;
 
   DISALLOW_COPY_AND_ASSIGN(TransformFeedbackManager);
 };

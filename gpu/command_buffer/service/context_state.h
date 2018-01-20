@@ -354,7 +354,6 @@ struct GPU_GLES2_EXPORT ContextState {
   scoped_refptr<Buffer> bound_copy_write_buffer;
   scoped_refptr<Buffer> bound_pixel_pack_buffer;
   scoped_refptr<Buffer> bound_pixel_unpack_buffer;
-  scoped_refptr<Buffer> bound_transform_feedback_buffer;
   scoped_refptr<Buffer> bound_uniform_buffer;
 
   // Which textures are bound to texture units through glActiveTexture.
