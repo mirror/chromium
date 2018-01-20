@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c80e1de9_3323d6c0",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_input.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-20T00:44:17Z",
+      "side": 1,
+      "message": "I think the issue here is that internet_config_dialog.html (neither does internet_detail_dialog.html) does not set html[dir] and html[lang] correctly - it should use \n\u003chtml dir\u003d\"$i18n{textdirection}\" lang\u003d\"$i18n{language}\"\u003e\ninstead of\n\u003chtml i18n-values\u003d\"dir:textdirection;lang:language\"\u003e",
+      "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
