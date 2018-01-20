@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fffd5a87_2be532dc",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9de4e71_3da967cc",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10109c00_6396cf3a",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8154a8e0_68c30c41",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "Oops, it looks like I refactored away any reason for this to be a GridLayout. Changed to BoxLayout.",
+      "parentUuid": "10109c00_6396cf3a",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "735112b7_c5571e23",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "I inlined this into the struct creation.",
+      "parentUuid": "9b45df12_a9e582ce",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a430100_7eba9bd4",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4759bff4_2a804b64",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a430100_7eba9bd4",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b72f1388_7741f732",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "The scroll view has the entirety of the details and permissions (what I started calling the \"extension info\"), but it was like that before too. What changed is that the title is now a real title, so the whole content area is the scroll view.",
+      "parentUuid": "101017a1_b531651f",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aede042a_c9510fc4",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9849e40_96e6cb4a",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-20T01:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aede042a_c9510fc4",
+      "revId": "b303b21514ce30942c8f7fa4ac5d2b7a47c10809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
