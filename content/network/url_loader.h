@@ -97,6 +97,7 @@ class CONTENT_EXPORT URLLoader : public network::mojom::URLLoader,
       const std::vector<uint16_t>& algorithm_preferences,
       network::mojom::SSLPrivateKeyPtr ssl_private_key,
       bool cancel_certificate_selection);
+  void OnAuthRequiredResponse(const net::AuthCredentials& credentials);
 
   NetworkContext* context_;
   int32_t options_;
