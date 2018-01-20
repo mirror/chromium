@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b1bbfcc_b4c83be6",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T01:00:47Z",
+      "side": 1,
+      "message": "FWIW, I would find it clearer to just return true directly here.",
+      "revId": "e6e1d6caf77a079519307ad0f37dfba347c827c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f085cbf4_8974bece",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T01:00:47Z",
+      "side": 1,
+      "message": "return true, et cetera",
+      "revId": "e6e1d6caf77a079519307ad0f37dfba347c827c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69d413f_e9844277",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T01:00:47Z",
+      "side": 1,
+      "message": "Maybe put a note that since unlimited length is represented as -1, this effectively guarantees we\u0027ll never bail out due to reaching max_distance above.",
+      "revId": "e6e1d6caf77a079519307ad0f37dfba347c827c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
