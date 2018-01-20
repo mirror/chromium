@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "0380ec6d_9ed473b1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-20T17:18:29Z",
+      "side": 1,
+      "message": "Won\u0027t this happen automatically? I think we should throttle it somehow due to many places calling it again and again.",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8ec5df_1e2eff07",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSStyleSheetHeader.js",
         "patchSetId": 2
@@ -30,6 +47,24 @@
       "writtenOn": "2018-01-19T00:57:10Z",
       "side": 1,
       "message": "This won\u0027t work if you reload devtools after editing. Fixing that requires requesting a lot of content.",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89aed104_36aa2578",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSStyleSheetHeader.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-20T17:18:29Z",
+      "side": 1,
+      "message": "We can store this together with stylesheet content on backend. WDYT?",
+      "parentUuid": "ac8ec5df_1e2eff07",
       "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
