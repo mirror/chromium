@@ -443,6 +443,7 @@ WebURLRequest CreateURLRequestForNavigation(
   extra_data->set_navigation_initiated_by_renderer(
       request_params.nav_entry_id == 0);
   request.SetExtraData(extra_data);
+  request.SetWasDiscarded(request_params.was_discarded);
 
   // Set the ui timestamp for this navigation. Currently the timestamp here is
   // only non empty when the navigation was triggered by an Android intent. The
@@ -3057,6 +3058,8 @@ void RenderFrameImpl::CommitNavigation(
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
     const base::UnguessableToken& devtools_navigation_token) {
+  fprintf(stderr, "\nRenderFrameImpl::CommitNavigation: was_discarded: %d",
+          request_params.was_discarded);
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3174,9 +3177,12 @@ void RenderFrameImpl::CommitNavigation(
   // corresponds to a back/forward navigation event. Update the parameters
   // depending on the navigation type.
   if (is_reload) {
+    fprintf(stderr, "\n\tRenderFrameImpl::CommitNavigation: is_reload");
     load_type = ReloadFrameLoadTypeFor(common_params.navigation_type);
     should_load_request = true;
   } else if (is_history_navigation) {
+    fprintf(stderr,
+            "\n\tRenderFrameImpl::CommitNavigation: is_history_navigation");
     // We must know the nav entry ID of the page we are navigating back to,
     // which should be the case because history navigations are routed via the
     // browser.
@@ -3253,6 +3259,8 @@ void RenderFrameImpl::CommitNavigation(
   }
 
   if (should_load_request) {
+    fprintf(stderr,
+            "\n\tRenderFrameImpl::CommitNavigation: should_load_request");
     // Check if the navigation being committed originated as a client redirect.
     bool is_client_redirect =
         !!(common_params.transition & ui::PAGE_TRANSITION_CLIENT_REDIRECT);
@@ -3264,10 +3272,15 @@ void RenderFrameImpl::CommitNavigation(
     should_load_data_url |= !request_params.data_url_as_string.empty();
 #endif
     if (is_main_frame_ && should_load_data_url) {
+      fprintf(stderr,
+              "\n\tRenderFrameImpl::CommitNavigation: (mainframe) LoadDataURL");
+
       LoadDataURL(common_params, request_params, frame_, load_type,
                   item_for_history_navigation, history_load_type,
                   is_client_redirect);
     } else {
+      fprintf(stderr, "\n\tRenderFrameImpl::CommitNavigation:  frame_->Load");
+
       WebURLRequest request = CreateURLRequestForCommit(
           common_params, request_params, std::move(url_loader_client_endpoints),
           head, body_url, is_same_document);
@@ -3285,6 +3298,8 @@ void RenderFrameImpl::CommitNavigation(
         return;
     }
   } else {
+    fprintf(stderr,
+            "\n\tRenderFrameImpl::CommitNavigation: NOT should_load_request");
     // The browser expects the frame to be loading this navigation. Inform it
     // that the load stopped if needed.
     // Note: in the case of history navigations, |should_load_request| will be

@@ -29,6 +29,7 @@
 
 #include "core/dom/Document.h"
 
+#include "base/debug/stack_trace.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
@@ -568,6 +569,10 @@ class Document::NetworkStateObserver final
 };
 
 Document* Document::Create(Document& document) {
+  fprintf(stderr, "\nDocument::Create");
+  // base::debug::StackTrace st = base::debug::StackTrace();
+  // st.Print();
+
   Document* new_document = new Document(
       DocumentInit::Create().WithContextDocument(&document).WithURL(
           BlankURL()));
@@ -618,6 +623,7 @@ Document::Document(const DocumentInit& initializer,
           this,
           &Document::UpdateFocusAppearanceTimerFired),
       css_target_(nullptr),
+      was_discarded_(false),
       load_event_progress_(kLoadEventCompleted),
       start_time_(CurrentTime()),
       script_runner_(ScriptRunner::Create(this)),
@@ -671,6 +677,9 @@ Document::Document(const DocumentInit& initializer,
       needs_to_record_ukm_outlive_time_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
+    fprintf(stderr, "\nDocument::Create");
+    // base::debug::StackTrace st = base::debug::StackTrace();
+    // st.Print();
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
 
     fetcher_ = frame_->Loader().GetDocumentLoader()->Fetcher();
@@ -1789,6 +1798,14 @@ String Document::visibilityState() const {
 
 bool Document::hidden() const {
   return GetPageVisibilityState() != mojom::PageVisibilityState::kVisible;
+}
+
+bool Document::wasDiscarded() const {
+  return was_discarded_;
+}
+
+void Document::SetWasDiscarded(bool was_discarded) {
+  was_discarded_ = was_discarded;
 }
 
 void Document::DidChangeVisibilityState() {

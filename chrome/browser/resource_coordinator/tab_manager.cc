@@ -107,7 +107,9 @@ int FindWebContentsById(const TabStripModel* model, int32_t tab_id) {
 
 void ReloadWebContentsIfDiscarded(WebContents* contents,
                                   TabManager::WebContentsData* contents_data) {
+  fprintf(stderr, "\nReloadWebContentsIfDiscarded");
   if (contents_data->IsDiscarded()) {
+    contents->SetWasDiscarded(true);
     contents->GetController().SetNeedsReload();
     contents->GetController().LoadIfNecessary();
     contents_data->SetDiscardState(false);
@@ -911,6 +913,7 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
                                   content::WebContents* new_contents,
                                   int index,
                                   int reason) {
+  fprintf(stderr, "\nTabManager::ActiveTabChanged");
   // An active tab is not purged.
   // Calling GetWebContentsData() early ensures that the WebContentsData is
   // created for |new_contents|, which |stats_collector_| expects.

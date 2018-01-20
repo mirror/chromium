@@ -264,6 +264,8 @@ bool NavigatorImpl::NavigateToEntry(
     bool is_history_navigation_in_new_child,
     bool is_pending_entry,
     const scoped_refptr<network::ResourceRequestBody>& post_body) {
+  fprintf(stderr, "\nNavigatorImpl::NavigateToEntry : was_discarded: %d",
+          delegate_->WasDiscarded());
   TRACE_EVENT0("browser,navigation", "NavigatorImpl::NavigateToEntry");
 
   GURL dest_url = frame_entry.url();
@@ -836,6 +838,7 @@ void NavigatorImpl::OnBeginNavigation(
     FrameTreeNode* frame_tree_node,
     const CommonNavigationParams& common_params,
     mojom::BeginNavigationParamsPtr begin_params) {
+  fprintf(stderr, "\nNavigatorImpl::OnBeginNavigation");
   // TODO(clamy): the url sent by the renderer should be validated with
   // FilterURL.
   // This is a renderer-initiated navigation.
@@ -1001,6 +1004,8 @@ void NavigatorImpl::RequestNavigation(
     bool is_history_navigation_in_new_child,
     const scoped_refptr<network::ResourceRequestBody>& post_body,
     base::TimeTicks navigation_start) {
+  fprintf(stderr, "\nNavigatorImpl::RequestNavigation: was_discarded: %d",
+          delegate_->WasDiscarded());
   DCHECK(frame_tree_node);
 
   // This value must be set here because creating a NavigationRequest might

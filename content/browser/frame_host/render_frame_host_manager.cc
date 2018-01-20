@@ -464,6 +464,7 @@ void RenderFrameHostManager::ClearWebUIInstances() {
 
 void RenderFrameHostManager::DidCreateNavigationRequest(
     NavigationRequest* request) {
+  fprintf(stderr, "\nRenderFrameHostManager::DidCreateNavigationRequest");
   RenderFrameHostImpl* dest_rfh = GetFrameHostForNavigation(*request);
   DCHECK(dest_rfh);
   request->set_associated_site_instance_type(
@@ -474,6 +475,10 @@ void RenderFrameHostManager::DidCreateNavigationRequest(
 
 RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     const NavigationRequest& request) {
+  fprintf(
+      stderr,
+      "\nRenderFrameHostManager::GetFrameHostForNavigation was_discarded %d",
+      request.request_params_.was_discarded);
   DCHECK(!request.common_params().url.SchemeIs(url::kJavaScriptScheme))
       << "Don't call this method for JavaScript URLs as those create a "
          "temporary  NavigationRequest and we don't want to reset an ongoing "

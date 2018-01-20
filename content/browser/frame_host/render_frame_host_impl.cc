@@ -3431,6 +3431,8 @@ void RenderFrameHostImpl::CommitNavigation(
     bool is_view_source,
     base::Optional<SubresourceLoaderParams> subresource_loader_params,
     const base::UnguessableToken& devtools_navigation_token) {
+  fprintf(stderr, "\nRenderFrameHostImpl::CommitNavigation was_discarded %d",
+          request_params.was_discarded);
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());

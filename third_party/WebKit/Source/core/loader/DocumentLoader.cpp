@@ -649,6 +649,8 @@ void DocumentLoader::ResponseReceived(
 
 void DocumentLoader::CommitNavigation(const AtomicString& mime_type,
                                       const KURL& overriding_url) {
+  fprintf(stderr, "\nDocumentLoader::CommitNavigation was_discarded: %d",
+          request_.WasDiscarded());
   if (state_ != kProvisional)
     return;
 
@@ -693,6 +695,8 @@ void DocumentLoader::CommitNavigation(const AtomicString& mime_type,
                      mime_type, encoding, InstallNewDocumentReason::kNavigation,
                      parsing_policy, overriding_url);
   parser_->SetDocumentWasLoadedAsPartOfNavigation();
+  if (request_.WasDiscarded())
+    frame_->GetDocument()->SetWasDiscarded(true);
   frame_->GetDocument()->MaybeHandleHttpRefresh(
       response_.HttpHeaderField(HTTPNames::Refresh),
       Document::kHttpRefreshFromHeader);

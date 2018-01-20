@@ -2042,6 +2042,7 @@ void WebLocalFrameImpl::Load(
     WebHistoryLoadType web_history_load_type,
     bool is_client_redirect,
     const base::UnguessableToken& devtools_navigation_token) {
+  fprintf(stderr, "\nWebLocalFrameImpl::Load");
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
   const ResourceRequest& resource_request = request.ToResourceRequest();

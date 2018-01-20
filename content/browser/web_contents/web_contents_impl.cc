@@ -1324,6 +1324,14 @@ const std::string& WebContentsImpl::GetEncoding() const {
   return canonical_encoding_;
 }
 
+void WebContentsImpl::SetWasDiscarded(bool was_discarded) {
+  was_discarded_ = was_discarded;
+}
+
+bool WebContentsImpl::WasDiscarded() const {
+  return was_discarded_;
+}
+
 void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   DCHECK(!is_being_destroyed_);
   ++capturer_count_;
@@ -3648,6 +3656,7 @@ void WebContentsImpl::SetFocusToLocationBar(bool select_all) {
 }
 
 void WebContentsImpl::DidStartNavigation(NavigationHandle* navigation_handle) {
+  fprintf(stderr, "\nWebContentsImpl::DidStartNavigation");
   TRACE_EVENT1("navigation", "WebContentsImpl::DidStartNavigation",
                "navigation_handle", navigation_handle);
   for (auto& observer : observers_)
@@ -3677,6 +3686,8 @@ void WebContentsImpl::DidRedirectNavigation(
 
 void WebContentsImpl::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
+  fprintf(stderr, "\nWebContentsImpl::ReadyToCommitNavigation was_discarded %d",
+          was_discarded_);
   TRACE_EVENT1("navigation", "WebContentsImpl::ReadyToCommitNavigation",
                "navigation_handle", navigation_handle);
   for (auto& observer : observers_)
@@ -3693,6 +3704,8 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
+  fprintf(stderr, "\nWebContentsImpl::didst was_discarded %d", was_discarded_);
+
   TRACE_EVENT1("navigation", "WebContentsImpl::DidFinishNavigation",
                "navigation_handle", navigation_handle);
   for (auto& observer : observers_)
@@ -4563,6 +4576,7 @@ const GURL& WebContentsImpl::GetMainFrameLastCommittedURL() const {
 }
 
 void WebContentsImpl::RenderFrameCreated(RenderFrameHost* render_frame_host) {
+  fprintf(stderr, "\nWebContentsImpl::RenderFrameCreated");
   for (auto& observer : observers_)
     observer.RenderFrameCreated(render_frame_host);
   UpdateAccessibilityModeOnFrame(render_frame_host);
@@ -4990,7 +5004,11 @@ void WebContentsImpl::DidStartLoading(FrameTreeNode* frame_tree_node,
 }
 
 void WebContentsImpl::DidStopLoading() {
+  fprintf(stderr, "\n\n^^^WebContentsImpl::DidStopLoading");
   std::unique_ptr<LoadNotificationDetails> details;
+
+  if (WasDiscarded())
+    SetWasDiscarded(false);
 
   // Use the last committed entry rather than the active one, in case a
   // pending entry has been created.
