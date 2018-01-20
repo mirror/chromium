@@ -34,6 +34,24 @@
       "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e2fa64_b9b61c9a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-20T01:00:39Z",
+      "side": 0,
+      "message": "\u003e I don\u0027t think we\u0027ve ever hit these DCHECKs.  Otherwise we would probably crash somewhere on the call below, right?  And I haven\u0027t seen any crashes like this.\n\u003e \n\u003e If we never expect GetFrameWidget() callers to hit GetWebWidget()-\u003eIsWebFrameWidget() being false, then perhaps we could put a DumpWithoutCrashing there to help catch these cases (perhaps with additional crash keys if we need more info), before returning nullptr.\n\nSounds like a good idea. I know about a few cases such as IME which specifically need a WebFrameWidget. I think I should first stop those cases (avoid sending IPCs from browser). Then add this DumpWithoutCrash so find out other less obvious cases.\n\n\u003e Do any callers legitimately need to handle a non-null widget that is not a WebFrameWidget?  I\u0027m not sure about calls like RenderWidget::GetInputMethodController from your previous CL.  Those would be false positives for such a DWOC.\n\nThe ones I can think of all need a WebFrameWidget.",
+      "parentUuid": "6b9c57fb_63d18074",
+      "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
