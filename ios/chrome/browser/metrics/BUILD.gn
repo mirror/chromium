@@ -22,6 +22,8 @@ source_set("metrics") {
     "previous_session_info.h",
     "previous_session_info.mm",
     "previous_session_info_private.h",
+    "ukm_url_recorder.h",
+    "ukm_url_recorder.mm",
   ]
   deps = [
     "//base",

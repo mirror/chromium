@@ -90,8 +90,9 @@ class UkmEntryBuilder;
 class TestRecordingHelper;
 
 namespace internal {
-class UkmEntryBuilderBase;
 class SourceUrlRecorderWebContentsObserver;
+class SourceUrlRecorderWebStateObserver;
+class UkmEntryBuilderBase;
 }
 
 // This feature controls whether UkmService should be created.
@@ -137,6 +138,7 @@ class METRICS_EXPORT UkmRecorder {
   friend content::PluginServiceImpl;
   friend content::WebContentsImpl;
   friend internal::SourceUrlRecorderWebContentsObserver;
+  friend internal::SourceUrlRecorderWebStateObserver;
   friend internal::UkmEntryBuilderBase;
   friend media::MediaMetricsProvider;
   friend media::VideoDecodePerfHistory;
