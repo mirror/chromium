@@ -614,10 +614,6 @@ class NET_EXPORT CookieMonster : public CookieStore {
   // the constructor.
   void InitializeHistograms();
 
-  // The resolution of our time isn't enough, so we do something
-  // ugly and increment when we've seen the same time twice.
-  base::Time CurrentTime();
-
   // Runs the callback if, or defers the callback until, the full cookie
   // database is loaded.
   void DoCookieCallback(base::OnceClosure callback);

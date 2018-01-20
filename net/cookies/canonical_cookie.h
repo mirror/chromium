@@ -48,7 +48,9 @@ class NET_EXPORT CanonicalCookie {
 
   // Creates a new |CanonicalCookie| from the |cookie_line| and the
   // |creation_time|.  Canonicalizes and validates inputs. May return NULL if
-  // an attribute value is invalid.  |creation_time| may not be null.
+  // an attribute value is invalid.
+  // If |creation_time| is null, a unique (to this process) creation time
+  // >= base::Time::now() will be assigned.
   static std::unique_ptr<CanonicalCookie> Create(
       const GURL& url,
       const std::string& cookie_line,
@@ -124,6 +126,12 @@ class NET_EXPORT CanonicalCookie {
   void SetLastAccessDate(const base::Time& date) {
     last_access_date_ = date;
   }
+
+  // Update a null creation date with a unique time >= base::Time::Now()
+  // If the creation date is already set, this is a no-op.
+  void AssignCreationDate();
+
+  // Only used when inheriting a creation date from a deleted cookie.
   void SetCreationDate(const base::Time& date) { creation_date_ = date; }
 
   // Returns true if the given |url_path| path-matches the cookie-path as
@@ -212,6 +220,8 @@ class NET_EXPORT CanonicalCookie {
 
   // Returns the cookie's domain, with the leading dot removed, if present.
   std::string DomainWithoutDot() const;
+
+  static base::Time last_creation_date_set_;
 
   std::string name_;
   std::string value_;

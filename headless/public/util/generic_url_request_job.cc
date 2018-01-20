@@ -161,8 +161,8 @@ void GenericURLRequestJob::OnFetchComplete(
     size_t iter = 0;
     while (response_headers_->EnumerateHeader(&iter, name, &cookie_line)) {
       std::unique_ptr<net::CanonicalCookie> cookie =
-          net::CanonicalCookie::Create(final_url, cookie_line,
-                                       base::Time::Now(), options);
+          net::CanonicalCookie::Create(final_url, cookie_line, base::Time(),
+                                       options);
       if (!cookie || !CanSetCookie(*cookie, &options))
         continue;
       request_->context()->cookie_store()->SetCanonicalCookieAsync(
