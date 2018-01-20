@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af71abf4_6ab17b39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-20T05:09:13Z",
+      "side": 1,
+      "message": "nit: \"by platform/feature\"\n\n(as opposed to alphabetically)",
+      "revId": "8174859775ba3415b7892c6a073f420f9a82c1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc553fe_d492109d",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-20T05:09:13Z",
+      "side": 1,
+      "message": "remove - this is used in webui_url_constants.h now",
+      "revId": "8174859775ba3415b7892c6a073f420f9a82c1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
