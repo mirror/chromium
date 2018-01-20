@@ -1011,14 +1011,13 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
    */
   _documentUpdated(event) {
     var domModel = /** @type {!SDK.DOMModel} */ (event.data);
-    var inspectedRootDocument = domModel.existingDocument();
-
-    this._reset();
-
-    if (!inspectedRootDocument)
+    if (domModel.parentModel())
       return;
 
-    this.rootDOMNode = inspectedRootDocument;
+    this._reset();
+    if (!domModel.existingDocument())
+      return;
+    this.rootDOMNode = domModel.existingDocument();
   }
 
   /**
