@@ -3481,7 +3481,7 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         network::ResourceResponseHead(), GURL(), common_params, request_params,
         network::mojom::URLLoaderClientEndpointsPtr(),
-        /*subresource_loader_factories=*/base::nullopt,
+        /*subresource_loader_factories=*/nullptr,
         /*controller_service_worker=*/nullptr, devtools_navigation_token);
     return;
   }
@@ -3505,11 +3505,12 @@ void RenderFrameHostImpl::CommitNavigation(
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
-  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories;
   mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
-    subresource_loader_factories.emplace();
+    subresource_loader_factories =
+        std::make_unique<URLLoaderFactoryBundleInfo>();
     // NOTE: On Network Service navigations, we want to ensure that a frame is
     // given everything it will need to load any accessible subresources. We
     // however only do this for cross-document navigations, because the
@@ -3537,8 +3538,8 @@ void RenderFrameHostImpl::CommitNavigation(
         } else {
           // This is a webui scheme that doesn't have webui bindings. Give it
           // access to the network loader as it might require it.
-          subresource_loader_factories->RegisterFactory(
-              scheme, std::move(factory_for_webui));
+          subresource_loader_factories->factories_info()[scheme] =
+              factory_for_webui.PassInterface();
         }
       }
     }
@@ -3560,14 +3561,15 @@ void RenderFrameHostImpl::CommitNavigation(
     }
 
     DCHECK(default_factory.is_bound());
-    subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+    subresource_loader_factories->default_factory_info() =
+        default_factory.PassInterface();
 
     // Everyone gets a blob loader.
-    network::mojom::URLLoaderFactoryPtr blob_factory;
+    network::mojom::URLLoaderFactoryPtrInfo blob_factory_info;
     storage_partition->GetBlobURLLoaderFactory()->HandleRequest(
-        mojo::MakeRequest(&blob_factory));
-    subresource_loader_factories->RegisterFactory(url::kBlobScheme,
-                                                  std::move(blob_factory));
+        mojo::MakeRequest(&blob_factory_info));
+    subresource_loader_factories->factories_info()[url::kBlobScheme] =
+        std::move(blob_factory_info);
 
     non_network_url_loader_factories_.clear();
 
@@ -3588,10 +3590,10 @@ void RenderFrameHostImpl::CommitNavigation(
             this, common_params.url, &non_network_url_loader_factories_);
 
     for (auto& factory : non_network_url_loader_factories_) {
-      network::mojom::URLLoaderFactoryPtr factory_proxy;
-      factory.second->Clone(mojo::MakeRequest(&factory_proxy));
-      subresource_loader_factories->RegisterFactory(factory.first,
-                                                    std::move(factory_proxy));
+      network::mojom::URLLoaderFactoryPtrInfo factory_proxy_info;
+      factory.second->Clone(mojo::MakeRequest(&factory_proxy_info));
+      subresource_loader_factories->factories_info()[factory.first] =
+          std::move(factory_proxy_info);
     }
 
     // Pass the controller service worker info if we have one.
@@ -3605,7 +3607,7 @@ void RenderFrameHostImpl::CommitNavigation(
   // subresource ULFs when the Network Service is enabled.
   DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService) ||
          is_same_document || !is_first_navigation ||
-         subresource_loader_factories.has_value());
+         subresource_loader_factories);
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params,
@@ -3669,9 +3671,10 @@ void RenderFrameHostImpl::FailedNavigation(
         original_factory.PassInterface());
   }
 
-  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
-  subresource_loader_factories.emplace();
-  subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+  auto subresource_loader_factories =
+      std::make_unique<URLLoaderFactoryBundleInfo>(
+          default_factory.PassInterface(),
+          std::map<std::string, network::mojom::URLLoaderFactoryPtrInfo>());
 
   GetNavigationControl()->CommitFailedNavigation(
       common_params, request_params, has_stale_copy_in_cache, error_code,
