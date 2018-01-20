@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e10a13ef_28ac7c05",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-20T01:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "319993b9_f40f829b",
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83042b1f_2b1613cb",
         "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-19T21:48:48Z",
       "side": 1,
       "message": "General question about this file. Do you find expect* more useful/convenient than assert*, or are you using it just because it is used elsewhere too?",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dffbf16_dd19b42b",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-20T01:22:52Z",
+      "side": 1,
+      "message": "expect is more widely used within the extensions test suite so I just went with that.",
+      "parentUuid": "83042b1f_2b1613cb",
       "range": {
         "startLine": 74,
         "startChar": 12,
@@ -62,6 +104,30 @@
       "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a939b020_ddfa0586",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-20T01:22:52Z",
+      "side": 1,
+      "message": "Done (there\u0027s only one paper-button per item).",
+      "parentUuid": "f5c742bb_6ae86969",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "4d3ba08caba152e9c831613b38e0f8d6398c9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
