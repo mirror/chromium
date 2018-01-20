@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689d0247_bb073f50",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "How come this one checks the referrer, while line 807 checks the frame tree node\u0027s current origin? Would it be reasonable to always use the referrer? If there\u0027s a reason to have these differences, it would be useful to document the subtleties of why.\n\nAlso, what\u0027s the referrer for something opened via the context menu? What about middle-click?",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb32de07_1ba8f1df",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "Just curious: why did we have to write a new test helper for this?",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ece512_d3a4c936",
+        "filename": "content/common/navigation_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "Consider using an in-class member initializer to simplify this.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ae28c9_954b92ef",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "Will these continue to remain distinct concepts for the forseeable future? It\u0027s not always clear to me what should be guarded by user activation vs user gesture.",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 21
+      },
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516b7229_12f38700",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "Btw, how likely will we be able to implement this? It would be nice to move this over to Document if we don\u0027t need to support it being sticky on subframes.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6568dbe_8f2c4cb4",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-20T05:01:15Z",
+      "side": 1,
+      "message": "Btw, how likely will we be able to implement this? It would be nice to move this over to Document if we don\u0027t need to support it being sticky on subframes.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
