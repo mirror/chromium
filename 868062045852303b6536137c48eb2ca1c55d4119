@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47bf0b6_dbfd7996",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3977,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T01:17:42Z",
+      "side": 1,
+      "message": "Needs braces.",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3655c3_391e6b75",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3978,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T01:17:42Z",
+      "side": 1,
+      "message": "Are all XFA text fields and combo boxes editable? I also don\u0027t see how the code can calculate a return value without considering |page_x| and |page_y|.",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9194855f_90e1e6b0",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3984,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-20T01:17:42Z",
+      "side": 1,
+      "message": "This was a DCHECK() before. When would it fail?",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
