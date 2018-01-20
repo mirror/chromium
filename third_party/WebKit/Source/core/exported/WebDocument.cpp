@@ -53,6 +53,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
+#include "platform/UUID.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebDistillability.h"
@@ -185,16 +186,24 @@ WebElement WebDocument::FocusedElement() const {
 
 WebStyleSheetId WebDocument::InsertStyleSheet(const WebString& source_code,
                                               CSSOrigin origin) {
+  WebStyleSheetId id(CreateCanonicalUUIDString());
+  InsertStyleSheet(id, source_code, origin);
+  return id;
+}
+
+void WebDocument::InsertStyleSheet(const WebStyleSheetId& id,
+                                   const WebString& source_code,
+                                   CSSOrigin origin) {
   Document* document = Unwrap<Document>();
   DCHECK(document);
   StyleSheetContents* parsed_sheet =
       StyleSheetContents::Create(CSSParserContext::Create(*document));
   parsed_sheet->ParseString(source_code);
-  return document->GetStyleEngine().InjectSheet(parsed_sheet, origin);
+  document->GetStyleEngine().InjectSheet(id, parsed_sheet, origin);
 }
 
-void WebDocument::RemoveInsertedStyleSheet(WebStyleSheetId stylesheet_id) {
-  Unwrap<Document>()->GetStyleEngine().RemoveInjectedSheet(stylesheet_id);
+void WebDocument::RemoveInsertedStyleSheet(const WebStyleSheetId& id) {
+  Unwrap<Document>()->GetStyleEngine().RemoveInjectedSheet(id);
 }
 
 void WebDocument::WatchCSSSelectors(const WebVector<WebString>& web_selectors) {
