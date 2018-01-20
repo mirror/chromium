@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221e9e7b_b045a751",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-20T00:23:18Z",
+      "side": 1,
+      "message": "hm.. maybe this should just go in buildtools directly?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 79
+      },
+      "revId": "2c318c3965befebbdefd748b1b439f5bf0cd4460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
