@@ -65,7 +65,7 @@ void MojoWatcher::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
 }
 
 bool MojoWatcher::HasPendingActivity() const {
-  return handle_.is_valid();
+  return static_cast<bool>(handle_);
 }
 
 void MojoWatcher::ContextDestroyed(ExecutionContext*) {
@@ -123,7 +123,7 @@ MojoResult MojoWatcher::Watch(mojo::Handle handle,
 
 MojoResult MojoWatcher::Arm(MojoResult* ready_result) {
   // Nothing to do if the watcher is inactive.
-  if (!handle_.is_valid())
+  if (!handle_)
     return MOJO_RESULT_OK;
 
   uint32_t num_ready_contexts = 1;

@@ -168,7 +168,7 @@ TEST_P(URLLoaderFactoryImplTest, GetResponse) {
       net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
   ASSERT_FALSE(client.has_received_completion());
 
   client.RunUntilResponseReceived();
@@ -186,7 +186,7 @@ TEST_P(URLLoaderFactoryImplTest, GetResponse) {
   ASSERT_FALSE(client.has_received_completion());
 
   client.RunUntilComplete();
-  ASSERT_TRUE(client.response_body().is_valid());
+  ASSERT_TRUE(client.response_body());
   ASSERT_TRUE(client.has_received_completion());
 
   EXPECT_EQ(200, client.response_head().headers->response_code());
@@ -245,7 +245,7 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse) {
 
   client.RunUntilComplete();
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
 
   EXPECT_EQ(net::ERR_TIMED_OUT, client.completion_status().error_code);
   EXPECT_EQ(0, client.completion_status().encoded_data_length);
@@ -274,7 +274,7 @@ TEST_P(URLLoaderFactoryImplTest, GetFailedResponse2) {
 
   client.RunUntilComplete();
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
 
   EXPECT_EQ(net::ERR_TIMED_OUT, client.completion_status().error_code);
   EXPECT_GT(client.completion_status().encoded_data_length, 0);
@@ -302,7 +302,7 @@ TEST_P(URLLoaderFactoryImplTest, InvalidURL) {
 
   client.RunUntilComplete();
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
 
   EXPECT_EQ(net::ERR_ABORTED, client.completion_status().error_code);
 }
@@ -331,7 +331,7 @@ TEST_P(URLLoaderFactoryImplTest, ShouldNotRequestURL) {
   rdh_.SetDelegate(nullptr);
 
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
 
   EXPECT_EQ(net::ERR_ABORTED, client.completion_status().error_code);
 }
@@ -550,7 +550,7 @@ TEST_P(URLLoaderFactoryImplTest, CancelFromRenderer) {
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(rdh_.GetURLRequest(GlobalRequestID(kChildId, kRequestId)));
   ASSERT_FALSE(client.has_received_response());
-  ASSERT_FALSE(client.response_body().is_valid());
+  ASSERT_FALSE(client.response_body());
   ASSERT_FALSE(client.has_received_completion());
 
   loader = nullptr;
