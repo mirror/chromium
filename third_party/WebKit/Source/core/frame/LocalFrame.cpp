@@ -847,6 +847,7 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
   String error_reason;
   const bool is_allowed_navigation =
       CanNavigateWithoutFramebusting(target_frame, error_reason);
+
   const bool sandboxed =
       GetSecurityContext()->GetSandboxFlags() != kSandboxNone;
   const bool has_user_gesture = HasBeenActivated();
@@ -884,11 +885,14 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
     if (is_allowed_navigation)
       framebust_params |= kAllowedBit;
     framebust_histogram.Count(framebust_params);
-    if (has_user_gesture || is_allowed_navigation)
+    if (has_user_gesture || is_allowed_navigation ||
+        target_frame.GetSecurityContext()->GetSecurityOrigin()->CanAccess(
+            SecurityOrigin::Create(destination_url).get())) {
       return true;
+    }
     // Frame-busting used to be generally allowed in most situations, but may
     // now blocked if the document initiating the navigation has never received
-    // a user gesture.
+    // a user gesture and the navigation isn't same-origin for the target.
     if (!RuntimeEnabledFeatures::
             FramebustingNeedsSameOriginOrUserGestureEnabled()) {
       String target_frame_description =
