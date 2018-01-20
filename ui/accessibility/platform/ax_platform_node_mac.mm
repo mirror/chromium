@@ -486,8 +486,8 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   if (!node_)
     return NO;
 
-  const int restriction =
-      node_->GetData().GetIntAttribute(ui::AX_ATTR_RESTRICTION);
+  const ui::AXRestriction restriction = static_cast<ui::AXRestriction>(
+      node_->GetData().GetIntAttribute(ui::AX_ATTR_RESTRICTION));
   if (restriction == ui::AX_RESTRICTION_DISABLED)
     return NO;
 
@@ -655,7 +655,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 
 - (NSNumber*)AXEnabled {
   return @(node_->GetData().GetIntAttribute(ui::AX_ATTR_RESTRICTION) !=
-           ui::AX_RESTRICTION_DISABLED);
+           static_cast<int32_t>(ui::AX_RESTRICTION_DISABLED));
 }
 
 - (NSNumber*)AXFocused {
