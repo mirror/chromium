@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "1c5acd20_a6ecfd3e",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-20T00:41:32Z",
+      "side": 1,
+      "message": "\u003e With regexps there is always danger.\n\nyeah, that\u0027s why i\u0027d rather use existing code.  it\u0027s not to eek out that last 10% of space (though that\u0027s an added benefit), it\u0027s to not mess things up.",
+      "parentUuid": "b442fb00_0376bce3",
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51ccf645_803bfd08",
         "filename": "tools/grit/grit/format/minifier.py",
         "patchSetId": 4
@@ -412,6 +430,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "9af767d0_2a4d780b",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "a4886c4a46a03385e4109143526227135caca2da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4dbbb63_3a369d29",
+        "filename": "tools/grit/grit/format/minifier.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-20T00:41:32Z",
+      "side": 1,
+      "message": "aberent@: what I remember about why we only minified on Android:\n\n1) Android bots already had Java and we were using Closure Compiller\u0027s .jar\n2) disk space on Android matters slightly more post-installed, unpacked\n\nnote: we gzip on all platforms.",
+      "parentUuid": "becc961e_f96610f9",
       "range": {
         "startLine": 148,
         "startChar": 11,
