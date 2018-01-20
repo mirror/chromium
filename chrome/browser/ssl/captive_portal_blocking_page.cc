@@ -73,7 +73,8 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
     const GURL& login_url,
     std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
     const net::SSLInfo& ssl_info,
-    const base::Callback<void(content::CertificateRequestResultType)>& callback)
+    const base::Callback<void(content::CertificateRequestResultType)>& callback,
+    bool os_reports_captive_portal)
     : SSLBlockingPageBase(
           web_contents,
           certificate_reporting::ErrorReport::INTERSTITIAL_CAPTIVE_PORTAL,
@@ -89,7 +90,8 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
               CreateMetricsHelper(web_contents, request_url))),
       login_url_(login_url),
       ssl_info_(ssl_info),
-      callback_(callback) {
+      callback_(callback),
+      os_reports_captive_portal_(os_reports_captive_portal) {
   captive_portal::CaptivePortalMetrics::LogCaptivePortalBlockingPageEvent(
       captive_portal::CaptivePortalMetrics::SHOW_ALL);
 }
@@ -274,6 +276,10 @@ void CaptivePortalBlockingPage::OnProceed() {
 }
 
 void CaptivePortalBlockingPage::OnDontProceed() {
+  if (os_reports_captive_portal_) {
+    SetOSReportedCaptivePortal();
+  }
+
   OnInterstitialClosing();
 
   // Need to explicity deny the certificate via the callback, otherwise memory

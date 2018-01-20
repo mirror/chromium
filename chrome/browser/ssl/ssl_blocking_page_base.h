@@ -41,6 +41,8 @@ class SSLBlockingPageBase
   // security_interstitials::SecurityInterstitialPage:
   void OnInterstitialClosing() override;
 
+  void SetOSReportedCaptivePortal();
+
  protected:
   CertReportHelper* cert_report_helper();
 

@@ -71,7 +71,8 @@ CertReportHelper::CertReportHelper(
       interstitial_reason_(interstitial_reason),
       overridable_(overridable),
       interstitial_time_(interstitial_time),
-      metrics_helper_(metrics_helper) {}
+      metrics_helper_(metrics_helper),
+      os_reports_captive_portal_(false) {}
 
 CertReportHelper::~CertReportHelper() {
 }
@@ -179,6 +180,9 @@ void CertReportHelper::FinishCertCollection() {
           : certificate_reporting::ErrorReport::INTERSTITIAL_NOT_OVERRIDABLE,
       interstitial_time_);
 
+  if (os_reports_captive_portal_)
+    report.SetOSReportsCaptivePortal();
+
   if (!report.Serialize(&serialized_report)) {
     LOG(ERROR) << "Failed to serialize certificate report.";
     return;
@@ -226,4 +230,8 @@ bool CertReportHelper::ShouldReportCertificateError() {
 
 bool CertReportHelper::IsPrefEnabled(const char* pref) {
   return GetProfile(web_contents_)->GetPrefs()->GetBoolean(pref);
+}
+
+void CertReportHelper::SetOSReportedCaptivePortal() {
+  os_reports_captive_portal_ = true;
 }

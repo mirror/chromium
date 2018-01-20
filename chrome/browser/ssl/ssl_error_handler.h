@@ -113,7 +113,9 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
         const CommonNameMismatchHandler::CheckUrlCallback& callback) = 0;
     virtual void NavigateToSuggestedURL(const GURL& suggested_url) = 0;
     virtual bool IsErrorOverridable() const = 0;
-    virtual void ShowCaptivePortalInterstitial(const GURL& landing_url) = 0;
+    virtual void ShowCaptivePortalInterstitial(
+        const GURL& landing_url,
+        bool os_reports_captive_portal) = 0;
     virtual void ShowMITMSoftwareInterstitial(
         const std::string& mitm_software_name,
         bool is_enterprise_managed) = 0;
@@ -182,7 +184,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
  private:
   FRIEND_TEST_ALL_PREFIXES(SSLErrorHandlerTest, CalculateOptionsMask);
 
-  void ShowCaptivePortalInterstitial(const GURL& landing_url);
+  void ShowCaptivePortalInterstitial(const GURL& landing_url,
+                                     bool os_reports_captive_portal);
   void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
                                     bool is_enterprise_managed);
   void ShowSSLInterstitial();

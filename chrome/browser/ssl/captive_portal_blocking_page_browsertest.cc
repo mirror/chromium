@@ -81,7 +81,8 @@ class CaptivePortalBlockingPageForTesting : public CaptivePortalBlockingPage {
                                   login_url,
                                   std::move(ssl_cert_reporter),
                                   ssl_info,
-                                  callback),
+                                  callback,
+                                  false),
         is_wifi_(is_wifi),
         wifi_ssid_(wifi_ssid) {}
 

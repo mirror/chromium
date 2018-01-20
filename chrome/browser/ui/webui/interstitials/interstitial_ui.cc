@@ -114,7 +114,8 @@ class CaptivePortalBlockingPageWithNetInfo : public CaptivePortalBlockingPage {
                                   login_url,
                                   nullptr,
                                   ssl_info,
-                                  callback),
+                                  callback,
+                                  false),
         is_wifi_(is_wifi),
         wifi_ssid_(wifi_ssid) {}
 

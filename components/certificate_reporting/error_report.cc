@@ -213,6 +213,10 @@ void ErrorReport::SetIsRetryUpload(bool is_retry_upload) {
   cert_report_->set_is_retry_upload(is_retry_upload);
 }
 
+void ErrorReport::SetOSReportsCaptivePortal() {
+  cert_report_->set_os_reports_captive_portal(true);
+}
+
 const std::string& ErrorReport::hostname() const {
   return cert_report_->hostname();
 }
@@ -227,6 +231,10 @@ bool ErrorReport::is_enterprise_managed() const {
 
 bool ErrorReport::is_retry_upload() const {
   return cert_report_->is_retry_upload();
+}
+
+bool ErrorReport::os_reports_captive_portal() const {
+  return cert_report_->os_reports_captive_portal();
 }
 
 }  // namespace certificate_reporting
