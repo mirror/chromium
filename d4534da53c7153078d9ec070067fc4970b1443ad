@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "747f6fac_c1ece744",
+        "filename": "base/component_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-20T00:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05762cc0_834fb01d",
+      "range": {
+        "startLine": 71,
+        "startChar": 56,
+        "endLine": 71,
+        "endChar": 68
+      },
+      "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5cf21df_2ebeb679",
         "filename": "base/component_export.h",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "writtenOn": "2018-01-20T00:04:41Z",
       "side": 1,
       "message": "worry about $ not being in the compilation character set, what matters is the airity, so maybe use \"\" or some such?",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "d4534da53c7153078d9ec070067fc4970b1443ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f66165_4491b36a",
+        "filename": "base/component_export.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-20T00:25:29Z",
+      "side": 1,
+      "message": "Sure, \"\" seems fine. Done",
+      "parentUuid": "c5cf21df_2ebeb679",
       "range": {
         "startLine": 84,
         "startChar": 25,
