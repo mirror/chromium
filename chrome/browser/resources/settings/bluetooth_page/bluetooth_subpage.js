@@ -21,12 +21,13 @@ Polymer({
     I18nBehavior,
     CrScrollableBehavior,
     settings.RouteObserverBehavior,
+    PrefsBehavior,
   ],
 
   properties: {
-    /** Reflects the bluetooth-page property. */
-    bluetoothToggleState: {
-      type: Boolean,
+    /** Preferences state. */
+    prefs: {
+      type: Object,
       notify: true,
     },
 
@@ -146,7 +147,8 @@ Polymer({
   },
 
   observers: [
-    'adapterStateChanged_(adapterState.*)',
+    'adapterStateChanged_(adapterState.*, ' +
+        'prefs.ash.user.bluetooth.adapter_enabled.*)',
     'deviceListChanged_(deviceList_.*)',
   ],
 
@@ -271,7 +273,7 @@ Polymer({
    * @private
    */
   updateDeviceList_: function() {
-    if (!this.bluetoothToggleState) {
+    if (!this.getPref('ash.user.bluetooth.adapter_enabled').value) {
       this.deviceList_ = [];
       return;
     }
@@ -370,16 +372,11 @@ Polymer({
    * @param {!Event} event
    * @private
    */
-  stopTap_: function(event) {
-    event.stopPropagation();
-  },
-
-  /**
-   * @param {!Event} event
-   * @private
-   */
   onEnableTap_: function(event) {
-    this.bluetoothToggleState = !this.bluetoothToggleState;
+    if (this.adapterState.available === false)
+      return;
+    const enabled = this.getPref('ash.user.bluetooth.adapter_enabled').value;
+    this.setPrefValue('ash.user.bluetooth.adapter_enabled', !enabled);
     event.stopPropagation();
   },
 
@@ -395,23 +392,23 @@ Polymer({
   },
 
   /**
-   * @param {boolean} bluetoothToggleState
+   * @param {boolean} bluetoothEnabled
    * @param {!Array<!chrome.bluetooth.Device>} deviceList
    * @return {boolean}
    * @private
    */
-  showDevices_: function(bluetoothToggleState, deviceList) {
-    return bluetoothToggleState && deviceList.length > 0;
+  showDevices_: function(bluetoothEnabled, deviceList) {
+    return bluetoothEnabled && deviceList.length > 0;
   },
 
   /**
-   * @param {boolean} bluetoothToggleState
+   * @param {boolean} bluetoothEnabled
    * @param {!Array<!chrome.bluetooth.Device>} deviceList
    * @return {boolean}
    * @private
    */
-  showNoDevices_: function(bluetoothToggleState, deviceList) {
-    return bluetoothToggleState && deviceList.length == 0;
+  showNoDevices_: function(bluetoothEnabled, deviceList) {
+    return bluetoothEnabled && deviceList.length == 0;
   },
 
   /**
