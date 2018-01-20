@@ -1922,6 +1922,8 @@ void RenderViewImpl::OnEnableAutoResize(const gfx::Size& min_size,
   if (!webview())
     return;
 
+  DidEnableAutoResize(min_size, max_size);
+
   auto_resize_mode_ = true;
 
   if (IsUseZoomForDSFEnabled()) {

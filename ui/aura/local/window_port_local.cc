@@ -146,6 +146,15 @@ void WindowPortLocal::AllocateLocalSurfaceId() {
     frame_sink_->SetLocalSurfaceId(local_surface_id_);
 }
 
+void WindowPortLocal::SetLocalSurfaceId(
+    const viz::LocalSurfaceId& local_surface_id) {
+  last_device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
+  last_size_ = window_->bounds().size();
+  local_surface_id_ = local_surface_id;
+  if (frame_sink_)
+    frame_sink_->SetLocalSurfaceId(local_surface_id_);
+}
+
 const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
   if (!local_surface_id_.is_valid())
     AllocateLocalSurfaceId();

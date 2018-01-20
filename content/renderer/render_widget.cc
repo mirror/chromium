@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_widget.h"
 
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -611,6 +612,17 @@ void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
 }
 #endif
 
+void RenderWidget::HandlePotentialLocalSurfaceIdConflict(
+    viz::LocalSurfaceId parent_generated_local_surface_id) {
+  // TODO(cblume): It is possible for an outstnding child-generated
+  // LocalSurfaceId to be in-flight when the parent provides a conflicting
+  // LocalSurfaceId. Handle the resolution here.
+  std::cout << "parent: " << parent_generated_local_surface_id << std::endl;
+  child_local_surface_id_allocator_.SetParent(
+      parent_generated_local_surface_id);
+  local_surface_id_ = parent_generated_local_surface_id;
+}
+
 void RenderWidget::SetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
     const content::ScreenInfo& screen_info,
@@ -632,7 +644,8 @@ void RenderWidget::SetLocalSurfaceIdForAutoResize(
       observer.ScreenInfoChanged(screen_info);
   }
 
-  AutoResizeCompositor(local_surface_id);
+  HandlePotentialLocalSurfaceIdConflict(local_surface_id);
+  AutoResizeCompositor(local_surface_id_);
 }
 
 void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
@@ -1322,8 +1335,10 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (!GetWebWidget())
     return;
 
-  if (params.local_surface_id)
+  if (params.local_surface_id) {
+    HandlePotentialLocalSurfaceIdConflict(*params.local_surface_id);
     local_surface_id_ = *params.local_surface_id;
+  }
 
   if (compositor_) {
     // If surface synchronization is enabled, then this will use the provided
@@ -2249,7 +2264,11 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       window_screen_rect_ = new_pos;
     }
 
-    AutoResizeCompositor(viz::LocalSurfaceId());
+    viz::LocalSurfaceId local_surface_id =
+        child_local_surface_id_allocator_.GenerateId();
+    local_surface_id_ = local_surface_id;
+    std::cout << "generated: " << local_surface_id << std::endl;
+    AutoResizeCompositor(local_surface_id);
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_resize_ack_for_auto_resize_ = true;
@@ -2583,6 +2602,13 @@ void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {
   widget_binding_.Bind(std::move(request));
 }
 
+void RenderWidget::DidEnableAutoResize(const gfx::Size& min_size,
+                                       const gfx::Size& max_size) {
+  min_autoresize_size_ = min_size;
+  max_autoresize_size_ = max_size;
+  has_autoresize_sizes_ = true;
+}
+
 void RenderWidget::DidResizeOrRepaintAck() {
   if (!next_paint_flags_ && !need_resize_ack_for_auto_resize_)
     return;
@@ -2591,6 +2617,8 @@ void RenderWidget::DidResizeOrRepaintAck() {
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
+  std::cout << "params; " << local_surface_id_ << std::endl;
+  params.local_surface_id = local_surface_id_;
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;

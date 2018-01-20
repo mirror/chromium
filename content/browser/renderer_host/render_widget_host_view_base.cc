@@ -284,8 +284,15 @@ void RenderWidgetHostViewBase::DidUnregisterFromTextInputManager(
   text_input_manager_ = nullptr;
 }
 
-void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
+void RenderWidgetHostViewBase::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
+  // If a LocalSurfaceId was provided, it *must* match our surface ID by this
+  // point. Subclasses are responsible for overriding this call and setting this
+  // up as expected.
+  DCHECK_EQ(surface_id, GetLocalSurfaceId());
+
   RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
   host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
 }

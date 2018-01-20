@@ -170,7 +170,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Informs the view that the renderer has resized to |new_size| because auto-
   // resize is enabled.
   virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
-                                     uint64_t sequence_number);
+                                     uint64_t sequence_number,
+                                     const viz::LocalSurfaceId& surface_id);
 
   base::WeakPtr<RenderWidgetHostViewBase> GetWeakPtr();
 
