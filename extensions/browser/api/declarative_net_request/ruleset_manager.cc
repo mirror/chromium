@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
+#include "base/timer/elapsed_timer.h"
 #include "components/web_cache/browser/web_cache_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
@@ -152,6 +153,7 @@ void RulesetManager::RemoveRuleset(const ExtensionId& extension_id) {
 
 bool RulesetManager::ShouldBlockRequest(const WebRequestInfo& request,
                                         bool is_incognito_context) const {
+  base::ElapsedTimer timer;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Return early if DNR is not enabled.
@@ -170,6 +172,7 @@ bool RulesetManager::ShouldBlockRequest(const WebRequestInfo& request,
   const bool is_third_party =
       IsThirdPartyRequest(request.url, first_party_origin);
 
+  bool result = false;
   for (const auto& ruleset_data : rulesets_) {
     const bool evaluate_ruleset =
         !is_incognito_context ||
@@ -179,15 +182,19 @@ bool RulesetManager::ShouldBlockRequest(const WebRequestInfo& request,
     if (evaluate_ruleset &&
         ruleset_data.matcher->ShouldBlockRequest(
             request.url, first_party_origin, element_type, is_third_party)) {
-      return true;
+      result = true;
+      break;
     }
   }
-  return false;
+
+  ruleset_eval_time_ += timer.Elapsed();
+  return result;
 }
 
 bool RulesetManager::ShouldRedirectRequest(const WebRequestInfo& request,
                                            bool is_incognito_context,
                                            GURL* redirect_url) const {
+  base::ElapsedTimer timer;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(redirect_url);
 
@@ -209,6 +216,7 @@ bool RulesetManager::ShouldRedirectRequest(const WebRequestInfo& request,
       request.initiator.value_or(url::Origin());
   const bool is_third_party = IsThirdPartyRequest(url, first_party_origin);
 
+  bool result = false;
   // This iterates in decreasing order of extension installation time. Hence
   // more recently installed extensions get higher priority in choosing the
   // redirect url.
@@ -221,16 +229,24 @@ bool RulesetManager::ShouldRedirectRequest(const WebRequestInfo& request,
     if (evaluate_ruleset && ruleset_data.matcher->ShouldRedirectRequest(
                                 url, first_party_origin, element_type,
                                 is_third_party, redirect_url)) {
-      return true;
+      result = true;
+      break;
     }
   }
 
-  return false;
+  ruleset_eval_time_ += timer.Elapsed();
+  return result;
 }
 
 void RulesetManager::SetObserverForTest(TestObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   test_observer_ = observer;
+}
+
+void RulesetManager::PrintRulesetEvalTime() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  LOG(ERROR) << "--------ruleset_eval_time_ "
+             << ruleset_eval_time_.InMillisecondsF() << "\n";
 }
 
 RulesetManager::ExtensionRulesetData::ExtensionRulesetData(
