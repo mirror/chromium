@@ -888,9 +888,16 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
       frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional() ||
       new_selection.IsDirectional());
   const SelectionInFlatTree& selection_in_flat_tree = builder.Build();
-  if (Selection().ComputeVisibleSelectionInFlatTree() ==
+  const bool default_selection_directional =
+      frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
+  const bool has_selection_changed =
+      Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
-      Selection().IsHandleVisible() == set_selection_options.ShouldShowHandle())
+      Selection().IsHandleVisible() ==
+          set_selection_options.ShouldShowHandle() &&
+      default_selection_directional == Selection().IsDirectional();
+  // If selection has not changed we do not clear editing style.
+  if (has_selection_changed)
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
