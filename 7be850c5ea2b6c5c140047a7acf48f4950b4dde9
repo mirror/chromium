@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60bba4f7_a6362517",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-20T18:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe8ce28_ef47faba",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46da2f11_c530c49e",
         "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da2fcb9_f041681b",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-20T18:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46da2f11_c530c49e",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f075d70_0280be81",
+        "filename": "chrome/browser/metrics/metrics_reporting_state_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-20T18:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc49d3d1_e805d10c",
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdab39d7_83429262",
         "filename": "components/metrics/metrics_service_accessor.h",
         "patchSetId": 13
@@ -64,6 +118,30 @@
       "writtenOn": "2018-01-20T05:23:58Z",
       "side": 1,
       "message": "Can you use the command line --force-enable-metrics-reporting instead of adding a new function and override?\n\nIf you need to keep this function, I would (nits):\n- rename the function to something like SetForceEnableMetricsReporting.\n- revise the second sentence above to something like \"Use this function to enable metrics reporting.\"\nand downstream changes in the implementation.",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a102dc_05a81ccb",
+        "filename": "components/metrics/metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-20T18:19:15Z",
+      "side": 1,
+      "message": "--force-enable-metrics-reporting (confusingly) forces creation of the UkmService. It doesn\u0027t change whether reporting is actually enabled. SetForceEnableMetricsReporting is a bit misleading because it sounds like it forces reporting to enabled, bt I need to enable the official code-path (which checks path). I went with SetForceIsMetricsReportingEnabledPrefLookup and more comments.",
+      "parentUuid": "cdab39d7_83429262",
       "range": {
         "startLine": 71,
         "startChar": 37,
