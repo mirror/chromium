@@ -376,6 +376,8 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
     return g_empty_string;
   }
 
+  void DispatchBloatedPage() override { CHECK(false); }
+
  protected:
   EmptyLocalFrameClient() = default;
 

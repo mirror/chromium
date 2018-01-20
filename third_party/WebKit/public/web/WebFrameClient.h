@@ -306,6 +306,8 @@ class BLINK_EXPORT WebFrameClient {
                                       unsigned source_line,
                                       const WebString& stack_trace) {}
 
+  virtual void BloatedPage(){};
+
   // Load commands -------------------------------------------------------
 
   // The client should handle the request as a download.
