@@ -659,7 +659,7 @@ TEST_F(ScreenOrientationControllerTest, UserRotationLockedOrientation) {
             UserLockedOrientation());
 
   orientation_controller->ToggleUserRotationLock();
-  SetInternalDisplayRotation(display::Display::ROTATE_90);
+  SetInternalDisplayRotation(display::Display::ROTATE_270);
   orientation_controller->ToggleUserRotationLock();
   EXPECT_EQ(blink::kWebScreenOrientationLockPortraitPrimary,
             UserLockedOrientation());
@@ -671,7 +671,7 @@ TEST_F(ScreenOrientationControllerTest, UserRotationLockedOrientation) {
             UserLockedOrientation());
 
   orientation_controller->ToggleUserRotationLock();
-  SetInternalDisplayRotation(display::Display::ROTATE_270);
+  SetInternalDisplayRotation(display::Display::ROTATE_90);
   orientation_controller->ToggleUserRotationLock();
   EXPECT_EQ(blink::kWebScreenOrientationLockPortraitSecondary,
             UserLockedOrientation());
@@ -744,7 +744,7 @@ TEST_F(ScreenOrientationControllerTest, UserRotationLock) {
 
   // Switching to Any orientation will stay to the user locked orientation.
   activation_client->ActivateWindow(focus_window2.get());
-  EXPECT_EQ(display::Display::ROTATE_90, GetCurrentInternalDisplayRotation());
+  EXPECT_EQ(display::Display::ROTATE_270, GetCurrentInternalDisplayRotation());
 
   // Application forced to be landscape.
   delegate()->Lock(content2.get(), blink::kWebScreenOrientationLockLandscape);
@@ -753,7 +753,7 @@ TEST_F(ScreenOrientationControllerTest, UserRotationLock) {
   delegate()->Lock(content1.get(), blink::kWebScreenOrientationLockAny);
   activation_client->ActivateWindow(focus_window1.get());
   // Switching back to any will rotate to user rotation.
-  EXPECT_EQ(display::Display::ROTATE_90, GetCurrentInternalDisplayRotation());
+  EXPECT_EQ(display::Display::ROTATE_270, GetCurrentInternalDisplayRotation());
 }
 
 }  // namespace ash
