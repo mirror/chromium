@@ -23,6 +23,7 @@
 #include "ios/chrome/browser/history/history_tab_helper.h"
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #import "ios/chrome/browser/infobars/infobar_manager_impl.h"
+#import "ios/chrome/browser/metrics/ukm_url_recorder.h"
 #import "ios/chrome/browser/passwords/password_tab_helper.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #import "ios/chrome/browser/reading_list/reading_list_web_state_observer.h"
@@ -110,6 +111,8 @@ void AttachTabHelpers(web::WebState* web_state, bool for_prerender) {
   ]);
 
   InsecureInputTabHelper::CreateForWebState(web_state);
+
+  ukm::InitializeSourceUrlRecorderForWebState(web_state);
 
   // TODO(crbug.com/794115): pre-rendered WebState have lots of unnecessary
   // tab helpers for historical reasons. For the moment, AttachTabHelpers
