@@ -149,6 +149,15 @@ NetworkServiceClient::NetworkServiceClient(
 
 NetworkServiceClient::~NetworkServiceClient() = default;
 
+void NetworkServiceClient::OnAuthRequired(
+    uint32_t process_id,
+    uint32_t routing_id,
+    const scoped_refptr<net::AuthChallengeInfo>& auth_info,
+    network::mojom::NetworkServiceClient::OnAuthRequiredCallback callback) {
+  net::AuthCredentials auth_credentials;
+  std::move(callback).Run(auth_credentials);
+}
+
 void NetworkServiceClient::OnCertificateRequested(
     uint32_t process_id,
     uint32_t routing_id,
