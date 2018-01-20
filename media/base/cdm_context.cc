@@ -12,6 +12,18 @@ CdmContext::~CdmContext() = default;
 
 void IgnoreCdmAttached(bool /* success */) {}
 
+Decryptor* CdmContext::GetDecryptor() {
+  return nullptr;
+}
+
+int CdmContext::GetCdmId() const {
+  return kInvalidCdmId;
+}
+
+bool CdmContext::GetDecryptContext() {
+  return false;
+}
+
 void* CdmContext::GetClassIdentifier() const {
   return nullptr;
 }
