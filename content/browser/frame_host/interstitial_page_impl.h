@@ -98,6 +98,7 @@ class CONTENT_EXPORT InterstitialPageImpl : public InterstitialPage,
   WebContents* OpenURL(const OpenURLParams& params) override;
   const std::string& GetUserAgentOverride() const override;
   bool ShowingInterstitialPage() const override;
+  bool WasDiscarded() const override;
 
  protected:
   // NotificationObserver method:

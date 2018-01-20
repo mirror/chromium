@@ -195,7 +195,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
       bool intended_as_new_entry,
       int pending_offset_to_send,
       int current_offset_to_send,
-      int current_length_to_send) const;
+      int current_length_to_send,
+      bool was_discarded) const;
 
   // Once a navigation entry is committed, we should no longer track several
   // pieces of non-persisted state, as documented on the members below.
