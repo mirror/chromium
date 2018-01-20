@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae963a0_fd0ff4a7",
+        "filename": "gpu/config/gpu_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-20T02:46:57Z",
+      "side": 1,
+      "message": "Could you add a little documentation here for what it means if *needs_more_info is set to true in this function?",
+      "revId": "80aa7847f6c51db8d4655e604d1884007677d704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
