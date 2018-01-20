@@ -110,6 +110,7 @@ bool GpuInit::InitializeAndStartSandbox(
     const GPUInfo* gpu_info,
     const GpuFeatureInfo* gpu_feature_info) {
   gpu_preferences_ = gpu_preferences;
+  bool needs_more_info = false;
 #if !defined(OS_ANDROID)
   if (gpu_info) {
     gpu_info_ = *gpu_info;
@@ -138,7 +139,8 @@ bool GpuInit::InitializeAndStartSandbox(
     gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
         gpu_info_, gpu_preferences.ignore_gpu_blacklist,
         gpu_preferences.disable_gpu_driver_bug_workarounds,
-        gpu_preferences.log_gpu_control_list_decisions, command_line);
+        gpu_preferences.log_gpu_control_list_decisions, command_line,
+        &needs_more_info);
   }
   if (gpu::SwitchableGPUsSupported(gpu_info_, *command_line)) {
     gpu::InitializeSwitchableGPUs(
@@ -207,7 +209,7 @@ bool GpuInit::InitializeAndStartSandbox(
   ui::OzonePlatform::InitializeForGPU(params);
 #endif
 
-  bool use_swiftshader = ShouldEnableSwiftShader(command_line);
+  bool use_swiftshader = ShouldEnableSwiftShader(command_line, needs_more_info);
   // Load and initialize the GL implementation and locate the GL entry points if
   // needed. This initialization may have already happened if running in the
   // browser process, for example.
@@ -238,8 +240,8 @@ bool GpuInit::InitializeAndStartSandbox(
     gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
         gpu_info_, gpu_preferences.ignore_gpu_blacklist,
         gpu_preferences.disable_gpu_driver_bug_workarounds,
-        gpu_preferences.log_gpu_control_list_decisions, command_line);
-    use_swiftshader = ShouldEnableSwiftShader(command_line);
+        gpu_preferences.log_gpu_control_list_decisions, command_line, nullptr);
+    use_swiftshader = ShouldEnableSwiftShader(command_line, false);
     if (use_swiftshader) {
       gl::init::ShutdownGL(true);
       gl_initialized = gl::init::InitializeGLNoExtensionsOneOff();
@@ -336,6 +338,7 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
     }
 #endif
   }
+  bool needs_more_info = false;
   if (gpu_feature_info) {
     gpu_feature_info_ = *gpu_feature_info;
   } else {
@@ -344,7 +347,8 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
       gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
           gpu_info_, gpu_preferences.ignore_gpu_blacklist,
           gpu_preferences.disable_gpu_driver_bug_workarounds,
-          gpu_preferences.log_gpu_control_list_decisions, command_line);
+          gpu_preferences.log_gpu_control_list_decisions, command_line,
+          &needs_more_info);
     }
 #endif
   }
@@ -353,7 +357,7 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
         gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
   }
 
-  bool use_swiftshader = ShouldEnableSwiftShader(command_line);
+  bool use_swiftshader = ShouldEnableSwiftShader(command_line, needs_more_info);
   if (!gl::init::InitializeGLNoExtensionsOneOff()) {
     VLOG(1) << "gl::init::InitializeGLNoExtensionsOneOff failed";
     return;
@@ -364,8 +368,8 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
     gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
         gpu_info_, gpu_preferences.ignore_gpu_blacklist,
         gpu_preferences.disable_gpu_driver_bug_workarounds,
-        gpu_preferences.log_gpu_control_list_decisions, command_line);
-    use_swiftshader = ShouldEnableSwiftShader(command_line);
+        gpu_preferences.log_gpu_control_list_decisions, command_line, nullptr);
+    use_swiftshader = ShouldEnableSwiftShader(command_line, false);
     if (use_swiftshader) {
       gl::init::ShutdownGL(true);
       if (!gl::init::InitializeGLNoExtensionsOneOff()) {
@@ -387,15 +391,17 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
   }
 }
 
-bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line) {
+bool GpuInit::ShouldEnableSwiftShader(base::CommandLine* command_line,
+                                      bool blacklist_needs_more_info) {
 #if BUILDFLAG(ENABLE_SWIFTSHADER)
   if (gpu_preferences_.disable_software_rasterizer)
     return false;
   // Don't overwrite user preference.
   if (command_line->HasSwitch(switches::kUseGL))
     return false;
-  if (gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
-      kGpuFeatureStatusEnabled) {
+  if (!blacklist_needs_more_info &&
+      gpu_feature_info_.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] !=
+          kGpuFeatureStatusEnabled) {
     command_line->AppendSwitchASCII(
         switches::kUseGL, gl::kGLImplementationSwiftShaderForWebGLName);
     return true;
