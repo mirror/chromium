@@ -481,11 +481,6 @@ TEST_F(CloudPrintProxyPolicyStartupTest, StartAndShutdown) {
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
 
-  TestingBrowserProcess* browser_process =
-      TestingBrowserProcess::GetGlobal();
-  TestingProfileManager profile_manager(browser_process);
-  ASSERT_TRUE(profile_manager.SetUp());
-
   base::Process process =
       Launch("CloudPrintMockService_StartEnabledWaitForQuit");
   mojo::edk::PeerConnection peer_connection;
