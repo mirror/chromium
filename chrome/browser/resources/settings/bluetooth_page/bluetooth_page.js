@@ -172,7 +172,7 @@ Polymer({
 
   /** @private */
   onTap_: function() {
-    if (this.adapterState_.available === false)
+    if (this.bluetoothToggleDisabled_ === true)
       return;
     if (!this.bluetoothToggleState_)
       this.bluetoothToggleState_ = true;
@@ -206,6 +206,10 @@ Polymer({
     this.bluetoothToggleDisabled_ = true;
     this.bluetoothPrivate.setAdapterState(
         {powered: this.bluetoothToggleState_}, () => {
+          // Always resets the button's disabled property when callback is
+          // called regardless of error or success.
+          this.bluetoothToggleDisabled_ = !this.adapterState_.available;
+
           const error = chrome.runtime.lastError;
           if (error && error != 'Error setting adapter properties: powered') {
             console.error('Error enabling bluetooth: ' + error.message);
