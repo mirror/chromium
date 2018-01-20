@@ -1027,6 +1027,8 @@ class CONTENT_EXPORT ContentBrowserClient {
   // BrowserMainLoop starts.
   // If false, a task scheduler has been created by the embedder, and browser
   // main loop should skip creating a second one.
+  // Note: the embedder should *not* start the TaskScheduler in content/chrome.
+  // BrowserMainLoop is responsible for that.
   virtual bool ShouldCreateTaskScheduler();
 };
 
