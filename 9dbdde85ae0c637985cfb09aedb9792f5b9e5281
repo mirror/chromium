@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a72d9d9_6af2ba7a",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-20T00:29:47Z",
+      "side": 1,
+      "message": "Calling this seems to cancel the current download.  Might this cancel a legitimate download?  It\u0027s a bit hard to tell without seeing the code that calls CanDownload.  I would have expected the CCT call to just put something in the request queue.\n\nIt seems to do more than just return whether we can or can\u0027t, so I wonder if we could improve the name a bit to indicate its responsibilities better.",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de1378e_2d414189",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-20T00:29:47Z",
+      "side": 1,
+      "message": "Should we have a unit test to cover this?",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f931bd_e9b10ebc",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-20T00:29:47Z",
+      "side": 1,
+      "message": "A bit more comments might be nice.  Reading this, I\u0027m not sure why we need a delegate, if any other classes will ever fulfil it, or how it is intended to be used.",
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
