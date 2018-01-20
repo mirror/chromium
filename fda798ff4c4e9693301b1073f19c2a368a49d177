@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7fbcd1c_1678ffb3",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-20T00:29:14Z",
+      "side": 1,
+      "message": "Instead of including a MITMSoftware here, I wonder if we should include the fields themselves so that they can be used to trigger other types of interstitials:\n\n// If the issuer common name of the leaf certificate matches this regex, then an interstitial of type |interstitial_type| will be shown.\noptional string issuer_common_name_regex;\n// If the issuer organization name of the leaf certificate matches this regex, then an interstitial of type |interstitial_type| will be shown.\noptional string issuer_organization_regex;\n// If |interstitial_type| is INTERSTITIAL_PAGE_MITM_SOFTWARE, this human-readable name will be displayed on the interstitial.\noptional string mitm_software_name;\n\nThat way we can use an issuer common name regex to trigger the captive portal interstitial, for example.",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "fda798ff4c4e9693301b1073f19c2a368a49d177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
