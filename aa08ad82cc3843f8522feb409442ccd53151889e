@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee09c417_6185f77e",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2018-01-20T02:12:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3ad558f6_3252590f",
+      "range": {
+        "startLine": 2003,
+        "startChar": 26,
+        "endLine": 2003,
+        "endChar": 48
+      },
+      "revId": "aa08ad82cc3843f8522feb409442ccd53151889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab8a6baa_ee7b476e",
         "filename": "net/ssl/channel_id_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "aa08ad82cc3843f8522feb409442ccd53151889e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2b00c4_edca556a",
+        "filename": "net/ssl/channel_id_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2018-01-20T02:12:28Z",
+      "side": 0,
+      "message": "I prefer all my if statements with braces, so I\u0027m fine leaving this as is.",
+      "parentUuid": "ab8a6baa_ee7b476e",
+      "range": {
+        "startLine": 285,
+        "startChar": 51,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "aa08ad82cc3843f8522feb409442ccd53151889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
