@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00cdbac7_afcd9bb0",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-21T06:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537b0f9f_a7900ce8",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5819309a_f64286f4",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d944d618_9101b243",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-21T06:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5819309a_f64286f4",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "844f3b84_fd1a09c1",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-21T06:41:51Z",
+      "side": 1,
+      "message": "The comments look much better. Thank you.\n\nThe VKEY-codes have two other important purposes, 1) to provide information if we need to display it in \"ICON\" and 2) where to insert it in the string template so that we will generate a bubble to display it (I added you to the UX mock so it can be more clear). E.g. VKEY_LEFT need to be displayed as \"\u003c-\". The shortcut string template has \"placeholders\" for them. The l10n_util::GetStringFUTF16() will return the offsets of the replacements. The offsets will be used to generate the style ranges of StyledLabel to insert the \"ICON\" for keys and bubbles to highlight modifiers and keys.\n\nWe have several templates for the shortcut string:\n1. In most of the cases, one template for 2,3,4 keys. Because on additional description in the string templates, just listing of keys. E.g. CTRL + A.\n2. But in some case, we would like to add more description, that means one-per-shortcut similar to the following examples: \"Select the file, then press Space\", \"Press \u0026 hold Alt, tap Tab until you get to the window you want to open, then release.\"\n3. In some cases, we would like to combine several shortcuts together, e.g. \"Alt + 1 through 8\".",
+      "parentUuid": "3ae653ea_a0761db7",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b39aba_ba35aedd",
         "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c82f03b_e45acde5",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-21T06:41:51Z",
+      "side": 1,
+      "message": "Much better and I like it. Thanks the suggestions. I changed the comments.",
+      "parentUuid": "f1b39aba_ba35aedd",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
