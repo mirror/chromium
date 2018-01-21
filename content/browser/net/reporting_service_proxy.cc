@@ -14,12 +14,15 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
-#include "net/reporting/reporting_report.h"
-#include "net/reporting/reporting_service.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/WebKit/public/platform/reporting.mojom.h"
 #include "url/gurl.h"
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_report.h"
+#include "net/reporting/reporting_service.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace content {
 
@@ -102,6 +105,7 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
                    const std::string& group,
                    const std::string& type,
                    std::unique_ptr<base::Value> body) {
+#if BUILDFLAG(ENABLE_REPORTING)
     net::URLRequestContext* request_context =
         request_context_getter_->GetURLRequestContext();
     if (!request_context) {
@@ -117,6 +121,7 @@ class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
     }
 
     reporting_service->QueueReport(url, group, type, std::move(body));
+#endif  // BUILDFLAG(ENABLE_REPORTING)
   }
 
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
