@@ -521,6 +521,7 @@ _ANDROID_SPECIFIC_PYDEPS_FILES = [
 
 
 _GENERIC_PYDEPS_FILES = [
+    'chrome/test/chromedriver/test/run_py_tests.pydeps',
 ]
 
 
