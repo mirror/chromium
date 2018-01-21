@@ -130,9 +130,7 @@ class BASE_EXPORT WeakReferenceOwner {
 
   WeakReference GetRef() const;
 
-  bool HasRefs() const {
-    return flag_.get() && !flag_->HasOneRef();
-  }
+  bool HasRefs() const { return flag_ && !flag_->HasOneRef(); }
 
   void Invalidate();
 
