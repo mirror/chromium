@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1bffe15_24b11027",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 8
+      },
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e40d13_5182e39c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "nit: we can:\nstd::unique_ptr\u003cv8::ScriptCompiler::CachedData\u003e cached_data \u003d v8::ScriptCompiler::CreateCodeCache(...);",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046651ae_69c88a2d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "The code block here and in CompileAndProduceCache() are mostly duplicated.\nIt\u0027 fine with me leaving this as-is, because we might change the code structure further on the way of code cache experiments, and we can clean this up later.\nLeaving a TODO comment might be helpful.",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6415f859_304a0800",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "nit: previously kNoCacheBecauseNoResource was used (in V8ScriptRunner::CompileScript)?\n\nEither value is fine with me. If we want to be more consistent, it might be better to call V8ScriptRunner::GetCompileOptions() here (which results in kNoCompileOptions and kNoCacheBecauseNoResource because currently all |source_code| doesn\u0027t have cache handlers).",
+      "range": {
+        "startLine": 655,
+        "startChar": 31,
+        "endLine": 655,
+        "endChar": 47
+      },
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db4a4cb_5fe47acf",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "Having comments like those in V8ScriptRunnerTest.produceAndConsumeCodeOption might be helpful.",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e292ddc_97be021d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "The same as my comment at Line 189, if we want to test that the CompileScript() at Line 166 consumes the code cache.",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c448537_f51ea661",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "How about also adding\nEXPECT_FALSE(cache_handler-\u003eGetCachedMetadata(TagForCodeCache(cache_handler)));\nhere to explicitly test that the code cache is not yet created here and will be actually created in the next CompileScript() below?",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c18189a_cca1063e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-21T23:45:01Z",
+      "side": 1,
+      "message": "This doesn\u0027t look like checking that CompileScript() consumed the code cache.\nChecking that GetCompileOptions() (before CompileScript()) returns v8::ScriptCompiler::kConsumeCodeCache might be better.",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
