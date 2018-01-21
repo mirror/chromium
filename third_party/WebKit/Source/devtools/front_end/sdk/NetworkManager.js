@@ -506,13 +506,12 @@ SDK.NetworkDispatcher = class {
    * @param {!Protocol.Network.RequestId} requestId
    * @param {!Protocol.Network.MonotonicTime} finishTime
    * @param {number} encodedDataLength
-   * @param {boolean=} blockedCrossSiteDocument
    */
-  loadingFinished(requestId, finishTime, encodedDataLength, blockedCrossSiteDocument) {
+  loadingFinished(requestId, finishTime, encodedDataLength) {
     var networkRequest = this._inflightRequestsById[requestId];
     if (!networkRequest)
       return;
-    this._finishNetworkRequest(networkRequest, finishTime, encodedDataLength, blockedCrossSiteDocument);
+    this._finishNetworkRequest(networkRequest, finishTime, encodedDataLength);
   }
 
   /**
@@ -741,9 +740,8 @@ SDK.NetworkDispatcher = class {
    * @param {!SDK.NetworkRequest} networkRequest
    * @param {!Protocol.Network.MonotonicTime} finishTime
    * @param {number} encodedDataLength
-   * @param {boolean=} blockedCrossSiteDocument
    */
-  _finishNetworkRequest(networkRequest, finishTime, encodedDataLength, blockedCrossSiteDocument) {
+  _finishNetworkRequest(networkRequest, finishTime, encodedDataLength) {
     networkRequest.endTime = finishTime;
     networkRequest.finished = true;
     if (encodedDataLength >= 0)
@@ -751,15 +749,6 @@ SDK.NetworkDispatcher = class {
     this._manager.dispatchEventToListeners(SDK.NetworkManager.Events.RequestFinished, networkRequest);
     delete this._inflightRequestsById[networkRequest.requestId()];
     delete this._inflightRequestsByURL[networkRequest.url()];
-
-    if (blockedCrossSiteDocument) {
-      var message = Common.UIString(
-          `Blocked current origin from receiving cross-site document at %s with MIME type %s.`, networkRequest.url(),
-          networkRequest.mimeType);
-      this._manager.dispatchEventToListeners(
-          SDK.NetworkManager.Events.MessageGenerated,
-          {message: message, requestId: networkRequest.requestId(), warning: true});
-    }
 
     if (Common.moduleSetting('monitoringXHREnabled').get() &&
         networkRequest.resourceType().category() === Common.resourceCategories.XHR) {

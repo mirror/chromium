@@ -186,8 +186,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       previews_state_(previews_state),
       body_(body),
       initiated_in_secure_context_(initiated_in_secure_context),
-      suggested_filename_(suggested_filename),
-      blocked_cross_site_document_(false) {}
+      suggested_filename_(suggested_filename) {}
 
 ResourceRequestInfoImpl::~ResourceRequestInfoImpl() {
 }

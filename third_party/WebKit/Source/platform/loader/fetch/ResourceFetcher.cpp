@@ -384,7 +384,7 @@ void ResourceFetcher::DidLoadResourceFromMemoryCache(
   }
 
   Context().DispatchDidFinishLoading(
-      identifier, 0, 0, resource->GetResponse().DecodedBodyLength(), false);
+      identifier, 0, 0, resource->GetResponse().DecodedBodyLength());
 }
 
 static std::unique_ptr<TracedValue> UrlForTraceEvent(const KURL& url) {
@@ -1361,8 +1361,7 @@ void ResourceFetcher::HandleLoadCompletion(Resource* resource) {
 void ResourceFetcher::HandleLoaderFinish(Resource* resource,
                                          double finish_time,
                                          LoaderFinishType type,
-                                         uint32_t inflight_keepalive_bytes,
-                                         bool blocked_cross_site_document) {
+                                         uint32_t inflight_keepalive_bytes) {
   DCHECK(resource);
 
   DCHECK_LE(inflight_keepalive_bytes, inflight_keepalive_bytes_);
@@ -1417,7 +1416,7 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
   resource->VirtualTimePauser().PauseVirtualTime(false);
   Context().DispatchDidFinishLoading(
       resource->Identifier(), finish_time, encoded_data_length,
-      resource->GetResponse().DecodedBodyLength(), blocked_cross_site_document);
+      resource->GetResponse().DecodedBodyLength());
 
   if (type == kDidFinishLoading)
     resource->Finish(finish_time, Context().GetLoadingTaskRunner().get());

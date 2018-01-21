@@ -925,8 +925,7 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
     } else {
       client_->DidFinishLoading(
           (status.completion_time - TimeTicks()).InSecondsF(),
-          total_transfer_size, encoded_body_size, status.decoded_body_length,
-          status.blocked_cross_site_document);
+          total_transfer_size, encoded_body_size, status.decoded_body_length);
     }
   }
 }

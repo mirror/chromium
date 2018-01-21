@@ -305,15 +305,12 @@ void WorkerFetchContext::DispatchDidReceiveEncodedData(
                                      encoded_data_length);
 }
 
-void WorkerFetchContext::DispatchDidFinishLoading(
-    unsigned long identifier,
-    double finish_time,
-    int64_t encoded_data_length,
-    int64_t decoded_body_length,
-    bool blocked_cross_site_document) {
+void WorkerFetchContext::DispatchDidFinishLoading(unsigned long identifier,
+                                                  double finish_time,
+                                                  int64_t encoded_data_length,
+                                                  int64_t decoded_body_length) {
   probe::didFinishLoading(global_scope_, identifier, nullptr, finish_time,
-                          encoded_data_length, decoded_body_length,
-                          blocked_cross_site_document);
+                          encoded_data_length, decoded_body_length);
 }
 
 void WorkerFetchContext::DispatchDidFail(unsigned long identifier,

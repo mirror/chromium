@@ -307,8 +307,6 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       // Block the response and throw away the data.  Report zero bytes read.
       bytes_read = 0;
       blocked_read_completed_ = true;
-      ResourceRequestInfoImpl* info = GetRequestInfo();
-      info->set_blocked_cross_site_document(true);
 
       // Log the blocking event.  Inline the Serialize call to avoid it when
       // tracing is disabled.
@@ -325,7 +323,7 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
               ? CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing
               : CrossSiteDocumentResourceHandler::Action::
                     kBlockedWithoutSniffing);
-      ResourceType resource_type = info->GetResourceType();
+      ResourceType resource_type = GetRequestInfo()->GetResourceType();
       UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked",
                                 resource_type,
                                 content::RESOURCE_TYPE_LAST_TYPE);
