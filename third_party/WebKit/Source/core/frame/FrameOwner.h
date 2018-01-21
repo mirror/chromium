@@ -14,6 +14,7 @@
 namespace blink {
 
 class Frame;
+class LocalFrame;
 class ResourceTimingInfo;
 
 // Oilpan: all FrameOwner instances are GCed objects. FrameOwner additionally
@@ -46,7 +47,7 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
 
   // The intrinsic dimensions of the embedded object changed. This is relevant
   // for SVG documents that are embedded via <object> or <embed>.
-  virtual void IntrinsicDimensionsChanged() = 0;
+  virtual void IntrinsicDimensionsChanged(LocalFrame& child_frame) = 0;
 
   // Returns the 'name' content attribute value of the browsing context
   // container.
@@ -84,7 +85,7 @@ class CORE_EXPORT DummyFrameOwner final
   void DispatchLoad() override {}
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
-  void IntrinsicDimensionsChanged() override {}
+  void IntrinsicDimensionsChanged(LocalFrame&) override {}
   AtomicString BrowsingContextContainerName() const override {
     return AtomicString();
   }

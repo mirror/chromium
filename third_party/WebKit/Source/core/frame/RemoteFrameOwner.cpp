@@ -7,6 +7,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/layout/LayoutReplaced.h"
 #include "core/timing/PerformanceBase.h"
 #include "public/platform/WebResourceTimingInfo.h"
 #include "public/web/WebFrameClient.h"
@@ -62,6 +63,15 @@ void RemoteFrameOwner::DispatchLoad() {
   WebLocalFrameImpl* web_frame =
       WebLocalFrameImpl::FromFrame(ToLocalFrame(*frame_));
   web_frame->Client()->DispatchLoad();
+}
+
+void RemoteFrameOwner::IntrinsicDimensionsChanged(LocalFrame& child_frame) {
+  LOG(ERROR) << "IntrinsicDimensionsChanged";
+  IntrinsicSizingInfo sizing_info;
+  child_frame.View()->GetIntrinsicSizingInfo(sizing_info);
+  WebLocalFrameImpl::FromFrame(&child_frame)
+      ->FrameWidget()
+      ->IntrinsicDimensionsChanged(sizing_info);
 }
 
 }  // namespace blink
