@@ -47,7 +47,7 @@ if (is_android) {
       # The default AFDO profile used by public builds. Value may differ in
       # internal builds.
       clang_default_afdo_profile =
-          rebase_path("//chrome/android/profiles/chrome-profile-3309-text.prof")
+          rebase_path("//chrome/android/profiles/afdo-text.prof")
     }
   }
 
