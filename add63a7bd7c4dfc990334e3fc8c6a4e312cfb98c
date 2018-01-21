@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d662ac_f5063490",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-21T07:20:07Z",
+      "side": 1,
+      "message": "nit: |selection_remains_the_same| better matches the condition below.",
+      "range": {
+        "startLine": 893,
+        "startChar": 13,
+        "endLine": 893,
+        "endChar": 34
+      },
+      "revId": "add63a7bd7c4dfc990334e3fc8c6a4e312cfb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac847167_8936ba97",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-21T07:20:07Z",
+      "side": 1,
+      "message": "Is this correct when ShouldConsiderSelectionAsDirectional() is false (e.g., on Mac)?\n\nIs it possible that |Selection().IsDirectional()| and |new_selection.IsDirectional()| are true, but we end up (mistakenly) clearing the editing style because |default_selection_directional| is false?",
+      "range": {
+        "startLine": 898,
+        "startChar": 6,
+        "endLine": 898,
+        "endChar": 66
+      },
+      "revId": "add63a7bd7c4dfc990334e3fc8c6a4e312cfb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
