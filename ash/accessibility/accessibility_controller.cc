@@ -41,6 +41,10 @@ void NotifyAccessibilityStatusChanged(
       notification_visibility);
 }
 
+PrefService* GetActivePrefService() {
+  return Shell::Get()->session_controller()->GetActivePrefService();
+}
+
 }  // namespace
 
 AccessibilityController::AccessibilityController(
@@ -197,6 +201,13 @@ void AccessibilityController::SetDarkenScreen(bool darken) {
   }
 }
 
+void AccessibilityController::BrailleDisplayStateChanged(bool connected) {
+  braille_display_connected_ = connected;
+  if (braille_display_connected_)
+    SetSpokenFeedbackEnabled(true, A11Y_NOTIFICATION_SHOW);
+  NotifyAccessibilityStatusChanged(A11Y_NOTIFICATION_SHOW);
+}
+
 void AccessibilityController::OnSigninScreenPrefServiceInitialized(
     PrefService* prefs) {
   ObservePrefs(prefs);
@@ -204,11 +215,6 @@ void AccessibilityController::OnSigninScreenPrefServiceInitialized(
 
 void AccessibilityController::OnActiveUserPrefServiceChanged(
     PrefService* prefs) {
-  ObservePrefs(prefs);
-}
-
-void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
-  pref_service_for_test_ = prefs;
   ObservePrefs(prefs);
 }
 
@@ -251,12 +257,6 @@ void AccessibilityController::ObservePrefs(PrefService* prefs) {
   UpdateLargeCursorFromPref();
   UpdateMonoAudioFromPref();
   UpdateSpokenFeedbackFromPref();
-}
-
-PrefService* AccessibilityController::GetActivePrefService() const {
-  if (pref_service_for_test_)
-    return pref_service_for_test_;
-  return Shell::Get()->session_controller()->GetActivePrefService();
 }
 
 void AccessibilityController::UpdateAutoclickFromPref() {
