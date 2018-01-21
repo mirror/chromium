@@ -10,8 +10,8 @@
 
 #include "content/common/content_export.h"
 #include "content/common/content_security_policy_header.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
-#include "third_party/WebKit/common/frame_policy.h"
+#include "third_party/WebKit/public/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/public/common/frame/frame_policy.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "url/origin.h"
 

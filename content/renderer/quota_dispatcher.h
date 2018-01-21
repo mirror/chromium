@@ -14,7 +14,7 @@
 #include "base/containers/id_map.h"
 #include "base/macros.h"
 #include "content/public/renderer/worker_thread.h"
-#include "third_party/WebKit/common/quota/quota_dispatcher_host.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_dispatcher_host.mojom.h"
 
 namespace url {
 class Origin;
