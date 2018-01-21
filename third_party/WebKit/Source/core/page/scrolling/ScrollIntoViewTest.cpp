@@ -7,6 +7,7 @@
 #include "core/frame/ScrollIntoViewOptions.h"
 #include "core/frame/ScrollToOptions.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/html/HTMLElement.h"
 #include "core/testing/sim/SimCompositor.h"
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
@@ -19,9 +20,9 @@ namespace blink {
 
 namespace {
 
-class SmoothScrollTest : public SimTest {};
+class ScrollIntoViewTest : public SimTest {};
 
-TEST_F(SmoothScrollTest, InstantScroll) {
+TEST_F(ScrollIntoViewTest, InstantScroll) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -42,7 +43,137 @@ TEST_F(SmoothScrollTest, InstantScroll) {
   ASSERT_EQ(Window().scrollY(), content->OffsetTop());
 }
 
-TEST_F(SmoothScrollTest, SmoothScroll) {
+TEST_F(ScrollIntoViewTest, ScrollPaddingOnContainer) {
+  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+      <style>
+      body {
+        margin: 0px;
+      }
+      #container {
+        height: 300px;
+        overflow: scroll;
+        scroll-padding: 10px;
+      }
+      </style>
+      <div id='container'>
+        <div id='space' style='height: 1000px'></div>
+        <div id='target' style='height: 200px;'></div>
+        <div id='space' style='height: 1000px'></div>
+      </div>
+    )HTML");
+
+  Compositor().BeginFrame();
+  ASSERT_EQ(Window().scrollY(), 0);
+  Element* target = GetDocument().getElementById("target");
+  Element* container = GetDocument().getElementById("container");
+  target->scrollIntoView();
+
+  ASSERT_EQ(container->scrollTop(), target->OffsetTop() - 10);
+}
+
+TEST_F(ScrollIntoViewTest, ScrollPaddingOnBodyViewportDefining) {
+  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
+  WebView().Resize(WebSize(300, 300));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+      <style>
+      body {
+        margin: 0px;
+        height: 300px;
+        overflow: scroll;
+        scroll-padding: 10px;
+      }
+      </style>
+      <div id='space' style='height: 1000px'></div>
+      <div id='target' style='height: 200px;'></div>
+      <div id='space' style='height: 1000px'></div>
+    )HTML");
+
+  Compositor().BeginFrame();
+  ASSERT_EQ(Window().scrollY(), 0);
+  Element* target = GetDocument().getElementById("target");
+  target->scrollIntoView();
+
+  // Sanity check that document element is the viewport defining element
+  ASSERT_EQ(GetDocument().body(), GetDocument().ViewportDefiningElement());
+  ASSERT_EQ(Window().scrollY(), target->OffsetTop() - 10);
+}
+
+TEST_F(ScrollIntoViewTest, ScrollPaddingOnHtmlViewportDefining) {
+  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
+  WebView().Resize(WebSize(300, 300));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+      <style>
+      :root {
+        height: 300px;
+        overflow: scroll;
+        scroll-padding: 10px;
+      }
+      </style>
+      <div id='space' style='height: 1000px'></div>
+      <div id='target' style='height: 200px;'></div>
+      <div id='space' style='height: 1000px'></div>
+    )HTML");
+
+  Compositor().BeginFrame();
+  ASSERT_EQ(Window().scrollY(), 0);
+  Element* target = GetDocument().getElementById("target");
+  target->scrollIntoView();
+
+  // Sanity check that document element is the viewport defining element
+  ASSERT_EQ(GetDocument().documentElement(),
+            GetDocument().ViewportDefiningElement());
+  ASSERT_EQ(Window().scrollY(), target->OffsetTop() - 10);
+}
+
+TEST_F(ScrollIntoViewTest, ScrollPaddingBodyOverflowHtmlViewportDefining) {
+  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
+  WebView().Resize(WebSize(300, 300));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(R"HTML(
+      <style>
+      :root {
+        height: 300px;
+        overflow: scroll;
+        scroll-padding: 2px;
+      }
+      body {
+        margin: 0px;
+        height: 400px;
+        overflow: scroll;
+        scroll-padding: 10px;
+      }
+      </style>
+      <div id='space' style='height: 1000px'></div>
+      <div id='target' style='height: 200px;'></div>
+      <div id='space' style='height: 1000px'></div>
+    )HTML");
+
+  Compositor().BeginFrame();
+  ASSERT_EQ(Window().scrollY(), 0);
+  Element* target = GetDocument().getElementById("target");
+  target->scrollIntoView();
+
+  // Sanity check that document element is the viewport defining element
+  ASSERT_EQ(GetDocument().documentElement(),
+            GetDocument().ViewportDefiningElement());
+
+  // When body and document elements are both scrollable then both the body and
+  // element should scroll and align with its padding.
+  Element* body = GetDocument().body();
+  ASSERT_EQ(body->scrollTop(), target->OffsetTop() - 10);
+  ASSERT_EQ(Window().scrollY(), 10 - 2);
+}
+
+TEST_F(ScrollIntoViewTest, SmoothScroll) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -72,7 +203,7 @@ TEST_F(SmoothScrollTest, SmoothScroll) {
   ASSERT_EQ(Window().scrollY(), content->OffsetTop());
 }
 
-TEST_F(SmoothScrollTest, NestedContainer) {
+TEST_F(ScrollIntoViewTest, NestedContainer) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -120,7 +251,7 @@ TEST_F(SmoothScrollTest, NestedContainer) {
             content->OffsetTop() - container->OffsetTop());
 }
 
-TEST_F(SmoothScrollTest, NewScrollIntoViewAbortsCurrentAnimation) {
+TEST_F(ScrollIntoViewTest, NewScrollIntoViewAbortsCurrentAnimation) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -185,7 +316,7 @@ TEST_F(SmoothScrollTest, NewScrollIntoViewAbortsCurrentAnimation) {
   ASSERT_EQ(container1->scrollTop(), 0);
 }
 
-TEST_F(SmoothScrollTest, ScrollWindowAbortsCurrentAnimation) {
+TEST_F(ScrollIntoViewTest, ScrollWindowAbortsCurrentAnimation) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -232,7 +363,7 @@ TEST_F(SmoothScrollTest, ScrollWindowAbortsCurrentAnimation) {
   ASSERT_EQ(container->scrollTop(), 0);
 }
 
-TEST_F(SmoothScrollTest, BlockAndInlineSettings) {
+TEST_F(ScrollIntoViewTest, BlockAndInlineSettings) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -289,7 +420,7 @@ TEST_F(SmoothScrollTest, BlockAndInlineSettings) {
             content->OffsetTop() + content_height - window_height);
 }
 
-TEST_F(SmoothScrollTest, SmoothAndInstantInChain) {
+TEST_F(ScrollIntoViewTest, SmoothAndInstantInChain) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -340,7 +471,7 @@ TEST_F(SmoothScrollTest, SmoothAndInstantInChain) {
             content->OffsetTop() - inner_container->OffsetTop());
 }
 
-TEST_F(SmoothScrollTest, SmoothScrollAnchor) {
+TEST_F(ScrollIntoViewTest, SmoothScrollAnchor) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -374,7 +505,7 @@ TEST_F(SmoothScrollTest, SmoothScrollAnchor) {
             content->OffsetTop() - container->OffsetTop());
 }
 
-TEST_F(SmoothScrollTest, FindDoesNotScrollOverflowHidden) {
+TEST_F(ScrollIntoViewTest, FindDoesNotScrollOverflowHidden) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -395,12 +526,13 @@ TEST_F(SmoothScrollTest, FindDoesNotScrollOverflowHidden) {
   ASSERT_EQ(container->scrollTop(), 0);
 }
 
-TEST_F(SmoothScrollTest, ApplyRootElementScrollBehaviorToViewport) {
+TEST_F(ScrollIntoViewTest, ApplyRootElementScrollBehaviorToViewport) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
-  request.Complete("<html style='scroll-behavior: smooth'>"
+  request.Complete(
+      "<html style='scroll-behavior: smooth'>"
       "<div id='space' style='height: 1000px'></div>"
       "<div id='content' style='height: 1000px'></div></html>");
 
@@ -425,7 +557,7 @@ TEST_F(SmoothScrollTest, ApplyRootElementScrollBehaviorToViewport) {
 }
 
 // This test passes if it doesn't crash/hit an ASAN check.
-TEST_F(SmoothScrollTest, RemoveSequencedScrollableArea) {
+TEST_F(ScrollIntoViewTest, RemoveSequencedScrollableArea) {
   v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
