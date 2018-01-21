@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df699e76_f63d43b7",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 4126,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-21T07:25:15Z",
+      "side": 0,
+      "message": "This seems a little bit tricky. The desktop_capture target is still needed by src/chrome/browser/media/webrtc/native_desktop_media_list.cc, which is also in this target.\nTechnically speaking, DesktopCapturer as well as its implementations are not \"exported\" from content library in component build. Won\u0027t it introduce problems on other platforms?",
+      "range": {
+        "startLine": 4126,
+        "startChar": 0,
+        "endLine": 4126,
+        "endChar": 53
+      },
+      "revId": "f8e92a3c40bd7c687b84655e0e6a470f01662466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
