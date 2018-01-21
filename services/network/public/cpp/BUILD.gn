@@ -14,6 +14,7 @@ static_library("cpp") {
     "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
     "net_adapters.h",
+    "network_export.h",
     "network_features.cc",
     "network_features.h",
     "network_switches.cc",
@@ -34,6 +35,8 @@ static_library("cpp") {
     "//mojo/common",
     "//net",
   ]
+
+  defines = [ "NETWORK_IMPLEMENTATION" ]
 }
 
 static_library("typemap_dependencies") {
