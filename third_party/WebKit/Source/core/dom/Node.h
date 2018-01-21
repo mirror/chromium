@@ -544,9 +544,11 @@ class CORE_EXPORT Node : public EventTarget {
   // inert to prevent text selection.
   bool IsInert() const;
 
-  virtual LayoutRect BoundingBox() const;
-  IntRect PixelSnappedBoundingBox() const {
-    return PixelSnappedIntRect(BoundingBox());
+  // |expand_scroll_margin| is true when the BoundingBox() is needed for scroll-
+  // related behaviors such as ScrollIntoView().
+  virtual LayoutRect BoundingBox(bool expand_scroll_margin = false) const;
+  IntRect PixelSnappedBoundingBox(bool expand_scroll_margin = false) const {
+    return PixelSnappedIntRect(BoundingBox(expand_scroll_margin));
   }
 
   unsigned NodeIndex() const;
