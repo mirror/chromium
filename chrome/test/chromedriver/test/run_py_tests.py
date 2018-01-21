@@ -2701,6 +2701,14 @@ if __name__ == '__main__':
       '', '--android-package',
       help=('Android package key. Possible values: ' +
             str(_ANDROID_NEGATIVE_FILTER.keys())))
+
+  parser.add_option(
+      '', '--isolated-script-test-output',
+      help='JSON output file used by swarming')
+  parser.add_option(
+      '', '--isolated-script-test-perf-output',
+      help='JSON perf output file used by swarming, ignored')
+
   options, args = parser.parse_args()
 
   options.chromedriver = util.GetAbsolutePathOfUserPath(options.chromedriver)
@@ -2752,4 +2760,15 @@ if __name__ == '__main__':
   ChromeDriverTest.GlobalTearDown()
   HeadlessInvalidCertificateTest.GlobalTearDown()
   MobileEmulationCapabilityTest.GlobalTearDown()
+
+  if options.isolated_script_test_output:
+    with open(options.isolated_script_test_output, 'w') as fp:
+      json.dump({
+          'valid': len(result.errors) == 0,
+          # Below, failure is a tuple, and failure[0] is the failed test method.
+          'failures': [str(failure[0])
+                       for failure in result.failures + result.errors],
+      }, fp)
+      fp.write('\n')
+
   sys.exit(len(result.failures) + len(result.errors))
