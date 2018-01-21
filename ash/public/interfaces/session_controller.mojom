@@ -177,6 +177,8 @@ interface SessionController {
   // Shows a dialog that explains that the given user is no longer allowed in
   // the session due to a policy change, and aborts the session.
   ShowMultiprofilesSessionAbortedDialog(string user_email);
+
+  AddObserver(associated PrefServiceObserver observer);
 };
 
 // Interface for ash to request session service from its client (e.g. Chrome).
@@ -196,4 +198,8 @@ interface SessionControllerClient {
 
   // Show the multi-profile login UI to add another user to this session.
   ShowMultiProfileLogin();
+};
+
+interface PrefServiceObserver {
+  OnProfilePrefServiceInitialized(signin.mojom.AccountId account_id);
 };
