@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f65cb126_c77dc968",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-21T02:30:21Z",
+      "side": 1,
+      "message": "DocumentLayoutDefinition::IsEqual(const CSSLayoutDefinition\u0026) looks odd because DocumentLayoutDefinition and CSSLayoutDefinition are in HAS-A relationship, and they\u0027re not equal. Would it be possible to move this to CSSLayoutDefinition?",
+      "revId": "c111e2429fc121ef9270dfcd9ecb1aae3a7facdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a05f384_54df42b6",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-21T02:30:21Z",
+      "side": 1,
+      "message": "Evaluate() evaluates the source code as a classic script. It would be better to evaluate it as a module script like this:\nhttps://chromium.googlesource.com/chromium/src/+/c6abefd153ea09f3734a7f5d409e316a0accd9d2/third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScopeTest.cpp#129",
+      "revId": "c111e2429fc121ef9270dfcd9ecb1aae3a7facdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
