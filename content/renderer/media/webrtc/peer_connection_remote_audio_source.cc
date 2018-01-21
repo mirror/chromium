@@ -12,8 +12,7 @@ namespace content {
 
 namespace {
 // Used as an identifier for the down-casters.
-void* const kPeerConnectionRemoteTrackIdentifier =
-    const_cast<void**>(&kPeerConnectionRemoteTrackIdentifier);
+void* const kClassIdentifier = const_cast<void**>(&kClassIdentifier);
 }  // namespace
 
 PeerConnectionRemoteAudioTrack::PeerConnectionRemoteAudioTrack(
@@ -34,8 +33,7 @@ PeerConnectionRemoteAudioTrack::~PeerConnectionRemoteAudioTrack() {
 // static
 PeerConnectionRemoteAudioTrack* PeerConnectionRemoteAudioTrack::From(
     MediaStreamAudioTrack* track) {
-  if (track &&
-      track->GetClassIdentifier() == kPeerConnectionRemoteTrackIdentifier)
+  if (track && track->GetClassIdentifier() == kClassIdentifier)
     return static_cast<PeerConnectionRemoteAudioTrack*>(track);
   return nullptr;
 }
@@ -56,7 +54,7 @@ void PeerConnectionRemoteAudioTrack::SetEnabled(bool enabled) {
 }
 
 void* PeerConnectionRemoteAudioTrack::GetClassIdentifier() const {
-  return kPeerConnectionRemoteTrackIdentifier;
+  return kClassIdentifier;
 }
 
 PeerConnectionRemoteAudioSource::PeerConnectionRemoteAudioSource(
