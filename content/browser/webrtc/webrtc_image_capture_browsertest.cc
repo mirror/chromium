@@ -69,6 +69,19 @@ static struct TargetVideoCaptureStack {
 #endif
 };
 
+enum class TargetVideoCaptureImplementation {
+  DEFAULT,
+#if defined(OS_WIN)
+  WIN_MEDIA_FOUNDATION
+#endif
+};
+const TargetVideoCaptureImplementation kTargetVideoCaptureImplementations[] = {
+    TargetVideoCaptureImplementation::DEFAULT,
+#if defined(OS_WIN)
+    TargetVideoCaptureImplementation::WIN_MEDIA_FOUNDATION
+#endif
+};
+
 }  // namespace
 
 // This class is the content_browsertests for Image Capture API, which allows
@@ -134,7 +147,9 @@ class WebRtcImageCaptureBrowserTestBase
 class WebRtcImageCaptureSucceedsBrowserTest
     : public WebRtcImageCaptureBrowserTestBase,
       public testing::WithParamInterface<
-          std::tuple<TargetCamera, TargetVideoCaptureStack>> {
+          std::tuple<TargetCamera,
+                     TargetVideoCaptureStack,
+                     TargetVideoCaptureImplementation>> {
  public:
   WebRtcImageCaptureSucceedsBrowserTest() {
     if (std::get<1>(GetParam()).use_video_capture_service) {
@@ -154,6 +169,16 @@ class WebRtcImageCaptureSucceedsBrowserTest
       ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeDeviceForMediaStream));
     }
+
+#if defined(OS_WIN)
+    if (std::get<2>(GetParam()) ==
+        TargetVideoCaptureImplementation::WIN_MEDIA_FOUNDATION) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kForceMediaFoundationVideoCapture);
+      ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceMediaFoundationVideoCapture));
+    }
+#endif
   }
 
   bool RunImageCaptureTestCase(const std::string& command) override {
@@ -221,7 +246,8 @@ INSTANTIATE_TEST_CASE_P(
        // --gtest_filter=WebRtc*
     WebRtcImageCaptureSucceedsBrowserTest,
     testing::Combine(testing::Values(TargetCamera::FAKE_DEVICE),
-                     testing::ValuesIn(kTargetVideoCaptureStacks)));
+                     testing::ValuesIn(kTargetVideoCaptureStacks),
+                     testing::ValuesIn(kTargetVideoCaptureImplementations)));
 
 // Tests on real webcam can only run on platforms for which the image capture
 // API has already been implemented.
@@ -234,7 +260,8 @@ INSTANTIATE_TEST_CASE_P(
                       // that don't.
     WebRtcImageCaptureSucceedsBrowserTest,
     testing::Combine(testing::Values(TargetCamera::REAL_WEBCAM),
-                     testing::ValuesIn(kTargetVideoCaptureStacks)));
+                     testing::ValuesIn(kTargetVideoCaptureStacks),
+                     testing::ValuesIn(kTargetVideoCaptureImplementations)));
 #endif
 
 // Test fixture template for setting up a fake device with a custom
