@@ -113,6 +113,17 @@ void CrossProcessFrameConnector::SetChildFrameSurface(
       frame_proxy_in_parent_renderer_->GetRoutingID(), surface_info, sequence));
 }
 
+void CrossProcessFrameConnector::SendIntrinsicInfoToParent(
+    const gfx::SizeF& size,
+    const gfx::SizeF& aspect_ratio,
+    bool has_width,
+    bool has_height) {
+  frame_proxy_in_parent_renderer_->Send(
+      new FrameMsg_IntrinsicSizeOfChildChanged(
+          frame_proxy_in_parent_renderer_->GetRoutingID(), size, aspect_ratio,
+          has_width, has_height));
+}
+
 void CrossProcessFrameConnector::OnSatisfySequence(
     const viz::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->SatisfySequence(sequence);

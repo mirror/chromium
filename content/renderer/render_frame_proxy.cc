@@ -357,6 +357,14 @@ void RenderFrameProxy::SetChildFrameSurface(
                                             frame_rect().size(), sequence);
 }
 
+void RenderFrameProxy::OnIntrinsicSizeOfChildChanged(gfx::SizeF size,
+                                                     gfx::SizeF aspect_ratio,
+                                                     bool has_width,
+                                                     bool has_height) {
+  LOG(ERROR) << "OnIntrinsicSizeOfChildChanged";
+  web_frame()->IntrinsicSizeChanged(size, aspect_ratio, has_width, has_height);
+}
+
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
   // Forward Page IPCs to the RenderView.
   if ((IPC_MESSAGE_CLASS(msg) == PageMsgStart)) {
@@ -371,6 +379,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DeleteProxy, OnDeleteProxy)
     IPC_MESSAGE_HANDLER(FrameMsg_ChildFrameProcessGone, OnChildFrameProcessGone)
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
+    IPC_MESSAGE_HANDLER(FrameMsg_IntrinsicSizeOfChildChanged,
+                        OnIntrinsicSizeOfChildChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
     IPC_MESSAGE_HANDLER(FrameMsg_ViewChanged, OnViewChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
