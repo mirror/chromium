@@ -9,7 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "storage/browser/quota/quota_client.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom.h"
 
 namespace content {
 class ServiceWorkerContextWrapper;
