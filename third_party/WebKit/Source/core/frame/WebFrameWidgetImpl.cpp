@@ -57,6 +57,7 @@
 #include "core/html/forms/HTMLTextAreaElement.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutReplaced.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/FocusController.h"
@@ -531,6 +532,18 @@ void WebFrameWidgetImpl::ScheduleAnimation() {
   }
   DCHECK(client_);
   client_->ScheduleAnimation();
+}
+
+void WebFrameWidgetImpl::IntrinsicDimensionsChanged(
+    const IntrinsicSizingInfo& sizing_info) {
+  WebIntrinsicSizingInfo web_sizing_info;
+  web_sizing_info.size =
+      WebFloatSize(sizing_info.size.Width(), sizing_info.size.Height());
+  web_sizing_info.aspect_ratio = WebFloatSize(
+      sizing_info.aspect_ratio.Width(), sizing_info.aspect_ratio.Height());
+  web_sizing_info.has_width = sizing_info.has_width;
+  web_sizing_info.has_height = sizing_info.has_height;
+  client_->IntrinsicDimensionsChanged(web_sizing_info);
 }
 
 CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
