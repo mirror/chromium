@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dab35e3d_87791e41",
+        "filename": "ash/new_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "Understood. FWIW it would read better if you remove \"the\" rather than \"is\", if you do want it to be shorter to avoid wrapping.",
+      "parentUuid": "64bf30a6_cc09ab55",
+      "range": {
+        "startLine": 25,
+        "startChar": 61,
+        "endLine": 25,
+        "endChar": 75
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "493f4a9a_73ef1ce4",
         "filename": "ui/chromeos/ksv/DEPS",
         "patchSetId": 6
@@ -199,6 +223,30 @@
       "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49eb9253_bcbcfc43",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "James: I accept that that is possibly the case, but it\u0027s also true for most other new chunks of code. Abbreviated names reduce readability and increase the chance of namespace collisions, so the style guide explicitly prohibits abbreviations unless they are well-known. Of the examples you gave, PDF is well-known and similarly NaCl and UKM are feature/project names outside the Chromium code itself, so are arguably well-known-enough to qualify.",
+      "parentUuid": "dda31bf5_79d4cf64",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -378,6 +426,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "a3611000_f2907125",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "bee3216db543d3a353b3a63d30d271be41cdfbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfe56564_96b6952e",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "Sorry; now that we have discussed this, so I have a clearer understanding of what that member is for, I would recommend the following:\n\ndescription_id -\u003e description_message_id\nshortcut_id -\u003e shortcut_message_id\nreplacement_codes -\u003e shortcut_key_codes\n\nto make clearer that the two \"id\" fields are resource string Ids, and that the replacement_codes/ids are specifically key-codes related to the shortcut message string.",
+      "parentUuid": "577305fe_86e2d0cb",
       "range": {
         "startLine": 56,
         "startChar": 43,

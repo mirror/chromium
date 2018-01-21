@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "537b0f9f_a7900ce8",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "nit: Since there are two things (//ash and //chrome) just \"provide\" rather than \"provides\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5819309a_f64286f4",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "nit: You could remove this text by using \"also\" instead, e.g. \"The key+modifiers are also used to populate...\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae653ea_a0761db7",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "nit: We can usually omit \"A\" and \"The\" from the start of comments, so in this case you could just have, e.g:\n\n\"Id of the message resource describing what action the shortcut performs.\"\n\nand then similarly:\n\n\"Id of the message template resource used to list the keys making up the shortcut.\"\n\nIs the shortcut template string used for all possible combinations, though? Or do we have one-per-shortcut? Or one for tow key shortcuts, one for three key shorts, and so-on?  If we have one resource string per-shortcut then do we even need the VKEY-codes in the replacements list?",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b39aba_ba35aedd",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-21T04:56:09Z",
+      "side": 1,
+      "message": "Again, apologies; now that I understand the function of this better, I\u0027d suggest something like:\n\n\"The VKEY codes of the key and each modifier comprising the shortcut. These are translated to text or icons representing each key, and substituted into the shortcut-message template string, to display to the user.\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 37
+      },
+      "revId": "43abce958b270cd81eff1c9515d6f473f455b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
