@@ -61,6 +61,8 @@ class ASH_EXPORT AccessibilityController
                                 AccessibilityNotificationVisibility notify);
   bool IsSpokenFeedbackEnabled() const;
 
+  bool braille_display_connected() const { return braille_display_connected_; }
+
   // Triggers an accessibility alert to give the user feedback.
   void TriggerAccessibilityAlert(mojom::AccessibilityAlert alert);
 
@@ -83,14 +85,11 @@ class ASH_EXPORT AccessibilityController
   // mojom::AccessibilityController:
   void SetClient(mojom::AccessibilityControllerClientPtr client) override;
   void SetDarkenScreen(bool darken) override;
+  void BrailleDisplayStateChanged(bool connected) override;
 
   // SessionObserver:
   void OnSigninScreenPrefServiceInitialized(PrefService* prefs) override;
   void OnActiveUserPrefServiceChanged(PrefService* prefs) override;
-
-  // TODO(warx): remove this method for browser tests
-  // (https://crbug.com/789285).
-  void SetPrefServiceForTest(PrefService* prefs);
 
   // Test helpers:
   void FlushMojoForTest();
@@ -99,10 +98,6 @@ class ASH_EXPORT AccessibilityController
   // Observes either the signin screen prefs or active user prefs and loads
   // initial settings.
   void ObservePrefs(PrefService* prefs);
-
-  // Returns |pref_service_for_test_| if not null, otherwise return
-  // SessionController::GetActivePrefService().
-  PrefService* GetActivePrefService() const;
 
   void UpdateAutoclickFromPref();
   void UpdateHighContrastFromPref();
@@ -125,13 +120,12 @@ class ASH_EXPORT AccessibilityController
   int large_cursor_size_in_dip_ = kDefaultLargeCursorSize;
   bool mono_audio_enabled_ = false;
   bool spoken_feedback_enabled_ = false;
+  bool braille_display_connected_ = false;
 
   // TODO(warx): consider removing this and replacing it with a more reliable
   // way (https://crbug.com/800270).
   AccessibilityNotificationVisibility spoken_feedback_notification_ =
       A11Y_NOTIFICATION_NONE;
-
-  PrefService* pref_service_for_test_ = nullptr;
 
   // Used to force the backlights off to darken the screen.
   std::unique_ptr<ScopedBacklightsForcedOff> scoped_backlights_forced_off_;

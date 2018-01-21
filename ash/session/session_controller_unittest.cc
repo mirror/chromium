@@ -27,6 +27,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/user_manager/user_type.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/window.h"
 #include "ui/views/widget/widget.h"
@@ -82,6 +83,28 @@ class TestSessionObserver : public SessionObserver {
   PrefService* last_user_pref_service_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(TestSessionObserver);
+};
+
+class TestPrefServiceObserver : public mojom::PrefServiceObserver {
+ public:
+  explicit TestPrefServiceObserver(const AccountId& account_id)
+      : account_id_(account_id) {}
+  ~TestPrefServiceObserver() override = default;
+
+  bool pref_service_initialized() const { return pref_service_initialized_; }
+
+ private:
+  // mojom::PrefServiceObserver:
+  void OnProfilePrefServiceInitialized(const AccountId& account_id) override {
+    if (account_id != account_id_)
+      return;
+    pref_service_initialized_ = true;
+  }
+
+  const AccountId account_id_;
+  bool pref_service_initialized_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(TestPrefServiceObserver);
 };
 
 void FillDefaultSessionInfo(mojom::SessionInfo* info) {
@@ -484,6 +507,47 @@ TEST_F(SessionControllerPrefsTest, Observer) {
             controller->GetLastActiveUserPrefService());
 
   controller->RemoveObserver(&observer);
+}
+
+TEST_F(SessionControllerPrefsTest, PrefServiceObserver) {
+  constexpr char kUser1[] = "user1@test.com";
+  constexpr char kUser2[] = "user2@test.com";
+  const AccountId kUserAccount1 = AccountId::FromUserEmail(kUser1);
+  const AccountId kUserAccount2 = AccountId::FromUserEmail(kUser2);
+
+  SessionController* controller = Shell::Get()->session_controller();
+  TestPrefServiceObserver observer(kUserAccount2);
+  mojom::PrefServiceObserverAssociatedPtr observer_ptr;
+  mojo::AssociatedBinding<mojom::PrefServiceObserver> binding(
+      &observer, mojo::MakeRequestAssociatedWithDedicatedPipe(&observer_ptr));
+  controller->AddObserver(observer_ptr.PassInterface());
+  controller->FlushMojoForTest();
+
+  // Setup 2 users.
+  TestSessionControllerClient* session = GetSessionControllerClient();
+  // Disable auto-provision of PrefService for earch user.
+  constexpr bool kEnableSettings = true;
+  constexpr bool kProvidePrefService = false;
+  session->AddUserSession(kUser1, user_manager::USER_TYPE_REGULAR,
+                          kEnableSettings, kProvidePrefService);
+  session->AddUserSession(kUser2, user_manager::USER_TYPE_REGULAR,
+                          kEnableSettings, kProvidePrefService);
+
+  session->SwitchActiveUser(kUserAccount1);
+  auto pref_service = std::make_unique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry(), true /* for test */);
+  controller->ProvideUserPrefServiceForTest(kUserAccount1,
+                                            std::move(pref_service));
+  controller->FlushMojoForTest();
+  EXPECT_FALSE(observer.pref_service_initialized());
+
+  session->SwitchActiveUser(kUserAccount2);
+  pref_service = std::make_unique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry(), true /* for test */);
+  controller->ProvideUserPrefServiceForTest(kUserAccount2,
+                                            std::move(pref_service));
+  controller->FlushMojoForTest();
+  EXPECT_TRUE(observer.pref_service_initialized());
 }
 
 TEST_F(SessionControllerTest, GetUserType) {

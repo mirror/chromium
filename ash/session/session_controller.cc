@@ -418,6 +418,13 @@ void SessionController::ShowMultiprofilesSessionAbortedDialog(
   SessionAbortedDialog::Show(user_email);
 }
 
+void SessionController::AddObserver(
+    mojom::PrefServiceObserverAssociatedPtrInfo observer) {
+  mojom::PrefServiceObserverAssociatedPtr observer_ptr;
+  observer_ptr.Bind(std::move(observer));
+  pref_service_observers_.AddPtr(std::move(observer_ptr));
+}
+
 void SessionController::ClearUserSessionsForTest() {
   user_sessions_.clear();
   last_active_user_prefs_ = nullptr;
@@ -427,6 +434,7 @@ void SessionController::ClearUserSessionsForTest() {
 
 void SessionController::FlushMojoForTest() {
   client_.FlushForTesting();
+  pref_service_observers_.FlushForTesting();
 }
 
 void SessionController::LockScreenAndFlushForTest() {
@@ -629,6 +637,10 @@ void SessionController::OnProfilePrefServiceInitialized(
     last_active_user_prefs_ = pref_service_ptr;
     for (auto& observer : observers_)
       observer.OnActiveUserPrefServiceChanged(pref_service_ptr);
+    pref_service_observers_.ForAllPtrs(
+        [account_id](mojom::PrefServiceObserver* observer) {
+          observer->OnProfilePrefServiceInitialized(account_id);
+        });
   }
 }
 
