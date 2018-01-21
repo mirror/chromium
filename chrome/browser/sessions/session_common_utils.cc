@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <string>
 
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/sessions/core/session_types.h"
 #include "url/gurl.h"
 

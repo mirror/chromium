@@ -8,7 +8,7 @@
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_pages.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 
 OneClickSigninLinksDelegateImpl::OneClickSigninLinksDelegateImpl(
     Browser* browser)

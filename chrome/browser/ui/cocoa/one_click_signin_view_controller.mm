@@ -8,7 +8,7 @@
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #import "chrome/browser/ui/cocoa/chrome_style.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/strings/grit/components_strings.h"

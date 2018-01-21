@@ -7,7 +7,7 @@
 #include "chrome/browser/ui/search/search_ipc_router_policy_impl.h"
 #include "chrome/browser/ui/search/search_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "content/public/browser/page_navigator.h"
 #include "testing/gtest/include/gtest/gtest.h"

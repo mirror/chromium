@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/sync/driver/sync_api_component_factory.h"
 #include "components/sync_sessions/sync_sessions_client.h"

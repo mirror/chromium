@@ -5,7 +5,7 @@
 #include "chrome/browser/translate/translate_service.h"
 
 #include "build/build_config.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/translate/core/browser/translate_download_manager.h"

@@ -5,7 +5,7 @@
 #include "chrome/browser/renderer_context_menu/context_menu_content_type_factory.h"
 
 #include "base/bind.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/renderer_context_menu/context_menu_content_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"

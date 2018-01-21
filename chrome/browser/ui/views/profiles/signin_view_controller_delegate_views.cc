@@ -12,7 +12,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/webui/signin/sync_confirmation_ui.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"

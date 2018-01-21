@@ -6,7 +6,7 @@
 
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
 #include "chrome/browser/ui/webui/chromeos/login/screenlock_icon_provider.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "net/base/escape.h"
 
 namespace {

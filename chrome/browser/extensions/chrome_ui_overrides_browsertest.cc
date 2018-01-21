@@ -6,7 +6,7 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/ui/browser_commands.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 
 class ChromeUIOverridesBrowserTest : public ExtensionBrowserTest {};
 

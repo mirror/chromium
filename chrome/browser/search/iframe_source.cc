@@ -8,7 +8,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/search/instant_io_context.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/resource/resource_bundle.h"

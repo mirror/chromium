@@ -11,7 +11,7 @@
 #include "chrome/browser/ui/webui/sync_file_system_internals/extension_statuses_handler.h"
 #include "chrome/browser/ui/webui/sync_file_system_internals/file_metadata_handler.h"
 #include "chrome/browser/ui/webui/sync_file_system_internals/sync_file_system_internals_handler.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/sync_file_system_internals_resources.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"

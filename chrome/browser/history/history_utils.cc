@@ -4,7 +4,7 @@
 
 #include "chrome/browser/history/history_utils.h"
 
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "url/gurl.h"
 

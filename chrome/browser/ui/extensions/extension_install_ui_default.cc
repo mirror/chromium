@@ -34,7 +34,7 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/extensions/extension_installed_notification.h"
 #else
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "content/public/browser/notification_service.h"
 #endif
 

@@ -6,7 +6,7 @@
 
 #include "base/memory/singleton.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "extensions/common/constants.h"
 #include "url/gurl.h"

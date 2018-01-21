@@ -15,7 +15,7 @@
 #include "chrome/browser/chromeos/fileapi/file_access_permissions.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend_delegate.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/cros_disks_client.h"
 #include "net/base/escape.h"

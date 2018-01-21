@@ -7,8 +7,8 @@
 #include <string>
 
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"

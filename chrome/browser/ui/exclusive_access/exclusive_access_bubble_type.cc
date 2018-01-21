@@ -5,7 +5,7 @@
 #include "chrome/browser/ui/exclusive_access/exclusive_access_bubble_type.h"
 
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"

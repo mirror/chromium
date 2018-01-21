@@ -5,8 +5,8 @@
 #include "chrome/browser/extensions/settings_api_helpers.h"
 
 #include "chrome/browser/extensions/api/preference/preference_api.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/url_constants.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "components/search_engines/search_engines_pref_names.h"
 #include "content/public/browser/browser_url_handler.h"

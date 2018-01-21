@@ -9,7 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/observer_list.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/cryptauth/remote_device_test_util.h"

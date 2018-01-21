@@ -18,7 +18,7 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/power/power_data_collector.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/url_constants.h"
+#include "chrome/browser/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/web_ui.h"
