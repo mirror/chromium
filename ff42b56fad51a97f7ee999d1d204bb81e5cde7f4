@@ -22,6 +22,30 @@
       "revId": "ff42b56fad51a97f7ee999d1d204bb81e5cde7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffe21bf_cfce61bc",
+        "filename": "net/cookies/cookie_monster.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2018-01-22T19:49:28Z",
+      "side": 1,
+      "message": "Correct. The histogram that used these values was removed in https://chromium-review.googlesource.com/c/chromium/src/+/560519/2/net/cookies/cookie_monster.cc.",
+      "parentUuid": "3845f8c6_ee473021",
+      "range": {
+        "startLine": 291,
+        "startChar": 4,
+        "endLine": 291,
+        "endChar": 28
+      },
+      "revId": "ff42b56fad51a97f7ee999d1d204bb81e5cde7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
