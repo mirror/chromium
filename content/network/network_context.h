@@ -19,6 +19,7 @@
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "services/network/cookie_manager.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
+#include "services/network/public/interfaces/tcp_socket.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace net {
@@ -98,6 +99,14 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
   void SetNetworkConditions(
       const std::string& profile_id,
       network::mojom::NetworkConditionsPtr conditions) override;
+  void CreateTCPServerSocket(const net::IPEndPoint& local_addr,
+                             network::mojom::TCPServerSocketRequest socket,
+                             CreateTCPServerSocketCallback callback) override;
+  void CreateTCPConnectedSocket(
+      const base::Optional<net::IPEndPoint>& local_addr,
+      const net::IPEndPoint& remote_addr,
+      network::mojom::TCPConnectedSocketRequest socket,
+      CreateTCPConnectedSocketCallback callback) override;
   void AddHSTSForTesting(const std::string& host,
                          base::Time expiry,
                          bool include_subdomains,

@@ -10,8 +10,10 @@ import "proxy_config.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "restricted_cookie_manager.mojom";
+import "tcp_socket.mojom";
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "net/interfaces/ip_endpoint.mojom";
 import "url/mojo/url.mojom";
 import "services/proxy_resolver/public/interfaces/proxy_resolver.mojom";
 
@@ -151,6 +153,29 @@ interface NetworkContext {
   // Passing null NetworkConditions disables the throttling.
   // TODO(caseq): get rid of header, make profile_id part of ResourceRequest.
   SetNetworkConditions(string profile_id, NetworkConditions? conditions);
+
+  // Creates a TCP server socket that listens on |local_addr|. Caller must
+  // specify an address family in |local_addr| to be either IPv4 or IPv6. If
+  // port in |local_addr| is 0, the OS will pick an available port. If address
+  // bytes are 0, the OS will pick a local address of the specified address
+  // family. On success, the resulting local address will be written to
+  // |local_addr_out| and |result| is net::OK. On failure, |result| is a network
+  // error code.
+  CreateTCPServerSocket(net.interfaces.IPEndPoint local_addr,
+                        network.mojom.TCPServerSocket& socket)
+      => (int32 result, net.interfaces.IPEndPoint? local_addr_out);
+
+  // Creates a TCP socket connected to |remote_addr|. |local_addr| should be set
+  // to null unless the caller wants to bind the socket to a specific address
+  // and port. On success, |local_addr_out| and |result| is net::OK. Caller is
+  // to use |send_stream| to send data and |receive_stream| to receive data over
+  // the connection. On failure, |result| is a network error code.
+  CreateTCPConnectedSocket(net.interfaces.IPEndPoint? local_addr,
+                           net.interfaces.IPEndPoint remote_addr,
+                           network.mojom.TCPConnectedSocket& socket)
+     => (int32 result, net.interfaces.IPEndPoint? local_addr_out,
+         handle<data_pipe_consumer>? send_stream,
+         handle<data_pipe_producer>? receive_stream);
 
   [Sync]
   // Adds explicitly-specified data as if it was processed from an

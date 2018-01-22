@@ -1,0 +1,31 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module network.mojom;
+
+import "net/interfaces/ip_endpoint.mojom";
+
+// Represents a connected TCP socket. Writes and Reads are through the data
+// pipes supplied upon construction.
+// Consumer can close the socket by destroying the interface pointer. Consumer
+// should also register a connection_error_with_reason_handler to watch for
+// connection error. When the socket is disconnected, the
+// connection_error_with_reason_handler will be notified with a net error code.
+interface TCPConnectedSocket {
+  // TODO(xunjieli): Setters for controlling the connection will be added.
+};
+
+// Represents a TCP server socket that has been successfully bound to a local
+// address. Caller can close the socket by destroying the interface pointer.
+interface TCPServerSocket {
+  // Waits for an incoming connection request. On success, |connected_socket|
+  // is the new connection established. Returns net::OK and |remote_addr|
+  // represents the peer address. On failure, |net_error| is a net error code.
+  // Only one Accept() can be pending at a time.
+  // TODO(xunjieli): Consider supporting multiple pending Accept()s.
+  Accept(TCPConnectedSocket& connected_socket)
+      => (int32 net_error, net.interfaces.IPEndPoint? remote_addr,
+          handle<data_pipe_consumer>? send_stream,
+          handle<data_pipe_producer>? receive_stream);
+};
