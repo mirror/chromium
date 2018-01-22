@@ -175,4 +175,9 @@ public class BrowserActionActivity extends AsyncInitializationActivity {
             }
         });
     }
+
+    @Override
+    protected boolean requiresFirstRunToBeCompleted(Intent intent) {
+        return false;
+    }
 }
