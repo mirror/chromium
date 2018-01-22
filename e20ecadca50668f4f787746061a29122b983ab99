@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b448b88e_b5501036",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "If its name is KeyAuthorizationData, it should convert both the type and the secrets.\nIf it only converts the type, the name should be the one suggested by xiyuan.\n\nIf this function is to only convert the type, you can make this function take AuthorizationData::Type and return KeyAuthorizationDataType instead of the entire proto \u0026 struct.",
+      "parentUuid": "b6f16fcf_17f55f45",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ec7f66b_a2b49c9b",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "833fe8f3_c1d9f3a9",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "Or you can totally get rid of this test fixture class, and use TEST instead of TEST_F.",
+      "parentUuid": "0ec7f66b_a2b49c9b",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b5d8aa7_e364969d",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-19T18:06:34Z",
       "side": 1,
       "message": "Would this cause problem since it references a temp obj? Please fix here and other places.",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea92605_e5b74fab",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "A temporary object\u0027s lifetime is extended when bound to a reference, but I agree it\u0027s more straightforward if it\u0027s not a reference.\nhttp://en.cppreference.com/w/cpp/language/reference_initialization#Lifetime_of_a_temporary",
+      "parentUuid": "3b5d8aa7_e364969d",
       "range": {
         "startLine": 27,
         "startChar": 19,
@@ -111,6 +177,40 @@
     },
     {
       "key": {
+        "uuid": "c9ea7149_db6cbe55",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "Could you add a test case in which an non-null empty BaseReply (i.e. non-null base::Optional\u003cBaseReply\u003e, but BaseReply::set_error() is not called) results in MOUNT_ERROR_NONE?\n\nAlso, at least one test case which results in an error code other than FATAL or NOT_SET?",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4a6f90_9ca8178f",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cef799cc_a426b38e",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -151,6 +251,23 @@
         "endLine": 188,
         "endChar": 29
       },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef401722_642e5e07",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-22T07:34:24Z",
+      "side": 1,
+      "message": "constexpr\n\nThe same goes for others.",
       "revId": "e20ecadca50668f4f787746061a29122b983ab99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
