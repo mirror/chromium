@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "24cca745_47419051",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T22:22:38Z",
+      "side": 1,
+      "message": "I had a longer explanation, but realized it probably muddied the waters more than cleared them, so trying for a shorter.\n\nA correct (for all platforms) approach should be\n- is_publicly_trusted \u003d (any cert in the chain in the built-in list) || (last cert in the chain in the OS list)\n\nAcross all of the platforms, the expectation is that if there is a shorter-chain to the OS\u0027s \"true\" source of trust, the OS would prefer that shorter chain.\n\nHowever, we know that the OS trust stores diverge, both intra-OS and inter-OS, hence examining the full chain for the built-in list.\n\nIf the built-in list is missing something, the terminal check matters.\n\nOn macOS/Windows/NSS, I did the check during the iteration simply due to programmer laziness and since I needed the terminal cert handle, and because the work should turn out to be negligible. In the case of Android/BuiltIn, it was easier to just do the terminal check, hence doing the terminal check.\n\nThat\u0027s what I meant by \"not API contract/implementation defined\" because it shouldn\u0027t matter, but happy to either comment to that fact or align the code simply for easier pattern matching/less confusion.",
+      "parentUuid": "ef733b7b_a7a4b361",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
