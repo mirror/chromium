@@ -412,6 +412,8 @@ void ImageBuffer::SetSurface(std::unique_ptr<ImageBufferSurface> surface) {
   SkPaint paint;
   paint.setBlendMode(SkBlendMode::kSrc);
   surface->Canvas()->drawImage(image->PaintImageForCurrentFrame(), 0, 0);
+  surface->GetCanvasResourceHost()->RestoreCanvasMatrixClipStack(
+      surface->Canvas());
   surface->SetImageBuffer(this);
   surface_ = std::move(surface);
 }
