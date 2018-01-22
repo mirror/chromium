@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1b1c970_b82d6088",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T15:08:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "736c7d3a_bb3fea01",
+      "revId": "0be08f21a2ac1557d6389b7cbb2cc0419f56131b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "220c6506_12fea546",
         "filename": "services/network/public/cpp/resource_request_body.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-18T08:40:40Z",
       "side": 1,
       "message": "Mentioning ServiceWorker here might be a bit weird per layering... not sure if all these must be commented here.  Alternatively we can implement this Clone method somewhere outside /services/network if it\u0027s really only used by ServiceWorker.",
+      "revId": "0be08f21a2ac1557d6389b7cbb2cc0419f56131b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e131eb_4f3a36c5",
+        "filename": "services/network/public/cpp/resource_request_body.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T15:08:11Z",
+      "side": 1,
+      "message": "Good point. I decided to move this to SWLoaderHelpers to limit the scope of the CL, as I think only S13nServiceWorker will need to clone the body. We can always factor it back into a central member if other users will want it.",
+      "parentUuid": "220c6506_12fea546",
       "revId": "0be08f21a2ac1557d6389b7cbb2cc0419f56131b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
