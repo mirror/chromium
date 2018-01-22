@@ -97,7 +97,7 @@ void Button::SetTooltipText(const base::string16& tooltip_text) {
 
 void Button::SetAccessibleName(const base::string16& name) {
   accessible_name_ = name;
-  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::TEXT_CHANGED, true);
 }
 
 void Button::SetState(ButtonState state) {
@@ -152,7 +152,7 @@ void Button::SetHotTracked(bool is_hot_tracked) {
     SetState(is_hot_tracked ? STATE_HOVERED : STATE_NORMAL);
 
   if (is_hot_tracked)
-    NotifyAccessibilityEvent(ui::AX_EVENT_HOVER, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::HOVER, true);
 }
 
 bool Button::IsHotTracked() const {
@@ -385,24 +385,27 @@ void Button::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::BUTTON;
   node_data->SetName(accessible_name_);
   if (!enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
+    node_data->AddIntAttribute(
+        ax::mojom::IntAttribute::RESTRICTION,
+        static_cast<int32_t>(ax::mojom::Restriction::DISABLED));
   }
 
   switch (state_) {
     case STATE_HOVERED:
-      node_data->AddState(ui::AX_STATE_HOVERED);
+      node_data->AddState(ax::mojom::State::HOVERED);
       break;
     case STATE_PRESSED:
-      node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                                 ui::AX_CHECKED_STATE_TRUE);
+      node_data->AddIntAttribute(
+          ax::mojom::IntAttribute::CHECKED_STATE,
+          static_cast<int32_t>(ax::mojom::CheckedState::TRUE_VALUE));
       break;
     case STATE_DISABLED:
-      node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                                 ui::AX_RESTRICTION_DISABLED);
+      node_data->AddIntAttribute(
+          ax::mojom::IntAttribute::RESTRICTION,
+          static_cast<int32_t>(ax::mojom::Restriction::DISABLED));
       break;
     case STATE_NORMAL:
     case STATE_COUNT:
@@ -410,8 +413,9 @@ void Button::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       break;
   }
   if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_PRESS);
+    node_data->AddIntAttribute(
+        ax::mojom::IntAttribute::DEFAULT_ACTION_VERB,
+        static_cast<int32_t>(ax::mojom::DefaultActionVerb::PRESS));
   }
 }
 

@@ -286,12 +286,12 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
       if (surface && tree_source->GetTreeData(&tree_data)) {
         surface->SetAXTreeId(tree_data.tree_id);
 
-        // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the
+        // Dispatch ax::mojom::Event::CHILDREN_CHANGED to force AXNodeData of the
         // notification updated. Before AXTreeId is set, its AXNodeData is
         // populated as a button.
         if (surface->IsAttached()) {
           surface->GetAttachedHost()->NotifyAccessibilityEvent(
-              ui::AX_EVENT_CHILDREN_CHANGED, false);
+              ax::mojom::Event::CHILDREN_CHANGED, false);
         }
       }
     }
@@ -369,41 +369,41 @@ void ArcAccessibilityHelperBridge::OnAction(
   action_data->window_id = tree_source->window_id();
 
   switch (data.action) {
-    case ui::AX_ACTION_DO_DEFAULT:
+    case ax::mojom::Action::DO_DEFAULT:
       action_data->action_type = arc::mojom::AccessibilityActionType::CLICK;
       break;
-    case ui::AX_ACTION_FOCUS:
+    case ax::mojom::Action::FOCUS:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::ACCESSIBILITY_FOCUS;
       break;
-    case ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE:
+    case ax::mojom::Action::SCROLL_TO_MAKE_VISIBLE:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SHOW_ON_SCREEN;
       break;
-    case ui::AX_ACTION_SCROLL_BACKWARD:
+    case ax::mojom::Action::SCROLL_BACKWARD:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_BACKWARD;
       break;
-    case ui::AX_ACTION_SCROLL_FORWARD:
+    case ax::mojom::Action::SCROLL_FORWARD:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_FORWARD;
       break;
-    case ui::AX_ACTION_SCROLL_UP:
+    case ax::mojom::Action::SCROLL_UP:
       action_data->action_type = arc::mojom::AccessibilityActionType::SCROLL_UP;
       break;
-    case ui::AX_ACTION_SCROLL_DOWN:
+    case ax::mojom::Action::SCROLL_DOWN:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_DOWN;
       break;
-    case ui::AX_ACTION_SCROLL_LEFT:
+    case ax::mojom::Action::SCROLL_LEFT:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_LEFT;
       break;
-    case ui::AX_ACTION_SCROLL_RIGHT:
+    case ax::mojom::Action::SCROLL_RIGHT:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::SCROLL_RIGHT;
       break;
-    case ui::AX_ACTION_CUSTOM_ACTION:
+    case ax::mojom::Action::CUSTOM_ACTION:
       action_data->action_type =
           arc::mojom::AccessibilityActionType::CUSTOM_ACTION;
       action_data->custom_action_id = data.custom_action_id;
@@ -527,7 +527,7 @@ void ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded(
 
   surface->SetAXTreeId(tree_data.tree_id);
 
-  // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the notification
+  // Dispatch ax::mojom::Event::CHILDREN_CHANGED to force AXNodeData of the notification
   // updated. As order of OnNotificationSurfaceAdded call is not guaranteed, we
   // are dispatching the event in both ArcAccessibilityHelperBridge and
   // ArcNotificationContentView. The event needs to be dispatched after 1. ax
@@ -535,7 +535,7 @@ void ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded(
   // view.
   if (surface->IsAttached()) {
     surface->GetAttachedHost()->NotifyAccessibilityEvent(
-        ui::AX_EVENT_CHILDREN_CHANGED, false);
+        ax::mojom::Event::CHILDREN_CHANGED, false);
   }
 }
 

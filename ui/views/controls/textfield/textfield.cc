@@ -344,7 +344,7 @@ void Textfield::SetText(const base::string16& new_text) {
   UpdateCursorViewPosition();
   UpdateCursorVisibility();
   SchedulePaint();
-  NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::VALUE_CHANGED, true);
 }
 
 void Textfield::AppendText(const base::string16& new_text) {
@@ -353,7 +353,7 @@ void Textfield::AppendText(const base::string16& new_text) {
   model_->Append(new_text);
   OnCaretBoundsChanged();
   SchedulePaint();
-  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::TEXT_CHANGED, true);
 }
 
 void Textfield::InsertOrReplaceText(const base::string16& new_text) {
@@ -934,37 +934,39 @@ void Textfield::OnDragDone() {
 }
 
 void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TEXT_FIELD;
+  node_data->role = ax::mojom::Role::TEXT_FIELD;
   node_data->SetName(accessible_name_);
   // Editable state indicates support of editable interface, and is always set
   // for a textfield, even if disabled or readonly.
-  node_data->AddState(ui::AX_STATE_EDITABLE);
+  node_data->AddState(ax::mojom::State::EDITABLE);
   if (enabled()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                               ui::AX_DEFAULT_ACTION_VERB_ACTIVATE);
+    node_data->AddIntAttribute(
+        ax::mojom::IntAttribute::DEFAULT_ACTION_VERB,
+        static_cast<int32_t>(ax::mojom::DefaultActionVerb::ACTIVATE));
     // Only readonly if enabled. Don't overwrite the disabled restriction.
     if (read_only()) {
-      node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                                 ui::AX_RESTRICTION_READ_ONLY);
+      node_data->AddIntAttribute(
+          ax::mojom::IntAttribute::RESTRICTION,
+          static_cast<int32_t>(ax::mojom::Restriction::READ_ONLY));
     }
   }
   if (text_input_type_ == ui::TEXT_INPUT_TYPE_PASSWORD) {
-    node_data->AddState(ui::AX_STATE_PROTECTED);
+    node_data->AddState(ax::mojom::State::PROTECTED);
     node_data->SetValue(base::string16(
         text().size(), gfx::RenderText::kPasswordReplacementChar));
   } else {
     node_data->SetValue(text());
   }
-  node_data->AddStringAttribute(ui::AX_ATTR_PLACEHOLDER,
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::PLACEHOLDER,
                                 base::UTF16ToUTF8(GetPlaceholderText()));
 
   const gfx::Range range = GetSelectedRange();
-  node_data->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, range.start());
-  node_data->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, range.end());
+  node_data->AddIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START, range.start());
+  node_data->AddIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END, range.end());
 }
 
 bool Textfield::HandleAccessibleAction(const ui::AXActionData& action_data) {
-  if (action_data.action == ui::AX_ACTION_SET_SELECTION) {
+  if (action_data.action == ax::mojom::Action::SET_SELECTION) {
     if (action_data.anchor_node_id != action_data.focus_node_id)
       return false;
     // TODO(nektar): Check that the focus_node_id matches the ID of this node.
@@ -976,11 +978,11 @@ bool Textfield::HandleAccessibleAction(const ui::AXActionData& action_data) {
   if (read_only())
     return View::HandleAccessibleAction(action_data);
 
-  if (action_data.action == ui::AX_ACTION_SET_VALUE) {
+  if (action_data.action == ax::mojom::Action::SET_VALUE) {
     SetText(action_data.value);
     ClearSelection();
     return true;
-  } else if (action_data.action == ui::AX_ACTION_REPLACE_SELECTED_TEXT) {
+  } else if (action_data.action == ax::mojom::Action::REPLACE_SELECTED_TEXT) {
     InsertOrReplaceText(action_data.value);
     ClearSelection();
     return true;
@@ -1983,7 +1985,7 @@ void Textfield::UpdateAfterChange(bool text_changed, bool cursor_changed) {
   if (text_changed) {
     if (controller_)
       controller_->ContentsChanged(this, text());
-    NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::VALUE_CHANGED, true);
   }
   if (cursor_changed) {
     UpdateCursorViewPosition();
@@ -2063,7 +2065,7 @@ void Textfield::OnCaretBoundsChanged() {
     GetInputMethod()->OnCaretBoundsChanged(this);
   if (touch_selection_controller_)
     touch_selection_controller_->SelectionChanged();
-  NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_SELECTION_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::TEXT_SELECTION_CHANGED, true);
 }
 
 void Textfield::OnBeforeUserAction() {

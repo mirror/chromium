@@ -14,7 +14,7 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_export.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -26,11 +26,11 @@ namespace ui {
 
 // Return true if |attr| should be interpreted as the id of another node
 // in the same tree.
-AX_EXPORT bool IsNodeIdIntAttribute(AXIntAttribute attr);
+AX_EXPORT bool IsNodeIdIntAttribute(ax::mojom::IntAttribute attr);
 
 // Return true if |attr| should be interpreted as a list of ids of
 // nodes in the same tree.
-AX_EXPORT bool IsNodeIdIntListAttribute(AXIntListAttribute attr);
+AX_EXPORT bool IsNodeIdIntListAttribute(ax::mojom::IntListAttribute attr);
 
 // A compact representation of the accessibility information for a
 // single accessible object, in a form that can be serialized and sent from
@@ -57,53 +57,53 @@ struct AX_EXPORT AXNodeData {
   // attribute is not present. In addition, strings can be returned as
   // either std::string or base::string16, for convenience.
 
-  bool HasBoolAttribute(AXBoolAttribute attr) const;
-  bool GetBoolAttribute(AXBoolAttribute attr) const;
-  bool GetBoolAttribute(AXBoolAttribute attr, bool* value) const;
+  bool HasBoolAttribute(ax::mojom::BoolAttribute attr) const;
+  bool GetBoolAttribute(ax::mojom::BoolAttribute attr) const;
+  bool GetBoolAttribute(ax::mojom::BoolAttribute attr, bool* value) const;
 
-  bool HasFloatAttribute(AXFloatAttribute attr) const;
-  float GetFloatAttribute(AXFloatAttribute attr) const;
-  bool GetFloatAttribute(AXFloatAttribute attr, float* value) const;
+  bool HasFloatAttribute(ax::mojom::FloatAttribute attr) const;
+  float GetFloatAttribute(ax::mojom::FloatAttribute attr) const;
+  bool GetFloatAttribute(ax::mojom::FloatAttribute attr, float* value) const;
 
-  bool HasIntAttribute(AXIntAttribute attribute) const;
-  int GetIntAttribute(AXIntAttribute attribute) const;
-  bool GetIntAttribute(AXIntAttribute attribute, int* value) const;
+  bool HasIntAttribute(ax::mojom::IntAttribute attribute) const;
+  int GetIntAttribute(ax::mojom::IntAttribute attribute) const;
+  bool GetIntAttribute(ax::mojom::IntAttribute attribute, int* value) const;
 
   bool HasStringAttribute(
-      AXStringAttribute attribute) const;
-  const std::string& GetStringAttribute(AXStringAttribute attribute) const;
-  bool GetStringAttribute(AXStringAttribute attribute,
+      ax::mojom::StringAttribute attribute) const;
+  const std::string& GetStringAttribute(ax::mojom::StringAttribute attribute) const;
+  bool GetStringAttribute(ax::mojom::StringAttribute attribute,
                           std::string* value) const;
 
-  bool GetString16Attribute(AXStringAttribute attribute,
+  bool GetString16Attribute(ax::mojom::StringAttribute attribute,
                             base::string16* value) const;
   base::string16 GetString16Attribute(
-      AXStringAttribute attribute) const;
+      ax::mojom::StringAttribute attribute) const;
 
-  bool HasIntListAttribute(AXIntListAttribute attribute) const;
+  bool HasIntListAttribute(ax::mojom::IntListAttribute attribute) const;
   const std::vector<int32_t>& GetIntListAttribute(
-      AXIntListAttribute attribute) const;
-  bool GetIntListAttribute(AXIntListAttribute attribute,
+      ax::mojom::IntListAttribute attribute) const;
+  bool GetIntListAttribute(ax::mojom::IntListAttribute attribute,
                            std::vector<int32_t>* value) const;
 
-  bool HasStringListAttribute(AXStringListAttribute attribute) const;
+  bool HasStringListAttribute(ax::mojom::StringListAttribute attribute) const;
   const std::vector<std::string>& GetStringListAttribute(
-      AXStringListAttribute attribute) const;
-  bool GetStringListAttribute(AXStringListAttribute attribute,
+      ax::mojom::StringListAttribute attribute) const;
+  bool GetStringListAttribute(ax::mojom::StringListAttribute attribute,
                               std::vector<std::string>* value) const;
 
   bool GetHtmlAttribute(const char* attr, base::string16* value) const;
   bool GetHtmlAttribute(const char* attr, std::string* value) const;
 
   // Setting accessibility attributes.
-  void AddStringAttribute(AXStringAttribute attribute,
+  void AddStringAttribute(ax::mojom::StringAttribute attribute,
                           const std::string& value);
-  void AddIntAttribute(AXIntAttribute attribute, int value);
-  void AddFloatAttribute(AXFloatAttribute attribute, float value);
-  void AddBoolAttribute(AXBoolAttribute attribute, bool value);
-  void AddIntListAttribute(AXIntListAttribute attribute,
+  void AddIntAttribute(ax::mojom::IntAttribute attribute, int32_t value);
+  void AddFloatAttribute(ax::mojom::FloatAttribute attribute, float value);
+  void AddBoolAttribute(ax::mojom::BoolAttribute attribute, bool value);
+  void AddIntListAttribute(ax::mojom::IntListAttribute attribute,
                            const std::vector<int32_t>& value);
-  void AddStringListAttribute(AXStringListAttribute attribute,
+  void AddStringListAttribute(ax::mojom::StringListAttribute attribute,
                               const std::vector<std::string>& value);
 
   // Convenience functions, mainly for writing unit tests.
@@ -115,12 +115,12 @@ struct AX_EXPORT AXNodeData {
   void SetValue(const base::string16& value);
 
   // Returns true if the given enum bit is 1.
-  bool HasState(ui::AXState state_enum) const;
-  bool HasAction(ui::AXAction state_enum) const;
+  bool HasState(ax::mojom::State state_enum) const;
+  bool HasAction(ax::mojom::Action state_enum) const;
 
   // Set bits in the given enum's corresponding bitfield.
-  void AddState(ui::AXState state_enum);
-  void AddAction(ui::AXAction action_enum);
+  void AddState(ax::mojom::State state_enum);
+  void AddAction(ax::mojom::Action action_enum);
 
   // Return a string representation of this data, for debugging.
   virtual std::string ToString() const;
@@ -128,16 +128,16 @@ struct AX_EXPORT AXNodeData {
   // As much as possible this should behave as a simple, serializable,
   // copyable struct.
   int32_t id = -1;
-  AXRole role = AX_ROLE_UNKNOWN;
-  uint32_t state = AX_STATE_NONE;
-  uint32_t actions = AX_ACTION_NONE;
-  std::vector<std::pair<AXStringAttribute, std::string>> string_attributes;
-  std::vector<std::pair<AXIntAttribute, int32_t>> int_attributes;
-  std::vector<std::pair<AXFloatAttribute, float>> float_attributes;
-  std::vector<std::pair<AXBoolAttribute, bool>> bool_attributes;
-  std::vector<std::pair<AXIntListAttribute, std::vector<int32_t>>>
+  ax::mojom::Role role = ax::mojom::Role::UNKNOWN;
+  uint32_t state = static_cast<uint32_t>(ax::mojom::State::NONE);
+  uint32_t actions = static_cast<uint32_t>(ax::mojom::Action::NONE);
+  std::vector<std::pair<ax::mojom::StringAttribute, std::string>> string_attributes;
+  std::vector<std::pair<ax::mojom::IntAttribute, int32_t>> int_attributes;
+  std::vector<std::pair<ax::mojom::FloatAttribute, float>> float_attributes;
+  std::vector<std::pair<ax::mojom::BoolAttribute, bool>> bool_attributes;
+  std::vector<std::pair<ax::mojom::IntListAttribute, std::vector<int32_t>>>
       intlist_attributes;
-  std::vector<std::pair<AXStringListAttribute, std::vector<std::string>>>
+  std::vector<std::pair<ax::mojom::StringListAttribute, std::vector<std::string>>>
       stringlist_attributes;
   base::StringPairs html_attributes;
   std::vector<int32_t> child_ids;

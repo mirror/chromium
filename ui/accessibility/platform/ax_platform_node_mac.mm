@@ -20,133 +20,133 @@
 
 namespace {
 
-using RoleMap = std::map<ui::AXRole, NSString*>;
-using EventMap = std::map<ui::AXEvent, NSString*>;
-using ActionList = std::vector<std::pair<ui::AXAction, NSString*>>;
+using RoleMap = std::map<ax::mojom::Role, NSString*>;
+using EventMap = std::map<ax::mojom::Event, NSString*>;
+using ActionList = std::vector<std::pair<ax::mojom::Action, NSString*>>;
 
 RoleMap BuildRoleMap() {
   const RoleMap::value_type roles[] = {
-      {ui::AX_ROLE_ABBR, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ALERT, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ALERT_DIALOG, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ANCHOR, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ANNOTATION, NSAccessibilityUnknownRole},
-      {ui::AX_ROLE_APPLICATION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ARTICLE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_AUDIO, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_BANNER, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_BLOCKQUOTE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_BUTTON, NSAccessibilityButtonRole},
-      {ui::AX_ROLE_CANVAS, NSAccessibilityImageRole},
-      {ui::AX_ROLE_CAPTION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_CELL, @"AXCell"},
-      {ui::AX_ROLE_CHECK_BOX, NSAccessibilityCheckBoxRole},
-      {ui::AX_ROLE_COLOR_WELL, NSAccessibilityColorWellRole},
-      {ui::AX_ROLE_COLUMN, NSAccessibilityColumnRole},
-      {ui::AX_ROLE_COLUMN_HEADER, @"AXCell"},
-      {ui::AX_ROLE_COMBO_BOX_GROUPING, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_COMBO_BOX_MENU_BUTTON, NSAccessibilityButtonRole},
-      {ui::AX_ROLE_COMPLEMENTARY, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_CONTENT_INFO, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DATE, @"AXDateField"},
-      {ui::AX_ROLE_DATE_TIME, @"AXDateField"},
-      {ui::AX_ROLE_DEFINITION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DESCRIPTION_LIST_DETAIL, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DESCRIPTION_LIST, NSAccessibilityListRole},
-      {ui::AX_ROLE_DESCRIPTION_LIST_TERM, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DIALOG, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DETAILS, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_DIRECTORY, NSAccessibilityListRole},
+      {ax::mojom::Role::ABBR, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ALERT, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ALERT_DIALOG, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ANCHOR, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ANNOTATION, NSAccessibilityUnknownRole},
+      {ax::mojom::Role::APPLICATION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ARTICLE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::AUDIO, NSAccessibilityGroupRole},
+      {ax::mojom::Role::BANNER, NSAccessibilityGroupRole},
+      {ax::mojom::Role::BLOCKQUOTE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::BUTTON, NSAccessibilityButtonRole},
+      {ax::mojom::Role::CANVAS, NSAccessibilityImageRole},
+      {ax::mojom::Role::CAPTION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::CELL, @"AXCell"},
+      {ax::mojom::Role::CHECK_BOX, NSAccessibilityCheckBoxRole},
+      {ax::mojom::Role::COLOR_WELL, NSAccessibilityColorWellRole},
+      {ax::mojom::Role::COLUMN, NSAccessibilityColumnRole},
+      {ax::mojom::Role::COLUMN_HEADER, @"AXCell"},
+      {ax::mojom::Role::COMBO_BOX_GROUPING, NSAccessibilityGroupRole},
+      {ax::mojom::Role::COMBO_BOX_MENU_BUTTON, NSAccessibilityButtonRole},
+      {ax::mojom::Role::COMPLEMENTARY, NSAccessibilityGroupRole},
+      {ax::mojom::Role::CONTENT_INFO, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DATE, @"AXDateField"},
+      {ax::mojom::Role::DATE_TIME, @"AXDateField"},
+      {ax::mojom::Role::DEFINITION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DESCRIPTION_LIST_DETAIL, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DESCRIPTION_LIST, NSAccessibilityListRole},
+      {ax::mojom::Role::DESCRIPTION_LIST_TERM, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DIALOG, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DETAILS, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DIRECTORY, NSAccessibilityListRole},
       // If Mac supports AXExpandedChanged event with
       // NSAccessibilityDisclosureTriangleRole, We should update
-      // AX_ROLE_DISCLOSURE_TRIANGLE mapping to
+      // ax::mojom::Role::DISCLOSURE_TRIANGLE mapping to
       // NSAccessibilityDisclosureTriangleRole. http://crbug.com/558324
-      {ui::AX_ROLE_DISCLOSURE_TRIANGLE, NSAccessibilityButtonRole},
-      {ui::AX_ROLE_DOCUMENT, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_EMBEDDED_OBJECT, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_FIGCAPTION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_FIGURE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_FOOTER, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_FORM, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_GENERIC_CONTAINER, NSAccessibilityGroupRole},
+      {ax::mojom::Role::DISCLOSURE_TRIANGLE, NSAccessibilityButtonRole},
+      {ax::mojom::Role::DOCUMENT, NSAccessibilityGroupRole},
+      {ax::mojom::Role::EMBEDDED_OBJECT, NSAccessibilityGroupRole},
+      {ax::mojom::Role::FIGCAPTION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::FIGURE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::FOOTER, NSAccessibilityGroupRole},
+      {ax::mojom::Role::FORM, NSAccessibilityGroupRole},
+      {ax::mojom::Role::GENERIC_CONTAINER, NSAccessibilityGroupRole},
       // Should be NSAccessibilityGridRole but VoiceOver treating it like
       // a list as of 10.12.6, so following WebKit and using table role:
-      {ui::AX_ROLE_GRID, NSAccessibilityTableRole},  // crbug.com/753925
-      {ui::AX_ROLE_GROUP, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_HEADING, @"AXHeading"},
-      {ui::AX_ROLE_IFRAME, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_IFRAME_PRESENTATIONAL, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_IGNORED, NSAccessibilityUnknownRole},
-      {ui::AX_ROLE_IMAGE, NSAccessibilityImageRole},
-      {ui::AX_ROLE_IMAGE_MAP, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_INPUT_TIME, @"AXTimeField"},
-      {ui::AX_ROLE_LABEL_TEXT, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_LEGEND, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_LINE_BREAK, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_LINK, NSAccessibilityLinkRole},
-      {ui::AX_ROLE_LIST, NSAccessibilityListRole},
-      {ui::AX_ROLE_LIST_BOX, NSAccessibilityListRole},
-      {ui::AX_ROLE_LIST_BOX_OPTION, NSAccessibilityStaticTextRole},
-      {ui::AX_ROLE_LIST_ITEM, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_LIST_MARKER, @"AXListMarker"},
-      {ui::AX_ROLE_LOG, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_MAIN, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_MARK, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_MARQUEE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_MATH, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_MENU, NSAccessibilityMenuRole},
-      {ui::AX_ROLE_MENU_BAR, NSAccessibilityMenuBarRole},
-      {ui::AX_ROLE_MENU_BUTTON, NSAccessibilityButtonRole},
-      {ui::AX_ROLE_MENU_ITEM, NSAccessibilityMenuItemRole},
-      {ui::AX_ROLE_MENU_ITEM_CHECK_BOX, NSAccessibilityMenuItemRole},
-      {ui::AX_ROLE_MENU_ITEM_RADIO, NSAccessibilityMenuItemRole},
-      {ui::AX_ROLE_MENU_LIST_OPTION, NSAccessibilityMenuItemRole},
-      {ui::AX_ROLE_MENU_LIST_POPUP, NSAccessibilityUnknownRole},
-      {ui::AX_ROLE_METER, NSAccessibilityProgressIndicatorRole},
-      {ui::AX_ROLE_NAVIGATION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_NONE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_NOTE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_PARAGRAPH, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_POP_UP_BUTTON, NSAccessibilityPopUpButtonRole},
-      {ui::AX_ROLE_PRE, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_PRESENTATIONAL, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_PROGRESS_INDICATOR, NSAccessibilityProgressIndicatorRole},
-      {ui::AX_ROLE_RADIO_BUTTON, NSAccessibilityRadioButtonRole},
-      {ui::AX_ROLE_RADIO_GROUP, NSAccessibilityRadioGroupRole},
-      {ui::AX_ROLE_REGION, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_ROOT_WEB_AREA, @"AXWebArea"},
-      {ui::AX_ROLE_ROW, NSAccessibilityRowRole},
-      {ui::AX_ROLE_ROW_HEADER, @"AXCell"},
-      {ui::AX_ROLE_SCROLL_BAR, NSAccessibilityScrollBarRole},
-      {ui::AX_ROLE_SEARCH, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_SEARCH_BOX, NSAccessibilityTextFieldRole},
-      {ui::AX_ROLE_SLIDER, NSAccessibilitySliderRole},
-      {ui::AX_ROLE_SLIDER_THUMB, NSAccessibilityValueIndicatorRole},
-      {ui::AX_ROLE_SPIN_BUTTON, NSAccessibilityIncrementorRole},
-      {ui::AX_ROLE_SPLITTER, NSAccessibilitySplitterRole},
-      {ui::AX_ROLE_STATIC_TEXT, NSAccessibilityStaticTextRole},
-      {ui::AX_ROLE_STATUS, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_SVG_ROOT, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_SWITCH, NSAccessibilityCheckBoxRole},
-      {ui::AX_ROLE_TAB, NSAccessibilityRadioButtonRole},
-      {ui::AX_ROLE_TABLE, NSAccessibilityTableRole},
-      {ui::AX_ROLE_TABLE_HEADER_CONTAINER, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TAB_LIST, NSAccessibilityTabGroupRole},
-      {ui::AX_ROLE_TAB_PANEL, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TERM, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TEXT_FIELD, NSAccessibilityTextFieldRole},
-      {ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX, NSAccessibilityComboBoxRole},
-      {ui::AX_ROLE_TIME, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TIMER, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TOGGLE_BUTTON, NSAccessibilityCheckBoxRole},
-      {ui::AX_ROLE_TOOLBAR, NSAccessibilityToolbarRole},
-      {ui::AX_ROLE_TOOLTIP, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_TREE, NSAccessibilityOutlineRole},
-      {ui::AX_ROLE_TREE_GRID, NSAccessibilityTableRole},
-      {ui::AX_ROLE_TREE_ITEM, NSAccessibilityRowRole},
-      {ui::AX_ROLE_VIDEO, NSAccessibilityGroupRole},
-      {ui::AX_ROLE_WEB_AREA, @"AXWebArea"},
-      {ui::AX_ROLE_WINDOW, NSAccessibilityWindowRole},
+      {ax::mojom::Role::GRID, NSAccessibilityTableRole},  // crbug.com/753925
+      {ax::mojom::Role::GROUP, NSAccessibilityGroupRole},
+      {ax::mojom::Role::HEADING, @"AXHeading"},
+      {ax::mojom::Role::IFRAME, NSAccessibilityGroupRole},
+      {ax::mojom::Role::IFRAME_PRESENTATIONAL, NSAccessibilityGroupRole},
+      {ax::mojom::Role::IGNORED, NSAccessibilityUnknownRole},
+      {ax::mojom::Role::IMAGE, NSAccessibilityImageRole},
+      {ax::mojom::Role::IMAGE_MAP, NSAccessibilityGroupRole},
+      {ax::mojom::Role::INPUT_TIME, @"AXTimeField"},
+      {ax::mojom::Role::LABEL_TEXT, NSAccessibilityGroupRole},
+      {ax::mojom::Role::LEGEND, NSAccessibilityGroupRole},
+      {ax::mojom::Role::LINE_BREAK, NSAccessibilityGroupRole},
+      {ax::mojom::Role::LINK, NSAccessibilityLinkRole},
+      {ax::mojom::Role::LIST, NSAccessibilityListRole},
+      {ax::mojom::Role::LIST_BOX, NSAccessibilityListRole},
+      {ax::mojom::Role::LIST_BOX_OPTION, NSAccessibilityStaticTextRole},
+      {ax::mojom::Role::LIST_ITEM, NSAccessibilityGroupRole},
+      {ax::mojom::Role::LIST_MARKER, @"AXListMarker"},
+      {ax::mojom::Role::LOG, NSAccessibilityGroupRole},
+      {ax::mojom::Role::MAIN, NSAccessibilityGroupRole},
+      {ax::mojom::Role::MARK, NSAccessibilityGroupRole},
+      {ax::mojom::Role::MARQUEE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::MATH, NSAccessibilityGroupRole},
+      {ax::mojom::Role::MENU, NSAccessibilityMenuRole},
+      {ax::mojom::Role::MENU_BAR, NSAccessibilityMenuBarRole},
+      {ax::mojom::Role::MENU_BUTTON, NSAccessibilityButtonRole},
+      {ax::mojom::Role::MENU_ITEM, NSAccessibilityMenuItemRole},
+      {ax::mojom::Role::MENU_ITEM_CHECK_BOX, NSAccessibilityMenuItemRole},
+      {ax::mojom::Role::MENU_ITEM_RADIO, NSAccessibilityMenuItemRole},
+      {ax::mojom::Role::MENU_LIST_OPTION, NSAccessibilityMenuItemRole},
+      {ax::mojom::Role::MENU_LIST_POPUP, NSAccessibilityUnknownRole},
+      {ax::mojom::Role::METER, NSAccessibilityProgressIndicatorRole},
+      {ax::mojom::Role::NAVIGATION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::NONE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::NOTE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::PARAGRAPH, NSAccessibilityGroupRole},
+      {ax::mojom::Role::POP_UP_BUTTON, NSAccessibilityPopUpButtonRole},
+      {ax::mojom::Role::PRE, NSAccessibilityGroupRole},
+      {ax::mojom::Role::PRESENTATIONAL, NSAccessibilityGroupRole},
+      {ax::mojom::Role::PROGRESS_INDICATOR, NSAccessibilityProgressIndicatorRole},
+      {ax::mojom::Role::RADIO_BUTTON, NSAccessibilityRadioButtonRole},
+      {ax::mojom::Role::RADIO_GROUP, NSAccessibilityRadioGroupRole},
+      {ax::mojom::Role::REGION, NSAccessibilityGroupRole},
+      {ax::mojom::Role::ROOT_WEB_AREA, @"AXWebArea"},
+      {ax::mojom::Role::ROW, NSAccessibilityRowRole},
+      {ax::mojom::Role::ROW_HEADER, @"AXCell"},
+      {ax::mojom::Role::SCROLL_BAR, NSAccessibilityScrollBarRole},
+      {ax::mojom::Role::SEARCH, NSAccessibilityGroupRole},
+      {ax::mojom::Role::SEARCH_BOX, NSAccessibilityTextFieldRole},
+      {ax::mojom::Role::SLIDER, NSAccessibilitySliderRole},
+      {ax::mojom::Role::SLIDER_THUMB, NSAccessibilityValueIndicatorRole},
+      {ax::mojom::Role::SPIN_BUTTON, NSAccessibilityIncrementorRole},
+      {ax::mojom::Role::SPLITTER, NSAccessibilitySplitterRole},
+      {ax::mojom::Role::STATIC_TEXT, NSAccessibilityStaticTextRole},
+      {ax::mojom::Role::STATUS, NSAccessibilityGroupRole},
+      {ax::mojom::Role::SVG_ROOT, NSAccessibilityGroupRole},
+      {ax::mojom::Role::SWITCH, NSAccessibilityCheckBoxRole},
+      {ax::mojom::Role::TAB, NSAccessibilityRadioButtonRole},
+      {ax::mojom::Role::TABLE, NSAccessibilityTableRole},
+      {ax::mojom::Role::TABLE_HEADER_CONTAINER, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TAB_LIST, NSAccessibilityTabGroupRole},
+      {ax::mojom::Role::TAB_PANEL, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TERM, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TEXT_FIELD, NSAccessibilityTextFieldRole},
+      {ax::mojom::Role::TEXT_FIELD_WITH_COMBO_BOX, NSAccessibilityComboBoxRole},
+      {ax::mojom::Role::TIME, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TIMER, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TOGGLE_BUTTON, NSAccessibilityCheckBoxRole},
+      {ax::mojom::Role::TOOLBAR, NSAccessibilityToolbarRole},
+      {ax::mojom::Role::TOOLTIP, NSAccessibilityGroupRole},
+      {ax::mojom::Role::TREE, NSAccessibilityOutlineRole},
+      {ax::mojom::Role::TREE_GRID, NSAccessibilityTableRole},
+      {ax::mojom::Role::TREE_ITEM, NSAccessibilityRowRole},
+      {ax::mojom::Role::VIDEO, NSAccessibilityGroupRole},
+      {ax::mojom::Role::WEB_AREA, @"AXWebArea"},
+      {ax::mojom::Role::WINDOW, NSAccessibilityWindowRole},
   };
 
   return RoleMap(begin(roles), end(roles));
@@ -154,37 +154,37 @@ RoleMap BuildRoleMap() {
 
 RoleMap BuildSubroleMap() {
   const RoleMap::value_type subroles[] = {
-      {ui::AX_ROLE_ALERT, @"AXApplicationAlert"},
-      {ui::AX_ROLE_ALERT_DIALOG, @"AXApplicationAlertDialog"},
-      {ui::AX_ROLE_APPLICATION, @"AXLandmarkApplication"},
-      {ui::AX_ROLE_ARTICLE, @"AXDocumentArticle"},
-      {ui::AX_ROLE_BANNER, @"AXLandmarkBanner"},
-      {ui::AX_ROLE_COMPLEMENTARY, @"AXLandmarkComplementary"},
-      {ui::AX_ROLE_CONTENT_INFO, @"AXLandmarkContentInfo"},
-      {ui::AX_ROLE_DEFINITION, @"AXDefinition"},
-      {ui::AX_ROLE_DESCRIPTION_LIST_DETAIL, @"AXDefinition"},
-      {ui::AX_ROLE_DESCRIPTION_LIST_TERM, @"AXTerm"},
-      {ui::AX_ROLE_DIALOG, @"AXApplicationDialog"},
-      {ui::AX_ROLE_DOCUMENT, @"AXDocument"},
-      {ui::AX_ROLE_FOOTER, @"AXLandmarkContentInfo"},
-      {ui::AX_ROLE_FORM, @"AXLandmarkForm"},
-      {ui::AX_ROLE_LOG, @"AXApplicationLog"},
-      {ui::AX_ROLE_MAIN, @"AXLandmarkMain"},
-      {ui::AX_ROLE_MARQUEE, @"AXApplicationMarquee"},
-      {ui::AX_ROLE_MATH, @"AXDocumentMath"},
-      {ui::AX_ROLE_NAVIGATION, @"AXLandmarkNavigation"},
-      {ui::AX_ROLE_NOTE, @"AXDocumentNote"},
-      {ui::AX_ROLE_REGION, @"AXDocumentRegion"},
-      {ui::AX_ROLE_SEARCH, @"AXLandmarkSearch"},
-      {ui::AX_ROLE_SEARCH_BOX, @"AXSearchField"},
-      {ui::AX_ROLE_STATUS, @"AXApplicationStatus"},
-      {ui::AX_ROLE_SWITCH, @"AXSwitch"},
-      {ui::AX_ROLE_TAB_PANEL, @"AXTabPanel"},
-      {ui::AX_ROLE_TERM, @"AXTerm"},
-      {ui::AX_ROLE_TIMER, @"AXApplicationTimer"},
-      {ui::AX_ROLE_TOGGLE_BUTTON, @"AXToggleButton"},
-      {ui::AX_ROLE_TOOLTIP, @"AXUserInterfaceTooltip"},
-      {ui::AX_ROLE_TREE_ITEM, NSAccessibilityOutlineRowSubrole},
+      {ax::mojom::Role::ALERT, @"AXApplicationAlert"},
+      {ax::mojom::Role::ALERT_DIALOG, @"AXApplicationAlertDialog"},
+      {ax::mojom::Role::APPLICATION, @"AXLandmarkApplication"},
+      {ax::mojom::Role::ARTICLE, @"AXDocumentArticle"},
+      {ax::mojom::Role::BANNER, @"AXLandmarkBanner"},
+      {ax::mojom::Role::COMPLEMENTARY, @"AXLandmarkComplementary"},
+      {ax::mojom::Role::CONTENT_INFO, @"AXLandmarkContentInfo"},
+      {ax::mojom::Role::DEFINITION, @"AXDefinition"},
+      {ax::mojom::Role::DESCRIPTION_LIST_DETAIL, @"AXDefinition"},
+      {ax::mojom::Role::DESCRIPTION_LIST_TERM, @"AXTerm"},
+      {ax::mojom::Role::DIALOG, @"AXApplicationDialog"},
+      {ax::mojom::Role::DOCUMENT, @"AXDocument"},
+      {ax::mojom::Role::FOOTER, @"AXLandmarkContentInfo"},
+      {ax::mojom::Role::FORM, @"AXLandmarkForm"},
+      {ax::mojom::Role::LOG, @"AXApplicationLog"},
+      {ax::mojom::Role::MAIN, @"AXLandmarkMain"},
+      {ax::mojom::Role::MARQUEE, @"AXApplicationMarquee"},
+      {ax::mojom::Role::MATH, @"AXDocumentMath"},
+      {ax::mojom::Role::NAVIGATION, @"AXLandmarkNavigation"},
+      {ax::mojom::Role::NOTE, @"AXDocumentNote"},
+      {ax::mojom::Role::REGION, @"AXDocumentRegion"},
+      {ax::mojom::Role::SEARCH, @"AXLandmarkSearch"},
+      {ax::mojom::Role::SEARCH_BOX, @"AXSearchField"},
+      {ax::mojom::Role::STATUS, @"AXApplicationStatus"},
+      {ax::mojom::Role::SWITCH, @"AXSwitch"},
+      {ax::mojom::Role::TAB_PANEL, @"AXTabPanel"},
+      {ax::mojom::Role::TERM, @"AXTerm"},
+      {ax::mojom::Role::TIMER, @"AXApplicationTimer"},
+      {ax::mojom::Role::TOGGLE_BUTTON, @"AXToggleButton"},
+      {ax::mojom::Role::TOOLTIP, @"AXUserInterfaceTooltip"},
+      {ax::mojom::Role::TREE_ITEM, NSAccessibilityOutlineRowSubrole},
   };
 
   return RoleMap(begin(subroles), end(subroles));
@@ -192,10 +192,10 @@ RoleMap BuildSubroleMap() {
 
 EventMap BuildEventMap() {
   const EventMap::value_type events[] = {
-      {ui::AX_EVENT_FOCUS, NSAccessibilityFocusedUIElementChangedNotification},
-      {ui::AX_EVENT_TEXT_CHANGED, NSAccessibilityTitleChangedNotification},
-      {ui::AX_EVENT_VALUE_CHANGED, NSAccessibilityValueChangedNotification},
-      {ui::AX_EVENT_TEXT_SELECTION_CHANGED,
+      {ax::mojom::Event::FOCUS, NSAccessibilityFocusedUIElementChangedNotification},
+      {ax::mojom::Event::TEXT_CHANGED, NSAccessibilityTitleChangedNotification},
+      {ax::mojom::Event::VALUE_CHANGED, NSAccessibilityValueChangedNotification},
+      {ax::mojom::Event::TEXT_SELECTION_CHANGED,
        NSAccessibilitySelectedTextChangedNotification},
       // TODO(patricialor): Add more events.
   };
@@ -206,11 +206,11 @@ EventMap BuildEventMap() {
 ActionList BuildActionList() {
   const ActionList::value_type entries[] = {
       // NSAccessibilityPressAction must come first in this list.
-      {ui::AX_ACTION_DO_DEFAULT, NSAccessibilityPressAction},
+      {ax::mojom::Action::DO_DEFAULT, NSAccessibilityPressAction},
 
-      {ui::AX_ACTION_DECREMENT, NSAccessibilityDecrementAction},
-      {ui::AX_ACTION_INCREMENT, NSAccessibilityIncrementAction},
-      {ui::AX_ACTION_SHOW_CONTEXT_MENU, NSAccessibilityShowMenuAction},
+      {ax::mojom::Action::DECREMENT, NSAccessibilityDecrementAction},
+      {ax::mojom::Action::INCREMENT, NSAccessibilityIncrementAction},
+      {ax::mojom::Action::SHOW_CONTEXT_MENU, NSAccessibilityShowMenuAction},
   };
   return ActionList(begin(entries), end(entries));
 }
@@ -220,30 +220,30 @@ const ActionList& GetActionList() {
   return action_map;
 }
 
-void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
+void NotifyMacEvent(AXPlatformNodeCocoa* target, ax::mojom::Event event_type) {
   NSAccessibilityPostNotification(
       target, [AXPlatformNodeCocoa nativeNotificationFromAXEvent:event_type]);
 }
 
 // Returns true if |action| should be added implicitly for |data|.
-bool HasImplicitAction(const ui::AXNodeData& data, ui::AXAction action) {
-  return action == ui::AX_ACTION_DO_DEFAULT && ui::IsRoleClickable(data.role);
+bool HasImplicitAction(const ui::AXNodeData& data, ax::mojom::Action action) {
+  return action == ax::mojom::Action::DO_DEFAULT && ui::IsRoleClickable(data.role);
 }
 
 // For roles that show a menu for the default action, ensure "show menu" also
 // appears in available actions, but only if that's not already used for a
 // context menu. It will be mapped back to the default action when performed.
 bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
-  return HasImplicitAction(data, ui::AX_ACTION_DO_DEFAULT) &&
-         !data.HasAction(ui::AX_ACTION_SHOW_CONTEXT_MENU) &&
-         data.role == ui::AX_ROLE_POP_UP_BUTTON;
+  return HasImplicitAction(data, ax::mojom::Action::DO_DEFAULT) &&
+         !data.HasAction(ax::mojom::Action::SHOW_CONTEXT_MENU) &&
+         data.role == ax::mojom::Role::POP_UP_BUTTON;
 }
 
 }  // namespace
 
 @interface AXPlatformNodeCocoa ()
 // Helper function for string attributes that don't require extra processing.
-- (NSString*)getStringAttribute:(ui::AXStringAttribute)attribute;
+- (NSString*)getStringAttribute:(ax::mojom::StringAttribute)attribute;
 // Returns AXValue, or nil if AXValue isn't an NSString.
 - (NSString*)getAXValueAsString;
 @end
@@ -254,19 +254,19 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 
 @synthesize node = node_;
 
-+ (NSString*)nativeRoleFromAXRole:(ui::AXRole)role {
++ (NSString*)nativeRoleFromAXRole:(ax::mojom::Role)role {
   CR_DEFINE_STATIC_LOCAL(const RoleMap, role_map, (BuildRoleMap()));
   RoleMap::const_iterator it = role_map.find(role);
   return it != role_map.end() ? it->second : NSAccessibilityUnknownRole;
 }
 
-+ (NSString*)nativeSubroleFromAXRole:(ui::AXRole)role {
++ (NSString*)nativeSubroleFromAXRole:(ax::mojom::Role)role {
   CR_DEFINE_STATIC_LOCAL(const RoleMap, subrole_map, (BuildSubroleMap()));
   RoleMap::const_iterator it = subrole_map.find(role);
   return it != subrole_map.end() ? it->second : nil;
 }
 
-+ (NSString*)nativeNotificationFromAXEvent:(ui::AXEvent)event {
++ (NSString*)nativeNotificationFromAXEvent:(ax::mojom::Event)event {
   CR_DEFINE_STATIC_LOCAL(const EventMap, event_map, (BuildEventMap()));
   EventMap::const_iterator it = event_map.find(event);
   return it != event_map.end() ? it->second : nil;
@@ -293,7 +293,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   return gfx::ScreenRectToNSRect(node_->GetBoundsInScreen());
 }
 
-- (NSString*)getStringAttribute:(ui::AXStringAttribute)attribute {
+- (NSString*)getStringAttribute:(ax::mojom::StringAttribute)attribute {
   std::string attributeValue;
   if (node_->GetStringAttribute(attribute, &attributeValue))
     return base::SysUTF8ToNSString(attributeValue);
@@ -312,7 +312,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
     return YES;
 
   return [[self AXRole] isEqualToString:NSAccessibilityUnknownRole] ||
-         node_->GetData().HasState(ui::AX_STATE_INVISIBLE);
+         node_->GetData().HasState(ax::mojom::State::INVISIBLE);
 }
 
 - (id)accessibilityHitTest:(NSPoint)point {
@@ -366,7 +366,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   ui::AXActionData data;
   if ([action isEqualToString:NSAccessibilityShowMenuAction] &&
       AlsoUseShowMenuActionForDefaultAction(node_->GetData())) {
-    data.action = ui::AX_ACTION_DO_DEFAULT;
+    data.action = ax::mojom::Action::DO_DEFAULT;
   } else {
     for (const ActionList::value_type& entry : GetActionList()) {
       if ([action isEqualToString:entry.second]) {
@@ -380,7 +380,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   // are already implemented in -accessibilitySetValue:forAttribute:, so ignore
   // those here.
 
-  if (data.action != ui::AX_ACTION_NONE)
+  if (data.action != ax::mojom::Action::NONE)
     node_->GetDelegate()->AccessibilityPerformAction(data);
 }
 
@@ -431,22 +431,22 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   [axAttributes addObjectsFromArray:kAllRoleAttributes];
 
   switch (node_->GetData().role) {
-    case ui::AX_ROLE_TEXT_FIELD:
-    case ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX:
-    case ui::AX_ROLE_STATIC_TEXT:
+    case ax::mojom::Role::TEXT_FIELD:
+    case ax::mojom::Role::TEXT_FIELD_WITH_COMBO_BOX:
+    case ax::mojom::Role::STATIC_TEXT:
       [axAttributes addObject:kTextAttributes];
-      if (!node_->GetData().HasState(ui::AX_STATE_PROTECTED))
+      if (!node_->GetData().HasState(ax::mojom::State::PROTECTED))
         [axAttributes addObjectsFromArray:kUnprotectedTextAttributes];
     // Fallthrough.
-    case ui::AX_ROLE_CHECK_BOX:
-    case ui::AX_ROLE_COMBO_BOX_MENU_BUTTON:
-    case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
-    case ui::AX_ROLE_MENU_ITEM_RADIO:
-    case ui::AX_ROLE_RADIO_BUTTON:
-    case ui::AX_ROLE_SEARCH_BOX:
-    case ui::AX_ROLE_SLIDER:
-    case ui::AX_ROLE_SLIDER_THUMB:
-    case ui::AX_ROLE_TOGGLE_BUTTON:
+    case ax::mojom::Role::CHECK_BOX:
+    case ax::mojom::Role::COMBO_BOX_MENU_BUTTON:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
+    case ax::mojom::Role::RADIO_BUTTON:
+    case ax::mojom::Role::SEARCH_BOX:
+    case ax::mojom::Role::SLIDER:
+    case ax::mojom::Role::SLIDER_THUMB:
+    case ax::mojom::Role::TOGGLE_BUTTON:
       [axAttributes addObjectsFromArray:kValueAttributes];
       break;
     // TODO(tapted): Add additional attributes based on role.
@@ -473,8 +473,8 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   ] retain];
 
   switch (node_->GetData().role) {
-    case ui::AX_ROLE_TEXT_FIELD:
-    case ui::AX_ROLE_STATIC_TEXT:
+    case ax::mojom::Role::TEXT_FIELD:
+    case ax::mojom::Role::STATIC_TEXT:
       return kSelectableTextAttributes;
     default:
       break;
@@ -486,9 +486,9 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   if (!node_)
     return NO;
 
-  const int restriction =
-      node_->GetData().GetIntAttribute(ui::AX_ATTR_RESTRICTION);
-  if (restriction == ui::AX_RESTRICTION_DISABLED)
+  const ax::mojom::Restriction restriction = static_cast<ax::mojom::Restriction>(
+      node_->GetData().GetIntAttribute(ax::mojom::IntAttribute::RESTRICTION));
+  if (restriction == ax::mojom::Restriction::DISABLED)
     return NO;
 
   // Allow certain attributes to be written via an accessibility client. A
@@ -504,10 +504,10 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   if ([attributeName isEqualToString:NSAccessibilityValueAttribute]) {
     // Since tabs use the Radio Button role on Mac, the standard way to set
     // them is via the value attribute rather than the selected attribute.
-    if (node_->GetData().role == ui::AX_ROLE_TAB)
-      return !node_->GetData().HasState(ui::AX_STATE_SELECTED);
+    if (node_->GetData().role == ax::mojom::Role::TAB)
+      return !node_->GetData().HasState(ax::mojom::State::SELECTED);
 
-    return restriction != ui::AX_RESTRICTION_READ_ONLY;
+    return restriction != ax::mojom::Restriction::READ_ONLY;
   }
 
   // Readonly fields and selected text operations:
@@ -517,10 +517,10 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   //   NSAccessibilitySelectedTextAttribute is prevented, which is correct.
   if ([attributeName isEqualToString:NSAccessibilitySelectedTextAttribute] ||
       [attributeName isEqualToString:NSAccessibilitySelectedTextRangeAttribute])
-    return restriction != ui::AX_RESTRICTION_READ_ONLY;
+    return restriction != ax::mojom::Restriction::READ_ONLY;
 
   if ([attributeName isEqualToString:NSAccessibilityFocusedAttribute]) {
-    return node_->GetData().HasState(ui::AX_STATE_FOCUSABLE);
+    return node_->GetData().HasState(ax::mojom::State::FOCUSABLE);
   }
 
   // TODO(patricialor): Add callbacks for updating the above attributes except
@@ -537,32 +537,32 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   // Check for attributes first. Only the |data.action| should be set here - any
   // type-specific information, if needed, should be set below.
   if ([attribute isEqualToString:NSAccessibilityValueAttribute]) {
-    data.action = node_->GetData().role == ui::AX_ROLE_TAB
-                      ? ui::AX_ACTION_SET_SELECTION
-                      : ui::AX_ACTION_SET_VALUE;
+    data.action = node_->GetData().role == ax::mojom::Role::TAB
+                      ? ax::mojom::Action::SET_SELECTION
+                      : ax::mojom::Action::SET_VALUE;
   } else if ([attribute isEqualToString:NSAccessibilitySelectedTextAttribute]) {
-    data.action = ui::AX_ACTION_REPLACE_SELECTED_TEXT;
+    data.action = ax::mojom::Action::REPLACE_SELECTED_TEXT;
   } else if ([attribute
                  isEqualToString:NSAccessibilitySelectedTextRangeAttribute]) {
-    data.action = ui::AX_ACTION_SET_SELECTION;
+    data.action = ax::mojom::Action::SET_SELECTION;
   } else if ([attribute isEqualToString:NSAccessibilityFocusedAttribute]) {
     if ([value isKindOfClass:[NSNumber class]]) {
       data.action =
-          [value boolValue] ? ui::AX_ACTION_FOCUS : ui::AX_ACTION_BLUR;
+          [value boolValue] ? ax::mojom::Action::FOCUS : ax::mojom::Action::BLUR;
     }
   }
 
   // Set type-specific information as necessary for actions set above.
   if ([value isKindOfClass:[NSString class]]) {
     data.value = base::SysNSStringToUTF16(value);
-  } else if (data.action == ui::AX_ACTION_SET_SELECTION &&
+  } else if (data.action == ax::mojom::Action::SET_SELECTION &&
              [value isKindOfClass:[NSValue class]]) {
     NSRange range = [value rangeValue];
     data.anchor_offset = range.location;
     data.focus_offset = NSMaxRange(range);
   }
 
-  if (data.action != ui::AX_ACTION_NONE)
+  if (data.action != ax::mojom::Action::NONE)
     node_->GetDelegate()->AccessibilityPerformAction(data);
 
   // TODO(patricialor): Plumb through all the other writable attributes as
@@ -571,7 +571,7 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 
 - (id)accessibilityAttributeValue:(NSString*)attribute {
   if (!node_)
-    return nil;  // Return nil when detached. Even for AXRole.
+    return nil;  // Return nil when detached. Even for ax::mojom::Role.
 
   SEL selector = NSSelectorFromString(attribute);
   if ([self respondsToSelector:selector])
@@ -602,12 +602,12 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 
 - (NSString*)AXRoleDescription {
   switch (node_->GetData().role) {
-    case ui::AX_ROLE_TAB:
+    case ax::mojom::Role::TAB:
       // There is no NSAccessibilityTabRole or similar (AXRadioButton is used
       // instead). Do the same as NSTabView and put "tab" in the description.
       return [l10n_util::GetNSStringWithFixup(IDS_ACCNAME_TAB_ROLE_DESCRIPTION)
           lowercaseString];
-    case ui::AX_ROLE_DISCLOSURE_TRIANGLE:
+    case ax::mojom::Role::DISCLOSURE_TRIANGLE:
       return [l10n_util::GetNSStringWithFixup(
           IDS_ACCNAME_DISCLOSURE_TRIANGLE_ROLE_DESCRIPTION) lowercaseString];
     default:
@@ -617,10 +617,10 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 }
 
 - (NSString*)AXSubrole {
-  ui::AXRole role = node_->GetData().role;
+  ax::mojom::Role role = node_->GetData().role;
   switch (role) {
-    case ui::AX_ROLE_TEXT_FIELD:
-      if (node_->GetData().HasState(ui::AX_STATE_PROTECTED))
+    case ax::mojom::Role::TEXT_FIELD:
+      if (node_->GetData().HasState(ax::mojom::State::PROTECTED))
         return NSAccessibilitySecureTextFieldSubrole;
       break;
     default:
@@ -633,8 +633,8 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   // TODO(aleventhal) Key shortcuts attribute should eventually get
   // its own field. Follow what WebKit does for aria-keyshortcuts, see
   // https://bugs.webkit.org/show_bug.cgi?id=159215 (WebKit bug).
-  NSString* desc = [self getStringAttribute:ui::AX_ATTR_DESCRIPTION];
-  NSString* key = [self getStringAttribute:ui::AX_ATTR_KEY_SHORTCUTS];
+  NSString* desc = [self getStringAttribute:ax::mojom::StringAttribute::DESCRIPTION];
+  NSString* key = [self getStringAttribute:ax::mojom::StringAttribute::KEY_SHORTCUTS];
   if (!desc.length)
     return key.length ? key : @"";
   if (!key.length)
@@ -643,23 +643,23 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 }
 
 - (id)AXValue {
-  ui::AXRole role = node_->GetData().role;
-  if (role == ui::AX_ROLE_TAB)
+  ax::mojom::Role role = node_->GetData().role;
+  if (role == ax::mojom::Role::TAB)
     return [self AXSelected];
 
   if (ui::IsNameExposedInAXValueForRole(role))
-    return [self getStringAttribute:ui::AX_ATTR_NAME];
+    return [self getStringAttribute:ax::mojom::StringAttribute::NAME];
 
-  return [self getStringAttribute:ui::AX_ATTR_VALUE];
+  return [self getStringAttribute:ax::mojom::StringAttribute::VALUE];
 }
 
 - (NSNumber*)AXEnabled {
-  return @(node_->GetData().GetIntAttribute(ui::AX_ATTR_RESTRICTION) !=
-           ui::AX_RESTRICTION_DISABLED);
+  return @(node_->GetData().GetIntAttribute(ax::mojom::IntAttribute::RESTRICTION) !=
+           static_cast<int32_t>(ax::mojom::Restriction::DISABLED));
 }
 
 - (NSNumber*)AXFocused {
-  if (node_->GetData().HasState(ui::AX_STATE_FOCUSABLE))
+  if (node_->GetData().HasState(ax::mojom::State::FOCUSABLE))
     return
         @(node_->GetDelegate()->GetFocus() == node_->GetNativeViewAccessible());
   return @NO;
@@ -702,17 +702,17 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
   if (ui::IsNameExposedInAXValueForRole(node_->GetData().role))
     return @"";
 
-  return [self getStringAttribute:ui::AX_ATTR_NAME];
+  return [self getStringAttribute:ax::mojom::StringAttribute::NAME];
 }
 
 // Misc attributes.
 
 - (NSNumber*)AXSelected {
-  return @(node_->GetData().HasState(ui::AX_STATE_SELECTED));
+  return @(node_->GetData().HasState(ax::mojom::State::SELECTED));
 }
 
 - (NSString*)AXPlaceholderValue {
-  return [self getStringAttribute:ui::AX_ATTR_PLACEHOLDER];
+  return [self getStringAttribute:ax::mojom::StringAttribute::PLACEHOLDER];
 }
 
 // Text-specific attributes.
@@ -726,8 +726,8 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 - (NSValue*)AXSelectedTextRange {
   // Selection might not be supported. Return (NSRange){0,0} in that case.
   int start = 0, end = 0;
-  node_->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START, &start);
-  node_->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END, &end);
+  node_->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START, &start);
+  node_->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END, &end);
 
   // NSRange cannot represent the direction the text was selected in.
   return [NSValue valueWithRange:{std::min(start, end), abs(end - start)}];
@@ -846,15 +846,15 @@ gfx::NativeViewAccessible AXPlatformNodeMac::GetNativeViewAccessible() {
   return native_node_.get();
 }
 
-void AXPlatformNodeMac::NotifyAccessibilityEvent(ui::AXEvent event_type) {
+void AXPlatformNodeMac::NotifyAccessibilityEvent(ax::mojom::Event event_type) {
   GetNativeViewAccessible();
-  // Add mappings between ui::AXEvent and NSAccessibility notifications using
+  // Add mappings between ax::mojom::Event and NSAccessibility notifications using
   // the EventMap above. This switch contains exceptions to those mappings.
   switch (event_type) {
-    case ui::AX_EVENT_TEXT_CHANGED:
+    case ax::mojom::Event::TEXT_CHANGED:
       // If the view is a user-editable textfield, this should change the value.
-      if (GetData().role == ui::AX_ROLE_TEXT_FIELD) {
-        NotifyMacEvent(native_node_, ui::AX_EVENT_VALUE_CHANGED);
+      if (GetData().role == ax::mojom::Role::TEXT_FIELD) {
+        NotifyMacEvent(native_node_, ax::mojom::Event::VALUE_CHANGED);
         return;
       }
       break;
@@ -869,12 +869,12 @@ int AXPlatformNodeMac::GetIndexInParent() {
   return -1;
 }
 
-bool IsNameExposedInAXValueForRole(AXRole role) {
+bool IsNameExposedInAXValueForRole(ax::mojom::Role role) {
   switch (role) {
-    case AX_ROLE_LIST_BOX_OPTION:
-    case AX_ROLE_LIST_MARKER:
-    case AX_ROLE_MENU_LIST_OPTION:
-    case AX_ROLE_STATIC_TEXT:
+    case ax::mojom::Role::LIST_BOX_OPTION:
+    case ax::mojom::Role::LIST_MARKER:
+    case ax::mojom::Role::MENU_LIST_OPTION:
+    case ax::mojom::Role::STATIC_TEXT:
       return true;
     default:
       return false;

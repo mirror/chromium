@@ -22,7 +22,7 @@ class AccessibilityFullscreenBrowserTest : public ContentBrowserTest {
 
  protected:
   BrowserAccessibility* FindButton(BrowserAccessibility* node) {
-    if (node->GetRole() == ui::AX_ROLE_BUTTON)
+    if (node->GetRole() == ax::mojom::Role::BUTTON)
       return node;
     for (unsigned i = 0; i < node->PlatformChildCount(); i++) {
       if (BrowserAccessibility* button = FindButton(node->PlatformGetChild(i)))
@@ -32,7 +32,7 @@ class AccessibilityFullscreenBrowserTest : public ContentBrowserTest {
   }
 
   int CountLinks(BrowserAccessibility* node) {
-    if (node->GetRole() == ui::AX_ROLE_LINK)
+    if (node->GetRole() == ax::mojom::Role::LINK)
       return 1;
     int links_in_children = 0;
     for (unsigned i = 0; i < node->PlatformChildCount(); i++) {
@@ -78,7 +78,7 @@ IN_PROC_BROWSER_TEST_F(AccessibilityFullscreenBrowserTest,
   shell()->web_contents()->SetDelegate(&delegate);
 
   AccessibilityNotificationWaiter waiter(
-      shell()->web_contents(), ui::kAXModeComplete, ui::AX_EVENT_LOAD_COMPLETE);
+      shell()->web_contents(), ui::kAXModeComplete, ax::mojom::Event::LOAD_COMPLETE);
   GURL url(
       embedded_test_server()->GetURL("/accessibility/fullscreen/links.html"));
   NavigateToURL(shell(), url);

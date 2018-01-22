@@ -736,16 +736,16 @@ bool OmniboxViewViews::SkipDefaultKeyEventProcessing(
 }
 
 void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TEXT_FIELD;
+  node_data->role = ax::mojom::Role::TEXT_FIELD;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_LOCATION));
-  node_data->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE, "both");
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::AUTO_COMPLETE, "both");
 // Expose keyboard shortcut where it makes sense.
 #if defined(OS_MACOSX)
   // Use cloverleaf symbol for command key.
-  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS,
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::KEY_SHORTCUTS,
                                 base::WideToUTF8(L"\u2318L"));
 #else
-  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, "Ctrl+L");
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::KEY_SHORTCUTS, "Ctrl+L");
 #endif
   if (friendly_suggestion_text_.empty()) {
     // While user edits text, use the exact text displayed in the omnibox.
@@ -769,7 +769,7 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   // the omnibox.
   int32_t popup_view_id =
       popup_view_->GetViewAccessibility().GetUniqueId().Get();
-  node_data->AddIntListAttribute(ui::AX_ATTR_CONTROLS_IDS, {popup_view_id});
+  node_data->AddIntListAttribute(ax::mojom::IntListAttribute::CONTROLS_IDS, {popup_view_id});
 
   base::string16::size_type entry_start;
   base::string16::size_type entry_end;
@@ -782,17 +782,18 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     GetSelectionBounds(&entry_start, &entry_end);
   }
   node_data->AddIntAttribute(
-      ui::AX_ATTR_TEXT_SEL_START,
+      ax::mojom::IntAttribute::TEXT_SEL_START,
       entry_start + friendly_suggestion_text_prefix_length_);
   node_data->AddIntAttribute(
-      ui::AX_ATTR_TEXT_SEL_END,
+      ax::mojom::IntAttribute::TEXT_SEL_END,
       entry_end + friendly_suggestion_text_prefix_length_);
 
   if (popup_window_mode_) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_READ_ONLY);
+    node_data->AddIntAttribute(
+        ax::mojom::IntAttribute::RESTRICTION,
+        static_cast<int32_t>(ax::mojom::Restriction::READ_ONLY));
   } else {
-    node_data->AddState(ui::AX_STATE_EDITABLE);
+    node_data->AddState(ax::mojom::State::EDITABLE);
   }
 }
 
@@ -801,10 +802,10 @@ bool OmniboxViewViews::HandleAccessibleAction(
   if (read_only())
     return Textfield::HandleAccessibleAction(action_data);
 
-  if (action_data.action == ui::AX_ACTION_SET_VALUE) {
+  if (action_data.action == ax::mojom::Action::SET_VALUE) {
     SetUserText(action_data.value, true);
     return true;
-  } else if (action_data.action == ui::AX_ACTION_REPLACE_SELECTED_TEXT) {
+  } else if (action_data.action == ax::mojom::Action::REPLACE_SELECTED_TEXT) {
     model()->SetInputInProgress(true);
     if (saved_selection_for_focus_change_.IsValid()) {
       SelectRange(saved_selection_for_focus_change_);
@@ -813,10 +814,10 @@ bool OmniboxViewViews::HandleAccessibleAction(
     InsertOrReplaceText(action_data.value);
     TextChanged();
     return true;
-  } else if (action_data.action == ui::AX_ACTION_SET_SELECTION) {
+  } else if (action_data.action == ax::mojom::Action::SET_SELECTION) {
     // Adjust for friendly text inserted at the start of the url.
     ui::AXActionData set_selection_action_data;
-    set_selection_action_data.action = ui::AX_ACTION_SET_SELECTION;
+    set_selection_action_data.action = ax::mojom::Action::SET_SELECTION;
     set_selection_action_data.anchor_node_id = action_data.anchor_node_id;
     set_selection_action_data.focus_offset =
         action_data.focus_offset - friendly_suggestion_text_prefix_length_;

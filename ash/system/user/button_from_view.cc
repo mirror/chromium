@@ -63,10 +63,10 @@ void ButtonFromView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   views::Button::GetAccessibleNodeData(node_data);
   // If no label has been explicitly set via Button::SetAccessibleName(),
   // use the content's label.
-  if (node_data->GetStringAttribute(ui::AX_ATTR_NAME).empty()) {
+  if (node_data->GetStringAttribute(ax::mojom::StringAttribute::NAME).empty()) {
     ui::AXNodeData content_data;
     content_->GetAccessibleNodeData(&content_data);
-    node_data->SetName(content_data.GetStringAttribute(ui::AX_ATTR_NAME));
+    node_data->SetName(content_data.GetStringAttribute(ax::mojom::StringAttribute::NAME));
   }
 }
 

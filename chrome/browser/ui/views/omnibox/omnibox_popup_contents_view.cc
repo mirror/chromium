@@ -453,7 +453,7 @@ OmniboxResultView* OmniboxPopupContentsView::result_view_at(size_t i) {
 
 void OmniboxPopupContentsView::GetAccessibleNodeData(
     ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_LIST_BOX;
+  node_data->role = ax::mojom::Role::LIST_BOX;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

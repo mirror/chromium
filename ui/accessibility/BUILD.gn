@@ -6,6 +6,7 @@ import("//build/config/linux/gtk/gtk.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
 import("//testing/test.gni")
 import("//tools/json_schema_compiler/json_schema_api.gni")
@@ -15,10 +16,24 @@ if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
+mojom("ax_enums_mojo") {
+  sources = [
+    "ax_enums.mojom",
+  ]
+}
+
+component("ax_gen") {
+  public_deps = [
+    ":ax_enums_mojo",
+  ]
+}
+
 component("accessibility") {
   sources = [
     "ax_action_data.cc",
     "ax_action_data.h",
+    "ax_enum_util.cc",
+    "ax_enum_util.h",
     "ax_event_generator.cc",
     "ax_event_generator.h",
     "ax_export.h",
@@ -81,6 +96,7 @@ component("accessibility") {
   defines = [ "ACCESSIBILITY_IMPLEMENTATION" ]
 
   public_deps = [
+    ":ax_enums_mojo",
     ":ax_gen",
     "//base",
     "//base:i18n",
@@ -131,21 +147,6 @@ component("accessibility") {
     ]
 
     public_deps += [ "//ui/aura" ]
-  }
-}
-
-if (is_android) {
-  android_library("ui_accessibility_java") {
-    deps = [
-      "//third_party/android_tools:android_support_annotations_java",
-    ]
-    srcjar_deps = [ ":ax_enumerations_srcjar" ]
-  }
-
-  java_cpp_enum("ax_enumerations_srcjar") {
-    sources = [
-      "ax_enums.idl",
-    ]
   }
 }
 
@@ -207,16 +208,16 @@ test("accessibility_unittests") {
   }
 }
 
-json_schema_api("ax_gen") {
-  sources = [
-    "ax_enums.idl",
-  ]
-  deps = [
-    "//base/third_party/dynamic_annotations",
-  ]
-  root_namespace = "ui"
-  schemas = true
-}
+#json_schema_api("ax_gen") {
+#  sources = [
+#    "ax_enums.idl",
+#  ]
+#  deps = [
+#    "//base/third_party/dynamic_annotations",
+#  ]
+#  root_namespace = "ui"
+#  schemas = true
+#}
 
 fuzzer_test("ax_tree_fuzzer") {
   sources = [

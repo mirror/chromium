@@ -95,15 +95,15 @@ def CheckEnumsMatch(input_api, output_api):
   automation_enums['StateType'].remove('offscreen')
 
   errs = []
-  CheckMatchingEnum(ax_enums, 'AXRole', automation_enums, 'RoleType', errs,
+  CheckMatchingEnum(ax_enums, 'ax::mojom::Role', automation_enums, 'RoleType', errs,
                     output_api)
-  CheckMatchingEnum(ax_enums, 'AXState', automation_enums, 'StateType', errs,
+  CheckMatchingEnum(ax_enums, 'ax::mojom::State', automation_enums, 'StateType', errs,
                     output_api)
-  CheckMatchingEnum(ax_enums, 'AXEvent', automation_enums, 'EventType', errs,
+  CheckMatchingEnum(ax_enums, 'ax::mojom::Event', automation_enums, 'EventType', errs,
                     output_api)
-  CheckMatchingEnum(ax_enums, 'AXNameFrom', automation_enums, 'NameFromType',
+  CheckMatchingEnum(ax_enums, 'ax::mojom::NameFrom', automation_enums, 'NameFromType',
                     errs, output_api)
-  CheckMatchingEnum(ax_enums, 'AXRestriction', automation_enums,
+  CheckMatchingEnum(ax_enums, 'ax::mojom::Restriction', automation_enums,
                    'Restriction', errs, output_api)
   return errs
 

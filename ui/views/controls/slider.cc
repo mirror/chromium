@@ -158,7 +158,7 @@ void Slider::SetValueInternal(float value, SliderChangeReason reason) {
   if (accessibility_events_enabled_) {
     if (GetWidget() && GetWidget()->IsVisible()) {
       DCHECK(!pending_accessibility_value_change_);
-      NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+      NotifyAccessibilityEvent(ax::mojom::Event::VALUE_CHANGED, true);
     } else {
       pending_accessibility_value_change_ = true;
     }
@@ -258,7 +258,7 @@ bool Slider::OnKeyPressed(const ui::KeyEvent& event) {
 }
 
 void Slider::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_SLIDER;
+  node_data->role = ax::mojom::Role::SLIDER;
   node_data->SetName(accessible_name_);
   node_data->SetValue(base::UTF8ToUTF16(
       base::StringPrintf("%d%%", static_cast<int>(value_ * 100 + 0.5))));
@@ -341,7 +341,7 @@ void Slider::NotifyPendingAccessibilityValueChanged() {
   if (!pending_accessibility_value_change_)
     return;
 
-  NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::VALUE_CHANGED, true);
   pending_accessibility_value_change_ = false;
 }
 

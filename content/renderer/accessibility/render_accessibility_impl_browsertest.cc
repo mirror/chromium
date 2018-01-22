@@ -127,7 +127,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   WebAXObject root_obj = WebAXObject::FromWebDocument(document);
   accessibility->HandleAXEvent(
       root_obj,
-      ui::AX_EVENT_LAYOUT_COMPLETE);
+      ax::mojom::Event::LAYOUT_COMPLETE);
   accessibility->SendPendingAccessibilityEvents();
   EXPECT_EQ(1, CountAccessibilityNodesSentToBrowser());
   {
@@ -146,7 +146,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   sink_->ClearMessages();
   accessibility->HandleAXEvent(
       root_obj,
-      ui::AX_EVENT_LAYOUT_COMPLETE);
+      ax::mojom::Event::LAYOUT_COMPLETE);
   accessibility->SendPendingAccessibilityEvents();
   EXPECT_EQ(4, CountAccessibilityNodesSentToBrowser());
 
@@ -160,7 +160,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   const WebAXObject& first_child = root_obj.ChildAt(0);
   accessibility->HandleAXEvent(
       first_child,
-      ui::AX_EVENT_LIVE_REGION_CHANGED);
+      ax::mojom::Event::LIVE_REGION_CHANGED);
   accessibility->SendPendingAccessibilityEvents();
   EXPECT_EQ(4, CountAccessibilityNodesSentToBrowser());
 }
@@ -201,7 +201,7 @@ TEST_F(RenderAccessibilityImplTest, HideAccessibilityObject) {
   sink_->ClearMessages();
   accessibility->HandleAXEvent(
       node_a,
-      ui::AX_EVENT_CHILDREN_CHANGED);
+      ax::mojom::Event::CHILDREN_CHANGED);
 
   accessibility->SendPendingAccessibilityEvents();
   AccessibilityHostMsg_EventParams event;
@@ -251,7 +251,7 @@ TEST_F(RenderAccessibilityImplTest, ShowAccessibilityObject) {
 
   accessibility->HandleAXEvent(
       node_a,
-      ui::AX_EVENT_CHILDREN_CHANGED);
+      ax::mojom::Event::CHILDREN_CHANGED);
 
   accessibility->SendPendingAccessibilityEvents();
   AccessibilityHostMsg_EventParams event;

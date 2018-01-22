@@ -25,7 +25,7 @@ void AshTestViewsDelegate::OnBeforeWidgetInit(
 }
 
 void AshTestViewsDelegate::NotifyAccessibilityEvent(views::View* view,
-                                                    ui::AXEvent event_type) {
+                                                    ax::mojom::Event event_type) {
   TestViewsDelegate::NotifyAccessibilityEvent(view, event_type);
 
   if (test_accessibility_event_delegate_) {

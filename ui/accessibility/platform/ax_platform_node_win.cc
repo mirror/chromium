@@ -283,7 +283,7 @@ void AXPlatformNodeWin::SanitizeStringAttributeForIA2(
 
 void AXPlatformNodeWin::StringAttributeToIA2(
     std::vector<base::string16>& attributes,
-    AXStringAttribute attribute,
+    ax::mojom::StringAttribute attribute,
     const char* ia2_attr) {
   base::string16 value;
   if (GetString16Attribute(attribute, &value)) {
@@ -294,7 +294,7 @@ void AXPlatformNodeWin::StringAttributeToIA2(
 
 void AXPlatformNodeWin::BoolAttributeToIA2(
     std::vector<base::string16>& attributes,
-    AXBoolAttribute attribute,
+    ax::mojom::BoolAttribute attribute,
     const char* ia2_attr) {
   bool value;
   if (GetBoolAttribute(attribute, &value)) {
@@ -305,7 +305,7 @@ void AXPlatformNodeWin::BoolAttributeToIA2(
 
 void AXPlatformNodeWin::IntAttributeToIA2(
     std::vector<base::string16>& attributes,
-    AXIntAttribute attribute,
+    ax::mojom::IntAttribute attribute,
     const char* ia2_attr) {
   int value;
   if (GetIntAttribute(attribute, &value)) {
@@ -340,15 +340,15 @@ gfx::NativeViewAccessible AXPlatformNodeWin::GetNativeViewAccessible() {
   return this;
 }
 
-void AXPlatformNodeWin::NotifyAccessibilityEvent(AXEvent event_type) {
+void AXPlatformNodeWin::NotifyAccessibilityEvent(ax::mojom::Event event_type) {
   HWND hwnd = delegate_->GetTargetForNativeAccessibilityEvent();
   if (!hwnd)
     return;
 
   // Menu items fire selection events but Windows screen readers work reliably
   // with focus events. Remap here.
-  if (event_type == AX_EVENT_SELECTION && GetData().role == AX_ROLE_MENU_ITEM)
-    event_type = AX_EVENT_FOCUS;
+  if (event_type == ax::mojom::Event::SELECTION && GetData().role == ax::mojom::Role::MENU_ITEM)
+    event_type = ax::mojom::Event::FOCUS;
 
   int native_event = MSAAEvent(event_type);
   if (native_event < EVENT_MIN)
@@ -357,7 +357,7 @@ void AXPlatformNodeWin::NotifyAccessibilityEvent(AXEvent event_type) {
   ::NotifyWinEvent(native_event, hwnd, OBJID_CLIENT, -GetUniqueId());
 
   // Keep track of objects that are a target of an alert event.
-  if (event_type == AX_EVENT_ALERT)
+  if (event_type == ax::mojom::Event::ALERT)
     AddAlertTarget();
 }
 
@@ -446,7 +446,7 @@ HRESULT AXPlatformNodeWin::accDoDefaultAction(VARIANT var_id) {
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_AND_GET_TARGET(var_id, target);
   AXActionData data;
-  data.action = AX_ACTION_DO_DEFAULT;
+  data.action = ax::mojom::Action::DO_DEFAULT;
 
   if (target->delegate_->AccessibilityPerformAction(data))
     return S_OK;
@@ -612,13 +612,13 @@ STDMETHODIMP AXPlatformNodeWin::get_accDefaultAction(
   AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   int action;
-  if (!target->GetIntAttribute(AX_ATTR_DEFAULT_ACTION_VERB, &action)) {
+  if (!target->GetIntAttribute(ax::mojom::IntAttribute::DEFAULT_ACTION_VERB, &action)) {
     *def_action = nullptr;
     return S_FALSE;
   }
 
   base::string16 action_verb =
-      ActionVerbToLocalizedString(static_cast<AXDefaultActionVerb>(action));
+      ActionVerbToLocalizedString(static_cast<ax::mojom::DefaultActionVerb>(action));
   if (action_verb.empty()) {
     *def_action = nullptr;
     return S_FALSE;
@@ -635,7 +635,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accDescription(
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, desc, target);
 
-  return target->GetStringAttributeAsBstr(AX_ATTR_DESCRIPTION, desc);
+  return target->GetStringAttributeAsBstr(ax::mojom::StringAttribute::DESCRIPTION, desc);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_accFocus(VARIANT* focus_child) {
@@ -663,7 +663,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accKeyboardShortcut(
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, acc_key, target);
 
-  return target->GetStringAttributeAsBstr(AX_ATTR_KEY_SHORTCUTS, acc_key);
+  return target->GetStringAttributeAsBstr(ax::mojom::StringAttribute::KEY_SHORTCUTS, acc_key);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_accName(
@@ -672,7 +672,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accName(
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, name, target);
 
-  HRESULT result = target->GetStringAttributeAsBstr(AX_ATTR_NAME, name);
+  HRESULT result = target->GetStringAttributeAsBstr(ax::mojom::StringAttribute::NAME, name);
   if (FAILED(result) && MSAARole() == ROLE_SYSTEM_DOCUMENT && GetParent()) {
     // Hack: Some versions of JAWS crash if they get an empty name on
     // a document that's the child of an iframe, so always return a
@@ -747,19 +747,19 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   // get_accValue() has two sets of special cases depending on the node's role.
   // The first set apply without regard for the nodes |value| attribute. That is
   // the nodes value attribute isn't consider for the first set of special
-  // cases. For example, if the node role is AX_ROLE_COLOR_WELL, we do not care
-  // at all about the node's AX_ATTR_VALUE attribute. The second set of special
+  // cases. For example, if the node role is ax::mojom::Role::COLOR_WELL, we do not care
+  // at all about the node's ax::mojom::StringAttribute::VALUE attribute. The second set of special
   // cases only apply if the value attribute for the node is empty.  That is, if
-  // AX_ATTR_VALUE is empty, we do something special.
+  // ax::mojom::StringAttribute::VALUE is empty, we do something special.
 
   base::string16 result;
 
   //
-  // Color Well special case (Use AX_ATTR_COLOR_VALUE)
+  // Color Well special case (Use ax::mojom::IntAttribute::COLOR_VALUE)
   //
-  if (target->GetData().role == AX_ROLE_COLOR_WELL) {
+  if (target->GetData().role == ax::mojom::Role::COLOR_WELL) {
     unsigned int color = static_cast<unsigned int>(target->GetIntAttribute(
-        AX_ATTR_COLOR_VALUE));  // todo, why the static cast?
+        ax::mojom::IntAttribute::COLOR_VALUE));  // todo, why the static cast?
 
     unsigned int red = SkColorGetR(color);
     unsigned int green = SkColorGetG(color);
@@ -776,8 +776,8 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   //
   // Document special case (Use the document's URL)
   //
-  if (target->GetData().role == AX_ROLE_ROOT_WEB_AREA ||
-      target->GetData().role == AX_ROLE_WEB_AREA) {
+  if (target->GetData().role == ax::mojom::Role::ROOT_WEB_AREA ||
+      target->GetData().role == ax::mojom::Role::WEB_AREA) {
     result = base::UTF8ToUTF16(target->delegate_->GetTreeData().url);
     *value = SysAllocString(result.c_str());
     DCHECK(*value);
@@ -785,10 +785,10 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   }
 
   //
-  // Links (Use AX_ATTR_URL)
+  // Links (Use ax::mojom::StringAttribute::URL)
   //
-  if (target->GetData().role == AX_ROLE_LINK) {
-    result = target->GetString16Attribute(AX_ATTR_URL);
+  if (target->GetData().role == ax::mojom::Role::LINK) {
+    result = target->GetString16Attribute(ax::mojom::StringAttribute::URL);
     *value = SysAllocString(result.c_str());
     DCHECK(*value);
     return S_OK;
@@ -797,11 +797,11 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
   // For range controls, e.g. sliders and spin buttons, |ax_attr_value| holds
   // the aria-valuetext if present but not the inner text. The actual value,
   // provided either via aria-valuenow or the actual control's value is held in
-  // |AX_ATTR_VALUE_FOR_RANGE|.
-  result = target->GetString16Attribute(AX_ATTR_VALUE);
+  // |ax::mojom::FloatAttribute::VALUE_FOR_RANGE|.
+  result = target->GetString16Attribute(ax::mojom::StringAttribute::VALUE);
   if (result.empty() && target->IsRangeValueSupported()) {
     float fval;
-    if (target->GetFloatAttribute(AX_ATTR_VALUE_FOR_RANGE, &fval)) {
+    if (target->GetFloatAttribute(ax::mojom::FloatAttribute::VALUE_FOR_RANGE, &fval)) {
       result = base::NumberToString16(fval);
       *value = SysAllocString(result.c_str());
       DCHECK(*value);
@@ -823,7 +823,7 @@ STDMETHODIMP AXPlatformNodeWin::put_accValue(VARIANT var_id,
   COM_OBJECT_VALIDATE_VAR_ID_AND_GET_TARGET(var_id, target);
 
   AXActionData data;
-  data.action = AX_ACTION_SET_VALUE;
+  data.action = ax::mojom::Action::SET_VALUE;
   data.value = new_value;
   if (target->delegate_->AccessibilityPerformAction(data))
     return S_OK;
@@ -837,7 +837,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
   for (int i = 0; i < delegate_->GetChildCount(); ++i) {
     auto* node = static_cast<AXPlatformNodeWin*>(
         FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
-    if (node && node->GetData().HasState(AX_STATE_SELECTED))
+    if (node && node->GetData().HasState(ax::mojom::State::SELECTED))
       selected_nodes.emplace_back(node);
   }
 
@@ -874,7 +874,7 @@ STDMETHODIMP AXPlatformNodeWin::accSelect(
 
   if (flagsSelect & SELFLAG_TAKEFOCUS) {
     AXActionData action_data;
-    action_data.action = AX_ACTION_FOCUS;
+    action_data.action = ax::mojom::Action::FOCUS;
     target->delegate_->AccessibilityPerformAction(action_data);
     return S_OK;
   }
@@ -1120,9 +1120,9 @@ STDMETHODIMP AXPlatformNodeWin::get_groupPosition(LONG* group_level,
                              position_in_group);
   AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
-  *group_level = GetIntAttribute(ui::AX_ATTR_HIERARCHICAL_LEVEL);
-  *similar_items_in_group = GetIntAttribute(ui::AX_ATTR_SET_SIZE);
-  *position_in_group = GetIntAttribute(ui::AX_ATTR_POS_IN_SET);
+  *group_level = GetIntAttribute(ax::mojom::IntAttribute::HIERARCHICAL_LEVEL);
+  *similar_items_in_group = GetIntAttribute(ax::mojom::IntAttribute::SET_SIZE);
+  *position_in_group = GetIntAttribute(ax::mojom::IntAttribute::POS_IN_SET);
 
   if (!*group_level && !*similar_items_in_group && !*position_in_group)
     return S_FALSE;
@@ -1135,7 +1135,7 @@ STDMETHODIMP AXPlatformNodeWin::get_localizedExtendedRole(
   COM_OBJECT_VALIDATE_1_ARG(localized_extended_role);
   AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
-  return GetStringAttributeAsBstr(ui::AX_ATTR_ROLE_DESCRIPTION,
+  return GetStringAttributeAsBstr(ax::mojom::StringAttribute::ROLE_DESCRIPTION,
                                   localized_extended_role);
 }
 
@@ -1154,7 +1154,7 @@ STDMETHODIMP AXPlatformNodeWin::scrollTo(enum IA2ScrollType scroll_type) {
   COM_OBJECT_VALIDATE();
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_IA2_SCROLL_TO);
 
-  // AX_ACTION_SCROLL_TO_MAKE_VISIBLE wants a target rect in *local* coords.
+  // ax::mojom::Action::SCROLL_TO_MAKE_VISIBLE wants a target rect in *local* coords.
   gfx::Rect r = gfx::ToEnclosingRect(GetData().location);
   r.Offset(-r.OffsetFromOrigin());
   switch (scroll_type) {
@@ -1183,7 +1183,7 @@ STDMETHODIMP AXPlatformNodeWin::scrollTo(enum IA2ScrollType scroll_type) {
 
   ui::AXActionData action_data;
   action_data.target_node_id = GetData().id;
-  action_data.action = ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE;
+  action_data.action = ax::mojom::Action::SCROLL_TO_MAKE_VISIBLE;
   action_data.target_rect = r;
   delegate_->AccessibilityPerformAction(action_data);
   return S_OK;
@@ -1212,7 +1212,7 @@ STDMETHODIMP AXPlatformNodeWin::scrollToPoint(
 
   ui::AXActionData action_data;
   action_data.target_node_id = GetData().id;
-  action_data.action = ui::AX_ACTION_SCROLL_TO_POINT;
+  action_data.action = ax::mojom::Action::SCROLL_TO_POINT;
   action_data.target_point = scroll_to;
   delegate_->AccessibilityPerformAction(action_data);
   return S_OK;
@@ -1328,14 +1328,14 @@ STDMETHODIMP AXPlatformNodeWin::get_columnDescription(LONG column,
 
   for (int r = 0; r < rows; ++r) {
     AXPlatformNodeBase* cell = GetTableCell(r, column);
-    if (cell && cell->GetData().role == AX_ROLE_COLUMN_HEADER) {
-      base::string16 cell_name = cell->GetString16Attribute(AX_ATTR_NAME);
+    if (cell && cell->GetData().role == ax::mojom::Role::COLUMN_HEADER) {
+      base::string16 cell_name = cell->GetString16Attribute(ax::mojom::StringAttribute::NAME);
       if (cell_name.size() > 0) {
         *description = SysAllocString(cell_name.c_str());
         return S_OK;
       }
 
-      cell_name = cell->GetString16Attribute(AX_ATTR_DESCRIPTION);
+      cell_name = cell->GetString16Attribute(ax::mojom::StringAttribute::DESCRIPTION);
       if (cell_name.size() > 0) {
         *description = SysAllocString(cell_name.c_str());
         return S_OK;
@@ -1429,7 +1429,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(LONG* cell_count) {
   for (int r = 0; r < rows; ++r) {
     for (int c = 0; c < columns; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (cell && cell->GetData().HasState(AX_STATE_SELECTED))
+      if (cell && cell->GetData().HasState(ax::mojom::State::SELECTED))
         result++;
     }
   }
@@ -1456,7 +1456,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(LONG* column_count) {
     bool selected = true;
     for (int r = 0; r < rows && selected == true; ++r) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+      if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
         selected = false;
     }
     if (selected)
@@ -1486,7 +1486,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(LONG* row_count) {
     bool selected = true;
     for (int c = 0; c < columns && selected == true; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+      if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
         selected = false;
     }
     if (selected)
@@ -1516,13 +1516,13 @@ STDMETHODIMP AXPlatformNodeWin::get_rowDescription(LONG row,
 
   for (int c = 0; c < columns; ++c) {
     AXPlatformNodeBase* cell = GetTableCell(row, c);
-    if (cell && cell->GetData().role == AX_ROLE_ROW_HEADER) {
-      base::string16 cell_name = cell->GetString16Attribute(AX_ATTR_NAME);
+    if (cell && cell->GetData().role == ax::mojom::Role::ROW_HEADER) {
+      base::string16 cell_name = cell->GetString16Attribute(ax::mojom::StringAttribute::NAME);
       if (cell_name.size() > 0) {
         *description = SysAllocString(cell_name.c_str());
         return S_OK;
       }
-      cell_name = cell->GetString16Attribute(AX_ATTR_DESCRIPTION);
+      cell_name = cell->GetString16Attribute(ax::mojom::StringAttribute::DESCRIPTION);
       if (cell_name.size() > 0) {
         *description = SysAllocString(cell_name.c_str());
         return S_OK;
@@ -1594,7 +1594,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(LONG max_children,
   for (int r = 0; r < rows; ++r) {
     for (int c = 0; c < columns; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (cell && cell->GetData().HasState(AX_STATE_SELECTED))
+      if (cell && cell->GetData().HasState(ax::mojom::State::SELECTED))
         // index is row index * column count + column index.
         results.push_back(r * columns + c);
     }
@@ -1623,7 +1623,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(LONG max_columns,
     bool selected = true;
     for (int r = 0; r < row_count && selected == true; ++r) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+      if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
         selected = false;
     }
     if (selected)
@@ -1651,7 +1651,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedRows(LONG max_rows,
     bool selected = true;
     for (int c = 0; c < column_count && selected == true; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+      if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
         selected = false;
     }
     if (selected)
@@ -1688,7 +1688,7 @@ STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(LONG column,
 
   for (int r = 0; r < rows; ++r) {
     AXPlatformNodeBase* cell = GetTableCell(r, column);
-    if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+    if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
       return S_OK;
   }
 
@@ -1711,7 +1711,7 @@ STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(LONG row,
 
   for (int c = 0; c < columns; ++c) {
     AXPlatformNodeBase* cell = GetTableCell(row, c);
-    if (!cell || !(cell->GetData().HasState(AX_STATE_SELECTED)))
+    if (!cell || !(cell->GetData().HasState(ax::mojom::State::SELECTED)))
       return S_OK;
   }
 
@@ -1735,7 +1735,7 @@ STDMETHODIMP AXPlatformNodeWin::get_isSelected(LONG row,
     return S_FALSE;
 
   AXPlatformNodeBase* cell = GetTableCell(row, column);
-  if (cell && cell->GetData().HasState(AX_STATE_SELECTED))
+  if (cell && cell->GetData().HasState(ax::mojom::State::SELECTED))
     *is_selected = true;
 
   return S_OK;
@@ -1852,7 +1852,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedCells(IUnknown*** cells,
   for (int r = 0; r < rows; ++r) {
     for (int c = 0; c < columns; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
-      if (cell && cell->GetData().HasState(AX_STATE_SELECTED))
+      if (cell && cell->GetData().HasState(ax::mojom::State::SELECTED))
         selected.push_back(cell);
     }
   }
@@ -1901,7 +1901,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
     return E_INVALIDARG;
 
   *n_column_header_cells = 0;
-  if (GetData().role != AX_ROLE_CELL)
+  if (GetData().role != ax::mojom::Role::CELL)
     return S_FALSE;
 
   AXPlatformNodeBase* table = GetTable();
@@ -1917,7 +1917,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
 
   for (int r = 0; r < rows; ++r) {
     AXPlatformNodeBase* cell = GetTableCell(r, column);
-    if (cell && cell->GetData().role == AX_ROLE_COLUMN_HEADER)
+    if (cell && cell->GetData().role == ax::mojom::Role::COLUMN_HEADER)
       (*n_column_header_cells)++;
   }
 
@@ -1926,7 +1926,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
   int index = 0;
   for (int r = 0; r < rows; ++r) {
     AXPlatformNodeBase* cell = GetTableCell(r, column);
-    if (cell && cell->GetData().role == AX_ROLE_COLUMN_HEADER) {
+    if (cell && cell->GetData().role == ax::mojom::Role::COLUMN_HEADER) {
       auto* node_win = static_cast<AXPlatformNodeWin*>(cell);
       node_win->AddRef();
 
@@ -1969,7 +1969,7 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
     return E_INVALIDARG;
 
   *n_row_header_cells = 0;
-  if (GetData().role != AX_ROLE_CELL)
+  if (GetData().role != ax::mojom::Role::CELL)
     return S_FALSE;
 
   AXPlatformNodeBase* table = GetTable();
@@ -1985,7 +1985,7 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
 
   for (int c = 0; c < columns; ++c) {
     AXPlatformNodeBase* cell = GetTableCell(row, c);
-    if (cell && cell->GetData().role == AX_ROLE_ROW_HEADER)
+    if (cell && cell->GetData().role == ax::mojom::Role::ROW_HEADER)
       (*n_row_header_cells)++;
   }
 
@@ -1994,7 +1994,7 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
   int index = 0;
   for (int c = 0; c < columns; ++c) {
     AXPlatformNodeBase* cell = GetTableCell(row, c);
-    if (cell && cell->GetData().role == AX_ROLE_ROW_HEADER) {
+    if (cell && cell->GetData().role == ax::mojom::Role::ROW_HEADER) {
       auto* node_win = static_cast<AXPlatformNodeWin*>(cell);
       node_win->AddRef();
 
@@ -2284,7 +2284,7 @@ STDMETHODIMP AXPlatformNodeWin::removeSelection(LONG selection_index) {
     return E_INVALIDARG;
   // Simply collapse the selection to the position of the caret if a caret is
   // visible, otherwise set the selection to 0.
-  return setCaretOffset(GetIntAttribute(AX_ATTR_TEXT_SEL_END));
+  return setCaretOffset(GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END));
 }
 
 STDMETHODIMP AXPlatformNodeWin::setCaretOffset(LONG offset) {
@@ -2394,314 +2394,314 @@ int AXPlatformNodeWin::MSAARole() {
     return ROLE_SYSTEM_GROUPING;
 
   switch (GetData().role) {
-    case AX_ROLE_ALERT:
+    case ax::mojom::Role::ALERT:
       return ROLE_SYSTEM_ALERT;
 
-    case AX_ROLE_ALERT_DIALOG:
+    case ax::mojom::Role::ALERT_DIALOG:
       return ROLE_SYSTEM_DIALOG;
 
-    case AX_ROLE_ANCHOR:
+    case ax::mojom::Role::ANCHOR:
       return ROLE_SYSTEM_LINK;
 
-    case AX_ROLE_APPLICATION:
+    case ax::mojom::Role::APPLICATION:
       return ROLE_SYSTEM_APPLICATION;
 
-    case AX_ROLE_ARTICLE:
+    case ax::mojom::Role::ARTICLE:
       return ROLE_SYSTEM_DOCUMENT;
 
-    case AX_ROLE_AUDIO:
+    case ax::mojom::Role::AUDIO:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_BANNER:
+    case ax::mojom::Role::BANNER:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_BUTTON:
+    case ax::mojom::Role::BUTTON:
       return ROLE_SYSTEM_PUSHBUTTON;
 
-    case AX_ROLE_CANVAS:
+    case ax::mojom::Role::CANVAS:
       return ROLE_SYSTEM_GRAPHIC;
 
-    case AX_ROLE_CAPTION:
+    case ax::mojom::Role::CAPTION:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_CELL:
+    case ax::mojom::Role::CELL:
       return ROLE_SYSTEM_CELL;
 
-    case AX_ROLE_CHECK_BOX:
+    case ax::mojom::Role::CHECK_BOX:
       return ROLE_SYSTEM_CHECKBUTTON;
 
-    case AX_ROLE_COLOR_WELL:
+    case ax::mojom::Role::COLOR_WELL:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_COLUMN:
+    case ax::mojom::Role::COLUMN:
       return ROLE_SYSTEM_COLUMN;
 
-    case AX_ROLE_COLUMN_HEADER:
+    case ax::mojom::Role::COLUMN_HEADER:
       return ROLE_SYSTEM_COLUMNHEADER;
 
-    case AX_ROLE_COMBO_BOX_GROUPING:
-    case AX_ROLE_COMBO_BOX_MENU_BUTTON:
+    case ax::mojom::Role::COMBO_BOX_GROUPING:
+    case ax::mojom::Role::COMBO_BOX_MENU_BUTTON:
       return ROLE_SYSTEM_COMBOBOX;
 
-    case AX_ROLE_COMPLEMENTARY:
+    case ax::mojom::Role::COMPLEMENTARY:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_CONTENT_INFO:
+    case ax::mojom::Role::CONTENT_INFO:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_DATE:
-    case AX_ROLE_DATE_TIME:
+    case ax::mojom::Role::DATE:
+    case ax::mojom::Role::DATE_TIME:
       return ROLE_SYSTEM_DROPLIST;
 
-    case AX_ROLE_DESCRIPTION_LIST_DETAIL:
+    case ax::mojom::Role::DESCRIPTION_LIST_DETAIL:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_DESCRIPTION_LIST:
+    case ax::mojom::Role::DESCRIPTION_LIST:
       return ROLE_SYSTEM_LIST;
 
-    case AX_ROLE_DESCRIPTION_LIST_TERM:
+    case ax::mojom::Role::DESCRIPTION_LIST_TERM:
       return ROLE_SYSTEM_LISTITEM;
 
-    case AX_ROLE_DETAILS:
+    case ax::mojom::Role::DETAILS:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_DIALOG:
+    case ax::mojom::Role::DIALOG:
       return ROLE_SYSTEM_DIALOG;
 
-    case AX_ROLE_DISCLOSURE_TRIANGLE:
+    case ax::mojom::Role::DISCLOSURE_TRIANGLE:
       return ROLE_SYSTEM_PUSHBUTTON;
 
-    case AX_ROLE_DOCUMENT:
-    case AX_ROLE_ROOT_WEB_AREA:
-    case AX_ROLE_WEB_AREA:
+    case ax::mojom::Role::DOCUMENT:
+    case ax::mojom::Role::ROOT_WEB_AREA:
+    case ax::mojom::Role::WEB_AREA:
       return ROLE_SYSTEM_DOCUMENT;
 
-    case AX_ROLE_EMBEDDED_OBJECT:
+    case ax::mojom::Role::EMBEDDED_OBJECT:
       if (delegate_->GetChildCount()) {
         return ROLE_SYSTEM_GROUPING;
       } else {
         return ROLE_SYSTEM_CLIENT;
       }
 
-    case AX_ROLE_FIGURE:
+    case ax::mojom::Role::FIGURE:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_FEED:
+    case ax::mojom::Role::FEED:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_GENERIC_CONTAINER:
+    case ax::mojom::Role::GENERIC_CONTAINER:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_GRID:
+    case ax::mojom::Role::GRID:
       return ROLE_SYSTEM_TABLE;
 
-    case AX_ROLE_GROUP:
+    case ax::mojom::Role::GROUP:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_HEADING:
+    case ax::mojom::Role::HEADING:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_IFRAME:
+    case ax::mojom::Role::IFRAME:
       return ROLE_SYSTEM_DOCUMENT;
 
-    case AX_ROLE_IFRAME_PRESENTATIONAL:
+    case ax::mojom::Role::IFRAME_PRESENTATIONAL:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_IMAGE:
+    case ax::mojom::Role::IMAGE:
       return ROLE_SYSTEM_GRAPHIC;
 
-    case AX_ROLE_INPUT_TIME:
+    case ax::mojom::Role::INPUT_TIME:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_LABEL_TEXT:
-    case AX_ROLE_LEGEND:
+    case ax::mojom::Role::LABEL_TEXT:
+    case ax::mojom::Role::LEGEND:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_LINK:
+    case ax::mojom::Role::LINK:
       return ROLE_SYSTEM_LINK;
 
-    case AX_ROLE_LIST:
+    case ax::mojom::Role::LIST:
       return ROLE_SYSTEM_LIST;
 
-    case AX_ROLE_LIST_BOX:
+    case ax::mojom::Role::LIST_BOX:
       return ROLE_SYSTEM_LIST;
 
-    case AX_ROLE_LIST_BOX_OPTION:
+    case ax::mojom::Role::LIST_BOX_OPTION:
       return ROLE_SYSTEM_LISTITEM;
 
-    case AX_ROLE_LIST_ITEM:
+    case ax::mojom::Role::LIST_ITEM:
       return ROLE_SYSTEM_LISTITEM;
 
-    case AX_ROLE_MAIN:
+    case ax::mojom::Role::MAIN:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_MARK:
+    case ax::mojom::Role::MARK:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_MARQUEE:
+    case ax::mojom::Role::MARQUEE:
       return ROLE_SYSTEM_ANIMATION;
 
-    case AX_ROLE_MATH:
+    case ax::mojom::Role::MATH:
       return ROLE_SYSTEM_EQUATION;
 
-    case AX_ROLE_MENU:
-    case AX_ROLE_MENU_BUTTON:
+    case ax::mojom::Role::MENU:
+    case ax::mojom::Role::MENU_BUTTON:
       return ROLE_SYSTEM_MENUPOPUP;
 
-    case AX_ROLE_MENU_BAR:
+    case ax::mojom::Role::MENU_BAR:
       return ROLE_SYSTEM_MENUBAR;
 
-    case AX_ROLE_MENU_ITEM:
+    case ax::mojom::Role::MENU_ITEM:
       return ROLE_SYSTEM_MENUITEM;
 
-    case AX_ROLE_MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
       return ROLE_SYSTEM_MENUITEM;
 
-    case AX_ROLE_MENU_ITEM_RADIO:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
       return ROLE_SYSTEM_MENUITEM;
 
-    case ui::AX_ROLE_MENU_LIST_POPUP:
+    case ax::mojom::Role::MENU_LIST_POPUP:
       if (IsAncestorComboBox())
         return ROLE_SYSTEM_LIST;
       return ROLE_SYSTEM_MENUPOPUP;
 
-    case ui::AX_ROLE_MENU_LIST_OPTION:
+    case ax::mojom::Role::MENU_LIST_OPTION:
       if (IsAncestorComboBox())
         return ROLE_SYSTEM_LISTITEM;
       return ROLE_SYSTEM_MENUITEM;
 
-    case AX_ROLE_METER:
+    case ax::mojom::Role::METER:
       return ROLE_SYSTEM_PROGRESSBAR;
 
-    case AX_ROLE_NAVIGATION:
+    case ax::mojom::Role::NAVIGATION:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_NOTE:
+    case ax::mojom::Role::NOTE:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_POP_UP_BUTTON: {
-      std::string html_tag = GetData().GetStringAttribute(AX_ATTR_HTML_TAG);
+    case ax::mojom::Role::POP_UP_BUTTON: {
+      std::string html_tag = GetData().GetStringAttribute(ax::mojom::StringAttribute::HTML_TAG);
       if (html_tag == "select")
         return ROLE_SYSTEM_COMBOBOX;
       return ROLE_SYSTEM_BUTTONMENU;
     }
-    case AX_ROLE_PRE:
+    case ax::mojom::Role::PRE:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_PROGRESS_INDICATOR:
+    case ax::mojom::Role::PROGRESS_INDICATOR:
       return ROLE_SYSTEM_PROGRESSBAR;
 
-    case AX_ROLE_RADIO_BUTTON:
+    case ax::mojom::Role::RADIO_BUTTON:
       return ROLE_SYSTEM_RADIOBUTTON;
 
-    case AX_ROLE_RADIO_GROUP:
+    case ax::mojom::Role::RADIO_GROUP:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_REGION: {
-      std::string html_tag = GetData().GetStringAttribute(AX_ATTR_HTML_TAG);
+    case ax::mojom::Role::REGION: {
+      std::string html_tag = GetData().GetStringAttribute(ax::mojom::StringAttribute::HTML_TAG);
       if (html_tag == "section")
         return ROLE_SYSTEM_GROUPING;
       return ROLE_SYSTEM_PANE;
     }
 
-    case AX_ROLE_ROW: {
+    case ax::mojom::Role::ROW: {
       // Role changes depending on whether row is inside a treegrid
       // https://www.w3.org/TR/core-aam-1.1/#role-map-row
       return IsInTreeGrid() ? ROLE_SYSTEM_OUTLINEITEM : ROLE_SYSTEM_ROW;
     }
 
-    case AX_ROLE_ROW_HEADER:
+    case ax::mojom::Role::ROW_HEADER:
       return ROLE_SYSTEM_ROWHEADER;
 
-    case AX_ROLE_RUBY:
+    case ax::mojom::Role::RUBY:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_SCROLL_BAR:
+    case ax::mojom::Role::SCROLL_BAR:
       return ROLE_SYSTEM_SCROLLBAR;
 
-    case AX_ROLE_SEARCH:
+    case ax::mojom::Role::SEARCH:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_SLIDER:
+    case ax::mojom::Role::SLIDER:
       return ROLE_SYSTEM_SLIDER;
 
-    case AX_ROLE_SPIN_BUTTON:
+    case ax::mojom::Role::SPIN_BUTTON:
       return ROLE_SYSTEM_SPINBUTTON;
 
-    case AX_ROLE_SPIN_BUTTON_PART:
+    case ax::mojom::Role::SPIN_BUTTON_PART:
       return ROLE_SYSTEM_PUSHBUTTON;
 
-    case AX_ROLE_ANNOTATION:
-    case AX_ROLE_LIST_MARKER:
-    case AX_ROLE_STATIC_TEXT:
+    case ax::mojom::Role::ANNOTATION:
+    case ax::mojom::Role::LIST_MARKER:
+    case ax::mojom::Role::STATIC_TEXT:
       return ROLE_SYSTEM_STATICTEXT;
 
-    case AX_ROLE_STATUS:
+    case ax::mojom::Role::STATUS:
       return ROLE_SYSTEM_STATUSBAR;
 
-    case AX_ROLE_SPLITTER:
+    case ax::mojom::Role::SPLITTER:
       return ROLE_SYSTEM_SEPARATOR;
 
-    case AX_ROLE_SVG_ROOT:
+    case ax::mojom::Role::SVG_ROOT:
       return ROLE_SYSTEM_GRAPHIC;
 
-    case AX_ROLE_TAB:
+    case ax::mojom::Role::TAB:
       return ROLE_SYSTEM_PAGETAB;
 
-    case AX_ROLE_TABLE:
+    case ax::mojom::Role::TABLE:
       return ROLE_SYSTEM_TABLE;
 
-    case AX_ROLE_TABLE_HEADER_CONTAINER:
+    case ax::mojom::Role::TABLE_HEADER_CONTAINER:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_TAB_LIST:
+    case ax::mojom::Role::TAB_LIST:
       return ROLE_SYSTEM_PAGETABLIST;
 
-    case AX_ROLE_TAB_PANEL:
+    case ax::mojom::Role::TAB_PANEL:
       return ROLE_SYSTEM_PROPERTYPAGE;
 
-    case AX_ROLE_TERM:
+    case ax::mojom::Role::TERM:
       return ROLE_SYSTEM_LISTITEM;
 
-    case AX_ROLE_TOGGLE_BUTTON:
+    case ax::mojom::Role::TOGGLE_BUTTON:
       return ROLE_SYSTEM_PUSHBUTTON;
 
-    case AX_ROLE_TEXT_FIELD:
-    case AX_ROLE_SEARCH_BOX:
+    case ax::mojom::Role::TEXT_FIELD:
+    case ax::mojom::Role::SEARCH_BOX:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX:
+    case ax::mojom::Role::TEXT_FIELD_WITH_COMBO_BOX:
       return ROLE_SYSTEM_COMBOBOX;
 
-    case AX_ROLE_ABBR:
-    case AX_ROLE_TIME:
+    case ax::mojom::Role::ABBR:
+    case ax::mojom::Role::TIME:
       return ROLE_SYSTEM_TEXT;
 
-    case AX_ROLE_TIMER:
+    case ax::mojom::Role::TIMER:
       return ROLE_SYSTEM_CLOCK;
 
-    case AX_ROLE_TOOLBAR:
+    case ax::mojom::Role::TOOLBAR:
       return ROLE_SYSTEM_TOOLBAR;
 
-    case AX_ROLE_TOOLTIP:
+    case ax::mojom::Role::TOOLTIP:
       return ROLE_SYSTEM_TOOLTIP;
 
-    case AX_ROLE_TREE:
+    case ax::mojom::Role::TREE:
       return ROLE_SYSTEM_OUTLINE;
 
-    case AX_ROLE_TREE_GRID:
+    case ax::mojom::Role::TREE_GRID:
       return ROLE_SYSTEM_OUTLINE;
 
-    case AX_ROLE_TREE_ITEM:
+    case ax::mojom::Role::TREE_ITEM:
       return ROLE_SYSTEM_OUTLINEITEM;
 
-    case AX_ROLE_LINE_BREAK:
+    case ax::mojom::Role::LINE_BREAK:
       return ROLE_SYSTEM_WHITESPACE;
 
-    case AX_ROLE_VIDEO:
+    case ax::mojom::Role::VIDEO:
       return ROLE_SYSTEM_GROUPING;
 
-    case AX_ROLE_WINDOW:
+    case ax::mojom::Role::WINDOW:
       // Do not return ROLE_SYSTEM_WINDOW as that is a special MSAA system role
       // used to indicate a real native window object. It is automatically
       // created by oleacc.dll as a parent of the root of our hierarchy,
@@ -2709,30 +2709,30 @@ int AXPlatformNodeWin::MSAARole() {
       return ROLE_SYSTEM_APPLICATION;
 
     // TODO(dmazzoni): figure out the proper MSAA role for roles listed below.
-    case AX_ROLE_BLOCKQUOTE:
-    case AX_ROLE_BUTTON_DROP_DOWN:
-    case AX_ROLE_CARET:
-    case AX_ROLE_CLIENT:
-    case AX_ROLE_DEFINITION:
-    case AX_ROLE_DESKTOP:
-    case AX_ROLE_DIRECTORY:
-    case AX_ROLE_FIGCAPTION:
-    case AX_ROLE_FOOTER:
-    case AX_ROLE_FORM:
-    case AX_ROLE_IGNORED:
-    case AX_ROLE_IMAGE_MAP:
-    case AX_ROLE_INLINE_TEXT_BOX:
-    case AX_ROLE_LOCATION_BAR:
-    case AX_ROLE_LOG:
-    case AX_ROLE_NONE:
-    case AX_ROLE_PANE:
-    case AX_ROLE_PARAGRAPH:
-    case AX_ROLE_PRESENTATIONAL:
-    case AX_ROLE_SLIDER_THUMB:
-    case AX_ROLE_SWITCH:
-    case AX_ROLE_TITLE_BAR:
-    case AX_ROLE_UNKNOWN:
-    case AX_ROLE_WEB_VIEW:
+    case ax::mojom::Role::BLOCKQUOTE:
+    case ax::mojom::Role::BUTTON_DROP_DOWN:
+    case ax::mojom::Role::CARET:
+    case ax::mojom::Role::CLIENT:
+    case ax::mojom::Role::DEFINITION:
+    case ax::mojom::Role::DESKTOP:
+    case ax::mojom::Role::DIRECTORY:
+    case ax::mojom::Role::FIGCAPTION:
+    case ax::mojom::Role::FOOTER:
+    case ax::mojom::Role::FORM:
+    case ax::mojom::Role::IGNORED:
+    case ax::mojom::Role::IMAGE_MAP:
+    case ax::mojom::Role::INLINE_TEXT_BOX:
+    case ax::mojom::Role::LOCATION_BAR:
+    case ax::mojom::Role::LOG:
+    case ax::mojom::Role::NONE:
+    case ax::mojom::Role::PANE:
+    case ax::mojom::Role::PARAGRAPH:
+    case ax::mojom::Role::PRESENTATIONAL:
+    case ax::mojom::Role::SLIDER_THUMB:
+    case ax::mojom::Role::SWITCH:
+    case ax::mojom::Role::TITLE_BAR:
+    case ax::mojom::Role::UNKNOWN:
+    case ax::mojom::Role::WEB_VIEW:
       return ROLE_SYSTEM_CLIENT;
   }
 
@@ -2741,40 +2741,40 @@ int AXPlatformNodeWin::MSAARole() {
 }
 
 std::string AXPlatformNodeWin::StringOverrideForMSAARole() {
-  std::string html_tag = GetData().GetStringAttribute(AX_ATTR_HTML_TAG);
+  std::string html_tag = GetData().GetStringAttribute(ax::mojom::StringAttribute::HTML_TAG);
 
   switch (GetData().role) {
-    case AX_ROLE_BLOCKQUOTE:
-    case AX_ROLE_DEFINITION:
-    case AX_ROLE_IMAGE_MAP:
+    case ax::mojom::Role::BLOCKQUOTE:
+    case ax::mojom::Role::DEFINITION:
+    case ax::mojom::Role::IMAGE_MAP:
       return html_tag;
 
-    case AX_ROLE_CANVAS:
-      if (GetData().GetBoolAttribute(AX_ATTR_CANVAS_HAS_FALLBACK)) {
+    case ax::mojom::Role::CANVAS:
+      if (GetData().GetBoolAttribute(ax::mojom::BoolAttribute::CANVAS_HAS_FALLBACK)) {
         return html_tag;
       }
       break;
 
-    case AX_ROLE_FORM:
+    case ax::mojom::Role::FORM:
       // This could be a div with the role of form
       // so we return just the string "form".
       return "form";
 
-    case AX_ROLE_HEADING:
+    case ax::mojom::Role::HEADING:
       if (!html_tag.empty())
         return html_tag;
       break;
 
-    case AX_ROLE_PARAGRAPH:
+    case ax::mojom::Role::PARAGRAPH:
       return html_tag;
 
-    case AX_ROLE_GENERIC_CONTAINER:
+    case ax::mojom::Role::GENERIC_CONTAINER:
       // TODO(dougt) why can't we always use div in this case?
       if (html_tag.empty())
         return "div";
       return html_tag;
 
-    case AX_ROLE_SWITCH:
+    case ax::mojom::Role::SWITCH:
       return "switch";
 
     default:
@@ -2785,8 +2785,8 @@ std::string AXPlatformNodeWin::StringOverrideForMSAARole() {
 }
 
 bool AXPlatformNodeWin::IsWebAreaForPresentationalIframe() {
-  if (GetData().role != AX_ROLE_WEB_AREA &&
-      GetData().role != AX_ROLE_ROOT_WEB_AREA) {
+  if (GetData().role != ax::mojom::Role::WEB_AREA &&
+      GetData().role != ax::mojom::Role::ROOT_WEB_AREA) {
     return false;
   }
 
@@ -2794,7 +2794,7 @@ bool AXPlatformNodeWin::IsWebAreaForPresentationalIframe() {
   if (!parent)
     return false;
 
-  return parent->GetData().role == AX_ROLE_IFRAME_PRESENTATIONAL;
+  return parent->GetData().role == ax::mojom::Role::IFRAME_PRESENTATIONAL;
 }
 
 int32_t AXPlatformNodeWin::ComputeIA2State() {
@@ -2802,26 +2802,27 @@ int32_t AXPlatformNodeWin::ComputeIA2State() {
   int32_t ia2_state = IA2_STATE_OPAQUE;
 
   const auto checked_state =
-      static_cast<AXCheckedState>(GetIntAttribute(AX_ATTR_CHECKED_STATE));
-  if (checked_state) {
+      static_cast<ax::mojom::CheckedState>(GetIntAttribute(ax::mojom::IntAttribute::CHECKED_STATE));
+  if (checked_state != ax::mojom::CheckedState::NONE) {
     ia2_state |= IA2_STATE_CHECKABLE;
   }
 
-  if (HasIntAttribute(AX_ATTR_INVALID_STATE) &&
-      GetIntAttribute(AX_ATTR_INVALID_STATE) != AX_INVALID_STATE_FALSE)
+  if (HasIntAttribute(ax::mojom::IntAttribute::INVALID_STATE) &&
+      GetIntAttribute(ax::mojom::IntAttribute::INVALID_STATE) !=
+          static_cast<int32_t>(ax::mojom::InvalidState::FALSE_VALUE))
     ia2_state |= IA2_STATE_INVALID_ENTRY;
-  if (data.HasState(AX_STATE_REQUIRED))
+  if (data.HasState(ax::mojom::State::REQUIRED))
     ia2_state |= IA2_STATE_REQUIRED;
-  if (data.HasState(AX_STATE_VERTICAL))
+  if (data.HasState(ax::mojom::State::VERTICAL))
     ia2_state |= IA2_STATE_VERTICAL;
-  if (data.HasState(AX_STATE_HORIZONTAL))
+  if (data.HasState(ax::mojom::State::HORIZONTAL))
     ia2_state |= IA2_STATE_HORIZONTAL;
 
-  if (data.HasState(AX_STATE_EDITABLE))
+  if (data.HasState(ax::mojom::State::EDITABLE))
     ia2_state |= IA2_STATE_EDITABLE;
 
   if (IsPlainTextField() || IsRichTextField()) {
-    if (data.HasState(AX_STATE_MULTILINE)) {
+    if (data.HasState(ax::mojom::State::MULTILINE)) {
       ia2_state |= IA2_STATE_MULTI_LINE;
     } else {
       ia2_state |= IA2_STATE_SINGLE_LINE;
@@ -2829,15 +2830,15 @@ int32_t AXPlatformNodeWin::ComputeIA2State() {
     ia2_state |= IA2_STATE_SELECTABLE_TEXT;
   }
 
-  if (!GetStringAttribute(AX_ATTR_AUTO_COMPLETE).empty())
+  if (!GetStringAttribute(ax::mojom::StringAttribute::AUTO_COMPLETE).empty())
     ia2_state |= IA2_STATE_SUPPORTS_AUTOCOMPLETION;
 
-  if (GetBoolAttribute(AX_ATTR_MODAL))
+  if (GetBoolAttribute(ax::mojom::BoolAttribute::MODAL))
     ia2_state |= IA2_STATE_MODAL;
 
   switch (data.role) {
-    case AX_ROLE_MENU_LIST_POPUP:
-    case AX_ROLE_MENU_LIST_OPTION:
+    case ax::mojom::Role::MENU_LIST_POPUP:
+    case ax::mojom::Role::MENU_LIST_OPTION:
       ia2_state &= ~(IA2_STATE_EDITABLE);
       break;
     default:
@@ -2859,117 +2860,117 @@ int32_t AXPlatformNodeWin::ComputeIA2Role() {
   int32_t ia2_role = 0;
 
   switch (GetData().role) {
-    case AX_ROLE_BANNER:
+    case ax::mojom::Role::BANNER:
       ia2_role = IA2_ROLE_HEADER;
       break;
-    case AX_ROLE_BLOCKQUOTE:
+    case ax::mojom::Role::BLOCKQUOTE:
       ia2_role = IA2_ROLE_SECTION;
       break;
-    case AX_ROLE_CANVAS:
-      if (GetBoolAttribute(AX_ATTR_CANVAS_HAS_FALLBACK)) {
+    case ax::mojom::Role::CANVAS:
+      if (GetBoolAttribute(ax::mojom::BoolAttribute::CANVAS_HAS_FALLBACK)) {
         ia2_role = IA2_ROLE_CANVAS;
       }
       break;
-    case AX_ROLE_CAPTION:
+    case ax::mojom::Role::CAPTION:
       ia2_role = IA2_ROLE_CAPTION;
       break;
-    case AX_ROLE_COLOR_WELL:
+    case ax::mojom::Role::COLOR_WELL:
       ia2_role = IA2_ROLE_COLOR_CHOOSER;
       break;
-    case AX_ROLE_COMPLEMENTARY:
+    case ax::mojom::Role::COMPLEMENTARY:
       ia2_role = IA2_ROLE_NOTE;
       break;
-    case AX_ROLE_CONTENT_INFO:
+    case ax::mojom::Role::CONTENT_INFO:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_DATE:
-    case AX_ROLE_DATE_TIME:
+    case ax::mojom::Role::DATE:
+    case ax::mojom::Role::DATE_TIME:
       ia2_role = IA2_ROLE_DATE_EDITOR;
       break;
-    case AX_ROLE_DEFINITION:
+    case ax::mojom::Role::DEFINITION:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_DESCRIPTION_LIST_DETAIL:
+    case ax::mojom::Role::DESCRIPTION_LIST_DETAIL:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_EMBEDDED_OBJECT:
+    case ax::mojom::Role::EMBEDDED_OBJECT:
       if (!delegate_->GetChildCount()) {
         ia2_role = IA2_ROLE_EMBEDDED_OBJECT;
       }
       break;
-    case AX_ROLE_FIGCAPTION:
+    case ax::mojom::Role::FIGCAPTION:
       ia2_role = IA2_ROLE_CAPTION;
       break;
-    case AX_ROLE_FORM:
+    case ax::mojom::Role::FORM:
       ia2_role = IA2_ROLE_FORM;
       break;
-    case AX_ROLE_FOOTER:
+    case ax::mojom::Role::FOOTER:
       ia2_role = IA2_ROLE_FOOTER;
       break;
-    case AX_ROLE_GENERIC_CONTAINER:
+    case ax::mojom::Role::GENERIC_CONTAINER:
       ia2_role = IA2_ROLE_SECTION;
       break;
-    case AX_ROLE_HEADING:
+    case ax::mojom::Role::HEADING:
       ia2_role = IA2_ROLE_HEADING;
       break;
-    case AX_ROLE_IFRAME:
+    case ax::mojom::Role::IFRAME:
       ia2_role = IA2_ROLE_INTERNAL_FRAME;
       break;
-    case AX_ROLE_IMAGE_MAP:
+    case ax::mojom::Role::IMAGE_MAP:
       ia2_role = IA2_ROLE_IMAGE_MAP;
       break;
-    case AX_ROLE_LABEL_TEXT:
-    case AX_ROLE_LEGEND:
+    case ax::mojom::Role::LABEL_TEXT:
+    case ax::mojom::Role::LEGEND:
       ia2_role = IA2_ROLE_LABEL;
       break;
-    case AX_ROLE_MAIN:
+    case ax::mojom::Role::MAIN:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_MARK:
+    case ax::mojom::Role::MARK:
       ia2_role = IA2_ROLE_TEXT_FRAME;
       break;
-    case AX_ROLE_MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
       ia2_role = IA2_ROLE_CHECK_MENU_ITEM;
       break;
-    case AX_ROLE_MENU_ITEM_RADIO:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
       ia2_role = IA2_ROLE_RADIO_MENU_ITEM;
       break;
-    case AX_ROLE_NAVIGATION:
+    case ax::mojom::Role::NAVIGATION:
       ia2_role = IA2_ROLE_SECTION;
       break;
-    case AX_ROLE_NOTE:
+    case ax::mojom::Role::NOTE:
       ia2_role = IA2_ROLE_NOTE;
       break;
-    case AX_ROLE_PARAGRAPH:
+    case ax::mojom::Role::PARAGRAPH:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_PRE:
+    case ax::mojom::Role::PRE:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
-    case AX_ROLE_REGION: {
-      base::string16 html_tag = GetString16Attribute(AX_ATTR_HTML_TAG);
+    case ax::mojom::Role::REGION: {
+      base::string16 html_tag = GetString16Attribute(ax::mojom::StringAttribute::HTML_TAG);
 
       if (html_tag == L"section") {
         ia2_role = IA2_ROLE_SECTION;
       }
     } break;
-    case AX_ROLE_RUBY:
+    case ax::mojom::Role::RUBY:
       ia2_role = IA2_ROLE_TEXT_FRAME;
       break;
-    case AX_ROLE_SEARCH:
+    case ax::mojom::Role::SEARCH:
       ia2_role = IA2_ROLE_SECTION;
       break;
-    case AX_ROLE_SWITCH:
+    case ax::mojom::Role::SWITCH:
       ia2_role = IA2_ROLE_TOGGLE_BUTTON;
       break;
-    case AX_ROLE_TABLE_HEADER_CONTAINER:
+    case ax::mojom::Role::TABLE_HEADER_CONTAINER:
       ia2_role = IA2_ROLE_SECTION;
       break;
-    case AX_ROLE_TOGGLE_BUTTON:
+    case ax::mojom::Role::TOGGLE_BUTTON:
       ia2_role = IA2_ROLE_TOGGLE_BUTTON;
       break;
-    case AX_ROLE_ABBR:
-    case AX_ROLE_TIME:
+    case ax::mojom::Role::ABBR:
+    case ax::mojom::Role::TIME:
       ia2_role = IA2_ROLE_TEXT_FRAME;
       break;
     default:
@@ -2985,71 +2986,71 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
   // historical reasons. Aside from that virtually every ARIA attribute
   // is exposed in a really straightforward way, i.e. "aria-foo" is exposed
   // as "foo".
-  StringAttributeToIA2(result, AX_ATTR_DISPLAY, "display");
-  StringAttributeToIA2(result, AX_ATTR_HTML_TAG, "tag");
-  StringAttributeToIA2(result, AX_ATTR_ROLE, "xml-roles");
-  StringAttributeToIA2(result, AX_ATTR_PLACEHOLDER, "placeholder");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::DISPLAY, "display");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::HTML_TAG, "tag");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::ROLE, "xml-roles");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::PLACEHOLDER, "placeholder");
 
-  StringAttributeToIA2(result, AX_ATTR_AUTO_COMPLETE, "autocomplete");
-  StringAttributeToIA2(result, AX_ATTR_ROLE_DESCRIPTION, "roledescription");
-  StringAttributeToIA2(result, AX_ATTR_KEY_SHORTCUTS, "keyshortcuts");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::AUTO_COMPLETE, "autocomplete");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::ROLE_DESCRIPTION, "roledescription");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::KEY_SHORTCUTS, "keyshortcuts");
 
-  IntAttributeToIA2(result, AX_ATTR_HIERARCHICAL_LEVEL, "level");
-  IntAttributeToIA2(result, AX_ATTR_SET_SIZE, "setsize");
-  IntAttributeToIA2(result, AX_ATTR_POS_IN_SET, "posinset");
+  IntAttributeToIA2(result, ax::mojom::IntAttribute::HIERARCHICAL_LEVEL, "level");
+  IntAttributeToIA2(result, ax::mojom::IntAttribute::SET_SIZE, "setsize");
+  IntAttributeToIA2(result, ax::mojom::IntAttribute::POS_IN_SET, "posinset");
 
-  if (HasIntAttribute(AX_ATTR_CHECKED_STATE))
+  if (HasIntAttribute(ax::mojom::IntAttribute::CHECKED_STATE))
     result.push_back(L"checkable:true");
 
   // Expose live region attributes.
-  StringAttributeToIA2(result, AX_ATTR_LIVE_STATUS, "live");
-  StringAttributeToIA2(result, AX_ATTR_LIVE_RELEVANT, "relevant");
-  BoolAttributeToIA2(result, AX_ATTR_LIVE_ATOMIC, "atomic");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::LIVE_STATUS, "live");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::LIVE_RELEVANT, "relevant");
+  BoolAttributeToIA2(result, ax::mojom::BoolAttribute::LIVE_ATOMIC, "atomic");
   // Busy is usually associated with live regions but can occur anywhere:
-  BoolAttributeToIA2(result, AX_ATTR_BUSY, "busy");
+  BoolAttributeToIA2(result, ax::mojom::BoolAttribute::BUSY, "busy");
 
   // Expose container live region attributes.
-  StringAttributeToIA2(result, AX_ATTR_CONTAINER_LIVE_STATUS, "container-live");
-  StringAttributeToIA2(result, AX_ATTR_CONTAINER_LIVE_RELEVANT,
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::CONTAINER_LIVE_STATUS, "container-live");
+  StringAttributeToIA2(result, ax::mojom::StringAttribute::CONTAINER_LIVE_RELEVANT,
                        "container-relevant");
-  BoolAttributeToIA2(result, AX_ATTR_CONTAINER_LIVE_ATOMIC, "container-atomic");
-  BoolAttributeToIA2(result, AX_ATTR_CONTAINER_LIVE_BUSY, "container-busy");
+  BoolAttributeToIA2(result, ax::mojom::BoolAttribute::CONTAINER_LIVE_ATOMIC, "container-atomic");
+  BoolAttributeToIA2(result, ax::mojom::BoolAttribute::CONTAINER_LIVE_BUSY, "container-busy");
 
   // Expose the non-standard explicit-name IA2 attribute.
   int name_from;
-  if (GetIntAttribute(AX_ATTR_NAME_FROM, &name_from) &&
-      name_from != AX_NAME_FROM_CONTENTS) {
+  if (GetIntAttribute(ax::mojom::IntAttribute::NAME_FROM, &name_from) &&
+      name_from != static_cast<int32_t>(ax::mojom::NameFrom::CONTENTS)) {
     result.push_back(L"explicit-name:true");
   }
 
   // Expose the aria-current attribute.
   int32_t aria_current_state;
-  if (GetIntAttribute(AX_ATTR_ARIA_CURRENT_STATE, &aria_current_state)) {
-    switch (static_cast<AXAriaCurrentState>(aria_current_state)) {
-      case AX_ARIA_CURRENT_STATE_NONE:
+  if (GetIntAttribute(ax::mojom::IntAttribute::ARIA_CURRENT_STATE, &aria_current_state)) {
+    switch (static_cast<ax::mojom::AriaCurrentState>(aria_current_state)) {
+      case ax::mojom::AriaCurrentState::NONE:
         break;
-      case AX_ARIA_CURRENT_STATE_FALSE:
+      case ax::mojom::AriaCurrentState::FALSE_VALUE:
         result.push_back(L"current:false");
         break;
-      case AX_ARIA_CURRENT_STATE_TRUE:
+      case ax::mojom::AriaCurrentState::TRUE_VALUE:
         result.push_back(L"current:true");
         break;
-      case AX_ARIA_CURRENT_STATE_PAGE:
+      case ax::mojom::AriaCurrentState::PAGE:
         result.push_back(L"current:page");
         break;
-      case AX_ARIA_CURRENT_STATE_STEP:
+      case ax::mojom::AriaCurrentState::STEP:
         result.push_back(L"current:step");
         break;
-      case AX_ARIA_CURRENT_STATE_LOCATION:
+      case ax::mojom::AriaCurrentState::LOCATION:
         result.push_back(L"current:location");
         break;
-      case AX_ARIA_CURRENT_STATE_UNCLIPPED_LOCATION:
+      case ax::mojom::AriaCurrentState::UNCLIPPED_LOCATION:
         result.push_back(L"current:unclippedLocation");
         break;
-      case AX_ARIA_CURRENT_STATE_DATE:
+      case ax::mojom::AriaCurrentState::DATE:
         result.push_back(L"current:date");
         break;
-      case AX_ARIA_CURRENT_STATE_TIME:
+      case ax::mojom::AriaCurrentState::TIME:
         result.push_back(L"current:time");
         break;
     }
@@ -3064,7 +3065,7 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
 
     if (table) {
       const std::vector<int32_t>& unique_cell_ids =
-          table->GetIntListAttribute(AX_ATTR_UNIQUE_CELL_IDS);
+          table->GetIntListAttribute(ax::mojom::IntListAttribute::UNIQUE_CELL_IDS);
       for (size_t i = 0; i < unique_cell_ids.size(); ++i) {
         if (unique_cell_ids[i] == GetData().id) {
           result.push_back(base::string16(L"table-cell-index:") +
@@ -3076,16 +3077,16 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
 
   // Expose aria-colcount and aria-rowcount in a table, grid or treegrid.
   if (IsTableLikeRole(GetData().role)) {
-    IntAttributeToIA2(result, AX_ATTR_ARIA_COLUMN_COUNT, "colcount");
-    IntAttributeToIA2(result, AX_ATTR_ARIA_ROW_COUNT, "rowcount");
+    IntAttributeToIA2(result, ax::mojom::IntAttribute::ARIA_COLUMN_COUNT, "colcount");
+    IntAttributeToIA2(result, ax::mojom::IntAttribute::ARIA_ROW_COUNT, "rowcount");
   }
 
   // Expose aria-colindex and aria-rowindex in a cell or row.
   if (IsCellOrTableHeaderRole(GetData().role) ||
-      GetData().role == AX_ROLE_ROW) {
-    if (GetData().role != AX_ROLE_ROW)
-      IntAttributeToIA2(result, AX_ATTR_ARIA_CELL_COLUMN_INDEX, "colindex");
-    IntAttributeToIA2(result, AX_ATTR_ARIA_CELL_ROW_INDEX, "rowindex");
+      GetData().role == ax::mojom::Role::ROW) {
+    if (GetData().role != ax::mojom::Role::ROW)
+      IntAttributeToIA2(result, ax::mojom::IntAttribute::ARIA_CELL_COLUMN_INDEX, "colindex");
+    IntAttributeToIA2(result, ax::mojom::IntAttribute::ARIA_CELL_ROW_INDEX, "rowindex");
 
     // Experimental: expose aria-rowtext / aria-coltext. Not standardized
     // yet, but obscure enough that it's safe to expose.
@@ -3108,20 +3109,20 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
   int32_t sort_direction;
   if ((MSAARole() == ROLE_SYSTEM_COLUMNHEADER ||
        MSAARole() == ROLE_SYSTEM_ROWHEADER) &&
-      GetIntAttribute(AX_ATTR_SORT_DIRECTION, &sort_direction)) {
-    switch (static_cast<AXSortDirection>(sort_direction)) {
-      case AX_SORT_DIRECTION_NONE:
+      GetIntAttribute(ax::mojom::IntAttribute::SORT_DIRECTION, &sort_direction)) {
+    switch (static_cast<ax::mojom::SortDirection>(sort_direction)) {
+      case ax::mojom::SortDirection::NONE:
         break;
-      case AX_SORT_DIRECTION_UNSORTED:
+      case ax::mojom::SortDirection::UNSORTED:
         result.push_back(L"sort:none");
         break;
-      case AX_SORT_DIRECTION_ASCENDING:
+      case ax::mojom::SortDirection::ASCENDING:
         result.push_back(L"sort:ascending");
         break;
-      case AX_SORT_DIRECTION_DESCENDING:
+      case ax::mojom::SortDirection::DESCENDING:
         result.push_back(L"sort:descending");
         break;
-      case AX_SORT_DIRECTION_OTHER:
+      case ax::mojom::SortDirection::OTHER:
         result.push_back(L"sort:other");
         break;
     }
@@ -3173,7 +3174,7 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
 
   // Expose datetime attribute.
   base::string16 datetime;
-  if (GetData().role == AX_ROLE_TIME &&
+  if (GetData().role == ax::mojom::Role::TIME &&
       GetData().GetHtmlAttribute("datetime", &datetime)) {
     SanitizeStringAttributeForIA2(datetime, &datetime);
     result.push_back(L"datetime:" + datetime);
@@ -3188,7 +3189,7 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
 
   // Expose src attribute.
   base::string16 src;
-  if (GetData().role == AX_ROLE_IMAGE &&
+  if (GetData().role == ax::mojom::Role::IMAGE &&
       GetData().GetHtmlAttribute("src", &src)) {
     SanitizeStringAttributeForIA2(src, &src);
     result.push_back(L"src:" + src);
@@ -3204,7 +3205,7 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
 
   // Expose input-text type attribute.
   base::string16 type;
-  base::string16 html_tag = GetString16Attribute(AX_ATTR_HTML_TAG);
+  base::string16 html_tag = GetString16Attribute(ax::mojom::StringAttribute::HTML_TAG);
   if (IsPlainTextField() && html_tag == L"input" &&
       GetData().GetHtmlAttribute("type", &type)) {
     SanitizeStringAttributeForIA2(type, &type);
@@ -3223,7 +3224,7 @@ base::string16 AXPlatformNodeWin::GetValue() {
   // TODO(dougt): Look into ensuring that on click handlers correctly provide
   // a value here.
   if (value.empty() && (MSAAState() & STATE_SYSTEM_LINKED))
-    value = GetString16Attribute(ui::AX_ATTR_URL);
+    value = GetString16Attribute(ax::mojom::StringAttribute::URL);
 
   return value;
 }
@@ -3243,7 +3244,7 @@ AXHypertext AXPlatformNodeWin::ComputeHypertext() {
       // We don't want to expose any associated label in IA2 Hypertext.
       return result;
     }
-    result.hypertext = GetString16Attribute(ui::AX_ATTR_NAME);
+    result.hypertext = GetString16Attribute(ax::mojom::StringAttribute::NAME);
     return result;
   }
 
@@ -3260,7 +3261,7 @@ AXHypertext AXPlatformNodeWin::ComputeHypertext() {
     DCHECK(child);
     // Similar to Firefox, we don't expose text-only objects in IA2 hypertext.
     if (child->IsTextOnlyObject()) {
-      hypertext += child->GetString16Attribute(ui::AX_ATTR_NAME);
+      hypertext += child->GetString16Attribute(ax::mojom::StringAttribute::NAME);
     } else {
       int32_t char_offset = static_cast<int32_t>(hypertext.size());
       int32_t child_unique_id = child->GetUniqueId();
@@ -3277,26 +3278,26 @@ AXHypertext AXPlatformNodeWin::ComputeHypertext() {
 bool AXPlatformNodeWin::ShouldNodeHaveReadonlyStateByDefault(
     const AXNodeData& data) const {
   switch (data.role) {
-    case AX_ROLE_ARTICLE:
-    case AX_ROLE_DEFINITION:
-    case AX_ROLE_DESCRIPTION_LIST:
-    case AX_ROLE_DESCRIPTION_LIST_TERM:
-    case AX_ROLE_DOCUMENT:
-    case AX_ROLE_IFRAME:
-    case AX_ROLE_IMAGE:
-    case AX_ROLE_IMAGE_MAP:
-    case AX_ROLE_LIST:
-    case AX_ROLE_LIST_ITEM:
-    case AX_ROLE_PROGRESS_INDICATOR:
-    case AX_ROLE_ROOT_WEB_AREA:
-    case AX_ROLE_TERM:
-    case AX_ROLE_TIMER:
-    case AX_ROLE_TOOLBAR:
-    case AX_ROLE_TOOLTIP:
-    case AX_ROLE_WEB_AREA:
+    case ax::mojom::Role::ARTICLE:
+    case ax::mojom::Role::DEFINITION:
+    case ax::mojom::Role::DESCRIPTION_LIST:
+    case ax::mojom::Role::DESCRIPTION_LIST_TERM:
+    case ax::mojom::Role::DOCUMENT:
+    case ax::mojom::Role::IFRAME:
+    case ax::mojom::Role::IMAGE:
+    case ax::mojom::Role::IMAGE_MAP:
+    case ax::mojom::Role::LIST:
+    case ax::mojom::Role::LIST_ITEM:
+    case ax::mojom::Role::PROGRESS_INDICATOR:
+    case ax::mojom::Role::ROOT_WEB_AREA:
+    case ax::mojom::Role::TERM:
+    case ax::mojom::Role::TIMER:
+    case ax::mojom::Role::TOOLBAR:
+    case ax::mojom::Role::TOOLTIP:
+    case ax::mojom::Role::WEB_AREA:
       return true;
 
-    case AX_ROLE_GRID:
+    case ax::mojom::Role::GRID:
       // TODO(aleventhal) this changed between ARIA 1.0 and 1.1,
       // need to determine whether grids/treegrids should really be readonly
       // or editable by default
@@ -3312,56 +3313,56 @@ bool AXPlatformNodeWin::ShouldNodeHaveReadonlyStateByDefault(
 bool AXPlatformNodeWin::ShouldNodeHaveFocusableState(
     const AXNodeData& data) const {
   switch (data.role) {
-    case AX_ROLE_DOCUMENT:
-    case AX_ROLE_ROOT_WEB_AREA:
-    case AX_ROLE_WEB_AREA:
+    case ax::mojom::Role::DOCUMENT:
+    case ax::mojom::Role::ROOT_WEB_AREA:
+    case ax::mojom::Role::WEB_AREA:
       return true;
 
-    case AX_ROLE_IFRAME:
+    case ax::mojom::Role::IFRAME:
       return false;
 
-    case AX_ROLE_LIST_BOX_OPTION:
-    case AX_ROLE_MENU_LIST_OPTION:
-      if (data.HasState(AX_STATE_SELECTABLE))
+    case ax::mojom::Role::LIST_BOX_OPTION:
+    case ax::mojom::Role::MENU_LIST_OPTION:
+      if (data.HasState(ax::mojom::State::SELECTABLE))
         return true;
 
     default:
       break;
   }
 
-  return data.HasState(AX_STATE_FOCUSABLE);
+  return data.HasState(ax::mojom::State::FOCUSABLE);
 }
 
 int AXPlatformNodeWin::MSAAState() {
   const AXNodeData& data = GetData();
   int msaa_state = 0;
 
-  // Map the AXState to MSAA state. Note that some of the states are not
+  // Map the ax::mojom::State to MSAA state. Note that some of the states are not
   // currently handled.
 
-  if (data.GetBoolAttribute(AX_ATTR_BUSY))
+  if (data.GetBoolAttribute(ax::mojom::BoolAttribute::BUSY))
     msaa_state |= STATE_SYSTEM_BUSY;
 
-  if (data.HasState(AX_STATE_COLLAPSED))
+  if (data.HasState(ax::mojom::State::COLLAPSED))
     msaa_state |= STATE_SYSTEM_COLLAPSED;
 
-  if (data.HasState(AX_STATE_DEFAULT))
+  if (data.HasState(ax::mojom::State::DEFAULT))
     msaa_state |= STATE_SYSTEM_DEFAULT;
 
-  // TODO(dougt) unhandled ux::AX_STATE_EDITABLE
+  // TODO(dougt) unhandled ux::ax::mojom::State::EDITABLE
 
-  if (data.HasState(AX_STATE_EXPANDED))
+  if (data.HasState(ax::mojom::State::EXPANDED))
     msaa_state |= STATE_SYSTEM_EXPANDED;
 
   if (ShouldNodeHaveFocusableState(data))
     msaa_state |= STATE_SYSTEM_FOCUSABLE;
 
-  if (data.HasState(AX_STATE_HASPOPUP))
+  if (data.HasState(ax::mojom::State::HASPOPUP))
     msaa_state |= STATE_SYSTEM_HASPOPUP;
 
-  // TODO(dougt) unhandled ux::AX_STATE_HORIZONTAL
+  // TODO(dougt) unhandled ux::ax::mojom::State::HORIZONTAL
 
-  if (data.HasState(AX_STATE_HOVERED)) {
+  if (data.HasState(ax::mojom::State::HOVERED)) {
     // Expose whether or not the mouse is over an element, but suppress
     // this for tests because it can make the test results flaky depending
     // on the position of the mouse.
@@ -3371,15 +3372,15 @@ int AXPlatformNodeWin::MSAAState() {
 
   // If the role is IGNORED, we want these elements to be invisible so that
   // these nodes are hidden from the screen reader.
-  if (data.HasState(AX_STATE_INVISIBLE) || GetData().role == AX_ROLE_IGNORED) {
+  if (data.HasState(ax::mojom::State::INVISIBLE) || GetData().role == ax::mojom::Role::IGNORED) {
     msaa_state |= STATE_SYSTEM_INVISIBLE;
   }
-  if (data.HasState(AX_STATE_LINKED))
+  if (data.HasState(ax::mojom::State::LINKED))
     msaa_state |= STATE_SYSTEM_LINKED;
 
-  // TODO(dougt) unhandled ux::AX_STATE_MULTILINE
+  // TODO(dougt) unhandled ux::ax::mojom::State::MULTILINE
 
-  if (data.HasState(AX_STATE_MULTISELECTABLE)) {
+  if (data.HasState(ax::mojom::State::MULTISELECTABLE)) {
     msaa_state |= STATE_SYSTEM_EXTSELECTABLE;
     msaa_state |= STATE_SYSTEM_MULTISELECTABLE;
   }
@@ -3387,34 +3388,34 @@ int AXPlatformNodeWin::MSAAState() {
   if (delegate_->IsOffscreen())
     msaa_state |= STATE_SYSTEM_OFFSCREEN;
 
-  if (data.HasState(AX_STATE_PROTECTED))
+  if (data.HasState(ax::mojom::State::PROTECTED))
     msaa_state |= STATE_SYSTEM_PROTECTED;
 
-  // TODO(dougt) unhandled ux::AX_STATE_REQUIRED
-  // TODO(dougt) unhandled ux::AX_STATE_RICHLY_EDITABLE
+  // TODO(dougt) unhandled ux::ax::mojom::State::REQUIRED
+  // TODO(dougt) unhandled ux::ax::mojom::State::RICHLY_EDITABLE
 
-  if (data.HasState(AX_STATE_SELECTABLE))
+  if (data.HasState(ax::mojom::State::SELECTABLE))
     msaa_state |= STATE_SYSTEM_SELECTABLE;
 
-  if (data.HasState(AX_STATE_SELECTED))
+  if (data.HasState(ax::mojom::State::SELECTED))
     msaa_state |= STATE_SYSTEM_SELECTED;
 
   // TODO(dougt) unhandled VERTICAL
 
-  if (data.HasState(AX_STATE_VISITED))
+  if (data.HasState(ax::mojom::State::VISITED))
     msaa_state |= STATE_SYSTEM_TRAVERSED;
 
   //
   // Checked state
   //
   const auto checked_state =
-      static_cast<AXCheckedState>(GetIntAttribute(AX_ATTR_CHECKED_STATE));
+      static_cast<ax::mojom::CheckedState>(GetIntAttribute(ax::mojom::IntAttribute::CHECKED_STATE));
   switch (checked_state) {
-    case AX_CHECKED_STATE_TRUE:
-      msaa_state |= data.role == AX_ROLE_TOGGLE_BUTTON ? STATE_SYSTEM_PRESSED
+    case ax::mojom::CheckedState::TRUE_VALUE:
+      msaa_state |= data.role == ax::mojom::Role::TOGGLE_BUTTON ? STATE_SYSTEM_PRESSED
                                                        : STATE_SYSTEM_CHECKED;
       break;
-    case AX_CHECKED_STATE_MIXED:
+    case ax::mojom::CheckedState::MIXED:
       msaa_state |= STATE_SYSTEM_MIXED;
       break;
     default:
@@ -3422,12 +3423,12 @@ int AXPlatformNodeWin::MSAAState() {
   }
 
   const auto restriction =
-      static_cast<AXRestriction>(GetIntAttribute(AX_ATTR_RESTRICTION));
+      static_cast<ax::mojom::Restriction>(GetIntAttribute(ax::mojom::IntAttribute::RESTRICTION));
   switch (restriction) {
-    case AX_RESTRICTION_DISABLED:
+    case ax::mojom::Restriction::DISABLED:
       msaa_state |= STATE_SYSTEM_UNAVAILABLE;
       break;
-    case AX_RESTRICTION_READ_ONLY:
+    case ax::mojom::Restriction::READ_ONLY:
       msaa_state |= STATE_SYSTEM_READONLY;
       break;
     default:
@@ -3435,7 +3436,7 @@ int AXPlatformNodeWin::MSAAState() {
       // on *some* document structure roles such as paragraph, heading or list
       // even if the node data isn't marked as read only, as long as the
       // node is not editable.
-      if (!data.HasState(AX_STATE_RICHLY_EDITABLE) &&
+      if (!data.HasState(ax::mojom::State::RICHLY_EDITABLE) &&
           ShouldNodeHaveReadonlyStateByDefault(data))
         msaa_state |= STATE_SYSTEM_READONLY;
       break;
@@ -3454,54 +3455,54 @@ int AXPlatformNodeWin::MSAAState() {
   // TODO(dmazzoni): this should probably check if focus is actually inside
   // the menu bar, but we don't currently track focus inside menu pop-ups,
   // and Chrome only has one menu visible at a time so this works for now.
-  if (data.role == AX_ROLE_MENU_BAR && !(data.HasState(AX_STATE_INVISIBLE))) {
+  if (data.role == ax::mojom::Role::MENU_BAR && !(data.HasState(ax::mojom::State::INVISIBLE))) {
     msaa_state |= STATE_SYSTEM_FOCUSED;
   }
 
   // Handle STATE_SYSTEM_LINKED
-  if (GetData().role == AX_ROLE_LINK)
+  if (GetData().role == ax::mojom::Role::LINK)
     msaa_state |= STATE_SYSTEM_LINKED;
 
   // Special case for indeterminate progressbar.
-  if (GetData().role == AX_ROLE_PROGRESS_INDICATOR &&
-      !HasFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE))
+  if (GetData().role == ax::mojom::Role::PROGRESS_INDICATOR &&
+      !HasFloatAttribute(ax::mojom::FloatAttribute::VALUE_FOR_RANGE))
     msaa_state |= STATE_SYSTEM_MIXED;
 
   return msaa_state;
 }
 
-int AXPlatformNodeWin::MSAAEvent(AXEvent event) {
+int AXPlatformNodeWin::MSAAEvent(ax::mojom::Event event) {
   switch (event) {
-    case AX_EVENT_ALERT:
+    case ax::mojom::Event::ALERT:
       return EVENT_SYSTEM_ALERT;
-    case AX_EVENT_FOCUS:
+    case ax::mojom::Event::FOCUS:
       return EVENT_OBJECT_FOCUS;
-    case AX_EVENT_MENU_START:
+    case ax::mojom::Event::MENU_START:
       return EVENT_SYSTEM_MENUSTART;
-    case AX_EVENT_MENU_END:
+    case ax::mojom::Event::MENU_END:
       return EVENT_SYSTEM_MENUEND;
-    case AX_EVENT_MENU_POPUP_START:
+    case ax::mojom::Event::MENU_POPUP_START:
       return EVENT_SYSTEM_MENUPOPUPSTART;
-    case AX_EVENT_MENU_POPUP_END:
+    case ax::mojom::Event::MENU_POPUP_END:
       return EVENT_SYSTEM_MENUPOPUPEND;
-    case AX_EVENT_SELECTION:
+    case ax::mojom::Event::SELECTION:
       return EVENT_OBJECT_SELECTION;
-    case AX_EVENT_SELECTION_ADD:
+    case ax::mojom::Event::SELECTION_ADD:
       return EVENT_OBJECT_SELECTIONADD;
-    case AX_EVENT_SELECTION_REMOVE:
+    case ax::mojom::Event::SELECTION_REMOVE:
       return EVENT_OBJECT_SELECTIONREMOVE;
-    case AX_EVENT_TEXT_CHANGED:
+    case ax::mojom::Event::TEXT_CHANGED:
       return EVENT_OBJECT_NAMECHANGE;
-    case AX_EVENT_TEXT_SELECTION_CHANGED:
+    case ax::mojom::Event::TEXT_SELECTION_CHANGED:
       return IA2_EVENT_TEXT_CARET_MOVED;
-    case AX_EVENT_VALUE_CHANGED:
+    case ax::mojom::Event::VALUE_CHANGED:
       return EVENT_OBJECT_VALUECHANGE;
     default:
       return -1;
   }
 }
 
-HRESULT AXPlatformNodeWin::GetStringAttributeAsBstr(AXStringAttribute attribute,
+HRESULT AXPlatformNodeWin::GetStringAttributeAsBstr(ax::mojom::StringAttribute attribute,
                                                     BSTR* value_bstr) const {
   base::string16 str;
 
@@ -3526,7 +3527,7 @@ void AXPlatformNodeWin::RemoveAlertTarget() {
 base::string16 AXPlatformNodeWin::TextForIAccessibleText() {
   // Special case allows us to get text even in non-HTML case, e.g. browser UI.
   if (IsPlainTextField())
-    return GetString16Attribute(AX_ATTR_VALUE);
+    return GetString16Attribute(ax::mojom::StringAttribute::VALUE);
   return GetText();
 }
 
@@ -3572,7 +3573,7 @@ LONG AXPlatformNodeWin::FindBoundary(const base::string16& text,
   std::vector<int32_t> line_breaks;
   return static_cast<LONG>(
       FindAccessibleTextBoundary(text, line_breaks, boundary, start_offset,
-                                 direction, AX_TEXT_AFFINITY_DOWNSTREAM));
+                                 direction, ax::mojom::TextAffinity::DOWNSTREAM));
 }
 
 AXPlatformNodeWin* AXPlatformNodeWin::GetTargetFromChildID(
@@ -3612,13 +3613,13 @@ bool AXPlatformNodeWin::IsInTreeGrid() {
   AXPlatformNodeBase* container = FromNativeViewAccessible(GetParent());
 
   // If parent was a rowgroup, we need to look at the grandparent
-  if (container && container->GetData().role == AX_ROLE_GROUP)
+  if (container && container->GetData().role == ax::mojom::Role::GROUP)
     container = FromNativeViewAccessible(container->GetParent());
 
   if (!container)
     return false;
 
-  return container->GetData().role == AX_ROLE_TREE_GRID;
+  return container->GetData().role == ax::mojom::Role::TREE_GRID;
 }
 
 HRESULT AXPlatformNodeWin::AllocateComArrayFromVector(
@@ -3923,8 +3924,8 @@ void AXPlatformNodeWin::GetSelectionOffsets(int* selection_start,
   DCHECK(selection_start && selection_end);
 
   if (IsPlainTextField() &&
-      GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START, selection_start) &&
-      GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END, selection_end)) {
+      GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START, selection_start) &&
+      GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END, selection_end)) {
     return;
   }
 

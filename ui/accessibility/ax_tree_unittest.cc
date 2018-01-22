@@ -14,6 +14,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_serializable_tree.h"
 #include "ui/accessibility/ax_tree_serializer.h"
@@ -119,15 +120,15 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 
   void OnRoleChanged(AXTree* tree,
                      AXNode* node,
-                     AXRole old_role,
-                     AXRole new_role) override {
+                     ax::mojom::Role old_role,
+                     ax::mojom::Role new_role) override {
     attribute_change_log_.push_back(base::StringPrintf(
         "Role changed from %s to %s", ToString(old_role), ToString(new_role)));
   }
 
   void OnStateChanged(AXTree* tree,
                       AXNode* node,
-                      AXState state,
+                      ax::mojom::State state,
                       bool new_value) override {
     attribute_change_log_.push_back(base::StringPrintf(
         "%s changed to %s", ToString(state), new_value ? "true" : "false"));
@@ -135,7 +136,7 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 
   void OnStringAttributeChanged(AXTree* tree,
                                 AXNode* node,
-                                AXStringAttribute attr,
+                                ax::mojom::StringAttribute attr,
                                 const std::string& old_value,
                                 const std::string& new_value) override {
     attribute_change_log_.push_back(
@@ -145,7 +146,7 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 
   void OnIntAttributeChanged(AXTree* tree,
                              AXNode* node,
-                             AXIntAttribute attr,
+                             ax::mojom::IntAttribute attr,
                              int32_t old_value,
                              int32_t new_value) override {
     attribute_change_log_.push_back(base::StringPrintf(
@@ -154,7 +155,7 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 
   void OnFloatAttributeChanged(AXTree* tree,
                                AXNode* node,
-                               AXFloatAttribute attr,
+                               ax::mojom::FloatAttribute attr,
                                float old_value,
                                float new_value) override {
     attribute_change_log_.push_back(
@@ -165,7 +166,7 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 
   void OnBoolAttributeChanged(AXTree* tree,
                               AXNode* node,
-                              AXBoolAttribute attr,
+                              ax::mojom::BoolAttribute attr,
                               bool new_value) override {
     attribute_change_log_.push_back(base::StringPrintf(
         "%s changed to %s", ToString(attr), new_value ? "true" : "false"));
@@ -174,7 +175,7 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
   void OnIntListAttributeChanged(
       AXTree* tree,
       AXNode* node,
-      AXIntListAttribute attr,
+      ax::mojom::IntListAttribute attr,
       const std::vector<int32_t>& old_value,
       const std::vector<int32_t>& new_value) override {
     attribute_change_log_.push_back(
@@ -229,20 +230,20 @@ class FakeAXTreeDelegate : public AXTreeDelegate {
 TEST(AXTreeTest, SerializeSimpleAXTree) {
   AXNodeData root;
   root.id = 1;
-  root.role = AX_ROLE_DIALOG;
-  root.AddState(AX_STATE_FOCUSABLE);
+  root.role = ax::mojom::Role::DIALOG;
+  root.AddState(ax::mojom::State::FOCUSABLE);
   root.location = gfx::RectF(0, 0, 800, 600);
   root.child_ids.push_back(2);
   root.child_ids.push_back(3);
 
   AXNodeData button;
   button.id = 2;
-  button.role = AX_ROLE_BUTTON;
+  button.role = ax::mojom::Role::BUTTON;
   button.location = gfx::RectF(20, 20, 200, 30);
 
   AXNodeData checkbox;
   checkbox.id = 3;
-  checkbox.role = AX_ROLE_CHECK_BOX;
+  checkbox.role = ax::mojom::Role::CHECK_BOX;
   checkbox.location = gfx::RectF(20, 50, 200, 30);
 
   AXTreeUpdate initial_state;
@@ -290,22 +291,22 @@ TEST(AXTreeTest, SerializeSimpleAXTree) {
 TEST(AXTreeTest, SerializeAXTreeUpdate) {
   AXNodeData list;
   list.id = 3;
-  list.role = AX_ROLE_LIST;
+  list.role = ax::mojom::Role::LIST;
   list.child_ids.push_back(4);
   list.child_ids.push_back(5);
   list.child_ids.push_back(6);
 
   AXNodeData list_item_2;
   list_item_2.id = 5;
-  list_item_2.role = AX_ROLE_LIST_ITEM;
+  list_item_2.role = ax::mojom::Role::LIST_ITEM;
 
   AXNodeData list_item_3;
   list_item_3.id = 6;
-  list_item_3.role = AX_ROLE_LIST_ITEM;
+  list_item_3.role = ax::mojom::Role::LIST_ITEM;
 
   AXNodeData button;
   button.id = 7;
-  button.role = AX_ROLE_BUTTON;
+  button.role = ax::mojom::Role::BUTTON;
 
   AXTreeUpdate update;
   update.root_id = 3;
@@ -742,10 +743,11 @@ TEST(AXTreeTest, RoleAndStateChangeCallbacks) {
   initial_state.root_id = 1;
   initial_state.nodes.resize(1);
   initial_state.nodes[0].id = 1;
-  initial_state.nodes[0].role = AX_ROLE_BUTTON;
-  initial_state.nodes[0].AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                                         ui::AX_CHECKED_STATE_TRUE);
-  initial_state.nodes[0].AddState(AX_STATE_FOCUSABLE);
+  initial_state.nodes[0].role = ax::mojom::Role::BUTTON;
+  initial_state.nodes[0].AddIntAttribute(
+      ax::mojom::IntAttribute::CHECKED_STATE,
+      static_cast<int32_t>(ax::mojom::CheckedState::TRUE_VALUE));
+  initial_state.nodes[0].AddState(ax::mojom::State::FOCUSABLE);
   AXTree tree(initial_state);
 
   FakeAXTreeDelegate fake_delegate;
@@ -756,11 +758,12 @@ TEST(AXTreeTest, RoleAndStateChangeCallbacks) {
   update.root_id = 1;
   update.nodes.resize(1);
   update.nodes[0].id = 1;
-  update.nodes[0].role = AX_ROLE_CHECK_BOX;
-  update.nodes[0].AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
-                                  ui::AX_CHECKED_STATE_FALSE);
-  update.nodes[0].AddState(AX_STATE_FOCUSABLE);
-  update.nodes[0].AddState(AX_STATE_VISITED);
+  update.nodes[0].role = ax::mojom::Role::CHECK_BOX;
+  update.nodes[0].AddIntAttribute(
+      ax::mojom::IntAttribute::CHECKED_STATE,
+      static_cast<int32_t>(ax::mojom::CheckedState::FALSE_VALUE));
+  update.nodes[0].AddState(ax::mojom::State::FOCUSABLE);
+  update.nodes[0].AddState(ax::mojom::State::VISITED);
   EXPECT_TRUE(tree.Unserialize(update));
 
   const std::vector<std::string>& change_log =
@@ -778,15 +781,15 @@ TEST(AXTreeTest, AttributeChangeCallbacks) {
   initial_state.root_id = 1;
   initial_state.nodes.resize(1);
   initial_state.nodes[0].id = 1;
-  initial_state.nodes[0].AddStringAttribute(AX_ATTR_NAME, "N1");
-  initial_state.nodes[0].AddStringAttribute(AX_ATTR_DESCRIPTION, "D1");
-  initial_state.nodes[0].AddBoolAttribute(AX_ATTR_LIVE_ATOMIC, true);
-  initial_state.nodes[0].AddBoolAttribute(AX_ATTR_BUSY, false);
-  initial_state.nodes[0].AddFloatAttribute(AX_ATTR_MIN_VALUE_FOR_RANGE, 1.0);
-  initial_state.nodes[0].AddFloatAttribute(AX_ATTR_MAX_VALUE_FOR_RANGE, 10.0);
-  initial_state.nodes[0].AddFloatAttribute(AX_ATTR_STEP_VALUE_FOR_RANGE, 3.0);
-  initial_state.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X, 5);
-  initial_state.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X_MIN, 1);
+  initial_state.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::NAME, "N1");
+  initial_state.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::DESCRIPTION, "D1");
+  initial_state.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::LIVE_ATOMIC, true);
+  initial_state.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::BUSY, false);
+  initial_state.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::MIN_VALUE_FOR_RANGE, 1.0);
+  initial_state.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::MAX_VALUE_FOR_RANGE, 10.0);
+  initial_state.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::STEP_VALUE_FOR_RANGE, 3.0);
+  initial_state.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X, 5);
+  initial_state.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X_MIN, 1);
   AXTree tree(initial_state);
 
   FakeAXTreeDelegate fake_delegate;
@@ -797,15 +800,15 @@ TEST(AXTreeTest, AttributeChangeCallbacks) {
   update0.root_id = 1;
   update0.nodes.resize(1);
   update0.nodes[0].id = 1;
-  update0.nodes[0].AddStringAttribute(AX_ATTR_NAME, "N2");
-  update0.nodes[0].AddStringAttribute(AX_ATTR_DESCRIPTION, "D2");
-  update0.nodes[0].AddBoolAttribute(AX_ATTR_LIVE_ATOMIC, false);
-  update0.nodes[0].AddBoolAttribute(AX_ATTR_BUSY, true);
-  update0.nodes[0].AddFloatAttribute(AX_ATTR_MIN_VALUE_FOR_RANGE, 2.0);
-  update0.nodes[0].AddFloatAttribute(AX_ATTR_MAX_VALUE_FOR_RANGE, 9.0);
-  update0.nodes[0].AddFloatAttribute(AX_ATTR_STEP_VALUE_FOR_RANGE, 0.5);
-  update0.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X, 6);
-  update0.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X_MIN, 2);
+  update0.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::NAME, "N2");
+  update0.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::DESCRIPTION, "D2");
+  update0.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::LIVE_ATOMIC, false);
+  update0.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::BUSY, true);
+  update0.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::MIN_VALUE_FOR_RANGE, 2.0);
+  update0.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::MAX_VALUE_FOR_RANGE, 9.0);
+  update0.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::STEP_VALUE_FOR_RANGE, 0.5);
+  update0.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X, 6);
+  update0.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X_MIN, 2);
   EXPECT_TRUE(tree.Unserialize(update0));
 
   const std::vector<std::string>& change_log =
@@ -829,13 +832,13 @@ TEST(AXTreeTest, AttributeChangeCallbacks) {
   update1.root_id = 1;
   update1.nodes.resize(1);
   update1.nodes[0].id = 1;
-  update1.nodes[0].AddStringAttribute(AX_ATTR_DESCRIPTION, "D3");
-  update1.nodes[0].AddStringAttribute(AX_ATTR_VALUE, "V3");
-  update1.nodes[0].AddBoolAttribute(AX_ATTR_MODAL, true);
-  update1.nodes[0].AddFloatAttribute(AX_ATTR_VALUE_FOR_RANGE, 5.0);
-  update1.nodes[0].AddFloatAttribute(AX_ATTR_MAX_VALUE_FOR_RANGE, 9.0);
-  update1.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X, 7);
-  update1.nodes[0].AddIntAttribute(AX_ATTR_SCROLL_X_MAX, 10);
+  update1.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::DESCRIPTION, "D3");
+  update1.nodes[0].AddStringAttribute(ax::mojom::StringAttribute::VALUE, "V3");
+  update1.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::MODAL, true);
+  update1.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::VALUE_FOR_RANGE, 5.0);
+  update1.nodes[0].AddFloatAttribute(ax::mojom::FloatAttribute::MAX_VALUE_FOR_RANGE, 9.0);
+  update1.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X, 7);
+  update1.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X_MAX, 10);
   EXPECT_TRUE(tree.Unserialize(update1));
 
   const std::vector<std::string>& change_log2 =
@@ -871,8 +874,8 @@ TEST(AXTreeTest, IntListChangeCallbacks) {
   initial_state.root_id = 1;
   initial_state.nodes.resize(1);
   initial_state.nodes[0].id = 1;
-  initial_state.nodes[0].AddIntListAttribute(AX_ATTR_CONTROLS_IDS, one);
-  initial_state.nodes[0].AddIntListAttribute(AX_ATTR_RADIO_GROUP_IDS, two);
+  initial_state.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::CONTROLS_IDS, one);
+  initial_state.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::RADIO_GROUP_IDS, two);
   AXTree tree(initial_state);
 
   FakeAXTreeDelegate fake_delegate;
@@ -883,8 +886,8 @@ TEST(AXTreeTest, IntListChangeCallbacks) {
   update0.root_id = 1;
   update0.nodes.resize(1);
   update0.nodes[0].id = 1;
-  update0.nodes[0].AddIntListAttribute(AX_ATTR_CONTROLS_IDS, two);
-  update0.nodes[0].AddIntListAttribute(AX_ATTR_RADIO_GROUP_IDS, three);
+  update0.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::CONTROLS_IDS, two);
+  update0.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::RADIO_GROUP_IDS, three);
   EXPECT_TRUE(tree.Unserialize(update0));
 
   const std::vector<std::string>& change_log =
@@ -901,8 +904,8 @@ TEST(AXTreeTest, IntListChangeCallbacks) {
   update1.root_id = 1;
   update1.nodes.resize(1);
   update1.nodes[0].id = 1;
-  update1.nodes[0].AddIntListAttribute(AX_ATTR_RADIO_GROUP_IDS, two);
-  update1.nodes[0].AddIntListAttribute(AX_ATTR_FLOWTO_IDS, three);
+  update1.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::RADIO_GROUP_IDS, two);
+  update1.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::FLOWTO_IDS, three);
   EXPECT_TRUE(tree.Unserialize(update1));
 
   const std::vector<std::string>& change_log2 =
@@ -962,8 +965,8 @@ TEST(AXTreeTest, EmptyNodeNotOffscreenEvenIfAllChildrenOffscreen) {
   tree_update.nodes.resize(4);
   tree_update.nodes[0].id = 1;
   tree_update.nodes[0].location = gfx::RectF(0, 0, 800, 600);
-  tree_update.nodes[0].role = AX_ROLE_ROOT_WEB_AREA;
-  tree_update.nodes[0].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[0].role = ax::mojom::Role::ROOT_WEB_AREA;
+  tree_update.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[1].id = 2;
   tree_update.nodes[1].location = gfx::RectF();  // Deliberately empty.
@@ -1040,8 +1043,8 @@ TEST(AXTreeTest, GetBoundsWithScrolling) {
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[1].id = 2;
   tree_update.nodes[1].location = gfx::RectF(100, 50, 600, 500);
-  tree_update.nodes[1].AddIntAttribute(ui::AX_ATTR_SCROLL_X, 5);
-  tree_update.nodes[1].AddIntAttribute(ui::AX_ATTR_SCROLL_Y, 10);
+  tree_update.nodes[1].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_X, 5);
+  tree_update.nodes[1].AddIntAttribute(ax::mojom::IntAttribute::SCROLL_Y, 10);
   tree_update.nodes[1].child_ids.push_back(3);
   tree_update.nodes[2].id = 3;
   tree_update.nodes[2].offset_container_id = 2;
@@ -1057,7 +1060,7 @@ TEST(AXTreeTest, GetBoundsEmptyBoundsInheritsFromParent) {
   tree_update.nodes.resize(3);
   tree_update.nodes[0].id = 1;
   tree_update.nodes[0].location = gfx::RectF(0, 0, 800, 600);
-  tree_update.nodes[1].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[1].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[1].id = 2;
   tree_update.nodes[1].location = gfx::RectF(300, 200, 100, 100);
@@ -1083,7 +1086,7 @@ TEST(AXTreeTest, GetBoundsCropsChildToRoot) {
   tree_update.nodes.resize(5);
   tree_update.nodes[0].id = 1;
   tree_update.nodes[0].location = gfx::RectF(0, 0, 800, 600);
-  tree_update.nodes[0].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[0].child_ids.push_back(3);
   tree_update.nodes[0].child_ids.push_back(4);
@@ -1121,13 +1124,13 @@ TEST(AXTreeTest, GetBoundsSetsOffscreenIfClipsChildren) {
   tree_update.nodes.resize(5);
   tree_update.nodes[0].id = 1;
   tree_update.nodes[0].location = gfx::RectF(0, 0, 800, 600);
-  tree_update.nodes[0].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[0].child_ids.push_back(3);
 
   tree_update.nodes[1].id = 2;
   tree_update.nodes[1].location = gfx::RectF(0, 0, 200, 200);
-  tree_update.nodes[1].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[1].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[1].child_ids.push_back(4);
 
   tree_update.nodes[2].id = 3;
@@ -1156,8 +1159,8 @@ TEST(AXTreeTest, GetBoundsUpdatesOffscreen) {
   tree_update.nodes.resize(5);
   tree_update.nodes[0].id = 1;
   tree_update.nodes[0].location = gfx::RectF(0, 0, 800, 600);
-  tree_update.nodes[0].role = AX_ROLE_ROOT_WEB_AREA;
-  tree_update.nodes[0].AddBoolAttribute(ui::AX_ATTR_CLIPS_CHILDREN, true);
+  tree_update.nodes[0].role = ax::mojom::Role::ROOT_WEB_AREA;
+  tree_update.nodes[0].AddBoolAttribute(ax::mojom::BoolAttribute::CLIPS_CHILDREN, true);
   tree_update.nodes[0].child_ids.push_back(2);
   tree_update.nodes[0].child_ids.push_back(3);
   tree_update.nodes[0].child_ids.push_back(4);
@@ -1187,32 +1190,32 @@ TEST(AXTreeTest, IntReverseRelations) {
   initial_state.root_id = 1;
   initial_state.nodes.resize(4);
   initial_state.nodes[0].id = 1;
-  initial_state.nodes[0].AddIntAttribute(AX_ATTR_ACTIVEDESCENDANT_ID, 2);
+  initial_state.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 2);
   initial_state.nodes[0].child_ids.push_back(2);
   initial_state.nodes[0].child_ids.push_back(3);
   initial_state.nodes[0].child_ids.push_back(4);
   initial_state.nodes[1].id = 2;
   initial_state.nodes[2].id = 3;
-  initial_state.nodes[2].AddIntAttribute(AX_ATTR_MEMBER_OF_ID, 1);
+  initial_state.nodes[2].AddIntAttribute(ax::mojom::IntAttribute::MEMBER_OF_ID, 1);
   initial_state.nodes[3].id = 4;
-  initial_state.nodes[3].AddIntAttribute(AX_ATTR_MEMBER_OF_ID, 1);
+  initial_state.nodes[3].AddIntAttribute(ax::mojom::IntAttribute::MEMBER_OF_ID, 1);
   AXTree tree(initial_state);
 
   auto reverse_active_descendant =
-      tree.GetReverseRelations(ui::AX_ATTR_ACTIVEDESCENDANT_ID, 2);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 2);
   ASSERT_EQ(1U, reverse_active_descendant.size());
   EXPECT_TRUE(base::ContainsKey(reverse_active_descendant, 1));
 
   reverse_active_descendant =
-      tree.GetReverseRelations(ui::AX_ATTR_ACTIVEDESCENDANT_ID, 1);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 1);
   ASSERT_EQ(0U, reverse_active_descendant.size());
 
   auto reverse_errormessage =
-      tree.GetReverseRelations(ui::AX_ATTR_ERRORMESSAGE_ID, 1);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::ERRORMESSAGE_ID, 1);
   ASSERT_EQ(0U, reverse_errormessage.size());
 
   auto reverse_member_of =
-      tree.GetReverseRelations(ui::AX_ATTR_MEMBER_OF_ID, 1);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::MEMBER_OF_ID, 1);
   ASSERT_EQ(2U, reverse_member_of.size());
   EXPECT_TRUE(base::ContainsKey(reverse_member_of, 3));
   EXPECT_TRUE(base::ContainsKey(reverse_member_of, 4));
@@ -1220,24 +1223,24 @@ TEST(AXTreeTest, IntReverseRelations) {
   AXTreeUpdate update = initial_state;
   update.nodes.resize(5);
   update.nodes[0].int_attributes.clear();
-  update.nodes[0].AddIntAttribute(AX_ATTR_ACTIVEDESCENDANT_ID, 5);
+  update.nodes[0].AddIntAttribute(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 5);
   update.nodes[0].child_ids.push_back(5);
   update.nodes[2].int_attributes.clear();
   update.nodes[4].id = 5;
-  update.nodes[4].AddIntAttribute(AX_ATTR_MEMBER_OF_ID, 1);
+  update.nodes[4].AddIntAttribute(ax::mojom::IntAttribute::MEMBER_OF_ID, 1);
 
   EXPECT_TRUE(tree.Unserialize(update));
 
   reverse_active_descendant =
-      tree.GetReverseRelations(ui::AX_ATTR_ACTIVEDESCENDANT_ID, 2);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 2);
   ASSERT_EQ(0U, reverse_active_descendant.size());
 
   reverse_active_descendant =
-      tree.GetReverseRelations(ui::AX_ATTR_ACTIVEDESCENDANT_ID, 5);
+      tree.GetReverseRelations(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID, 5);
   ASSERT_EQ(1U, reverse_active_descendant.size());
   EXPECT_TRUE(base::ContainsKey(reverse_active_descendant, 1));
 
-  reverse_member_of = tree.GetReverseRelations(ui::AX_ATTR_MEMBER_OF_ID, 1);
+  reverse_member_of = tree.GetReverseRelations(ax::mojom::IntAttribute::MEMBER_OF_ID, 1);
   ASSERT_EQ(2U, reverse_member_of.size());
   EXPECT_TRUE(base::ContainsKey(reverse_member_of, 4));
   EXPECT_TRUE(base::ContainsKey(reverse_member_of, 5));
@@ -1255,7 +1258,7 @@ TEST(AXTreeTest, IntListReverseRelations) {
   initial_state.root_id = 1;
   initial_state.nodes.resize(3);
   initial_state.nodes[0].id = 1;
-  initial_state.nodes[0].AddIntListAttribute(AX_ATTR_LABELLEDBY_IDS, node_two);
+  initial_state.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::LABELLEDBY_IDS, node_two);
   initial_state.nodes[0].child_ids.push_back(2);
   initial_state.nodes[0].child_ids.push_back(3);
   initial_state.nodes[1].id = 2;
@@ -1264,20 +1267,20 @@ TEST(AXTreeTest, IntListReverseRelations) {
   AXTree tree(initial_state);
 
   auto reverse_labelled_by =
-      tree.GetReverseRelations(ui::AX_ATTR_LABELLEDBY_IDS, 2);
+      tree.GetReverseRelations(ax::mojom::IntListAttribute::LABELLEDBY_IDS, 2);
   ASSERT_EQ(1U, reverse_labelled_by.size());
   EXPECT_TRUE(base::ContainsKey(reverse_labelled_by, 1));
 
-  reverse_labelled_by = tree.GetReverseRelations(ui::AX_ATTR_LABELLEDBY_IDS, 3);
+  reverse_labelled_by = tree.GetReverseRelations(ax::mojom::IntListAttribute::LABELLEDBY_IDS, 3);
   ASSERT_EQ(0U, reverse_labelled_by.size());
 
   // Change existing attributes.
   AXTreeUpdate update = initial_state;
   update.nodes[0].intlist_attributes.clear();
-  update.nodes[0].AddIntListAttribute(AX_ATTR_LABELLEDBY_IDS, nodes_two_three);
+  update.nodes[0].AddIntListAttribute(ax::mojom::IntListAttribute::LABELLEDBY_IDS, nodes_two_three);
   EXPECT_TRUE(tree.Unserialize(update));
 
-  reverse_labelled_by = tree.GetReverseRelations(ui::AX_ATTR_LABELLEDBY_IDS, 3);
+  reverse_labelled_by = tree.GetReverseRelations(ax::mojom::IntListAttribute::LABELLEDBY_IDS, 3);
   ASSERT_EQ(1U, reverse_labelled_by.size());
   EXPECT_TRUE(base::ContainsKey(reverse_labelled_by, 1));
 }
