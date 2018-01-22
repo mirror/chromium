@@ -237,4 +237,56 @@ unsigned int TextureStorageFormat(ResourceFormat format) {
   return GL_RGBA8_OES;
 }
 
+bool IsRenderBufferFormatSupported(ResourceFormat format,
+                                   const gpu::Capabilities& caps) {
+  switch (format) {
+    case RGBA_4444:
+    case RGBA_8888:
+    case RGB_565:
+      return true;
+    case BGRA_8888:
+      return caps.render_buffer_format_bgra8888;
+    case RGBA_F16:
+      // TODO(ccameron): This will always return false on pixel tests, which
+      // makes it un-test-able until we upgrade Mesa.
+      // https://crbug.com/687720
+      return caps.texture_half_float_linear &&
+             caps.color_buffer_half_float_rgba;
+    case LUMINANCE_8:
+    case ALPHA_8:
+    case RED_8:
+    case ETC1:
+    case LUMINANCE_F16:
+    case R16_EXT:
+      // We don't currently render into these formats. If we need to render into
+      // these eventually, we should expand this logic.
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+bool IsGpuMemoryBufferFormatSupported(ResourceFormat format,
+                                      gfx::BufferUsage usage) {
+  switch (format) {
+    case BGRA_8888:
+    case RED_8:
+    case R16_EXT:
+    case RGBA_4444:
+    case RGBA_8888:
+    case ETC1:
+    case RGBA_F16:
+      return true;
+    // These formats have no BufferFormat equivalent.
+    case ALPHA_8:
+    case LUMINANCE_8:
+    case RGB_565:
+    case LUMINANCE_F16:
+      return false;
+  }
+  NOTREACHED();
+  return false;
+}
+
 }  // namespace viz
