@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e64442_2a80c785",
+        "filename": "cc/paint/transfer_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-22T21:02:29Z",
+      "side": 1,
+      "message": "Should we just make an \"UnsafeType()\" call on TransferCacheEntry (easy to implement on TransferCacheEntryBase), rather than casting everywhere?",
+      "range": {
+        "startLine": 90,
+        "startChar": 36,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "0197d7f539fd6ec920f20d54cc729ef86eb369f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0863ac98_91e3e174",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-22T21:02:29Z",
+      "side": 1,
+      "message": "seems like the caller could just handle the error? But yeah, someone should handle it eventually",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "0197d7f539fd6ec920f20d54cc729ef86eb369f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
