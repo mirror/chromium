@@ -711,11 +711,13 @@ class MetaBuildWrapper(object):
         return ret
 
     android = 'target_os="android"' in vals['gn_args']
+    fuchsia = 'target_os="fuchsia"' in vals['gn_args']
     for target in swarming_targets:
-      if android:
+      if android or fuchsia:
         # Android targets may be either android_apk or executable. The former
         # will result in runtime_deps associated with the stamp file, while the
         # latter will result in runtime_deps associated with the executable.
+        # Same thing for Fuchsia, except they might be groups instead of apks.
         label = isolate_map[target]['label']
         runtime_deps_targets = [
             target + '.runtime_deps',
