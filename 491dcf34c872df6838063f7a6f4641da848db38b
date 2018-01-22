@@ -39,6 +39,30 @@
       "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69c5c18_2b0e5f41",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-22T15:25:46Z",
+      "side": 1,
+      "message": "The issue with not having this logic in the network service is that I now have to replicate it three times:\n1) In the navigation code.\n2) In the sub-resource load code.\n3) In the downloads code.\n\nIf we want to add other schemes where a redirection of a network request would fail, we\u0027ll have to add it in three different places. There\u0027s a high chance that we forget it and it goes out of date (not to mention that each component has to make sure that the check is properly done in each of the code paths that interacts with the network service).\n\nI understand that hard-coding it is an issue. Could we have a system where the embedder gives the network service a list of schemes on which to block the redirects? This way users of the network service don\u0027t have to do the checks themselves, we keep the blocking logic in one place while also not needing to know about what a particular scheme is.",
+      "parentUuid": "db8d13d2_2d7f04b6",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
