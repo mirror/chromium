@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9192f3f8_e01bbbb5",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-22T18:20:23Z",
+      "side": 1,
+      "message": "Am I correct in believing that this check is required because there is one SVGTreeScopeResources per id, and this element may not the the one in use for the id due to a duplicate id?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 42
+      },
+      "revId": "bfae80fa252c4c786086e91499a86ada225c1ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
