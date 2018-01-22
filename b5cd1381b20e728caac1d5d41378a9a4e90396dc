@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15084f21_b1ac41d2",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:38:19Z",
+      "side": 1,
+      "message": "Are we going to eventually use perfetto everywhere, or only on some platforms?\n\nIf the latter, we should probably only pull the repo conditionally, and then test for the gclient condition here.",
+      "revId": "b5cd1381b20e728caac1d5d41378a9a4e90396dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
