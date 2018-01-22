@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e63a7079_4de44229",
+        "filename": "sandbox/win/src/sandbox_policy_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-22T20:23:44Z",
+      "side": 1,
+      "message": "can you add a link to the bug with the investigation",
+      "range": {
+        "startLine": 548,
+        "startChar": 44,
+        "endLine": 548,
+        "endChar": 51
+      },
+      "revId": "4817b40688943893563c04a0f127e97b91ff2e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fae0f6_1aa1c0fe",
+        "filename": "sandbox/win/tests/common/controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-22T20:23:44Z",
+      "side": 1,
+      "message": "I\u0027d revert this file and just leave it in the implemention function. this is where the other incompatibility (32-bit) is also addressed.",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "4817b40688943893563c04a0f127e97b91ff2e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
