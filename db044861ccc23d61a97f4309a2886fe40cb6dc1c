@@ -22,6 +22,30 @@
       "revId": "db044861ccc23d61a97f4309a2886fe40cb6dc1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9027314_69343144",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 95232,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-22T23:37:06Z",
+      "side": 1,
+      "message": "Sure, we could implement that too.  I think it would require adding a new pref kVariationsSafeSeedFetchTime that would save off the value of kVariationsLastFetchTime at the time the safe seed is saved (well, technically, the value that was live when the safe seed was being loaded).  Does that sound about right to you?  If so, I think it might make sense to land this CL with a TODO, and implement that in a follow-up.  WDYT?\n\nFWIW, the reason that I chose this current approach is that it seemed to me like we could watch the safe mode fallback rate separately (via Variations.SafeMode.FellBackToSafeMode), and that combining the two data sources would be more confusing than helpful.  But, if you prefer combining them, I\u0027m not strongly opposed to it.\n\n(... that reminds me, I should update the logging for Variations.SafeMode.FellBackToSafeMode, and possibly rename it.  It currently tracks whether we /would/ fall back to safe mode using a fixed threshold of 3.)",
+      "parentUuid": "7d9707ad_f32e906e",
+      "range": {
+        "startLine": 95232,
+        "startChar": 25,
+        "endLine": 95232,
+        "endChar": 0
+      },
+      "revId": "db044861ccc23d61a97f4309a2886fe40cb6dc1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
