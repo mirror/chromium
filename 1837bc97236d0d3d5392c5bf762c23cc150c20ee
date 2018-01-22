@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1934b66_cb36b97f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-22T18:52:54Z",
+      "side": 1,
+      "message": "Sure.\n\nIf you just want a cc, I can try to remember but I think you can use WATCHLISTS to make it automatic. I can\u0027t think of a way to automatically require a review stamp without also removing that requirement from Java/Android OWNERS, which would be incorrect here.",
+      "parentUuid": "986f92d6_9562e64c",
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e11d6cb_9742b302",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-22T12:31:01Z",
       "side": 1,
       "message": "Should this be privateMethod?\n\n(Maybe call it privateAnnotatedMethod to make it clear that it\u0027s not exposed even though it\u0027s annotated?)",
+      "range": {
+        "startLine": 79,
+        "startChar": 17,
+        "endLine": 79,
+        "endChar": 37
+      },
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09f132b_4517e36c",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-22T18:52:54Z",
+      "side": 1,
+      "message": "Bleh, that\u0027s what I get for renaming things after I get the test working. Done.",
+      "parentUuid": "7e11d6cb_9742b302",
       "range": {
         "startLine": 79,
         "startChar": 17,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2c788561_0f0b7612",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-22T18:52:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89a85c79_1c16d039",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d67f528_7365383b",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-22T12:31:01Z",
       "side": 1,
       "message": "Why do we want to support passing a null annotation class?",
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa064f21_8de47594",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-22T18:52:54Z",
+      "side": 1,
+      "message": "For compatibility. The Android WebView API has the documented behavior that if the application targets an API level earlier than JELLY_BEAN_MR1, methods are exposed regardless of whether they have the @JavascriptInterface annotation.\n\nhttps://developer.android.com/reference/android/webkit/WebView.html#addJavascriptInterface(java.lang.Object,%20java.lang.String)\n\nThis is similar to how the existing C++ implementation works: higher level logic will check the target API level and pass in either android.webkit.JavascriptInterface.class or null, as appropriate. Obviously the latter is far less secure, and we have warnings to that effect. The current code also has an explicit check (which I have an unsent CL to replicate) for access to java.lang.Object#getClass, which is particularly dangerous (because access to it basically lets you traverse the Java reflection APIs), and block it unconditionally.",
+      "parentUuid": "4d67f528_7365383b",
       "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
