@@ -6,6 +6,7 @@
       "provides": {
         // Interfaces needed by a generic client of content browser.
         "app": [
+      //    "audio::mojom::SystemInfo",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
@@ -71,6 +72,7 @@
       },
       "requires": {
         "*": [ "app" ],
+        "audio": [ "info" ],
         "cdm": [ "media:cdm" ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
