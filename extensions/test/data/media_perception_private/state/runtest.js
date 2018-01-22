@@ -13,6 +13,7 @@ function setStateRunning() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'RUNNING',
     deviceContext: 'device_context',
+    configFile: 'dummy_config.txt',
     videoStreamParam: [
       {
         id: 'FaceDetection',
@@ -23,6 +24,7 @@ function setStateRunning() {
     ],
   }, chrome.test.callbackPass(function(state) {
     chrome.test.assertEq('RUNNING', state.status);
+    chrome.test.assertEq('dummy_config.txt', state.configFile);
   }));
 }
 
@@ -30,6 +32,7 @@ function getStateRunning() {
   chrome.mediaPerceptionPrivate.getState(
       chrome.test.callbackPass(function(state) {
         chrome.test.assertEq('RUNNING', state.status);
+        chrome.test.assertEq('dummy_config.txt', state.configFile);
       }));
 }
 
@@ -49,6 +52,14 @@ function setStateSuspendedButWithDeviceContextFail() {
   chrome.mediaPerceptionPrivate.setState({
     status: 'SUSPENDED',
     deviceContext: 'device_context'
+  }, chrome.test.callbackFail(error));
+}
+
+function setStateSuspendedButWithConfigFileFail() {
+  const error = 'SetState: status must be RUNNING to set configFile.';
+  chrome.mediaPerceptionPrivate.setState({
+    status: 'SUSPENDED',
+    configFile: 'dummy_config.txt'
   }, chrome.test.callbackFail(error));
 }
 
@@ -91,6 +102,7 @@ chrome.test.runTests([
     getStateRunning,
     setStateUnsettable,
     setStateSuspendedButWithDeviceContextFail,
+    setStateSuspendedButWithConfigFileFail,
     setStateSuspendedButWithVideoStreamParamFail,
     setStateRestarted,
     setStateStopped]);
