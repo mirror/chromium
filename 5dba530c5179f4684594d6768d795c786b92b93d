@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b092ba93_1cecee46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Does this need to be a separate member from mMetricsObserver?",
+      "range": {
+        "startLine": 268,
+        "startChar": 43,
+        "endLine": 268,
+        "endChar": 72
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dea640_a77b8518",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Oh BTW, do we need to check here if the |webContents| in question is our tab? PageLoadMetrics Observers are global, so they might fire on events for any tab, right?",
+      "range": {
+        "startLine": 273,
+        "startChar": 20,
+        "endLine": 273,
+        "endChar": 73
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82e5480_4f2443df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Can you revert this please? git-cl formatting for Java is still not optimal… :-(",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55170a5_069aba05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "I think what I would do here is remove the callbacks in reset(), so it\u0027s a bit more self-contained.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 9
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20f2ade_7bd92652",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Make this final.",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f631e9_7adee16f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Small nit: I would probably make these methods public anyway, even if that\u0027s not strictly necessary.",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c210643f_270b827a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "This method isn\u0027t required.",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c4c73f_e7a9545e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "I would name the method maybeSchedule() or something, to reflect that it might not do anything if the Capture has already been canceled.",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fc829d_a5a00e94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Hm, what actually happens if the delegate returns false? The capture won\u0027t be scheduled again, so I think cancelling it is still fine (if only just to clean things up), so I think we should only skip postCapture() in that case.",
+      "range": {
+        "startLine": 101,
+        "startChar": 20,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db3edf3_b6f469f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Maybe you should also remove the callback from the handler?",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb8a62c_93b1599a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T12:21:43Z",
+      "side": 1,
+      "message": "Hm, I would almost be tempted to pass the delay and the postCapture method (as a Runnable) to schedule(), so all of the logic about which Capture gets scheduled and canceled when is in one place.",
+      "range": {
+        "startLine": 123,
+        "startChar": 56,
+        "endLine": 123,
+        "endChar": 80
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
