@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "424be2ed_9ee4dc1a",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-22T21:22:07Z",
+      "side": 1,
+      "message": "+ftirelo: As discussed offline, we should add a followup to treat these differently.",
+      "range": {
+        "startLine": 453,
+        "startChar": 23,
+        "endLine": 453,
+        "endChar": 45
+      },
+      "revId": "5df22c698cf608f8d5faa978674ca56c615ebf0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57a1d4b_36b7c764",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2018-01-22T21:22:07Z",
+      "side": 1,
+      "message": "Thank you for fixing this typo!",
+      "revId": "5df22c698cf608f8d5faa978674ca56c615ebf0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68b1de78_36ed244f",
         "filename": "chrome/browser/ui/webui/components_ui.cc",
         "patchSetId": 2
