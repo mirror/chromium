@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43453c88_58fec781",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T14:55:47Z",
+      "side": 1,
+      "message": "I considered that option. I thought that for the case the bubble is normally closing it\u0027s nice to have a pointer to it as long as it lives.\nI want to merge this CL back and it seems that nulling the pointer has higher chances to break something.",
+      "parentUuid": "9aec6957_7a59198b",
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9b8848b_3ec988d2",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871975fe_a7862d68",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T14:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9b8848b_3ec988d2",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -74,6 +116,24 @@
       "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714dcc9b_10b3fc61",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T14:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98bdbe3b_5a8f166b",
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
