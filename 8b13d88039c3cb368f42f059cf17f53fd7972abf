@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb91821_48ab414c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-correct-suggestions.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-22T18:52:06Z",
+      "side": 1,
+      "message": "Suggestions with the same name might be in the list more than once.",
+      "revId": "8b13d88039c3cb368f42f059cf17f53fd7972abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
