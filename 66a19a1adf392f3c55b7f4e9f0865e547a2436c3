@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2954aa16_c7852327",
+        "filename": "chromecast/graphics/cast_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001985
+      },
+      "writtenOn": "2018-01-22T23:37:28Z",
+      "side": 1,
+      "message": "Yes, you are right, I thought there was a return there.",
+      "parentUuid": "9e06652c_8c372abe",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a12c4c0d_f77537aa",
         "filename": "chromecast/graphics/cast_screen.cc",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-22T21:21:26Z",
       "side": 1,
       "message": "As a thought, would we ever want to override one but not the other? It would seem to be an unintended behavior to override just one dimension.\n\nAs a suggestion, maybe just have --cast-initial-screen-size\u003d1280x720 and fail back to the default if parsing fails.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d930e4_f27525db",
+        "filename": "chromecast/graphics/cast_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001985
+      },
+      "writtenOn": "2018-01-22T23:37:28Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a12c4c0d_f77537aa",
       "range": {
         "startLine": 50,
         "startChar": 8,
