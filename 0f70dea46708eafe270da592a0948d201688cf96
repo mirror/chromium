@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b42e2a79_0f13ea61",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901ef657_8101bd21",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57d7fa69_37a034bb",
         "filename": "ash/system/power/power_button_menu_screen_view.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c037aae_778dec2c",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d7fa69_37a034bb",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fb68e63e_ad303ff7",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd0e04c_cc48ccbf",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24eb4cfa_c14312b7",
         "filename": "ash/system/power/power_button_menu_view.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-22T20:33:44Z",
       "side": 1,
       "message": "if power_off_item_ must exist in both paths, please move it outside of the if-else:\n\n  DCHECK(power_off_item_);\n  if (sign_out_item_) {\n    ...\n  } else {\n    ...\n  }\n\nif you want, you could probably also use a ternary, but i\u0027m not sure how it\u0027ll look after clang-format indents it:\n\n  menu_size \u003d sign_out_item_\n      ? gfx::Size(...)\n      : gfx::Size(...);",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a185d39_a0275ca4",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "I changed it to a ternary and since they have the same height, I changed it to use set_width instead.",
+      "parentUuid": "24eb4cfa_c14312b7",
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "685b7e58_87977250",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c78baae0_d1affa11",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b7f0b14_1efcd494",
         "filename": "ash/system/power/power_button_menu_view.h",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "76b766c5_76d06ced",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7f0b14_1efcd494",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a0948d_31b40cdf",
         "filename": "ash/system/power/power_button_menu_view.h",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a0c1da_da5dee25",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a0948d_31b40cdf",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "f80b7e57_a14f635e",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c07de4_a865c7bc",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4f070eb_2b9a0081",
         "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
         "patchSetId": 7
@@ -158,6 +308,24 @@
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aded2d_c6694c04",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f070eb_2b9a0081",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "d8095a41_fb82c71a",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58abfc4_b6ecaef6",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b14ab38e_3b98497d",
         "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
         "patchSetId": 7
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "6eb1b9f8_abff249f",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b14ab38e_3b98497d",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0df60bb_4629f243",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 7
@@ -209,6 +413,24 @@
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ccb5fe_fb73cbb9",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0df60bb_4629f243",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
