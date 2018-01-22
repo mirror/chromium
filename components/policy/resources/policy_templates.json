@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 409
+#   For your editing convenience: highest ID currently used: 411
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -10927,6 +10927,52 @@
       The wildcard character '*' can be used to match zero or more arbitrary characters. The escape character is '\\', so to match actual '*' or '\\' characters, you can put a '\\' in front of them.
 
       If this policy is left not set then all Google accounts on the device will be visible in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.''',
+    },
+    {
+      'id': 411,
+      'name': 'ForceRestartAfterUpdate',
+      'tags': [],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'supported_on': ['chrome.*:65-'],
+      'type': 'int-enum',
+      'schema': {
+        'type': 'integer',
+        'enum': [ 1, 2, 3 ],
+      },
+      'desc': '''Allows you to cause <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> to restart to apply a pending update.
+
+      This policy setting can be used to force a restart when an update is pending. If
+      not set, <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> indicates to the
+      user that a restart is needed via subtle changes to its menu. If set to 1, the
+      browser will restart when the machine is at the lock screen or is is idle. If
+      set to 2, a recurring warning will be shown to the user that a restart will take
+      place after a short delay. The user can dismiss this warning to defer the
+      restart. If set to 3, the aforementioned warning will be shown once and the
+      restart cannot be deferred.
+
+      The user's session is restored following the restart.''',
+      'caption': '''Force a browser restart following an update''',
+      'items': [
+        {
+          'name': 'RestartWhenIdle',
+          'value': 1,
+          'caption': '''The browser will restart when the machine is idle''',
+        },
+        {
+          'name': 'DeferrableRestart',
+          'value': 2,
+          'caption': '''Show a recurring prompt to the user to restart''',
+        },
+        {
+          'name': 'ForcedRestart',
+          'value': 3,
+          'caption': '''Show a prompt to the user once to restart''',
+        },
+      ],
+      'example_value': 1,
     },
   ],
 

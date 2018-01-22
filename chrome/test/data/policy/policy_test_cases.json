@@ -2297,6 +2297,15 @@
     ]
   },
 
+  "ForceRestartAfterUpdate": {
+    "os": ["win", "linux", "mac"],
+    "test_policy": { "ForceRestartAfterUpdate": 1},
+    "pref_mappings": [
+      { "pref": "browser.force_restart_after_update",
+         "local_state": true
+      }
+    ]
+  },
 
   "----- Chrome OS policies ------------------------------------------------": {},
 
