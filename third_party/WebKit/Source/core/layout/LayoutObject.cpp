@@ -110,12 +110,9 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
-bool ShouldUseNewLayout(const ComputedStyle& style) {
-  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
-    return false;
-  // TODO(layout-dev): Remove user-modify style check once editing handles
-  // LayoutNG.
-  return style.UserModify() == EUserModify::kReadOnly;
+inline bool ShouldUseNewLayout(const ComputedStyle& style) {
+  return RuntimeEnabledFeatures::LayoutNGEnabled() &&
+         !style.ForceLegacyLayout();
 }
 
 }  // namespace
@@ -223,7 +220,7 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+      if (ShouldUseNewLayout(style))
         return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
@@ -703,7 +700,9 @@ LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
     return nullptr;
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
-  return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
+  return box->IsLayoutNGMixin() && !box->StyleRef().ForceLegacyLayout()
+             ? ToLayoutBlockFlow(box)
+             : nullptr;
 }
 
 const NGPhysicalBoxFragment* LayoutObject::EnclosingBlockFlowFragment() const {
