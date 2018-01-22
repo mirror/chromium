@@ -38,13 +38,13 @@ namespace {
 
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 SpellingEngine* CreateNativeSpellingEngine(
-    service_manager::LocalInterfaceProvider* embedder_provider) {
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider) {
   return new HunspellEngine(embedder_provider);
 }
 #endif
 
 HunspellEngine::HunspellEngine(
-    service_manager::LocalInterfaceProvider* embedder_provider)
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider)
     : hunspell_enabled_(false),
       initialized_(false),
       dictionary_requested_(false),

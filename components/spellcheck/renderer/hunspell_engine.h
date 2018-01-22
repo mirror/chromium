@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/spellcheck/common/spellcheck_common.h"
@@ -23,7 +24,7 @@ class MemoryMappedFile;
 class HunspellEngine : public SpellingEngine {
  public:
   explicit HunspellEngine(
-      service_manager::LocalInterfaceProvider* embedder_provider);
+      base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
   ~HunspellEngine() override;
 
   void Init(base::File file) override;
@@ -60,7 +61,7 @@ class HunspellEngine : public SpellingEngine {
   // This flag is true if we have requested dictionary.
   bool dictionary_requested_;
 
-  service_manager::LocalInterfaceProvider* embedder_provider_;
+  base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider_;
 };
 
 #endif  // COMPONENTS_SPELLCHECK_RENDERER_HUNSPELL_ENGINE_H_

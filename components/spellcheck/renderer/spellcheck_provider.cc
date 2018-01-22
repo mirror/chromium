@@ -42,7 +42,7 @@ static_assert(int(blink::kWebTextDecorationTypeGrammar) ==
 SpellCheckProvider::SpellCheckProvider(
     content::RenderFrame* render_frame,
     SpellCheck* spellcheck,
-    service_manager::LocalInterfaceProvider* embedder_provider)
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider)
     : content::RenderFrameObserver(render_frame),
       content::RenderFrameObserverTracker<SpellCheckProvider>(render_frame),
       spellcheck_(spellcheck),
