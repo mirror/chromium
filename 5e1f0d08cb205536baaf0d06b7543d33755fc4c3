@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d13ed4_1c06b396",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T12:06:24Z",
+      "side": 1,
+      "message": "Optional: change this to IsDicePrepareMigration, because that is what is actually needed for this code.",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddeb841_32af869a",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T12:06:24Z",
+      "side": 1,
+      "message": "What should we do if |account| does not match the current authenticated account?",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 10
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da3f29a_7b3c7778",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T12:06:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a return here? DiceTurnSyncOnHelper should probably not be invoked in this case.",
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
