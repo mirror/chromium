@@ -483,8 +483,18 @@ base::TimeDelta SourceBufferRangeByPts::GetBufferedEndTimestamp() const {
 
   DCHECK(!buffers_.empty());
   base::TimeDelta duration = highest_frame_->duration();
-  if (duration == kNoTimestamp || duration.is_zero())
-    duration = GetApproximateDuration();
+
+  // FrameProcessor should protect against unknown buffer durations.
+  DCHECK_NE(duration, kNoTimestamp);
+
+  // Mimic the logic in SBS::GetTimestampInterval here, except report an
+  // approximated duration as it currently is. Do not use fudge room or
+  // GetApproximateDuration() here, because it could change after work on this
+  // range is completed, causing this range to appear to overlap the next
+  // range(s) incorrectly.
+  if (duration.is_zero())
+    duration = base::TimeDelta::FromMicroseconds(1);
+
   return GetEndTimestamp() + duration;
 }
 
