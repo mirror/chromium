@@ -22,6 +22,30 @@
       "revId": "64b48783ad803ec5aa35b14d23fab2f3cc072c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dd25af_221ecf5b",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-22T18:30:11Z",
+      "side": 1,
+      "message": "Oh, I did not spot the difference initially, thanks! Done.",
+      "parentUuid": "d6950081_5d1ad9b0",
+      "range": {
+        "startLine": 1242,
+        "startChar": 12,
+        "endLine": 1242,
+        "endChar": 24
+      },
+      "revId": "64b48783ad803ec5aa35b14d23fab2f3cc072c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
