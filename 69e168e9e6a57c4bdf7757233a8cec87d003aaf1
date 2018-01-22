@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "491e8b2d_5f33c794",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "nit: move impl to cc",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfab1e66_ddd26008",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "nit: const pointer",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac636d5_a2dc539a",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "SetIsFolder(true) before AddChromeItem",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

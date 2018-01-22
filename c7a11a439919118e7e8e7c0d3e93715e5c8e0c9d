@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d240000f_49c883d6",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "Nope because those two are more like runtime thing and do not need to be synced. I am okay to leave them out of the meta data, which means we would need to have mojo call to update them.",
+      "parentUuid": "367d876a_fce702bf",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fa63971_79854a83",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.cc",
         "patchSetId": 3
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "8a8384df_3cea338b",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "Yes. Getter that returns a pointer via unique_ptr\u003cT\u003e::get could be inlined and use this naming style.",
+      "parentUuid": "c9ee2349_7815d27e",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 52
+      },
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd6cffc_7c2db84a",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
         "patchSetId": 3
@@ -242,6 +290,24 @@
       "side": 1,
       "message": "No. We need this virtual for polymorphism since we have derived classes.",
       "parentUuid": "7856e0b8_e97c8eaf",
+      "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75288109_ec35e797",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T18:31:59Z",
+      "side": 1,
+      "message": "Sorry, marked wrong portion of the statement. I mean the whole method could be probably removed since we only need to tell the difference of app and folder and has a bool flag for that now.",
+      "parentUuid": "6d6d0649_fd787b32",
       "revId": "c7a11a439919118e7e8e7c0d3e93715e5c8e0c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
