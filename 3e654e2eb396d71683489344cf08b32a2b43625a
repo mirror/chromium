@@ -34,6 +34,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d928083d_e7244fcc",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-22T21:59:47Z",
+      "side": 1,
+      "message": "\"\"\"ipc:mojom needs to have a public dependency on whichever mojom target has \"native_struct\" as one of its sources (currently it\u0027s the mojom bindings:bindings target). If that target is part of a different component it would still need to be overridden.\"\"\"\n\nWhen we make //mojo/public/interfaces/bindings:bindings a separate component, it is no longer \"part of a different component\", right? Have you tried out making  //mojo/public/interfaces/bindings:bindings a mojom_component()?\n\nMaybe I haven\u0027t fully understood the problem here. If that is the case, please help me to better understand it. Thanks! :)",
+      "parentUuid": "8470951e_1808c82b",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
