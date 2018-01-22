@@ -52,6 +52,24 @@
       "revId": "de0d1afc53492579e100807719df9e09191d84d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c838ad97_eb328834",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T00:53:23Z",
+      "side": 1,
+      "message": "Ok, thanks Trent! :)",
+      "parentUuid": "cbb63343_154d52d6",
+      "revId": "de0d1afc53492579e100807719df9e09191d84d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
