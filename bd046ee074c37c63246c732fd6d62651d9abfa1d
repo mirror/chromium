@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46222e29_377cd5e8",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T19:55:52Z",
+      "side": 1,
+      "message": "Do we care if this returns LOCAL_PRINTER twice, therefore making the caller call this.startLoadDestinations(LOCAL_PRINTER) twice?",
+      "revId": "bd046ee074c37c63246c732fd6d62651d9abfa1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
