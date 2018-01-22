@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c659d0fe_86d3bf47",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T10:02:30Z",
+      "side": 1,
+      "message": "I thought Mirror was only for unicorn accounts, are there plans to enable it system-wide?\n\nWe had a plan to make mirror available on a per-profile basis, but if your goal is to have Mirror globally on ChromeOS then we should probably drop that plan. Let me know about this, I am confused now.",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "3fdfdf354ff1e15eb8e0df13c296068b44604ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eedd132_324924fa",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T10:02:30Z",
+      "side": 1,
+      "message": "AccountConsistencyManager is the place where I want to move all the account consistency configuration.\n\nCould you make a function in:\nchrome/browser/signin/account_consistency_mode_manager.h\n\nstatic bool IsMirrorEnabledForProfile() {\n#if defined(OS_CHROMEOS)\n  return profile-\u003eIsChild();\n#else\n  return signin::IsAccountConsistencyMirrorEnabled();\n#endif\n}\n\nEventually we\u0027ll need to remove the signin::IsAccountConsistencyMirrorEnabled(); because it is global and not per-profile (assuming ChromeOS needs to have mirror on a per-profile basis).\nWe\u0027ll also need to review everywhere where signin::IsAccountConsistencyMirrorEnabled() and replace it with the new function, but that can be done in later CLs.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 3
+      },
+      "revId": "3fdfdf354ff1e15eb8e0df13c296068b44604ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
