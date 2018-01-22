@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a964dbf3_b46419b4",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T10:44:12Z",
+      "side": 1,
+      "message": "can remove this clause since the next sentence covers it.",
+      "range": {
+        "startLine": 390,
+        "startChar": 36,
+        "endLine": 391,
+        "endChar": 20
+      },
+      "revId": "0baa8ba86ab64ea754002624f9e227ec03c40a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
