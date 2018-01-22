@@ -640,13 +640,22 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     }
   }
 
-  // TODO(layout-dev): Once LayoutnG handles inline content editable, we should
-  // get rid of following code fragment.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
-      style.UserModify() != EUserModify::kReadOnly &&
-      style.Display() == EDisplay::kInline &&
-      parent_style.UserModify() == EUserModify::kReadOnly) {
-    style.SetDisplay(EDisplay::kInlineBlock);
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() && !style.ForceLegacyLayout()) {
+    // Form controls are not supported yet.
+    if (element && (LabelableElement::ShouldForceLegacyLayout(*element))) {
+      style.SetForceLegacyLayout(true);
+    }
+
+    // Content editable is not supported yet.
+    else if (style.UserModify() != EUserModify::kReadOnly) {
+      style.SetForceLegacyLayout(true);
+
+      // Change inline to inline-block because all boxes within an inline
+      // formatting context must use one layout engine.
+      if (style.Display() == EDisplay::kInline &&
+          parent_style.UserModify() == EUserModify::kReadOnly)
+        style.SetDisplay(EDisplay::kInlineBlock);
+    }
   }
 }
 }  // namespace blink
