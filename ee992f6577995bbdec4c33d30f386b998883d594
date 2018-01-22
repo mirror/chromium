@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb7d3eb7_4f3d9dc5",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-22T22:37:23Z",
+      "side": 1,
+      "message": "Missed this line. Should also replace the two uses of |chromeCleanupDoneButtonLabel| with |done| from here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js?q\u003dchromeCleanupDoneButtonLabel\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d770",
+      "range": {
+        "startLine": 773,
+        "startChar": 0,
+        "endLine": 774,
+        "endChar": 53
+      },
+      "revId": "ee992f6577995bbdec4c33d30f386b998883d594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

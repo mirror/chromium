@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5361ccff_3f2b4923",
+        "filename": "chrome/browser/ui/webui/certificate_manager_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-22T22:37:23Z",
+      "side": 0,
+      "message": "Nice! This was un-used",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "5052da93139fb4025d8425c38f88c15f65a29e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
