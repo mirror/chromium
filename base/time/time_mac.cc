@@ -21,6 +21,7 @@
 #include "base/mac/scoped_mach_port.h"
 #include "base/macros.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/time/time_override.h"
 #include "build/build_config.h"
 
 #if defined(OS_IOS)
@@ -134,10 +135,34 @@ namespace base {
 // for TimeTicks gives us nice high-resolution interval timing.
 
 // Time -----------------------------------------------------------------------
+namespace {
+TimeNowFunction g_time_now_function = &TimeNowIgnoringOverride;
+}  // namespace
+
+TimeNowFunction SetTimeClockOverride(TimeNowFunction func_ptr) {
+  auto original = g_time_now_function;
+  g_time_now_function = func_ptr;
+  return original;
+}
 
 // static
 Time Time::Now() {
-  return FromCFAbsoluteTime(CFAbsoluteTimeGetCurrent());
+  return g_time_now_function();
+}
+
+// static
+Time Time::NowFromSystemTime() {
+  // Just use g_time_now_function because it returns the system time.
+  return g_time_now_function();
+}
+
+Time TimeNowIgnoringOverride() {
+  return Time::FromCFAbsoluteTime(Time::CFAbsoluteTimeGetCurrent());
+}
+
+Time TimeNowFromSystemTimeIgnoringOverride() {
+  // Just use TimeNowIgnoringOverride() because it returns the system time.
+  return TimeNowIgnoringOverride();
 }
 
 // static
@@ -163,12 +188,6 @@ CFAbsoluteTime Time::ToCFAbsoluteTime() const {
   return (static_cast<CFAbsoluteTime>(us_ - kTimeTToMicrosecondsOffset) /
           kMicrosecondsPerSecond) -
          kCFAbsoluteTimeIntervalSince1970;
-}
-
-// static
-Time Time::NowFromSystemTime() {
-  // Just use Now() because Now() returns the system time.
-  return Now();
 }
 
 // Note: These implementations of Time::FromExploded() and Time::Explode() are
@@ -269,8 +288,22 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
 
 // TimeTicks ------------------------------------------------------------------
 
+namespace {
+TimeTicksNowFunction g_time_ticks_now_function = &TimeTicksNowIgnoringOverride;
+}  // namespace
+
+TimeTicksNowFunction SetTimeTicksClockOverride(TimeTicksNowFunction func_ptr) {
+  auto original = g_time_ticks_now_function;
+  g_time_ticks_now_function = func_ptr;
+  return original;
+}
+
 // static
 TimeTicks TimeTicks::Now() {
+  return g_time_ticks_now_function();
+}
+
+TimeTicks TimeTicksNowIgnoringOverride() {
   return TimeTicks(ComputeCurrentTicks());
 }
 
@@ -300,8 +333,25 @@ TimeTicks::Clock TimeTicks::GetClock() {
 #endif  // defined(OS_IOS)
 }
 
+// ThreadTicks ----------------------------------------------------------------
+namespace {
+ThreadTicksNowFunction g_thread_ticks_now_function =
+    &ThreadTicksNowIgnoringOverride;
+}  // namespace
+
+ThreadTicksNowFunction SetThreadTicksClockOverride(
+    ThreadTicksNowFunction func_ptr) {
+  auto original = g_thread_ticks_now_function;
+  g_thread_ticks_now_function = func_ptr;
+  return original;
+}
+
 // static
 ThreadTicks ThreadTicks::Now() {
+  return g_thread_ticks_now_function();
+}
+
+ThreadTicks ThreadTicksNowIgnoringOverride() {
   return ThreadTicks(ComputeThreadTicks());
 }
 
