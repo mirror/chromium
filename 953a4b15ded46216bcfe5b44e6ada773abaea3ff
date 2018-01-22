@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "acad0841_78dd602e",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T14:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ed6083_38be0028",
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f64579_255746c5",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
@@ -62,6 +80,30 @@
       "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973024a1_ad6636d7",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T14:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f64579_255746c5",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 14
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "51bbd1ba_5ca810ab",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T14:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5009680_6892f07c",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 20
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0113e49_4f20fa08",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
@@ -105,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "c9f86b62_0a8fd32a",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T14:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0113e49_4f20fa08",
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4365da8f_e697571f",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
@@ -116,6 +200,30 @@
       "writtenOn": "2018-01-22T14:29:29Z",
       "side": 1,
       "message": "nit: Move to other Dispatch* methods.",
+      "range": {
+        "startLine": 194,
+        "startChar": 7,
+        "endLine": 194,
+        "endChar": 41
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177cd8b7_6a32e832",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T14:57:34Z",
+      "side": 1,
+      "message": "Ack. It is here because it is private.",
+      "parentUuid": "4365da8f_e697571f",
       "range": {
         "startLine": 194,
         "startChar": 7,
