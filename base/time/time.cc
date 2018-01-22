@@ -298,6 +298,8 @@ std::ostream& operator<<(std::ostream& os, Time time) {
                             exploded.millisecond);
 }
 
+// TimeTicks ------------------------------------------------------------------
+
 // Local helper class to hold the conversion from Time to TickTime at the
 // time of the Unix epoch.
 class UnixEpochSingleton {
@@ -343,6 +345,8 @@ std::ostream& operator<<(std::ostream& os, TimeTicks time_ticks) {
   const TimeDelta as_time_delta = time_ticks - TimeTicks();
   return os << as_time_delta.InMicroseconds() << " bogo-microseconds";
 }
+
+// ThreadTicks ----------------------------------------------------------------
 
 std::ostream& operator<<(std::ostream& os, ThreadTicks thread_ticks) {
   const TimeDelta as_time_delta = thread_ticks - ThreadTicks();
