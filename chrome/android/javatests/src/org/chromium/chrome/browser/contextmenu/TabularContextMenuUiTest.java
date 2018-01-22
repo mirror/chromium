@@ -143,12 +143,13 @@ public class TabularContextMenuUiTest {
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
-        final String expectedUrl = "http://google.com";
+        final String inputUrl = "http://google.com";
+        final String expectedUrl = "google.com";
         View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
             @Override
             public View call() {
                 return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
-                        new MockMenuParams(expectedUrl), Collections.unmodifiableList(item), false);
+                        new MockMenuParams(inputUrl), Collections.unmodifiableList(item), false);
             }
         });
 
