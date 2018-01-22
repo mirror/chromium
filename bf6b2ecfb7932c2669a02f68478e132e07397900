@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d5c5952_0333b58e",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Ideally, we\u0027d have a couple integration tests for this (One with the feature enabled, one with it disabled - probably should do one with a POST and one with a GET as well).\n\nThe way to do this would be to make a browser test that uses the embedded test server return a DNS response for a domain, and then do a DNS lookup directly (Could do a URLRequest instead, and rely on the DNS lookup, but think it\u0027s better to just post a task over to the IOThread that calls into the HostResolver (g_browser-\u003esystem_request_context()-\u003eGetRequestContext()-\u003ehost_resolver()) and does a lookup, and posts the result back to the UI thread.\n\nThere are a couple problems with this, though:\n* We need to enable the async DNS resolver.  There\u0027s another base::Feature for that.\n* We currently use a MockHostResolver in tests.\n* If we\u0027re not using the network service, we don\u0027t want to be talking to a real DNS server, so we\u0027d need to do something about that.\n\nThis gets very complicated very quickly.  We could just check the configuration of the HostResolver directly, but that won\u0027t work after servicification, if we expose an API for that.\n\nSo...in summary, I don\u0027t think we can reasonably make integration tests for this.\n\nMaybe some much more limited tests of the logic to use features::kDnsOverHttps to set pref defaults, instead?",
+      "range": {
+        "startLine": 751,
+        "startChar": 3,
+        "endLine": 751,
+        "endChar": 0
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e1ca1b_8ab27da5",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "I think this adds too much complexity to the test, and adds some unnecessary conversions in the HTTP cases.  It also means we ignore the sync/async bit, so future tests may not be testing what they think they\u0027re testing.  I\u0027m also a bit concerned about how reliably the sync/async cases are sync/async, with the real server.\n\nI suggest using mock sockets instead of the test server, and adding:\n\nAddWrite(const std::string\u0026 data, IoMode) {\n  // store a copy of data in a list, and add it to the provider.\n}\n\nAnd the same for AddRead.\n\nThen you can make AddResponseWithLength funnel into this method, and get rid of |responses_|.  Request / response headers would then be added with calling Add[Write|Read] the relevant strings.\n\nNot going to insist on the change, but think it results in more consistent test behavior, is more consistent with exist tests at this layer, and also ensures we fully validate the written data.",
+      "range": {
+        "startLine": 154,
+        "startChar": 14,
+        "endLine": 154,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0792e85d_3133db04",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "This is considered an anti-pattern.  I suggest fixing Run to instead populate a unique_ptr\u003cbase::RunLoop\u003e and start its run loop, and have OnTranactionComplete call quit on it.  That would result in hanging on failure, but think that\u0027s preferred.  There are a couple tests that call EXPECT_FALSE(Run(...)), and I suggest a separate method for that.",
+      "range": {
+        "startLine": 352,
+        "startChar": 22,
+        "endLine": 352,
+        "endChar": 34
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc0491_60934f39",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "doh_servers_",
+      "range": {
+        "startLine": 376,
+        "startChar": 51,
+        "endLine": 376,
+        "endChar": 62
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03f7e7d_265ae583",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "This is run off-thread, so suggest making it static, and take whatever it needs as bound parameters.",
+      "range": {
+        "startLine": 401,
+        "startChar": 23,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63ea932_fd444f48",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Should also check the accept line is valid.",
+      "range": {
+        "startLine": 404,
+        "startChar": 14,
+        "endLine": 404,
+        "endChar": 21
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9acaed_44f5a8f9",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Use net::GetValueForKeyInQuery?",
+      "range": {
+        "startLine": 431,
+        "startChar": 17,
+        "endLine": 431,
+        "endChar": 30
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704b5597_cb87cfab",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "EXPECT_GT (EXPECTS are preferred in the case of failure of the code being tested, which CHECKs are fine when the bug is in the test fixture itself)",
+      "range": {
+        "startLine": 444,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 28
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99175091_ff00a222",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "This search is completely different from how socket_data_ normally works (Which is ordered with respect to reads), which seems problematic if we combine HTTPS and non-HTTPS responses..",
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4574c9_ba5fd1d0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "We\u0027re on another thread from where socket_data_ is written.  Per comment elsewhere, I think it\u0027s better to make this an argument to the method instead.",
+      "range": {
+        "startLine": 458,
+        "startChar": 30,
+        "endLine": 458,
+        "endChar": 42
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c2bf82_da24b333",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "This value isn\u0027t read anywhere, so just remove it?",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d464ec3_d651b784",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Not needed?  We shut down the server on destruction, anyways.",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c391d0b_7fe6e3f0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Other tests I think we need:\n\n* Response where we get a network error before we receive headers.\n* Response where we get a network error on the first read synchronously / asynchronously.\n* Response where we get a network error on the second read completes synchronously / asynchronously (After the first read completed asynchronously - I don\u0027t think we need to worry about the first read completed synchronously case?  Though could make one test loop through the possibilities).\n* Response where we succeed, and the second read completes synchronously / asynchronously (Again, I feel the most important case here is where the first completes async, though looping over the options offers better coverage).\n* Case where HTTPS fails and we fall back to UDP (Which succeeds in one test, and fails in another).  Make sure there are two UDP DNS servers, and we fall back to the first one.\n* Test marking UDP servers as bad when there\u0027s an HTTPS server (Which presumably also would be bad, since we\u0027d be using UDP servers)\n* HTTP Redirect (Should we even follow these?)\n* Make sure we don\u0027t send cookies.  I don\u0027t think we need the full matrix of set/send cookies, set/send auth, set/send channel ID, as those are all hopefully going to be merged, and seems a rather overkill, anyways.  For this test, could either set a cookie and make sure we don\u0027t send any, or use URLFilter and check the flags on the underlying URLRequest.\n* Check we cache responses based on the DNS response (And make sure we don\u0027t based on the HTTP response, perhaps).\n* Test where we fall back to the second HTTPS server, and it succeeds.\n\nSorry for all the requested tests, but this adds a lot of complicated behaviors, and it\u0027s most often the untested stuff that breaks.",
+      "range": {
+        "startLine": 1109,
+        "startChar": 0,
+        "endLine": 1109,
+        "endChar": 6
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64c8384_364c1a2d",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Should either use an enum class for these bools with value that make clear what these each mean, or label all these true / falss on these calls with the argument name.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 25,
+        "endLine": 1113,
+        "endChar": 30
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef16c43_4bbe04ad",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2210,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T18:31:42Z",
+      "side": 1,
+      "message": "Each call to UpdateDNSConfig does a fair bit of work, if there are pending requests (Including cancelling all started DNS requests) - would it make sense to just make this take in a vector instead, and use a null vector to clear?  Fine as-is, as I don\u0027t think this is a huge concern (How often does the configuration change, after all?), just thought I\u0027d bring it up.",
+      "range": {
+        "startLine": 2210,
+        "startChar": 25,
+        "endLine": 2210,
+        "endChar": 26
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
