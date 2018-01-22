@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 
-#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/strings/string_number_conversions.h"
@@ -213,6 +212,9 @@ void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
       context_gpu_info.vertex_shader_version;
   basic_gpu_info->max_msaa_samples =
       context_gpu_info.max_msaa_samples;
+  basic_gpu_info->machine_model_name = context_gpu_info.machine_model_name;
+  basic_gpu_info->machine_model_version =
+      context_gpu_info.machine_model_version;
   basic_gpu_info->gl_ws_vendor = context_gpu_info.gl_ws_vendor;
   basic_gpu_info->gl_ws_version = context_gpu_info.gl_ws_version;
   basic_gpu_info->gl_ws_extensions = context_gpu_info.gl_ws_extensions;

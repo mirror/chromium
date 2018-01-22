@@ -14,6 +14,8 @@
 #include "gpu/command_buffer/service/service_utils.h"
 #include "gpu/config/gpu_switches.h"
 #include "media/media_features.h"
+#include "ui/gfx/switches.h"
+#include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
 
 namespace {
@@ -137,6 +139,14 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
       command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds);
   gpu_preferences.ignore_gpu_blacklist =
       command_line->HasSwitch(switches::kIgnoreGpuBlacklist);
+  const char* software_gl_impl_name =
+      gl::GetGLImplementationName(gl::GetSoftwareGLImplementation());
+  if ((command_line->GetSwitchValueASCII(switches::kUseGL) ==
+       software_gl_impl_name) ||
+      command_line->HasSwitch(switches::kOverrideUseSoftwareGLForTests) ||
+      command_line->HasSwitch(switches::kHeadless)) {
+    gpu_preferences.ignore_gpu_blacklist = true;
+  }
   // Some of these preferences are set or adjusted in
   // GpuDataManagerImplPrivate::AppendGpuCommandLine.
   return gpu_preferences;
