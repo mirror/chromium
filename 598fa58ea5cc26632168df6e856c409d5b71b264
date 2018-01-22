@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f87cb63c_e01c5b49",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T22:48:00Z",
+      "side": 1,
+      "message": "Can this match the DCHECK? That is, can this be is_folder()?",
+      "range": {
+        "startLine": 141,
+        "startChar": 14,
+        "endLine": 141,
+        "endChar": 33
+      },
+      "revId": "598fa58ea5cc26632168df6e856c409d5b71b264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
