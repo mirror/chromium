@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dae30155_5d11326a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63bad7a2_daa9fed3",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce574d2_101f1b6f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T00:50:17Z",
       "side": 1,
       "message": "What tells the DialMediaServiceImpl to stop monitoring sinks when the destructor for this class is invoked?  Since this is a global singleton, is it just a matter of the impl being destroyed immediately after this object?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951db05f_9ba36bfc",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "|impl_| will be destoryed shortly after this class\u0027 dtor.",
+      "parentUuid": "3ce574d2_101f1b6f",
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ea0caace_38690438",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a4bc22_16067ee3",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a961689c_8df5a05d",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c2cfe9ab_8b0ebeb1",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a961689c_8df5a05d",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88176b69_46fd4f80",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744f924d_cfc91b9e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88176b69_46fd4f80",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "b7597c71_96db37ea",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc26c85_19cac53f",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73095aeb_edc8f646",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
         "patchSetId": 12
@@ -171,6 +279,24 @@
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7429e45d_0d3c7b83",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73095aeb_edc8f646",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "447b3e0b_ef55575c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81db21ac_2ca3a544",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40fb5b51_0132eb49",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
         "patchSetId": 12
@@ -202,6 +346,24 @@
       "writtenOn": "2018-01-19T22:25:56Z",
       "side": 1,
       "message": "Why is observer4 called but not 1,2,3?",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88600bb_797ccfb7",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "If there is an existing observer for \"Netflix\" (observer3), registering a new observer for \"Netflix\" (observer4) will also notify observer4 with available sinks (will not notify existing observers though).\n\nNeed to do this because QueryResult observer is registered later than other observers. Need to notify it with available sinks during registration.",
+      "parentUuid": "40fb5b51_0132eb49",
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "406b91e2_eabce377",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38dbc488_092db259",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a0b0d0_e04cfedd",
         "filename": "chrome/common/media_router/media_source_helper.cc",
         "patchSetId": 12
@@ -239,6 +419,24 @@
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77a7fd3_7d75e4ad",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a0b0d0_e04cfedd",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +490,24 @@
       "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8601166_1d75d39a",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-22T21:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca782a32_403bae59",
+      "revId": "dbe38b00ac4ff764365de40caa20485d9dc947e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
