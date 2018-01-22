@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be71eff_9ca19c3d",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3da931_abe54b2d",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "Nit: I wonder if we should have this line, and if we should, whether it should be changed to something that checks against the enumeration values explicitly (i.e. checks that this is not one of the unexpected types) instead of checking the value.\n\nI ask this because it feels a little bit like we\u0027re peering into the implementation details of the type when we do a \"\u003e\u003d 0\" check.",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a171c3a6_36dee80b",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "Nit: Or just combine with previous statement using \"+\"; in the limit this could all be inlined into the next line, but that might get unwieldy.",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97f3e29_88c6a4d4",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "Where did this magic number come from?",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cbb314_3f308f2a",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "It seems odd that this is using a custom spacing value instead of the icon-to-related-label spacing constant we\u0027ve specified globally.  If we can\u0027t use that value here because it feels too big that sounds like an argument that it is too big globally :D",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82b3b9d_f3b9f031",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T22:00:28Z",
+      "side": 1,
+      "message": "Nit: ?: can move inside the GetStringUTF16() call",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
