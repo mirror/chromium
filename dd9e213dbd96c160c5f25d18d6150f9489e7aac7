@@ -16,6 +16,24 @@
       "revId": "dd9e213dbd96c160c5f25d18d6150f9489e7aac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7266f293_6ecbe922",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2018-01-22T13:30:31Z",
+      "side": 1,
+      "message": "Sorry for late reply. I was on vacation.\nAs per my understanding and codeflow \" base::Unretained(this)\" looks to be ok.\nI also referred few other similar code.\nPlz suggest",
+      "parentUuid": "02901a3c_a20376d1",
+      "revId": "dd9e213dbd96c160c5f25d18d6150f9489e7aac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
