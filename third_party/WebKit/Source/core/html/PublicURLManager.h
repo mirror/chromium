@@ -26,6 +26,7 @@
 #ifndef PublicURLManager_h
 #define PublicURLManager_h
 
+#include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashMap.h"
@@ -40,7 +41,7 @@ class ExecutionContext;
 class URLRegistry;
 class URLRegistrable;
 
-class PublicURLManager final
+class CORE_EXPORT PublicURLManager final
     : public GarbageCollectedFinalized<PublicURLManager>,
       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(PublicURLManager);
@@ -67,6 +68,7 @@ class PublicURLManager final
   // Map from URLs to the URLRegistry they are registered with.
   typedef HashMap<URLString, URLRegistry*> URLToRegistryMap;
   URLToRegistryMap url_to_registry_;
+  HashSet<URLString> mojo_urls_;
 
   bool is_stopped_;
 
