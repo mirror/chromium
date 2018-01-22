@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd9e384c_1120f07d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-22T10:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd931c1_e803050c",
+      "range": {
+        "startLine": 19,
+        "startChar": 59,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee8fabd_1899bf0e",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-18T16:23:58Z",
       "side": 1,
       "message": "what is \"this\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f349b3c2_cbad9231",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-22T10:10:59Z",
+      "side": 1,
+      "message": "This turning on/off.\ns/this/this toggling\nIs that phrasing clear enough?",
+      "parentUuid": "7ee8fabd_1899bf0e",
       "range": {
         "startLine": 24,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8527a1e_522716b6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-22T10:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca16f30_9a50e114",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf1a4a5_7fc55e3d",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "027983af_df913b4e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-22T10:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcf1a4a5_7fc55e3d",
+      "range": {
+        "startLine": 31,
+        "startChar": 67,
+        "endLine": 31,
+        "endChar": 73
+      },
+      "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e85f936_93720dbe",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7ceb2f_fb947990",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-22T10:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e85f936_93720dbe",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 39
+      },
+      "revId": "9e0c97ba465ec9611d8bb2315a7092f5856d5d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
