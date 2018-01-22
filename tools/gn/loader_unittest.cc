@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/build_settings.h"
 #include "tools/gn/err.h"
@@ -146,6 +147,7 @@ class LoaderTest : public testing::Test {
   }
 
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   Scheduler scheduler_;
   BuildSettings build_settings_;
   MockBuilder mock_builder_;

@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 #include "base/stl_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/runtime_deps.h"
 #include "tools/gn/scheduler.h"
@@ -419,6 +420,7 @@ TEST(RuntimeDeps, Dupe) {
 
 // Tests that actions can't have output substitutions.
 TEST(RuntimeDeps, WriteRuntimeDepsVariable) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;

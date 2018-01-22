@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/functions.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
 TEST(FunctionToolchain, RuntimeOutputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 

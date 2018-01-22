@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/scope.h"
@@ -10,6 +11,7 @@
 
 // Checks that we find unused identifiers in targets.
 TEST(FunctionsTarget, CheckUnused) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -39,6 +41,7 @@ TEST(FunctionsTarget, CheckUnused) {
 
 // Checks that we find uses of identifiers marked as not needed.
 TEST(FunctionsTarget, CheckNotNeeded) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -94,6 +97,7 @@ TEST(FunctionsTarget, CheckNotNeeded) {
 // the name of the template, rather than the string "target" (which is the
 // name of the actual function being called).
 TEST(FunctionsTarget, TemplateDefaults) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 

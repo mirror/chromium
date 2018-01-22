@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
 // Tests that actions can't have output substitutions.
 TEST(ActionTargetGenerator, ActionOutputSubstitutions) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Scope::ItemVector items_;
@@ -44,6 +46,7 @@ TEST(ActionTargetGenerator, ActionOutputSubstitutions) {
 // Tests that arg and response file substitutions are validated for
 // action_foreach targets.
 TEST(ActionTargetGenerator, ActionForeachSubstitutions) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Scope::ItemVector items_;

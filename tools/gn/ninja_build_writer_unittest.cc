@@ -4,6 +4,7 @@
 
 #include <sstream>
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/ninja_build_writer.h"
 #include "tools/gn/pool.h"
@@ -12,6 +13,7 @@
 #include "tools/gn/test_with_scope.h"
 
 TEST(NinjaBuildWriter, TwoTargets) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;
@@ -96,6 +98,7 @@ TEST(NinjaBuildWriter, TwoTargets) {
 }
 
 TEST(NinjaBuildWriter, DuplicateOutputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;

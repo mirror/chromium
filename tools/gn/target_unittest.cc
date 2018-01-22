@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/build_settings.h"
 #include "tools/gn/config.h"
@@ -711,6 +712,7 @@ TEST(Target, SharedInheritance) {
 }
 
 TEST(Target, GeneratedInputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;
@@ -770,6 +772,7 @@ TEST(Target, GeneratedInputs) {
 
 // This is sort of a Scheduler test, but is related to the above test more.
 TEST(Target, WriteFileGeneratedInputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;
@@ -797,6 +800,7 @@ TEST(Target, WriteFileGeneratedInputs) {
 }
 
 TEST(Target, WriteRuntimeDepsGeneratedInputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;
@@ -848,6 +852,7 @@ TEST(Target, WriteRuntimeDepsGeneratedInputs) {
 // the failure cases for generated inputs, so here only test .o files that are
 // present.
 TEST(Target, ObjectGeneratedInputs) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
   Err err;
