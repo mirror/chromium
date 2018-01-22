@@ -1837,6 +1837,7 @@ jumbo_source_set("unit_tests") {
     "html/LinkElementLoadingTest.cpp",
     "html/LinkRelAttributeTest.cpp",
     "html/MediaElementFillingViewportTest.cpp",
+    "html/PublicURLManagerTest.cpp",
     "html/TimeRangesTest.cpp",
     "html/canvas/CanvasAsyncBlobCreatorTest.cpp",
     "html/canvas/CanvasFontCacheTest.cpp",
