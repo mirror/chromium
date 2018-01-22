@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a17343_68626ccc",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 43
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2018-01-22T17:55:42Z",
+      "side": 1,
+      "message": "2018 here and in all the new files, I\u0027d guess.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "202c8b0de87f69a8cbb2f442c720e7177990fc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
