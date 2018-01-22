@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8af429_a6634a0d",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-22T05:14:55Z",
+      "side": 1,
+      "message": "optional: How about\n\nfound_urls \u003d GetUrlListFromDataFile(...) || GetUrlListFromDataPickle(...);\n\n?",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "c32c405c182537f89092a8a85fe995ebd1f31622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6584dd0_0e6c56c4",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-22T05:14:55Z",
+      "side": 1,
+      "message": "It looks the two functions do not use member variables.\nCould you turn them into global functions in anonymous namespace to eliminate definitions from data_offer.h?",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 71
+      },
+      "revId": "c32c405c182537f89092a8a85fe995ebd1f31622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
