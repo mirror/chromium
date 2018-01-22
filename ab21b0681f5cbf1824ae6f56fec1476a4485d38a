@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385bf682_167a1805",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-22T17:53:59Z",
+      "side": 1,
+      "message": "nit; I\u0027m trying to decide if you need the `\u003e 0`.  Is it necessary?",
+      "revId": "ab21b0681f5cbf1824ae6f56fec1476a4485d38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
