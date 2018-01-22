@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "615c8428_278ad9f9",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_data.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-22T19:57:50Z",
+      "side": 1,
+      "message": "I think this is only used in browser tests where it does not need to be mocked.\nIt would still probably be better to use the ExtensionService version, but then we have(here and the other places you pointed out) add a bit more complexity in the code to access the ExtensionService when we don\u0027t have it handy (or have a profile).\nSo I\u0027ll leave it as is, and we\u0027ll address it if this code gets used in unit-test scenarios.",
+      "parentUuid": "814be7c0_abd95435",
+      "revId": "99d3fbeb4a9c970c18e127fb4738a21495900545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1a2cc0_e28d707b",
         "filename": "chrome/browser/chromeos/app_mode/kiosk_external_update_validator.cc",
         "patchSetId": 23
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1a01298_ef3deca9",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_external_update_validator.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-22T19:57:50Z",
+      "side": 1,
+      "message": "See my other comment.",
+      "parentUuid": "de1a2cc0_e28d707b",
+      "revId": "99d3fbeb4a9c970c18e127fb4738a21495900545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579585d8_bd99fe45",
         "filename": "chrome/browser/extensions/startup_helper.cc",
         "patchSetId": 23
@@ -50,6 +86,24 @@
       "revId": "99d3fbeb4a9c970c18e127fb4738a21495900545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007568ce_4ffe38bc",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-22T19:57:50Z",
+      "side": 1,
+      "message": "See my other comment.",
+      "parentUuid": "579585d8_bd99fe45",
+      "revId": "99d3fbeb4a9c970c18e127fb4738a21495900545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
