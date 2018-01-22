@@ -3659,6 +3659,17 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kSoleIntegration)},
 #endif  // defined(OS_ANDROID)
 
+#if defined(OS_CHROMEOS)
+    {
+        "ash-new-touch-support-for-screen-magnification",
+        flag_descriptions::kAshNewTouchSupportForScreenMagnificationName,
+        flag_descriptions::kAshNewTouchSupportForScreenMagnificationDescription,
+        kOsCrOS,
+        SINGLE_VALUE_TYPE(
+            ash::switches::kAshNewTouchSupportForScreenMagnification),
+    }
+#endif  // defined(OS_CHROMEOS)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
