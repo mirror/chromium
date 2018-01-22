@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ce667b4_3be26f7a",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T09:08:00Z",
+      "side": 1,
+      "message": "Oops, thanks, I don\u0027t know how I got caught between two implementations. Since speed has not been a problem I\u0027ll lean towards simplicity and remove _timestamps.",
+      "parentUuid": "f720fa48_6b8f7e07",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "4c28b8959949ac8a9f4d5affca951c4dce26c877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "762c56c3_24751595",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T13:01:20Z",
       "side": 1,
       "message": "nit: perhaps not worth being a public method? Could be inlined into _GetRunGroups, all files being sorted is a nice invariant..",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 28
+      },
+      "revId": "4c28b8959949ac8a9f4d5affca951c4dce26c877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1221d744_5b513cb9",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T09:08:00Z",
+      "side": 1,
+      "message": "Since no comments from Benoit I\u0027ll make this the default behavior.",
+      "parentUuid": "762c56c3_24751595",
       "range": {
         "startLine": 244,
         "startChar": 2,
