@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54bacac2_4d110019",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T22:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de1b217_26f283f7",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e58bf8ad_8a2bdc5f",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
         "patchSetId": 24
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "840a3a6f_a9926051",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T22:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58bf8ad_8a2bdc5f",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52153a07_590fab01",
         "filename": "ui/base/win/direct_manipulation.cc",
         "patchSetId": 24
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-22T21:47:06Z",
       "side": 1,
       "message": "Still looks like this could be div by 0. Where is last_scale_ mutated? Is last_scale_ even needed if it is always 1?",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2874e661_39f57884",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T22:36:25Z",
+      "side": 1,
+      "message": "The last_scale_ can be 1.0 or scale from last scale. So I DCHECK scale above. I forgot the last_scale_ \u003d scale.",
+      "parentUuid": "52153a07_590fab01",
       "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1061011e_45d84c91",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T22:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13769c2e_5ec9e1b6",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea21fa94_98c5a506",
         "filename": "ui/base/win/window_event_target.h",
         "patchSetId": 24
@@ -84,6 +156,24 @@
       "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615be3f9_9be4e7ee",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T22:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea21fa94_98c5a506",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
