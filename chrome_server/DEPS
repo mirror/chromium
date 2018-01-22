@@ -1,0 +1,8 @@
+include_rules = [
+  "+base",
+  "+chrome/common",
+  "+chrome/installer",
+  "+chrome/install_static",
+  "+components/crash/content/app",
+  "+content/public/common",
+]
