@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da3175ef_0f8dcb5d",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-22T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c43a385_abd070c0",
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e46e9848_d3ad560b",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fe1cb6_e2b24687",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-22T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46e9848_d3ad560b",
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2d812a9b_230c2fae",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-22T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153e1dbc_5878b308",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f64aa21_a8591b74",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
         "patchSetId": 5
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "71bd1fb1_868ff4b3",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-22T22:02:26Z",
+      "side": 1,
+      "message": "Ack.  I had just looked up offsetof online, and included the header it told me to. :)  Didn\u0027t realize cstddef was some sort of equivalent to stddef.h.",
+      "parentUuid": "4f64aa21_a8591b74",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed076db_d26a3b40",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fdb4c5_df404ca1",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-22T22:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed076db_d26a3b40",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "fb620b1ec19a566409af12008d5402b0009e8ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
