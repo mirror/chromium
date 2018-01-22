@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8763e33d_ece3b8e0",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42dd2432_96dfec7b",
+      "range": {
+        "startLine": 201,
+        "startChar": 15,
+        "endLine": 201,
+        "endChar": 53
+      },
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "038dc67c_474c3d32",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8ff5a3ee_6895908e",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038dc67c_474c3d32",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40f57859_204ceedf",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 14
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-19T20:29:30Z",
       "side": 1,
       "message": "the resource hold by this unique_ptr will be freed at the end of this function. I think the best way to do it is pass this mock in as a parameter so you have the full control of it. i.e., void SetMockRendererCompositorFrameSink(viz::MockCompositorFrameSinkClient) or SetMockRendererCompositorFrameSink(CompositorFrameSinkClientPtr)",
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2993100_160d629d",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "I\u0027m now passing in a unique_ptr\u003cviz::MockCompositorFrameSinkClient\u003e. I couldn\u0027t pass in just a viz::MockCompositorFrameSinkClient because the class disallows copy and assign (https://cs.chromium.org/chromium/src/components/viz/test/mock_compositor_frame_sink_client.h?q\u003dMockCompositorFrameSinkClient\u0026dr\u003dCSs\u0026l\u003d36).",
+      "parentUuid": "40f57859_204ceedf",
       "revId": "61d6384eeff864c67e3d872309707801a17356de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1ced7bbd_08dcc3df",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed648872_4f3dc6e2",
+      "range": {
+        "startLine": 1739,
+        "startChar": 13,
+        "endLine": 1739,
+        "endChar": 53
+      },
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22a3581e_145594b1",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 14
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8a494a4f_30970f52",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22a3581e_145594b1",
+      "range": {
+        "startLine": 1822,
+        "startChar": 15,
+        "endLine": 1822,
+        "endChar": 55
+      },
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d6c6154_483108ff",
         "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
         "patchSetId": 14
@@ -131,6 +245,30 @@
       "revId": "61d6384eeff864c67e3d872309707801a17356de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf16f1f_88b1841a",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1260932
+      },
+      "writtenOn": "2018-01-22T18:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6c6154_483108ff",
+      "range": {
+        "startLine": 2911,
+        "startChar": 13,
+        "endLine": 2911,
+        "endChar": 53
+      },
+      "revId": "61d6384eeff864c67e3d872309707801a17356de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
