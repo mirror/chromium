@@ -477,7 +477,7 @@ Polymer({
   setNetworkProperties_: function(properties) {
     this.propertiesReceived_ = true;
     this.networkProperties = properties;
-    this.error_ = properties.ErrorState || '';
+    this.setError_(properties.ErrorState);
 
     // Set the current shareNetwork_ value when porperties are received.
     this.setShareNetwork_();
@@ -883,10 +883,7 @@ Polymer({
 
     var requireCerts = (this.showEap_ && this.showEap_.UserCert) ||
         (this.showVpn_ && this.showVpn_.UserCert);
-    if (requireCerts && !this.userCerts_.length)
-      this.error_ = certError;
-    else
-      this.error_ = '';
+    this.setError_(requireCerts && !this.userCerts_.length ? certError : '');
   },
 
   /**
@@ -1011,6 +1008,14 @@ Polymer({
   shareIsVisible_: function() {
     return !this.guid &&
         (this.type == CrOnc.Type.WI_FI || this.type == CrOnc.Type.WI_MAX);
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  connectingIsVisible_: function() {
+    return this.propertiesSent_ && !this.error_;
   },
 
   /**
@@ -1178,9 +1183,10 @@ Polymer({
 
   /** @private */
   setPropertiesCallback_: function() {
-    this.error_ = this.getRuntimeError_();
+    this.setError_(this.getRuntimeError_());
     if (this.error_) {
       console.error('setProperties error: ' + this.guid + ': ' + this.error_);
+      this.propertiesSent_ = false;
       return;
     }
     var connectState = this.networkProperties.ConnectionState;
@@ -1198,11 +1204,12 @@ Polymer({
    * @private
    */
   createNetworkCallback_: function(guid) {
-    this.error_ = this.getRuntimeError_();
+    this.setError_(this.getRuntimeError_());
     if (this.error_) {
       console.error(
           'createNetworkError, type: ' + this.networkProperties.Type + ': ' +
           'error: ' + this.error_);
+      this.propertiesSent_ = false;
       return;
     }
     this.startConnect_(guid);
@@ -1215,18 +1222,15 @@ Polymer({
   startConnect_: function(guid) {
     this.networkingPrivate.startConnect(guid, () => {
       var error = this.getRuntimeError_();
-      if (!error || error == 'connected' || error == 'connect-canceled') {
-        this.close_();  // Connect completed or canceled, close the dialog.
+      if (!error || error == 'connected' || error == 'connect-canceled' ||
+          error == 'connecting') {
+        // Connect is in progress, completed or canceled, close the dialog.
+        this.close_();
         return;
       }
-      if (error == 'connecting') {
-        // Keep the dialog open while connecting. TODO(stevenjb): Add a listener
-        // for the network properties and close the dialog if connected or show
-        // an error if not.
-        return;
-      }
-      this.error_ = error;
+      this.setError_(error);
       console.error('Error connecting to network: ' + error);
+      this.propertiesSent_ = false;
     });
   },
 
@@ -1266,6 +1270,18 @@ Polymer({
       GUID: properties.GUID || '',
       Type: this.type,
     };
+  },
+
+  /**
+   * @param {string|undefined} error
+   * @private
+   */
+  setError_: function(error) {
+    if (!error) {
+      this.error_ = '';
+      return;
+    }
+    this.error_ = error;
   },
 
   /**
