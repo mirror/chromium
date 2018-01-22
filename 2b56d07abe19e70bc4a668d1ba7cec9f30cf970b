@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56fbdadc_fa4a8a79",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T00:59:18Z",
+      "side": 1,
+      "message": "What is this check for?\n\nWhat happens if shared_array_buffers_contents is valid but an invalid |id| is specified?",
+      "revId": "2b56d07abe19e70bc4a668d1ba7cec9f30cf970b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
