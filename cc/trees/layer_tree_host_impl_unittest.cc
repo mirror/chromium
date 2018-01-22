@@ -11244,6 +11244,55 @@ TEST_F(LayerTreeHostImplVirtualViewportTest,
   EXPECT_EQ(gfx::Vector2dF(), host_impl_->accumulated_root_overscroll());
 }
 
+TEST_F(LayerTreeHostImplVirtualViewportTest, ScrollSnapOnViewport) {
+  gfx::Size content_size = gfx::Size(200, 200);
+  gfx::Size outer_viewport = gfx::Size(100, 100);
+  gfx::Size inner_viewport = gfx::Size(100, 100);
+
+  SetupVirtualViewportLayers(content_size, outer_viewport, inner_viewport);
+
+  SnapContainerData container_data(
+      ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
+      gfx::ScrollOffset(300, 300));
+  SnapAreaData area_data(SnapAxis::kBoth, gfx::ScrollOffset(50, 50), false);
+  container_data.AddSnapAreaData(area_data);
+  host_impl_->active_tree()->set_snap_container_data(container_data);
+
+  LayerImpl* outer_scroll = host_impl_->OuterViewportScrollLayer();
+  LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
+  DrawFrame();
+  {
+    gfx::ScrollOffset inner_expected;
+    gfx::ScrollOffset outer_expected;
+    EXPECT_EQ(inner_expected, inner_scroll->CurrentScrollOffset());
+    EXPECT_EQ(outer_expected, outer_scroll->CurrentScrollOffset());
+
+    gfx::Point scroll_position(10, 10);
+    EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
+              host_impl_
+                  ->ScrollBegin(BeginState(scroll_position).get(),
+                                InputHandler::WHEEL)
+                  .thread);
+
+    gfx::Vector2dF delta(20, 20);
+    host_impl_->ScrollBy(UpdateState(scroll_position, delta).get());
+
+    viz::BeginFrameArgs begin_frame_args =
+        viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+    host_impl_->ScrollEnd(EndState().get(), true);
+    base::TimeTicks start_time =
+        base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
+    BeginImplFrameAndAnimate(begin_frame_args, start_time);
+    BeginImplFrameAndAnimate(
+        begin_frame_args, start_time + base::TimeDelta::FromMilliseconds(50));
+    BeginImplFrameAndAnimate(
+        begin_frame_args, start_time + base::TimeDelta::FromMilliseconds(1000));
+
+    EXPECT_VECTOR_EQ(gfx::Vector2dF(50, 50),
+                     outer_scroll->CurrentScrollOffset());
+  }
+}
+
 class LayerTreeHostImplWithImplicitLimitsTest : public LayerTreeHostImplTest {
  public:
   void SetUp() override {

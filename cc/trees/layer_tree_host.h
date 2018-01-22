@@ -31,6 +31,7 @@
 #include "cc/input/event_listener_properties.h"
 #include "cc/input/input_handler.h"
 #include "cc/input/layer_selection_bound.h"
+#include "cc/input/scroll_snap_data.h"
 #include "cc/input/scrollbar.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_list_iterator.h"
@@ -308,6 +309,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
                                 bool shrink);
   void SetBrowserControlsShownRatio(float ratio);
   void SetOverscrollBehavior(const OverscrollBehavior& overscroll_behavior);
+  void SetSnapContainerData(base::Optional<SnapContainerData> data);
 
   void SetPageScaleFactorAndLimits(float page_scale_factor,
                                    float min_page_scale_factor,
@@ -626,6 +628,7 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   float top_controls_shown_ratio_ = 0.f;
   bool browser_controls_shrink_blink_size_ = false;
   OverscrollBehavior overscroll_behavior_;
+  base::Optional<SnapContainerData> snap_container_data_;
 
   float bottom_controls_height_ = 0.f;
 

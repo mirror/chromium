@@ -3827,11 +3827,24 @@ void LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset(
 
 bool LayerTreeHostImpl::SnapAtScrollEnd() {
   ScrollNode* scroll_node = CurrentlyScrollingNode();
-  if (!scroll_node || !scroll_node->snap_container_data.has_value())
+  if (!scroll_node)
     return false;
 
-  const SnapContainerData& data = scroll_node->snap_container_data.value();
-  ScrollTree& scroll_tree = active_tree()->property_trees()->scroll_tree;
+  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
+  ScrollNode* viewport_scroll_node =
+      viewport()->MainScrollLayer()
+          ? scroll_tree.Node(viewport()->MainScrollLayer()->scroll_tree_index())
+          : nullptr;
+  bool is_viewport_scrolling = scroll_node == viewport_scroll_node;
+  if ((!is_viewport_scrolling &&
+       !scroll_node->snap_container_data.has_value()) ||
+      (is_viewport_scrolling &&
+       !active_tree_->snap_container_data().has_value()))
+    return false;
+
+  const SnapContainerData& data =
+      is_viewport_scrolling ? active_tree_->snap_container_data().value()
+                            : scroll_node->snap_container_data.value();
   gfx::ScrollOffset current_position =
       scroll_tree.current_scroll_offset(scroll_node->element_id);
 

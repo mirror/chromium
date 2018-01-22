@@ -1166,6 +1166,11 @@ void RenderWidgetCompositor::SetOverscrollBehavior(
   layer_tree_host_->SetOverscrollBehavior(behavior);
 }
 
+void RenderWidgetCompositor::SetSnapContainerData(
+    base::Optional<cc::SnapContainerData> data) {
+  layer_tree_host_->SetSnapContainerData(std::move(data));
+}
+
 void RenderWidgetCompositor::WillBeginMainFrame() {
   delegate_->WillBeginCompositorFrame();
 }
