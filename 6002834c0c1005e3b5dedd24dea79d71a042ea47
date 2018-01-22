@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8ac24a4_077c6e2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-22T18:57:26Z",
+      "side": 1,
+      "message": "This does happen on KitKat, but is overshadowed by the other issue (double notification) for the most part. Doesn\u0027t hurt to launch the notification earlier in those cases.",
+      "parentUuid": "1146caf4_b0d73f18",
+      "range": {
+        "startLine": 265,
+        "startChar": 39,
+        "endLine": 265,
+        "endChar": 48
+      },
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb5b025_28e2f923",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3a8857_9ca82bc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-22T18:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb5b025_28e2f923",
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba224391_b4656d80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-22T18:57:26Z",
+      "side": 1,
+      "message": "Yea I\u0027ll manually include that, but technically since it\u0027s \u003c24 the detach won\u0027t work and it will have to kill, it doesn\u0027t matter, but including it specifically won\u0027t rely on that pathway to be true.",
+      "parentUuid": "6da07247_12e23b76",
+      "range": {
+        "startLine": 280,
+        "startChar": 11,
+        "endLine": 280,
+        "endChar": 70
+      },
+      "revId": "6002834c0c1005e3b5dedd24dea79d71a042ea47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
