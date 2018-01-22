@@ -18,6 +18,7 @@
           "content::mojom::RenderWidgetWindowTreeClientFactory",
           "content::mojom::SharedWorkerFactory",
           "IPC::mojom::ChannelBootstrap",
+          "media::mojom::VideoCaptureObserver",
           "visitedlink::mojom::VisitedLinkNotificationSink",
           "web_cache::mojom::WebCache"
         ],
