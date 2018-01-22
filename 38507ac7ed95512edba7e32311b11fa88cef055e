@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb566a0_77664139",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessCreationParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-22T16:39:06Z",
+      "side": 1,
+      "message": "probably can get rid of the lock too. reference updates are atomic in java, and probably not much point keeping a lock just to make the assert totally correct..",
+      "revId": "38507ac7ed95512edba7e32311b11fa88cef055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
