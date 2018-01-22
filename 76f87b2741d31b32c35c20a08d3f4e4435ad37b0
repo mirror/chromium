@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1c2ce98_2bc74547",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-22T17:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20960cb8_9aa46132",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 26
+      },
+      "revId": "76f87b2741d31b32c35c20a08d3f4e4435ad37b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d62150_a5d92329",
         "filename": "extensions/browser/image_sanitizer.cc",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "76f87b2741d31b32c35c20a08d3f4e4435ad37b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a981eb_c706e974",
+        "filename": "extensions/browser/image_sanitizer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-22T17:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d62150_a5d92329",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 52
+      },
+      "revId": "76f87b2741d31b32c35c20a08d3f4e4435ad37b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
