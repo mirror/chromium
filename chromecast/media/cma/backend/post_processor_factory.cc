@@ -18,7 +18,7 @@ namespace media {
 namespace {
 
 const char kV1SoCreateFunction[] = "AudioPostProcessorShlib_Create";
-const char kV2SoCreateFunctionFormat[] = "AudioPostProcessorShlib2_%s_Create";
+const char kV2SoCreateFunctionFormat[] = "AudioPostProcessor2Shlib%sCreate";
 
 }  // namespace
 
