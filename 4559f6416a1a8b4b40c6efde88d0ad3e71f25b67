@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d4392c8_b14c7b93",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-01-22T01:56:53Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "569f0952_62ea88e6",
+      "range": {
+        "startLine": 55,
+        "startChar": 59,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "4559f6416a1a8b4b40c6efde88d0ad3e71f25b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c803221_e8eef0ab",
         "filename": "third_party/WebKit/Source/core/animation/README.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4559f6416a1a8b4b40c6efde88d0ad3e71f25b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e923ee81_8a61761d",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-01-22T01:56:53Z",
+      "side": 1,
+      "message": "This is intentional to have a newline appear here.",
+      "parentUuid": "5c803221_e8eef0ab",
+      "range": {
+        "startLine": 71,
+        "startChar": 73,
+        "endLine": 71,
+        "endChar": 75
+      },
+      "revId": "4559f6416a1a8b4b40c6efde88d0ad3e71f25b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
