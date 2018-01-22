@@ -34,6 +34,24 @@
       "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd3ffc8_6bacc9f6",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_input.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-22T22:06:36Z",
+      "side": 1,
+      "message": "This should remain as \u003clabel\u003e since the paper-input-container expects a \u003clabel\u003e child.\nWe should be able to remove our use of \u003clabel\u003e in favor of slot\u003d\"label\" in polymer 2.0.\n\nSee paper-input-container: https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/paper-input/paper-input-container.html?rcl\u003d4877f1a174745116edb5517953572c8854caae2e\u0026l\u003d15",
+      "parentUuid": "a18b4e86_94120546",
+      "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
