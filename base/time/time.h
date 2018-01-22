@@ -514,13 +514,15 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
 
   // Returns the current time. Watch out, the system might adjust its clock
   // in which case time will actually go backwards. We don't guarantee that
-  // times are increasing, or that two calls to Now() won't be the same.
+  // times are increasing, or that two calls to Now() won't be the same. The
+  // returned value may be overridden by SetTimeClockOverride().
   static Time Now();
 
   // Returns the current time. Same as Now() except that this function always
   // uses system time so that there are no discrepancies between the returned
   // time and system time even on virtual environments including our test bot.
-  // For timing sensitive unittests, this function should be used.
+  // For timing sensitive unittests, this function should be used. The returned
+  // value may be overridden by SetTimeClockOverride().
   static Time NowFromSystemTime();
 
   // Converts to/from TimeDeltas relative to the Windows epoch (1601-01-01
@@ -662,6 +664,8 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
 
  private:
   friend class time_internal::TimeBase<Time>;
+  friend BASE_EXPORT Time TimeNowIgnoringOverride();
+  friend BASE_EXPORT Time TimeNowFromSystemTimeIgnoringOverride();
 
   explicit Time(int64_t us) : TimeBase(us) {}
 
@@ -794,7 +798,8 @@ class BASE_EXPORT TimeTicks : public time_internal::TimeBase<TimeTicks> {
   // Platform-dependent tick count representing "right now." When
   // IsHighResolution() returns false, the resolution of the clock could be
   // as coarse as ~15.6ms. Otherwise, the resolution should be no worse than one
-  // microsecond.
+  // microsecond. The returned value may be overridden by
+  // SetTimeTicksClockOverride().
   static TimeTicks Now();
 
   // Returns true if the high resolution clock is working on this system and
@@ -856,6 +861,7 @@ class BASE_EXPORT TimeTicks : public time_internal::TimeBase<TimeTicks> {
 
  private:
   friend class time_internal::TimeBase<TimeTicks>;
+  friend BASE_EXPORT TimeTicks TimeTicksNowIgnoringOverride();
 
   // Please use Now() to create a new object. This is for internal use
   // and testing.
@@ -901,7 +907,8 @@ class BASE_EXPORT ThreadTicks : public time_internal::TimeBase<ThreadTicks> {
   // actual work vs. being de-scheduled. May return bogus results if the thread
   // migrates to another CPU between two calls. Returns an empty ThreadTicks
   // object until the initialization is completed. If a clock reading is
-  // absolutely needed, call WaitUntilInitialized() before this method.
+  // absolutely needed, call WaitUntilInitialized() before this method. The
+  // returned value may be overridden by SetThreadTicksClockOverride().
   static ThreadTicks Now();
 
 #if defined(OS_WIN)
@@ -913,6 +920,7 @@ class BASE_EXPORT ThreadTicks : public time_internal::TimeBase<ThreadTicks> {
 
  private:
   friend class time_internal::TimeBase<ThreadTicks>;
+  friend BASE_EXPORT ThreadTicks ThreadTicksNowIgnoringOverride();
 
   // Please use Now() or GetForThread() to create a new object. This is for
   // internal use and testing.
