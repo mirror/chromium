@@ -22,19 +22,26 @@ class View;
 // that the border is one pixel regardless of display scaling.
 class BackgroundWith1PxBorder : public views::Background {
  public:
-  // Corner radius of the inside edge of the roundrect border stroke.
-  static constexpr int kCornerRadius = 2;
-
   // The thickness of the location bar's border in DIP.
   static constexpr int kLocationBarBorderThicknessDip = 1;
 
+  static int GetBorderRadius(int height, bool rounded);
+
   BackgroundWith1PxBorder(SkColor background, SkColor border);
+
+  BackgroundWith1PxBorder(SkColor background, SkColor border, bool rounded);
 
   void Paint(gfx::Canvas* canvas, views::View* view) const override;
 
  private:
+  // Corner radius of the inside edge of the roundrect border stroke.
+  static constexpr int kDefaultBorderRadius = 2;
+
   // Color for the one pixel border.
   SkColor border_color_;
+
+  // Whether the background should have fully rounded corners.
+  bool rounded_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundWith1PxBorder);
 };

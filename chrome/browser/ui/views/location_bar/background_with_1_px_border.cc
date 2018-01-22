@@ -12,9 +12,22 @@
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
+int BackgroundWith1PxBorder::GetBorderRadius(int height, bool rounded) {
+  if (!rounded)
+    return kDefaultBorderRadius;
+  return height / 2;
+}
+
 BackgroundWith1PxBorder::BackgroundWith1PxBorder(SkColor background,
                                                  SkColor border)
     : border_color_(border) {
+  SetNativeControlColor(background);
+}
+
+BackgroundWith1PxBorder::BackgroundWith1PxBorder(SkColor background,
+                                                 SkColor border,
+                                                 bool rounded)
+    : border_color_(border), rounded_(rounded) {
   SetNativeControlColor(background);
 }
 
@@ -35,8 +48,8 @@ void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
       gfx::InsetsF(std::floor(kLocationBarBorderThicknessDip * scale) - 0.5f));
 
   SkPath path;
-  const SkScalar scaled_corner_radius =
-      SkFloatToScalar(kCornerRadius * scale + 0.5f);
+  const SkScalar scaled_corner_radius = SkFloatToScalar(
+      GetBorderRadius(border_rect_f.height(), rounded_) * scale + 0.5f);
   path.addRoundRect(gfx::RectFToSkRect(border_rect_f), scaled_corner_radius,
                     scaled_corner_radius);
 
