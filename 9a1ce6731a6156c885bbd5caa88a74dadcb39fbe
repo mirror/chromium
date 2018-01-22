@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c61214c_9d2f92c4",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-22T22:52:15Z",
+      "side": 1,
+      "message": "I wonder if you could do something like:\nusing BlobItemType \u003d BlobDataItem::Type;\nto make these lines a bit shorter. Could be confusing for others though, so maybe not.",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 39
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110a11ab_ebbee27d",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-22T22:52:15Z",
+      "side": 1,
+      "message": "I wonder if we should change this to kFutureBytes to match future file - just a thought, no need to change it.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c7fa153_14d38e09",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-22T22:52:15Z",
+      "side": 1,
+      "message": "Is there a need for bytes where we assume ownership? Can someone create a blob and not have byte copies?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
