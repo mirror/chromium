@@ -7,6 +7,7 @@
 
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/viz_resource_format_export.h"
+#include "gpu/command_buffer/common/capabilities.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
 #include "third_party/skia/include/gpu/GrTypes.h"
 #include "ui/gfx/buffer_types.h"
@@ -36,7 +37,14 @@ VIZ_RESOURCE_FORMAT_EXPORT bool DoesResourceFormatSupportAlpha(
 VIZ_RESOURCE_FORMAT_EXPORT unsigned int TextureStorageFormat(
     ResourceFormat format);
 VIZ_RESOURCE_FORMAT_EXPORT GrPixelConfig ToGrPixelConfig(ResourceFormat format);
-
+// Returns true if the provided |format| can be used as a render buffer.
+// Note that render buffer support implies texture support.
+VIZ_RESOURCE_FORMAT_EXPORT bool IsRenderBufferFormatSupported(
+    ResourceFormat format,
+    const gpu::Capabilities& capabilities);
+VIZ_RESOURCE_FORMAT_EXPORT bool IsGpuMemoryBufferFormatSupported(
+    ResourceFormat format,
+    gfx::BufferUsage usage);
 }  // namespace viz
 
 #endif  // COMPONENTS_VIZ_COMMON_RESOURCES_RESOURCE_FORMAT_UTILS_H_
