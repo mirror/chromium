@@ -16,7 +16,7 @@
 
 namespace content {
 
-class WebRtcLocalEventLogManager {
+class WebRtcLocalEventLogManager final {
  public:
   explicit WebRtcLocalEventLogManager(WebRtcLocalEventLogsObserver* observer);
   ~WebRtcLocalEventLogManager();
@@ -27,6 +27,7 @@ class WebRtcLocalEventLogManager {
   bool EnableLogging(base::FilePath base_path, size_t max_file_size_bytes);
   bool DisableLogging();
 
+  // TODO: !!! Document.
   bool EventLogWrite(int render_process_id, int lid, const std::string& output);
 
   // This function is public, but this entire class is a protected
@@ -36,16 +37,6 @@ class WebRtcLocalEventLogManager {
 
  private:
   using PeerConnectionKey = WebRtcEventLogPeerConnectionKey;
-
-  struct LogFile {
-    LogFile(base::File file, size_t max_file_size_bytes)
-        : file(std::move(file)),
-          max_file_size_bytes(max_file_size_bytes),
-          file_size_bytes(0) {}
-    base::File file;
-    const size_t max_file_size_bytes;
-    size_t file_size_bytes;
-  };
 
   typedef std::map<PeerConnectionKey, LogFile> LogFilesMap;
 
