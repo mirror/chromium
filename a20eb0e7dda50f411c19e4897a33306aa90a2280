@@ -34,6 +34,24 @@
       "revId": "a20eb0e7dda50f411c19e4897a33306aa90a2280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8d9efd_90957d81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-22T22:18:52Z",
+      "side": 1,
+      "message": "\u003e Looks like this crash is happening in other normal cases too. https://crbug.com/804240. Seems like also when a tab is closed.. Fixing the test may not be enough.\n\nthen update the commit message then",
+      "parentUuid": "788837d3_2a1af2ce",
+      "revId": "a20eb0e7dda50f411c19e4897a33306aa90a2280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
