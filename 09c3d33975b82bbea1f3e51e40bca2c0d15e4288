@@ -105,6 +105,24 @@
       "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e572d5_a9ebe438",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2018-01-22T17:17:39Z",
+      "side": 1,
+      "message": "I don\u0027t fully follow what the backmerge problem is. Is it about avoiding an autoroll from v8, in the respective version branch, and the time delay associated?\n\nIn any case, all good if you plan to update the API!",
+      "parentUuid": "af7d395d_4d4eb0be",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
