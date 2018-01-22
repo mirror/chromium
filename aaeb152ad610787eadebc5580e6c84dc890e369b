@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e6f066_0e3af832",
+        "filename": "third_party/WebKit/LayoutTests/crypto/subtle/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-22T23:58:38Z",
+      "side": 1,
+      "message": "Could you add a comment explaining that this early return is necessary, in case anyone tries refactoring this in the future.\n\n(Just restate what code review description says).\n\nThanks!",
+      "revId": "aaeb152ad610787eadebc5580e6c84dc890e369b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
