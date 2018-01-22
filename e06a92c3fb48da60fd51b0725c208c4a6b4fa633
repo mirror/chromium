@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75c0d765_fa7f6a32",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de77c5a_e228c759",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d2be11_8eaf63bc",
         "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-16T14:22:11Z",
       "side": 1,
       "message": "Probably worth making simple util method here too.\n\ncreatePrefDefaults(Map\u003cContentSettingsType, ContentSetting\u003e defaults)\n\nActually, see the example below for what might be the nicest API.",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed329e3_5290bcef",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "I think it\u0027s probably not worth it - all these defaults have only 1 ContentSettingType set in them and it\u0027s pretty simple to just avoid using the computed property thing. Is what I have in the next patchset OK? It\u0027s shorter too.",
+      "parentUuid": "b2d2be11_8eaf63bc",
       "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "48209f47_8b116fca",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "Aw :( Thanks for checking, I\u0027ll try to remember to check that next time. Will convert them all.",
+      "parentUuid": "87c07534_7d021f31",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "874c5191_4711a86d",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f22e59_56b2dee5",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "874c5191_4711a86d",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "90e54a34_3fddb828",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "It has the same problem of not having loaded settings/constants.js before the test setup is done (you might remember because you helped me debug this ages ago when it was like, \"settings.ContentSettingsType.WHATEVER is undefined\").",
+      "parentUuid": "511eedfc_7e7b49f4",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a65b30a_b9d4d6dd",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002d75a9_239c889d",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a65b30a_b9d4d6dd",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

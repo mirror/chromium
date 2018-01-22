@@ -16,6 +16,24 @@
       "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42293940_4f3c1179",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-22T06:17:25Z",
+      "side": 0,
+      "message": "Oops, sorry I didn\u0027t clarify - before r525611 the Ads permission didn\u0027t have a \"default\" option (just showing \"Allow\", \"Block\" in the dropdown) and resetting site permissions was the only way to clear it back to the default, so I wrote it an extra test. r525611 added the default option back to the Ads permission, so I just removed it here as a kind of unrelated cleanup.",
+      "parentUuid": "f59c2093_9154c49b",
+      "revId": "193c7425ab494d87b07d70a1df512d58fcd58b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
