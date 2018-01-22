@@ -984,9 +984,10 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   voice_search_button->set_y_anchoring(BOTTOM);
   voice_search_button->set_y_centering(TOP);
   voice_search_button->set_contributes_to_parent_bounds(false);
-  VR_BIND_VISIBILITY(
-      voice_search_button,
-      model->speech.has_or_can_request_audio_permission && !model->incognito);
+  VR_BIND_VISIBILITY(voice_search_button,
+                     model->speech.has_or_can_request_audio_permission &&
+                         !model->incognito &&
+                         !model->permissions.audio_capture_enabled);
   VR_BIND_BUTTON_COLORS(model_, voice_search_button.get(),
                         &ColorScheme::button_colors,
                         &DiscButton::SetButtonColors);
