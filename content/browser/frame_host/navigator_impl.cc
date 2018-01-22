@@ -268,7 +268,8 @@ bool NavigatorImpl::NavigateToEntry(
 
   GURL dest_url = frame_entry.url();
   Referrer dest_referrer = frame_entry.referrer();
-  if (reload_type == ReloadType::ORIGINAL_REQUEST_URL &&
+  if ((reload_type == ReloadType::ORIGINAL_REQUEST_URL ||
+       reload_type == ReloadType::DISABLE_PREVIEWS) &&
       entry.GetOriginalRequestURL().is_valid() && !entry.GetHasPostData()) {
     // We may have been redirected when navigating to the current URL.
     // Use the URL the user originally intended to visit, if it's valid and if a
