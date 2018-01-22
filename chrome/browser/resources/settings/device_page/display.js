@@ -52,6 +52,21 @@ Polymer({
     },
 
     /**
+     * @type {!chrome.settingsPrivate.PrefObject}
+     * @private
+     */
+    selectedZoomPref_: {
+      type: Object,
+      value: function() {
+        return {
+          key: 'fakeDisplaySliderZoomPref',
+          type: chrome.settingsPrivate.PrefType.NUMBER,
+          value: 0,
+        };
+      },
+    },
+
+    /**
      * Array of displays.
      * @type {!Array<!chrome.system.display.DisplayUnitInfo>}
      */
@@ -86,6 +101,9 @@ Polymer({
 
     /** @private {!Array<number>} Mode index values for slider. */
     modeValues_: Array,
+
+    /** @private {!Array<number>} Display zoom percentage values for slider */
+    zoomValues_: Array,
 
     /** @private */
     unifiedDesktopAvailable_: {
@@ -143,6 +161,12 @@ Polymer({
     shouldOpenCustomScheduleCollapse_: {
       type: Boolean,
       value: false,
+    },
+
+    /** @private */
+    showDisplayZoomSetting_: {
+      type: Boolean,
+      value: loadTimeData.getBoolean('enableDisplayZoomSetting'),
     },
 
     /** @private */
@@ -252,6 +276,117 @@ Polymer({
   },
 
   /**
+   * Returns a value from |zoomValues_| that is closest to the display zoom
+   * percentage currently selected for the |selectedDisplay|.
+   * @param {!chrome.system.display.DisplayUnitInfo} selectedDisplay
+   * @return {number}
+   * @private
+   */
+  getSelectedDisplayZoom_: function(selectedDisplay) {
+    const selectedZoom = selectedDisplay.displayZoomFactor * 100;
+    let closestMatch = this.zoomValues_[0];
+    let minimumDiff = Math.abs(closestMatch - selectedZoom);
+
+    for (let i = 0; i < this.zoomValues_.length; i++) {
+      const currentDiff = Math.abs(this.zoomValues_[i] - selectedZoom);
+      if (currentDiff < minimumDiff) {
+        closestMatch = this.zoomValues_[i];
+        minimumDiff = currentDiff;
+      }
+    }
+
+    return closestMatch;
+  },
+
+  /**
+   * Given the display with the current display mode, this function lists all
+   * the display zoom values.
+   * @param {!chrome.system.display.DisplayUnitInfo} selectedDisplay
+   * @return {!Array<number>}
+   */
+  getZoomValues_: function(selectedDisplay) {
+    // The list of deltas between two consecutive zoom level. Any display must
+    // have one of these values as the difference between two consecutive zoom
+    // level.
+    const ZoomFactorDeltas = [10, 15, 20, 25, 50, 100];
+
+    // The maximum logical resolution width allowed when zooming out for a
+    // display.
+    const MaxResolutionWidth = 4096;
+
+    // The minimum logical resolution width allowed when zooming in for a
+    // display.
+    const MinResolutionWidth = 640;
+
+    // The total number of display zoom ticks to choose from on the slider.
+    const NumOfZoomTicks = 9;
+
+    let effectiveWidth = selectedDisplay.bounds.width;
+
+    // Update the effective width if the display has a device scale factor
+    // applied.
+    if (selectedDisplay.modes.length) {
+      const mode =
+          selectedDisplay.modes[this.getSelectedModeIndex_(selectedDisplay)];
+      effectiveWidth = mode.widthInNativePixels / mode.deviceScaleFactor;
+    }
+
+    // The logical resolution will vary from half of the mode resolution to
+    // double the mode resolution.
+    let maxWidth =
+        Math.min(Math.round(effectiveWidth * 2.0), MaxResolutionWidth);
+    let minWidth =
+        Math.max(Math.round(effectiveWidth / 2.0), MinResolutionWidth);
+
+    // If either the maximum width or minimum width was reached in the above
+    // step and clamping was performed, then update the total range of logical
+    // resolutions and ensure that everything lies within the maximum and
+    // minimum resolution range.
+    if (2 * (maxWidth - minWidth) != 3 * effectiveWidth) {
+      const interval = Math.round(1.5 * effectiveWidth);
+      if (maxWidth == MaxResolutionWidth)
+        minWidth = Math.max(maxWidth - interval, MinResolutionWidth);
+      if (minWidth == MinResolutionWidth)
+        maxWidth = Math.min(minWidth + interval, MaxResolutionWidth);
+    }
+
+    // Zoom values are in percentage.
+    let maxZoom = (100 * effectiveWidth) / minWidth;
+    let minZoom = (100 * effectiveWidth) / maxWidth;
+
+    let delta = (maxZoom - minZoom) / NumOfZoomTicks;
+
+    // Clamp the delta to a user friendly and UI friendly value.
+    for (let i = 1; i < ZoomFactorDeltas.length; i++) {
+      if (delta >= ZoomFactorDeltas[i])
+        continue;
+      // Number of values above 100% zoom.
+      const zoomInCount = Math.round((maxZoom - 100) / delta);
+
+      // Number of values below 100% zoom.
+      const zoomOutCount = NumOfZoomTicks - zoomInCount - 1;
+
+      // Update the delta between consecutive zoom factors.
+      delta = ZoomFactorDeltas[i - 1];
+
+      // Update the max and min zoom factor based on the new delta. Make sure it
+      // is in percentage.
+      maxZoom = 100 + delta * zoomInCount;
+      minZoom = 100 - delta * zoomOutCount;
+      break;
+    }
+    // Ensure that everything is within range and we dont have an extreme value.
+    delta = Math.min(delta, ZoomFactorDeltas[ZoomFactorDeltas.length - 1]);
+
+    // Populate the final zoom percentage values.
+    let zoomValues = [];
+    for (let i = 0; i < NumOfZoomTicks; i++)
+      zoomValues.push(minZoom + i * delta);
+
+    return zoomValues;
+  },
+
+  /**
    * We need to call this explicitly rather than relying on change events
    * so that we can control the update order.
    * @param {!chrome.system.display.DisplayUnitInfo} selectedDisplay
@@ -269,6 +404,12 @@ Polymer({
       this.currentSelectedModeIndex_ =
           this.getSelectedModeIndex_(selectedDisplay);
     }
+
+    this.zoomValues_ = this.getZoomValues_(selectedDisplay);
+    this.set(
+        'selectedZoomPref_.value',
+        this.getSelectedDisplayZoom_(selectedDisplay));
+
     // Set |selectedDisplay| first since only the resolution slider depends
     // on |selectedModePref_|.
     this.selectedDisplay = selectedDisplay;
@@ -436,6 +577,15 @@ Polymer({
   },
 
   /**
+   * @param {!chrome.system.display.DisplayUnitInfo} selectedDisplay
+   * @return {string}
+   * @private
+   */
+  getDisplayZoomText_: function(selectedDisplay) {
+    return '' + /** @type {number} */ (this.selectedZoomPref_.value) + '%';
+  },
+
+  /**
    * @param {!{detail: string}} e |e.detail| is the id of the selected display.
    * @private
    */
@@ -509,6 +659,23 @@ Polymer({
       displayMode: this.selectedDisplay.modes[
           /** @type {number} */ (this.selectedModePref_.value)]
     };
+    settings.display.systemDisplayApi.setDisplayProperties(
+        this.selectedDisplay.id, properties,
+        this.setPropertiesCallback_.bind(this));
+  },
+
+  /**
+   * Triggerend when the display size slider changes its value. This only
+   * occurs when the value is committed (i.e. not while the slider is being
+   * dragged).
+   * @private
+   */
+  onSelectedZoomChange_: function() {
+    /** @type {!chrome.system.display.DisplayProperties} */ const properties = {
+      displayZoomFactor:
+          (/** @type {number} */ (this.selectedZoomPref_.value) / 100.0)
+    };
+
     settings.display.systemDisplayApi.setDisplayProperties(
         this.selectedDisplay.id, properties,
         this.setPropertiesCallback_.bind(this));
