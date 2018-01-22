@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab5be8fc_72dc617a",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2018-01-22T12:47:44Z",
+      "side": 1,
+      "message": "There is a direct sequence of calls from here to Promise::Reject(), which eventually causes the execution of JavaScript code within the context of this function. It could be that the JavaScript code just creates a new microtask and does not execute the reject callback immediately, but I am not sure about that.",
+      "parentUuid": "bcfd0a88_a8bf9a93",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50259efd_8f2c9597",
         "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
         "patchSetId": 2
