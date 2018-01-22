@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8106ff18_7015e9af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-22T13:50:22Z",
+      "side": 1,
+      "message": "Thanks, changed.",
+      "parentUuid": "ad443a18_403918f6",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "df3105f9de13dfdf883a60d01424bd0207753a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e6b062_478a5a16",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "df3105f9de13dfdf883a60d01424bd0207753a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32f7767_e5388783",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-22T13:50:22Z",
+      "side": 1,
+      "message": "Yes, everything - homepages can be set by users. If we exclude it, we would fetch popular sites unnecessarily if there are 7 ML/TS tiles and a home page tile.\n\nIf we want make it bullet proof, we can use a switch statement ensuring that future revisions cannot compile the same mistake. Seems like overkill to me though.",
+      "parentUuid": "67e6b062_478a5a16",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "df3105f9de13dfdf883a60d01424bd0207753a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
