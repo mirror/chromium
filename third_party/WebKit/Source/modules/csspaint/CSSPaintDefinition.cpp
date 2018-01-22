@@ -69,8 +69,6 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
     const IntSize& container_size,
     const CSSStyleValueVector* paint_arguments) {
-  DCHECK(paint_arguments);
-
   // TODO: Break dependency on LayoutObject. Passing the Node should work.
   const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
 
@@ -103,20 +101,29 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
                                                native_invalidation_properties_,
                                                custom_invalidation_properties_);
 
-  v8::Local<v8::Value> argv[] = {
-      ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
-      ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
-      ToV8(style_map, script_state_->GetContext()->Global(), isolate),
-      ToV8(*paint_arguments, script_state_->GetContext()->Global(), isolate)};
-
   v8::Local<v8::Function> paint = paint_.NewLocal(isolate);
 
   v8::TryCatch block(isolate);
   block.SetVerbose(true);
 
-  V8ScriptRunner::CallFunction(paint,
-                               ExecutionContext::From(script_state_.get()),
-                               instance, WTF_ARRAY_LENGTH(argv), argv, isolate);
+  if (paint_arguments) {
+    v8::Local<v8::Value> argv[] = {
+        ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
+        ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
+        ToV8(style_map, script_state_->GetContext()->Global(), isolate),
+        ToV8(*paint_arguments, script_state_->GetContext()->Global(), isolate)};
+    V8ScriptRunner::CallFunction(paint,
+                                 ExecutionContext::From(script_state_.get()),
+                                 instance, WTF_ARRAY_LENGTH(argv), argv, isolate);
+  } else {
+    v8::Local<v8::Value> argv[] = {
+        ToV8(rendering_context, script_state_->GetContext()->Global(), isolate),
+        ToV8(paint_size, script_state_->GetContext()->Global(), isolate),
+        ToV8(style_map, script_state_->GetContext()->Global(), isolate)};
+    V8ScriptRunner::CallFunction(paint,
+                                 ExecutionContext::From(script_state_.get()),
+                                 instance, WTF_ARRAY_LENGTH(argv), argv, isolate);
+  }
 
   // The paint function may have produced an error, in which case produce an
   // invalid image.
