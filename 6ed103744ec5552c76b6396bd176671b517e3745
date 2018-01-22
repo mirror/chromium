@@ -1,0 +1,488 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c65dc7_df3f2f21",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: Brief document what are defined in this proto file.\n\ne.g.\n  // Protocol buffer messages to get wallpaper image from backdrop service.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec5ede9_89c2b977",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: This looks strange since the message only uses id up to 4. Okay to leave as-is if this comes from upstream.",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b0381a_5fc88486",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Think we don\u0027t need this part since we don\u0027t do stubby ipc.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12630fce_54017b13",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and other places",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89d78c8_cdd09bf0",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: explicit for single arg ctor",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01389821_0f855a81",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "LOG(ERROR) to help debugging?",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd676cc_479d51f1",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "LOG(ERROR) to help debugging?",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9926538d_cdce0c85",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "images_info_ \u003d std::make_unique\u003cbase::Value\u003e(base::Value::Type::LIST);",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8662b7fc_7c089147",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: emplace_back",
+      "range": {
+        "startLine": 97,
+        "startChar": 31,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a44e57e_35b69d10",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: const std::string since it would not change.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697df919_87dfb1fb",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Looks like that we can get rid of this and use whether |images_info_| holds a base::Value as the flag.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ca066_b9650e01",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Can we not using base::Singleton and explicitly control the lifetime of the object? The worry is that this object holds URLFetcher and should be released before profile shutdown. However, Singleton uses AtExitManager to delete, which probably happens after the profile shutdown.\n\nWe can simulate singleton like WallpaperManager to control the lifetime.",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 24
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951994e_fa8a8cb6",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "What happens if Start is called with some pending load or with already loaded data?",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c925fa98_a9613274",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Please annotate the request, here and in ImageInfoFetcher.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/network_traffic_annotations.md",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b37ec42_898d4a19",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Do you need to set load flags?\n\nCommon ones used for system requests include:\n  net::LOAD_DISABLE_CACHE\n  net::LOAD_DO_NOT_SAVE_COOKIES |\n  net::LOAD_DO_NOT_SEND_COOKIES |\n  net::LOAD_DO_NOT_SEND_AUTH_DATA",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3460a3fa_49ee2d72",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: push_back -\u003e emplace_back",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 45
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e2affb_79757a13",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: Change to a \"if\" and return false when this happens.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a1292d_1f39534b",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "fyi, URLFetcher::SetAutomaticallyRetryOn5xx(...)/SetMaxRetriesOn5xx(...) can auto retry on 5xx errors. For other http errors, we need our own retry logic.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c813db_5d179739",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "LOG(ERROR) when we give up.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705e3c63_ee5d398c",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Do we need to LOG(ERROR)? Otherwise, it could fail without a trace in log and hard to debug when it happens.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b448dd9_0ae2fb5f",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: make this a nested class in private section since external code does not need access to it.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2135be_0b32f409",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "Both Get functions checks only the currently loaded data and return synchronously. This could give caller a hard time to figure out whether it is because network error or there is no data.\n\nI wonder whether it makes sense to make them async to allow caller to provide a callback to be invoked when the info is fetched (or we give up on network errors).",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a61a202_cf528b0c",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: nuke this empty line",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9843dc_b1cde68e",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "It seems that we can get rid of this unless you plan to have test to inject something to use. Otherwise, just get it when needed.",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce99068_8b84ca62",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "nit: prefer std::unique_ptr\u003cImageInfoFetcher\u003e to make ownership more clear.",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb844f09_01a3e824",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T23:37:47Z",
+      "side": 1,
+      "message": "collection_names_ready -\u003e collection_names_ready_\n\nMember variable name ends with a \"_\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
