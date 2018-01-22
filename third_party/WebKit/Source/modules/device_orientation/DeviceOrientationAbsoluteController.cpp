@@ -41,14 +41,14 @@ void DeviceOrientationAbsoluteController::DidAddEventListener(
   if (event_type != EventTypeName())
     return;
 
-  if (GetDocument().GetFrame()) {
+  LocalFrame* frame = GetDocument().GetFrame();
+  if (frame) {
     if (GetDocument().IsSecureContext()) {
-      UseCounter::Count(GetDocument().GetFrame(),
+      UseCounter::Count(frame,
                         WebFeature::kDeviceOrientationAbsoluteSecureOrigin);
     } else {
       Deprecation::CountDeprecation(
-          GetDocument().GetFrame(),
-          WebFeature::kDeviceOrientationAbsoluteInsecureOrigin);
+          frame, WebFeature::kDeviceOrientationAbsoluteInsecureOrigin);
       // TODO: add rappor logging of insecure origins as in
       // DeviceOrientationController.
       if (GetDocument()
@@ -59,7 +59,17 @@ void DeviceOrientationAbsoluteController::DidAddEventListener(
     }
   }
 
-  // TODO: add rappor url logging as in DeviceOrientationController.
+  if (!has_event_listener_) {
+    // TODO: add rappor url logging as in DeviceOrientationController.
+
+    if (frame &&
+        !CheckPolicyFeatures(frame, {FeaturePolicyFeature::kAccelerometer,
+                                     FeaturePolicyFeature::kGyroscope,
+                                     FeaturePolicyFeature::kMagnetometer})) {
+      LogToConsolePolicyFeaturesDisabled(frame, EventTypeName());
+      return;
+    }
+  }
 
   DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
 }
