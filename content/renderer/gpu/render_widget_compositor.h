@@ -189,6 +189,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
                      base::OnceCallback<void(bool)> callback) override;
 
   void SetOverscrollBehavior(const blink::WebOverscrollBehavior&) override;
+  void SetSnapContainerData(base::Optional<cc::SnapContainerData>) override;
 
   // cc::LayerTreeHostClient implementation.
   void WillBeginMainFrame() override;
