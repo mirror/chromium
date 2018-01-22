@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f79f6900_4ae13bec",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T14:36:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "402e070d_45b4d6f8",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eddeb841_32af869a",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "94081420_971db32b",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T14:36:40Z",
+      "side": 1,
+      "message": "NOTREACHED is not good as it is possible if somehow the user presses twice on the same button to enable sync.\nDCHECK_EQ is also risky as in some crazy cases maybe some UI does not update itself based on SigninManager events and allows the user to tap enable sync. In that case we simply ignore the event.",
+      "parentUuid": "d8076877_270b96f6",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 10
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da3f29a_7b3c7778",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -193,6 +241,24 @@
       "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc361d7_5c8a8450",
+        "filename": "chrome/browser/signin/signin_ui_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T14:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b9d1c5_b05621a8",
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
