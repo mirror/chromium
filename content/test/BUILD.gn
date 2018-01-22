@@ -960,9 +960,6 @@ test("content_browsertests") {
     ]
   }
 
-  if (is_win || is_linux || is_android) {
-  }
-
   if (is_win) {
     sources += [ "../browser/accessibility/accessibility_win_browsertest.cc" ]
 
@@ -1119,6 +1116,7 @@ test("content_browsertests") {
 
   if (use_aura) {
     deps += [
+      "//services/ui",
       "//ui/aura",
       "//ui/touch_selection:test_support",
       "//ui/touch_selection:touch_selection",
@@ -1996,6 +1994,7 @@ test("content_unittests") {
 
   if (use_aura) {
     deps += [
+      "//services/ui",
       "//ui/aura:test_support",
       "//ui/aura_extra",
       "//ui/wm",

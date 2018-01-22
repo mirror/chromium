@@ -304,6 +304,7 @@ source_set("tests") {
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
     "//services/service_manager/public/interfaces",
+    "//services/ui",
     "//services/ui/common:mus_common",
     "//services/ui/common:task_runner_test_base",
     "//services/ui/public/cpp",
