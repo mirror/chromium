@@ -16,6 +16,24 @@
       "revId": "ab21b0681f5cbf1824ae6f56fec1476a4485d38a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a1c38e_3ed5af72",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-22T19:37:33Z",
+      "side": 1,
+      "message": "Probably not strictly necessary because the number of values in the SSL content status seems like it could all be contained within the bool type, so we probably don\u0027t have to worry about any bool bitwise logic weirdness.  That being said, adding the \"\u003e 0\" would protect against this case, so I\u0027ll leave it in.",
+      "parentUuid": "385bf682_167a1805",
+      "revId": "ab21b0681f5cbf1824ae6f56fec1476a4485d38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
