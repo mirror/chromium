@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5528f4_f45a510b",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-22T21:27:23Z",
+      "side": 1,
+      "message": "This comment is a bit vague to me. Also the inequality at the end doesn\u0027t seem necessary correct to me. Is it correct for both vertical-lr and vertical-rl writing modes?",
+      "revId": "17b3427e8df8a4ea63bbfc26f3f4237cf13bfbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
