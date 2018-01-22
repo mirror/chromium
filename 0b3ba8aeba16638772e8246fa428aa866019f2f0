@@ -70,6 +70,30 @@
       "revId": "0b3ba8aeba16638772e8246fa428aa866019f2f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594280cc_1b3106dc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/device-memory/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-22T14:05:05Z",
+      "side": 1,
+      "message": "Thanks, sending to CQ!",
+      "parentUuid": "a2ee4480_f8d70d49",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 31
+      },
+      "revId": "0b3ba8aeba16638772e8246fa428aa866019f2f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
