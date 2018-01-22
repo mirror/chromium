@@ -80,6 +80,7 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
+#include "ui/base/ui_base_features.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/events/event.h"
 #include "ui/gfx/animation/slide_animation.h"
@@ -117,6 +118,14 @@
 
 using content::WebContents;
 using views::View;
+
+namespace {
+
+bool IsLocationBarRound() {
+  return base::FeatureList::IsEnabled(features::kTouchableChrome);
+}
+
+}  // namespace
 
 // LocationBarView -----------------------------------------------------------
 
@@ -619,7 +628,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
     // This border color will be blended on top of the toolbar (which may use an
     // image in the case of themes).
     SetBackground(std::make_unique<BackgroundWith1PxBorder>(
-        GetColor(BACKGROUND), GetBorderColor()));
+        GetColor(BACKGROUND), GetBorderColor(), IsLocationBarRound()));
   }
   SchedulePaint();
 }
@@ -1040,7 +1049,10 @@ void LocationBarView::OnPaint(gfx::Canvas* canvas) {
     gfx::RectF focus_rect(GetLocalBounds());
     focus_rect.Inset(gfx::InsetsF(0.5f));
     canvas->DrawRoundRect(focus_rect,
-                          BackgroundWith1PxBorder::kCornerRadius + 0.5f, flags);
+                          BackgroundWith1PxBorder::GetBorderRadius(
+                              height(), IsLocationBarRound()) +
+                              0.5f,
+                          flags);
   }
 }
 

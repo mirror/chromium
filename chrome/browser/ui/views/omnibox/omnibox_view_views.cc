@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h"
 #include "chrome/grit/generated_resources.h"
@@ -46,6 +47,7 @@
 #include "ui/base/ime/text_input_type.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
+#include "ui/base/ui_base_features.h"
 #include "ui/compositor/layer.h"
 #include "ui/events/event.h"
 #include "ui/gfx/canvas.h"
@@ -301,8 +303,10 @@ gfx::Size OmniboxViewViews::GetMinimumSize() const {
 void OmniboxViewViews::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   views::Textfield::OnNativeThemeChanged(theme);
   if (location_bar_view_) {
-    SetBackgroundColor(
-        location_bar_view_->GetColor(LocationBarView::BACKGROUND));
+    SetBackground(std::make_unique<BackgroundWith1PxBorder>(
+        location_bar_view_->GetColor(LocationBarView::BACKGROUND),
+        SK_ColorTRANSPARENT,
+        base::FeatureList::IsEnabled(features::kTouchableChrome)));
   }
   EmphasizeURLComponents();
 }
