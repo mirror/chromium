@@ -65,7 +65,7 @@ function getUserMediaError(error) {
 function gotStream(stream) {
   console.log('Received local stream', stream);
   var video = document.querySelector('video');
-  video.src = URL.createObjectURL(stream);
+  video.srcObject = stream;
   stream.onended = function() { console.log('Ended'); };
 
   pc1 = new RTCPeerConnection();
@@ -107,7 +107,7 @@ function onCreateOfferSuccess(desc) {
 function gotRemoteStream(event) {
   // Call the polyfill wrapper to attach the media stream to this element.
   console.log('hitting this code');
-  remoteVideo.src = URL.createObjectURL(event.stream);
+  remoteVideo.srcObject = event.stream;
 }
 
 function onCreateAnswerSuccess(desc) {
