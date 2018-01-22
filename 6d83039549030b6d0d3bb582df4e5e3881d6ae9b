@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e0a09467_bc32045c",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-22T18:25:05Z",
+      "side": 1,
+      "message": "I was actually thinking this (fewer negations, seems more straightforward):\n  bool allow_offset \u003d gurl.IsStandard() \u0026\u0026 !gurl.SchemeIsFile() \u0026\u0026 parsed.host.is_nonempty();\nI also wonder if you mean to handle just http/https schemes this way (what about FileSystem, etc.)?",
+      "parentUuid": "7e6333e4_1ad8e957",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceecf81c_af63e60c",
         "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
         "patchSetId": 7
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "61ad3bc1_10c80395",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-22T18:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ff5f397d_d4617af6",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d901cb88_ac0b5d82",
         "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
         "patchSetId": 7
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "This would rock.  However, that setter is private, and exploded to test-specific friend classes.  I think adding this test class (outside RenderText) to the friend list is nasty.  Do you see it that way?\n\nWe could also pull RenderTextTestApi out to a separate module, and put it in a test library for use by other test code.  Then SetGlyphWidth() can move to RenderTextTestApi, and out of RenderTextUnittest.\n\nThat has the downside of exposing your private test API to other clients.  Thoughts?",
       "parentUuid": "18652817_ddb2ddd4",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1f2f23_9b5bf72e",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-22T18:25:05Z",
+      "side": 1,
+      "message": "Moving RenderTextTestApi to the gfx/test_support target and exposing the setter there (with a NOTREACHED/NOTIMPLEMENTED in the base class for the non-harfbuzz case) seems okay. I\u0027m also usually okay with just making test functions with \"ForTest[ing]\" public, but I guess if there\u0027s a test api class, we should try to keep test helpers there.",
+      "parentUuid": "66be687f_8317e43d",
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
