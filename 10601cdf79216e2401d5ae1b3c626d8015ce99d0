@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d6246a_0d277404",
+        "filename": "chrome/browser/sync/test/integration/sync_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-22T09:01:58Z",
+      "side": 1,
+      "message": "Could you mention a workaround here as well? Otherwise, it is not obvious why we need this at all.",
+      "range": {
+        "startLine": 399,
+        "startChar": 2,
+        "endLine": 399,
+        "endChar": 27
+      },
+      "revId": "10601cdf79216e2401d5ae1b3c626d8015ce99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
