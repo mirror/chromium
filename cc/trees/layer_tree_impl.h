@@ -49,6 +49,7 @@ class LayerTreeSettings;
 class MemoryHistory;
 class PictureLayerImpl;
 class RenderFrameMetadata;
+class SnapContainerData;
 class TaskRunnerProvider;
 class TileManager;
 class UIResourceRequest;
@@ -502,6 +503,11 @@ class CC_EXPORT LayerTreeImpl {
     return overscroll_behavior_;
   }
 
+  void set_snap_container_data(const base::Optional<SnapContainerData>& data);
+  const base::Optional<SnapContainerData>& snap_container_data() const {
+    return snap_container_data_;
+  }
+
   void SetPendingPageScaleAnimation(
       std::unique_ptr<PendingPageScaleAnimation> pending_animation);
   std::unique_ptr<PendingPageScaleAnimation> TakePendingPageScaleAnimation();
@@ -672,6 +678,8 @@ class CC_EXPORT LayerTreeImpl {
   float bottom_controls_height_;
 
   OverscrollBehavior overscroll_behavior_;
+
+  base::Optional<SnapContainerData> snap_container_data_;
 
   // The amount that the browser controls are shown from 0 (hidden) to 1 (fully
   // shown).

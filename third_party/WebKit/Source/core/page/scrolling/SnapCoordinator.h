@@ -30,9 +30,10 @@ class LayoutBox;
 class CORE_EXPORT SnapCoordinator final
     : public GarbageCollectedFinalized<SnapCoordinator> {
  public:
-  static SnapCoordinator* Create();
+  static SnapCoordinator* Create(Document*);
+  SnapCoordinator(Document*);
   ~SnapCoordinator();
-  void Trace(blink::Visitor* visitor) {}
+  void Trace(blink::Visitor*);
 
   void SnapContainerDidChange(LayoutBox&, ScrollSnapType);
   void SnapAreaDidChange(LayoutBox&, ScrollSnapAlign);
@@ -73,7 +74,10 @@ class CORE_EXPORT SnapCoordinator final
   friend class SnapCoordinatorTest;
   explicit SnapCoordinator();
 
+  void SetChromeClientData(Optional<SnapContainerData>) const;
+
   HashMap<const LayoutBox*, SnapContainerData> snap_container_map_;
+  Member<Document> document_;
   DISALLOW_COPY_AND_ASSIGN(SnapCoordinator);
 };
 

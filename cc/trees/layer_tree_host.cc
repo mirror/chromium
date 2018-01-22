@@ -1088,6 +1088,14 @@ void LayerTreeHost::SetOverscrollBehavior(const OverscrollBehavior& behavior) {
   SetNeedsCommit();
 }
 
+void LayerTreeHost::SetSnapContainerData(
+    base::Optional<SnapContainerData> data) {
+  if (snap_container_data_ == data)
+    return;
+  snap_container_data_ = std::move(data);
+  SetNeedsCommit();
+}
+
 void LayerTreeHost::SetPageScaleFactorAndLimits(float page_scale_factor,
                                                 float min_page_scale_factor,
                                                 float max_page_scale_factor) {
@@ -1340,6 +1348,7 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
   tree_impl->set_top_controls_height(top_controls_height_);
   tree_impl->set_bottom_controls_height(bottom_controls_height_);
   tree_impl->set_overscroll_behavior(overscroll_behavior_);
+  tree_impl->set_snap_container_data(snap_container_data_);
   tree_impl->PushBrowserControlsFromMainThread(top_controls_shown_ratio_);
   tree_impl->elastic_overscroll()->PushMainToPending(elastic_overscroll_);
   if (tree_impl->IsActiveTree())
