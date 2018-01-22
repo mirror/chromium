@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9fcbbad_ca954e9a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/frameNavigation/xss-ALLOWED-same-origin-top-navigation-without-user-gesture.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-22T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1195c3fb_129f18fe",
+      "revId": "c50ed2f5d7987223e922bb497c48759daf04e0c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837b042d_add9fcec",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c50ed2f5d7987223e922bb497c48759daf04e0c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee41510_88eed012",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-22T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837b042d_add9fcec",
+      "revId": "c50ed2f5d7987223e922bb497c48759daf04e0c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
