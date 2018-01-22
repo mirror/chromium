@@ -96,6 +96,8 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
 
   int GetAccessibilityPanelHeight() const;
 
+  int GetDockedMagnifierHeight() const;
+
   // Returns the ideal bounds of the shelf assuming it is visible.
   gfx::Rect GetIdealBounds();
 
