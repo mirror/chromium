@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c3e206c_37939295",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T13:09:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "fc1424e8_5fa3c87b",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 198,
+        "endChar": 23
+      },
+      "revId": "28179648a384d88f2f5fcff853e6a062dde13883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b098f70b_c684f6ac",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "28179648a384d88f2f5fcff853e6a062dde13883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7029e428_181c6aee",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T13:09:55Z",
+      "side": 1,
+      "message": "Public method categorized per functionality (updated pragma).",
+      "parentUuid": "b098f70b_c684f6ac",
+      "range": {
+        "startLine": 434,
+        "startChar": 15,
+        "endLine": 434,
+        "endChar": 25
+      },
+      "revId": "28179648a384d88f2f5fcff853e6a062dde13883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
