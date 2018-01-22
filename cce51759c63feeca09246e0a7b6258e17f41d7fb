@@ -16,6 +16,24 @@
       "revId": "cce51759c63feeca09246e0a7b6258e17f41d7fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebf10c4_4076b893",
+        "filename": "content/renderer/manifest/manifest_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-22T23:34:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d4f90bcf_62bb6538",
+      "revId": "cce51759c63feeca09246e0a7b6258e17f41d7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

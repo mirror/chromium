@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e171ae8_8cd186b3",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-22T23:34:16Z",
+      "side": 1,
+      "message": "Hmm, I thought that expecting the reported_manifest_urls() to be empty was this check. (I\u0027ve made it explicitly check size rather than having the empty vector now).",
+      "parentUuid": "682f9cdc_7e2c2117",
+      "range": {
+        "startLine": 663,
+        "startChar": 70,
+        "endLine": 664,
+        "endChar": 45
+      },
+      "revId": "0678f622365989832f4a6cc94870955803c473f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b583fc7d_8bb7faca",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "0678f622365989832f4a6cc94870955803c473f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86796a98_e356b82b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 27149,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-22T23:34:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b583fc7d_8bb7faca",
+      "revId": "0678f622365989832f4a6cc94870955803c473f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
