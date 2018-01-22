@@ -151,6 +151,30 @@
       "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee998eb_6199922d",
+        "filename": "components/metrics/metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-22T19:40:08Z",
+      "side": 1,
+      "message": "force-enable-metrics-reporting does indeed force creation of the UkmService.  But it does more than it, I think.  It actually does what what it says.  See here\nhttps://cs.chromium.org/chromium/src/components/metrics_services_manager/metrics_services_manager.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d159\n\nI think the change to the command line flag you made is misleading.  Can you please revise that comment?\n\nIt kind of seems like there is a mismatch between MetricsServicesManager\u0027s notion of reporting, which uses that flag--and MetricsServiceAccessor, which ignores it.  I\u0027ll file a bug so we can resolve this on our end.",
+      "parentUuid": "61a102dc_05a81ccb",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
