@@ -33,8 +33,6 @@
 #include "gpu/command_buffer/common/mailbox.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
-#include "third_party/skia/include/core/SkBitmap.h"
-#include "ui/gfx/geometry/size.h"
 
 namespace gpu {
 namespace gles2 {
@@ -91,9 +89,6 @@ class CC_EXPORT ResourceProvider
   viz::internal::Resource* InsertResource(viz::ResourceId id,
                                           viz::internal::Resource resource);
   viz::internal::Resource* GetResource(viz::ResourceId id);
-
-  void PopulateSkBitmapWithResource(SkBitmap* sk_bitmap,
-                                    const viz::internal::Resource* resource);
 
   enum DeleteStyle {
     NORMAL,

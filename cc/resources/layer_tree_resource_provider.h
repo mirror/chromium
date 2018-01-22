@@ -117,13 +117,6 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
 
   bool IsTextureFormatSupported(viz::ResourceFormat format) const;
 
-  // Returns true if the provided |format| can be used as a render buffer.
-  // Note that render buffer support implies texture support.
-  bool IsRenderBufferFormatSupported(viz::ResourceFormat format) const;
-
-  bool IsGpuMemoryBufferFormatSupported(viz::ResourceFormat format,
-                                        gfx::BufferUsage usage) const;
-
   bool use_sync_query() const { return settings_.use_sync_query; }
 
   int max_texture_size() const { return settings_.max_texture_size; }

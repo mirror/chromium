@@ -155,15 +155,6 @@ viz::internal::Resource* ResourceProvider::GetResource(viz::ResourceId id) {
   return &it->second;
 }
 
-void ResourceProvider::PopulateSkBitmapWithResource(
-    SkBitmap* sk_bitmap,
-    const viz::internal::Resource* resource) {
-  DCHECK_EQ(viz::RGBA_8888, resource->format);
-  SkImageInfo info = SkImageInfo::MakeN32Premul(resource->size.width(),
-                                                resource->size.height());
-  sk_bitmap->installPixels(info, resource->pixels, info.minRowBytes());
-}
-
 void ResourceProvider::WaitSyncTokenInternal(
     viz::internal::Resource* resource) {
   DCHECK(resource);

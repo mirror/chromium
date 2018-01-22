@@ -12,6 +12,7 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
+#include "components/viz/common/skia_helper.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -752,62 +753,6 @@ bool LayerTreeResourceProvider::IsTextureFormatSupported(
   return false;
 }
 
-bool LayerTreeResourceProvider::IsRenderBufferFormatSupported(
-    viz::ResourceFormat format) const {
-  gpu::Capabilities caps;
-  if (compositor_context_provider_)
-    caps = compositor_context_provider_->ContextCapabilities();
-
-  switch (format) {
-    case viz::RGBA_4444:
-    case viz::RGBA_8888:
-    case viz::RGB_565:
-      return true;
-    case viz::BGRA_8888:
-      return caps.render_buffer_format_bgra8888;
-    case viz::RGBA_F16:
-      // TODO(ccameron): This will always return false on pixel tests, which
-      // makes it un-test-able until we upgrade Mesa.
-      // https://crbug.com/687720
-      return caps.texture_half_float_linear &&
-             caps.color_buffer_half_float_rgba;
-    case viz::LUMINANCE_8:
-    case viz::ALPHA_8:
-    case viz::RED_8:
-    case viz::ETC1:
-    case viz::LUMINANCE_F16:
-    case viz::R16_EXT:
-      // We don't currently render into these formats. If we need to render into
-      // these eventually, we should expand this logic.
-      return false;
-  }
-
-  NOTREACHED();
-  return false;
-}
-
-bool LayerTreeResourceProvider::IsGpuMemoryBufferFormatSupported(
-    viz::ResourceFormat format,
-    gfx::BufferUsage usage) const {
-  switch (format) {
-    case viz::BGRA_8888:
-    case viz::RED_8:
-    case viz::R16_EXT:
-    case viz::RGBA_4444:
-    case viz::RGBA_8888:
-    case viz::ETC1:
-    case viz::RGBA_F16:
-      return true;
-    // These formats have no BufferFormat equivalent.
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::LUMINANCE_F16:
-      return false;
-  }
-  NOTREACHED();
-  return false;
-}
 
 viz::ResourceFormat LayerTreeResourceProvider::YuvResourceFormat(
     int bits) const {
@@ -1025,7 +970,8 @@ LayerTreeResourceProvider::ScopedWriteLockSoftware::ScopedWriteLockSoftware(
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   viz::internal::Resource* resource =
       resource_provider->LockForWrite(resource_id);
-  resource_provider->PopulateSkBitmapWithResource(&sk_bitmap_, resource);
+  PopulateSkBitmapWithResource(&sk_bitmap_, resource->pixels, resource->size,
+                               resource->format);
   color_space_ = resource_provider->GetResourceColorSpaceForRaster(resource);
   DCHECK(valid());
 }
