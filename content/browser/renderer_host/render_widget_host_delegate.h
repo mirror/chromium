@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/common/content_export.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/public/common/drop_data.h"

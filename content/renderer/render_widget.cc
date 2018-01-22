@@ -611,6 +611,16 @@ void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
 }
 #endif
 
+void RenderWidget::HandlePotentialLocalSurfaceIdConflict(
+    viz::LocalSurfaceId parent_generated_local_surface_id) {
+  // TODO(cblume): It is possible for an outstnding child-generated
+  // LocalSurfaceId to be in-flight when the parent provides a conflicting
+  // LocalSurfaceId. Handle the resolution here.
+  child_local_surface_id_allocator_.SetParent(
+      parent_generated_local_surface_id);
+  local_surface_id_ = parent_generated_local_surface_id;
+}
+
 void RenderWidget::SetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
     const content::ScreenInfo& screen_info,
@@ -632,7 +642,8 @@ void RenderWidget::SetLocalSurfaceIdForAutoResize(
       observer.ScreenInfoChanged(screen_info);
   }
 
-  AutoResizeCompositor(local_surface_id);
+  HandlePotentialLocalSurfaceIdConflict(local_surface_id);
+  AutoResizeCompositor(local_surface_id_);
 }
 
 void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
@@ -1322,8 +1333,10 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (!GetWebWidget())
     return;
 
-  if (params.local_surface_id)
+  if (params.local_surface_id) {
+    HandlePotentialLocalSurfaceIdConflict(*params.local_surface_id);
     local_surface_id_ = *params.local_surface_id;
+  }
 
   if (compositor_) {
     // If surface synchronization is enabled, then this will use the provided
@@ -2249,7 +2262,9 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       window_screen_rect_ = new_pos;
     }
 
-    AutoResizeCompositor(viz::LocalSurfaceId());
+    viz::LocalSurfaceId local_surface_id =
+        child_local_surface_id_allocator_.GenerateId();
+    AutoResizeCompositor(local_surface_id);
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_resize_ack_for_auto_resize_ = true;
@@ -2591,10 +2606,14 @@ void RenderWidget::DidResizeOrRepaintAck() {
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
+  params.local_surface_id = local_surface_id_;
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
   need_resize_ack_for_auto_resize_ = false;
+
+  SetLocalSurfaceIdForAutoResize(resize_or_repaint_ack_num_, screen_info_,
+                                 local_surface_id_);
 }
 
 void RenderWidget::UpdateURLForCompositorUkm() {
@@ -2636,7 +2655,7 @@ PepperPluginInstanceImpl* RenderWidget::GetFocusedPepperPluginInsideWidget() {
         current_frame->IsWebLocalFrame()
             ? RenderFrameImpl::FromWebFrame(current_frame)
             : nullptr;
-    if (render_frame && render_frame->focused_pepper_plugin())
+
       return render_frame->focused_pepper_plugin();
     current_frame = current_frame->TraverseNext();
   }
