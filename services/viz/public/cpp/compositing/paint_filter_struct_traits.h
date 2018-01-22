@@ -59,8 +59,10 @@ struct StructTraits<viz::mojom::PaintFilterDataView, sk_sp<cc::PaintFilter>> {
     sk_sp<cc::PaintFilter> filter;
     reader.Read(&filter);
     if (!filter) {
+      // We may fail to serialize the filter if it doesn't fit in kBufferSize
+      // above, use an empty filter instead of rejecting the message.
       *out = nullptr;
-      return false;
+      return true;
     }
 
     *out = std::move(filter);
