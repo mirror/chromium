@@ -393,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "eb69b9d6_9bef51e0",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-22T22:28:36Z",
+      "side": 1,
+      "message": "If it compiles then that seems fine. We usually went with only compiling on some platforms because the necessary test methods weren\u0027t available in all platforms yet. Now that most methods are available that pattern seems better.",
+      "parentUuid": "cc63ffff_8d178aff",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90c7fecc_62f92739",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 9
