@@ -16,7 +16,7 @@
 SpellCheckPanel::SpellCheckPanel(
     content::RenderFrame* render_frame,
     service_manager::BinderRegistry* registry,
-    service_manager::LocalInterfaceProvider* embedder_provider)
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider)
     : content::RenderFrameObserver(render_frame),
       spelling_panel_visible_(false),
       embedder_provider_(embedder_provider) {
@@ -74,6 +74,7 @@ void SpellCheckPanel::ToggleSpellPanel(bool visible) {
 spellcheck::mojom::SpellCheckPanelHostPtr
 SpellCheckPanel::GetSpellCheckPanelHost() {
   spellcheck::mojom::SpellCheckPanelHostPtr spell_check_panel_host;
-  embedder_provider_->GetInterface(&spell_check_panel_host);
+  if (embedder_provider_)
+    embedder_provider_->GetInterface(&spell_check_panel_host);
   return spell_check_panel_host;
 }
