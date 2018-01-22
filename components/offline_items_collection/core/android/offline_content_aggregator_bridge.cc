@@ -4,10 +4,11 @@
 
 #include "components/offline_items_collection/core/android/offline_content_aggregator_bridge.h"
 
+#include <memory>
+
 #include "base/android/callback_android.h"
 #include "base/android/jni_string.h"
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "components/offline_items_collection/core/android/offline_item_bridge.h"
 #include "components/offline_items_collection/core/android/offline_item_visuals_bridge.h"
 #include "components/offline_items_collection/core/offline_item.h"
@@ -81,7 +82,7 @@ OfflineContentAggregatorBridge::GetBridgeForOfflineContentAggregator(
 
 OfflineContentAggregatorBridge::OfflineContentAggregatorBridge(
     OfflineContentAggregator* aggregator)
-    : provider_(base::MakeUnique<ThrottledOfflineContentProvider>(aggregator)) {
+    : provider_(std::make_unique<ThrottledOfflineContentProvider>(aggregator)) {
   JNIEnv* env = AttachCurrentThread();
   java_ref_.Reset(Java_OfflineContentAggregatorBridge_create(
       env, reinterpret_cast<intptr_t>(this)));
