@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94d5b0c1_538ca0f0",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-22T21:09:47Z",
+      "side": 1,
+      "message": "I think this started being a thing in ObjC 2.0. Here\u0027s an SO question with someone asking about it after the first time it showed up at WWDC: https://stackoverflow.com/questions/6785765/instance-variables-declared-in-objc-implementation-file. It looks like this:\n\n    @implementation {\n        CAShapeLayer* shapeLayer_;  // Weak.\n        CALayer* rotationLayer_;    // Weak.\n    }\n    // …\n    @end",
+      "parentUuid": "33fb0a22_d17d712b",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e9e7d26_d119c4c3",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 14
@@ -200,6 +224,30 @@
       "side": 1,
       "message": "This is code from the original implementation (not something recently added). I think you were saying this should not be necessary? I\u0027m removing assuming that\u0027s true.",
       "parentUuid": "06686022_4c3bbd84",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09572325_bc903b32",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-22T21:09:47Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be necessary, but if it\u0027s been there for a while then I don\u0027t feel as strongly about changing it now.",
+      "parentUuid": "d65df168_562ca5e1",
       "range": {
         "startLine": 210,
         "startChar": 0,
