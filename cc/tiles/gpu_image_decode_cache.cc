@@ -1383,7 +1383,15 @@ void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
       return;
 
     ClientImageTransferCacheEntry image_entry(&pixmap, nullptr);
-    context_->ContextSupport()->CreateTransferCacheEntry(image_entry);
+    size_t size = image_entry.SerializedSize();
+    void* data = context_->ContextSupport()->MapTransferCacheEntry(size);
+    // TODO(piman): handle error (failed to allocate/map shm)
+    DCHECK(data);
+    bool succeeded = image_entry.Serialize(
+        base::make_span(reinterpret_cast<uint8_t*>(data), size));
+    DCHECK(succeeded);
+    context_->ContextSupport()->UnmapAndCreateTransferCacheEntry(
+        image_entry.UnsafeType(), image_entry.Id());
     image_data->upload.SetTransferCacheId(image_entry.Id());
   } else {
     DCHECK(!use_transfer_cache_);
@@ -1517,8 +1525,8 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
   images_pending_unlock_.clear();
 
   for (auto id : ids_pending_unlock_) {
-    context_->ContextSupport()->UnlockTransferCacheEntries(
-        {std::make_pair(TransferCacheEntryType::kImage, id)});
+    context_->ContextSupport()->UnlockTransferCacheEntries({std::make_pair(
+        static_cast<uint32_t>(TransferCacheEntryType::kImage), id)});
   }
   ids_pending_unlock_.clear();
 
@@ -1533,9 +1541,9 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
 
   for (auto id : ids_pending_deletion_) {
     if (context_->ContextSupport()->ThreadsafeLockTransferCacheEntry(
-            TransferCacheEntryType::kImage, id)) {
+            static_cast<uint32_t>(TransferCacheEntryType::kImage), id)) {
       context_->ContextSupport()->DeleteTransferCacheEntry(
-          TransferCacheEntryType::kImage, id);
+          static_cast<uint32_t>(TransferCacheEntryType::kImage), id);
     }
   }
   ids_pending_deletion_.clear();
@@ -1563,7 +1571,7 @@ bool GpuImageDecodeCache::TryLockImage(HaveContextLock have_context_lock,
     DCHECK(use_transfer_cache_);
     DCHECK(data->upload.transfer_cache_id());
     if (context_->ContextSupport()->ThreadsafeLockTransferCacheEntry(
-            TransferCacheEntryType::kImage,
+            static_cast<uint32_t>(TransferCacheEntryType::kImage),
             *data->upload.transfer_cache_id())) {
       data->upload.OnLock();
       return true;
