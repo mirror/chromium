@@ -22,6 +22,30 @@
       "revId": "8a6b9c4c4a0595a76e778f64900beb8ad556bd97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d3bc89_af77fa07",
+        "filename": "base/lazy_instance_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-22T21:52:01Z",
+      "side": 1,
+      "message": "Nah, this is just because this POC only did it for LazyInstance (I didn\u0027t bother with hooking it up Singleton/LazyTaskRunner but if we would this would never be null)",
+      "parentUuid": "8d48d379_b7b7e9c9",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 5
+      },
+      "revId": "8a6b9c4c4a0595a76e778f64900beb8ad556bd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
