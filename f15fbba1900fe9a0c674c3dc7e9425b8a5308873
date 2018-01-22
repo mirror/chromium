@@ -22,6 +22,29 @@
       "revId": "f15fbba1900fe9a0c674c3dc7e9425b8a5308873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc53bbd2_15cd888c",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-22T21:12:55Z",
+      "side": 1,
+      "message": "I\u0027d blend this with the other check (also that comment is weird because it also returns early for many other kinds of notification besides just arc)",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 11
+      },
+      "revId": "f15fbba1900fe9a0c674c3dc7e9425b8a5308873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
