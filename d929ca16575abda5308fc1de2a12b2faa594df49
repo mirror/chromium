@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb55e73_0e6624c9",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-22T20:52:50Z",
+      "side": 1,
+      "message": "this is not guaranteed to be non-null (in practice, it should be non-null, but a different observer could have hypothetically removed it before getting here)",
+      "range": {
+        "startLine": 390,
+        "startChar": 32,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "d929ca16575abda5308fc1de2a12b2faa594df49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
