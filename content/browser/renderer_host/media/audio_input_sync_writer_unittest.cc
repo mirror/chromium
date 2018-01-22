@@ -14,10 +14,11 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
+#include "base/strings/string_piece.h"
 #include "base/sync_socket.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
@@ -34,6 +35,8 @@ namespace {
 
 // Number of audio buffers in the faked ring buffer.
 const int kSegments = 10;
+
+void NoLog(base::StringPiece) {}
 
 }  // namespace
 
@@ -107,10 +110,7 @@ class MockCancelableSyncSocket : public base::CancelableSyncSocket {
 class AudioInputSyncWriterUnderTest : public AudioInputSyncWriter {
  public:
   using AudioInputSyncWriter::AudioInputSyncWriter;
-
   ~AudioInputSyncWriterUnderTest() override {}
-
-  MOCK_METHOD1(AddToNativeLog, void(const std::string& message));
 };
 
 class AudioInputSyncWriterTest : public testing::Test {
@@ -131,22 +131,12 @@ class AudioInputSyncWriterTest : public testing::Test {
     auto socket = std::make_unique<MockCancelableSyncSocket>(kSegments);
     socket_ = socket.get();
     writer_ = std::make_unique<AudioInputSyncWriterUnderTest>(
-        std::move(shared_memory), std::move(socket), kSegments, audio_params);
+        base::BindRepeating(&NoLog), std::move(shared_memory),
+        std::move(socket), kSegments, audio_params);
     audio_bus_ = AudioBus::Create(audio_params);
   }
 
   ~AudioInputSyncWriterTest() override {
-  }
-
-  // Get total number of expected log calls. On non-Android we expect one log
-  // call at first Write() call, zero on Android. Besides that only for errors
-  // and fifo info.
-  int GetTotalNumberOfExpectedLogCalls(int expected_calls_due_to_error) {
-#if defined(OS_ANDROID)
-    return expected_calls_due_to_error;
-#else
-    return expected_calls_due_to_error + 1;
-#endif
   }
 
   // Tests expected numbers which are given as arguments.
@@ -168,15 +158,12 @@ class AudioInputSyncWriterTest : public testing::Test {
   std::unique_ptr<AudioBus> audio_bus_;
 
  private:
-  TestBrowserThreadBundle thread_bundle_;
+  base::test::ScopedTaskEnvironment env;
 
   DISALLOW_COPY_AND_ASSIGN(AudioInputSyncWriterTest);
 };
 
 TEST_F(AudioInputSyncWriterTest, SingleWriteAndRead) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(0));
-
   writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());
   EXPECT_TRUE(TestSocketAndFifoExpectations(1, 0, 0));
 
@@ -185,9 +172,6 @@ TEST_F(AudioInputSyncWriterTest, SingleWriteAndRead) {
 }
 
 TEST_F(AudioInputSyncWriterTest, MultipleWritesAndReads) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(0));
-
   for (int i = 1; i <= 2 * kSegments; ++i) {
     writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());
     EXPECT_TRUE(TestSocketAndFifoExpectations(1, 0, 0));
@@ -197,9 +181,6 @@ TEST_F(AudioInputSyncWriterTest, MultipleWritesAndReads) {
 }
 
 TEST_F(AudioInputSyncWriterTest, MultipleWritesNoReads) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(1));
-
   // Fill the ring buffer.
   for (int i = 1; i <= kSegments; ++i) {
     writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());
@@ -215,9 +196,6 @@ TEST_F(AudioInputSyncWriterTest, MultipleWritesNoReads) {
 }
 
 TEST_F(AudioInputSyncWriterTest, FillAndEmptyRingBuffer) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(2));
-
   // Fill the ring buffer.
   for (int i = 1; i <= kSegments; ++i) {
     writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());
@@ -259,9 +237,6 @@ TEST_F(AudioInputSyncWriterTest, FillAndEmptyRingBuffer) {
 }
 
 TEST_F(AudioInputSyncWriterTest, FillRingBufferAndFifo) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(2));
-
   // Fill the ring buffer.
   for (int i = 1; i <= kSegments; ++i) {
     writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());
@@ -281,9 +256,6 @@ TEST_F(AudioInputSyncWriterTest, FillRingBufferAndFifo) {
 }
 
 TEST_F(AudioInputSyncWriterTest, MultipleFillAndEmptyRingBufferAndPartOfFifo) {
-  EXPECT_CALL(*writer_.get(), AddToNativeLog(_))
-      .Times(GetTotalNumberOfExpectedLogCalls(4));
-
   // Fill the ring buffer.
   for (int i = 1; i <= kSegments; ++i) {
     writer_->Write(audio_bus_.get(), 0, false, base::TimeTicks::Now());

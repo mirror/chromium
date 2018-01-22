@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
@@ -50,7 +52,7 @@ void LogMessage(int stream_id, base::StringPiece message) {
   const std::string out_message =
       base::StringPrintf("[stream_id=%d] %.*s", stream_id,
                          static_cast<int>(message.size()), message.data());
-  content::MediaStreamManager::SendMessageToNativeLog(out_message);
+  MediaStreamManager::SendMessageToNativeLog(out_message);
   DVLOG(1) << out_message;
 }
 
@@ -133,7 +135,8 @@ std::unique_ptr<media::AudioInputDelegate> AudioInputDelegateImpl::Create(
   auto foreign_socket = std::make_unique<base::CancelableSyncSocket>();
 
   std::unique_ptr<AudioInputSyncWriter> writer = AudioInputSyncWriter::Create(
-      shared_memory_count, possibly_modified_parameters, foreign_socket.get());
+      base::BindRepeating(&LogMessage, stream_id), shared_memory_count,
+      possibly_modified_parameters, foreign_socket.get());
 
   if (!writer) {
     LogMessage(stream_id, "Failed to set up sync writer.");
