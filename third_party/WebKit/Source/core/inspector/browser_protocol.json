@@ -9448,7 +9448,7 @@
                 },
                 {
                     "name": "addScriptToEvaluateOnNewDocument",
-                    "description": "Evaluates given script in every frame upon creation (before loading frame's scripts).",
+                    "description": "Evaluates given script in root frame upon creation (before loading document's scripts).",
                     "parameters": [
                         {
                             "name": "source",
