@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39cb984_96a52408",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T17:13:11Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t parse. Is this whole line just there by mistake?",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 90
+      },
+      "revId": "e214f9a6d0802b12a30ba2b4762c144c1d0c8281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

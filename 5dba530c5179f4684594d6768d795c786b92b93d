@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3c4407d0_b9ec4c3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T17:13:11Z",
+      "side": 1,
+      "message": "Hm, I think the way I see it, it\u0027s not really worth it to separate these two things if they\u0027re still in the same class – the class does both of them, so it might as well combine the mechanisms for doing so.",
+      "parentUuid": "b607a992_b04a8248",
+      "range": {
+        "startLine": 268,
+        "startChar": 43,
+        "endLine": 268,
+        "endChar": 72
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02dea640_a77b8518",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 4
@@ -542,6 +566,30 @@
       "side": 1,
       "message": "Done - although now I think that the \"if (mCancelled) return;\" check on line 99 is now redundant? Do you agree?",
       "parentUuid": "9db3edf3_b6f469f6",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a8d7fe_b142d8f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T17:13:11Z",
+      "side": 1,
+      "message": "Indeed! And that actually means you could `assert !mCancelled` there instead.",
+      "parentUuid": "44dfa7b3_ea7ca937",
       "range": {
         "startLine": 118,
         "startChar": 12,
