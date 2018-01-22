@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "device/ctap/ctap_authenticator_request_param.h"
 #include "device/ctap/ctap_get_assertion_request_param.h"
 #include "device/ctap/ctap_make_credential_request_param.h"
-#include "device/ctap/ctap_request_param.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -23,7 +23,7 @@ TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
       0x01, 0x02, 0x30, 0x82, 0x01, 0x93, 0x30, 0x82, 0x01, 0x38, 0xa0,
       0x03, 0x02, 0x01, 0x02, 0x30, 0x82, 0x01, 0x93, 0x30, 0x82};
 
-  const std::vector<uint8_t> kSerializedRequest = {
+  static constexpr uint8_t kSerializedRequest[] = {
       // clang format-off
       0x01,        // authenticatorMakeCredential command
       0xa5,        // map(5)
@@ -132,7 +132,7 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
       0x50, 0x5f, 0x8e, 0xd2, 0xb1, 0x6a, 0xe2, 0x2f, 0x16, 0xbb, 0x05,
       0xb8, 0x8c, 0x25, 0xdb, 0x9e, 0x60, 0x26, 0x45, 0xf1, 0x41};
 
-  static const uint8_t kSerializedRequest[] = {
+  static constexpr uint8_t kSerializedRequest[] = {
       // clang format-off
       0x02,  // authenticatorGetAssertion command
       0xa4,  // map(4)
@@ -220,6 +220,35 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
   auto serialized_data = get_assertion_req.SerializeToCBOR();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
+}
+
+TEST(CTAPRequestTest, TestConstructCtapAuthenticatorRequestParam) {
+  static constexpr uint8_t kSerializedGetInfoCmd = 0x04;
+  static constexpr uint8_t kSerializedGetNextAssertionCmd = 0x08;
+  static constexpr uint8_t kSerializedCancelCmd = 0x03;
+  static constexpr uint8_t kSerializedResetCmd = 0x07;
+
+  auto get_info_cmd =
+      CTAPAuthenticatorRequestParam::CreateGetInfoParam().SerializeToCBOR();
+  ASSERT_TRUE(get_info_cmd);
+  EXPECT_THAT(*get_info_cmd, testing::ElementsAre(kSerializedGetInfoCmd));
+
+  auto get_next_assertion_cmd =
+      CTAPAuthenticatorRequestParam::CreateGetNextAssertionParam()
+          .SerializeToCBOR();
+  ASSERT_TRUE(get_next_assertion_cmd);
+  EXPECT_THAT(*get_next_assertion_cmd,
+              testing::ElementsAre(kSerializedGetNextAssertionCmd));
+
+  auto cancel_cmd =
+      CTAPAuthenticatorRequestParam::CreateCancelParam().SerializeToCBOR();
+  ASSERT_TRUE(cancel_cmd);
+  EXPECT_THAT(*cancel_cmd, testing::ElementsAre(kSerializedCancelCmd));
+
+  auto reset_cmd =
+      CTAPAuthenticatorRequestParam::CreateResetParam().SerializeToCBOR();
+  ASSERT_TRUE(reset_cmd);
+  EXPECT_THAT(*reset_cmd, testing::ElementsAre(kSerializedResetCmd));
 }
 
 }  // namespace device
