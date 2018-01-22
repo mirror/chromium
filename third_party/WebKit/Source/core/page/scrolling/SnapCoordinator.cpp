@@ -9,18 +9,21 @@
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "core/paint/PaintLayerScrollableArea.h"
 #include "platform/LengthFunctions.h"
 #include "platform/scroll/ScrollSnapData.h"
 
 namespace blink {
 
-SnapCoordinator::SnapCoordinator() : snap_container_map_() {}
+SnapCoordinator::SnapCoordinator(Document* document)
+    : snap_container_map_(), document_(document) {}
 
 SnapCoordinator::~SnapCoordinator() = default;
 
-SnapCoordinator* SnapCoordinator::Create() {
-  return new SnapCoordinator();
+SnapCoordinator* SnapCoordinator::Create(Document* document) {
+  return new SnapCoordinator(document);
 }
 
 // Returns the scroll container that can be affected by this snap area.
@@ -103,6 +106,9 @@ void SnapCoordinator::UpdateSnapContainerData(const LayoutBox& snap_container) {
     }
   }
   snap_container_map_.Set(&snap_container, snap_container_data);
+
+  if (snap_container.IsLayoutView())
+    SetChromeClientData(snap_container_data);
 }
 
 static float ClipInContainer(LayoutUnit unit, float max) {
@@ -395,6 +401,8 @@ void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
   if (scroll_snap_type.is_none) {
     snap_container_map_.erase(&snap_container);
     snap_container.ClearSnapAreas();
+    if (snap_container.IsLayoutView())
+      SetChromeClientData(base::nullopt);
   } else {
     if (scroll_snap_type.axis == SnapAxis::kInline) {
       if (snap_container.Style()->IsHorizontalWritingMode())
@@ -427,6 +435,18 @@ Optional<SnapContainerData> SnapCoordinator::GetSnapContainerData(
     return iter->value;
   }
   return base::nullopt;
+}
+
+void SnapCoordinator::Trace(blink::Visitor* visitor) {
+  visitor->Trace(document_);
+}
+
+void SnapCoordinator::SetChromeClientData(
+    Optional<SnapContainerData> data) const {
+  if (!document_ || !document_->GetPage())
+    return;
+
+  document_->GetPage()->GetChromeClient().SetSnapContainerData(std::move(data));
 }
 
 #ifndef NDEBUG

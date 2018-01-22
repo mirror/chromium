@@ -1079,6 +1079,11 @@ void ChromeClientImpl::SetOverscrollBehavior(
   web_view_->SetOverscrollBehavior(overscroll_behavior);
 }
 
+void ChromeClientImpl::SetSnapContainerData(
+    Optional<SnapContainerData> data) const {
+  web_view_->SetSnapContainerData(std::move(data));
+}
+
 void ChromeClientImpl::RegisterPopupOpeningObserver(
     PopupOpeningObserver* observer) {
   DCHECK(observer);

@@ -6745,7 +6745,7 @@ bool Document::ThreadedParsingEnabledForTesting() {
 SnapCoordinator* Document::GetSnapCoordinator() {
   if (RuntimeEnabledFeatures::CSSScrollSnapPointsEnabled() &&
       !snap_coordinator_)
-    snap_coordinator_ = SnapCoordinator::Create();
+    snap_coordinator_ = SnapCoordinator::Create(this);
 
   return snap_coordinator_.Get();
 }

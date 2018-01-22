@@ -43,6 +43,7 @@
 
 namespace cc {
 class AnimationHost;
+class SnapContainerData;
 }
 
 namespace blink {
@@ -138,6 +139,12 @@ class WebLayerTreeView {
   // Set the browser's behavior when overscroll happens, e.g. whether to glow
   // or navigate.
   virtual void SetOverscrollBehavior(const WebOverscrollBehavior&) {}
+
+  // SnapContainerData contains the necessary information a layer needs to
+  // perform snapping. The CSS scroll snap could enforce the scroll positions
+  // that a scroll container's scroll port may end at after a scrolling
+  // operation has completed.
+  virtual void SetSnapContainerData(base::Optional<cc::SnapContainerData>) {}
 
   // Flow control and scheduling ---------------------------------------
 

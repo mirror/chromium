@@ -1714,6 +1714,11 @@ void WebViewImpl::SetOverscrollBehavior(
     layer_tree_view_->SetOverscrollBehavior(overscroll_behavior);
 }
 
+void WebViewImpl::SetSnapContainerData(Optional<SnapContainerData> data) {
+  if (layer_tree_view_)
+    layer_tree_view_->SetSnapContainerData(std::move(data));
+}
+
 BrowserControls& WebViewImpl::GetBrowserControls() {
   return GetPage()->GetBrowserControls();
 }

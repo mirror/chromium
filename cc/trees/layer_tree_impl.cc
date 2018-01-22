@@ -22,6 +22,7 @@
 #include "cc/base/math_util.h"
 #include "cc/base/synced_property.h"
 #include "cc/input/page_scale_animation.h"
+#include "cc/input/scroll_snap_data.h"
 #include "cc/input/scrollbar_animation_controller.h"
 #include "cc/layers/effect_tree_layer_list_iterator.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
@@ -451,6 +452,7 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   target_tree->PushBrowserControls(nullptr);
 
   target_tree->set_overscroll_behavior(overscroll_behavior_);
+  target_tree->set_snap_container_data(snap_container_data_);
 
   // The page scale factor update can affect scrolling which requires that
   // these ids are set, so this must be before PushPageScaleFactorAndLimits.
@@ -847,6 +849,11 @@ void LayerTreeImpl::set_bottom_controls_height(float bottom_controls_height) {
 void LayerTreeImpl::set_overscroll_behavior(
     const OverscrollBehavior& behavior) {
   overscroll_behavior_ = behavior;
+}
+
+void LayerTreeImpl::set_snap_container_data(
+    const base::Optional<SnapContainerData>& data) {
+  snap_container_data_ = data;
 }
 
 bool LayerTreeImpl::ClampBrowserControlsShownRatio() {

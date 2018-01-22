@@ -39,6 +39,7 @@
 #include "platform/WebFrameScheduler.h"
 #include "platform/graphics/TouchAction.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollSnapData.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/text/TextDirection.h"
 #include "platform/wtf/Forward.h"
@@ -331,6 +332,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void DidUpdateBrowserControls() const {}
 
   virtual void SetOverscrollBehavior(const WebOverscrollBehavior&) {}
+
+  virtual void SetSnapContainerData(Optional<SnapContainerData>) const {}
 
   virtual void RegisterPopupOpeningObserver(PopupOpeningObserver*) = 0;
   virtual void UnregisterPopupOpeningObserver(PopupOpeningObserver*) = 0;
