@@ -16,6 +16,24 @@
       "revId": "0c3bd678275edc92172ff291bdea153166f0acad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143f8fda_8d0c0fd3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/MediaElementAudioSourceNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T23:28:51Z",
+      "side": 1,
+      "message": "I can revert it if you like, but I didn\u0027t want to create another CL only for 2 curly braces.",
+      "parentUuid": "f995ff36_de40666c",
+      "revId": "0c3bd678275edc92172ff291bdea153166f0acad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
