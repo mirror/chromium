@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07e0b25_c41fdd82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T05:21:58Z",
+      "side": 1,
+      "message": "I looked briefly at the bug to understand what this CL was trying to accomplish, and I have to confess I don\u0027t quite understand the purpose of this CL or why it\u0027s important to pass rotation information along (see also my comment in WebVideoFrameSubmitter). Perhaps the CL description and the public interface could use a few comment additions to help clarify things.",
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6932c590_f1dd5646",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T05:21:58Z",
+      "side": 1,
+      "message": "Nit: std::move() here since we pass |frame| by value to this function to transfer ownership.",
+      "range": {
+        "startLine": 105,
+        "startChar": 46,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5c1cfb_a78af094",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T05:21:58Z",
+      "side": 1,
+      "message": "Would you mind expanding this comment a bit? I\u0027m not quite sure what the purpose of WebVideoFrameSubmitter is used for.",
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
