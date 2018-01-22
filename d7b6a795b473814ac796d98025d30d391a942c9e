@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f3bdfaf_a1bbb6df",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-22T16:05:45Z",
+      "side": 0,
+      "message": "We have the same check on |support_map_| when adding to it in FSMI::RegisterCompositorFrameSinkSupport, so this check is redundant. I added this back as to DCHECK on |frame_sink_data_map_| sink though.",
+      "parentUuid": "d65c4a08_a5aea63e",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 70
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda6af27_d9e5ca04",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40424f25_c6e5be0e",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-22T16:05:45Z",
+      "side": 0,
+      "message": "We aren\u0027t accessing |support_map_| here anymore so adding a DCHECK on it seemed unnecessary.",
+      "parentUuid": "dda6af27_d9e5ca04",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 24
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a67c9e97_6c8d9de5",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-22T16:05:45Z",
+      "side": 0,
+      "message": "Ditto.",
+      "parentUuid": "a55cd479_830cf605",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "617a0927_86cde30a",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530ac9f7_ae262275",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-22T16:05:45Z",
+      "side": 0,
+      "message": "Ditto.",
+      "parentUuid": "617a0927_86cde30a",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 25
+      },
+      "revId": "d7b6a795b473814ac796d98025d30d391a942c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

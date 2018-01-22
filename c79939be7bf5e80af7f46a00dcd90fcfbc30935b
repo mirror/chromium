@@ -22,6 +22,30 @@
       "revId": "c79939be7bf5e80af7f46a00dcd90fcfbc30935b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d09a9f_d4ef3fb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-22T16:05:45Z",
+      "side": 1,
+      "message": "Done! I hope that explains it better.",
+      "parentUuid": "1f97d178_b4ac749e",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "c79939be7bf5e80af7f46a00dcd90fcfbc30935b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
