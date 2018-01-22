@@ -321,3 +321,7 @@ const RendererContentSettingRules*
 ChromeRenderThreadObserver::content_setting_rules() const {
   return &content_setting_rules_;
 }
+
+void ChromeRenderThreadObserver::NetworkStateChanged(bool online) {
+  online_ = online;
+}
