@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <algorithm>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -180,13 +181,13 @@ SpellCheck::SpellCheck(
       content::ChildThread::Get()->GetServiceManagerConnection();
   DCHECK(service_manager_connection);
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+  auto registry = std::make_unique<service_manager::BinderRegistry>();
   registry->AddInterface(base::BindRepeating(&SpellCheck::SpellCheckerRequest,
                                              base::Unretained(this)),
                          base::ThreadTaskRunnerHandle::Get());
 
   service_manager_connection->AddConnectionFilter(
-      base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
+      std::make_unique<content::SimpleConnectionFilter>(std::move(registry)));
 }
 
 SpellCheck::~SpellCheck() {
@@ -265,7 +266,7 @@ void SpellCheck::CustomDictionaryChanged(
 void SpellCheck::AddSpellcheckLanguage(base::File file,
                                        const std::string& language) {
   languages_.push_back(
-      base::MakeUnique<SpellcheckLanguage>(embedder_provider_));
+      std::make_unique<SpellcheckLanguage>(embedder_provider_));
   languages_.back()->Init(std::move(file), language);
 }
 
