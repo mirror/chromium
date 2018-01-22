@@ -22,6 +22,30 @@
       "revId": "d929ca16575abda5308fc1de2a12b2faa594df49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77ff36d_bbbfa7e5",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-22T21:04:24Z",
+      "side": 1,
+      "message": "Thanks! Just sent you a CL for this.",
+      "parentUuid": "7fb55e73_0e6624c9",
+      "range": {
+        "startLine": 390,
+        "startChar": 32,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "d929ca16575abda5308fc1de2a12b2faa594df49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
