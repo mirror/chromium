@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "4c49298e_9ff50c6c",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "I unfortunately can\u0027t do this because the TestImageDecoder is not only used for the FakeAccountFetcherService but also passed as an argument directly to AccountFetcherService: https://cs.chromium.org/chromium/src/components/signin/core/browser/account_tracker_service_unittest.cc?q\u003daccount_tracker_service_un\u0026sq\u003dpackage:chromium\u0026l\u003d279",
+      "parentUuid": "e466a107_b61bd0e9",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e0cae98_83f84982",
         "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
         "patchSetId": 19
@@ -127,6 +145,24 @@
       "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3725d3a8_69163176",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e0cae98_83f84982",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "5f66c71f_edb1c891",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9226_f7c32c5d",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787d9684_615315ad",
         "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
         "patchSetId": 19
@@ -161,6 +215,24 @@
       "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10995db3_b8d468c6",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "787d9684_615315ad",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

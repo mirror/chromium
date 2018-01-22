@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b09785f9_98cfe1a0",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3404250_cb0c6671",
+      "range": {
+        "startLine": 298,
+        "startChar": 64,
+        "endLine": 298,
+        "endChar": 65
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe19a2b_54f5160c",
         "filename": "components/signin/core/browser/account_fetcher_service.cc",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6ed687b_a866d6ef",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe19a2b_54f5160c",
+      "range": {
+        "startLine": 299,
+        "startChar": 66,
+        "endLine": 299,
+        "endChar": 67
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1ad8c7_c15c073c",
         "filename": "components/signin/core/browser/account_fetcher_service.cc",
         "patchSetId": 20
@@ -68,6 +116,30 @@
       "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b145256_cbdd3140",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-22T12:23:48Z",
+      "side": 1,
+      "message": "That is the thing. The accounts are signed into the web but not into Chrome!\nWe show a list of accounts (with images) so the user can choose one of them.",
+      "parentUuid": "4e1ad8c7_c15c073c",
+      "range": {
+        "startLine": 300,
+        "startChar": 40,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
