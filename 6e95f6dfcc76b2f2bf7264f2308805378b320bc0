@@ -34,6 +34,24 @@
       "revId": "6e95f6dfcc76b2f2bf7264f2308805378b320bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ae0d91_049b3a3f",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T21:37:50Z",
+      "side": 1,
+      "message": "Since cancelling doesn\u0027t work anyways (Or at least is racy, at least), maybe it would be best to move it to an argument to the callback.",
+      "parentUuid": "5892fed5_40cd551c",
+      "revId": "6e95f6dfcc76b2f2bf7264f2308805378b320bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
