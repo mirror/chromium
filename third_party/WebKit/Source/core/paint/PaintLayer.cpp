@@ -2747,6 +2747,9 @@ bool PaintLayer::BackgroundIsKnownToBeOpaqueInRect(
   if (GetLayoutObject().Style()->Visibility() != EVisibility::kVisible)
     return false;
 
+  if (GetLayoutObject().HasMask() || GetLayoutObject().HasClipPath())
+    return false;
+
   if (PaintsWithFilters() &&
       GetLayoutObject().Style()->Filter().HasFilterThatAffectsOpacity())
     return false;
