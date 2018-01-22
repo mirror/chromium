@@ -140,6 +140,30 @@
       "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a960db5b_1edd0bd9",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T13:30:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b145256_cbdd3140",
+      "range": {
+        "startLine": 300,
+        "startChar": 40,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
