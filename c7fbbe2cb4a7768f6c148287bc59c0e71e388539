@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06b1bfa5_d4b6abf3",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T14:28:37Z",
+      "side": 1,
+      "message": "I think this shouldn\u0027t be exposed and instead this should be call from init.",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6213117c_cbe34c7e",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T14:28:37Z",
+      "side": 1,
+      "message": "That\u0027s a lot of constraint manipulation for displaying a row of buttons. Can you explain what are you trying to solve here? Priorities do not seem like the right solution to me.",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad53a65_5b23d3be",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T14:28:37Z",
+      "side": 1,
+      "message": "Do you really need a helper for this?",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542b1a3b_7efc4fb3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T14:28:37Z",
+      "side": 1,
+      "message": "I don\u0027t think you should rely on constraints priority to resolve constraint conflicts. Instead, create constraints that don\u0027t conflict. The priorities should be used for implementing conditional layout where the view can be presented in different sizes and should adapt accordingly.",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
