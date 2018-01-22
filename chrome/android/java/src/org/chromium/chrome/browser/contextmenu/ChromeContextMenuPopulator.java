@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.share.ShareParams;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content_public.common.ContentUrlConstants;
 
@@ -275,7 +276,7 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
         String titleText = "";
         if (!TextUtils.isEmpty(params.getLinkUrl())
                 && !params.getLinkUrl().equals(ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL)) {
-            titleText = params.getLinkUrl();
+            titleText = UrlFormatter.formatUrlForDisplay(params.getLinkUrl());
         } else if (!TextUtils.isEmpty(params.getTitleText())) {
             titleText = params.getTitleText();
         }

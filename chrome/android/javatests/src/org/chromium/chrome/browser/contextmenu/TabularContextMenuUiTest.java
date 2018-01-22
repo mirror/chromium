@@ -143,7 +143,7 @@ public class TabularContextMenuUiTest {
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
-        final String expectedUrl = "http://google.com";
+        final String expectedUrl = "google.com";
         View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
             @Override
             public View call() {
