@@ -492,12 +492,13 @@ bool DownloadItemView::GetTooltipText(const gfx::Point& p,
 
 void DownloadItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetName(accessible_name_);
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::BUTTON;
   if (model_.IsDangerous()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
+    node_data->AddIntAttribute(
+        ax::mojom::IntAttribute::RESTRICTION,
+        static_cast<int32_t>(ax::mojom::Restriction::DISABLED));
   } else {
-    node_data->AddState(ui::AX_STATE_HASPOPUP);
+    node_data->AddState(ax::mojom::State::HASPOPUP);
   }
 }
 
@@ -1120,7 +1121,7 @@ void DownloadItemView::UpdateAccessibleName() {
   // has changed so they can announce it immediately.
   if (new_name != accessible_name_) {
     accessible_name_ = new_name;
-    NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::TEXT_CHANGED, true);
   }
 }
 

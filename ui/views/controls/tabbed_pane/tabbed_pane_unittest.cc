@@ -11,7 +11,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/accessibility/ax_action_data.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/events/keycodes/keyboard_code_conversion.h"
 #include "ui/views/test/test_views.h"
@@ -212,14 +212,14 @@ TEST_F(TabbedPaneTest, SelectTabWithAccessibleAction) {
     ui::AXNodeData data;
     GetTabAt(i)->GetAccessibleNodeData(&data);
     SCOPED_TRACE(testing::Message() << "Tab at index: " << i);
-    EXPECT_EQ(ui::AX_ROLE_TAB, data.role);
-    EXPECT_EQ(DefaultTabTitle(), data.GetString16Attribute(ui::AX_ATTR_NAME));
-    EXPECT_TRUE(data.HasState(ui::AX_STATE_SELECTABLE));
-    EXPECT_EQ(i == 0, data.HasState(ui::AX_STATE_SELECTED));
+    EXPECT_EQ(ax::mojom::Role::TAB, data.role);
+    EXPECT_EQ(DefaultTabTitle(), data.GetString16Attribute(ax::mojom::StringAttribute::NAME));
+    EXPECT_TRUE(data.HasState(ax::mojom::State::SELECTABLE));
+    EXPECT_EQ(i == 0, data.HasState(ax::mojom::State::SELECTED));
   }
 
   ui::AXActionData action;
-  action.action = ui::AX_ACTION_SET_SELECTION;
+  action.action = ax::mojom::Action::SET_SELECTION;
   // Select the first tab.
 
   GetTabAt(0)->HandleAccessibleAction(action);

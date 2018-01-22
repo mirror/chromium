@@ -163,17 +163,20 @@ const char* Checkbox::GetClassName() const {
 
 void Checkbox::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   LabelButton::GetAccessibleNodeData(node_data);
-  node_data->role = ui::AX_ROLE_CHECK_BOX;
-  const ui::AXCheckedState checked_state =
-      checked() ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-  node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+  node_data->role = ax::mojom::Role::CHECK_BOX;
+  const ax::mojom::CheckedState checked_state =
+      checked() ? ax::mojom::CheckedState::TRUE_VALUE : ax::mojom::CheckedState::FALSE_VALUE;
+  node_data->AddIntAttribute(ax::mojom::IntAttribute::CHECKED_STATE,
+                             static_cast<int32_t>(checked_state));
   if (enabled()) {
     if (checked()) {
-      node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                                 ui::AX_DEFAULT_ACTION_VERB_UNCHECK);
+      node_data->AddIntAttribute(
+          ax::mojom::IntAttribute::DEFAULT_ACTION_VERB,
+          static_cast<int32_t>(ax::mojom::DefaultActionVerb::UNCHECK));
     } else {
-      node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
-                                 ui::AX_DEFAULT_ACTION_VERB_CHECK);
+      node_data->AddIntAttribute(
+          ax::mojom::IntAttribute::DEFAULT_ACTION_VERB,
+          static_cast<int32_t>(ax::mojom::DefaultActionVerb::CHECK));
     }
   }
 }

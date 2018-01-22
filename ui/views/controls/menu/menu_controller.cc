@@ -1201,7 +1201,7 @@ void MenuController::SetSelection(MenuItemView* menu_item,
       (MenuDepth(menu_item) != 1 ||
        menu_item->GetType() != MenuItemView::SUBMENU)) {
     menu_item->NotifyAccessibilityEvent(
-        ui::AX_EVENT_SELECTION, true);
+        ax::mojom::Event::SELECTION, true);
   }
 }
 
@@ -2697,7 +2697,7 @@ void MenuController::SetHotTrackedButton(Button* hot_button) {
     // Hot-tracked state may change outside of the MenuController. Correct it.
     if (hot_button && !hot_button->IsHotTracked()) {
       hot_button->SetHotTracked(true);
-      hot_button->NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+      hot_button->NotifyAccessibilityEvent(ax::mojom::Event::SELECTION, true);
     }
     return;
   }
@@ -2706,7 +2706,7 @@ void MenuController::SetHotTrackedButton(Button* hot_button) {
   hot_button_ = hot_button;
   if (hot_button) {
     hot_button->SetHotTracked(true);
-    hot_button->NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+    hot_button->NotifyAccessibilityEvent(ax::mojom::Event::SELECTION, true);
   }
 }
 

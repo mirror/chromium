@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/strings/string16.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_export.h"
 
 namespace ui {
@@ -50,16 +50,16 @@ size_t AX_EXPORT
                                TextBoundaryType boundary,
                                size_t start_offset,
                                TextBoundaryDirection direction,
-                               AXTextAffinity affinity);
+                               ax::mojom::TextAffinity affinity);
 
 // Returns a string ID that corresponds to the name of the given action.
 base::string16 AX_EXPORT
-ActionVerbToLocalizedString(const AXDefaultActionVerb action_verb);
+ActionVerbToLocalizedString(const ax::mojom::DefaultActionVerb action_verb);
 
 // Returns the non-localized string representation of a supported action.
 // Some APIs on Linux and Windows need to return non-localized action names.
 base::string16 AX_EXPORT
-ActionVerbToUnlocalizedString(const AXDefaultActionVerb action_verb);
+ActionVerbToUnlocalizedString(const ax::mojom::DefaultActionVerb action_verb);
 
 }  // namespace ui
 

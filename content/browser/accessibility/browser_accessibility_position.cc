@@ -9,7 +9,7 @@
 #include "content/browser/accessibility/accessibility_flags.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 
 namespace content {
 
@@ -136,14 +136,14 @@ std::vector<int32_t> BrowserAccessibilityPosition::GetWordStartOffsets() const {
   if (IsNullPosition())
     return std::vector<int32_t>();
   DCHECK(GetAnchor());
-  return GetAnchor()->GetIntListAttribute(ui::AX_ATTR_WORD_STARTS);
+  return GetAnchor()->GetIntListAttribute(ax::mojom::IntListAttribute::WORD_STARTS);
 }
 
 std::vector<int32_t> BrowserAccessibilityPosition::GetWordEndOffsets() const {
   if (IsNullPosition())
     return std::vector<int32_t>();
   DCHECK(GetAnchor());
-  return GetAnchor()->GetIntListAttribute(ui::AX_ATTR_WORD_ENDS);
+  return GetAnchor()->GetIntListAttribute(ax::mojom::IntListAttribute::WORD_ENDS);
 }
 
 int32_t BrowserAccessibilityPosition::GetNextOnLineID(int32_t node_id) const {
@@ -152,7 +152,7 @@ int32_t BrowserAccessibilityPosition::GetNextOnLineID(int32_t node_id) const {
   BrowserAccessibility* node = GetNodeInTree(tree_id(), node_id);
   int next_on_line_id;
   if (!node ||
-      !node->GetIntAttribute(ui::AX_ATTR_NEXT_ON_LINE_ID, &next_on_line_id)) {
+      !node->GetIntAttribute(ax::mojom::IntAttribute::NEXT_ON_LINE_ID, &next_on_line_id)) {
     return INVALID_ANCHOR_ID;
   }
   return static_cast<int32_t>(next_on_line_id);
@@ -164,7 +164,7 @@ int32_t BrowserAccessibilityPosition::GetPreviousOnLineID(
     return INVALID_ANCHOR_ID;
   BrowserAccessibility* node = GetNodeInTree(tree_id(), node_id);
   int previous_on_line_id;
-  if (!node || !node->GetIntAttribute(ui::AX_ATTR_PREVIOUS_ON_LINE_ID,
+  if (!node || !node->GetIntAttribute(ax::mojom::IntAttribute::PREVIOUS_ON_LINE_ID,
                                       &previous_on_line_id)) {
     return INVALID_ANCHOR_ID;
   }

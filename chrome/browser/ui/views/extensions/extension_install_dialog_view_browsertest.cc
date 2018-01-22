@@ -414,15 +414,15 @@ void ExtensionInstallDialogRatingsSectionTest::TestRatingsSectionA11y(
   {
     ui::AXNodeData node_data;
     rating_view->GetAccessibleNodeData(&node_data);
-    EXPECT_EQ(ui::AX_ROLE_STATIC_TEXT, node_data.role);
-    EXPECT_EQ(expected_text, node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+    EXPECT_EQ(ax::mojom::Role::STATIC_TEXT, node_data.role);
+    EXPECT_EQ(expected_text, node_data.GetStringAttribute(ax::mojom::StringAttribute::NAME));
   }
 
   for (int i = 0; i < rating_view->child_count(); ++i) {
     views::View* child = rating_view->child_at(i);
     ui::AXNodeData node_data;
     child->GetAccessibleNodeData(&node_data);
-    EXPECT_EQ(ui::AX_ROLE_IGNORED, node_data.role);
+    EXPECT_EQ(ax::mojom::Role::IGNORED, node_data.role);
   }
 
   modal_dialog->Close();

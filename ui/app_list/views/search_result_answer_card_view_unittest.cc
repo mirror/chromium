@@ -160,8 +160,8 @@ TEST_F(SearchResultAnswerCardViewTest, KeyboardEvents) {
 TEST_F(SearchResultAnswerCardViewTest, SpokenFeedback) {
   ui::AXNodeData node_data;
   GetAccessibleNodeData(&node_data);
-  EXPECT_EQ(ui::AX_ROLE_GENERIC_CONTAINER, node_data.role);
-  EXPECT_EQ(kResultTitle, node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+  EXPECT_EQ(ax::mojom::Role::GENERIC_CONTAINER, node_data.role);
+  EXPECT_EQ(kResultTitle, node_data.GetStringAttribute(ax::mojom::StringAttribute::NAME));
 }
 
 TEST_F(SearchResultAnswerCardViewTest, DeleteResult) {
