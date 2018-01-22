@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73ddbad_15706fc3",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5266,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-22T23:17:06Z",
+      "side": 0,
+      "message": "This is a real change.",
+      "revId": "59a2ae4c4d36be31e18d4c91165aff29a7568cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
