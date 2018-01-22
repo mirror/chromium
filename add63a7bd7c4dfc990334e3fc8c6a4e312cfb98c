@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9a9c0d4_c63507c8",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-22T07:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d1bd71_ae7256da",
+      "range": {
+        "startLine": 887,
+        "startChar": 1,
+        "endLine": 889,
+        "endChar": 37
+      },
+      "revId": "add63a7bd7c4dfc990334e3fc8c6a4e312cfb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee28279b_997eeff1",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 1
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "1c1218a0_81c46119",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-22T07:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d662ac_f5063490",
+      "range": {
+        "startLine": 893,
+        "startChar": 13,
+        "endLine": 893,
+        "endChar": 34
+      },
+      "revId": "add63a7bd7c4dfc990334e3fc8c6a4e312cfb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac847167_8936ba97",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 1
@@ -76,6 +124,30 @@
       "writtenOn": "2018-01-21T07:20:07Z",
       "side": 1,
       "message": "Is this correct when ShouldConsiderSelectionAsDirectional() is false (e.g., on Mac)?\n\nIs it possible that |Selection().IsDirectional()| and |new_selection.IsDirectional()| are true, but we end up (mistakenly) clearing the editing style because |default_selection_directional| is false?",
+      "range": {
+        "startLine": 898,
+        "startChar": 6,
+        "endLine": 898,
+        "endChar": 66
+      },
+      "revId": "add63a7bd7c4dfc990334e3fc8c6a4e312cfb98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1aaf31_ab259df2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-22T07:41:03Z",
+      "side": 1,
+      "message": "Updated code.\nSetSelectionOptions |is_directional_| value is now set at the call sites.\nIf |passed_selection| was created from the current selection , then directional value is taken from FrameSelection, else default value is passed.",
+      "parentUuid": "ac847167_8936ba97",
       "range": {
         "startLine": 898,
         "startChar": 6,
