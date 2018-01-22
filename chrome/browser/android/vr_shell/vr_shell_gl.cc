@@ -465,16 +465,18 @@ void VrShellGl::ScheduleOrCancelWebVrFrameTimeout() {
     webvr_spinner_timeout_.Cancel();
     return;
   }
-  webvr_spinner_timeout_.Reset(
-      base::Bind(&VrShellGl::OnWebVrTimeoutImminent, base::Unretained(this)));
-  task_runner_->PostDelayedTask(
-      FROM_HERE, webvr_spinner_timeout_.callback(),
-      base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
-  webvr_frame_timeout_.Reset(
-      base::Bind(&VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
-  task_runner_->PostDelayedTask(
-      FROM_HERE, webvr_frame_timeout_.callback(),
-      base::TimeDelta::FromSeconds(kWebVrInitialFrameTimeoutSeconds));
+  if (ui_->CanSendWebVrVSync()) {
+    webvr_spinner_timeout_.Reset(base::BindRepeating(
+        &VrShellGl::OnWebVrTimeoutImminent, base::Unretained(this)));
+    task_runner_->PostDelayedTask(
+        FROM_HERE, webvr_spinner_timeout_.callback(),
+        base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
+    webvr_frame_timeout_.Reset(base::BindRepeating(
+        &VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
+    task_runner_->PostDelayedTask(
+        FROM_HERE, webvr_frame_timeout_.callback(),
+        base::TimeDelta::FromSeconds(kWebVrInitialFrameTimeoutSeconds));
+  }
 }
 
 void VrShellGl::OnWebVrFrameTimedOut() {
@@ -1255,8 +1257,17 @@ void VrShellGl::OnVSync(base::TimeTicks frame_time) {
   vsync_helper_.RequestVSync(
       base::Bind(&VrShellGl::OnVSync, base::Unretained(this)));
 
+  bool can_send_webvr_vsync = ui_->CanSendWebVrVSync();
+  if (submit_client_ && !last_should_send_webvr_vsync_ &&
+      can_send_webvr_vsync) {
+    // We will start sending vsync to the WebVR page, so schedule the first
+    // frame timeout.
+    ScheduleOrCancelWebVrFrameTimeout();
+  }
+  last_should_send_webvr_vsync_ = can_send_webvr_vsync;
+
   // Process WebVR presenting VSync (VRDisplay rAF).
-  if (!callback_.is_null()) {
+  if (!callback_.is_null() && can_send_webvr_vsync) {
     // A callback was stored by GetVSync. Use it now for sending a VSync.
     SendVSync(frame_time, base::ResetAndReturn(&callback_));
   } else {
@@ -1283,7 +1294,8 @@ void VrShellGl::GetVSync(GetVSyncCallback callback) {
   // In surfaceless (reprojecting) rendering, stay locked
   // to vsync intervals. Otherwise, for legacy Cardboard mode,
   // run requested animation frames now if it missed a vsync.
-  if ((surfaceless_rendering_ && webvr_vsync_align_) || !pending_vsync_) {
+  if ((surfaceless_rendering_ && webvr_vsync_align_) || !pending_vsync_ ||
+      !ui_->CanSendWebVrVSync()) {
     if (!callback_.is_null()) {
       mojo::ReportBadMessage(
           "Requested VSync before waiting for response to previous request.");
