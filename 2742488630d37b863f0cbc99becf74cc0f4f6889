@@ -34,6 +34,24 @@
       "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "daf49e2d_8ca016d8",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T19:07:16Z",
+      "side": 1,
+      "message": "I\u0027m confused by your comment \"we want to allow incognito -\u003e non-incognito\" since yes, that\u0027s precisely what I was saying we want to allow.  We just didn\u0027t want to allow the other direction.  Which you also seemed to acknowledge later.  So I can\u0027t figure out what your interpretation of my comment was :)\n\nIf a tab exists as both types, I\u0027m OK with prioritizing the MRU window over windows of the same type.  So I don\u0027t think the final case you describe is bad.",
+      "parentUuid": "c63e1d34_fd1a89f8",
+      "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
