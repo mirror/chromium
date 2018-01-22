@@ -12,6 +12,7 @@
 
 #include "base/files/file.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "components/spellcheck/renderer/spellcheck_worditerator.h"
 
@@ -35,7 +36,7 @@ class SpellcheckLanguage {
   };
 
   explicit SpellcheckLanguage(
-      service_manager::LocalInterfaceProvider* embedder_provider);
+      base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
   ~SpellcheckLanguage();
 
   void Init(base::File file, const std::string& language);

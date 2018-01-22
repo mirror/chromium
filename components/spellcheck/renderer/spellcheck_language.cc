@@ -11,7 +11,7 @@
 #include "components/spellcheck/renderer/spelling_engine.h"
 
 SpellcheckLanguage::SpellcheckLanguage(
-    service_manager::LocalInterfaceProvider* embedder_provider)
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider)
     : platform_spelling_engine_(CreateNativeSpellingEngine(embedder_provider)) {
 }
 
