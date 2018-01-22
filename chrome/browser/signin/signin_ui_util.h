@@ -9,9 +9,13 @@
 #include <vector>
 
 #include "base/strings/string16.h"
+#include "build/buildflag.h"
 #include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/signin_features.h"
+#include "components/signin/core/browser/signin_metrics.h"
 
 class Profile;
+class Browser;
 class SigninManagerBase;
 
 // Utility functions to gather status information from the various signed in
@@ -31,6 +35,7 @@ void InitializePrefsForProfile(Profile* profile);
 // Shows a learn more page for signin errors.
 void ShowSigninErrorLearnMorePage(Profile* profile);
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
 // Returns the display email string for the given account.  If the profile
 // has not been migrated to use gaia ids, then its possible for the display
 // to not ne known yet.  In this case, use |account_id|, which is assumed to
@@ -40,6 +45,17 @@ std::string GetDisplayEmail(Profile* profile, const std::string& account_id);
 // Returns the list of all accounts that have a token. The default account in
 // the Gaia cookies will be the first account in the list.
 std::vector<AccountInfo> GetAccountsForDicePromos(Profile* profile);
+
+// Enables sync for |account|.
+// If the user is already signed in to Chrome with a different account, then
+// this function does nothing.
+// If the account credentials are stale (the refresh token is missing or there
+// is an auth error for the account), then the user is presented with a Chrome
+// sign-in reauth page having the |account.email| prefilled.
+void EnableSync(Browser* browser,
+                const AccountInfo& account,
+                signin_metrics::AccessPoint access_point);
+#endif
 
 }  // namespace signin_ui_util
 
