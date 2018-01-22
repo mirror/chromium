@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab0427fb_6300173a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-22T18:53:49Z",
+      "side": 1,
+      "message": "lets not cache this and keep using FirstRunStatus.getFirstRunFlowComplete(); when necessary below.",
+      "range": {
+        "startLine": 138,
+        "startChar": 49,
+        "endLine": 138,
+        "endChar": 72
+      },
+      "revId": "77e9773f98120ac538ffe821d0bf3a679743bc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1532c397_249d7825",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-01-22T18:53:49Z",
+      "side": 1,
+      "message": "what happens if this doesn\u0027t run at all and we don\u0027t start the native init? It would be good to make sure we are not leaving the user in a ANR like situation.",
+      "range": {
+        "startLine": 143,
+        "startChar": 41,
+        "endLine": 143,
+        "endChar": 44
+      },
+      "revId": "77e9773f98120ac538ffe821d0bf3a679743bc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
