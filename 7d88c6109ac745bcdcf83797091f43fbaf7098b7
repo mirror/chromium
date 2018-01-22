@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4cf9c226_e0a1a844",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-22T15:59:25Z",
+      "side": 1,
+      "message": "thanks for the explanation, sgtm",
+      "parentUuid": "acc4ce1e_08299f01",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749f14b5_130ad9dc",
         "filename": "components/exo/wayland/clients/rects.cc",
         "patchSetId": 7
