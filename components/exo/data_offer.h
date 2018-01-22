@@ -72,6 +72,15 @@ class DataOffer final : public ui::PropertyHandler {
   DndAction dnd_action() { return dnd_action_; }
 
  private:
+  // Gets a comma-separated list of urls extracted from file in |data|.
+  bool GetUrlListFromDataFile(FileHelper* file_helper,
+                              const ui::OSExchangeData& data,
+                              base::string16* url_list_string) const;
+  // Gets a comma-separated list of urls extracted from pickle in |data|.
+  bool GetUrlListFromDataPickle(FileHelper* file_helper,
+                                const ui::OSExchangeData& data,
+                                base::string16* url_list_string) const;
+
   DataOfferDelegate* const delegate_;
 
   // Map between mime type and drop data bytes.
