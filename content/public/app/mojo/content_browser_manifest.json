@@ -9,6 +9,9 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
+	"debug_recording" : [
+          "audio::mojom::DebugRecordingFileProvider"
+	],
         "dwrite_font_proxy": [
           "content::mojom::DWriteFontProxy"
         ],
