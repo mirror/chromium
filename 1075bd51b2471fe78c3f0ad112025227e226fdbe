@@ -111,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "87f2f975_9fd3ed3c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1182956
+      },
+      "writtenOn": "2018-01-22T15:59:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3e7134_55e58235",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57618598_671a4817",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
         "patchSetId": 3
