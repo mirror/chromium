@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f7e36bc_56a77731",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-22T04:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47658f98_a2e47eba",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed711717_711fdff1",
         "filename": "ash/frame/header_view.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "224194f8_175b7161",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-22T04:11:05Z",
+      "side": 1,
+      "message": "Yeah, this can go too.",
+      "parentUuid": "ed711717_711fdff1",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "220e64b1_1f9ef41e",
         "filename": "ash/frame/header_view.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-19T05:16:46Z",
       "side": 1,
       "message": "nit: comment why/when parent() might be null?  (nothing else in header_view.cc has checks for parent()).",
+      "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a2a183_dd2b254f",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-22T04:11:05Z",
+      "side": 1,
+      "message": "Apparently frame_caption_button_container_view calls PreferredSizeChanged when setting the image, before this view is attached to anything. That seems.... Reasonable enough.",
+      "parentUuid": "220e64b1_1f9ef41e",
       "revId": "dcf5d51143d49b3d0a4889dc04c5e6fbdcd6286b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
