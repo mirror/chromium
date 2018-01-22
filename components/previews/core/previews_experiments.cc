@@ -150,15 +150,20 @@ net::EffectiveConnectionType GetECTThresholdForPreview(
   return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
 }
 
+bool ArePreviewsAllowed() {
+  return base::FeatureList::IsEnabled(features::kPreviews);
+}
+
 bool IsOfflinePreviewsEnabled() {
   return base::FeatureList::IsEnabled(features::kOfflinePreviews);
 }
 
 bool IsClientLoFiEnabled() {
-  return base::FeatureList::IsEnabled(features::kClientLoFi) ||
-         base::StartsWith(
-             base::FieldTrialList::FindFullName(kClientLoFiExperimentName),
-             kEnabled, base::CompareCase::SENSITIVE);
+  return base::FeatureList::IsEnabled(
+      features::kClientLoFi ||
+      base::StartsWith(
+          base::FieldTrialList::FindFullName(kClientLoFiExperimentName),
+          kEnabled, base::CompareCase::SENSITIVE));
 }
 
 bool IsAMPRedirectionPreviewEnabled() {
