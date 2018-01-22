@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7cefc11a_bbf60f4b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-22T23:54:26Z",
+      "side": 1,
+      "message": "Done. Thoughts on the naming scheme after WebVR tests are removed and we don\u0027t need to subclass anymore? TestFramework sounds super generic, but XrTestFramework might not make as much sense in VR browsing tests. Or are we counting VR browsing under XR now?",
+      "parentUuid": "f823276a_036cd579",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc60883_6c2bb928",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d623bb2_523abfd2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-22T23:54:26Z",
+      "side": 1,
+      "message": "Done. This is only going to be temporary (I assume we\u0027ll have no need for WebVR tests once it\u0027s out of origin trial), but that\u0027s multiple months down the line, so probably worth keeping things clean in the meantime.\n\nThoughts on also renaming the other util classes to remove \"Vr\" to keep things consistent?",
+      "parentUuid": "bcc60883_6c2bb928",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
