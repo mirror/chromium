@@ -1470,6 +1470,11 @@ void HTMLCanvasElement::UnregisterContentsLayer(WebLayer* web_layer) {
   GraphicsLayer::UnregisterContentsLayer(web_layer);
 }
 
+void HTMLCanvasElement::OnSurfaceIdUpdated(uint32_t client_id,
+                                           uint32_t frame_sink_id,
+                                           uint32_t parent_id,
+                                           base::UnguessableToken nonce) {}
+
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
 }
