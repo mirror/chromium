@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8067c9_00485dcc",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437270ac_d873f1b8",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "Are you going to remove this?",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f07bae6_e1a879b5",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "Why is this test uncertain about whether |dir| exists or not?",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30be3221_82cabadb",
+        "filename": "chrome/browser/profiles/profile_info_cache_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58392763_a7e9e5cb",
+        "filename": "chrome/browser/profiles/profile_info_cache_unittest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef563c7a_bb1d9144",
+        "filename": "chrome/test/base/testing_profile_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T22:03:27Z",
+      "side": 1,
+      "message": "foo_unique_ptr.reset(new Foo(foo_args)) -\u003e foo_unique_ptr \u003d std::make_unique\u003cFoo\u003e(foo_args).",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
