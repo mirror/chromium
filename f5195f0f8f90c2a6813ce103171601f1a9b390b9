@@ -16,6 +16,24 @@
       "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffe25ad_c03ecbb3",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-22T23:02:13Z",
+      "side": 1,
+      "message": "Capabilities is enough to know if XR30 is supported, but I\u0027d \nlike to enable the platforms individually to make sure there\u0027s\nno hardware specific bug and to give time to some of them (e.g.\nCrOs on Intel) to deploy specific patches (mesa: b/71811478 or\ncrrev.com/c/747509) etc.",
+      "parentUuid": "f30519d2_2935675f",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
