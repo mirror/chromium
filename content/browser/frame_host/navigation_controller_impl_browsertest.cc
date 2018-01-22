@@ -1424,15 +1424,15 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, ReloadWithUrlAnchor) {
 
   std::string script =
       "domAutomationController.send(document.getElementById('div').scrollTop)";
-  int value = 0;
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), script, &value));
-  EXPECT_EQ(100, value);
+  double value = 0;
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), script, &value));
+  EXPECT_EQ(100, round(value));
 
   // Reload.
   ReloadBlockUntilNavigationsComplete(shell(), 1);
 
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), script, &value));
-  EXPECT_EQ(100, value);
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), script, &value));
+  EXPECT_EQ(100, round(value));
 }
 
 // Verify that reloading a page with url anchor and scroll scrolls to correct
@@ -1450,24 +1450,24 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       "domAutomationController.send(document.getElementById('div').scrollTop)";
   std::string get_window_scroll_y =
       "domAutomationController.send(window.scrollY)";
-  int div_scroll_top = 0;
-  int window_scroll_y = 0;
-  EXPECT_TRUE(
-      ExecuteScriptAndExtractInt(shell(), get_div_scroll_top, &div_scroll_top));
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), get_window_scroll_y,
-                                         &window_scroll_y));
-  EXPECT_EQ(100, div_scroll_top);
-  EXPECT_EQ(10, window_scroll_y);
+  double div_scroll_top = 0;
+  double window_scroll_y = 0;
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_div_scroll_top,
+                                            &div_scroll_top));
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_window_scroll_y,
+                                            &window_scroll_y));
+  EXPECT_EQ(100, round(div_scroll_top));
+  EXPECT_EQ(10, round(window_scroll_y));
 
   // Reload.
   ReloadBlockUntilNavigationsComplete(shell(), 1);
 
-  EXPECT_TRUE(
-      ExecuteScriptAndExtractInt(shell(), get_div_scroll_top, &div_scroll_top));
-  EXPECT_TRUE(ExecuteScriptAndExtractInt(shell(), get_window_scroll_y,
-                                         &window_scroll_y));
-  EXPECT_EQ(100, div_scroll_top);
-  EXPECT_EQ(10, window_scroll_y);
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_div_scroll_top,
+                                            &div_scroll_top));
+  EXPECT_TRUE(ExecuteScriptAndExtractDouble(shell(), get_window_scroll_y,
+                                            &window_scroll_y));
+  EXPECT_EQ(100, round(div_scroll_top));
+  EXPECT_EQ(10, round(window_scroll_y));
 }
 
 // Verify that empty GURL navigations are not classified as SAME_PAGE.
