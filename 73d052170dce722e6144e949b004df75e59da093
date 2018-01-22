@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "147b7cd6_18b112d4",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-22T20:25:05Z",
+      "side": 1,
+      "message": "\u003e Can you tell me how to enable the feature so that I can play with the tests tomorrow? It sounds very concerning if CommitNavigation() isn\u0027t successful today.\n\nIf you can provide some insight re what these tests want the browser to do after script execution, that will be great!  I originally guessed the tests doesn\u0027t want navigation so tried adding \"navigate \u003d false;\" to the script (blindly :( ) w/o any luck.\n\nYou can enable the feature through any of these:\n--enable-features\u003dUserActivationV2\nchrome://flags/#user-activation-v2\n\n\n\u003e I feel that my question from another comment isn\u0027t addressed. Why would a test use content::ExecuteScript consciously instead of content::ExecuteScriptWithScopedUserGesture? Is there an example? I\u0027m asking because if nobody needs content::ExecuteScript (i.e. with pending activation) then we could just update content::ExecuteScript with the new implementation.\n\nI see your point now.  For examples in the other category, see the failures here:\nhttps://ci.chromium.org/buildbot/tryserver.chromium.linux/linux_chromium_rel_ng/629279\nThe answer to \"why\" depends on what a particular test wants to check.  Suppose w.l.o.g that the test is \"if X then Y\".\n\n- If the JS in the test is part of the precondition (X), then check Y should be done in the same context of the script (that assumes user activation).  From a user interaction perspective, it is equivalent to: X \u003d {user interacted with the page, some JS got executed} and Y \u003d {then the browser did something as a result of both of these}.  The last part shouldn\u0027t just assume there is no user gesture (unless of course the JS itself consumes it though a popup or navigation).\n\n- If the JS in the test is not part of \"if X then Y\" but merely a setup shortcut for the test (e.g. to avoid having C++ APIs only for the setup), it could be fine to test \"if X then Y\" outside of the JS context.  Hence partially resetting the script\u0027s outcome through a forced consumption of activation could be reasonable.\n\nFeel free to VC to make sure we are on the same page.",
+      "parentUuid": "f0fe5871_37a1442c",
+      "range": {
+        "startLine": 594,
+        "startChar": 14,
+        "endLine": 594,
+        "endChar": 57
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9272751_26ab743c",
         "filename": "content/public/test/browser_test_utils.cc",
         "patchSetId": 6
