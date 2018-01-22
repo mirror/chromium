@@ -236,9 +236,11 @@ class MetricsService : public base::HistogramFlattener {
 
   // Turns recording on or off.
   // DisableRecording() also forces a persistent save of logging state (if
-  // anything has been recorded, or transmitted).
+  // anything has been recorded, or transmitted). The |collect_metrics| flag
+  // indicates if unreported metrics should be collected into the log or left
+  // where they are.
   void EnableRecording();
-  void DisableRecording();
+  void DisableRecording(bool collect_metrics);
 
   // If in_idle is true, sets idle_since_last_transmission to true.
   // If in_idle is false and idle_since_last_transmission_ is true, sets
@@ -252,12 +254,16 @@ class MetricsService : public base::HistogramFlattener {
   // Opens a new log for recording user experience metrics.
   void OpenNewLog();
 
-  // Closes out the current log after adding any last information.
-  void CloseCurrentLog();
+  // Closes out the current log after adding any last information. The
+  // |collect_metrics| flag indicates if unreported metrics should be
+  // collected into the log or left where they are.
+  void CloseCurrentLog(bool collect_metrics);
 
   // Pushes the text of the current and staged logs into persistent storage.
-  // Called when Chrome shuts down.
-  void PushPendingLogsToPersistentStorage();
+  // Called when Chrome shuts down. The |collect_metrics| flag indicates if
+  // unreported metrics should be collected into the log or left where they
+  // are.
+  void PushPendingLogsToPersistentStorage(bool collect_metrics);
 
   // Ensures that scheduler is running, assuming the current settings are such
   // that metrics should be reported. If not, this is a no-op.
