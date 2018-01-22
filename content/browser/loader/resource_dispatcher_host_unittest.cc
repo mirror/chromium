@@ -83,7 +83,7 @@
 #include "services/network/public/cpp/resource_request.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom.h"
 
 // TODO(eroman): Write unit tests for SafeBrowsing that exercise
 //               SafeBrowsingResourceHandler.

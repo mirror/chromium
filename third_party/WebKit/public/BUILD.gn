@@ -26,6 +26,19 @@ group("blink") {
   ]
 }
 
+# Unlink :blink, both renderer-side and browser-side code can depend
+# on :blink_common.
+group("blink_common") {
+  public_deps = [
+    "//third_party/WebKit/public/common:headers",
+    "//third_party/WebKit/public/common:mojo_bindings",
+    "//third_party/WebKit/public/common:mojo_platform_bindings",
+  ]
+  deps = [
+    "//third_party/WebKit/common",
+  ]
+}
+
 group("test_support") {
   testonly = true
   public_deps = [
@@ -115,6 +128,8 @@ source_set("test_headers") {
 # Depend on this target to use public blink API headers for things like enums
 # and public structures without actually linking against any Blink libraries.
 source_set("blink_headers") {
+  # See common/BUILD.gn for common blink headers that are defined in
+  # public/common.
   sources = [
     "platform/BlameContext.h",
     "platform/CORSStatus.h",
@@ -618,10 +633,10 @@ source_set("blink_headers") {
   ]
 
   public_deps = [
+    ":blink_common",
     "//net",
     "//services/service_manager/public/cpp",
     "//skia",
-    "//third_party/WebKit/common:blink_common",
     "//url",
   ]
 
@@ -795,14 +810,15 @@ mojom("mojo_bindings") {
     "//services/network/public/interfaces:interfaces",
     "//services/service_manager/public/interfaces",
     "//skia/public/interfaces",
-    "//third_party/WebKit/common:mojo_platform_bindings",
+    "//third_party/WebKit/public/common:mojo_platform_bindings",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
 
-  overridden_deps = [ "//third_party/WebKit/common:mojo_platform_bindings" ]
-  component_deps = [ "//third_party/WebKit/common:blink_common" ]
+  overridden_deps =
+      [ "//third_party/WebKit/public/common:mojo_platform_bindings" ]
+  component_deps = [ "//third_party/WebKit/common" ]
 
   component_output_prefix = "blink_mojo_bindings"
 
@@ -904,12 +920,12 @@ mojom("core_mojo_bindings") {
     "platform/modules/broadcastchannel/broadcast_channel.mojom",
   ]
   public_deps = [
-    "//third_party/WebKit/common:mojo_bindings",
+    "//third_party/WebKit/public/common:mojo_bindings",
     "//url/mojo:url_mojom_origin",
   ]
 
-  overridden_deps = [ "//third_party/WebKit/common:mojo_bindings" ]
-  component_deps = [ "//third_party/WebKit/common:blink_common" ]
+  overridden_deps = [ "//third_party/WebKit/public/common:mojo_bindings" ]
+  component_deps = [ "//third_party/WebKit/common" ]
 
   component_output_prefix = "blink_core_mojo_bindings"
 

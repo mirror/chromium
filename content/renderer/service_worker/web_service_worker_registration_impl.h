@@ -16,8 +16,8 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/common/service_worker/service_worker_error_type.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_error_type.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
 
 namespace base {

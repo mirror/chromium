@@ -5,7 +5,7 @@
 #ifndef BaseFetchContext_h
 #define BaseFetchContext_h
 
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/CoreExport.h"
 #include "core/frame/WebFeatureForward.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
