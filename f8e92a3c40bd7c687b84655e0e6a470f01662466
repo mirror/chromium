@@ -46,6 +46,30 @@
       "revId": "f8e92a3c40bd7c687b84655e0e6a470f01662466",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4129c0_8504a129",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 4126,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-22T21:22:31Z",
+      "side": 0,
+      "message": "\u003e as it depends on webrtc/desktop_capture through the public_dep in content/public/browser.\n\nThis is indeed my concern: content/public/browser does not export webrtc/desktop_capture itself (dllexport or visibility(\"default\")), so I cannot imagine how could it work in component build.\n\nBut if you are sure about the impact of this change. I am fine with it.",
+      "parentUuid": "a5f3e35f_224cbb77",
+      "range": {
+        "startLine": 4126,
+        "startChar": 0,
+        "endLine": 4126,
+        "endChar": 53
+      },
+      "revId": "f8e92a3c40bd7c687b84655e0e6a470f01662466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
