@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30519d2_2935675f",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-22T22:30:52Z",
+      "side": 1,
+      "message": "nit: do we need the #ifdef? Ideally the capabilities check should be sufficient.",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
