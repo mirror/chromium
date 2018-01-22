@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3da7ba60_995169fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-22T23:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1055e45_22264ebb",
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea0450d_a1425b06",
         "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d227c1_7af615cd",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-22T23:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea0450d_a1425b06",
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8b507c31_9ef1d188",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-22T23:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b5723b_48c21dc4",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 69,
+        "endChar": 23
+      },
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7729f83e_d74020ab",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "92a02278_50602b81",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-22T23:15:23Z",
+      "side": 1,
+      "message": "Our backend service manages a drishti graph that performs some machine perception tasks. Currently that service has only one working mode (like detecting faces in the video frames) so there is only one configuration file sitting on the hard drive.\n\nBut now we would like to add more working modes where each mode has its own configuration defined in a separate file. So we need a mechanism to tell the backend which configuration to load for each particular graph run, and this field refers to the name of that configuration file.\n\nThe configuration has a very complicated structure so it might not be a good idea to let the API provide the entire configuration here. Using enum is not a good choice for us either, otherwise we would have to add new enums each time we add a new configuration to the backend.",
+      "parentUuid": "7729f83e_d74020ab",
+      "range": {
+        "startLine": 122,
+        "startChar": 23,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1650a3b0_9dba0bfe",
         "filename": "extensions/test/data/media_perception_private/state/runtest.js",
         "patchSetId": 3
@@ -102,6 +186,30 @@
       "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcf7c7c_3a266533",
+        "filename": "extensions/test/data/media_perception_private/state/runtest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-22T23:15:23Z",
+      "side": 1,
+      "message": "Yea I have added a new test that sets status to \u0027RUNNING\u0027 without any optional parameters.",
+      "parentUuid": "1650a3b0_9dba0bfe",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
