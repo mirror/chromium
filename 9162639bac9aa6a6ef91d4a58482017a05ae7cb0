@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "130932e5_3decf9dc",
+        "filename": "chrome/browser/ui/browser_tab_strip_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T04:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e5bf825_742d3893",
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1301bcda_8447065f",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
         "patchSetId": 5
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "fc9dafe4_1d96950c",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T04:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1301bcda_8447065f",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf40eea5_11a9798c",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
         "patchSetId": 5
@@ -80,6 +122,30 @@
       "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c2bc1e_341653db",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T04:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf40eea5_11a9798c",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "84041f52_747da865",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T04:15:45Z",
+      "side": 1,
+      "message": "I\u0027ll upload a separate patchset to this CL after sending this one out.",
+      "parentUuid": "66c03aa1_e9bd5c79",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cd019d5_d3ee0d3f",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.h",
         "patchSetId": 5
@@ -140,6 +230,30 @@
       "writtenOn": "2018-01-19T18:14:24Z",
       "side": 1,
       "message": "How about web_contents_to_browser_? Is there a reason you cache the id and not the Browser*?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e919195_c69436b9",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T04:15:45Z",
+      "side": 1,
+      "message": "The Browser* can become a dangling pointer; we need a way to verify the browser still exists after a WebContents is removed from its tabstrip (eg in TabDetachedAt). We could iterate through the BrowserList to find the given pointer, but FindBrowserWithId does that with less room for user error.\n\nThat said, a separate tracker per browser is a simpler solution.",
+      "parentUuid": "9cd019d5_d3ee0d3f",
       "range": {
         "startLine": 72,
         "startChar": 6,
