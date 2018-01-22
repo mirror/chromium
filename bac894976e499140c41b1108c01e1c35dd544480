@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9528b11f_1d65f283",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-22T18:26:02Z",
+      "side": 1,
+      "message": "Optional: You could explain this parameter in a docstring. Is it the case that this can be either None or a list of paths, and if it\u0027s a list of file paths then this method only affects those files?",
+      "revId": "bac894976e499140c41b1108c01e1c35dd544480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1047cb_7f405114",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-22T18:26:02Z",
+      "side": 1,
+      "message": "len(...) should never return negative numbers; here you could use `if len(status) \u003d\u003d 0` or `if not status`.",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 257,
+        "endChar": 27
+      },
+      "revId": "bac894976e499140c41b1108c01e1c35dd544480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a719b253_4f393a09",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-22T18:26:02Z",
+      "side": 1,
+      "message": "Python style nits: You can also use \"set comprehensions\". Also, usually `\u003d\u003d` is used instead of `is` for comparing values:\n\n    modified_files \u003d {f for (s, f) in status if s !\u003d \u0027D\u0027}\n    deleted_files \u003d {f for (s, f) in status if s \u003d\u003d \u0027D\u0027}",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 65
+      },
+      "revId": "bac894976e499140c41b1108c01e1c35dd544480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
