@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e6333e4_1ad8e957",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Done.  Easier to read, and I like that the boolean is now true in the exceptional case, rather than the typical case.  Good call.",
+      "parentUuid": "8956ce1e_e5ca94ba",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceecf81c_af63e60c",
         "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T23:16:10Z",
       "side": 1,
       "message": "optional nit: use std::accumulate like render_text_unittest.cc",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867a8d3d_8270b2d1",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Interesting.  I want to use this, but I hit a template instantiation issue.  Transplanting your unit test instance into this module hits the same issue.  It\u0027s like there\u0027s a required declaration missing from a header other than geometry/rect.h or something.  I\u0027m going to leave it for now.",
+      "parentUuid": "ceecf81c_af63e60c",
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff5f397d_d4617af6",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Consider a long domain with no path.  There, we want to shift left to show the end of the domain, but there\u0027s no path to truncate, and hence no fade.",
+      "parentUuid": "426af8f7_6e89701d",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d901cb88_ac0b5d82",
         "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-19T23:16:10Z",
       "side": 1,
       "message": "optional nit: kOffsetFalse and kOffsetTrue",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf229ef_7671f1b7",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "I was intentionally hiding the true/false nature of the implementation for the sake of clear test parameters.  Ie. one step shy of declaring an enum and using a custom type.",
+      "parentUuid": "d901cb88_ac0b5d82",
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "66be687f_8317e43d",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "This would rock.  However, that setter is private, and exploded to test-specific friend classes.  I think adding this test class (outside RenderText) to the friend list is nasty.  Do you see it that way?\n\nWe could also pull RenderTextTestApi out to a separate module, and put it in a test library for use by other test code.  Then SetGlyphWidth() can move to RenderTextTestApi, and out of RenderTextUnittest.\n\nThat has the downside of exposing your private test API to other clients.  Thoughts?",
+      "parentUuid": "18652817_ddb2ddd4",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98f0d6ca_a4c8ef88",
         "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0328851c_8d8382b1",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f0d6ca_a4c8ef88",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a39e876_9b0fca8e",
         "filename": "chrome/browser/vr/elements/ui_texture.cc",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211252f5_472d33c2",
+        "filename": "chrome/browser/vr/elements/ui_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a39e876_9b0fca8e",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +292,24 @@
       "writtenOn": "2018-01-19T23:16:10Z",
       "side": 1,
       "message": "q: Is there a reason to use the same URL three times in a row?",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb77df0a_a4470ced",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:36:19Z",
+      "side": 1,
+      "message": "Done.  Nope; good catch and sharp eyes!",
+      "parentUuid": "22c1fc35_1cdbea1f",
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
