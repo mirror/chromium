@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6d8e44e_90cb694e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d51bec2_658fd507",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce93bd59_d9fe098f",
         "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ac5418_7a096a8e",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce93bd59_d9fe098f",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 59
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "810cdf4c_1d002114",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ae59ab_91bf4cd4",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 19
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eee1d7be_a1d5ae49",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8926bf2_58330127",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eee1d7be_a1d5ae49",
+      "range": {
+        "startLine": 663,
+        "startChar": 0,
+        "endLine": 663,
+        "endChar": 59
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "635bebc5_3ecce67f",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "If you look on the rest of the code in the file, that\u0027s how tests are written.\nIt makes sense to factor out code in production code, or when tests would be really large.\nHowever, tests here are ~15 lines long, and it makes test more readable when you have all test on a screen, without need for extra navigation.",
+      "parentUuid": "e75e2b47_e1c33f39",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 80
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d196f0_cec03850",
         "filename": "components/policy/core/common/cloud/cloud_policy_client_unittest.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f10a1f_6c00fab7",
+        "filename": "components/policy/core/common/cloud/cloud_policy_client_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2018-01-22T16:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d196f0_cec03850",
+      "range": {
+        "startLine": 506,
+        "startChar": 20,
+        "endLine": 506,
+        "endChar": 30
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
