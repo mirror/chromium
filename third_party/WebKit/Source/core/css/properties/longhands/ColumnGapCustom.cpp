@@ -18,8 +18,8 @@ const CSSValue* ColumnGap::ParseSingleValue(
     const CSSParserLocalContext&) const {
   if (range.Peek().Id() == CSSValueNormal)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  return CSSPropertyParserHelpers::ConsumeLength(range, context.Mode(),
-                                                 kValueRangeNonNegative);
+  return CSSPropertyParserHelpers::ConsumeLengthOrPercent(
+      range, context.Mode(), kValueRangeNonNegative);
 }
 
 const CSSValue* ColumnGap::CSSValueFromComputedStyleInternal(
@@ -28,9 +28,10 @@ const CSSValue* ColumnGap::CSSValueFromComputedStyleInternal(
     const LayoutObject*,
     Node* styled_node,
     bool allow_visited_style) const {
-  if (style.HasNormalColumnGap())
+  if (style.ColumnGap().IsNormal())
     return CSSIdentifierValue::Create(CSSValueNormal);
-  return ZoomAdjustedPixelValue(style.ColumnGap(), style);
+  return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      style.ColumnGap().GetLength(), style);
 }
 
 }  // namespace CSSLonghand
