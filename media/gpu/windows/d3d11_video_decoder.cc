@@ -48,21 +48,9 @@ namespace media {
 D3D11VideoDecoder::D3D11VideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
     base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb)
-    : impl_task_runner_(std::move(gpu_task_runner)), weak_factory_(this) {
-  // We create |impl_| on the wrong thread, but we never use it here.
-  // Note that the output callback will hop to our thread, post the video
-  // frame, and along with a callback that will hop back to the impl thread
-  // when it's released.
-  impl_ = std::make_unique<D3D11VideoDecoderImpl>(get_stub_cb);
-  impl_weak_ = impl_->GetWeakPtr();
-}
+    : impl_(std::move(gpu_task_runner), get_stub_cb), weak_factory_(this) {}
 
-D3D11VideoDecoder::~D3D11VideoDecoder() {
-  // Post destruction to the main thread.  When this executes, it will also
-  // cancel pending callbacks into |impl_| via |impl_weak_|.  Callbacks out
-  // from |impl_| will be cancelled by |weak_factory_| when we return.
-  impl_task_runner_->DeleteSoon(FROM_HERE, std::move(impl_));
-}
+D3D11VideoDecoder::~D3D11VideoDecoder() {}
 
 std::string D3D11VideoDecoder::GetDisplayName() const {
   return "D3D11VideoDecoder";
@@ -83,42 +71,34 @@ void D3D11VideoDecoder::Initialize(const VideoDecoderConfig& config,
   // Bind our own init / output cb that hop to this thread, so we don't call the
   // originals on some other thread.
   // TODO(liberato): what's the lifetime of |cdm_context|?
-  impl_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(
-          &VideoDecoder::Initialize, impl_weak_, config, low_delay, cdm_context,
-          BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), init_cb),
-          BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), output_cb)));
+  impl_.Post(
+      FROM_HERE, &VideoDecoder::Initialize, config, low_delay, cdm_context,
+      BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), init_cb),
+      BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), output_cb));
 }
 
 void D3D11VideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
                                const DecodeCB& decode_cb) {
-  impl_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&VideoDecoder::Decode, impl_weak_, buffer,
-                                BindToCurrentThreadIfWeakPtr(
-                                    weak_factory_.GetWeakPtr(), decode_cb)));
+  impl_.Post(
+      FROM_HERE, &VideoDecoder::Decode, buffer,
+      BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), decode_cb));
 }
 
 void D3D11VideoDecoder::Reset(const base::Closure& closure) {
-  impl_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&VideoDecoder::Reset, impl_weak_,
-                                BindToCurrentThreadIfWeakPtr(
-                                    weak_factory_.GetWeakPtr(), closure)));
+  impl_.Post(FROM_HERE, &VideoDecoder::Reset,
+             BindToCurrentThreadIfWeakPtr(weak_factory_.GetWeakPtr(), closure));
 }
 
 bool D3D11VideoDecoder::NeedsBitstreamConversion() const {
-  // Wrong thread, but it's okay.
-  return impl_->NeedsBitstreamConversion();
+  return true;
 }
 
 bool D3D11VideoDecoder::CanReadWithoutStalling() const {
-  // Wrong thread, but it's okay.
-  return impl_->CanReadWithoutStalling();
+  return false;
 }
 
 int D3D11VideoDecoder::GetMaxDecodeRequests() const {
-  // Wrong thread, but it's okay.
-  return impl_->GetMaxDecodeRequests();
+  return 4;
 }
 
 }  // namespace media
