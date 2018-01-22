@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4290b970_bb6307eb",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-22T23:40:57Z",
+      "side": 1,
+      "message": "BluetoothAdapter::SetPowered() will still be called. However the implementation of SetPowered will ignore the request if the power doesn\u0027t change.",
+      "parentUuid": "d780d4f2_0160e027",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 46
+      },
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1763528d_39f23619",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "70911158_eb69b9d8",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-22T23:40:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1763528d_39f23619",
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cd415ad_473f9fec",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8436dd77_5aa2fa6e",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-22T23:40:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cd415ad_473f9fec",
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
