@@ -15,6 +15,7 @@ namespace extensions {
 namespace {
 
 const char kTestDeviceContext[] = "Video camera";
+const char kTestConfigFile[] = "dummy_config.txt";
 const char kFakePacketLabel1[] = "Packet1";
 const char kFakePacketLabel3[] = "Packet3";
 const char kFakeEntityLabel3[] = "Region3";
@@ -258,9 +259,12 @@ TEST(MediaPerceptionConversionUtilsTest, DiagnosticsProtoToIdl) {
 TEST(MediaPerceptionConversionUtilsTest, StateProtoToIdl) {
   mri::State state;
   state.set_status(mri::State::RUNNING);
+  state.set_config_file(kTestConfigFile);
   media_perception::State state_result =
       media_perception::StateProtoToIdl(state);
   EXPECT_EQ(state_result.status, media_perception::STATUS_RUNNING);
+  ASSERT_TRUE(state_result.config_file);
+  EXPECT_EQ(*state_result.config_file, kTestConfigFile);
 
   state.set_status(mri::State::STARTED);
   state.set_device_context(kTestDeviceContext);
@@ -284,6 +288,13 @@ TEST(MediaPerceptionConversionUtilsTest, StateIdlToProto) {
   mri::State state_proto = StateIdlToProto(state);
   EXPECT_EQ(state_proto.status(), mri::State::UNINITIALIZED);
   EXPECT_FALSE(state_proto.has_device_context());
+
+  state.status = media_perception::STATUS_RUNNING;
+  state.config_file = std::make_unique<std::string>(kTestConfigFile);
+  state_proto = StateIdlToProto(state);
+  EXPECT_EQ(state_proto.status(), mri::State::RUNNING);
+  EXPECT_TRUE(state_proto.has_config_file());
+  EXPECT_EQ(state_proto.config_file(), kTestConfigFile);
 
   state.status = media_perception::STATUS_SUSPENDED;
   state.device_context = std::make_unique<std::string>(kTestDeviceContext);
