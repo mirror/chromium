@@ -51,6 +51,24 @@
       "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f20453f_fe5e129c",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-22T21:38:56Z",
+      "side": 1,
+      "message": "Agreed, this logic shouldn\u0027t live here.",
+      "parentUuid": "a30beed3_e299778b",
+      "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
