@@ -188,6 +188,30 @@
       "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da297b5f_32015177",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-22T23:27:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acdc4ef7_a7426cc5",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
