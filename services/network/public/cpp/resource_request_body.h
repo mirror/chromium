@@ -72,6 +72,15 @@ class ResourceRequestBody
   }
   bool contains_sensitive_info() const { return contains_sensitive_info_; }
 
+  // NetworkService
+  // Returns a new copy of this ResourceRequestBody. This is used for service
+  // worker with NetworkService because it sends the ResourceRequestBody over
+  // Mojo IPC, which moves out the DataPipeGetter elements in the Pickle code in
+  // resources_messages.cc. We can't change the Pickle code to call
+  // DataPipeGetter's Clone method because that code can run on different thread
+  // than the DataPipeGetter.
+  scoped_refptr<ResourceRequestBody> Clone() const;
+
  private:
   friend class base::RefCountedThreadSafe<ResourceRequestBody>;
 
