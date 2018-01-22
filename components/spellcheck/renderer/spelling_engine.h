@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 
 namespace service_manager {
@@ -17,7 +18,7 @@ class LocalInterfaceProvider;
 
 // Creates the platform's "native" spelling engine.
 class SpellingEngine* CreateNativeSpellingEngine(
-    service_manager::LocalInterfaceProvider* embedder_provider);
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
 
 // Interface to different spelling engines.
 class SpellingEngine {

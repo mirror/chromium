@@ -25,9 +25,10 @@ class SpellCheckPanel : public content::RenderFrameObserver,
                         public blink::WebSpellCheckPanelHostClient,
                         public spellcheck::mojom::SpellCheckPanel {
  public:
-  SpellCheckPanel(content::RenderFrame* render_frame,
-                  service_manager::BinderRegistry* registry,
-                  service_manager::LocalInterfaceProvider* embedder_provider);
+  SpellCheckPanel(
+      content::RenderFrame* render_frame,
+      service_manager::BinderRegistry* registry,
+      base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
   ~SpellCheckPanel() override;
 
  private:
@@ -56,7 +57,7 @@ class SpellCheckPanel : public content::RenderFrameObserver,
   // True if the browser is showing the spelling panel.
   bool spelling_panel_visible_;
 
-  service_manager::LocalInterfaceProvider* embedder_provider_;
+  base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheckPanel);
 };

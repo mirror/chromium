@@ -10,7 +10,7 @@
 using content::RenderThread;
 
 SpellingEngine* CreateNativeSpellingEngine(
-    service_manager::LocalInterfaceProvider* embedder_provider) {
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider) {
   return new PlatformSpellingEngine();
 }
 
