@@ -16,6 +16,23 @@
       "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58b82dd_36022dbb",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-22T20:44:54Z",
+      "side": 1,
+      "message": "Why is this done in an animation?",
+      "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
