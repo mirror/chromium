@@ -25,7 +25,10 @@ interface ProfilingClient {
   // allocations.
   // |stack_mode| refers to the type of data that should be recorded for each
   // allocation.
-  StartProfiling(handle memlog_sender_pipe, StackMode stack_mode);
+  // |include_thread_names| indicates whether to include thread names in NATIVE
+  // stack_mode. It has no effect when stack_mode != NATIVE.
+  StartProfiling(handle memlog_sender_pipe, StackMode stack_mode,
+                 bool include_thread_names);
 
   // Flushes the memlog pipe associated with this client. A barrier packet is
   // set over the memlog pipe with the given identifier. This allows the

@@ -34,6 +34,7 @@ struct TestParam {
   ProfilingProcessHost::Mode mode;
   mojom::StackMode stack_mode;
   bool start_profiling_with_command_line_flag;
+  bool include_thread_names;
 };
 
 class MemlogBrowserTest : public InProcessBrowserTest,
@@ -63,6 +64,10 @@ class MemlogBrowserTest : public InProcessBrowserTest,
       } else {
         NOTREACHED();
       }
+
+      if (GetParam().include_thread_names) {
+        command_line->AppendSwitch(switches::kMemlogIncludeThreadNames);
+      }
     }
   }
 };
@@ -75,12 +80,15 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   LOG(INFO) << "Started via command line flag: "
             << static_cast<int>(
                    GetParam().start_profiling_with_command_line_flag);
+  LOG(INFO) << "Include thread names: "
+            << static_cast<int>(GetParam().include_thread_names);
   ProfilingTestDriver driver;
   ProfilingTestDriver::Options options;
   options.mode = GetParam().mode;
   options.stack_mode = GetParam().stack_mode;
   options.profiling_already_started =
       GetParam().start_profiling_with_command_line_flag;
+  options.include_thread_names = GetParam().include_thread_names;
 
   EXPECT_TRUE(driver.RunTest(options));
 }
@@ -102,7 +110,7 @@ std::vector<TestParam> GetParams() {
 
   for (const auto& mode : dynamic_start_modes) {
     for (const auto& stack_mode : stack_modes) {
-      params.push_back({mode, stack_mode, false});
+      params.push_back({mode, stack_mode, false, false});
     }
   }
 
@@ -113,9 +121,13 @@ std::vector<TestParam> GetParams() {
   command_line_start_modes.push_back(ProfilingProcessHost::Mode::kAllRenderers);
   for (const auto& mode : command_line_start_modes) {
     for (const auto& stack_mode : stack_modes) {
-      params.push_back({mode, stack_mode, true});
+      params.push_back({mode, stack_mode, true, false});
     }
   }
+
+  // Test thread names for native profiling.
+  params.push_back({ProfilingProcessHost::Mode::kBrowser,
+                    mojom::StackMode::NATIVE, false, true});
   return params;
 }
 

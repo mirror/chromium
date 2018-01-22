@@ -67,10 +67,12 @@ void ProfilingService::AddProfilingClient(
     mojo::ScopedHandle memlog_pipe_sender,
     mojo::ScopedHandle memlog_pipe_receiver,
     mojom::ProcessType process_type,
-    profiling::mojom::StackMode stack_mode) {
+    profiling::mojom::StackMode stack_mode,
+    bool include_thread_names) {
   connection_manager_.OnNewConnection(
       pid, std::move(client), std::move(memlog_pipe_sender),
-      std::move(memlog_pipe_receiver), process_type, stack_mode);
+      std::move(memlog_pipe_receiver), process_type, stack_mode,
+      include_thread_names);
 }
 
 void ProfilingService::DumpProcessesForTracing(
