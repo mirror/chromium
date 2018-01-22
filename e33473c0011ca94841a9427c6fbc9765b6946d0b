@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c90e618_17f9ac95",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-22T06:50:32Z",
+      "side": 1,
+      "message": "perhaps call once @45 and store the result for both uses?",
+      "revId": "e33473c0011ca94841a9427c6fbc9765b6946d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a2d39a_909f680e",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-22T06:50:32Z",
+      "side": 1,
+      "message": "here and elsewhere in this fn, rather than dchecks for the various errors, might one signal the error on the decode callback?  ignoring these errors in the production build seems like it might cause issues.",
+      "revId": "e33473c0011ca94841a9427c6fbc9765b6946d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0361db16_74515b72",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-22T06:50:32Z",
+      "side": 1,
+      "message": "consider something like  \"auto iter \u003d decode_cb_map_.find(bitstream_buffer_id)\", then re-using it @229, @230, and @231.  else, it\u0027s doing the lookup ~3 times.",
+      "revId": "e33473c0011ca94841a9427c6fbc9765b6946d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
