@@ -46,9 +46,8 @@ public class PopupZoomerTest {
         Canvas mCanvas;
         long mPendingDraws = 0;
 
-        CustomCanvasPopupZoomer(
-                Context context, WebContents webContents, ViewGroup containerView, Canvas c) {
-            super(context, webContents, containerView);
+        CustomCanvasPopupZoomer(Context context, ViewGroup containerView, Canvas c) {
+            super(context, containerView);
             mCanvas = c;
         }
 
@@ -71,7 +70,10 @@ public class PopupZoomerTest {
         }
 
         @Override
-        protected void initOptionalListeners(final ViewGroup containerView) {}
+        protected void setVisibilityChangedListener(PopupZoomer.OnVisibilityChangedListener l) {}
+
+        @Override
+        protected void setOnTapListener(PopupZoomer.OnTapListener l) {}
 
         public void finishPendingDraws() {
             // Finish all pending draw calls. A draw call may change mPendingDraws.
@@ -82,8 +84,8 @@ public class PopupZoomerTest {
     }
 
     private CustomCanvasPopupZoomer createPopupZoomerForTest(
-            Context context, WebContents webContents, ViewGroup containerView) {
-        return new CustomCanvasPopupZoomer(context, webContents, containerView,
+            Context context, ViewGroup containerView) {
+        return new CustomCanvasPopupZoomer(context, containerView,
                 new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
     }
 
@@ -110,8 +112,8 @@ public class PopupZoomerTest {
                 imeAdapter.setInputMethodManagerWrapperForTest(
                         TestInputMethodManagerWrapper.create(imeAdapter));
                 mPopupZoomer = createPopupZoomerForTest(
-                        InstrumentationRegistry.getTargetContext(), webContents, containerView);
-                mContentViewCore.setPopupZoomerForTest(mPopupZoomer);
+                        InstrumentationRegistry.getTargetContext(), containerView);
+                TapDisambiguator.fromWebContents(webContents).setPopupZoomerForTest(mPopupZoomer);
                 mContentViewCore.setTextSuggestionHostForTesting(
                         new TextSuggestionHost(mActivityTestRule.getContentViewCore()));
             }
