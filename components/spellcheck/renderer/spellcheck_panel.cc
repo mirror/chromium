@@ -16,7 +16,7 @@
 SpellCheckPanel::SpellCheckPanel(
     content::RenderFrame* render_frame,
     service_manager::BinderRegistry* registry,
-    service_manager::LocalInterfaceProvider* embedder_provider)
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider)
     : content::RenderFrameObserver(render_frame),
       spelling_panel_visible_(false),
       embedder_provider_(embedder_provider) {

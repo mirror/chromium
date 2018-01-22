@@ -82,6 +82,8 @@ class AwContentRendererClient : public content::ContentRendererClient,
   std::unique_ptr<SpellCheck> spellcheck_;
 #endif
 
+  base::WeakPtrFactory<service_manager::LocalInterfaceProvider> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(AwContentRendererClient);
 };
 

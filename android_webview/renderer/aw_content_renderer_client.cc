@@ -74,7 +74,7 @@ constexpr char kThrottledErrorDescription[] =
     "information.";
 }  // namespace
 
-AwContentRendererClient::AwContentRendererClient() {}
+AwContentRendererClient::AwContentRendererClient() : weak_factory_(this) {}
 
 AwContentRendererClient::~AwContentRendererClient() {}
 
@@ -95,8 +95,8 @@ void AwContentRendererClient::RenderThreadStarted() {
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   if (!spellcheck_) {
-    spellcheck_ = std::make_unique<SpellCheck>(this);
-    thread->AddObserver(spellcheck_.get());
+    spellcheck_ =
+        std::make_unique<SpellCheck>(nullptr, weak_factory_.GetWeakPtr());
   }
 #endif
 }

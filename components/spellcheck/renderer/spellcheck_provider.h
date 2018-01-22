@@ -40,7 +40,7 @@ class SpellCheckProvider
   SpellCheckProvider(
       content::RenderFrame* render_frame,
       SpellCheck* spellcheck,
-      service_manager::LocalInterfaceProvider* embedder_provider);
+      base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
   ~SpellCheckProvider() override;
 
   // Requests async spell and grammar checks from the platform text checker
@@ -124,7 +124,7 @@ class SpellCheckProvider
   // Weak pointer to shared (per renderer) spellcheck data.
   SpellCheck* spellcheck_;
 
-  service_manager::LocalInterfaceProvider* embedder_provider_;
+  base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider_;
 
   // Interface to the SpellCheckHost.
   spellcheck::mojom::SpellCheckHostPtr spell_check_host_;

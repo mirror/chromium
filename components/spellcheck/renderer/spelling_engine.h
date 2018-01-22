@@ -17,7 +17,7 @@ class LocalInterfaceProvider;
 
 // Creates the platform's "native" spelling engine.
 class SpellingEngine* CreateNativeSpellingEngine(
-    service_manager::LocalInterfaceProvider* embedder_provider);
+    base::WeakPtr<service_manager::LocalInterfaceProvider> embedder_provider);
 
 // Interface to different spelling engines.
 class SpellingEngine {
