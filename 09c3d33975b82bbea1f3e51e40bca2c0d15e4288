@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d41f177f_ffd4000c",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T13:58:49Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure if we really need to worry about the case.\n\nIIUC the point of the ScriptForbiddenScope is that no arbitrary script is executed during the scope. I *guess* it\u0027s fine to call Promise::Reject.\n\nAdam: Do you have any thoughts on this?",
+      "parentUuid": "ab5be8fc_72dc617a",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50259efd_8f2c9597",
         "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
         "patchSetId": 2
