@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524ee6cd_2b3c51fc",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "Nit: I realize GetUpperLeftCorner does this but I think it\u0027s just legacy. Out parameters should be passed by pointer according to style-guide (so it\u0027s clear in the call site it\u0027s an out param).",
+      "range": {
+        "startLine": 987,
+        "startChar": 36,
+        "endLine": 987,
+        "endChar": 53
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a939bb_15eed5fd",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "I find the spec reads ambiguously on how transforms are to be handled:\n\n\"The scroll snap area is the rectangular bounding box of the transformed border box, plus the specified outsets, axis-aligned in the scroll container’s coordinate space.\"\n\nDoes that mean \"transform the border box, then add the specified outsets\", or \"add the specified outsets to the border box and transform the result\"? The code currently does the latter. Could you please confirm that\u0027s the intention and perhaps file a bug to clarify the spec language?",
+      "range": {
+        "startLine": 1113,
+        "startChar": 6,
+        "endLine": 1113,
+        "endChar": 29
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f57ab6b_6653c48f",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "BoundingBox(true) is a bit mysterious so it\u0027s usually better to use an enum (e.g. EXPAND_SCROLL_MARGIN, NO_SCROLL_MARGIN). In this case, I think it\u0027d might be better to just add a new method, BoundingBoxForScrollIntoView() or ScrollSnapArea() since it\u0027s semantically different from the bounding box and I tend to lean away from default arguments.",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8468f945_bf72230f",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "Nit: Style-guide says use an anonymous namespace rather than static.",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 697,
+        "endChar": 6
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6fc1a8_d2a00505",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "Is this method ever used? i.e. is this ever used on Nodes that aren\u0027t ContainerNodes? CodeSearch says that\u0027s just: Attr, CharacterData, and DocumentType. I would assume none of these have any geometry/LayoutObject. Perhaps BoundingBox should be moved to LayoutObject? (also found crbug.com/248354).",
+      "range": {
+        "startLine": 709,
+        "startChar": 11,
+        "endLine": 709,
+        "endChar": 28
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bee5757_4b0722fd",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "Probably better done in a separate patch, but please convert these tests to be parameterized on RootLayerScrolls and ensure this all works when that flag is turned on. You can see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/VisualViewportTest.cpp?q\u003dVisualViewportTest\u0026sq\u003dpackage:chromium\u0026l\u003d74 for how that works (should be just a matter of modifying the ScrollIntoViewTest class and changing each TEST_F to TEST_P.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48d825b_b535fc71",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:22:21Z",
+      "side": 1,
+      "message": "This only tests that scroll-margin-top is respected. Please add cases for the other 3 directions.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
