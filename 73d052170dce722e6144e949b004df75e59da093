@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07132870_6184c444",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-22T16:48:50Z",
+      "side": 1,
+      "message": "Done substituting all |ExecuteScript()| here.\n\nHere is my explanation for the 6 test failures with UserActivationV2:\n\nIn our new model, user activation is a frame state which doesn\u0027t automatically expire when the \"holder\" var goes out of scope (unlike UserGestureIndicator).  Here is the design doc if you are interested:\nhttps://docs.google.com/document/d/1erpl1yqJlc1pH0QvVVmi1s3WzqQLsEXTLLh6VuYp228/edit#heading\u003dh.hy5wkxbrpq6o\n\nThe 6 failing tests here assume that the script has user activation but following tasks don\u0027t.\n\nE.g. in PasswordManagerBrowserTestBase.NoFormElementTest, the ExecuteScript call in VerifyPasswordIsSavedAndFilled runs with activation but the test stalls in a later task if the task finds a user activation.  My debugging suggests that a RenderFrameImpl::CommitNavigation() becomes successful with an available user activation in our new model which the test doesn\u0027t like.\n\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F622292%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FPasswordManagerBrowserTestBase.NoFormElementTest%2F0\n\nDoes it make sense to you now?",
+      "parentUuid": "ab9a88de_04609f01",
+      "range": {
+        "startLine": 594,
+        "startChar": 14,
+        "endLine": 594,
+        "endChar": 57
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9272751_26ab743c",
         "filename": "content/public/test/browser_test_utils.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "63dfdacd_4bdda8ee",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-22T16:48:50Z",
+      "side": 1,
+      "message": "- Done with param names.\n- Tried the following:\n  bool f(args) WARN_UNUSED_RESULT {body}\n  GCC doesn\u0027t like it (\"GCC does not allow \u0027warn_unused_result\u0027 attribute in this position on a function definition...\").  Not sure why we have other examples in our codebase that works.\n\nAnyway, this is not part of this CL, so marking this comment as resolved.",
+      "parentUuid": "f9272751_26ab743c",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 30
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e23f3d_5fe8daf5",
         "filename": "content/public/test/browser_test_utils.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-22T11:20:04Z",
       "side": 1,
       "message": "Does this code path make sense for any of the tests we have? It seems strange because if the user gesture isn\u0027t needed for executing |script| then the function can just use ExecuteJavaScriptForTests.",
+      "range": {
+        "startLine": 168,
+        "startChar": 1,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6dc60f_ac9fb8c2",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-22T16:48:50Z",
+      "side": 1,
+      "message": "I know that all tests in password_manager_browsertest.cc pass if they all use scoped user activation as in my latest patch (which is the same as patch 4 btw).  Hopefully that addresses your concern.\n\nNote, however, that there two separate expectations to consider:\n- if the script expects a user gesture, and\n- if the test-tasks after the script expects a user gesture.\n\nLet\u0027s continue the discussion in my comment in password_manager_browsertest.cc where it seems more relevant (so marking this comment as resolved in favor of the other one).",
+      "parentUuid": "a8e23f3d_5fe8daf5",
       "range": {
         "startLine": 168,
         "startChar": 1,
