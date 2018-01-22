@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "2cb9376e_75e9bb6f",
+        "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-22T04:59:21Z",
+      "side": 1,
+      "message": "nit: There\u0027s a constructor that automatically opens the file that you could use.",
+      "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a0775e_15b101d1",
+        "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-22T04:59:21Z",
+      "side": 1,
+      "message": "You can open the file with std::ios::ate and delete this line. It\u0027s a bit less obvious though so up to you.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca718265_1c4f8317",
+        "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-22T04:59:21Z",
+      "side": 1,
+      "message": "file_size can be -1 if tellg() fails. sgtm if you don\u0027t want to handle it though.",
+      "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd456cd5_8d3ae07d",
         "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
         "patchSetId": 1
@@ -43,6 +100,23 @@
         "endLine": 200,
         "endChar": 16
       },
+      "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fbdd28_708f11ed",
+        "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-22T04:59:21Z",
+      "side": 1,
+      "message": "Seems more idiomatic to do the read() and error checking in one step: \"if (!file.read(..)) { exit(); }\"",
       "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
