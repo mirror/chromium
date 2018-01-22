@@ -4402,7 +4402,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
         false,                  // started_from_context_menu
         CSPDisposition::CHECK,  // should_check_main_world_csp
         false,                  // is_form_submission
-        base::nullopt);         // suggested_filename
+        base::nullopt,          // suggested_filename
+        nullptr);               // navigation_ui_data
   }
 
   // Determine if the current NavigationHandle can be used.
@@ -4458,7 +4459,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
       false,                  // started_from_context_menu
       CSPDisposition::CHECK,  // should_check_main_world_csp
       false,                  // is_form_submission
-      base::nullopt);         // suggested_filename
+      base::nullopt,          // suggested_filename
+      nullptr);               // navigation_ui_data
 }
 
 void RenderFrameHostImpl::BeforeUnloadTimeout() {
