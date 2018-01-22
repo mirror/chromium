@@ -22,6 +22,30 @@
       "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067518ff_2b1b5eb1",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-22T18:07:14Z",
+      "side": 1,
+      "message": "Done. Thanks for the explanation! Sorry I don\u0027t quite understand why it has to be there for it to work debug builds?",
+      "parentUuid": "a3a0c9fa_72a6d3a9",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 67
+      },
+      "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
