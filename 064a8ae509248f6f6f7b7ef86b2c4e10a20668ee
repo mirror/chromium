@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "80d80018_fad436fe",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-22T18:18:58Z",
+      "side": 1,
+      "message": "That\u0027s a good idea.",
+      "parentUuid": "83244257_cb9609c2",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5ecc0d2_2c72aea2",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2018-01-19T19:54:54Z",
       "side": 1,
       "message": "nit: this block can be moved to the @implementation and then you won\u0027t need a private @interface.",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fb0a22_d17d712b",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-22T18:18:58Z",
+      "side": 1,
+      "message": "Can you elaborate? I\u0027m not sure how I could declare these ivars within an implementation block.",
+      "parentUuid": "c5ecc0d2_2c72aea2",
       "range": {
         "startLine": 37,
         "startChar": 26,
@@ -137,6 +185,30 @@
       "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65df168_562ca5e1",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-22T18:18:58Z",
+      "side": 1,
+      "message": "This is code from the original implementation (not something recently added). I think you were saying this should not be necessary? I\u0027m removing assuming that\u0027s true.",
+      "parentUuid": "06686022_4c3bbd84",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
