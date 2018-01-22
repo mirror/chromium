@@ -119,6 +119,7 @@ class ExtensionFrameHelper
   void DidCreateScriptContext(v8::Local<v8::Context>,
                               int world_id) override;
   void WillReleaseScriptContext(v8::Local<v8::Context>, int world_id) override;
+  void DidClearWindowObject() override;
   bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
   void DraggableRegionsChanged() override;

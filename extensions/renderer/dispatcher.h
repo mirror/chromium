@@ -99,6 +99,7 @@ class Dispatcher : public content::RenderThreadObserver,
   void WillReleaseScriptContext(blink::WebLocalFrame* frame,
                                 const v8::Local<v8::Context>& context,
                                 int world_id);
+  void DidClearWindowObject(blink::WebLocalFrame* frame);
 
   // Runs on a different thread and should not use any member variables.
   static void WillDestroyServiceWorkerContextOnWorkerThread(
@@ -304,6 +305,10 @@ class Dispatcher : public content::RenderThreadObserver,
   // if this renderer is a WebView guest render process. Otherwise, this will be
   // empty.
   std::string webview_partition_id_;
+
+  // For frames in this set, we force the initialization of the main world in
+  // any subframes.
+  std::set<blink::WebLocalFrame*> need_script_context_in_subframes_;
 
   DISALLOW_COPY_AND_ASSIGN(Dispatcher);
 };

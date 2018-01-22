@@ -489,8 +489,19 @@ void Dispatcher::WillReleaseScriptContext(
     return;
   bindings_system_->WillReleaseScriptContext(context);
 
+  need_script_context_in_subframes_.erase(frame);
+
   script_context_set_->Remove(context);
   VLOG(1) << "Num tracked contexts: " << script_context_set_->size();
+}
+
+void Dispatcher::DidClearWindowObject(blink::WebLocalFrame* frame) {
+  if (need_script_context_in_subframes_.find(frame->LocalRoot()) !=
+      need_script_context_in_subframes_.end()) {
+    v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
+    // Force the creation of the context.
+    frame->MainWorldScriptContext();
+  }
 }
 
 // static
@@ -1406,6 +1417,15 @@ void Dispatcher::RequireGuestViewModules(ScriptContext* context) {
       base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames)) {
     module_system->Require("guestViewIframe");
     module_system->Require("guestViewIframeContainer");
+  }
+
+  if (requires_guest_view_module &&
+      context->web_frame()->LocalRoot() == context->web_frame()) {
+    // If a frame has guest view custom elements defined, we need to make sure
+    // the custom elements are also defined in subframes. The subframes will
+    // need a scripting context which we will need to forcefully create if
+    // the subframe doesn't otherwise have any scripts.
+    need_script_context_in_subframes_.insert(context->web_frame());
   }
 
   // The "guestViewDeny" module must always be loaded last. It registers
