@@ -128,6 +128,30 @@
       "revId": "8ccb544a4695c17a81044cf208097a675ba51327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c7303a2_db04507a",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T20:51:59Z",
+      "side": 1,
+      "message": "I also added some tests, PTAL.",
+      "parentUuid": "6abc827e_aebb72f6",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 51
+      },
+      "revId": "8ccb544a4695c17a81044cf208097a675ba51327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
