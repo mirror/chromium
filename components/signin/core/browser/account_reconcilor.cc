@@ -11,11 +11,11 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/signin/core/browser/account_reconcilor_delegate.h"
 #include "components/signin/core/browser/profile_management_switches.h"
@@ -96,10 +96,12 @@ AccountReconcilor::AccountReconcilor(
       reconcile_is_noop_(true),
       chrome_accounts_changed_(false),
       account_reconcilor_lock_count_(0),
-      reconcile_on_unblock_(false) {
+      reconcile_on_unblock_(false),
+      timer_(new base::OneShotTimer) {
   VLOG(1) << "AccountReconcilor::AccountReconcilor";
   DCHECK(delegate_);
   delegate_->set_reconcilor(this);
+  timeout_ = delegate_->GetReconcileTimeout();
 }
 
 AccountReconcilor::~AccountReconcilor() {
@@ -314,6 +316,16 @@ void AccountReconcilor::StartReconcile() {
   is_reconcile_started_ = true;
   error_during_last_reconcile_ = false;
   reconcile_is_noop_ = true;
+
+  if (!timeout_.is_max()) {
+    // This is NOT a repeating callback but to test it, we need a |MockTimer|,
+    // which mocks |Timer| and not |OneShotTimer|. |Timer| currently does not
+    // support a |OnceClosure|.
+    timer_->Start(
+        FROM_HERE, timeout_,
+        base::BindRepeating(&AccountReconcilor::HandleReconcileTimeout,
+                            base::Unretained(this)));
+  }
 
   // Rely on the GCMS to manage calls to and responses from ListAccounts.
   std::vector<gaia::ListedAccount> accounts;
@@ -619,4 +631,14 @@ void AccountReconcilor::UnblockReconcile() {
     reconcile_on_unblock_ = false;
     StartReconcile();
   }
+}
+
+void AccountReconcilor::set_timer_for_testing(
+    std::unique_ptr<base::Timer> timer) {
+  timer_ = std::move(timer);
+}
+
+void AccountReconcilor::HandleReconcileTimeout() {
+  AbortReconcile();
+  delegate_->OnReconcileTimeout();
 }
