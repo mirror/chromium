@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "90e396f9_6638ab00",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T23:07:52Z",
+      "side": 1,
+      "message": "Misread your comment.. I kept thinking I should be able to do it without UserDataFactory + constructor method ref but our own factory method that just returns a newly created instance. Implementing the UserDataFactory ourselves does the trick. Thanks done.",
+      "parentUuid": "b846cb42_38e5a24a",
+      "revId": "1d547928a4f412bfdfb254c78c8eb26b70f140f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bafd30ec_516afa00",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
         "patchSetId": 14
