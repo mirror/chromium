@@ -473,8 +473,13 @@
         ],
         "isolate_name": "telemetry_perf_tests",
         "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
+          "script": "//tools/perf/process_perf_results.py"
         },
         "name": "benchmark1 smoothness.maps",
         "override_compile_targets": [
@@ -505,8 +510,13 @@
         ],
         "isolate_name": "telemetry_perf_tests",
         "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
+          "script": "//tools/perf/process_perf_results.py"
         },
         "name": "benchmark2 blink_perf.css",
         "override_compile_targets": [
@@ -541,7 +551,7 @@
         },
         "name": "performance_test_suite",
         "override_compile_targets": [
-          "peformance_test_suite"
+          "performance_test_suite"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -560,7 +570,9 @@
             "--bot-id",
             "swarm846-c4",
             "--bot-id",
-            "swarm847-c4"
+            "swarm847-c4",
+            "--shards",
+            2
           ],
           "script": "//tools/perf/perf_device_trigger.py"
         }
