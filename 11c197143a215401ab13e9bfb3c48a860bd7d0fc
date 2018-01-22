@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b40d2c4_623774c7",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I\u0027ve slightly changed this to make the tests pass. I\u0027ve added a comment to explain.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "689d0247_bb073f50",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -13,6 +30,24 @@
       "writtenOn": "2018-01-20T05:01:15Z",
       "side": 1,
       "message": "How come this one checks the referrer, while line 807 checks the frame tree node\u0027s current origin? Would it be reasonable to always use the referrer? If there\u0027s a reason to have these differences, it would be useful to document the subtleties of why.\n\nAlso, what\u0027s the referrer for something opened via the context menu? What about middle-click?",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176ea08f_b8140aba",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment explaining. Folding everything into checking the referrer would probably work fine most of the case but I\u0027m worried about relying on the referrer as it can be stripped by the page for example. Probably not a big deal and happy to do it if you or clamy@ would prefer this (I assume rare are the pages setting no referrer policy on internal links).\n\nMiddle-click, ctrl+click and context menu will all set the URL of the WebContents from which the action was generated as referrer. Assuming there is no referrer policy I assume.",
+      "parentUuid": "689d0247_bb073f50",
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "ea3a23de_e5dbf7b9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I only carry the bit for renderer initiated navigations and `OpenURL()` is browser initiated by default. I basically add `true` in the call to override this.",
+      "parentUuid": "cb32de07_1ba8f1df",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9ece512_d3a4c936",
         "filename": "content/common/navigation_params.cc",
         "patchSetId": 4
@@ -47,6 +100,24 @@
       "writtenOn": "2018-01-20T05:01:15Z",
       "side": 1,
       "message": "Consider using an in-class member initializer to simplify this.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76df2cb6_454d127d",
+        "filename": "content/common/navigation_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to have all the members in-class or none instead of a mix? I also usually avoid doing code style changes on code I do not own. Happy to do it in a follow-up if you want though :)",
+      "parentUuid": "d9ece512_d3a4c936",
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +141,47 @@
         "endLine": 295,
         "endChar": 21
       },
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9906d5e3_76c9d7dc",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I think the distinction here isn\u0027t activation vs gesture but whether there was an activation prior to the navigation or to start the navigation. `was_activated` will answer the former question. `user_gesture` will answer the latter. At the moment, `was_activated` is used by autoplay and vibration API I believe.",
+      "parentUuid": "85ae28c9_954b92ef",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 21
+      },
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7840f4ae_7c310eed",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I\u0027ve reverted as the other change above seems to work better :)",
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +216,24 @@
       "writtenOn": "2018-01-20T05:01:15Z",
       "side": 1,
       "message": "Btw, how likely will we be able to implement this? It would be nice to move this over to Document if we don\u0027t need to support it being sticky on subframes.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e901688b_686f6536",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T16:32:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we don\u0027t want to implement stickyness on subframes. Either way, I\u0027m not sure we should implement this as part of this CL as I would like to attempt a merge :(",
+      "parentUuid": "c6568dbe_8f2c4cb4",
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
