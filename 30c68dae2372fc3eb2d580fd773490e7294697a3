@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37015f38_86749d6b",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T04:44:55Z",
+      "side": 1,
+      "message": "Perhaps update the comment at line 2084: I\u0027m not really sure why pydeps files are, or why they\u0027d need to be updated. The comment implies this is an Android-only thing, but it seems like that\u0027s not actually true anymore.",
+      "revId": "30c68dae2372fc3eb2d580fd773490e7294697a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
