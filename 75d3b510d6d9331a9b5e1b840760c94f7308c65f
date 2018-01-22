@@ -142,6 +142,30 @@
       "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422d5c83_191ba0ce",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-22T22:46:13Z",
+      "side": 1,
+      "message": "\u003e My rough understanding (which may be incorrect) is that there are three separate issues here:\n\u003e \n\u003e (A) do function prototypes exist in a header file?\n\u003e (B) are the functions defined, in other words does the build link successfully?\n\u003e (C) are the functions present at runtime?\n\u003e \n\u003e With the old NDK, all three of these were false, hence the workarounds.\n\nCorrection, (C) may be true or false depending on the runtime OS level. When running on O+, AHardwareBuffer functions are available via dynamic loading.",
+      "parentUuid": "77077897_3907fa69",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
