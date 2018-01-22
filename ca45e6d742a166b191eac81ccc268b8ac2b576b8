@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c0cc757_647f61c2",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-22T23:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6b2690_5b26fb28",
+      "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be77403a_28c03394",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 3
@@ -56,6 +74,30 @@
       "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d827b653_d32eb30b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-22T23:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b50040a_4f04153d",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 10
+      },
+      "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
