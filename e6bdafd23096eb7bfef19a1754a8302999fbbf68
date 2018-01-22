@@ -16,6 +16,24 @@
       "revId": "e6bdafd23096eb7bfef19a1754a8302999fbbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984782e2_211ae8cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-22T23:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44c7bfa_fb5149c6",
+      "revId": "e6bdafd23096eb7bfef19a1754a8302999fbbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

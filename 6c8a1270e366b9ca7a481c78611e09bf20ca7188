@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "27cf0d3a_390b66d9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-22T23:15:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure why DOMContentLoaded times out the tests. The event never gets fired. Also, the tests that it times out are all in canonicalizeFilter. Using window.addEventListener(\u0027load\u0027, func, {once:true}) does work for all tests. I tried this out in JS Bin, and according to the script there, document.body should not be null after DOMContentLoaded and window.load are fired.\nI also noticed on the canonicalizeFilter/no-arguments.https.html, if you change the test from promise_test to bluetooth_test, it stops firing the DOMContentLoaded event.\n\nJS Bin Link: http://jsbin.com/totacetazo/edit?html,js,console",
+      "parentUuid": "d2808718_71fce50a",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "149b1053_40ca1a53",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
         "patchSetId": 6

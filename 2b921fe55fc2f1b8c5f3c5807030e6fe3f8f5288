@@ -16,6 +16,24 @@
       "revId": "2b921fe55fc2f1b8c5f3c5807030e6fe3f8f5288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95853b7_f0a65ee0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/canonicalizeFilter/no-arguments.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-22T23:15:32Z",
+      "side": 1,
+      "message": "Thanks for clarifying that.",
+      "parentUuid": "afd84c99_ea454b8c",
+      "revId": "2b921fe55fc2f1b8c5f3c5807030e6fe3f8f5288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
