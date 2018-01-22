@@ -30,8 +30,8 @@ const unsigned kSkipAllocatorFrames = 4;
 
 Atomic32 g_running;
 Atomic32 g_deterministic;
-AtomicWord g_cumulative_counter = 0;
-AtomicWord g_threshold;
+AtomicWord g_bytes_left;
+AtomicWord g_current_interval;
 AtomicWord g_sampling_interval = 128 * 1024;
 
 static void* AllocFn(const AllocatorDispatch* self,
@@ -187,7 +187,10 @@ bool SamplingNativeHeapProfiler::InstallAllocatorHooks() {
 
 void SamplingNativeHeapProfiler::Start() {
   InstallAllocatorHooksOnce();
-  base::subtle::Release_Store(&g_threshold, g_sampling_interval);
+  intptr_t next_interval =
+      GetNextSampleInterval(base::subtle::Acquire_Load(&g_sampling_interval));
+  base::subtle::Release_Store(&g_current_interval, next_interval);
+  base::subtle::Release_Store(&g_bytes_left, next_interval);
   base::subtle::Release_Store(&g_running, true);
 }
 
@@ -197,14 +200,14 @@ void SamplingNativeHeapProfiler::Stop() {
 
 void SamplingNativeHeapProfiler::SetSamplingInterval(
     unsigned sampling_interval) {
-  // TODO(alph): Update the threshold. Make sure not to leave it in a state
-  // when the threshold is already crossed.
+  // Note: when changed dynamically, the current sample will still use
+  // the previous sampling interval.
   base::subtle::Release_Store(&g_sampling_interval, sampling_interval);
 }
 
 // static
 intptr_t SamplingNativeHeapProfiler::GetNextSampleInterval(uint64_t interval) {
-  if (base::subtle::NoBarrier_Load(&g_deterministic))
+  if (UNLIKELY(base::subtle::NoBarrier_Load(&g_deterministic)))
     return static_cast<intptr_t>(interval);
   // We sample with a Poisson process, with constant average sampling
   // interval. This follows the exponential probability distribution with
@@ -233,22 +236,32 @@ bool SamplingNativeHeapProfiler::CreateAllocSample(size_t size,
   // counter. When the counter reaches threshold, it picks a single thread
   // that will record the sample and reset the counter.
   // The thread that records the sample returns true, others return false.
-  AtomicWord threshold = base::subtle::NoBarrier_Load(&g_threshold);
-  AtomicWord accumulated = base::subtle::NoBarrier_AtomicIncrement(
-      &g_cumulative_counter, static_cast<AtomicWord>(size));
-  if (LIKELY(accumulated < threshold))
+  AtomicWord bytes_left = base::subtle::NoBarrier_AtomicIncrement(
+      &g_bytes_left, -static_cast<AtomicWord>(size));
+  if (LIKELY(bytes_left > 0))
     return false;
-
-  // Return if it was another thread that in fact crossed the threshold.
+  // Return if g_bytes_left was already zero or below before we decreased it.
+  // That basically means that another thread in fact crossed the threshold.
   // That other thread is responsible for recording the sample.
-  if (UNLIKELY(accumulated >= threshold + static_cast<AtomicWord>(size)))
+  if (LIKELY(bytes_left + static_cast<intptr_t>(size) <= 0))
     return false;
 
-  intptr_t next_interval =
+  // Only one thread that crossed the threshold is running the code below.
+  // It is going to be recording the sample.
+  size_t next_interval =
       GetNextSampleInterval(base::subtle::NoBarrier_Load(&g_sampling_interval));
-  base::subtle::Release_Store(&g_threshold, next_interval);
-  accumulated =
-      base::subtle::NoBarrier_AtomicExchange(&g_cumulative_counter, 0);
+  size_t last_interval = base::subtle::NoBarrier_AtomicExchange(
+      &g_current_interval, next_interval);
+  // Make sure g_current_interval is updated before staring next sample.
+  base::subtle::MemoryBarrier();
+
+  // Put the next sampling interval to g_bytes_left, thus allowing threads to
+  // start accumulating bytes towards the next sample.
+  // Simulateneously extract the current value (which is negative or zero)
+  // and take it into account when calculating the number of bytes
+  // accumulated during the current sample.
+  size_t accumulated = last_interval - base::subtle::NoBarrier_AtomicExchange(
+                                           &g_bytes_left, next_interval);
 
   DCHECK_NE(size, 0u);
   sample->size = size;
@@ -274,9 +287,6 @@ void* SamplingNativeHeapProfiler::RecordAlloc(Sample& sample,
                                               unsigned offset,
                                               unsigned skip_frames,
                                               bool preserve_data) {
-  // TODO(alph): It's better to use a recursive mutex and move the check
-  // inside the critical section. This way we won't skip the sample generation
-  // on one thread if another thread is recording a sample.
   if (entered_.Get())
     return address;
   base::AutoLock lock(mutex_);
