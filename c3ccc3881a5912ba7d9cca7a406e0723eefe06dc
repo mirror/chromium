@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f1b68c_c0111a51",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_item.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-22T22:58:51Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this argument default?",
+      "range": {
+        "startLine": 59,
+        "startChar": 64,
+        "endLine": 59,
+        "endChar": 66
+      },
+      "revId": "c3ccc3881a5912ba7d9cca7a406e0723eefe06dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
