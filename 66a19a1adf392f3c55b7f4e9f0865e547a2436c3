@@ -117,6 +117,30 @@
       "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20037db7_cfa5eda3",
+        "filename": "chromecast/graphics/cast_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2018-01-22T23:45:07Z",
+      "side": 1,
+      "message": "Oops, sorry, I had a draft comment here that didn\u0027t get posted. I think having two separate switches is better than one for consistency with other switches (e.g. the cast-initial-*), so I kept them separate.\nRe. requiring both to be specified for this to take effect - sure, fixed in patchset #2.",
+      "parentUuid": "70d930e4_f27525db",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
