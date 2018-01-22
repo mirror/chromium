@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8c2fac_c0acf0a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T23:19:26Z",
+      "side": 1,
+      "message": "This only describes 1/2 of the problem that this addresses.",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6407180f_129bd2f2",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T23:19:26Z",
+      "side": 1,
+      "message": "This can just be (this.adapterState_.available \u003d\u003d\u003d false || this.bluetoothToggleDisabled_)\n\nWe use \u003d\u003d\u003d false for \u0027avaliable\u0027 because \u0027avaiable\u0027 may be undefined which we do not necessarily want to treat as false. bluetoothToggleDisabled_ is a Boolean which will always only be true or false.",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f701e077_d44218b8",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T23:19:26Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5458e222_ce952010",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T23:19:26Z",
+      "side": 1,
+      "message": "s/Always resets/Restore/ to make it more clear that we are restoring a state set above (I didn\u0027t see that initially and was confused).",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075cf7b8_16185b73",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T23:19:26Z",
+      "side": 1,
+      "message": "Unfortunately the description for setAdapterState does not indicate when |callback| is invoked:\nhttps://cs.chromium.org/chromium/src/extensions/common/api/bluetooth_private.idl?q\u003dbluetooth_private.idl\u0026sq\u003dpackage:chromium\u0026l\u003d127\n\nWe should fix that.\n\nLooking at the bluez implementaiton, it looks like when \u0027powered\u0027 is changed it invokes this callback when the DBus powered.Set call completes; I\u0027m not sure how long that could take. I looks like this change is assuming that once the powerd.Set call completes it is OK to toggle the switch again? (Whereas currently we wait until onBluetoothAdapterStateChanged_ to get called to restore bluetoothToggleDisabled_ which I agree is incorrect).\n\nSetting this to |this.adapterState_.available| is confusing because it suggest that might have changed (persumably this should never be called if \u0027available\u0027 were false?) Is to protect against a case where toggling the state changed \u0027available\u0027? Unless that could actually happen, I would just set bluetoothToggleDisabled_ to \u0027false\u0027 here to be more clear.\n\nA better solution might be to introduce a second variable, \u0027stateChangeInProgress_\u0027, set that above and clear it here, and then make the disabled state of the toggle a function toggleIsEnabled_(available, inProgress).",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
