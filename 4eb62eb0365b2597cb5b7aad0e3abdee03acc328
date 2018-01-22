@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d19fc282_8d897b37",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T22:49:20Z",
+      "side": 1,
+      "message": "No, this doesn\u0027t affect test but certainly wrong based on what the code is doing (returning the maximum scroll position). It\u0027s related to the broken test though because the underlying cause is the same - the change RLS makes to what ContentsSize means. https://chromium-review.googlesource.com/664898 changed it to return the frame size rather than the document size (since the Frame\u0027s content is the LayoutView which is now clipped) but forgot to update this call site.\n\nWhen RLS is turned on the current code would just return the frame height which is wrong. Using LayoutViewportScrollableArea means it\u0027ll use the LayoutView\u0027s PLSA::ContentsSize when RLS is turned on so the returned value will be unchanged from today.",
+      "parentUuid": "f0bbf732_800d4272",
+      "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92cd1592_1a874ae3",
         "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d0ee323_57cf558e",
+        "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T22:49:20Z",
+      "side": 1,
+      "message": "Same as above, unrelated to test but missed in the earlier CL (https://chromium-review.googlesource.com/664898) when ContentsSize changed from Document to Frame size. This code wants to use document size since it recomputes the find text rects when this changes (i.e. page layout changes).",
+      "parentUuid": "92cd1592_1a874ae3",
+      "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c5816de_b3a2bb77",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-22T22:34:06Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c78750_4a433243",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T22:49:20Z",
+      "side": 1,
+      "message": "This is the change that fixes the broken test due to the call site in aw_render_view_ext.cc. The other call sites are just a result of me going through all the callers looking for similar issues.",
+      "parentUuid": "8c5816de_b3a2bb77",
       "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
