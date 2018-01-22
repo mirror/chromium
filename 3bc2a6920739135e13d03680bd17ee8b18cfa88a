@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11c38d8_ff042161",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableMarkingVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T18:32:01Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "3bc2a6920739135e13d03680bd17ee8b18cfa88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1999ebc4_fb60e851",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T18:32:01Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "3bc2a6920739135e13d03680bd17ee8b18cfa88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d9310d_11913091",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T18:32:01Z",
+      "side": 1,
+      "message": "nit: include TraceWrapperBase but no SW.h",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "3bc2a6920739135e13d03680bd17ee8b18cfa88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32001eb7_ecb4cf92",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T18:32:01Z",
+      "side": 1,
+      "message": "nit: includes not needed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 28,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "3bc2a6920739135e13d03680bd17ee8b18cfa88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
