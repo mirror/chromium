@@ -168,8 +168,6 @@ void InitializeFieldTrialAndFeatureList(
   base::FeatureList::SetInstance(std::move(feature_list));
 }
 
-#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
-
 void LoadV8SnapshotFile() {
 #if defined(USE_V8_CONTEXT_SNAPSHOT)
   static constexpr gin::V8Initializer::V8SnapshotFileType kSnapshotType =
@@ -196,6 +194,7 @@ void LoadV8SnapshotFile() {
     return;
   }
 #endif  // OS_POSIX && !OS_MACOSX
+
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
   gin::V8Initializer::LoadV8Snapshot(kSnapshotType);
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
@@ -218,7 +217,6 @@ void LoadV8NativesFile() {
   gin::V8Initializer::LoadV8Natives();
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
 }
-#endif  // V8_USE_EXTERNAL_STARTUP_DATA
 
 void InitializeV8IfNeeded(const base::CommandLine& command_line,
                           const std::string& process_type) {
