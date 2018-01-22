@@ -16,6 +16,24 @@
       "revId": "80523ff4f4175c16548f3a2ebf0f81a0f948788f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df6b9b2_a2d35306",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 41
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-22T13:27:51Z",
+      "side": 1,
+      "message": "For me it shows fine everywhere I\u0027ve seen it, including git log. I didn\u0027t know people are having problems with this.",
+      "parentUuid": "b55564a2_626a6c0e",
+      "revId": "80523ff4f4175c16548f3a2ebf0f81a0f948788f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
