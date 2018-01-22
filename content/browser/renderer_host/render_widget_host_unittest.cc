@@ -19,6 +19,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
@@ -1719,9 +1720,27 @@ TEST_F(RenderWidgetHostTest, MultipleInputEvents) {
   EXPECT_TRUE(delegate_->unresponsive_timer_fired());
 }
 
-// Test that the rendering timeout for newly loaded content fires
-// when enough time passes without receiving a new compositor frame.
-TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
+// Test that the rendering timeout for newly loaded content fires when enough
+// time passes without receiving a new compositor frame. This test assumes
+// Surface Synchronization is on.
+TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithSurfaceSync) {
+  // If Surface Synchronization is off, we have a separate code path for
+  // disabling new content rendering timeout that is tested in
+  // NewContentRenderingTimeoutWithoutSurfaceSync.
+  if (!features::IsSurfaceSynchronizationEnabled())
+    return;
+}
+
+// Test that the rendering timeout for newly loaded content fires when enough
+// time passes without receiving a new compositor frame. This test assumed
+// Surface Synchronization is off.
+TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
+  // If Surface Synchronization is on, we have a separate code path for
+  // disabling new content rendering timeout that is tested in
+  // NewContentRenderingTimeoutWithSurfaceSync.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
+
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
@@ -1789,6 +1808,10 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 // This tests that a compositor frame received with a stale content source ID
 // in its metadata is properly discarded.
 TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
+  // If Surface Synchronization is on, we don't keep track of content_source_id
+  // in CompositorFrameMetadata.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
