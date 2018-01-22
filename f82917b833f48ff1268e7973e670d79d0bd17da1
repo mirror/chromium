@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22ceda58_0e807ee1",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-22T19:50:40Z",
+      "side": 1,
+      "message": "Done. I have moved it to anonymous namespace above.",
+      "parentUuid": "e2e55cfa_d4e430fa",
+      "range": {
+        "startLine": 841,
+        "startChar": 29,
+        "endLine": 841,
+        "endChar": 51
+      },
+      "revId": "f82917b833f48ff1268e7973e670d79d0bd17da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37993f2b_93678c86",
         "filename": "content/public/browser/browser_main_parts.h",
         "patchSetId": 31
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-22T17:32:09Z",
       "side": 1,
       "message": "Please name this to make PreCreateThreads. Maybe PostCreateThreads().",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "f82917b833f48ff1268e7973e670d79d0bd17da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae260961_fe35bf62",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-22T19:50:40Z",
+      "side": 1,
+      "message": "Done. I\u0027ve renamed it to PostCreateThreads().",
+      "parentUuid": "37993f2b_93678c86",
       "range": {
         "startLine": 78,
         "startChar": 15,
