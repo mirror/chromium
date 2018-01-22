@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7e5ba8a_4d95a166",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-22T07:01:03Z",
+      "side": 1,
+      "message": "I\u0027d call this something like AXIntAttributeFromAOM",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "2433b0376163dc33f3e019936148c36976ba511e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf1b3de7_5f042ace",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.idl",
         "patchSetId": 1
