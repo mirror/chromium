@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d134ddc1_d1e3f7d7",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "TODO: listener.set_connection_error_handler()",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88fd907_a26f778f",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "TODO:\n\nnon_persistent_listeners_.erase(notification_id);",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aab147d_f296e21f",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "Hm. I\u0027d rather keep this private as it can be somewhat fragile. How about this:\n\n  1. Have a std::unique_ptr\u003cNotificationEventDispatcherImpl\u003e member in the unit test fixture.\n  2. Initialize it in SetUp() or the constructor.\n  3. Delete it in TearDown() or the destructor as:\n\n     delete dispatcher_.release();\n\nYeah this is fugly, but will allow us to use the friend declaration and keep it private.",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecf0457_12166d39",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "micro nit (I realise this code was already there): friend declarations come immediately after \"private:\"",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1f9377_69061146",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "nit: constants and the TestNotificationListener should still be in an anonymous namespace",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0481f24_02faa393",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T18:15:43Z",
+      "side": 1,
+      "message": "nit: you can drop WrapUnique afaik and just keep the bare `new`",
+      "revId": "d2bcf7677ed4e8e1f934a98b346c37f8b04f4d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
