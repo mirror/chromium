@@ -22,6 +22,30 @@
       "revId": "f8bb466be530c8b83acc10393da387f8e69a0208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a3b531_d9636aea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-22T23:53:25Z",
+      "side": 1,
+      "message": "No I mean setGroupSummary (unfortunately)... \"Note: You must set a notification as the group summary, otherwise your notifications will not appear as part of a group.\"\n (https://medium.com/exploring-android/android-n-introducing-upgraded-notifications-d4dd98a7ca92)",
+      "parentUuid": "54e8e2fd_9b871bb7",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "f8bb466be530c8b83acc10393da387f8e69a0208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
