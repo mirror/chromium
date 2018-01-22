@@ -31,6 +31,7 @@ class Toast : public UiElement {
               const CameraModel& model) const final;
 
   void AddIcon(const gfx::VectorIcon& icon, int width_pixels, float icon_size);
+  void AddTooltip(std::unique_ptr<UiElement> tooltip);
   void AddText(const base::string16& text,
                float font_height_dmm,
                TextLayoutMode text_layout_mode);
@@ -38,6 +39,7 @@ class Toast : public UiElement {
 
   void SetForegroundColor(SkColor color);
   void SetBackgroundColor(SkColor color);
+  void SetHoverBackgroundColor(SkColor color);
 
  private:
   void OnSetDrawPhase() override;
@@ -47,11 +49,19 @@ class Toast : public UiElement {
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
                                 int target_property_id,
                                 cc::Animation* animation) override;
+  bool hovered() const { return hovered_; }
+  virtual void OnStateUpdated();
+  void HandleHoverEnter();
+  void HandleHoverLeave();
 
   LinearLayout* container_ = nullptr;
   Rect* background_ = nullptr;
   VectorIcon* icon_ = nullptr;
   Text* text_ = nullptr;
+  SkColor hover_color_;
+  SkColor background_color_;
+  UiElement* tooltip_ = nullptr;
+  bool hovered_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(Toast);
 };

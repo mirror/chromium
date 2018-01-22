@@ -74,16 +74,24 @@ static constexpr float kAudioPermissionPromptWidth = 0.63f * kUrlBarDistance;
 static constexpr float kAudioPermissionPromptHeight = 0.218f * kUrlBarDistance;
 static constexpr float kAudionPermisionPromptDepth = 0.11f;
 
-static constexpr float kIndicatorHeight = 0.08f;
-static constexpr float kIndicatorXPadding = kIndicatorHeight * 0.1f;
-static constexpr float kIndicatorYPadding = kIndicatorHeight * 0.15f;
-static constexpr float kIndicatorIconSize = kIndicatorHeight * 0.7f;
-static constexpr float kIndicatorCornerRadius = kIndicatorHeight * 0.1f;
-static constexpr float kIndicatorMargin = kIndicatorHeight * 0.2f;
-static constexpr float kIndicatorFontHeightDmm = 0.032f;
-static constexpr float kIndicatorGap = 0.05f;
-static constexpr float kIndicatorVerticalOffset = 0.1f;
-static constexpr float kIndicatorDistanceOffset = 0.1f;
+static constexpr float kIndicatorDistance = 2.4f;
+static constexpr float kIndicatorXPaddingDMM = 0.015f;
+static constexpr float kIndicatorYPaddingDMM = 0.015f;
+static constexpr float kIndicatorIconSizeDMM = 0.034f;
+static constexpr float kIndicatorCornerRadiusDMM = 0.006f;
+static constexpr float kIndicatorMargin = 0.7f;
+static constexpr float kIndicatorFontHeightDMM = 0.020f;
+static constexpr float kIndicatorGapDMM = 0.03f;
+static constexpr float kIndicatorVerticalOffsetDMM = 0.016f;
+static constexpr float kIndicatorDistanceOffset =
+    kContentDistance - kIndicatorDistance;
+static constexpr float kIndicatorButtonWidthDMM = 0.064f;
+static constexpr float kIndicatorTooltipHeightDMM = 0.056f;
+static constexpr float kIndicatorTooltipGapDMM = 0.016f;
+static constexpr float kIndicatorTooltipXPaddingDMM = 0.024f;
+static constexpr float kIndicatorTooltipYPaddingDMM = 0.018f;
+static constexpr float kIndicatorTooltipOffsetDMM =
+    kIndicatorTooltipHeightDMM + kIndicatorTooltipGapDMM;
 
 static constexpr float kWebVrUrlToastWidthDMM = 0.472f;
 static constexpr float kWebVrUrlToastHeightDMM = 0.064f;

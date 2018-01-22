@@ -588,31 +588,66 @@ void UiSceneCreator::CreateSystemIndicators() {
   indicator_layout->SetName(kIndicatorLayout);
   indicator_layout->set_hit_testable(false);
   indicator_layout->set_y_anchoring(TOP);
-  indicator_layout->SetTranslate(0, kIndicatorVerticalOffset,
-                                 kIndicatorDistanceOffset);
-  indicator_layout->set_margin(kIndicatorGap);
+  indicator_layout->set_y_centering(BOTTOM);
+  indicator_layout->SetTranslate(
+      0, kIndicatorVerticalOffsetDMM * kIndicatorDistance,
+      kIndicatorDistanceOffset);
+  indicator_layout->set_margin(kIndicatorGapDMM * kIndicatorDistance);
   VR_BIND_VISIBILITY(indicator_layout, !model->fullscreen_enabled());
 
   for (const auto& indicator : indicators) {
     auto element = std::make_unique<Toast>();
     element->SetName(indicator.name);
     element->SetDrawPhase(kPhaseForeground);
-    element->set_padding(kIndicatorXPadding, kIndicatorYPadding);
-    element->set_corner_radius(kIndicatorCornerRadius);
-    element->SetMargin(kIndicatorMargin);
-    element->AddIcon(indicator.icon, 64, kIndicatorIconSize);
+    // TOD0(https://crbug.com/804411) once content quad is under a
+    // ScaledDepthAdjuster we can avoid multiplying the constants by
+    // kIndicatorDistance
+    element->set_corner_radius(kIndicatorCornerRadiusDMM * kIndicatorDistance);
+    element->SetSize(kIndicatorButtonWidthDMM * kIndicatorDistance,
+                     kIndicatorButtonWidthDMM * kIndicatorDistance);
+    element->set_padding(kIndicatorXPaddingDMM * kIndicatorDistance,
+                         kIndicatorYPaddingDMM * kIndicatorDistance);
+
+    element->AddIcon(indicator.icon, 128,
+                     kIndicatorIconSizeDMM * kIndicatorDistance);
     if (indicator.resource_string != 0) {
-      element->AddText(l10n_util::GetStringUTF16(indicator.resource_string),
-                       kIndicatorFontHeightDmm,
-                       TextLayoutMode::kSingleLineFixedHeight);
+      auto tooltip = Create<Rect>(kNone, kPhaseForeground);
+      tooltip->set_corner_radius(kIndicatorTooltipHeightDMM / 2 *
+                                 kIndicatorDistance);
+      tooltip->SetSize(kIndicatorTooltipHeightDMM * kIndicatorDistance,
+                       kIndicatorButtonWidthDMM * kIndicatorDistance);
+      tooltip->set_padding(kIndicatorTooltipXPaddingDMM * kIndicatorDistance,
+                           kIndicatorTooltipYPaddingDMM * kIndicatorDistance);
+      tooltip->SetTranslate(0, -kIndicatorTooltipOffsetDMM * kIndicatorDistance,
+                            0);
+      tooltip->set_bounds_contain_children(true);
+      tooltip->SetColor(
+          model_->color_scheme().system_indicator_tooltip_background);
+
+      auto text = Create<Text>(kNone, kPhaseForeground,
+                               kIndicatorFontHeightDMM * kIndicatorDistance);
+
+      text->SetText(l10n_util::GetStringUTF16(indicator.resource_string));
+      text->SetLayoutMode(TextLayoutMode::kSingleLineFixedHeight);
+      text->set_hit_testable(false);
+      text->SetColor(model_->color_scheme().system_indicator_foreground);
+
+      tooltip->AddChild(std::move(text));
+      tooltip->SetVisible(false);
+      tooltip->set_requires_layout(false);
+      tooltip->set_contributes_to_parent_bounds(false);
+      element->AddTooltip(std::move(tooltip));
     }
 
-    VR_BIND_COLOR(model_, element.get(),
-                  &ColorScheme::system_indicator_background,
-                  &Toast::SetBackgroundColor);
-    VR_BIND_COLOR(model_, element.get(),
-                  &ColorScheme::system_indicator_foreground,
-                  &Toast::SetForegroundColor);
+    // TODO(asimjour): We should update the colors to use binding when the
+    // indicators are using different colors in different modes.
+    element->SetForegroundColor(
+        model_->color_scheme().system_indicator_foreground);
+    element->SetBackgroundColor(
+        model_->color_scheme().system_indicator_background);
+    element->SetHoverBackgroundColor(
+        model_->color_scheme().system_indicator_background_hover);
+
     element->AddBinding(std::make_unique<Binding<bool>>(
         VR_BIND_LAMBDA(
             [](Model* m, bool PermissionsModel::*permission) {

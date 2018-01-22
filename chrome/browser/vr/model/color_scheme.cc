@@ -51,8 +51,10 @@ void InitializeColorSchemes() {
   normal_scheme.exclusive_screen_toast_foreground = 0xCCFFFFFF;
   normal_scheme.exclusive_screen_toast_background = 0xCC2F2F2F;
 
-  normal_scheme.system_indicator_foreground = normal_scheme.element_foreground;
-  normal_scheme.system_indicator_background = normal_scheme.element_background;
+  normal_scheme.system_indicator_foreground = 0xA6000000;
+  normal_scheme.system_indicator_background = 0xDFEEEEEE;
+  normal_scheme.system_indicator_background_hover = 0xFFEEEEEE;
+  normal_scheme.system_indicator_tooltip_background = 0xFFEEEEEE;
   normal_scheme.audio_permission_prompt_icon_foreground = 0xFF4285F4;
   normal_scheme.audio_permission_prompt_background = 0xFFF5F5F5;
   normal_scheme.audio_permission_prompt_secondary_button_colors.foreground =
