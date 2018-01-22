@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="container">
+  <table>
+  <colgroup>
+  <meter>
+  <form id="a">
+  <textarea id="b" name="aa"></textarea>
+  <button id="c" name="ab"></button>
+</div>
+<script>
+'use strict';
+
+test(() => {
+  var form = document.getElementById("a");
+  var textarea = document.getElementById("b");
+  var input = document.getElementById("c");
+  var container = document.getElementById("container");
+  document.body.removeChild(container);
+  var before = form.aa; // validates cache
+  assert_equals(before, textarea);
+  textarea.setAttribute("name", "ac"); // should invalidate cache
+  input.setAttribute("name", "aa");
+  var after = form.aa; // should not return textarea
+  assert_not_equals(before, after);
+}, "should invalidate nameditem cache even when removed from document");
+
+</script>
