@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f823276a_036cd579",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T22:07:15Z",
+      "side": 1,
+      "message": "Same as last comment. TestFramework base, VrTestFramework and XrTestFramework overrides?",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc60883_6c2bb928",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T22:07:15Z",
+      "side": 1,
+      "message": "I think this is going to get confusing/hard to manage. How about instead we have a base class \u0027TransitionUtils.java\u0027 with all of the shared code, and an XrTransitionUtils and VrTransitionUtils for the functions specific to xr/vr?",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
