@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2462d86b_14fdeb5f",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-22T22:16:11Z",
+      "side": 1,
+      "message": "Done. That totally works. Learned something new today... http://en.cppreference.com/w/cpp/language/data_members#Member_initialization",
+      "parentUuid": "7ff68715_520201a2",
+      "revId": "4b8a2970027dc763f6277ee553546bad64f2ddb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b779b7f_2f12e773",
         "filename": "components/toolbar/toolbar_model_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-22T21:34:45Z",
       "side": 1,
       "message": "Hmm, don\u0027t we want to ellipsize here instead of just truncating?",
+      "revId": "4b8a2970027dc763f6277ee553546bad64f2ddb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46590432_0d06f5b6",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-22T22:16:11Z",
+      "side": 1,
+      "message": "So my reading of TruncateString was that it includes the ellipsis adding. See here for comment and look at the implementation too... https://cs.chromium.org/chromium/src/ui/gfx/text_elider.h?sq\u003dpackage:chromium\u0026l\u003d160\n\nI think the old version just added two ellipsis.\n\nFWIW, it still passes this test that checks ellipsizing: https://cs.chromium.org/chromium/src/chrome/browser/ui/toolbar/toolbar_model_unittest.cc?q\u003dtoolbar_model_unittest\u0026dr\u0026l\u003d158",
+      "parentUuid": "6b779b7f_2f12e773",
       "revId": "4b8a2970027dc763f6277ee553546bad64f2ddb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
