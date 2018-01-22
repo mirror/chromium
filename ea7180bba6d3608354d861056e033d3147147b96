@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "491dc15d_43bed729",
+        "filename": "content/test/fuzzer/fuzzer_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2018-01-22T00:16:33Z",
+      "side": 1,
+      "message": "how about: \n\n  #if defined(V8_USE_EXTERNAL_STARTUP_DATA) \u0026\u0026 defined(USE_V8_CONTEXT_SNAPSHOT)\n\n?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "ea7180bba6d3608354d861056e033d3147147b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
