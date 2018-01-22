@@ -87,6 +87,24 @@
       "revId": "0cca07ada65cc95d013181390c125e5904de046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c2e454_7b5bdb88",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-22T22:50:59Z",
+      "side": 1,
+      "message": "Since |WallpaperControllerClient::SetDefaultWallpaper| is adding itself as the callback, I\u0027m afraid this will result in an infinite loop? Should I add a new callback function? Like:\n\nSetDefaultWallpaperCallback() {\n  wallpaper_controller_-\u003eSetDefaultWallpaper(\n      std::move(user_info), GetFilesId(account_id).id(), show_wallpaper);\n}\n\n\n\nvoid WallpaperControllerClient::SetDefaultWallpaper(const AccountId\u0026 account_id,\n                                                    bool show_wallpaper) {\n  AddCanGetFilesIdCallback(\n  base::Bind(\u0026WallpaperControllerClient::SetDefaultWallpaperCallback, // Currently it\u0027s adding \n                                                                           itself here.\n                   weak_factory_.GetWeakPtr(), account_id, show_wallpaper));\n}\n\n\n\nI didn\u0027t do this since it will result in three extra *Callback functions which seem to be redundant.",
+      "parentUuid": "55c670e6_a0e83124",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
