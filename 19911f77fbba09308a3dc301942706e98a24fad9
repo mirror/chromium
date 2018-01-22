@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "314764f9_2763b71e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/VrModalPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "nit on ordering\n\nstatic finals, statics, finals, normal class level",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd401174_7c487a1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/VrModalPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "nit, {}s needed if the statement and condition aren\u0027t on the same line (javaland only)",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9cb329_8435be60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "why protected?",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dcfada_440dee01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "same ordering comment from the other file",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1808f4c8_6bec390e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "If you find yourself needing to this a lot, i would recommend creating a handler yourself and using messages with data.  Creating a runnable each time is a fair amount of churn of object creation and you could do this more lightweight.\n\nhttps://developer.android.com/reference/android/os/Handler.html#sendMessage(android.os.Message)\n\nYou would use one of the Message.obtain methods to get a empty one.",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f907a3_89ae8e5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "nit, blank line above",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f031eb_3c0dcd19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "I would recommend adding docs for your non-private methods as that is the standard practice in java",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8db94b_3d2fe745",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "I think we\u0027ll want to cache the previous one (before overriding it with the vr dialog manager) instead of creating a new one.\n\nFrom the offline discussion, I think we\u0027ll need a way to support not clobbering all of the dialogs when switching, but we can do that in a followup.",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb0eda2_e0ce57b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T22:19:56Z",
+      "side": 1,
+      "message": "blank line below",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
