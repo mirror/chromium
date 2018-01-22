@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "901ef657_8101bd21",
+        "filename": "ash/system/power/power_button_menu_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-22T22:31:23Z",
+      "side": 1,
+      "message": "nit: #include \"base/macros.h\" explicitly. I was told it\u0027s better to do so.",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d7fa69_37a034bb",
+        "filename": "ash/system/power/power_button_menu_screen_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-22T22:31:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd0e04c_cc48ccbf",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-22T22:31:23Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24eb4cfa_c14312b7",
         "filename": "ash/system/power/power_button_menu_view.cc",
         "patchSetId": 7
@@ -30,6 +81,23 @@
       "writtenOn": "2018-01-22T20:33:44Z",
       "side": 1,
       "message": "nit: please add an else here:\n\n  } else {\n    NOTREACHED() \u003c\u003c \"Invalid sender\";\n  }",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7f0b14_1efcd494",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-22T22:31:23Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "0f70dea46708eafe270da592a0948d201688cf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
