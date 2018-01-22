@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24eb4cfa_c14312b7",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "if power_off_item_ must exist in both paths, please move it outside of the if-else:\n\n  DCHECK(power_off_item_);\n  if (sign_out_item_) {\n    ...\n  } else {\n    ...\n  }\n\nif you want, you could probably also use a ternary, but i\u0027m not sure how it\u0027ll look after clang-format indents it:\n\n  menu_size \u003d sign_out_item_\n      ? gfx::Size(...)\n      : gfx::Size(...);",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78baae0_d1affa11",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: please add an else here:\n\n  } else {\n    NOTREACHED() \u003c\u003c \"Invalid sender\";\n  }",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a0948d_31b40cdf",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "big nit: don\u0027t need this comment; it\u0027s a simple accessor and already has \"for_testing\" in its name",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c07de4_a865c7bc",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: delete \"that\", or change it to \"that\u0027s\" (either is okay)",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f070eb_2b9a0081",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: instead of \"avoid cross interference\", how about \"avoid events being ignored\"?",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58abfc4_b6ecaef6",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: please update the member name here to include the relation to |controller_| -- see comment below",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14ab38e_3b98497d",
+        "filename": "ash/system/power/tablet_power_button_controller_test_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: how about something more general like this: \n\n  // True if |controller_|\u0027s menu has a sign out item.\n\n? it\u0027s a bit confusing otherwise since sign_out_item_ doesn\u0027t exist in this class.",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0df60bb_4629f243",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "nit: same comment here; change \"avoid cross interference\" to something like \"avoid events getting ignored\"",
+      "revId": "0f70dea46708eafe270da592a0948d201688cf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

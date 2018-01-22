@@ -417,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "88a9ddb6_28321ed1",
+        "filename": "ash/system/power/power_button_menu_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "ah, good point. i\u0027ve been spoiled by writing go lately, which has a more powerful switch statement. :-)",
+      "parentUuid": "83e3884f_15b32b1c",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e10e2f24_e3a2b27b",
         "filename": "ash/system/power/power_button_menu_view.h",
         "patchSetId": 2
@@ -1384,6 +1402,24 @@
       "side": 1,
       "message": "No strong opinion, as far as UI review agrees with it.",
       "parentUuid": "e1b2a05e_cfe52c59",
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7d075e_91430a15",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-22T20:33:44Z",
+      "side": 1,
+      "message": "yeah, i just noticed my phone has this behavior too. it doesn\u0027t make much sense to me, but being consistent with android sounds fine. :-)",
+      "parentUuid": "a8a4a91c_3e207439",
       "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
