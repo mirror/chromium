@@ -76,9 +76,13 @@ class OmniboxPopupContentsView : public views::View,
 
  private:
   class AutocompletePopupWidget;
+  class AutocompleteClipFrame;
 
   // Calculates the height needed to show all the results in the model.
   int CalculatePopupHeight();
+
+  // Update the Widget bounds, or re-clip the contents.
+  void UpdatePopupBounds();
 
   // Size our children to the available content area.
   void LayoutChildren();
@@ -104,6 +108,7 @@ class OmniboxPopupContentsView : public views::View,
   void PaintChildren(const views::PaintInfo& paint_info) override;
 
   std::unique_ptr<OmniboxPopupModel> model_;
+  AutocompleteClipFrame* clip_frame_ = nullptr;
 
   // The popup that contains this view.  We create this, but it deletes itself
   // when its window is destroyed.  This is a WeakPtr because it's possible for

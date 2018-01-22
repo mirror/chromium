@@ -1245,7 +1245,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   subtree_property_changed_ = false;
   inputs_.update_rect = gfx::Rect();
 
-  if (mask_layer())
+  if (false && mask_layer())
     DCHECK_EQ(bounds().ToString(), mask_layer()->bounds().ToString());
   layer_tree_host_->RemoveLayerShouldPushProperties(this);
 }
