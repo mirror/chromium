@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29da74eb_33a33ac9",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T09:28:28Z",
+      "side": 1,
+      "message": "Tiny Nit: Could you make the order of constructors match the order of fields in the union? That is move the SimpleValue and bool constructor above the int constructors?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "c666164c51b206d3f9bf9ece28f601f38bd45320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6daec5c6_cc2d2d3e",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T09:28:28Z",
+      "side": 1,
+      "message": "Tiny Nit: Here as well, could this go between is_none() and is_unsigned()?\n\nDon\u0027t forget to update the CC file as well in case you decide to address this",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "c666164c51b206d3f9bf9ece28f601f38bd45320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
