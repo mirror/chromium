@@ -63,6 +63,30 @@
       "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9330c4f0_9295748a",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T15:29:46Z",
+      "side": 1,
+      "message": "I\u0027m completely fine with passing a list.\n\nHowever, I\u0027m not sure that argument holds - there are a lot of things that need to be on all three paths, so it seems like we\u0027re going to need to have shared consumer-side code for all three of those paths, anyways, so we\u0027ll presumably need some shared consumer-side infrastructure, regardless.",
+      "parentUuid": "d69c5c18_2b0e5f41",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
