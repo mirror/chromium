@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba6173a0_cfef4b26",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-22T18:41:22Z",
+      "side": 1,
+      "message": "Will mojo::SharedBufferHandle::Create() work so you don\u0027t need to depend on mojo/edk directly?",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa47c81_dee3c589",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-22T18:41:22Z",
+      "side": 1,
+      "message": "Do you plan to implement this? Could this be reached at runtime? Does it make sense to still fire the callback with failure params?",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e1c161_d4db104a",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-22T18:41:22Z",
+      "side": 1,
+      "message": "Will this work?\n\nDCHECK(iter !\u003d decode_cb_map_.end());",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e717f469_31e5be63",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-22T18:41:22Z",
+      "side": 1,
+      "message": "nit: empty line here",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
