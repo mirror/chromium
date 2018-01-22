@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61e3cba9_f155dcff",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "It is needed since this class is a WebContentsUserData.",
+      "parentUuid": "ebb34360_8deee3b2",
+      "range": {
+        "startLine": 30,
+        "startChar": 43,
+        "endLine": 30,
+        "endChar": 77
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c13340_36185e82",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 46
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e914d600_0c74e890",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "By moving, we can save one copy of this map. Yes, std::unordered_map supports move.",
+      "parentUuid": "89c13340_36185e82",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e667e6_ab542ffb",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 46
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "24f6ea69_1f62226f",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "Since it should not happen since we are holding the interface pointer, just remove this.",
+      "parentUuid": "54e667e6_ab542ffb",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8f20b2_13a20422",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 46
@@ -79,6 +145,24 @@
       "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee138a3_dfdde961",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8f20b2_13a20422",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1a11b889_d0f91663",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "Comments changed, no longer needed",
+      "parentUuid": "e86861c5_3aaad0c1",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9eaee4_bd3cf7c5",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 46
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "935fd94b_63145317",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "The problem is that browser side may be changed ahead of renderer side, which may cause the status no longer in sync. The renderer side carries cookie to let us know which request this rendered result corresponds to. Even if the cookie value is tampered, it either points to nothing or the content in the same page or doc they already have access to.",
+      "parentUuid": "1c9eaee4_bd3cf7c5",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0183dc3_7b80cec2",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 46
@@ -136,6 +262,24 @@
       "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e80366_19a4057d",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "Changed to one service instance per request, so each page will request its own subframe contents.",
+      "parentUuid": "f0183dc3_7b80cec2",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bee2150c_da581044",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "It is a bit obscure here. Basically it just makes the callback copyable, so we can pass it through another callback. Directly passing it will fail on forwarding parameters.",
+      "parentUuid": "5b50d977_969eac77",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c94e07_0d0026fa",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 49
@@ -33,6 +51,24 @@
       "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f7f33f_7ecd64b1",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "The browser side of code is not added yet, will do in the follow-up CLs. This CL just focuses on the service side.",
+      "parentUuid": "03c94e07_0d0026fa",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0cad2316_899b8ee6",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "I changed data structures to make this simpler.",
+      "parentUuid": "aeea5c15_770f69a6",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 75
+      },
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cab2696_aa8b8740",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 49
@@ -73,6 +133,24 @@
       "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a39be3_ef607033",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-22T19:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cab2696_aa8b8740",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
