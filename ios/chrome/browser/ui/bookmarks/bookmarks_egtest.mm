@@ -168,6 +168,8 @@ id<GREYMatcher> CloseToolsMenuButton() {
 // Tear down called once per test.
 - (void)tearDown {
   [super tearDown];
+  [EarlGrey rotateDeviceToOrientation:UIDeviceOrientationPortrait
+                           errorOrNil:nil];
   GREYAssert(chrome_test_util::ClearBookmarks(),
              @"Not all bookmarks were removed.");
   // Clear position cache so that Bookmarks starts at the root folder in next
@@ -2760,6 +2762,91 @@ id<GREYMatcher> CloseToolsMenuButton() {
 
   // Ensure Folder 1 is seen, by verifying folders at this level.
   [BookmarksTestCase verifyBookmarkFolderIsSeen:@"Folder 2"];
+}
+
+// Ensure bookmark/folder is visible after entering the editor with orientation
+// changed (make sure https://crbug.com/782481 doesn't happen).
+- (void)testBookmarkIsVisibleWhenEditDoneWithOrientationChanged {
+  [BookmarksTestCase setupBookmarksWhichExceedsScreenHeight];
+  [BookmarksTestCase openBookmarks];
+  [BookmarksTestCase openMobileBookmarks];
+
+  // 1. Test the bookmark editor.
+
+  // Verify Bottom URL is not visible before scrolling to bottom (make sure
+  // setupBookmarksWhichExceedsScreenHeight works as expected).
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Bottom URL")]
+      assertWithMatcher:grey_notVisible()];
+
+  // Scroll to the bottom so that Bottom URL is visible.
+  [BookmarksTestCase scrollToBottom];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Bottom URL")]
+      assertWithMatcher:grey_sufficientlyVisible()];
+
+  // Invoke Edit through long press.
+  [[EarlGrey
+      selectElementWithMatcher:TappableBookmarkNodeWithLabel(@"Bottom URL")]
+      performAction:grey_longPress()];
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabelId(
+                                          IDS_IOS_BOOKMARK_CONTEXT_MENU_EDIT)]
+      performAction:grey_tap()];
+
+  // Rotate the screen to landscape.
+  [EarlGrey rotateDeviceToOrientation:UIDeviceOrientationLandscapeLeft
+                           errorOrNil:nil];
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
+  // Tap the Done button.
+  [[EarlGrey selectElementWithMatcher:BookmarksDoneButton()]
+      performAction:grey_tap()];
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(@"Single Bookmark Editor")]
+      assertWithMatcher:grey_notVisible()];
+
+  // Ensure the Bottom URL is visible.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Bottom URL")]
+      assertWithMatcher:grey_sufficientlyVisible()];
+
+  // Rotate the screen back to portrait.
+  [EarlGrey rotateDeviceToOrientation:UIDeviceOrientationPortrait
+                           errorOrNil:nil];
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
+  // 2. Test the folder editor.
+
+  // Create "New Folder".
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          @"context_bar_leading_button")]
+      performAction:grey_tap()];
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(grey_accessibilityID(
+                                              @"bookmark_editing_text"),
+                                          grey_sufficientlyVisible(), nil)]
+      performAction:grey_typeText(@"\n")];
+
+  // Invoke Edit through long press.
+  [[EarlGrey
+      selectElementWithMatcher:TappableBookmarkNodeWithLabel(@"New Folder")]
+      performAction:grey_longPress()];
+  [[EarlGrey
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_BOOKMARK_CONTEXT_MENU_EDIT_FOLDER)]
+      performAction:grey_tap()];
+
+  // Rotate the screen to landscape.
+  [EarlGrey rotateDeviceToOrientation:UIDeviceOrientationLandscapeLeft
+                           errorOrNil:nil];
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
+  // Tap the Done button.
+  [[EarlGrey selectElementWithMatcher:BookmarksDoneButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Folder Editor")]
+      assertWithMatcher:grey_notVisible()];
+
+  // Ensure the New Folder is visible.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"New Folder")]
+      assertWithMatcher:grey_sufficientlyVisible()];
 }
 
 // Tests that all elements on the bookmarks landing page are accessible.

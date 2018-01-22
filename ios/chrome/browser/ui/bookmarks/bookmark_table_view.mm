@@ -369,6 +369,25 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self.editingFolderCell stopEdit];
 }
 
+- (void)scrollToBookmarkIfNotVisible:(const BookmarkNode*)bookmarkNode {
+  const BookmarkNode* node(bookmarkNode);
+  // Do it in next run loop cycle because we need to wait until the tableView
+  // completed its rotation (in case it needs to).
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSIndexPath* indexPath = [self indexPathForNode:node];
+    if (!indexPath) {
+      return;
+    }
+    // Scroll to the cell if it is not visible.
+    NSArray* visiblePaths = [self.tableView indexPathsForVisibleRows];
+    if (![visiblePaths containsObject:indexPath]) {
+      [self.tableView scrollToRowAtIndexPath:indexPath
+                            atScrollPosition:UITableViewScrollPositionBottom
+                                    animated:NO];
+    }
+  });
+}
+
 #pragma mark - UIView
 
 - (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {

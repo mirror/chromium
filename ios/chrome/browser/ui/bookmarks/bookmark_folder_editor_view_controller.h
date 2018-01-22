@@ -20,7 +20,8 @@ class ChromeBrowserState;
 }  // namespace ios
 
 @protocol BookmarkFolderEditorViewControllerDelegate
-// Called when the controller successfully created or edited |folder|.
+// Called when the controller successfully created or edited |folder|.   Scroll
+// the tableView to |folder| in case |folder| is outside of the visible area.
 - (void)bookmarkFolderEditor:(BookmarkFolderEditorViewController*)folderEditor
       didFinishEditingFolder:(const bookmarks::BookmarkNode*)folder;
 // Called when the user deletes the edited folder.

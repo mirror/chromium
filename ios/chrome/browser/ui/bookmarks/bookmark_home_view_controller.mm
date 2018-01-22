@@ -538,6 +538,15 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   [self dismissViewControllerAnimated:YES completion:nil];
   self.folderEditor.delegate = nil;
   self.folderEditor = nil;
+  // Scroll to the editing cell in case a rotation to landscape happened in
+  // editor and caused the editing cell to be moved outside of the screen
+  // (prevent https://crbug.com/782481).  Do it in next run loop cycle because
+  // we need to wait until the tableView started and completed its rotation (in
+  // cases it needs to).
+  const BookmarkNode* node(folder);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.bookmarksTableView scrollToBookmarkIfNotVisible:node];
+  });
 }
 
 - (void)bookmarkFolderEditorDidDeleteEditedFolder:
@@ -566,10 +575,20 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   return NO;
 }
 
-- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller {
+- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller
+                        bookmarkNode:(const BookmarkNode*)bookmarkNode {
   self.editViewController.delegate = nil;
   self.editViewController = nil;
   [self dismissViewControllerAnimated:YES completion:NULL];
+  // Scroll to the editing cell in case a rotation to landscape happened in
+  // editor and caused the editing cell to be moved outside of the screen
+  // (prevent https://crbug.com/782481).  Do it in next run loop cycle because
+  // we need to wait until the tableView started and completed its rotation (in
+  // cases it needs to).
+  const BookmarkNode* node(bookmarkNode);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.bookmarksTableView scrollToBookmarkIfNotVisible:node];
+  });
 }
 
 - (void)bookmarkEditorWillCommitTitleOrUrlChange:

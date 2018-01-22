@@ -296,7 +296,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [self.view resignFirstResponder];
 
   // Dismiss this controller.
-  [self.delegate bookmarkEditorWantsDismissal:self];
+  [self.delegate bookmarkEditorWantsDismissal:self bookmarkNode:self.bookmark];
 }
 
 #pragma mark - Layout
@@ -379,7 +379,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
                                                      self.browserState);
     self.bookmark = nil;
   }
-  [self.delegate bookmarkEditorWantsDismissal:self];
+  [self.delegate bookmarkEditorWantsDismissal:self bookmarkNode:nil];
 }
 
 - (void)moveBookmark {
@@ -540,7 +540,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   if (self.bookmark == bookmarkNode) {
     self.bookmark = nil;
-    [self.delegate bookmarkEditorWantsDismissal:self];
+    [self.delegate bookmarkEditorWantsDismissal:self bookmarkNode:nil];
   } else if (self.folder == bookmarkNode) {
     [self changeFolder:self.bookmarkModel->mobile_node()];
   }
@@ -555,7 +555,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [self changeFolder:self.bookmarkModel->mobile_node()];
   }
 
-  [self.delegate bookmarkEditorWantsDismissal:self];
+  [self.delegate bookmarkEditorWantsDismissal:self bookmarkNode:nil];
 }
 
 #pragma mark - UIResponder
