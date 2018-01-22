@@ -16,6 +16,24 @@
       "revId": "fb640b2e6e610a090f448873ee9883c3bd4039ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de7de9d_eabf4a28",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-22T13:25:59Z",
+      "side": 1,
+      "message": "I don\u0027t think that is feasible because these commands of cr.ui.Command type doesn\u0027t have \"self\" or \"this\" arguments but created like singletons with the existing design IIUC. For example, if we do like\n    const thisClass \u003d CommandHandler.COMMANDS_[\u0027paste-into-folder\u0027];\nto refer the command itself, then thisClass is type of cr.ui.Command and cannot have the helper method in it at compilation time.",
+      "parentUuid": "761853d6_7c0afbd9",
+      "revId": "fb640b2e6e610a090f448873ee9883c3bd4039ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
