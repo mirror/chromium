@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c2fa45_67617651",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T22:11:58Z",
+      "side": 1,
+      "message": "We don\u0027t need to find all the printers, just check whether one exists:\n\n    return this.printers.some(printer \u003d\u003e {\n      ...",
+      "revId": "424dc08c887aa214d4d11f00c2d0354d87f33f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

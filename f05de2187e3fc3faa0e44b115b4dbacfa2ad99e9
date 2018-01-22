@@ -46,6 +46,30 @@
       "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505df4f9_368fce24",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T22:11:58Z",
+      "side": 1,
+      "message": "Because if this page is imported with \u003clink rel\u003d\"import\"\u003e, style sheets that it includes via \u003clink rel\u003d\"stylesheet\"\u003e aren\u0027t added to the main page.\n\nIn release builds, we use vulcanize, which combines all these HTML files into one. In that case, this \u003clink rel\u003d\"stylesheet\"\u003e works like you expect -- it loads the css and adds it as a stylesheet to the page.\n\nIn debug builds, we disable vulcanize, meaning this cups_printers.html page is loaded as an HTML import. Then the \u003clink rel\u003d\"stylesheet\"\u003e isn\u0027t added to the main document so it doesn\u0027t have any visible effect here.\n\nPolymer does have a way of importing modular style sheets, but for global CSS variables we prefer to just do a normal \u003clink rel\u003d\"stylesheet\"\u003e in the main page (settings.html), like your new patch has. Thanks!",
+      "parentUuid": "067518ff_2b1b5eb1",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 67
+      },
+      "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
