@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4188e09_69b584fd",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2018-01-22T18:11:54Z",
+      "side": 1,
+      "message": "nit: Indentation doesn\u0027t match other permissions.",
+      "range": {
+        "startLine": 157,
+        "startChar": 30,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "4073666cea48f3dee77e27022a137577621029ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
