@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a4c6b9_e5e9ab1c",
+        "filename": "ios/web/navigation/navigation_item_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-22T23:51:01Z",
+      "side": 1,
+      "message": "It would be useful to explain tricks with loadHTML and reload call to give more context for this enum.",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "96e0869d7f2cf4d995eaee25a423248e975f5ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac94f9d_859654e8",
+        "filename": "ios/web/navigation/navigation_item_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-22T23:51:01Z",
+      "side": 1,
+      "message": "nit: In modern Chromium code there is no need to use MACRO_STYLE names for enum. I did not comment in the previous round because new code was consistent with the rest of NavigationManagerImpl enums.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "96e0869d7f2cf4d995eaee25a423248e975f5ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778aa6c8_8fc32c33",
+        "filename": "ios/web/navigation/navigation_item_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-22T23:51:01Z",
+      "side": 1,
+      "message": "What does \"session history\" mean in this context? WKBackForwardList?",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "96e0869d7f2cf4d995eaee25a423248e975f5ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
