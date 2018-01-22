@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfe870c5_24fe5e77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "for clipping.. one option would be to give the omnibox a layer and a clip mask (see native_view_host_aura.cc). That might be expensive or hide other bugs or not work if the subviews do not also have layers.. -- better if we can ensure things that don\u0027t need to are not painting a background.",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a865359_600b6c6b",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "nit:: // static\n\nactually, I\u0027d even declare this constexpr in the header, like\n\nconstexpr int GetBorderRadius(int height, Style style) {\n  return style \u003d\u003d RECTANGULAR ? kDefaultCornerRadius : height / 2;\n}",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7236b7fc_1d3e79ea",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure this logic is correct -- if we scale the radius, it won\u0027t match half the height for the draw op, so would never draw properly rounded.",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ed9039_9e0a805e",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "hmm - a rounded rect stroke technically has different radii on the inside and the outside of the stroke (the radius only applies to the centreline of the stroke). The pixels may be too small to make a difference. But usually the best result is achieved by something like\n\n - paint round-rect FILL with the stroke color\n - inset the round-rect by the thickness of the stroke\n - paint round-rect FILL with background color\n\nthis effectively makes a stroke with the delta in round rects, and uses faster draw operations.",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd04871_c985967d",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "rounded is a bit ambiguous. maybe \u0027rectangular\u0027 is clearer. (or pill/oval). But best would be an enum I think, e.g.\n\nenum class Style {\n  RECTANGULAR,\n  PILL/OVAL\n};",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24738bae_75e63cbf",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "`bool rounded` -\u003e `Style style \u003d RECTANGULAR`",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd40007f_9a27e0a9",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "the drawing code above should perhaps move into a helper of BackgroundWith1PxBorder.. Does anything else use it (can we call it OmniboxBackgroundBorder?). Or can we subclass it? Then we can move IsLocationBarRound() into the subclass implementation .cc file",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5954401_a8121bb3",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T23:32:37Z",
+      "side": 1,
+      "message": "comment about this?",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
