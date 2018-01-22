@@ -22,6 +22,30 @@
       "revId": "6454d4d3569c0ddfb4f765655362b118147f1616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67d0456_30bb2836",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T03:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dce24d_faf62840",
+      "range": {
+        "startLine": 435,
+        "startChar": 13,
+        "endLine": 435,
+        "endChar": 14
+      },
+      "revId": "6454d4d3569c0ddfb4f765655362b118147f1616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
