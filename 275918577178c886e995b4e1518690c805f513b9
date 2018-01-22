@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e682f9b0_ffc1631a",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:12:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18d8181c_2c57bb19",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 45
+      },
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5f342a4_95475c6f",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "275918577178c886e995b4e1518690c805f513b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bb5a2f_f228ce0e",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f342a4_95475c6f",
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "275918577178c886e995b4e1518690c805f513b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e841c947_6dbfe9a7",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:12:50Z",
+      "side": 1,
+      "message": "I would rather keep it as a method as it is not backed by a property or ivar.",
+      "parentUuid": "44e59b4a_6b9ecc47",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
