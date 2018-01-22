@@ -344,9 +344,9 @@ void NotificationPlatformBridgeAndroid::GetDisplayed(
   // from a race condition shortly after showing or closing a notification.
   // During this period, this data would be incorrect. Hence, restrict
   // synchronization to O onwards.
-  bool supports_synchronization =
-      (base::android::BuildInfo::GetInstance()->sdk_int() >=
-       base::android::SDK_VERSION_OREO);
+  bool supports_synchronization = false;
+  // (base::android::BuildInfo::GetInstance()->sdk_int() >=
+  //  base::android::SDK_VERSION_OREO);
 
   auto displayed_notifications_set = std::make_unique<std::set<std::string>>();
 

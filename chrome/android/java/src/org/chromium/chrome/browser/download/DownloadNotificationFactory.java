@@ -71,6 +71,10 @@ public final class DownloadNotificationFactory {
                         .setLocalOnly(true)
                         .setGroup(NotificationConstants.GROUP_DOWNLOADS)
                         .setAutoCancel(true);
+        //
+        //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+        //            builder.setGroup(NotificationConstants.GROUP_DOWNLOADS);
+        //        }
 
         String contentText;
         int iconId;
