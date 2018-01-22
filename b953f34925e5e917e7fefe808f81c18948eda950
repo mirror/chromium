@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "e7ec9815_401d19d1",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T23:08:35Z",
+      "side": 1,
+      "message": "Any suggestions on how I could make it clearer to future readers? If not, I\u0027ll probably sprinkle some inline or reshuffle the methods tomorrow, just to make it easier for future-me and future-you.",
+      "parentUuid": "3ac02b13_25975fd5",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
