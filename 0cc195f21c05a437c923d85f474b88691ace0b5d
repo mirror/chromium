@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e752a8a_271d36cd",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-22T15:42:04Z",
+      "side": 1,
+      "message": "This NOTREACHED condition is making the unittest crash. I did not consider this when I suggested it.\n\nFeel free to remove it if you think the unittest should stay as-is. I suppose just using error codes is sufficient. Sorry about that.",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182fc241_fa82c071",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-22T15:42:04Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983a4892_28c3b065",
+        "filename": "components/assist_ranker/example_preprocessing_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-22T15:42:04Z",
+      "side": 1,
+      "message": "features",
+      "range": {
+        "startLine": 239,
+        "startChar": 25,
+        "endLine": 239,
+        "endChar": 32
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
