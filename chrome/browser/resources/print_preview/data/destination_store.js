@@ -530,16 +530,26 @@ cr.define('print_preview', function() {
      */
     fetchMatchingDestination_(destinationMatch) {
       this.autoSelectMatchingDestination_ = destinationMatch;
-      const type = destinationMatch.getType();
-      if (type != null) {  // Local, Privet, or Extension.
-        this.startLoadDestinations(type);
-      } else if (
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.COOKIES) ||
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.DEVICE)) {
-        this.startLoadCloudDestinations();
-      }
+      const types = destinationMatch.getTypes();
+      let typesLoading =
+          /** @type {Map<print_preview.PrinterType, boolean>} */ (new Map([]));
+      let cloudLoading = false;
+      types.forEach(type => {
+        if (type != null) {  // Local, Privet, or Extension.
+          if (typesLoading.get(type))
+            return;
+          typesLoading.set(
+              /** @type {!print_preview.PrinterType} */ (type), true);
+          this.startLoadDestinations(type);
+        } else if (
+            !cloudLoading &&
+            (destinationMatch.matchOrigin(
+                 print_preview.DestinationOrigin.COOKIES) ||
+             destinationMatch.matchOrigin(
+                 print_preview.DestinationOrigin.DEVICE))) {
+          this.startLoadCloudDestinations();
+        }
+      });
     }
 
     /**
