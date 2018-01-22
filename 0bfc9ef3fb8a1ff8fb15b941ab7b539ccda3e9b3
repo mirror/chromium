@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442c74f6_ee2018f5",
+        "filename": "testing/buildbot/filters/mojo.fyi.viz.content_browsertests.filter",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:45:23Z",
+      "side": 1,
+      "message": "Is this a typo? \"Slown\"?",
+      "revId": "0bfc9ef3fb8a1ff8fb15b941ab7b539ccda3e9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354aa644_69045c83",
+        "filename": "testing/buildbot/filters/mus.content_browsertests.filter",
+        "patchSetId": 21
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:45:23Z",
+      "side": 1,
+      "message": "same question.",
+      "revId": "0bfc9ef3fb8a1ff8fb15b941ab7b539ccda3e9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a04aaec_62c2e1ba",
+        "filename": "testing/buildbot/filters/viz.content_browsertests.filter",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:45:23Z",
+      "side": 1,
+      "message": "same question.",
+      "revId": "0bfc9ef3fb8a1ff8fb15b941ab7b539ccda3e9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
