@@ -32,11 +32,12 @@ class FakeVSyncProvider : public gfx::VSyncProvider {
   }
 
   bool GetVSyncParametersIfAvailable(base::TimeTicks* timebase,
-                                     base::TimeDelta* interval) override {
+                                     base::TimeDelta* interval) const override {
     return false;
   }
 
   bool SupportGetVSyncParametersIfAvailable() override { return false; }
+  bool IsHWClock() const override { return false; }
 
   int call_count() const { return call_count_; }
 
