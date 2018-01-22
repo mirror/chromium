@@ -13,7 +13,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
-#include "chrome/browser/notifications/notification_display_service_tester.h"
+#include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/signin/fake_signin_manager_builder.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_error_notifier_factory_ash.h"
@@ -50,8 +50,7 @@ class SigninErrorNotifierTest : public BrowserWithTestWindowTest {
     error_controller_ =
         SigninErrorControllerFactory::GetForProfile(GetProfile());
     SigninErrorNotifierFactory::GetForProfile(GetProfile());
-    display_service_ =
-        std::make_unique<NotificationDisplayServiceTester>(profile());
+    notification_ui_manager_ = g_browser_process->notification_ui_manager();
   }
 
   TestingProfile::TestingFactories GetTestingFactories() override {
@@ -59,39 +58,54 @@ class SigninErrorNotifierTest : public BrowserWithTestWindowTest {
   }
 
  protected:
+  void GetMessage(base::string16* message) {
+    const message_center::Notification* notification =
+        g_browser_process->notification_ui_manager()->FindById(
+            kNotificationId, NotificationUIManager::GetProfileID(GetProfile()));
+    ASSERT_FALSE(notification == NULL);
+    *message = notification->message();
+  }
+
   SigninErrorController* error_controller_;
-  std::unique_ptr<NotificationDisplayServiceTester> display_service_;
+  NotificationUIManager* notification_ui_manager_;
   chromeos::MockUserManager* mock_user_manager_;  // Not owned.
   std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
 };
 
 TEST_F(SigninErrorNotifierTest, NoErrorAuthStatusProviders) {
-  EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+  ASSERT_FALSE(notification_ui_manager_->FindById(
+      kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
   {
     // Add a provider (removes itself on exiting this scope).
     FakeAuthStatusProvider provider(error_controller_);
-    EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+    ASSERT_FALSE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
   }
-  EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+  ASSERT_FALSE(notification_ui_manager_->FindById(
+      kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
 }
 
 TEST_F(SigninErrorNotifierTest, ErrorAuthStatusProvider) {
   {
     FakeAuthStatusProvider provider(error_controller_);
-    EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+    ASSERT_FALSE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
     {
       FakeAuthStatusProvider error_provider(error_controller_);
       error_provider.SetAuthError(
           kTestAccountId,
           GoogleServiceAuthError(
               GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS));
-      EXPECT_TRUE(display_service_->GetNotification(kNotificationId));
+      ASSERT_TRUE(notification_ui_manager_->FindById(
+          kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
     }
     // error_provider is removed now that we've left that scope.
-    EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+    ASSERT_FALSE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
   }
   // All providers should be removed now.
-  EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+  ASSERT_FALSE(notification_ui_manager_->FindById(
+      kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
 }
 
 TEST_F(SigninErrorNotifierTest, AuthStatusProviderErrorTransition) {
@@ -102,12 +116,12 @@ TEST_F(SigninErrorNotifierTest, AuthStatusProviderErrorTransition) {
         kTestAccountId,
         GoogleServiceAuthError(
             GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS));
+    ASSERT_TRUE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
 
-    base::Optional<message_center::Notification> notification =
-        display_service_->GetNotification(kNotificationId);
-    ASSERT_TRUE(notification);
-    base::string16 message = notification->message();
-    EXPECT_FALSE(message.empty());
+    base::string16 message;
+    GetMessage(&message);
+    ASSERT_FALSE(message.empty());
 
     // Now set another auth error and clear the original.
     provider1.SetAuthError(
@@ -118,16 +132,19 @@ TEST_F(SigninErrorNotifierTest, AuthStatusProviderErrorTransition) {
         kTestAccountId,
         GoogleServiceAuthError::AuthErrorNone());
 
-    notification = display_service_->GetNotification(kNotificationId);
-    ASSERT_TRUE(notification);
-    base::string16 new_message = notification->message();
-    EXPECT_FALSE(new_message.empty());
+    ASSERT_TRUE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
+
+    base::string16 new_message;
+    GetMessage(&new_message);
+    ASSERT_FALSE(new_message.empty());
 
     ASSERT_NE(new_message, message);
 
     provider1.SetAuthError(
         kTestAccountId, GoogleServiceAuthError::AuthErrorNone());
-    EXPECT_FALSE(display_service_->GetNotification(kNotificationId));
+    ASSERT_FALSE(notification_ui_manager_->FindById(
+        kNotificationId, NotificationUIManager::GetProfileID(GetProfile())));
   }
 }
 
@@ -163,9 +180,10 @@ TEST_F(SigninErrorNotifierTest, AuthStatusEnumerateAllErrors) {
     FakeAuthStatusProvider provider(error_controller_);
     provider.SetAuthError(kTestAccountId,
                           GoogleServiceAuthError(table[i].error_state));
-    base::Optional<message_center::Notification> notification =
-        display_service_->GetNotification(kNotificationId);
-    ASSERT_EQ(table[i].is_error, !!notification);
+    const message_center::Notification* notification =
+        notification_ui_manager_->FindById(
+            kNotificationId, NotificationUIManager::GetProfileID(GetProfile()));
+    ASSERT_EQ(table[i].is_error, notification != NULL);
     if (table[i].is_error) {
       EXPECT_FALSE(notification->title().empty());
       EXPECT_FALSE(notification->message().empty());

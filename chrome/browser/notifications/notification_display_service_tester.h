@@ -21,7 +21,8 @@ class Notification;
 }
 
 // Helper class that enables use of the NotificationDisplayService in tests. The
-// Profile* passed when constructing an instance may outlive this class.
+// Profile* passed when constructing an instance must outlive this class, as
+// the service (or internals of the service) may be overridden.
 //
 // This class must only be used for testing purposes. Unlike most production
 // NotificationDisplayService implementations, all operations on this tester are
