@@ -1,3 +1,13 @@
+UNKNOWN_TYPE |  | Gift Card Number | Χ  | _1-default
+UNKNOWN_TYPE | GiftCardNumber | Gift Card Number |  | _1-default
+UNKNOWN_TYPE |  | PIN* | Χ  | _1-default
+UNKNOWN_TYPE | GiftCardPin | PIN* |  | _1-default
+UNKNOWN_TYPE | paymentType | What is PayPal? | on | _1-default
+UNKNOWN_TYPE | paymentType | Card Number Expiration Date | on | _1-default
+UNKNOWN_TYPE |  | Card Number | Χ  | _1-default
+CREDIT_CARD_NUMBER | clearTextAccount | Card Number |  | credit-card-cc
+CREDIT_CARD_EXP_MONTH | expire_month | Expiration Date | 01 | credit-card-cc
+CREDIT_CARD_EXP_4_DIGIT_YEAR | expire_year | Expiration Date | 2014 | credit-card-cc
 UNKNOWN_TYPE | typeOfAddress | Business address | H | typeOfAddress_1-default
 UNKNOWN_TYPE | personTitle | Title |  | typeOfAddress_1-default
 UNKNOWN_TYPE | recipientRelation | Relationship | 0 | typeOfAddress_1-default
@@ -30,13 +40,3 @@ UNKNOWN_TYPE |  | Email address* | Χ  | typeOfAddress_1-default
 EMAIL_ADDRESS | email1 | Email address* |  | typeOfAddress_1-default
 UNKNOWN_TYPE |  | Confirm email address* | Χ  | typeOfAddress_1-default
 EMAIL_ADDRESS | logonId | Confirm email address* |  | typeOfAddress_1-default
-UNKNOWN_TYPE |  | Gift Card Number | Χ  | _1-default
-UNKNOWN_TYPE | GiftCardNumber | Gift Card Number |  | _1-default
-UNKNOWN_TYPE |  | PIN* | Χ  | _1-default
-UNKNOWN_TYPE | GiftCardPin | PIN* |  | _1-default
-UNKNOWN_TYPE | paymentType | What is PayPal? | on | _1-default
-UNKNOWN_TYPE | paymentType | Card Number Expiration Date | on | _1-default
-UNKNOWN_TYPE |  | Card Number | Χ  | _1-default
-CREDIT_CARD_NUMBER | clearTextAccount | Card Number |  | credit-card-cc
-CREDIT_CARD_EXP_MONTH | expire_month | Expiration Date | 01 | credit-card-cc
-CREDIT_CARD_EXP_4_DIGIT_YEAR | expire_year | Expiration Date | 2014 | credit-card-cc

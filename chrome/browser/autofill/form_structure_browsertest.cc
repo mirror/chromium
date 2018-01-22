@@ -90,10 +90,10 @@ std::vector<base::FilePath> GetTestFiles() {
 }
 
 std::string FormStructuresToString(
-    const std::vector<std::unique_ptr<FormStructure>>& forms) {
+    const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms) {
   std::string forms_string;
-  for (const auto& form : forms) {
-    for (const auto& field : *form) {
+  for (const auto& form_it : forms) {
+    for (const auto& field : *form_it.second.get()) {
       forms_string += field->Type().ToString();
       forms_string += " | " + base::UTF16ToUTF8(field->name);
       forms_string += " | " + base::UTF16ToUTF8(field->label);
@@ -197,7 +197,7 @@ void FormStructureBrowserTest::GenerateResults(const std::string& input,
   ASSERT_NE(nullptr, autofill_driver);
   AutofillManager* autofill_manager = autofill_driver->autofill_manager();
   ASSERT_NE(nullptr, autofill_manager);
-  const std::vector<std::unique_ptr<FormStructure>>& forms =
+  const std::map<FormSignature, std::unique_ptr<FormStructure>>& forms =
       autofill_manager->form_structures_;
   *output = FormStructuresToString(forms);
 }
