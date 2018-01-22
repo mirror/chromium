@@ -172,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "b3d06d34_4e31a173",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-22T06:23:26Z",
+      "side": 1,
+      "message": "With the new patchset, I don\u0027t use BrowserTabStripTracker -- probably worth splitting the fix into a separate CL now, right?",
+      "parentUuid": "b1458bb7_e241458c",
+      "range": {
+        "startLine": 151,
+        "startChar": 3,
+        "endLine": 152,
+        "endChar": 33
+      },
+      "revId": "9162639bac9aa6a6ef91d4a58482017a05ae7cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66c03aa1_e9bd5c79",
         "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
         "patchSetId": 5
