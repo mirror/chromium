@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "1248735a_4327a3c7",
+        "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-22T05:38:58Z",
+      "side": 1,
+      "message": "Nah, we can fix that too, tellg return pos_type(-1) \u003d something like max size_t.  Next round.",
+      "parentUuid": "ca718265_1c4f8317",
+      "revId": "bd18714867cd6a62d09eccfc3692cd815ebf65ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd456cd5_8d3ae07d",
         "filename": "third_party/WebKit/Source/platform/testing/ImageDecodeBench.cpp",
         "patchSetId": 1
