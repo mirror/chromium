@@ -33,6 +33,24 @@
       "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30beed3_e299778b",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-22T21:31:35Z",
+      "side": 1,
+      "message": "The old call to |-updateFullscreenWithToolbarVisible:| animated the toolbar onscreen; this performs the same effect using the new API.  It might be better to create a separate AnimatedScopedFullscreenDisabler class that encapsulates this though so we can use a consistent animation duration and don\u0027t need to add animation blocks in multiple places if we want to animate the toolbar in the future.",
+      "parentUuid": "e58b82dd_36022dbb",
+      "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
