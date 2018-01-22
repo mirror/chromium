@@ -8,6 +8,7 @@
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
+#include "components/viz/common/skia_helper.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 
@@ -635,7 +636,8 @@ DisplayResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
         nullptr);
   } else if (resource->pixels) {
     SkBitmap sk_bitmap;
-    resource_provider->PopulateSkBitmapWithResource(&sk_bitmap, resource);
+    PopulateSkBitmapWithResource(&sk_bitmap, resource->pixels, resource->size,
+                                 resource->format);
     sk_bitmap.setImmutable();
     sk_image_ = SkImage::MakeFromBitmap(sk_bitmap);
   } else {
@@ -659,7 +661,8 @@ DisplayResourceProvider::ScopedReadLockSoftware::ScopedReadLockSoftware(
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   const viz::internal::Resource* resource =
       resource_provider->LockForRead(resource_id);
-  resource_provider->PopulateSkBitmapWithResource(&sk_bitmap_, resource);
+  PopulateSkBitmapWithResource(&sk_bitmap_, resource->pixels, resource->size,
+                               resource->format);
 }
 
 DisplayResourceProvider::ScopedReadLockSoftware::~ScopedReadLockSoftware() {
