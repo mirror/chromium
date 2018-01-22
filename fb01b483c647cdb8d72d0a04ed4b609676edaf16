@@ -46,6 +46,30 @@
       "revId": "fb01b483c647cdb8d72d0a04ed4b609676edaf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bd794c_97e38ef5",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T19:55:12Z",
+      "side": 0,
+      "message": "Looking further, the current expectation (fudge room is used for range adjacency, and not buffered range reporting for 0-duration frames) is tested by the new SourceBufferStreamTest.ZeroDurationBuffersThenIncreasingFudgeRoom. I suppose I could retain a modified version of this old test (with the default duration for 0 duration frames as 1 microsecond, not 1 millisecond), but it seems overkill / redundant with the new tests that are more focused on testing current expectations.",
+      "parentUuid": "d268baca_fe63beec",
+      "range": {
+        "startLine": 1315,
+        "startChar": 48,
+        "endLine": 1316,
+        "endChar": 34
+      },
+      "revId": "fb01b483c647cdb8d72d0a04ed4b609676edaf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
