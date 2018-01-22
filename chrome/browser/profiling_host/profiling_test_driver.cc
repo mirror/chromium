@@ -413,7 +413,8 @@ bool ProfilingTestDriver::CheckOrStartProfiling() {
     }
   }
 
-  ProfilingProcessHost::Start(connection, options_.mode, options_.stack_mode);
+  ProfilingProcessHost::Start(connection, options_.mode, options_.stack_mode,
+                              options_.include_thread_names);
 
   if (run_loop)
     run_loop->Run();

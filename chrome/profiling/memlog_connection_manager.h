@@ -74,7 +74,8 @@ class MemlogConnectionManager {
                        mojo::ScopedHandle sender_pipe_end,
                        mojo::ScopedHandle receiver_pipe_end,
                        mojom::ProcessType process_type,
-                       profiling::mojom::StackMode stack_mode);
+                       profiling::mojom::StackMode stack_mode,
+                       bool include_thread_names);
 
   std::vector<base::ProcessId> GetConnectionPids();
 
