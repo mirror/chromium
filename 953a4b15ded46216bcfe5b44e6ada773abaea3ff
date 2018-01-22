@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "288ab02b_e7bb1e4a",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-22T13:47:45Z",
+      "side": 1,
+      "message": "Keeping this class in this file for now to make CL easier to review.\n\nI will move it into separate file in subsequent CL.",
+      "range": {
+        "startLine": 201,
+        "startChar": 22,
+        "endLine": 201,
+        "endChar": 51
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
