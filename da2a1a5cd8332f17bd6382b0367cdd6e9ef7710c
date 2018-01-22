@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "92aa7e75_8ee9468f",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-22T23:46:15Z",
+      "side": 1,
+      "message": "The advantage of a map from frame to AXTree is that we\u0027ll need that eventually\nif we want to allow access to other frames, OOPIFs, or the desktop tree.\n\nAs a quick hack just to land this change, what about just keeping track of\nthe frame and then asserting / crashing if you ever try to access the\ncomputed accessibility tree for a different frame?",
+      "parentUuid": "e58a579f_507c8f88",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8cef1a_89a3587c",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-22T23:46:15Z",
+      "side": 1,
+      "message": "I\u0027d say null strings rather than blank strings.\n\nAn AtomicString can take the value of g_null_atom or g_empty_atom (\"\").\n\"blank\" is a little ambiguous.",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6862f_48780293",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 14
