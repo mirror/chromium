@@ -292,14 +292,26 @@ function getDeepEquivalentForSelection(parent, offset) {
     if (node.children.length > 0) {
       nodesToCheck = nodesToCheck.concat(node.children.slice().reverse());
     } else {
-      index += node.name ? node.name.length : 0;
-      if (index > offset) {
-        return {node: node, offset: offset - index + node.name.length};
+      if (node.role == RoleType.STATIC_TEXT ||
+          node.role == RoleType.INLINE_TEXT_BOX) {
+        if (node.state.offscreen || node.state.invisible) {
+          index += 0;
+        } else if (node.parent.role == RoleType.LINE_BREAK) {
+          index += 2;
+        } else {
+          index += node.name ? node.name.length : 0;
+        }
+      } else if (parent.role == RoleType.ROOT_WEB_AREA) {
+        index += 1;
+      }
+      if (index >= offset && node.name) {
+        let result = offset - index + node.name.length;
+        return {node: node, offset: result > 0 ? result : 0};
       }
     }
   }
   // We are off the end of the last node.
-  return {node: node, offset: node.name.length};
+  return {node: node, offset: node.name ? node.name.length : 0};
 }
 
 
@@ -611,6 +623,16 @@ SelectToSpeak.prototype = {
     let focusOffset = focusedNode.root.focusOffset || 0;
     if (anchorObject === focusObject && anchorOffset == focusOffset)
       return;
+    // First calculate the equivalant position for this selection.
+    // Sometimes the automation selection returns a offset into a root
+    // node rather than a child node, which is a bug. This allows us to
+    // work around that bug until it is fixed.
+    // Note that this calculation is imperfect: it uses node name length
+    // to index into child nodes. However, not all node names are
+    // user-visible text, so this does not always work. Instead, we must
+    // fix the Blink bug where focus offset is not specific enough to
+    // say which node is selected and at what charOffset. See crbug.com/803160
+    // for more.
     let anchorPosition =
         getDeepEquivalentForSelection(anchorObject, anchorOffset);
     let focusPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
@@ -650,7 +672,7 @@ SelectToSpeak.prototype = {
 
     let nodes = [];
     let selectedNode = firstPosition.node;
-    if (firstPosition.offset < selectedNode.name.length) {
+    if (selectedNode.name && firstPosition.offset < selectedNode.name.length) {
       // Initialize to the first node in the list.
       nodes.push(selectedNode);
     } else {
