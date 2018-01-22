@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/sync/model/attachments/attachment_id.h"
 #include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
@@ -145,7 +144,7 @@ class WifiCredentialSyncableServiceTest : public testing::Test {
     change_processor_ = change_processor.get();
     syncable_service_->MergeDataAndStartSyncing(
         syncer::WIFI_CREDENTIALS, syncer::SyncDataList(),
-        std::move(change_processor), base::MakeUnique<SyncErrorFactoryMock>());
+        std::move(change_processor), std::make_unique<SyncErrorFactoryMock>());
   }
 
  private:

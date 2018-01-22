@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -76,7 +75,7 @@ class MockBluetoothLowEnergyConnectionFinder
       : BluetoothLowEnergyConnectionFinder(
             cryptauth::CreateLERemoteDeviceForTest(),
             kBLEGattServiceUUID,
-            base::MakeUnique<FakeEidGenerator>(this)) {}
+            std::make_unique<FakeEidGenerator>(this)) {}
 
   ~MockBluetoothLowEnergyConnectionFinder() override {}
 
