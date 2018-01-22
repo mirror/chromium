@@ -58,7 +58,7 @@
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "third_party/WebKit/common/mime_util/mime_util.h"
+#include "third_party/WebKit/public/common/mime_util/mime_util.h"
 
 namespace content {
 
