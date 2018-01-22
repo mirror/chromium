@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc6e5aef_0b905a87",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T23:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8684c837_f9adb8b4",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed08e39_810114d0",
         "filename": "chrome/browser/resources/settings/people_page/people_page.js",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d793d36_6843f6da",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T23:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bed08e39_810114d0",
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6197a339_5bd54e61",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T23:31:01Z",
+      "side": 1,
+      "message": "As discussed offline I\u0027ve wrapped it in a non-CrOS check.",
+      "parentUuid": "f8151185_8adb4d7d",
+      "range": {
+        "startLine": 293,
+        "startChar": 27,
+        "endLine": 293,
+        "endChar": 38
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ef2b0cf_81092588",
         "filename": "chrome/test/data/webui/settings/people_page_test.js",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b69145_724bc46a",
+        "filename": "chrome/test/data/webui/settings/people_page_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T23:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef2b0cf_81092588",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 33
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
