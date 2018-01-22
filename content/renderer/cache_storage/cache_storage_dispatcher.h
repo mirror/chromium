@@ -55,9 +55,9 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   void OnCacheStorageHasSuccess(int thread_id, int request_id);
   void OnCacheStorageOpenSuccess(int thread_id, int request_id, int cache_id);
   void OnCacheStorageDeleteSuccess(int thread_id, int request_id);
-  void OnCacheStorageKeysSuccess(int thread_id,
-                                 int request_id,
-                                 const std::vector<base::string16>& keys);
+  void OnKeys(int thread_id,
+              int request_id,
+              const std::vector<base::string16>& keys);
   void OnCacheStorageMatchSuccess(int thread_id,
                                   int request_id,
                                   const ServiceWorkerResponse& response);
@@ -218,6 +218,7 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   WithResponsesCallbacksMap cache_match_all_callbacks_;
   WithRequestsCallbacksMap cache_keys_callbacks_;
   BatchCallbacksMap cache_batch_callbacks_;
+  blink::mojom::CacheStoragePtr cache_storage_ptr_;
 
   TimeMap cache_match_times_;
   TimeMap cache_match_all_times_;

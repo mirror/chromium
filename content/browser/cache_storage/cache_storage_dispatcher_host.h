@@ -17,6 +17,7 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/cache_storage/cache_storage.h"
 #include "content/browser/cache_storage/cache_storage_index.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 
 namespace url {
@@ -30,7 +31,10 @@ class CacheStorageContextImpl;
 // Handles Cache Storage related messages sent to the browser process from
 // child processes. One host instance exists per child process. All
 // messages are processed on the IO thread.
-class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
+class CONTENT_EXPORT CacheStorageDispatcherHost
+    : public BrowserMessageFilter,
+      public BrowserAssociatedInterface<blink::mojom::CacheStorage>,
+      public blink::mojom::CacheStorage {
  public:
   CacheStorageDispatcherHost();
 
@@ -69,14 +73,24 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
                             int request_id,
                             const url::Origin& origin,
                             const base::string16& cache_name);
-  void OnCacheStorageKeys(int thread_id,
-                          int request_id,
-                          const url::Origin& origin);
+  //void OnCacheStorageKeys(int thread_id,
+  //                        int request_id,
+  //                        const url::Origin& origin);
+
   void OnCacheStorageMatch(int thread_id,
                            int request_id,
                            const url::Origin& origin,
                            const ServiceWorkerFetchRequest& request,
                            const CacheStorageCacheQueryParams& match_params);
+
+  // Mojo CacheStorage Interface implementation:
+  void Keys(const url::Origin& origin,
+            blink::mojom::CacheStorage::KeysCallback callback) override;
+
+  // Callbacks used by Mojo implementation:
+  void OnCacheStorageKeysCallback(
+      blink::mojom::CacheStorage::KeysCallback callback,
+      const CacheStorageIndex& cache_index);
 
   // The message receiver functions for the Cache API:
   void OnCacheMatch(int thread_id,
@@ -109,9 +123,9 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
                                     int request_id,
                                     bool deleted,
                                     blink::mojom::CacheStorageError error);
-  void OnCacheStorageKeysCallback(int thread_id,
-                                  int request_id,
-                                  const CacheStorageIndex& cache_index);
+  //void OnCacheStorageKeysCallback(int thread_id,
+  //                                int request_id,
+  //                                const CacheStorageIndex& cache_index);
   void OnCacheStorageMatchCallback(
       int thread_id,
       int request_id,
