@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e49950_bcece93b",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-22T23:35:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure what these comments are for. Can I remove these?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
