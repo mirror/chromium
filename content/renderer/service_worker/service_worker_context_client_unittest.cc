@@ -244,11 +244,10 @@ class ServiceWorkerContextClientTest : public testing::Test {
     info->registration->request =
         mojo::MakeRequestAssociatedWithDedicatedPipe(out_ptr);
 
-    info->registration->installing =
-        blink::mojom::ServiceWorkerObjectInfo::New();
+    info->registration->installing = nullptr;
     info->registration->registration_id = 100;  // dummy
-    info->registration->waiting = blink::mojom::ServiceWorkerObjectInfo::New();
-    info->registration->active = blink::mojom::ServiceWorkerObjectInfo::New();
+    info->registration->waiting = nullptr;
+    info->registration->active = nullptr;
     return info;
   }
 
