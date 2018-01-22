@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ef733b7b_a7a4b361",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 1,
+      "message": "Hrm. I might not be following. The bug description explains why we\u0027d want to look at not just the last one, which makes sense. I\u0027m asking whether we should be looking at all of them for the OS check too. (I.e. should we add a loop in X509Util.java? I guess the cost there is potentially bouncing on disk a few extra times... though that could be alleviated by iterating in reverse order.)\n\nOr is the claim that it\u0027s okay to look only at one certificate for the OS check because it\u0027s a fallback to the main check and thus we don\u0027t really care much about it? (Though the commit message says we do kinda care about the OS check in case the OS shipped an update which, for Android, is not really likely... :-) )",
+      "parentUuid": "285aa699_c563016c",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4b59c711_8ace61ef",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4040602b_30f2a47c",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc525e2_e680d992",
         "filename": "net/cert/cert_verify_proc_ios.cc",
         "patchSetId": 3
@@ -121,6 +157,24 @@
       "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3558dcbb_1d836baf",
+        "filename": "net/cert/cert_verify_proc_ios.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d22e4805_19fffe0e",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +222,30 @@
       "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ef49fb_c4ad7af6",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1aac7b90_5066b734",
+      "range": {
+        "startLine": 390,
+        "startChar": 62,
+        "endLine": 390,
+        "endChar": 80
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +301,30 @@
       "side": 1,
       "message": "Did we allow that C++11ism yet? It was forbidden for a while due to std library issues",
       "parentUuid": "7900206d_2f39fd4b",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d0e7b3_9f79925d",
+        "filename": "net/cert/known_roots_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 1,
+      "message": "Pretty sure we\u0027ve allowed that for a while now, yeah. Here\u0027s a sample:\nhttps://cs.chromium.org/chromium/src/components/webcrypto/crypto_data.cc?rcl\u003d6c4efb8dd66c61b5ee55453e021f43d58a4d3093\u0026l\u003d15\n\n(And //third_party/boringssl:boringssl_crypto_tests would have trouble if we didn\u0027t.)",
+      "parentUuid": "15b42111_ed01c74a",
       "range": {
         "startLine": 37,
         "startChar": 43,

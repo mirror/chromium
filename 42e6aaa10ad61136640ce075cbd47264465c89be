@@ -57,6 +57,24 @@
       "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8fcbde_4eac5742",
+        "filename": "net/cert/known_roots_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T21:48:23Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9c5332e3_bb1f65ff",
+      "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
