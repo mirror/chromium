@@ -99,7 +99,14 @@ TestRunner::TestRunner(JobLevel job_level,
     : is_init_(false),
       is_async_(false),
       no_sandbox_(false),
+#if defined(ADDRESS_SANITIZER)
+      // DO NOT SUBMIT - maybe it's sufficient to disable this in the
+      // implementation bottleneck function?
+      // Address sanitizer can't deal with this feature, disable for now.
+      disable_csrss_(false),
+#else
       disable_csrss_(true),
+#endif
       target_process_id_(0) {
   broker_ = NULL;
   policy_ = NULL;

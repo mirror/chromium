@@ -544,8 +544,9 @@ bool PolicyBase::OnJobEmpty(HANDLE job) {
 }
 
 ResultCode PolicyBase::SetDisconnectCsrss() {
-// Does not work on 32-bit.
-#if defined(_WIN64)
+// Does not work on 32-bit, and the ASAN runtime falls over with the
+// CreateThread EAT patch used when this is enabled.
+#if defined(_WIN64) && !defined(ADDRESS_SANITIZER)
   if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
     is_csrss_connected_ = false;
     return AddKernelObjectToClose(L"ALPC Port", nullptr);
