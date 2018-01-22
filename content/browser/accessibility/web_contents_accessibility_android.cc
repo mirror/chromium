@@ -540,8 +540,12 @@ bool WebContentsAccessibilityAndroid::OnHoverEvent(
   // The response is handled by HandleHover when it returns.
   // Hover event was consumed by accessibility by now. Return true to
   // stop the event from proceeding.
-  if (event.GetAction() != ui::MotionEvent::ACTION_HOVER_EXIT && root_manager_)
-    root_manager_->HitTest(gfx::ToFlooredPoint(event.GetPoint()));
+  if (event.GetAction() != ui::MotionEvent::ACTION_HOVER_EXIT &&
+      root_manager_) {
+    gfx::Point point =
+        UseZoomForDSFEnabled() ? event.GetPointPix() : event.GetPoint();
+    root_manager_->HitTest(gfx::ToFlooredPoint(point));
+  }
   return true;
 }
 
