@@ -16,6 +16,7 @@ namespace blink {
 
 enum class WebTreeScopeType;
 class InterfaceRegistry;
+struct WebFloatSize;
 class WebFrameClient;
 class WebLayer;
 class WebRemoteFrameClient;
@@ -119,6 +120,11 @@ class WebRemoteFrame : public WebFrame {
   // used to properly chain the recursive scrolling between the two processes.
   virtual void ScrollRectToVisible(const WebRect&,
                                    const WebScrollIntoViewParams&) = 0;
+
+  virtual void IntrinsicSizeChanged(const WebFloatSize&,
+                                    const WebFloatSize& aspect_ratio,
+                                    bool has_width,
+                                    bool has_height) = 0;
 
  protected:
   explicit WebRemoteFrame(WebTreeScopeType scope) : WebFrame(scope) {}
