@@ -4313,7 +4313,7 @@ domain Page
       # Identifier of the added script.
       ScriptIdentifier identifier
 
-  # Evaluates given script in every frame upon creation (before loading frame's scripts).
+  # Evaluates given script in root frame upon creation (before loading document's scripts).
   command addScriptToEvaluateOnNewDocument
     parameters
       string source
