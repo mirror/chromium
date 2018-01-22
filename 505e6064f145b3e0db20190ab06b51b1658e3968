@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a3cd4d6_cceea72f",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_input.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-22T21:42:28Z",
+      "side": 1,
+      "message": "is this still needed?",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "505e6064f145b3e0db20190ab06b51b1658e3968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
