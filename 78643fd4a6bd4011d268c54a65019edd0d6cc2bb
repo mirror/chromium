@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ce9a41_ebbde14f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:45:17Z",
+      "side": 1,
+      "message": "Hmm...should these (or at least one or two cases) be WPT that we can export? Or have other vendors already added some WPT?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "78643fd4a6bd4011d268c54a65019edd0d6cc2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d809e4_7da940b3",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:45:17Z",
+      "side": 1,
+      "message": "Please add a case to ensure this works as expected when pinch-zoomed.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "78643fd4a6bd4011d268c54a65019edd0d6cc2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cfe071_dc4cd0b1",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollAlignment.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-22T18:45:17Z",
+      "side": 1,
+      "message": "Ref?",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "78643fd4a6bd4011d268c54a65019edd0d6cc2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
