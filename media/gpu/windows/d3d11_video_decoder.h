@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "gpu/ipc/service/command_buffer_stub.h"
+#include "media/base/post_only_owner.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/media_gpu_export.h"
 
@@ -47,15 +48,8 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
   int GetMaxDecodeRequests() const override;
 
  private:
-  // The implementation, which we trampoline to the impl thread.
-  // This must be freed on the impl thread.
-  std::unique_ptr<D3D11VideoDecoderImpl> impl_;
-
-  // Weak ptr to |impl_|, which we use for callbacks.
-  base::WeakPtr<VideoDecoder> impl_weak_;
-
-  // Task runner for |impl_|.  This must be the GPU main thread.
-  scoped_refptr<base::SequencedTaskRunner> impl_task_runner_;
+  // The implementation, which runs on the gpu thread.
+  PostOnlyOwner<D3D11VideoDecoderImpl> impl_;
 
   base::WeakPtrFactory<D3D11VideoDecoder> weak_factory_;
 
