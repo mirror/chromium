@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "bfcad724_e3910b11",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "For upgrade I think we\u0027d have to use copy-then-rename instead of move because it\u0027s a safer operation. Do you think it\u0027d be much of a problem to have that sequence instead for the current use of this task?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2167eceb_c61f7a7c",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -30,6 +53,52 @@
       "writtenOn": "2018-01-22T21:06:57Z",
       "side": 1,
       "message": "This will break Windows since wchar_t is used on this platform. You can use store_utils::ToDatabaseFilePath.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3091bf_fe0d5630",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "Replace with |true| as if the file was not moved we would have returned earlier.\nBut why the choice not to return false in case of DB failure?",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d984776_37cedff2",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "As we\u0027re trying to minimize the amount of unrelated item data being kept in memory let\u0027s start following the pattern used in the Prefetching tasks. For that let\u0027s replace this full item with only its offline ID which will be used in the *Sync function to obtain the needed file path using a SQL read query.",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 54
+      },
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +122,29 @@
     },
     {
       "key": {
+        "uuid": "2de5c597_fb0b82e3",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "nit: this could be a more thorough check if using DirectoryExists (from file_util.h) instead.",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4f6089_42e42c38",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -64,6 +156,29 @@
       "writtenOn": "2018-01-22T21:24:00Z",
       "side": 1,
       "message": "nit: no need to store new_file_path_. You can pass it directly to OnMovePageDone.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cdaf60_a27c4e60",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "If the final path was passed in the ctor instead of created here this task would better serve the upgrade needs as well. You could create static helper function to create the proper path for this case (as done in other OPM tasks).",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 55
+      },
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +202,52 @@
     },
     {
       "key": {
+        "uuid": "d8aca60e_23c6fbd7",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "I find it a bit odd that the callback is only invoked in a successful case. Won\u0027t there be any follow up operations waiting on it even in case of failure?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360ed232_0837c97c",
+        "filename": "components/offline_pages/core/model/move_page_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "nit: |using| is preferred over |typedef| (https://chromium-cpp.appspot.com/).",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec8d652d_77f0ea6a",
         "filename": "components/offline_pages/core/model/move_page_task.h",
         "patchSetId": 1
@@ -98,6 +259,172 @@
       "writtenOn": "2018-01-22T21:24:00Z",
       "side": 1,
       "message": "nit: this is very risky.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4e2bda_22248032",
+        "filename": "components/offline_pages/core/model/move_page_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this store a copy of the ctor provided value?",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d893fd94_d17e607f",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "nit: gating logging behind Debug and Verbose seems unnecessary in a test. You could replace this is just |LOG| which seems reasonably common in unit tests [1] (more so than DVLOG and VLOG).\n\n[1] https://cs.chromium.org/search/?q\u003dfile:unittest+%5CWLOG%5CW+case:yes",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fc9bbb_d31e2beb",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "this seems unrelated. same happens in the next tests.",
+      "range": {
+        "startLine": 136,
+        "startChar": 15,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d233704_dfda4525",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "nit: swap parameters; the expected value should come first. There\u0027s other cases below.",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 63
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e22502_a8af3b18",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "check that the original location doesn\u0027t have a file anymore.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5aeaa6f_7b1210ce",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "\"was not moved\"",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 64
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f01193_4fe74eea",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "check that the original location still holds the file.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde96b10_f258b1b5",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-22T22:45:30Z",
+      "side": 1,
+      "message": "update comment and check that the original location doesn\u0027t have a file anymore.",
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
