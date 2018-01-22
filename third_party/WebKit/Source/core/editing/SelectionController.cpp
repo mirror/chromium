@@ -345,7 +345,10 @@ bool SelectionController::HandleSingleClick(
     if (adjusted_position.IsNull()) {
       UpdateSelectionForMouseDownDispatchingSelectStart(
           inner_node, selection.AsSelection(),
-          SetSelectionOptions::Builder().SetGranularity(granularity).Build());
+          SetSelectionOptions::Builder()
+              .SetGranularity(granularity)
+              .SetIsDirectional(Selection().IsDirectional())
+              .Build());
       return false;
     }
     UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -361,7 +364,10 @@ bool SelectionController::HandleSingleClick(
 
   if (selection_state_ == SelectionState::kExtendedSelection) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
-        inner_node, selection.AsSelection(), SetSelectionOptions());
+        inner_node, selection.AsSelection(),
+        SetSelectionOptions::Builder()
+            .SetIsDirectional(Selection().IsDirectional())
+            .Build());
     return false;
   }
 
@@ -430,7 +436,10 @@ bool SelectionController::HandleTapInsideSelection(
 
   const bool did_select = UpdateSelectionForMouseDownDispatchingSelectStart(
       event.InnerNode(), selection,
-      SetSelectionOptions::Builder().SetShouldShowHandle(true).Build());
+      SetSelectionOptions::Builder()
+          .SetShouldShowHandle(true)
+          .SetIsDirectional(Selection().IsDirectional())
+          .Build());
   if (did_select) {
     frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
                                                         kMenuSourceTouch);
@@ -888,15 +897,25 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
       frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional() ||
       new_selection.IsDirectional());
   const SelectionInFlatTree& selection_in_flat_tree = builder.Build();
-  if (Selection().ComputeVisibleSelectionInFlatTree() ==
+  const bool selection_is_directional =
+      frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional() ||
+      set_selection_options.IsDirectional();
+  const bool selection_remains_the_same =
+      Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
-      Selection().IsHandleVisible() == set_selection_options.ShouldShowHandle())
+      Selection().IsHandleVisible() ==
+          set_selection_options.ShouldShowHandle() &&
+      selection_is_directional == Selection().IsDirectional();
+
+  // If selection has not changed we do not clear editing style.
+  if (selection_remains_the_same)
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
       SetSelectionOptions::Builder(set_selection_options)
           .SetShouldCloseTyping(true)
           .SetShouldClearTypingStyle(true)
+          .SetIsDirectional(selection_is_directional)
           .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
           .Build());
 }
