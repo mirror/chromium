@@ -67,6 +67,11 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                                     const viz::SurfaceSequence& sequence) {}
 
+  virtual void SendIntrinsicInfoToParent(const gfx::SizeF& size,
+                                         const gfx::SizeF& aspect_ratio,
+                                         bool has_width,
+                                         bool has_height) {}
+
   // Return the rect in DIP that the RenderWidgetHostViewChildFrame's content
   // will render into.
   const gfx::Rect& frame_rect_in_dip() { return frame_rect_in_dip_; }

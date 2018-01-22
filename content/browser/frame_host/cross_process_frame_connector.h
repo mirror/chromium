@@ -78,6 +78,11 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void RenderProcessGone() override;
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                             const viz::SurfaceSequence& sequence) override;
+  void SendIntrinsicInfoToParent(const gfx::SizeF& size,
+                                 const gfx::SizeF& aspect_ratio,
+                                 bool has_width,
+                                 bool has_height) override;
+
   void UpdateCursor(const WebCursor& cursor) override;
   gfx::PointF TransformPointToRootCoordSpace(
       const gfx::PointF& point,
