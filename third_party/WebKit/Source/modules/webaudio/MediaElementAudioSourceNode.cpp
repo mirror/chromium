@@ -105,18 +105,20 @@ void MediaElementAudioSourceHandler::SetFormat(size_t number_of_channels,
 
     // Synchronize with process() to protect m_sourceNumberOfChannels,
     // m_sourceSampleRate, and m_multiChannelResampler.
-    Locker<MediaElementAudioSourceHandler> locker(*this);
+    {
+      Locker<MediaElementAudioSourceHandler> locker(*this);
 
-    source_number_of_channels_ = number_of_channels;
-    source_sample_rate_ = source_sample_rate;
+      source_number_of_channels_ = number_of_channels;
+      source_sample_rate_ = source_sample_rate;
 
-    if (source_sample_rate != Context()->sampleRate()) {
-      double scale_factor = source_sample_rate / Context()->sampleRate();
-      multi_channel_resampler_ = std::make_unique<MultiChannelResampler>(
-          scale_factor, number_of_channels);
-    } else {
-      // Bypass resampling.
-      multi_channel_resampler_.reset();
+      if (source_sample_rate != Context()->sampleRate()) {
+        double scale_factor = source_sample_rate / Context()->sampleRate();
+        multi_channel_resampler_ = std::make_unique<MultiChannelResampler>(
+            scale_factor, number_of_channels);
+      } else {
+        // Bypass resampling.
+        multi_channel_resampler_.reset();
+      }
     }
 
     {
