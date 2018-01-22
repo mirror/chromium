@@ -16,6 +16,24 @@
       "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18b4e86_94120546",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_input.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T17:06:58Z",
+      "side": 1,
+      "message": "You are correct. Interesting and concerning. Thanks for the heads up. I copied the \u003chtml\u003e tag from other similar dialogs; we use that pattern a lot. \n\nI went ahead and fixed it in the three I\u0027ve been maintaining: this, internet_detail_dialog, and bluetooth_pairing_dialog.\n+hcarmona@ FYI\n\nI am keeping this change however because it\u0027s an awkward use of \u003clabel\u003e and we generally avoid \u003clabel\u003e in the Settings UI.",
+      "parentUuid": "c80e1de9_3323d6c0",
+      "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
