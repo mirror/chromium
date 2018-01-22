@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5761308c_23c584f6",
+        "filename": "third_party/closure_compiler/compile2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T20:04:07Z",
+      "side": 1,
+      "message": "Would this also fix the issue https://chromium-review.googlesource.com/c/chromium/src/+/566023 ?\n\nI\u0027ve had this CL LGed for a while, but have not landed it because I was not 100% sure if someone (IOS team?) was relying on the sourcemaps.",
+      "parentUuid": "cca16c15_6ab7ce2e",
+      "revId": "4eb322c0dda6e08c61ddefd4cb381ad8c0a5db27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d9f675e_8e621c32",
         "filename": "third_party/closure_compiler/compile2.py",
         "patchSetId": 2
