@@ -8,12 +8,18 @@
 #include "chrome/browser/extensions/global_shortcut_listener.h"
 
 #include <Carbon/Carbon.h>
-#include <CoreFoundation/CoreFoundation.h>
 
 #include <map>
+#include <memory>
 
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
+
+namespace ui {
+class Accelerator;
+class MediaKeysListener;
+}  // namespace ui
 
 namespace extensions {
 
@@ -39,7 +45,8 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
 
   // Keyboard event callbacks.
   void OnHotKeyEvent(EventHotKeyID hot_key_id);
-  bool OnMediaKeyEvent(int key_code);
+  void OnMediaKeysAccelerator(const ui::Accelerator& accelerator,
+                              bool* was_handled);
 
   // GlobalShortcutListener implementation.
   void StartListening() override;
@@ -51,10 +58,6 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
   bool RegisterHotKey(const ui::Accelerator& accelerator, KeyId hot_key_id);
   void UnregisterHotKey(const ui::Accelerator& accelerator);
 
-  // Enable and disable the media key event tap.
-  void StartWatchingMediaKeys();
-  void StopWatchingMediaKeys();
-
   // Enable and disable the hot key event handler.
   void StartWatchingHotKeys();
   void StopWatchingHotKeys();
@@ -64,10 +67,6 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
 
   // Whether or not any hot keys are currently registered.
   bool IsAnyHotKeyRegistered();
-
-  // The callback for when an event tap happens.
-  static CGEventRef EventTapCallback(
-      CGEventTapProxy proxy, CGEventType type, CGEventRef event, void* refcon);
 
   // The callback for when a hot key event happens.
   static OSStatus HotKeyHandler(
@@ -90,12 +89,12 @@ class GlobalShortcutListenerMac : public GlobalShortcutListener {
   // Keyboard shortcut IDs to hotkeys map for unregistration.
   IdHotKeyRefMap id_hot_key_refs_;
 
-  // Event tap for intercepting mac media keys.
-  CFMachPortRef event_tap_;
-  CFRunLoopSourceRef event_tap_source_;
-
   // Event handler for keyboard shortcut hot keys.
   EventHandlerRef event_handler_;
+
+  std::unique_ptr<ui::MediaKeysListener> media_keys_listener_;
+
+  base::WeakPtrFactory<GlobalShortcutListenerMac> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GlobalShortcutListenerMac);
 };

@@ -71,6 +71,8 @@ class ExtensionKeybindingRegistry : public content::NotificationObserver,
 
   // Check whether the specified |accelerator| has been registered.
   bool IsAcceleratorRegistered(const ui::Accelerator& accelerator) const;
+  // Whether or not any media keys are currently registered.
+  bool IsAnyMediaKeyRegistered();
 
  protected:
   // Add extension keybindings for the events defined by the |extension|.
