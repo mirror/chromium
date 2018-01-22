@@ -86,3 +86,21 @@ promise_test(() => {
 }, "Deleting nodes from the accessibility tree will not cause a crash, and set computed properties on any references to a deleted computed accessible node to empty.");
 
 </script>
+
+<div id="list" role="list">
+  <div id="listitem" role="listitem" aria-setSize="10" aria-posinset="3"></div>
+</div>
+
+<script>
+
+promise_test(() => {
+    var listitem = document.getElementById("listitem");
+    return window.getComputedAccessibleNode(listitem).then(computedAXNode => {
+      assert_equals(computedAXNode.posInSet, 3);
+      assert_equals(computedAXNode.setSize, 10);
+      assert_equals(computedAXNode.level, null);
+      assert_equals(computedAXNode.colIndex, null);
+    });
+}, "Set int attributes should be included, and unset or non-applicable attributes should be null.");
+
+</script>
