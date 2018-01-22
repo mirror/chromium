@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e25cbe_7a5ae2d1",
+        "filename": "chrome/browser/ui/browser_ui_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-22T10:42:51Z",
+      "side": 1,
+      "message": "could you move this into browser_prefs.cc as well so that you can get rid of the constant in pref_names.{cc,h}? note how other deprecated prefs are defined within browser_prefs.cc.",
+      "revId": "8e0e3f232c5d7b6b174e4333a35d93625e7e8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
