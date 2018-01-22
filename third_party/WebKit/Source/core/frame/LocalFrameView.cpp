@@ -720,6 +720,8 @@ void LocalFrameView::SetLayoutOverflowSize(const IntSize& size) {
     return;
 
   page->GetChromeClient().ContentsSizeChanged(frame_.Get(), size);
+  ScrollToFragmentAnchor();
+  GetFrame().Loader().RestoreScrollPositionAndViewState();
 }
 
 void LocalFrameView::AdjustViewSize() {
@@ -2563,7 +2565,6 @@ void LocalFrameView::PerformPostLayoutTasks() {
   // If we're restoring a scroll position from history, that takes precedence
   // over scrolling to the anchor in the URL.
   ScrollToFragmentAnchor();
-  GetFrame().Loader().RestoreScrollPositionAndViewState();
   SendResizeEventIfNeeded();
 }
 
