@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f881b2e_83e90a55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:03:06Z",
+      "side": 1,
+      "message": "Changed to prerendered page.",
+      "parentUuid": "1f8c48c0_4fcdc07c",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82de639d_cda3914f",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/BUILD.gn",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3dd1b04d_bf521171",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:03:06Z",
+      "side": 1,
+      "message": "Yeah, I didn\u0027t get that the filename should be changed.\nDone.",
+      "parentUuid": "82de639d_cda3914f",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28a24c9_93a59112",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller+protected.h",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdfe14a_72bca93b",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller+protected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28a24c9_93a59112",
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98dd41e_d54cb902",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-22T17:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65f469cc_98ae3bad",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
