@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45777609_14ef3b2d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-22T22:42:30Z",
+      "side": 1,
+      "message": "nit: wrap with {}",
+      "revId": "a309383ef8055f6f18579933c252a9831a473037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
