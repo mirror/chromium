@@ -295,6 +295,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // Notification that the LegacyRenderWidgetHostHWND was destroyed.
   void OnLegacyWindowDestroyed();
+
+  // DirectManipulation needs pull gestures each frame while finger gesturing.
+  void AddCompositorAnimationObserver(
+      ui::CompositorAnimationObserver* observer);
+  void RemoveCompositorAnimationObserver(
+      ui::CompositorAnimationObserver* observer);
+
 #endif
 
   // Method to indicate if this instance is shutting down or closing.
