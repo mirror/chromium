@@ -22,6 +22,30 @@
       "revId": "f8e92a3c40bd7c687b84655e0e6a470f01662466",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f3e35f_224cbb77",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 4126,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-22T20:30:56Z",
+      "side": 0,
+      "message": "Yes it\u0027s a little bit tricky. Native_desktop_media_list.cc has no problem here as it depends on webrtc/desktop_capture through the public_dep in content/public/browser. As Native_desktop_media_list only uses some webrtc/desktop_capture definitions, it\u0027s fine here.\nThe problem in chrome/ is the destruction of the webrtc::DesktopCaptureOptions when it creates capturer.",
+      "parentUuid": "df699e76_f63d43b7",
+      "range": {
+        "startLine": 4126,
+        "startChar": 0,
+        "endLine": 4126,
+        "endChar": 53
+      },
+      "revId": "f8e92a3c40bd7c687b84655e0e6a470f01662466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
