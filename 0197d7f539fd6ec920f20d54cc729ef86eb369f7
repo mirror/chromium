@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ded8674_3672c366",
+        "filename": "cc/paint/transfer_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-22T22:06:14Z",
+      "side": 1,
+      "message": "As discussed separately, I added UnsafeType as an inline function on ClientTransferCacheEntry, and used it where possible. There are still a few static_casts when using the enum values directly (e.g. GpuImageDecodeCache).",
+      "parentUuid": "a8e64442_2a80c785",
+      "range": {
+        "startLine": 90,
+        "startChar": 36,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "0197d7f539fd6ec920f20d54cc729ef86eb369f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0863ac98_91e3e174",
         "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-22T21:02:29Z",
       "side": 1,
       "message": "seems like the caller could just handle the error? But yeah, someone should handle it eventually",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "0197d7f539fd6ec920f20d54cc729ef86eb369f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bdc8a4_851f653c",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-22T22:06:14Z",
+      "side": 1,
+      "message": "Fair enough, I added error handling here (clarified docs in ContextSupport). Callers still have asserts + TODOs, we\u0027d need to wire failure propagation in the PaintOp code, which felt out-of-scope for this patch (issue already exists in current code).",
+      "parentUuid": "0863ac98_91e3e174",
       "range": {
         "startLine": 18,
         "startChar": 24,
