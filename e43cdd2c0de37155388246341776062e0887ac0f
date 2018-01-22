@@ -70,6 +70,30 @@
       "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34bfabf_7b30576a",
+        "filename": "ui/views/animation/ink_drop_host_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-22T23:26:50Z",
+      "side": 1,
+      "message": "Looks like this is already handled indirectly by View::PropagateRemoveNotifications, so the notifications propagate recursively and ViewHierarchyChanged gets called for indirect children as well.\n\nI\u0027ve added a test that cover both direct and indirect removal.",
+      "parentUuid": "4b87461c_1174ec8e",
+      "range": {
+        "startLine": 228,
+        "startChar": 25,
+        "endLine": 228,
+        "endChar": 46
+      },
+      "revId": "e43cdd2c0de37155388246341776062e0887ac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
