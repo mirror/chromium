@@ -42,6 +42,9 @@ NSString* const kSideSwipeWillStartNotification =
 NSString* const kSideSwipeDidStopNotification =
     @"kSideSwipeDidStopNotification";
 
+// Duration of the toolbar dropdown animation when disabling fullscreen.
+const NSTimeInterval kToolbarAnimationDuration = 0.3;
+
 namespace {
 
 enum class SwipeType { NONE, CHANGE_TAB, CHANGE_PAGE };
@@ -423,6 +426,16 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
       // If the toolbar is hidden, move it to visible.
       [[model_ currentTab] updateFullscreenWithToolbarVisible:YES];
+    } else {
+      // Make sure the Toolbar is visible by disabling Fullscreen.
+      [UIView animateWithDuration:kToolbarAnimationDuration
+                       animations:^{
+                         fullscreenDisabler_ =
+                             std::make_unique<ScopedFullscreenDisabler>(
+                                 FullscreenControllerFactory::GetInstance()
+                                     ->GetForBrowserState(browserState_));
+                       }
+                       completion:nil];
     }
 
     inSwipe_ = YES;
@@ -450,6 +463,10 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 
     [gesture.view insertSubview:pageSideSwipeView_
                    belowSubview:[self.toolbarInteractionHandler toolbarView]];
+  } else {
+    // Enable fullscreen functionality after the Toolbar has been shown.
+    if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen))
+      fullscreenDisabler_ = nullptr;
   }
 
   __weak Tab* weakCurrentTab = [model_ currentTab];
