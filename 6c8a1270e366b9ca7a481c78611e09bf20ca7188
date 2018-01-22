@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d2808718_71fce50a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-22T18:28:19Z",
+      "side": 1,
+      "message": "Hrm...I\u0027d like to understand this better.  The thing is, there is only one window.onload, so overwriting could cause conflicts if we have multiple methods that do this.\n\nIt seems that your analysis suggests that body stops being null after onload...why would that be?  What about using \"load\" instead of \"DOMContentLoaded\"?",
+      "parentUuid": "907ffcc3_763f54bf",
+      "revId": "6c8a1270e366b9ca7a481c78611e09bf20ca7188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "149b1053_40ca1a53",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
         "patchSetId": 6

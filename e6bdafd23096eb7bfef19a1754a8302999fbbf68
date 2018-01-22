@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f44c7bfa_fb5149c6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-22T18:28:19Z",
+      "side": 1,
+      "message": "FYI: Comments on methods should generally be indicative mood (\"Waits\")",
+      "revId": "e6bdafd23096eb7bfef19a1754a8302999fbbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
