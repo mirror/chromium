@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e40c17a_2f93cb74",
+        "filename": "ui/base/resource/resource_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-22T21:22:07Z",
+      "side": 0,
+      "message": "GetPrimaryDisplayScale() is now unused.",
+      "revId": "bd083f78a214c4cfdd297d1711c56c9a8e9d509a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
