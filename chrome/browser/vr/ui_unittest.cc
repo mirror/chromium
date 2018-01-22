@@ -262,6 +262,19 @@ TEST_F(UiTest, VoiceSearchHiddenWhenCantAskForPermission) {
   EXPECT_FALSE(IsVisible(kVoiceSearchButton));
 }
 
+TEST_F(UiTest, VoiceSearchHiddenWhenContentCapturingAudio) {
+  CreateScene(kNotInCct, kNotInWebVr);
+
+  model_->speech.has_or_can_request_audio_permission = true;
+  model_->permissions.audio_capture_enabled = false;
+  EXPECT_TRUE(OnBeginFrame());
+  EXPECT_TRUE(IsVisible(kVoiceSearchButton));
+
+  model_->permissions.audio_capture_enabled = true;
+  EXPECT_TRUE(OnBeginFrame());
+  EXPECT_FALSE(IsVisible(kVoiceSearchButton));
+}
+
 TEST_F(UiTest, UiModeWebVr) {
   CreateScene(kNotInCct, kNotInWebVr);
 
