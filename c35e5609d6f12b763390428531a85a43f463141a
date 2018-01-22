@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f479fa13_7b92bbf3",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T15:12:15Z",
+      "side": 1,
+      "message": "nit: Since it was non obvious, maybe mention that this also does coalescing of those pages.",
+      "range": {
+        "startLine": 886,
+        "startChar": 61,
+        "endLine": 886,
+        "endChar": 65
+      },
+      "revId": "c35e5609d6f12b763390428531a85a43f463141a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
