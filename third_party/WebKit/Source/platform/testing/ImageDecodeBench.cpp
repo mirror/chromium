@@ -17,14 +17,16 @@
 // using the image corpii used to assess Blink image decode performance. Refer
 // to http://crbug.com/398235#c103 and http://crbug.com/258324#c5
 
-#include <memory>
 #include "base/command_line.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/message_loop/message_loop.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "platform/SharedBuffer.h"
+#include "platform/graphics/ImageDataBuffer.h"
 #include "platform/image-decoders/ImageDecoder.h"
-#include "platform/wtf/PtrUtil.h"
+#include "platform/image-encoders/ImageEncoderUtils.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "ui/gfx/test/icc_profiles.h"
 
@@ -98,8 +100,8 @@ static double HighResUpTime() {
       tick_count_elapsed = tick_count_large - tick_count_last;
     }
 
-    // Force a re-sync if QueryPerformanceCounter differs from GetTickCount() by
-    // more than 500ms. (The 500ms value is from
+    // Force a re-sync if QueryPerformanceCounter differs from GetTickCount()
+    // by more than 500ms. (The 500ms value is from
     // http://support.microsoft.com/kb/274323).
     __int64 diff = tick_count_elapsed - qpc_elapsed;
     if (diff > 500 || diff < -500)
@@ -133,8 +135,8 @@ static double GetCurrentTime() {
   // resolution.  QueryPerformanceCounter has high resolution, but is only
   // usable to measure time intervals.  To combine them, we call ftime and
   // QueryPerformanceCounter initially. Later calls will use
-  // QueryPerformanceCounter by itself, adding the delta to the saved ftime.  We
-  // periodically re-sync to correct for drift.
+  // QueryPerformanceCounter by itself, adding the delta to the saved ftime.
+  // We periodically re-sync to correct for drift.
   static double sync_low_res_utc_time;
   static double sync_high_res_up_time;
   static double last_utc_time;
@@ -195,39 +197,60 @@ scoped_refptr<SharedBuffer> ReadFile(const char* file_name) {
   if (s.st_size <= 0)
     return SharedBuffer::Create();
 
-  auto buffer = std::make_unique<unsigned char[]>(file_size);
-  if (file_size != fread(buffer.get(), 1, file_size, fp)) {
+  Vector<char> buffer(file_size);
+  if (file_size != fread(buffer.data(), 1, file_size, fp)) {
     fprintf(stderr, "Error reading file %s\n", file_name);
     exit(2);
   }
 
   fclose(fp);
-  return SharedBuffer::Create(buffer.get(), file_size);
+  return SharedBuffer::AdoptVector(buffer);
 }
+
+struct ImageTime {
+  char* name;
+  int frames;
+  int width;
+  int height;
+  double time;
+};
 
 bool DecodeImageData(SharedBuffer* data,
                      bool color_correction,
-                     size_t packet_size) {
+                     size_t packet_size,
+                     ImageTime* image_time) {
   std::unique_ptr<ImageDecoder> decoder =
       ImageDecoder::Create(data, true, ImageDecoder::kAlphaPremultiplied,
                            color_correction ? ColorBehavior::TransformToSRGB()
                                             : ColorBehavior::Ignore());
   if (!packet_size) {
+    double start_time = GetCurrentTime();
+
     bool all_data_received = true;
     decoder->SetData(data, all_data_received);
 
     int frame_count = decoder->FrameCount();
-    for (int i = 0; i < frame_count; ++i) {
-      if (!decoder->DecodeFrameBufferAtIndex(i))
-        return false;
+    for (int index = 0; index < frame_count; ++index) {
+      if (!decoder->DecodeFrameBufferAtIndex(index))
+        break;
     }
 
-    return !decoder->Failed();
+    image_time->time += GetCurrentTime() - start_time;
+
+    image_time->width = decoder->Size().Width();
+    image_time->height = decoder->Size().Height();
+    image_time->frames = frame_count;
+
+    return frame_count && !decoder->Failed();
   }
 
   scoped_refptr<SharedBuffer> packet_data = SharedBuffer::Create();
   size_t position = 0;
-  size_t next_frame_to_decode = 0;
+  int frame_count = 0;
+  int index = 0;
+
+  double start_time = GetCurrentTime();
+
   while (true) {
     const char* packet;
     size_t length = data->GetSomeData(packet, position);
@@ -236,13 +259,12 @@ bool DecodeImageData(SharedBuffer* data,
     packet_data->Append(packet, length);
     position += length;
 
-    bool all_data_received = position == data->size();
+    bool all_data_received = position >= data->size();
     decoder->SetData(packet_data.get(), all_data_received);
 
-    size_t frame_count = decoder->FrameCount();
-    for (; next_frame_to_decode < frame_count; ++next_frame_to_decode) {
-      ImageFrame* frame =
-          decoder->DecodeFrameBufferAtIndex(next_frame_to_decode);
+    frame_count = decoder->FrameCount();
+    for (; index < frame_count; ++index) {
+      ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(index);
       if (frame->GetStatus() != ImageFrame::kFrameComplete)
         break;
     }
@@ -251,7 +273,125 @@ bool DecodeImageData(SharedBuffer* data,
       break;
   }
 
-  return !decoder->Failed();
+  image_time->time += GetCurrentTime() - start_time;
+
+  image_time->width = decoder->Size().Width();
+  image_time->height = decoder->Size().Height();
+  image_time->frames = frame_count;
+
+  return frame_count && !decoder->Failed();
+}
+
+bool DecodeBench(SharedBuffer* data, ImageTime* image) {
+  const int kRuns = 11;
+
+  const int kArea = image->width * image->height;
+  int repeats = 18 * 1048576 / kArea;
+  if (repeats < 10)
+    repeats = 10;
+  if (repeats > 10000)
+    repeats = 10000;
+
+  double utime[kRuns];
+  for (int run = 0; run < kRuns; ++run) {
+    image->time = 0.0;
+    for (int i = 0; i < repeats; ++i)
+      DecodeImageData(data, false, 0, image);
+    utime[run] = image->time;
+  }
+
+  std::sort(utime, utime + kRuns);
+  const int median = kRuns / 2;
+
+  float m_rate = 4 * kArea * repeats / utime[median];
+  m_rate /= 1048576.0;  // rate in MB/s
+  float s_rate = 4 * kArea * repeats / utime[0];
+  s_rate /= 1048576.0;  // rate in MB/s
+
+  printf("%.6f %.1f ", utime[0], s_rate);
+  printf("%.6f %.1f ", utime[median], m_rate);
+  printf("\n");
+
+  return false;
+}
+
+void EncodeImageData(const String& mime_type,
+                     ImageDataBuffer* buffer,
+                     ImageTime* image_time) {
+  Vector<unsigned char> encoded_image;
+
+  double start_time = GetCurrentTime();
+  bool success = buffer->EncodeImage(mime_type, 0.8, &encoded_image);
+  image_time->time += GetCurrentTime() - start_time;
+
+  if (!success) {
+    fprintf(stderr, "Failed to encode image [%s]\n", image_time->name);
+    exit(3);
+  }
+}
+
+String EncodingMimeType(const String& extension) {
+  String mime_type =
+      MIMETypeRegistry::GetWellKnownMIMETypeForExtension(extension);
+  return ImageEncoderUtils::ToEncodingMimeType(
+      mime_type, ImageEncoderUtils::kEncodeReasonToDataURL);
+}
+
+bool EncodeBench(SharedBuffer* data, ImageTime* image) {
+  const int kRuns = 11;
+
+  std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
+      data, true, ImageDecoder::kAlphaPremultiplied, ColorBehavior::Ignore());
+
+  bool frame_complete = true;
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
+  if (frame->GetStatus() != ImageFrame::kFrameComplete)
+    frame_complete = false;
+  if (decoder->FilenameExtension().IsEmpty())
+    frame_complete = false;
+  int frame_count = decoder->FrameCount();
+  if (!frame_count || !frame_complete || decoder->Failed()) {
+    fprintf(stderr, "Failed to decode image [%s]\n", image->name);
+    exit(3);
+  }
+
+  image->width = decoder->Size().Width();
+  image->height = decoder->Size().Height();
+  image->frames = frame_count;
+
+  const int kArea = image->width * image->height;
+  int repeats = 18 * 1048576 / kArea;
+  if (repeats < 10)
+    repeats = 10;
+  if (repeats > 10000)
+    repeats = 10000;
+
+  const String kMimeType = EncodingMimeType(decoder->FilenameExtension());
+  unsigned char const* kPixels = (unsigned char*)frame->GetAddr(0, 0);
+  const IntSize kSize = IntSize(image->width, image->height);
+  ImageDataBuffer buffer = ImageDataBuffer(kSize, kPixels);
+
+  double utime[kRuns];
+  for (int run = 0; run < kRuns; ++run) {
+    image->time = 0.0;
+    for (int i = 0; i < repeats; ++i)
+      EncodeImageData(kMimeType, &buffer, image);
+    utime[run] = image->time;
+  }
+
+  std::sort(utime, utime + kRuns);
+  const int median = kRuns / 2;
+
+  float m_rate = 4 * kArea * repeats / utime[median];
+  m_rate /= 1048576.0;  // rate in MB/s
+  float s_rate = 4 * kArea * repeats / utime[0];
+  s_rate /= 1048576.0;  // rate in MB/s
+
+  printf("%.6f %.1f ", utime[0], s_rate);
+  printf("%.6f %.1f ", utime[median], m_rate);
+  printf("\n");
+
+  return false;
 }
 
 }  // namespace
@@ -303,14 +443,14 @@ int Main(int argc, char* argv[]) {
     }
   }
 
-  // Create a web platform.  blink::Platform can't be used directly because its
-  // constructor is protected.
+  // Create a web platform.  blink::Platform can't be used directly because
+  // it has a protected constructor.
 
   class WebPlatform : public blink::Platform {};
 
   Platform::Initialize(new WebPlatform());
 
-  // Read entire file content to data, and consolidate the SharedBuffer data
+  // Read entire file content to data and consolidate the SharedBuffer data
   // segments into one, contiguous block of memory.
 
   scoped_refptr<SharedBuffer> data = ReadFile(argv[1]);
@@ -323,10 +463,22 @@ int Main(int argc, char* argv[]) {
 
   // Warm-up: throw out the first iteration for more consistent results.
 
-  if (!DecodeImageData(data.get(), apply_color_correction, packet_size)) {
+  ImageTime image_time;
+  memset(&image_time, 0, sizeof(image_time));
+  image_time.name = argv[1];
+
+  if (!DecodeImageData(data.get(), apply_color_correction, packet_size,
+                       &image_time)) {
     fprintf(stderr, "Image decode failed [%s]\n", argv[1]);
     exit(3);
   }
+
+  // Image encode / decode rate-based bench.
+
+  if (!DecodeBench(data.get(), &image_time))
+    return 0;
+  if (!EncodeBench(data.get(), &image_time))
+    return 0;
 
   // Image decode bench for iterations.
 
@@ -334,8 +486,8 @@ int Main(int argc, char* argv[]) {
 
   for (size_t i = 0; i < iterations; ++i) {
     double start_time = GetCurrentTime();
-    bool decoded =
-        DecodeImageData(data.get(), apply_color_correction, packet_size);
+    bool decoded = DecodeImageData(data.get(), apply_color_correction,
+                                   packet_size, &image_time);
     double elapsed_time = GetCurrentTime() - start_time;
     total_time += elapsed_time;
     if (!decoded) {
