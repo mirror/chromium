@@ -46,10 +46,18 @@ class CORE_EXPORT LabelableElement : public HTMLElement {
   LabelsNodeList* labels();
   virtual bool SupportLabels() const { return false; }
 
+  // Most form controls do not support LayoutNG yet.
+  // Some of them, such as <fieldset> or <output> are merely semantics and has
+  // nothing to do with layout. They are non-atomic for inline formatting
+  // context that they need to use LayoutNG.
+  static bool ShouldForceLegacyLayout(const Element&);
+
   void Trace(blink::Visitor*) override;
 
  protected:
   LabelableElement(const QualifiedName& tag_name, Document&);
+
+  virtual bool ShouldForceLegacyLayout() const { return false; }
 
  private:
   bool IsLabelable() const final { return true; }
@@ -60,6 +68,11 @@ inline bool IsLabelableElement(const HTMLElement& element) {
 }
 
 DEFINE_HTMLELEMENT_TYPE_CASTS_WITH_FUNCTION(LabelableElement);
+
+inline bool LabelableElement::ShouldForceLegacyLayout(const Element& element) {
+  return element.IsHTMLElement() && ToHTMLElement(element).IsLabelable() &&
+         ToLabelableElement(element).ShouldForceLegacyLayout();
+}
 
 }  // namespace blink
 
