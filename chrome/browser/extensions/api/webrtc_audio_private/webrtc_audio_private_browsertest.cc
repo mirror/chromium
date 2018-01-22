@@ -31,6 +31,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/media_device_id.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_data.h"
@@ -38,6 +39,7 @@
 #include "media/audio/audio_system.h"
 #include "media/base/media_switches.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "services/audio/public/cpp/audio_system_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
@@ -64,7 +66,8 @@ void GetAudioDeviceDescriptions(bool for_input,
                                 AudioDeviceDescriptions* device_descriptions) {
   base::RunLoop run_loop;
   std::unique_ptr<media::AudioSystem> audio_system =
-      media::AudioSystem::CreateInstance();
+      audio::audio_system_factory::CreateInstance(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
   audio_system->GetDeviceDescriptions(
       for_input,
       base::BindOnce(

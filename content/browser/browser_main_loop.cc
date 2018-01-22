@@ -124,6 +124,7 @@
 #include "net/socket/client_socket_factory.h"
 #include "net/ssl/ssl_config_service.h"
 #include "ppapi/features/features.h"
+#include "services/audio/public/cpp/audio_system_factory.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
@@ -1422,6 +1423,10 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
       // AudioManager shutdown failed.
       ignore_result(user_input_monitor_.release());
     }
+
+    // Leaking AudioSystem: we cannot correctly destory it since Audio service
+    // connection in there is bound to IO thread.
+    ignore_result(audio_system_.release());
   }
 
   if (parts_) {
@@ -1472,10 +1477,19 @@ void BrowserMainLoop::InitializeMainThread() {
 int BrowserMainLoop::BrowserThreadsStarted() {
   TRACE_EVENT0("startup", "BrowserMainLoop::BrowserThreadsStarted");
 
+  {
+    TRACE_EVENT0("startup", "BrowserThreadsStarted::Subsystem:AudioMan");
+    CreateAudioManager();
+  }
+
   // Bring up Mojo IPC and the embedded Service Manager as early as possible.
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
   InitializeMojo();
+
+  audio_system_ = audio::audio_system_factory::CreateInstance(
+      content::ServiceManagerConnection::GetForProcess()->GetConnector());
+  CHECK(audio_system_);
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {
@@ -1563,11 +1577,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       tracing::GraphicsMemoryDumpProvider::GetInstance(), "AndroidGraphics",
       nullptr);
 #endif
-
-  {
-    TRACE_EVENT0("startup", "BrowserThreadsStarted::Subsystem:AudioMan");
-    CreateAudioManager();
-  }
 
   {
     TRACE_EVENT0("startup", "BrowserThreadsStarted::Subsystem:MidiService");
@@ -1921,8 +1930,6 @@ void BrowserMainLoop::CreateAudioManager() {
                                     MediaInternals::GetInstance());
   }
   CHECK(audio_manager_);
-  audio_system_ = media::AudioSystem::CreateInstance();
-  CHECK(audio_system_);
 }
 
 }  // namespace content
