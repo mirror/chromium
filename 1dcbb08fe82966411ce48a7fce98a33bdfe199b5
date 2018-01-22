@@ -22,6 +22,30 @@
       "revId": "1dcbb08fe82966411ce48a7fce98a33bdfe199b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf3fd6b_b095d64c",
+        "filename": "base/component_export.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T17:38:23Z",
+      "side": 1,
+      "message": "That won\u0027t work because it requires IS_COMPONENT_IMPL to be defined.",
+      "parentUuid": "3c657024_9b615d6d",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "1dcbb08fe82966411ce48a7fce98a33bdfe199b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
