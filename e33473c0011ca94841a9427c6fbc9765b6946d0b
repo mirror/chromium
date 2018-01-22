@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b095e0a6_d4381ded",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-22T23:27:58Z",
+      "side": 1,
+      "message": "at the moment, they do look unlikely to return an error, i agree.  however, it\u0027s hard to tell how those functions will change over time.  that\u0027s my main concern.\n\nto help me get some context, i searched cs for calls to \"UnwrapPlatformFile\".  it finds four cases of CHECK/DCHECK, and ~12 cases of returning an error.\n\nis there a disadvantage to returning an error rather than CHECK?",
+      "parentUuid": "6d963c46_89acf7cf",
+      "revId": "e33473c0011ca94841a9427c6fbc9765b6946d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0361db16_74515b72",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 21
