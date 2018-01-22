@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "223dce6f_ffe43c69",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75cfffbf_31602899",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b55f661_8334e4a4",
         "filename": "ui/base/win/direct_manipulation.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e57e7b_99c05a58",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b55f661_8334e4a4",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ceed646_56e8250f",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c50672_061f8459",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "487c3e4d_736da4c8",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134854ac_d798fa54",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "487c3e4d_736da4c8",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b5ca8afa_51e61daa",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3367af_99af4ab5",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31b8733_afb341a5",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 19
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-19T17:32:46Z",
       "side": 1,
       "message": "We should definitely describe what this method is doing in comments.",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6802612a_c4fbd16e",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "I move this logic to DirectManipulationHandler. And comment it.",
+      "parentUuid": "e31b8733_afb341a5",
       "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b7496f82_7a06b199",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "It seems we have same issue. https://cs.chromium.org/chromium/src/ui/events/event.cc?sq\u003dpackage:chromium\u0026l\u003d466-467",
+      "parentUuid": "931abd48_c1dc34b0",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9640940_b70fdf72",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 19
@@ -132,6 +258,24 @@
       "writtenOn": "2018-01-19T17:32:46Z",
       "side": 1,
       "message": "What is this ref used for?",
+      "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7d9c06_ce298a6a",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-22T21:28:42Z",
+      "side": 1,
+      "message": "I don\u0027t know. But we have this for each event handler.",
+      "parentUuid": "b9640940_b70fdf72",
       "revId": "028bf08b3ef6474e1ed57a22e50094609c884e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
