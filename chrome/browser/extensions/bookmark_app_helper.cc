@@ -817,7 +817,28 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
   }
 #endif
 
+  // Reparent the tab into an app window immediately when a windowed app is
+  // InstallableData.
+  if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+      launch_type == extensions::LAUNCH_TYPE_WINDOW) {
+    ReparentTabToAppWindow(browser, extension);
+  }
+
   callback_.Run(extension, web_app_info_);
+}
+
+void BookmarkAppHelper::ReparentTabToAppWindow(Browser* browser,
+                                               const Extension* extension) {
+  Browser::CreateParams browser_params(Browser::CreateParams::CreateForApp(
+      web_app::GenerateApplicationNameFromExtensionId(extension->id()),
+      true /* trusted_source */, gfx::Rect(), profile_, true));
+  Browser* target_browser = new Browser(browser_params);
+
+  TabStripModel* source_tabstrip = browser->tab_strip_model();
+  target_browser->tab_strip_model()->AppendWebContents(
+      source_tabstrip->DetachWebContentsAt(source_tabstrip->active_index()),
+      true);
+  target_browser->window()->Show();
 }
 
 void BookmarkAppHelper::Observe(int type,
