@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d65d65c_815838f3",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-22T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca89850_0622b757",
+      "revId": "a82210106ca21e41084655e5599be2f519ad55a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ee75c5_d19e12a8",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-20T14:37:55Z",
       "side": 1,
       "message": "Is it possible to write a test for this? We need to make sure we are able to write tests for such changes because there are a lot of subtle things we need to get right.",
+      "revId": "a82210106ca21e41084655e5599be2f519ad55a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93241c30_7309052d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-22T16:26:37Z",
+      "side": 1,
+      "message": "As discussed offline, will be adding tests right after this CL.",
+      "parentUuid": "b0ee75c5_d19e12a8",
       "revId": "a82210106ca21e41084655e5599be2f519ad55a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
