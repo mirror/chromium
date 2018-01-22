@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9707ad_f32e906e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 95232,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:48:55Z",
+      "side": 1,
+      "message": "I\u0027m not convinced this makes sense. I think Freshness should really mean how fresh the seed that Chrome is being run with is. And triggers of safe mode should actually regress this metric.",
+      "range": {
+        "startLine": 95232,
+        "startChar": 25,
+        "endLine": 95232,
+        "endChar": 0
+      },
+      "revId": "db044861ccc23d61a97f4309a2886fe40cb6dc1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
