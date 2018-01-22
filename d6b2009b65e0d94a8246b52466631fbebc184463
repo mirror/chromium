@@ -22,6 +22,30 @@
       "revId": "d6b2009b65e0d94a8246b52466631fbebc184463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3b71aa_881c8a8e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-22T21:26:00Z",
+      "side": 1,
+      "message": "Ah, yeah, this dcheck is too lenient. Added a new one and fixed this one.",
+      "parentUuid": "b0cf1930_48f88832",
+      "range": {
+        "startLine": 1232,
+        "startChar": 4,
+        "endLine": 1232,
+        "endChar": 74
+      },
+      "revId": "d6b2009b65e0d94a8246b52466631fbebc184463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
