@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7692c4c4_fca9e79b",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "271641e2_e93c68cb",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "6834c0521416528118475f207dcf5bef881bf98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb5c05a0_385f26c7",
         "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6834c0521416528118475f207dcf5bef881bf98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466b4330_bcb5cf4d",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-22T22:45:57Z",
+      "side": 1,
+      "message": ".invalid can return non-bool values when it\u0027s bound to non-bool properties (often when it\u0027s convenient to just evaluate truthiness, such as invalid\u003d\"[[error]]\").",
+      "parentUuid": "cb5c05a0_385f26c7",
+      "range": {
+        "startLine": 238,
+        "startChar": 18,
+        "endLine": 238,
+        "endChar": 20
+      },
+      "revId": "6834c0521416528118475f207dcf5bef881bf98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
