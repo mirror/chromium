@@ -217,6 +217,7 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   void OnMouseDown(Node&) override;
   void DidUpdateBrowserControls() const override;
   void SetOverscrollBehavior(const WebOverscrollBehavior&) override;
+  void SetSnapContainerData(Optional<SnapContainerData>) const override;
 
   FloatSize ElasticOverscroll() const override;
 

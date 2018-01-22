@@ -447,6 +447,8 @@ class CORE_EXPORT WebViewImpl final
 
   void SetOverscrollBehavior(const WebOverscrollBehavior&);
 
+  void SetSnapContainerData(Optional<SnapContainerData>);
+
   void ForceNextWebGLContextCreationToFail() override;
   void ForceNextDrawingBufferCreationToFail() override;
 
