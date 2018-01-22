@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de1b217_26f283f7",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T21:47:06Z",
+      "side": 1,
+      "message": "DISALLOW_COPY?",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58bf8ad_8a2bdc5f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T21:47:06Z",
+      "side": 1,
+      "message": "These comments probably shouldn\u0027t be about direct manipulation no? The should just indicate what an animation observer is doing.",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52153a07_590fab01",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T21:47:06Z",
+      "side": 1,
+      "message": "Still looks like this could be div by 0. Where is last_scale_ mutated? Is last_scale_ even needed if it is always 1?",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13769c2e_5ec9e1b6",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T21:47:06Z",
+      "side": 1,
+      "message": "I don\u0027t think feature_list needs to be included here...",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea21fa94_98c5a506",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T21:47:06Z",
+      "side": 1,
+      "message": "Update the comments. Explain what scale is.. ie; 0.5 is half, explain what scroll_x/y values are.",
+      "revId": "85d26e9c82d0783145d277b4c4e2e8a9886f265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
