@@ -64,13 +64,13 @@ class InProcessVideoCaptureDeviceLauncher : public VideoCaptureDeviceLauncher {
   void DoStartTabCaptureOnDeviceThread(
       const std::string& device_id,
       const media::VideoCaptureParams& params,
-      std::unique_ptr<media::VideoCaptureDeviceClient> client,
+      base::WeakPtr<media::VideoFrameReceiver> receiver,
       ReceiveDeviceCallback result_callback);
 
   void DoStartDesktopCaptureOnDeviceThread(
       const std::string& device_id,
       const media::VideoCaptureParams& params,
-      std::unique_ptr<media::VideoCaptureDeviceClient> client,
+      base::WeakPtr<media::VideoFrameReceiver> receiver,
       ReceiveDeviceCallback result_callback);
 
   const scoped_refptr<base::SingleThreadTaskRunner> device_task_runner_;

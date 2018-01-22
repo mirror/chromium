@@ -1022,6 +1022,7 @@ test("content_browsertests") {
     # Non-Android.
     sources += [
       "../browser/host_zoom_map_impl_browsertest.cc",
+      "../browser/media/capture/web_contents_video_capture_device_browsertest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
       "../browser/zoom_browsertest.cc",
     ]
@@ -1909,7 +1910,6 @@ test("content_unittests") {
     deps += [ "//third_party/libyuv" ]
     sources += [
       "../browser/media/capture/frame_sink_video_capture_device_unittest.cc",
-      "../browser/media/capture/web_contents_video_capture_device_unittest.cc",
     ]
     if (use_aura) {
       sources += [ "../browser/media/capture/cursor_renderer_aura_unittest.cc" ]
