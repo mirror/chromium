@@ -16,6 +16,24 @@
       "revId": "b5cd1381b20e728caac1d5d41378a9a4e90396dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0b3f11_7c92d485",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-01-22T20:43:32Z",
+      "side": 1,
+      "message": "Eventually everywhere.",
+      "parentUuid": "15084f21_b1ac41d2",
+      "revId": "b5cd1381b20e728caac1d5d41378a9a4e90396dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
