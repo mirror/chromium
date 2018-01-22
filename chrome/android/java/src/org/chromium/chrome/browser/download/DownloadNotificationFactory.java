@@ -70,6 +70,7 @@ public final class DownloadNotificationFactory {
                                 true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_DOWNLOADS)
                         .setLocalOnly(true)
                         .setGroup(NotificationConstants.GROUP_DOWNLOADS)
+                        .setGroupSummary(true)
                         .setAutoCancel(true);
 
         String contentText;
@@ -87,8 +88,8 @@ public final class DownloadNotificationFactory {
                     contentText =
                             DownloadUtils.getPendingStatusString(downloadUpdate.getPendingState());
                 } else if (indeterminate || downloadUpdate.getTimeRemainingInMillis() < 0) {
-                    // TODO(dimich): Enable the byte count back in M59. See bug 704049 for more info
-                    // and details of what was temporarily reverted (for M58).
+                    // TODO(dimich): Enable the byte count yea back in M59. See bug 704049 for more
+                    // info and details of what was temporarily reverted (for M58).
                     contentText = context.getResources().getString(R.string.download_started);
                 } else {
                     contentText = DownloadUtils.getTimeOrFilesLeftString(context,
@@ -257,6 +258,10 @@ public final class DownloadNotificationFactory {
             builder.setContentIntent(
                     PendingIntent.getService(context, downloadUpdate.getNotificationId(),
                             downloadHomeIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+        }
+        // Group notifications together as expected for Android versions N+.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.setGroupSummary(true);
         }
 
         return builder.build();
