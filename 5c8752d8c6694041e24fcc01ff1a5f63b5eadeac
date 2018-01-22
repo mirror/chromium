@@ -22,6 +22,30 @@
       "revId": "5c8752d8c6694041e24fcc01ff1a5f63b5eadeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957c7be5_1882d17e",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-22T21:44:22Z",
+      "side": 0,
+      "message": "Done.\n\nBut please not that this actually changes the behavior as current code sets send_buffer_size_ to 0 and doesn\u0027t call SetOption.",
+      "parentUuid": "b1f80e1d_eb901722",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 22
+      },
+      "revId": "5c8752d8c6694041e24fcc01ff1a5f63b5eadeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
