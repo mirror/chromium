@@ -46,6 +46,30 @@
       "revId": "ea7180bba6d3608354d861056e033d3147147b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6268459b_3cd50c4e",
+        "filename": "content/test/fuzzer/fuzzer_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2018-01-22T00:43:53Z",
+      "side": 1,
+      "message": "oh my bad, misread the code. thanks.",
+      "parentUuid": "0a4e9b3f_c1a62597",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "ea7180bba6d3608354d861056e033d3147147b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
