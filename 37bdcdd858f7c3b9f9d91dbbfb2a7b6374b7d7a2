@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385ab99e_d1017304",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-22T19:04:39Z",
+      "side": 1,
+      "message": "Should we assert finiteness (really: \"non-NaN-ness\") somewhere?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7fe90e_38a51f00",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-22T19:04:39Z",
+      "side": 1,
+      "message": "Probably not an issue in any practical way, but worth mentioning the O(log \u003cdepth\u003e) vs. O(1) (expected) runtime?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec75c87_f61ce614",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-22T19:04:39Z",
+      "side": 1,
+      "message": "This file doesn\u0027t exist?",
+      "range": {
+        "startLine": 871,
+        "startChar": 14,
+        "endLine": 871,
+        "endChar": 29
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
