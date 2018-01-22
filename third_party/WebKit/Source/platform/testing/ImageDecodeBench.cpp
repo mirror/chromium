@@ -24,11 +24,13 @@
 #include "base/message_loop/message_loop.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "platform/SharedBuffer.h"
+#include "platform/graphics/ImageDataBuffer.h"
 #include "platform/image-decoders/ImageDecoder.h"
+#include "platform/image-encoders/ImageEncoderUtils.h"
+#include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
-#include "ui/gfx/test/icc_profiles.h"
 
 namespace blink {
 
@@ -37,7 +39,7 @@ namespace {
 scoped_refptr<SharedBuffer> ReadFile(const char* name) {
   std::ifstream file(name, std::ios::in | std::ios::binary);
   if (!file) {
-    fprintf(stderr, "Can't open file %s\n", name);
+    fprintf(stderr, "Cannot open %s\n", name);
     exit(2);
   }
 
@@ -50,36 +52,59 @@ scoped_refptr<SharedBuffer> ReadFile(const char* name) {
 
   Vector<char> buffer(file_size);
   if (!file.read(buffer.data(), file_size)) {
-    fprintf(stderr, "Error reading file %s\n", name);
+    fprintf(stderr, "Error reading %s\n", name);
     exit(2);
   }
 
   return SharedBuffer::AdoptVector(buffer);
 }
 
-bool DecodeImageData(SharedBuffer* data,
-                     bool color_correction,
-                     size_t packet_size) {
-  std::unique_ptr<ImageDecoder> decoder =
-      ImageDecoder::Create(data, true, ImageDecoder::kAlphaPremultiplied,
-                           color_correction ? ColorBehavior::TransformToSRGB()
-                                            : ColorBehavior::Ignore());
+struct ImageMeta {
+  char* name;
+  int width;
+  int height;
+  int frames;
+  double time;
+};
+
+void DecodeFailure(ImageMeta* image) {
+  fprintf(stderr, "Failed to decode image %s\n", image->name);
+  exit(3);
+}
+
+void DecodeImageData(SharedBuffer* data, size_t packet_size, ImageMeta* image) {
+  std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
+      data, true, ImageDecoder::kAlphaPremultiplied, ColorBehavior::Ignore());
+
   if (!packet_size) {
+    auto start = CurrentTimeTicks();
+
     bool all_data_received = true;
     decoder->SetData(data, all_data_received);
 
     int frame_count = decoder->FrameCount();
-    for (int i = 0; i < frame_count; ++i) {
-      if (!decoder->DecodeFrameBufferAtIndex(i))
-        return false;
+    for (int index = 0; index < frame_count; ++index) {
+      if (!decoder->DecodeFrameBufferAtIndex(index))
+        DecodeFailure(image);
     }
 
-    return !decoder->Failed();
+    image->time += (CurrentTimeTicks() - start).InSecondsF();
+    image->width = decoder->Size().Width();
+    image->height = decoder->Size().Height();
+    image->frames = frame_count;
+
+    if (!frame_count || decoder->Failed())
+      DecodeFailure(image);
+    return;
   }
 
   scoped_refptr<SharedBuffer> packet_data = SharedBuffer::Create();
   size_t position = 0;
-  size_t next_frame_to_decode = 0;
+  int frame_count = 0;
+  int index = 0;
+
+  auto start = CurrentTimeTicks();
+
   while (true) {
     const char* packet;
     size_t length = data->GetSomeData(packet, position);
@@ -88,51 +113,167 @@ bool DecodeImageData(SharedBuffer* data,
     packet_data->Append(packet, length);
     position += length;
 
-    bool all_data_received = position == data->size();
+    bool all_data_received = position >= data->size();
     decoder->SetData(packet_data.get(), all_data_received);
 
-    size_t frame_count = decoder->FrameCount();
-    for (; next_frame_to_decode < frame_count; ++next_frame_to_decode) {
-      ImageFrame* frame =
-          decoder->DecodeFrameBufferAtIndex(next_frame_to_decode);
+    frame_count = decoder->FrameCount();
+    for (; index < frame_count; ++index) {
+      ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(index);
       if (frame->GetStatus() != ImageFrame::kFrameComplete)
-        break;
+        DecodeFailure(image);
     }
 
     if (all_data_received || decoder->Failed())
       break;
   }
 
-  return !decoder->Failed();
+  image->time += (CurrentTimeTicks() - start).InSecondsF();
+  image->width = decoder->Size().Width();
+  image->height = decoder->Size().Height();
+  image->frames = frame_count;
+
+  if (!frame_count || decoder->Failed())
+    DecodeFailure(image);
+}
+
+bool DecodeBench(SharedBuffer* data, ImageMeta* image) {
+  const int kRuns = 11;
+
+  const int kArea = image->width * image->height;
+  int repeats = (18 * 1024 * 1024) / kArea;
+  if (repeats < 10)
+    repeats = 10;
+  if (repeats > 10000)
+    repeats = 10000;
+
+  double utime[kRuns];
+  for (int run = 0; run < kRuns; ++run) {
+    image->time = 0.0;
+    for (int i = 0; i < repeats; ++i)
+      DecodeImageData(data, 0, image);
+    utime[run] = image->time;
+  }
+
+  std::sort(utime, utime + kRuns);
+  const int median = kRuns / 2;
+
+  float m_rate = 4 * kArea * repeats / utime[median];
+  m_rate /= 1024.0 * 1024.0;  // rate in MB/s
+  float s_rate = 4 * kArea * repeats / utime[0];
+  s_rate /= 1024.0 * 1024.0;  // rate in MB/s
+
+  printf("%.6f %.1f ", utime[0], s_rate);
+  printf("%.6f %.1f ", utime[median], m_rate);
+  printf("\n");
+
+  return false;
+}
+
+void EncodeImageData(const String& mime_type,
+                     ImageDataBuffer* buffer,
+                     ImageMeta* image) {
+  Vector<unsigned char> encoded_image;
+
+  auto start = CurrentTimeTicks();
+  bool success = buffer->EncodeImage(mime_type, 0.8, &encoded_image);
+  image->time += (CurrentTimeTicks() - start).InSecondsF();
+
+  if (!success) {
+    fprintf(stderr, "Failed to encode image %s\n", image->name);
+    exit(3);
+  }
+}
+
+String EncodingMimeType(const String& extension) {
+  String mime_type =
+      MIMETypeRegistry::GetWellKnownMIMETypeForExtension(extension);
+  return ImageEncoderUtils::ToEncodingMimeType(
+      mime_type, ImageEncoderUtils::kEncodeReasonToDataURL);
+}
+
+bool EncodeBench(SharedBuffer* data, ImageMeta* image) {
+  const int kRuns = 11;
+
+  std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
+      data, true, ImageDecoder::kAlphaPremultiplied, ColorBehavior::Ignore());
+
+  bool frame_complete = true;
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
+  if (frame->GetStatus() != ImageFrame::kFrameComplete)
+    frame_complete = false;
+  if (decoder->FilenameExtension().IsEmpty())
+    frame_complete = false;
+  int frame_count = decoder->FrameCount();
+  if (!frame_count || !frame_complete || decoder->Failed())
+    DecodeFailure(image);
+
+  image->width = decoder->Size().Width();
+  image->height = decoder->Size().Height();
+  image->frames = frame_count;
+
+  const int kArea = image->width * image->height;
+  int repeats = (18 * 1024 * 1024) / kArea;
+  if (repeats < 10)
+    repeats = 10;
+  if (repeats > 10000)
+    repeats = 10000;
+
+  const String kMimeType = EncodingMimeType(decoder->FilenameExtension());
+  unsigned char const* kPixels = (unsigned char*)frame->GetAddr(0, 0);
+  const IntSize kSize = IntSize(image->width, image->height);
+  ImageDataBuffer buffer = ImageDataBuffer(kSize, kPixels);
+
+  double utime[kRuns];
+  for (int run = 0; run < kRuns; ++run) {
+    image->time = 0.0;
+    for (int i = 0; i < repeats; ++i)
+      EncodeImageData(kMimeType, &buffer, image);
+    utime[run] = image->time;
+  }
+
+  std::sort(utime, utime + kRuns);
+  const int median = kRuns / 2;
+
+  float m_rate = 4 * kArea * repeats / utime[median];
+  m_rate /= 1024.0 * 1024.0;  // rate in MB/s
+  float s_rate = 4 * kArea * repeats / utime[0];
+  s_rate /= 1024.0 * 1024.0;  // rate in MB/s
+
+  printf("%.6f %.1f ", utime[0], s_rate);
+  printf("%.6f %.1f ", utime[median], m_rate);
+  printf("\n");
+
+  return false;
 }
 
 }  // namespace
 
 int Main(int argc, char* argv[]) {
   base::CommandLine::Init(argc, argv);
+  const char* name = argv[0];
 
-  // If the platform supports color correction, allow it to be controlled.
+  bool encode_bench = false;
+  if (argc >= 2 && !strcmp(argv[1], "--encode"))
+    encode_bench = (--argc, ++argv, true);
 
-  bool apply_color_correction = false;
-
-  if (argc >= 2 && strcmp(argv[1], "--color-correct") == 0) {
-    apply_color_correction = (--argc, ++argv, true);
-  }
+  bool decode_bench = false;
+  if (argc >= 2 && !strcmp(argv[1], "--decode"))
+    decode_bench = (--argc, ++argv, true);
 
   if (argc < 2) {
     fprintf(stderr,
-            "Usage: %s [--color-correct] file [iterations] [packetSize]\n",
-            argv[0]);
+            "Usage: %s [--encode|decode] file [iterations] [packetSize]\n",
+            name);
     exit(1);
   }
 
-  // Control decode bench iterations and packet size.
+  // Control decode iterations and packet size.
 
-  size_t iterations = 1;
-  if (argc >= 3) {
+  size_t decode_iterations = 1;
+  if (!encode_bench && !decode_bench && argc >= 3) {
     char* end = nullptr;
-    iterations = strtol(argv[2], &end, 10);
-    if (*end != '\0' || !iterations) {
+    decode_iterations = strtol(argv[2], &end, 10);
+    if (*end != '\0' || !decode_iterations) {
       fprintf(stderr,
               "Second argument should be number of iterations. "
               "The default is 1. You supplied %s\n",
@@ -142,7 +283,7 @@ int Main(int argc, char* argv[]) {
   }
 
   size_t packet_size = 0;
-  if (argc >= 4) {
+  if (!encode_bench && !decode_bench && argc >= 4) {
     char* end = nullptr;
     packet_size = strtol(argv[3], &end, 10);
     if (*end != '\0') {
@@ -155,19 +296,18 @@ int Main(int argc, char* argv[]) {
     }
   }
 
-  // Create a web platform.  blink::Platform can't be used directly because its
-  // constructor is protected.
+  // Create a web platform.  blink::Platform can't be used directly because
+  // it has a protected constructor.
 
-  class WebPlatform : public blink::Platform {};
-
+  class WebPlatform : public Platform {};
   Platform::Initialize(new WebPlatform());
 
-  // Read entire file content to data, and consolidate the SharedBuffer data
+  // Read entire file content to data and consolidate the SharedBuffer data
   // segments into one, contiguous block of memory.
 
   scoped_refptr<SharedBuffer> data = ReadFile(argv[1]);
   if (!data.get() || !data->size()) {
-    fprintf(stderr, "Error reading image data from [%s]\n", argv[1]);
+    fprintf(stderr, "Error reading image %s\n", argv[1]);
     exit(2);
   }
 
@@ -175,30 +315,29 @@ int Main(int argc, char* argv[]) {
 
   // Warm-up: throw out the first iteration for more consistent results.
 
-  if (!DecodeImageData(data.get(), apply_color_correction, packet_size)) {
-    fprintf(stderr, "Image decode failed [%s]\n", argv[1]);
-    exit(3);
-  }
+  ImageMeta image;
+  image.name = argv[1];
+  DecodeImageData(data.get(), packet_size, &image);
 
-  // Image decode bench for iterations.
+  // Run image encode or decode rate-based bench.
+
+  if (decode_bench)
+    return DecodeBench(data.get(), &image);
+  if (encode_bench)
+    return EncodeBench(data.get(), &image);
+
+  // Otherwise, decode bench for decode iterations.
 
   double total_time = 0.0;
-
-  for (size_t i = 0; i < iterations; ++i) {
-    auto start_time = CurrentTimeTicks();
-    bool decoded =
-        DecodeImageData(data.get(), apply_color_correction, packet_size);
-    double elapsed_time = (CurrentTimeTicks() - start_time).InSecondsF();
-    total_time += elapsed_time;
-    if (!decoded) {
-      fprintf(stderr, "Image decode failed [%s]\n", argv[1]);
-      exit(3);
-    }
+  for (size_t i = 0; i < decode_iterations; ++i) {
+    image.time = 0.0;
+    DecodeImageData(data.get(), packet_size, &image);
+    total_time += image.time;
   }
 
   // Results to stdout.
 
-  double average_time = total_time / static_cast<double>(iterations);
+  double average_time = total_time / decode_iterations;
   printf("%f %f\n", total_time, average_time);
   return 0;
 }
