@@ -164,6 +164,30 @@
       "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdc4ef7_a7426cc5",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-22T23:25:35Z",
+      "side": 1,
+      "message": "It\u0027s not a lot of extra work, but it\u0027s also not related to this change. To create a blob you use whatever API BlobDataBuilder exposes, and that\u0027s not something I\u0027m changing in this CL. You can\u0027t create a blob from BlobDataItems directly (and before none of its constructors were public). The only reason these Create* methods are public now is that it seemed cleaner than friending every possible test or non-test code that does have a legitimate reason to create these items, and it seemed pretty harmless to let anybody create BlobDataItems (since you can\u0027t do anything with them anyway).\n\nNote that network::DataElement also doesn\u0027t have a way to move bytes into the element (other than the identical SetToAllocatedBytes + mutable_bytes access that is still possible with BlobDataItem).\n\nSo yes, I agree it would be nice to be able to move bytes into a blob, but that seems unrelated to anything this CL changes.",
+      "parentUuid": "0f319e47_2ae5a1f3",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
