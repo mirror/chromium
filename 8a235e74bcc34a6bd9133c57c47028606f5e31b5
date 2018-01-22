@@ -68,6 +68,23 @@
       "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8b85cf_51fbb3c2",
+        "filename": "ui/views/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:23:33Z",
+      "side": 1,
+      "message": "just an FYI that you\u0027ll need an OWNER for ui/views/ such as sky@\n\nhttps://cs.chromium.org/chromium/src/ui/views/OWNERS",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
