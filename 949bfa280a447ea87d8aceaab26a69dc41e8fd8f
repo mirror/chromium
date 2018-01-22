@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "672e17ab_c7e49477",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-22T16:52:23Z",
+      "side": 1,
+      "message": "As mentioned in the other patchset: adding the if-check here with the TODO makes sense.",
+      "revId": "949bfa280a447ea87d8aceaab26a69dc41e8fd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
