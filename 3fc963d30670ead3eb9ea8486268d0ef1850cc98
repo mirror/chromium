@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f40a56b9_b4f90bed",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2c885c_718fe36a",
+      "range": {
+        "startLine": 116,
+        "startChar": 43,
+        "endLine": 116,
+        "endChar": 64
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8e92af_2efe0c24",
         "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d6bb64_bce7eb46",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8e92af_2efe0c24",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4016f5cb_f2ae21a8",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c538d71_1b8d42ef",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2edf0a4a_90bbcc87",
         "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-17T14:44:36Z",
       "side": 1,
       "message": "This contains a lot more. See https://cs.corp.google.com/chromeos_public/src/platform2/cryptohome/attestation.proto?rcl\u003da7d7f5140c2ef4c71b4f4410b5ad5c7e048d0c63\u0026l\u003d87 and https://cs.corp.google.com/chromeos_public/src/platform2/cryptohome/attestation.proto?rcl\u003da7d7f5140c2ef4c71b4f4410b5ad5c7e048d0c63\u0026l\u003d207 for details. Is it possible to just reference protos?",
+      "range": {
+        "startLine": 126,
+        "startChar": 12,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c830bfc7_b1faccf5",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "According to the docs, in case there are many arguments:\n\"name the sensitive user data and general classes of other data and refer to a document specifying the details.\"\nI\u0027ve mentioned the messages from your links. Thank you.",
+      "parentUuid": "2edf0a4a_90bbcc87",
       "range": {
         "startLine": 126,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4d4ab5d9_5ce977a2",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66345039_ef8ef216",
+      "range": {
+        "startLine": 132,
+        "startChar": 13,
+        "endLine": 132,
+        "endChar": 70
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce9105a_c676460f",
         "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-17T14:44:36Z",
       "side": 1,
       "message": "There actually is kDeviceAttestationEnabled, but attestation requests may also originate due to other features (for example content protection), so this policy does not switch this off entirely.",
+      "range": {
+        "startLine": 135,
+        "startChar": 10,
+        "endLine": 135,
+        "endChar": 60
+      },
+      "revId": "3fc963d30670ead3eb9ea8486268d0ef1850cc98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfc8741_bbf510d3",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-22T11:56:03Z",
+      "side": 1,
+      "message": "Seems like there\u0027s also content_protection_enabled (https://cs.chromium.org/chromium/src/chrome/browser/chromeos/settings/device_settings_provider.cc?l\u003d536) in attestation_settings. But I couldn\u0027t find any way to manage these settings.",
+      "parentUuid": "dce9105a_c676460f",
       "range": {
         "startLine": 135,
         "startChar": 10,
