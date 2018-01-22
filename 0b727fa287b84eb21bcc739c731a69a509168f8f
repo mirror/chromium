@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d769bcec_0dda1f59",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "nit: incomplete documentation",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b039f85_dcf44800",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "This class may benefit from the Builder pattern. e.g. it would be nice to call:\n\n  DumpStreamBuilder builder \u003d new DumpStreamBuilder(uuid);\n  \n  if (logcat !\u003d null) {\n      builder.addLogcat(logcat);\n  };\n  \n  if (minidump !\u003d null) {\n      builder.addMinidump(minidump);\n  }\n  \n  // ... etc.\n  \n  return builder.getDumpStream();\n\nTo help with this, we can create DumpStream class that has an InputStream, a MIME boundary string, and a close() method that deletes the minidump file if it exists. Then CastCrashUploader.uploadCrashDump() can take an instance of DumpStream instead of DumpStreamConstructor, to better indicate that uploadCrashDump() is consuming, not constructing, a DumpStream.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9aa39c_e352a499",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "Here and elsewhere:\n\n@VisibleForTesting fields and methods should be package-protected, not public. The @VisibleForTesting annotation is for marking things that otherwise could be private, but need to be accessed directly by tests.\n\nIn particular, this field, \"v\", does not get accessed by tests right now, so it seems like this could be private.",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7c895b_439b33b2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "Is this caught by CastCrashUploader.uploadCrashDump() when it\u0027s called?",
+      "range": {
+        "startLine": 85,
+        "startChar": 40,
+        "endLine": 85,
+        "endChar": 57
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c75e8cc_3fc92ab5",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "Should this be \"Mime\"?",
+      "range": {
+        "startLine": 194,
+        "startChar": 42,
+        "endLine": 194,
+        "endChar": 46
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d5673c_1c740717",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 199,
+        "startChar": 33,
+        "endLine": 199,
+        "endChar": 38
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c416568a_39da4821",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "Document whether this mutates the given InputStream. I call:\n\nInputStream stream \u003d ...;\nString line1 \u003d getFirstLine(stream);\nString line2 \u003d getFirstLine(stream);\n\n... will line1.equals(line2) return true, or may it return false?",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96bd341_e012ce88",
+        "filename": "chromecast/browser/android/junit/src/org/chromium/chromecast/shell/DumpStreamConstructorUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-22T19:16:23Z",
+      "side": 1,
+      "message": "I think we need a @Before annotation for JUnit4",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 22
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
