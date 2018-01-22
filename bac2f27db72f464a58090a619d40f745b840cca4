@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "65d12e55_692aeabe",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-22T19:51:30Z",
+      "side": 1,
+      "message": "It cannot be part of NukeAllSuggestions because I do not want this to happen for clearing history. I\u0027ve moved it up to the callers, it is more intuitive there (and I can distinguish case by case).",
+      "parentUuid": "1fd85ac2_f501d72b",
+      "range": {
+        "startLine": 1363,
+        "startChar": 42,
+        "endLine": 1363,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81222dbe_66abef62",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-22T19:51:30Z",
+      "side": 1,
+      "message": "This is already the case. I agree the enum will make it easier to reason about.",
+      "parentUuid": "8943dce9_b0d609bf",
+      "range": {
+        "startLine": 1363,
+        "startChar": 37,
+        "endLine": 1363,
+        "endChar": 41
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145e0ba7_2a84b206",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 1
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3364b116_c384e4fd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-22T19:51:30Z",
+      "side": 1,
+      "message": "Makes sense, the signalling is back.\n\n(It had no impact to notify the scheduler as the only thing it does is that it tries to initiate another fetch with no success as there already is one fetch in flight. Anyway, it is cleaner not to assume anything.)",
+      "parentUuid": "145e0ba7_2a84b206",
+      "range": {
+        "startLine": 1365,
+        "startChar": 58,
+        "endLine": 1365,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc582355_ed8dcdd0",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a819698_74301a06",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-22T19:51:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc582355_ed8dcdd0",
+      "range": {
+        "startLine": 454,
+        "startChar": 26,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "bac2f27db72f464a58090a619d40f745b840cca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
