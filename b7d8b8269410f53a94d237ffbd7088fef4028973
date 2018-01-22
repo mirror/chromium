@@ -160,6 +160,24 @@
       "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224b814c_9ce957f3",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T23:11:03Z",
+      "side": 1,
+      "message": "(That\u0027s in general, not just for the next round on this CL)",
+      "parentUuid": "2046dd0e_0dd3b8d5",
+      "revId": "b7d8b8269410f53a94d237ffbd7088fef4028973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
