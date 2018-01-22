@@ -1786,7 +1786,7 @@ void ComputedStyle::RestoreParentTextDecorations(
 }
 
 void ComputedStyle::ClearMultiCol() {
-  SetColumnGapInternal(ComputedStyleInitialValues::InitialColumnGap());
+  SetColumnGap(ComputedStyleInitialValues::InitialColumnGap());
   SetColumnWidthInternal(ComputedStyleInitialValues::InitialColumnWidth());
   SetColumnRuleStyle(ComputedStyleInitialValues::InitialColumnRuleStyle());
   SetColumnRuleWidthInternal(
@@ -1803,8 +1803,6 @@ void ComputedStyle::ClearMultiCol() {
   SetHasAutoColumnWidthInternal(
       ComputedStyleInitialValues::InitialHasAutoColumnWidth());
   ResetColumnFill();
-  SetHasNormalColumnGapInternal(
-      ComputedStyleInitialValues::InitialHasNormalColumnGap());
   ResetColumnSpan();
 }
 
