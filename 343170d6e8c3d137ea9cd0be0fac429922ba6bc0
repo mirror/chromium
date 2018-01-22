@@ -52,6 +52,24 @@
       "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a34d75_06d418d3",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config_input.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T22:55:53Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, thanks. Reverting the changes to this file.",
+      "parentUuid": "bfd3ffc8_6bacc9f6",
+      "revId": "343170d6e8c3d137ea9cd0be0fac429922ba6bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
