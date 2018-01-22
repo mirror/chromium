@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "acc4ce1e_08299f01",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-22T11:28:11Z",
+      "side": 1,
+      "message": "This code was designed to work both when the input-timestamps protocol is available and when it is not, hence the added complexity. push_*_timestamp_or_msec(m) pushes onto the stack the last received high-res timestamp (for the corresponding input device), or if we don\u0027t have a high-res timestamp (i.e. extension not present), we just push the provided low-res msec value.\n\nI see from your other comments that we just care about running with ToT chrome, which means we can assume the extension is present (and fail if not). In this case, since we don\u0027t care about supporting a low-res fallback and the rects example just cares about times, we could get away with using the simpler EventTimeStack as you propose (so just push the high-res timestamps to the stack directly from InputTimestamp). I am not very fond of this approach, however, since high-res timestamp events don\u0027t constitute an input event themselves, but just enhance subsequent input events. I think we would be providing a bad example of how to use the input-timestamps protocol.\n\nThe proper way is to push to the stack from the corresponding input event callback (PointerMotion, TouchMotion) like the current code does, and in order to do so we have to store and use the last high-res timestamps. My proposal would be to keep the newly introduced EventTimes struct (or similar), but remove the \"or_msec\" part of the logic.",
+      "parentUuid": "a5a754fa_5effb677",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749f14b5_130ad9dc",
         "filename": "components/exo/wayland/clients/rects.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad0651d5_fdfc75ca",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-22T11:28:11Z",
+      "side": 1,
+      "message": "ack, will fix.",
+      "parentUuid": "749f14b5_130ad9dc",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49d559bf_6745d195",
         "filename": "components/exo/wayland/clients/rects.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-19T16:10:49Z",
       "side": 1,
       "message": "ditto",
+      "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b3965f_b71fc878",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-22T11:28:11Z",
+      "side": 1,
+      "message": "ack, will fix.",
+      "parentUuid": "49d559bf_6745d195",
       "revId": "7d88c6109ac745bcdcf83797091f43fbaf7098b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
