@@ -155,39 +155,55 @@ The animation engine is built around the
 in the Web Animations spec.
 
 This describes a hierarchy of entities:
-*   DocumentTimeline: Represents the wall clock time
-    *   Animation: Represents an individual animation and when it started
-        playing.
-        *   AnimationEffect: Represents the effect an animation has during the
-            animation e.g. updating an elements color property.
 
-Time trickles down from the DocumentTimeline and is transformed at each stage to
+*   __[DocumentTimeline][]__: Represents the wall clock time.
+    *   __[Animation][]__: Represents an individual animation and when it
+        started playing.
+        *   __[AnimationEffect][]__: Represents the effect an animation has
+            during the animation (e.g. updating an element's color property).
+
+Time trickles down from the [DocumentTimeline][] and is transformed at each stage to
 produce some progress fraction that can be used to apply the effects of the
 animations.
 
 For example:
 
-*   DocumentTimeline notifies that the time is 20 seconds.
-    *   Animation was started at 18 seconds and computes that it has a current
-        time of 2 seconds.
-        *   AnimationEffect has a duration of 8 seconds and computes that it has
-            a progress of 25%.
+```javascript
+// Page was loaded at 2:00:00PM, the time is currently 2:00:10PM.
+// document.timeline.currentTime is currently 10000 (10 seconds).
 
-            The effect is animating an element8s transform property from `none`
-            to `rotate(360deg)` so it computes the current effect to be
-            `rotate(90deg)`.
+let animation = element.animate([
+    {transform: 'none'},
+    {transform: 'rotate(200deg)'},
+  ], {
+    duration: 20000,  // 20 seconds
+  });
 
-### Life cycle of an animation
+animation.startTime = 6000;  // 6 seconds
+```
 
-1.  An Animation is created via CSS<sup>1</sup> or `element.animate()`.
-2.  At the start of the next frame the Animation and its AnimationEffect are
-    updated with the currentTime of the DocumentTimeline.
-3.  The AnimationEffect gets sampled with its computed localTime, pushes a
-    SampledEffect into its target element s EffectStack and marks the elements
+*   __[DocumentTimeline][]__ notifies that the time is 10 seconds.
+    *   __[Animation][]__ computes that its currentTime is 4 seconds due to its
+        startTime being at 6 seconds.
+        *   __[AnimationEffect][]__ has a duration of 20 seconds and computes
+            that it has a progress of 20% from the parent animation being 4
+            seconds into the animation.
+
+            The effect is animating an element from `transform: none` to
+            `transform: rotate(200deg)` so it computes the current effect to be
+            `transfrom: rotate(40deg)`.
+
+### Lifecycle of an Animation
+
+1.  An [Animation][] is created via CSS<sup>1</sup> or `element.animate()`.
+2.  At the start of the next frame the [Animation][] and its [AnimationEffect][] are
+    updated with the currentTime of the [DocumentTimeline][].
+3.  The [AnimationEffect][] gets sampled with its computed localTime, pushes a
+    [SampledEffect][] into its target element's [EffectStack][] and marks the elements
     style as dirty to ensure it gets updated later in the document lifecycle.
-4.  During the next style resolve on the target element all the SampledEffects
-    in its EffectStack are incorporated into building the element's
-    ComputedStyle.
+4.  During the next [style resolve][styleForElement()] on the target element all the [SampledEffect][]s
+    in its [EffectStack][] are incorporated into building the element's
+    [ComputedStyle][].
 
 One key takeaway here is to note that timing updates are done in a separate
 phase to effect application. Effect application must occur during style
@@ -202,21 +218,48 @@ the same style resolve. An unfortunate side effect of this is that style
 resolution can cause style to get dirtied, this is currently a
 [code health bug](http://crbug.com/492887).
 
-### KeyframeEffects
+### [KeyframeEffect][]
 
-TODO: Describe how KeyframeEffects represent an animation's keyframes.
+Currently all animations use [KeyframeEffect][]. The generic [AnimationEffect][]
+from which it inherits is an extention point in Web Animations where other kinds
+of animation effects can be defined later by other specs (e.g. Javascript
+callback based effects).
 
-### Keyframe Interpolations
+#### Structure of a [KeyframeEffect][]
 
-TODO: Describe how interpolation works and where to look for further details.
+*   __[KeyframeEffect][]__ represents the effect an animation has without any
+    details of when it started.
+    *   __[Timing][] information__, example:  
+        ```javascript
+        {duration: 4000, easing: 'ease-in', iterations: 4}
+        ```
 
-#### InterpolationTypes
+    *   __Target [Element][]__ specifies which DOM element is being animated.
 
-TODO: Describe various interpolation types and where they are defined.
+    *   __[KeyframeEffectModel][]__ holds the sequence of keyframes that specify
+        the properties being animated and their values.
+        Example:  
+        ```javascript
+        [
+          {opacity: '0', transform: 'scale(0)'},
+          {opacity: '1', transform: 'none'},
+        ]
+        ```
 
-#### Applying a stack of Interpolations
+[Timing]: https://cs.chromium.org/search/?q=class:blink::Timing$
+[AnimationEffect]: https://cs.chromium.org/search/?q=class:blink::AnimationEffectReadOnly$
+[KeyframeEffect]: https://cs.chromium.org/search/?q=class:blink::KeyframeEffectReadOnly$
+[KeyframeEffectModel]: https://cs.chromium.org/search/?q=class:blink::KeyframeEffectModelBase$
+
+#### Lifecycle of an Interpolation
 
 TODO: Describe how interpolations interact with the effect stack.
+
+[Animation]: https://cs.chromium.org/search/?q=class:blink::Animation$
+[DocumentTimeline]: https://cs.chromium.org/search/?q=class:blink::DocumentTimeline$
+[EffectStack]: https://cs.chromium.org/search/?q=class:blink::EffectStack
+[Element]: https://cs.chromium.org/search/?q=class:blink::Element$
+[SampledEffect]: https://cs.chromium.org/search/?q=class:blink::SampledEffect
 
 ## Testing pointers
 
