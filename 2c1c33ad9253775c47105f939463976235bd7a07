@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4728eee8_1abde321",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Maybe introduce a helper method to build this instance (to avoid the duplicated ClipHeightTo call).\n\n  users_list_ \u003d BuildScrollableUsersListView(LoginDisplayStyle::kSmall);\n  main_view_-\u003eAddChildView(users_list_);",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f5d10b_23cb8364",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Use Small/ExtraSmall terminology since we are switching on |LoginDisplayStyle|.",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475b7380_6b8bdc98",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "ScrollableUsersListView::LayoutParams layout_params;",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b35b83e_6956e856",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Maybe this line-wrap could be avoided if |layout_params| was renamed to |params|? Not sure. If you do decide to rename make sure to also rename the one on line 64.",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37f3610_05853d12",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "ScrollableUsersListView::LayoutParams layout_params;",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd279ad_3bce544d",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fdfdf8_6a22042d",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2a58d3_eeda4a9d",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839a46cd_42f25f5c",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "nit: should_show_landscape",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f00f819_e0830a0f",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Do we need to call this when we construct the instance? Since we are calling it here?",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d168c81a_aafc6c1c",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Are there a more descriptive names than position1/position2/points/positions/colors? It\u0027s hard to tell the difference.",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca3ea92_9a903464",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-22T22:17:13Z",
+      "side": 1,
+      "message": "Make these structs private.",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
