@@ -102,7 +102,8 @@ RequestNavigationParams::RequestNavigationParams()
       should_clear_history_list(false),
       should_create_service_worker(false),
       service_worker_provider_id(kInvalidServiceWorkerProviderId),
-      appcache_host_id(kAppCacheNoHostId) {}
+      appcache_host_id(kAppCacheNoHostId),
+      was_activated(false) {}
 
 RequestNavigationParams::RequestNavigationParams(
     bool is_overriding_user_agent,
@@ -137,7 +138,8 @@ RequestNavigationParams::RequestNavigationParams(
       should_clear_history_list(should_clear_history_list),
       should_create_service_worker(false),
       service_worker_provider_id(kInvalidServiceWorkerProviderId),
-      appcache_host_id(kAppCacheNoHostId) {}
+      appcache_host_id(kAppCacheNoHostId),
+      was_activated(false) {}
 
 RequestNavigationParams::RequestNavigationParams(
     const RequestNavigationParams& other) = default;
