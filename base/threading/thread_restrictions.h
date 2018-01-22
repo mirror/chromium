@@ -119,6 +119,10 @@ namespace viz {
 class ServerGpuMemoryBufferManager;
 }
 
+namespace webrtc {
+class DesktopConfigurationMonitor;
+}
+
 namespace base {
 
 namespace android {
@@ -270,6 +274,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
   friend class rlz_lib::FinancialPing;
   friend class shell_integration::LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
+  friend class webrtc::DesktopConfigurationMonitor;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
