@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec7ee15_6f8ae81d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2018-01-22T20:03:44Z",
+      "side": 1,
+      "message": "Wasn\u0027t there a bug for reducing hooks output? No big deal though.",
+      "revId": "51c28b2e22579e01d442b6e2452e695ab19b3319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
