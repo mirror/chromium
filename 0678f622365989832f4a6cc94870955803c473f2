@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682f9cdc_7e2c2117",
+        "filename": "content/browser/manifest/manifest_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T23:19:18Z",
+      "side": 1,
+      "message": "What do you mean by \"no manifest change notifications are received\"? I don\u0027t see anything checking this but maybe it\u0027s indirect? Should this be clarified?",
+      "range": {
+        "startLine": 663,
+        "startChar": 70,
+        "endLine": 664,
+        "endChar": 45
+      },
+      "revId": "0678f622365989832f4a6cc94870955803c473f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b583fc7d_8bb7faca",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 27149,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T23:19:18Z",
+      "side": 1,
+      "message": "Could we say \"unique origin\" here to stay consistent with what the code does?",
+      "revId": "0678f622365989832f4a6cc94870955803c473f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
