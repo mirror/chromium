@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1763528d_39f23619",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T17:58:09Z",
+      "side": 1,
+      "message": "DCHECK(pending_bluetooth_power_target_.has_value())",
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd415ad_473f9fec",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-22T17:58:09Z",
+      "side": 1,
+      "message": "s/kept tracked/tracked/\ns/cancel out/combine/",
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
