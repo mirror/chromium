@@ -199,14 +199,10 @@ class NET_EXPORT X509Certificate
   // Verifies that |hostname| matches this certificate.
   // Does not verify that the certificate is valid, only that the certificate
   // matches this host.
-  // If |allow_common_name_fallback| is set to true, and iff no SANs are
-  // present of type dNSName or iPAddress, then fallback to using the
-  // certificate's commonName field in the Subject.
-  bool VerifyNameMatch(const std::string& hostname,
-                       bool allow_common_name_fallback) const;
+  bool VerifyNameMatch(const std::string& hostname) const;
 
-  // Returns the PEM encoded data from a DER encoded certificate. If the return
-  // value is true, then the PEM encoded certificate is written to
+  // Returns the PEM encoded data from a DER encoded certificate. If the
+  // return value is true, then the PEM encoded certificate is written to
   // |pem_encoded|.
   static bool GetPEMEncodedFromDER(base::StringPiece der_encoded,
                                    std::string* pem_encoded);
@@ -294,20 +290,14 @@ class NET_EXPORT X509Certificate
   // Verifies that |hostname| matches one of the certificate names or IP
   // addresses supplied, based on TLS name matching rules - specifically,
   // following http://tools.ietf.org/html/rfc6125.
-  // |cert_common_name| is the Subject CN, e.g. from X509Certificate::subject().
   // The members of |cert_san_dns_names| and |cert_san_ipaddrs| must be filled
   // from the dNSName and iPAddress components of the subject alternative name
   // extension, if present. Note these IP addresses are NOT ascii-encoded:
   // they must be 4 or 16 bytes of network-ordered data, for IPv4 and IPv6
   // addresses, respectively.
-  // If |allow_common_name_fallback| is true, then the |cert_common_name| will
-  // be used if the |cert_san_dns_names| and |cert_san_ip_addrs| parameters are
-  // empty.
   static bool VerifyHostname(const std::string& hostname,
-                             const std::string& cert_common_name,
                              const std::vector<std::string>& cert_san_dns_names,
-                             const std::vector<std::string>& cert_san_ip_addrs,
-                             bool allow_common_name_fallback);
+                             const std::vector<std::string>& cert_san_ip_addrs);
 
   // The subject of the certificate.
   CertPrincipal subject_;
