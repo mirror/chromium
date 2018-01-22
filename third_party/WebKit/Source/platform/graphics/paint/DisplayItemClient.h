@@ -18,6 +18,7 @@ namespace blink {
 // in which its display items are created during painting. After the document
 // cycle, a pointer/reference to DisplayItemClient should be no longer
 // dereferenced unless we can make sure the client is still valid.
+
 class PLATFORM_EXPORT DisplayItemClient {
  public:
 #if DCHECK_IS_ON()
