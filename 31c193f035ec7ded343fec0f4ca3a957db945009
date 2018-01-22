@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a47f68d_0f1bd09c",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:59:12Z",
+      "side": 1,
+      "message": "I think it\u0027s probably sufficient to have the documentation on the function APIs as you did below. It\u0027s a little confusing here since it\u0027s hard to map \"timeout\" to \"max_sync_event_duration\"",
+      "revId": "31c193f035ec7ded343fec0f4ca3a957db945009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3b72f3_574da5c7",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:59:12Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "31c193f035ec7ded343fec0f4ca3a957db945009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd33292_e16dd76a",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:59:12Z",
+      "side": 1,
+      "message": "Add something like \"Timeouts can be added to the mojom::ServiceWorkerEventDispatcher interface instead (see DispatchSyncEvent for an example).\"",
+      "revId": "31c193f035ec7ded343fec0f4ca3a957db945009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f75df2c_3326ed71",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:59:12Z",
+      "side": 1,
+      "message": "event",
+      "range": {
+        "startLine": 58,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 8
+      },
+      "revId": "31c193f035ec7ded343fec0f4ca3a957db945009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bece769_a71f5caf",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:59:12Z",
+      "side": 1,
+      "message": "same as",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "31c193f035ec7ded343fec0f4ca3a957db945009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
