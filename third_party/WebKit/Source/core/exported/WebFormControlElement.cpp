@@ -111,7 +111,10 @@ void WebFormControlElement::SetAutofillValue(const WebString& value) {
     }
     Unwrap<Element>()->DispatchScopedEvent(
         Event::CreateBubble(EventTypeNames::keydown));
-    Unwrap<TextControlElement>()->setValue(value, kDispatchInputAndChangeEvent);
+    WTF::String string_value(value);
+    Unwrap<TextControlElement>()->setValue(
+        string_value.Substring(0, Unwrap<TextControlElement>()->maxLength()),
+        kDispatchInputAndChangeEvent);
     Unwrap<Element>()->DispatchScopedEvent(
         Event::CreateBubble(EventTypeNames::keyup));
     if (!Focused()) {
@@ -142,11 +145,14 @@ WebString WebFormControlElement::Value() const {
 }
 
 void WebFormControlElement::SetSuggestedValue(const WebString& value) {
-  if (auto* input = ToHTMLInputElementOrNull(*private_))
-    input->SetSuggestedValue(value);
-  else if (auto* textarea = ToHTMLTextAreaElementOrNull(*private_))
-    textarea->SetSuggestedValue(value);
-  else if (auto* select = ToHTMLSelectElementOrNull(*private_))
+  WTF::String string_value(value);
+  if (auto* input = ToHTMLInputElementOrNull(*private_)) {
+    input->SetSuggestedValue(
+        string_value.Substring(0, Unwrap<TextControlElement>()->maxLength()));
+  } else if (auto* textarea = ToHTMLTextAreaElementOrNull(*private_)) {
+    textarea->SetSuggestedValue(
+        string_value.Substring(0, Unwrap<TextControlElement>()->maxLength()));
+  } else if (auto* select = ToHTMLSelectElementOrNull(*private_))
     select->SetSuggestedValue(value);
 }
 
