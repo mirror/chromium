@@ -16,6 +16,24 @@
       "revId": "51de2f5f3da9e77dcca5b149940fd3ca3a72ec13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432103e2_df5697ba",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-22T13:04:22Z",
+      "side": 1,
+      "message": "I think you are right. I need to take a closer look.\nThis test was not intended to test ResourceDispatcherHostImpl::CancelRequest, but only that if the mojo connection is broken, the URLLoaderImpl will end the load.",
+      "parentUuid": "b0c45a96_1dc6939e",
+      "revId": "51de2f5f3da9e77dcca5b149940fd3ca3a72ec13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
