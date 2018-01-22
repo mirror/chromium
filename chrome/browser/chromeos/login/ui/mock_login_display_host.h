@@ -21,7 +21,6 @@ class MockLoginDisplayHost : public LoginDisplayHost {
   MOCK_CONST_METHOD0(GetNativeWindow, gfx::NativeWindow(void));
   MOCK_CONST_METHOD0(GetOobeUI, OobeUI*(void));
   MOCK_CONST_METHOD0(GetWebUILoginView, WebUILoginView*(void));
-  MOCK_METHOD0(BeforeSessionStart, void(void));
 
   // Workaround for move-only args in GMock.
   MOCK_METHOD1(MockFinalize, void(base::OnceClosure*));
@@ -48,6 +47,7 @@ class MockLoginDisplayHost : public LoginDisplayHost {
   MOCK_METHOD0(OnStartAppLaunch, void());
   MOCK_METHOD0(StartDemoAppLaunch, void(void));
   MOCK_METHOD0(OnStartArcKiosk, void());
+  MOCK_METHOD0(OnBrowserCreated, void(void));
   MOCK_METHOD0(StartVoiceInteractionOobe, void(void));
   MOCK_METHOD0(IsVoiceInteractionOobe, bool(void));
 
