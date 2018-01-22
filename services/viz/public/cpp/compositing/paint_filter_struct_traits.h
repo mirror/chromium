@@ -54,13 +54,22 @@ struct StructTraits<viz::mojom::PaintFilterDataView, sk_sp<cc::PaintFilter>> {
     if (!data.ReadData(&buffer))
       return false;
 
+    if (buffer.data.size() == 0u) {
+      // We may fail to serialize the filter if it doesn't fit in kBufferSize
+      // above, use an empty filter instead of rejecting the message.
+      // TODO(khushalsagar): Realloc during serialization to avoid failures like
+      // these.
+      *out = nullptr;
+      return true;
+    }
+
     cc::PaintOpReader reader(buffer.data.data(), buffer.data.size(), nullptr,
                              true /* enable_security_constraints */);
     sk_sp<cc::PaintFilter> filter;
     reader.Read(&filter);
-    if (!filter) {
+    if (!reader.valid()) {
       *out = nullptr;
-      return false;
+      return true;
     }
 
     *out = std::move(filter);
