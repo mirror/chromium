@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e55cfa_d4e430fa",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:32:09Z",
+      "side": 1,
+      "message": "Does this need to be a member function? Can it be a standalone function?",
+      "range": {
+        "startLine": 841,
+        "startChar": 29,
+        "endLine": 841,
+        "endChar": 51
+      },
+      "revId": "f82917b833f48ff1268e7973e670d79d0bd17da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37993f2b_93678c86",
+        "filename": "content/public/browser/browser_main_parts.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:32:09Z",
+      "side": 1,
+      "message": "Please name this to make PreCreateThreads. Maybe PostCreateThreads().",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "f82917b833f48ff1268e7973e670d79d0bd17da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
