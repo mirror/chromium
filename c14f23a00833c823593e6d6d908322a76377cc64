@@ -16,6 +16,24 @@
       "revId": "c14f23a00833c823593e6d6d908322a76377cc64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d9556a_10523c82",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 110185,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-22T15:25:17Z",
+      "side": 1,
+      "message": "Autoformatting is strange, eh. \nDone.",
+      "parentUuid": "f9e59cfb_ee954705",
+      "revId": "c14f23a00833c823593e6d6d908322a76377cc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
