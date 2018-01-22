@@ -9,12 +9,7 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "cc/paint/transfer_cache_entry.h"
 #include "ui/gfx/overlay_transform.h"
-
-namespace cc {
-class ClientTransferCacheEntry;
-}
 
 namespace gfx {
 class GpuFence;
@@ -98,15 +93,12 @@ class ContextSupport {
   // Access to transfer cache functionality for OOP raster. Only
   // ThreadsafeLockTransferCacheEntry can be accessed without holding the
   // context lock.
-  virtual void CreateTransferCacheEntry(
-      const cc::ClientTransferCacheEntry& entry) = 0;
-  virtual bool ThreadsafeLockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                                uint32_t id) = 0;
+  virtual void* MapTransferCacheEntry(size_t serialized_size) = 0;
+  virtual void UnmapAndCreateTransferCacheEntry(uint32_t type, uint32_t id) = 0;
+  virtual bool ThreadsafeLockTransferCacheEntry(uint32_t type, uint32_t id) = 0;
   virtual void UnlockTransferCacheEntries(
-      const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
-          entries) = 0;
-  virtual void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) = 0;
+      const std::vector<std::pair<uint32_t, uint32_t>>& entries) = 0;
+  virtual void DeleteTransferCacheEntry(uint32_t type, uint32_t id) = 0;
 
   virtual unsigned int GetTransferBufferFreeSize() const = 0;
 
