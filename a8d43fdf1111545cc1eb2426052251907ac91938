@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca9efe3b_2f0c7c7f",
+        "filename": "net/cookies/canonical_cookie.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-22T17:04:55Z",
+      "side": 1,
+      "message": "I don\u0027t think this works - cookie_manager_struct_traits.h passes CanonicalCookies between processes via IPCs, so we\u0027ll presumably be seeing some creation dates in other processes, no?",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "a8d43fdf1111545cc1eb2426052251907ac91938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
