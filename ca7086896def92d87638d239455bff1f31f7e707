@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "693e0c09_9f52bee5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T02:18:34Z",
+      "side": 1,
+      "message": "Lines 9-17 are the is the same as an earlier commit: https://chromium-review.googlesource.com/752703\n\nTo distinguish between the commits, this should just say something like:\n\"This patch persists the updateViaCache value into service worker registration storage,\nand makes the service worker update check take the value into account. Since the default\nvalue of updateViaCache is \u0027imports\u0027, this makes it so the update check bypasses the\ncache for the main script by default.\"",
+      "revId": "ca7086896def92d87638d239455bff1f31f7e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7581bec5_2b11c1db",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T02:18:34Z",
+      "side": 1,
+      "message": "\"that the same registration is used and the update_via_cache value is updated.\"",
+      "revId": "ca7086896def92d87638d239455bff1f31f7e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a92b0f_f23f51b7",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T02:18:34Z",
+      "side": 1,
+      "message": "Ensure that the same registration is used.",
+      "revId": "ca7086896def92d87638d239455bff1f31f7e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afca9da5_1ef81546",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T02:18:34Z",
+      "side": 1,
+      "message": "I think this meant to say new_registration_by_pattern here and in the above test.\n\nIt could also be EXPECT_EQ.",
+      "revId": "ca7086896def92d87638d239455bff1f31f7e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7df99a_e0a1ba7f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T02:18:34Z",
+      "side": 1,
+      "message": "For now we can make this comment: \"only mutable property when the browser process sends |info| for an existing registration. The installing/waiting/active properties are changed by the SetVersionAttributes method instead.\"\n\nI think I understand more. The only ServiceWorkerRegistration JS object that can be referenced from a service worker execution context is self.registration. This never changes so we just create it when creating the service worker and don\u0027t need any additional Attach* calls. But for clients it\u0027s more complicatd, they can be created throughout the lifetime of the client. So we need both Create* and Attach*\n\nI think we\u0027ll take care of this when adding the IPC mechanism for updating update_via_cache for all existing ServiceWorkerRegistration objects.",
+      "revId": "ca7086896def92d87638d239455bff1f31f7e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
