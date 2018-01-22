@@ -30,7 +30,9 @@
 namespace blink {
 
 LayoutSVGForeignObject::LayoutSVGForeignObject(SVGForeignObjectElement* node)
-    : LayoutSVGBlock(node), needs_transform_update_(true) {}
+    : LayoutSVGBlock(node), needs_transform_update_(true) {
+  rare_stat_.AddReason(kReasonLOSVGForeign);
+}
 
 LayoutSVGForeignObject::~LayoutSVGForeignObject() = default;
 
