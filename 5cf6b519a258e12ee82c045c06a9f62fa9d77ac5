@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6899af77_29272b9b",
+        "filename": "chrome/browser/signin/account_consistency_mode_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T16:08:46Z",
+      "side": 1,
+      "message": "You can remove this,  profile_management_switches.h is already included from account_consistency_mode_manager.h",
+      "revId": "5cf6b519a258e12ee82c045c06a9f62fa9d77ac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
