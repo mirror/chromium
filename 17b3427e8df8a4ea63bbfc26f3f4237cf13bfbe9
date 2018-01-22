@@ -16,6 +16,24 @@
       "revId": "17b3427e8df8a4ea63bbfc26f3f4237cf13bfbe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2489ba_db121597",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-22T21:52:42Z",
+      "side": 1,
+      "message": "Good question, actually, for \nvertical-lr\n  - start bound edge_top().x() \u003e edge_bottom().x(),\n  - end bound edge_top().x() \u003c edge_bottom().x()\n\nvertical-rl\n  - start bound edge_top().x() \u003c edge_bottom().x(),\n  - end bound edge_top().x() \u003e edge_bottom().x()\n\nSo the fix works for both cases, I think I need to update the comment for both cases.",
+      "parentUuid": "fb5528f4_f45a510b",
+      "revId": "17b3427e8df8a4ea63bbfc26f3f4237cf13bfbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
