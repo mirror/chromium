@@ -47,6 +47,7 @@ import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
@@ -756,11 +757,13 @@ public class NotificationPlatformBridge {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
         StatusBarNotification[] activeNotifications = mNotificationManager.getActiveNotifications();
         if (activeNotifications == null) return null;
-        String[] result = new String[activeNotifications.length];
+        ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < activeNotifications.length; i++) {
-            result[i] = activeNotifications[i].getTag();
+            String tag = activeNotifications[i].getTag();
+            // If the tag is null, this could mean this is a non-Web Notification. Skip it.
+            if (tag != null) result.add(tag);
         }
-        return result;
+        return result.toArray(new String[result.size()]);
     }
 
     /**
