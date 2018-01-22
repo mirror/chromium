@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d52848c_253d4fad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T18:47:28Z",
+      "side": 1,
+      "message": "These all used be only called after native had been loaded, but now this can happen before (as the test failures is likely showing).\n\nI think you\u0027ll need to null check all of these (where they weren\u0027t previously) or guard them by mInitializedWithNative.",
+      "range": {
+        "startLine": 764,
+        "startChar": 8,
+        "endLine": 764,
+        "endChar": 23
+      },
+      "revId": "df9b9e1131fa612b516f6f1368df8489ab21fe85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
