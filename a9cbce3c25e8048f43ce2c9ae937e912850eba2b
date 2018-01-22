@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1145e0f_55dd028d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T20:52:19Z",
+      "side": 1,
+      "message": "\u003e You\u0027re expecting to run multiple content_shells inside a single QEMU instance?\n\nYes.\n\n\u003e Does it make more sense to just run N QEMU instances, and one content_shell per QEMU instance?\n\nWhy would it be better? Multiple QEMU instances would require more memory and more time to provision and I don\u0027t see any benefits. With KVM QEMU scales quite well for multiple CPUs. Fuchsia is expected to isolate content_shell instances from each other so they shouldn\u0027t be interfere with each other. Also in the future I think we will want to run these tests on physical devices and in that case it would be wasteful to run only one content_shell per device.",
+      "parentUuid": "9e34855e_95d95ec2",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2638913_3b035c31",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0d8e2c71_cd2289c8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T20:52:19Z",
+      "side": 1,
+      "message": "Yes. It\u0027s the same way it works on Android (except the URL is updated in the content_shell, see https://codesearch.chromium.org/chromium/src/content/shell/browser/layout_test/test_info_extractor.cc?q\u003dtest_info_extractor\u0026dr\u003dC\u0026l\u003d35 ).",
+      "parentUuid": "b2638913_3b035c31",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ba098a_e69dc9d2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/server_process.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-22T20:10:52Z",
       "side": 1,
       "message": "why these changes?",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68c8c12_4ab93684",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/server_process.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T20:52:19Z",
+      "side": 1,
+      "message": "On Fuchsia content_shell runs remotely over ssh, so we need to override some login in ServerProcess. This change allows to reuse the code in _set_proc instead of duplicating it in FuchsiaServerProcess.",
+      "parentUuid": "57ba098a_e69dc9d2",
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
