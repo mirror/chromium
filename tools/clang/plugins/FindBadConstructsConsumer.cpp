@@ -1018,7 +1018,7 @@ void FindBadConstructsConsumer::CheckVarDecl(clang::VarDecl* var_decl) {
   for (;;) {
     const clang::AutoType* auto_type =
         non_reference_type->getAs<clang::AutoType>();
-    if (auto_type) {
+    if (auto_type && !var_decl->isInitCapture()) {
       if (auto_type->isDeduced()) {
         QualType deduced_type = auto_type->getDeducedType();
         if (!deduced_type.isNull() && deduced_type->isPointerType() &&

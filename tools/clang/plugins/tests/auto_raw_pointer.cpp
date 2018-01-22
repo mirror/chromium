@@ -15,6 +15,17 @@ class Foo {
   void foo() {}
 };
 
+template <class T>
+class UniquePtr {
+ public:
+  UniquePtr(T* ptr) : ptr_(ptr) {}
+  ~UniquePtr() { delete ptr_; }
+  T* get() { return ptr_; }
+
+ private:
+  T* ptr_;
+};
+
 void f();
 
 int main() {
@@ -61,4 +72,7 @@ int main() {
   Iteratable iteratable;
   for (auto& it : iteratable)
     (void)it;
+
+  UniquePtr<Foo> foo_ptr(new Foo);
+  auto lambda = [foo_weak = foo_ptr.get()] { return *foo_weak; };
 }
