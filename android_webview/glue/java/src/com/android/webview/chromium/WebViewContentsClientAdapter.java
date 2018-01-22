@@ -642,35 +642,42 @@ class WebViewContentsClientAdapter extends AwContentsClient {
         }
     }
 
-    @SuppressLint({"NewApi", "Override"})
+    @SuppressLint({"Override"}) // Needed to subclass SafeBrowsingResponse.
     @Override
+    @TargetApi(Build.VERSION_CODES.O_MR1)
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
             final Callback<AwSafeBrowsingResponse> callback) {
+        // WebViewClient.onSafeBrowsingHit was added in O_MR1.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
             callback.onResult(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
                     /* reporting */ true));
             return;
         }
-        mWebViewClient.onSafeBrowsingHit(mWebView, new WebResourceRequestImpl(request), threatType,
-                new SafeBrowsingResponse() {
-                    @Override
-                    public void showInterstitial(boolean allowReporting) {
-                        callback.onResult(new AwSafeBrowsingResponse(
-                                SafeBrowsingAction.SHOW_INTERSTITIAL, allowReporting));
-                    }
+        try {
+            TraceEvent.begin("WebViewContentsClientAdapter.onSafeBrowsingHit");
+            mWebViewClient.onSafeBrowsingHit(mWebView, new WebResourceRequestImpl(request),
+                    threatType, new SafeBrowsingResponse() {
+                        @Override
+                        public void showInterstitial(boolean allowReporting) {
+                            callback.onResult(new AwSafeBrowsingResponse(
+                                    SafeBrowsingAction.SHOW_INTERSTITIAL, allowReporting));
+                        }
 
-                    @Override
-                    public void proceed(boolean report) {
-                        callback.onResult(
-                                new AwSafeBrowsingResponse(SafeBrowsingAction.PROCEED, report));
-                    }
+                        @Override
+                        public void proceed(boolean report) {
+                            callback.onResult(
+                                    new AwSafeBrowsingResponse(SafeBrowsingAction.PROCEED, report));
+                        }
 
-                    @Override
-                    public void backToSafety(boolean report) {
-                        callback.onResult(new AwSafeBrowsingResponse(
-                                SafeBrowsingAction.BACK_TO_SAFETY, report));
-                    }
-                });
+                        @Override
+                        public void backToSafety(boolean report) {
+                            callback.onResult(new AwSafeBrowsingResponse(
+                                    SafeBrowsingAction.BACK_TO_SAFETY, report));
+                        }
+                    });
+        } finally {
+            TraceEvent.end("WebViewContentsClientAdapter.onRenderProcessGone");
+        }
     }
 
     @Override
