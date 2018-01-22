@@ -16,6 +16,24 @@
       "revId": "b196a49371d2c77e6e5f4d9d913063928469c712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8035976d_7a016dc5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T18:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3492fa9_b513d358",
+      "revId": "b196a49371d2c77e6e5f4d9d913063928469c712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
