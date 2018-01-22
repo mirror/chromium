@@ -16,6 +16,24 @@
       "revId": "4235a8b39fc5a60c4bb1c01b89ab631e2e94697a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d0bfe7_aa33c703",
+        "filename": "chrome/browser/prerender/prerender_link_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T23:59:17Z",
+      "side": 1,
+      "message": "We save iterators into |pending_prerenders|.",
+      "parentUuid": "18105e05_7efe536c",
+      "revId": "4235a8b39fc5a60c4bb1c01b89ab631e2e94697a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
