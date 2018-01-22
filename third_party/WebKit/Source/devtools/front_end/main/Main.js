@@ -468,6 +468,7 @@ Main.Main.InspectorModel = class extends SDK.SDKModel {
     super(target);
     target.registerInspectorDispatcher(this);
     target.inspectorAgent().enable();
+    this._hideCrashedDialog = null;
   }
 
   /**
@@ -483,9 +484,23 @@ Main.Main.InspectorModel = class extends SDK.SDKModel {
    * @override
    */
   targetCrashed() {
-    var debuggerModel = this.target().model(SDK.DebuggerModel);
-    if (debuggerModel)
-      Main.TargetCrashedScreen.show(debuggerModel);
+    var dialog = new UI.Dialog();
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+    dialog.addCloseButton();
+    dialog.setDimmed(true);
+    this._hideCrashedDialog = dialog.hide.bind(dialog);
+    new Main.TargetCrashedScreen(() => this._hideCrashedDialog = null).show(dialog.contentElement);
+    dialog.show();
+  }
+
+  /**
+   * @override;
+   */
+  targetReloadedAfterCrash() {
+    if (this._hideCrashedDialog) {
+      this._hideCrashedDialog.call(null);
+      this._hideCrashedDialog = null;
+    }
   }
 };
 
@@ -851,25 +866,6 @@ Main.TargetCrashedScreen = class extends UI.VBox {
     this.contentElement.createChild('div', 'message').textContent =
         Common.UIString('Once page is reloaded, DevTools will automatically reconnect.');
     this._hideCallback = hideCallback;
-  }
-
-  /**
-   * @param {!SDK.DebuggerModel} debuggerModel
-   */
-  static show(debuggerModel) {
-    var dialog = new UI.Dialog();
-    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
-    dialog.addCloseButton();
-    dialog.setDimmed(true);
-    var hideBound = dialog.hide.bind(dialog);
-    debuggerModel.addEventListener(SDK.DebuggerModel.Events.GlobalObjectCleared, hideBound);
-
-    new Main.TargetCrashedScreen(onHide).show(dialog.contentElement);
-    dialog.show();
-
-    function onHide() {
-      debuggerModel.removeEventListener(SDK.DebuggerModel.Events.GlobalObjectCleared, hideBound);
-    }
   }
 
   /**
