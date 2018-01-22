@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0086d6_80c4ac8d",
+        "filename": "chrome/browser/ui/views/confirm_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:26:06Z",
+      "side": 1,
+      "message": "Nit: Maybe we should rename this API?",
+      "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f41ab0_eb29f8a5",
+        "filename": "chrome/browser/ui/views/confirm_bubble_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:26:06Z",
+      "side": 1,
+      "message": "Nit: The comments here seem out of date now since they talk about a link.",
+      "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
