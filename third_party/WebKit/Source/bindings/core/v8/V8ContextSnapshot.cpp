@@ -218,7 +218,7 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
     v8::Local<v8::Object> prototype = interface->Get(context, prototype_str)
                                           .ToLocalChecked()
                                           .As<v8::Object>();
-    V8Document::InstallRuntimeEnabledFeatures(
+    V8Document::install_runtime_enabled_features_function_(
         isolate, world, v8::Local<v8::Object>(), prototype, interface);
     type->InstallConditionalFeatures(context, world, v8::Local<v8::Object>(),
                                      prototype, interface,
