@@ -16,6 +16,24 @@
       "revId": "44daedc9104b29bb89ab4cb17937c97b56f92b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a6a8ff_91f4fc58",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-22T17:57:35Z",
+      "side": 1,
+      "message": "Looking at the ReloadType::ORIGINAL_REQUEST_URL idea, that enum maps into a FrameMsg_Navigate_Type::RELOAD_ORIGINAL_REQUEST_URL but I\u0027m pretty sure we want \nFrameMsg_Navigate_Type::RELOAD_BYPASSING_CACHE (which is what ReloadType::DISABLE_PREVIEWS\nmaps into) in order to reload any cached resources that were optimized for the preview. \nAlso, we need do need to keep the ReloadType as DISABLE_PREVIEWS for other downstream\nlogic. So, what looks attractive is just adding the DISABLE_PREVIEWS to the current\ncheck on ORIGINAL_REQUEST_URL in NavigatorImpl::NavigateToEntry here: \nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/navigator_impl.cc?rcl\u003d0e60340df4c5c91b1d53787f0cc94414984ebac0\u0026l\u003d271\n\nI will create a separate CL to test that out (in case I want to come back to this approach).",
+      "parentUuid": "4812e428_861bf55f",
+      "revId": "44daedc9104b29bb89ab4cb17937c97b56f92b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
