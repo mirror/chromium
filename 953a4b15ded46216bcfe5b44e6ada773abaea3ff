@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "84ed6083_38be0028",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:06:21Z",
+      "side": 1,
+      "message": "|traceable|",
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0113e49_4f20fa08",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:06:21Z",
+      "side": 1,
+      "message": "Nit: Trace wrappers in non-main worlds.",
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "288ab02b_e7bb1e4a",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
