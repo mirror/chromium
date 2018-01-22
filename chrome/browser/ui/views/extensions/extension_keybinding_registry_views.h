@@ -5,10 +5,12 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_VIEWS_H_
 #define CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_VIEWS_H_
 
+#include <memory>
 #include <string>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/extensions/extension_keybinding_registry.h"
 #include "ui/base/accelerators/accelerator.h"
 
@@ -20,6 +22,10 @@ class Extension;
 
 namespace views {
 class FocusManager;
+}
+
+namespace ui {
+class MediaKeysListener;
 }
 
 // ExtensionKeybindingRegistryViews is a class that handles Views-specific
@@ -49,6 +55,8 @@ class ExtensionKeybindingRegistryViews
   void RemoveExtensionKeybindingImpl(const ui::Accelerator& accelerator,
                                      const std::string& command_name) override;
   void OnShortcutHandlingSuspended(bool suspended) override;
+  void OnMediaKeysAccelerator(const ui::Accelerator& accelerator,
+                              bool* was_handled);
 
   // Weak pointer to the our profile. Not owned by us.
   Profile* profile_;
@@ -59,6 +67,8 @@ class ExtensionKeybindingRegistryViews
 
   // The content notification registrar for listening to extension events.
   content::NotificationRegistrar registrar_;
+  std::unique_ptr<ui::MediaKeysListener> media_keys_listener_;
+  base::WeakPtrFactory<ExtensionKeybindingRegistryViews> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionKeybindingRegistryViews);
 };

@@ -5,10 +5,12 @@
 #ifndef CHROME_BROWSER_UI_COCOA_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_COCOA_H_
 #define CHROME_BROWSER_UI_COCOA_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_COCOA_H_
 
+#include <memory>
 #include <string>
 #include <utility>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/extensions/extension_keybinding_registry.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/accelerators/accelerator_manager.h"
@@ -22,6 +24,11 @@ namespace content {
 namespace extensions {
   class Extension;
 }
+
+namespace ui {
+class Accelerator;
+class MediaKeysListener;
+}  // namespace ui
 
 // The ExtensionKeybindingRegistryCocoa is the Cocoa specialization of the
 // ExtensionKeybindingRegistry class that handles turning keyboard shortcuts
@@ -54,6 +61,9 @@ class ExtensionKeybindingRegistryCocoa
                                      const std::string& command_name) override;
 
  private:
+  void OnMediaKeysAccelerator(const ui::Accelerator& accelerator,
+                              bool* was_handled);
+
   // Weak pointer to the our profile. Not owned by us.
   Profile* profile_;
 
@@ -62,6 +72,8 @@ class ExtensionKeybindingRegistryCocoa
 
   // The content notification registrar for listening to extension events.
   content::NotificationRegistrar registrar_;
+  std::unique_ptr<ui::MediaKeysListener> media_keys_listener_;
+  base::WeakPtrFactory<ExtensionKeybindingRegistryCocoa> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionKeybindingRegistryCocoa);
 };
