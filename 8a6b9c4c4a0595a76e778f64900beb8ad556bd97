@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d48d379_b7b7e9c9",
+        "filename": "base/lazy_instance_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-22T21:37:34Z",
+      "side": 1,
+      "message": "Why do we need to allow for |construction_event| being null? Is that just to cope with the Singleton return-to-null behaviour?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 5
+      },
+      "revId": "8a6b9c4c4a0595a76e778f64900beb8ad556bd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
