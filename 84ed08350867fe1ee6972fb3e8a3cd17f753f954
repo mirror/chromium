@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79d26d14_56526143",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "786321c0_b3f7875f",
+      "range": {
+        "startLine": 188,
+        "startChar": 23,
+        "endLine": 188,
+        "endChar": 30
+      },
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ebf8033_39b100bb",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c3029_99cfa16d",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ebf8033_39b100bb",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "80ca6f28_72f0266e",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985cfa45_c483d2bf",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdc551a_4c8590b2",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-19T00:55:19Z",
       "side": 1,
       "message": "I feel like if this was a declared struct rather than a tuple, the code here would be much clearer, and you wouldn\u0027t need a comment, since it would say \"pending_powered_callback_-\u003eerror_callback.Run()\". See go/tott-494.",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b47ded_d67ef886",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Ack. I switched to the pattern already used in Android\u0027s remote characteristic: https://codesearch.chromium.org/chromium/src/device/bluetooth/bluetooth_remote_gatt_characteristic_android.h?l\u003d129-137\u0026rcl\u003d0bbbd9b26264daffbc80c1b1477e84b512946926\n\nI considered using a struct, however the Chromium Style check then wants me to declare the constructors out of line, adding quite a bit of noise. I feel like simply breaking it up into individual fields is clear as well and more concise. Let me know what you think.",
+      "parentUuid": "7fdc551a_4c8590b2",
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "596eec8c_afc35bfd",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3702018_d05da0f7",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27bd3a5c_57bcc69b",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 9
@@ -107,6 +203,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470df50c_5cf34cf3",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "I changed this now to not be an optional anymore, but calling reset() after moving out of the optional would be necessary. Calling std::move() on an optional that contains a value results in moving out the underlying value, and leaving it in a \"valid but unspecified state\". In particular, opt.has_value() is still true (http://eel.is/c++draft/optional#ctor-7).\n\nRegarding auto: A plain `auto` will never resolve to a reference, only `auto\u0026` does. But I do agree that this is subtle. Hopefully the updated code is more explicit.",
+      "parentUuid": "27bd3a5c_57bcc69b",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "9b6dfe01_5ff23d2a",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff713f22_4b549a1b",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a991a196_347c4f45",
         "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
         "patchSetId": 9
@@ -141,6 +273,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14d0574_da794110",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a991a196_347c4f45",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +314,30 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40515ac9_14a71e50",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8d6357fb_7adc2e6e",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +375,24 @@
     },
     {
       "key": {
+        "uuid": "cc63ffff_8d178aff",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "ortuno@ should comment on this, I sticked to the pattern found in this file and other Bluetooth unittests.",
+      "parentUuid": "76f4de13_8134b3a1",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90c7fecc_62f92739",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 9
@@ -212,6 +404,24 @@
       "writtenOn": "2018-01-19T00:55:19Z",
       "side": 1,
       "message": "same deal - would it make sense to compile these on all platforms, but only run them on Mac? (Otherwise, they should be in bluetooth_adapter_mac_unittest.mm not bluetooth_adapter_unittest.mm right?)",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a312b41_41b9f8a4",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "They shortly will be enabled on Android as well (https://crbug.com/803105).",
+      "parentUuid": "90c7fecc_62f92739",
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -235,6 +445,24 @@
     },
     {
       "key": {
+        "uuid": "1bd5f221_9328629e",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cc64459_05468ed1",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c9289dc_3ba0759f",
         "filename": "device/bluetooth/bluetooth_preferences_mac.h",
         "patchSetId": 9
@@ -252,6 +480,24 @@
     },
     {
       "key": {
+        "uuid": "23b4e0a1_34543b2d",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Got rid of these classes now. It\u0027s possible we will use the C API more in the future, but that can be left for a later CL.\n\nI wrapped the function pointer into a base::RepeatingCallback, since I can\u0027t use a global method in tests without creating a lot of global state.",
+      "parentUuid": "3c9289dc_3ba0759f",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc95a49b_094a4a4d",
         "filename": "device/bluetooth/bluetooth_preferences_mac.h",
         "patchSetId": 9
@@ -266,6 +512,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29aaa4d_b6d21c6e",
+        "filename": "device/bluetooth/bluetooth_preferences_mac.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bc95a49b_094a4a4d",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -436,6 +700,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab20a098_dd720f30",
+        "filename": "device/bluetooth/test/mock_bluetooth_preferences_mac.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-22T20:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473f0977_255d228d",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
