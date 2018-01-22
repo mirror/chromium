@@ -1175,7 +1175,8 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
 
   bool scroll_update_needs_wrapping = false;
   if (gesture_event.GetType() == blink::WebInputEvent::kGestureScrollBegin) {
-    DCHECK(!is_in_gesture_scroll_[gesture_event.source_device]);
+    DCHECK(!is_in_gesture_scroll_[gesture_event.source_device] ||
+           FlingCancellationIsDeferred());
     is_in_gesture_scroll_[gesture_event.source_device] = true;
   } else if (gesture_event.GetType() ==
              blink::WebInputEvent::kGestureScrollEnd) {
@@ -1223,10 +1224,16 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
       }
 
       is_in_touchpad_gesture_fling_ = true;
-    } else {  // gesture_event.source_device !=
-              // blink::WebGestureDevice::kWebGestureDeviceTouchpad
+    } else {
+      DCHECK_EQ(blink::WebGestureDevice::kWebGestureDeviceTouchscreen,
+                gesture_event.source_device);
       DCHECK(is_in_gesture_scroll_[gesture_event.source_device]);
-      is_in_gesture_scroll_[gesture_event.source_device] = false;
+
+      // The FlingController handles GFS with touchscreen source and sends GSU
+      // events with inertial state to the renderer to progress the fling.
+      // is_in_gesture_scroll must stay true till the fling progress is
+      // finished. Then the FlingController will generate and send a GSE which
+      // shows the end of a scroll sequence and resets is_in_gesture_scroll_.
     }
   }
 
@@ -2931,6 +2938,13 @@ void RenderWidgetHostImpl::ProgressFling(base::TimeTicks current_time) {
 void RenderWidgetHostImpl::StopFling() {
   if (input_router_)
     input_router_->StopFling();
+}
+
+bool RenderWidgetHostImpl::FlingCancellationIsDeferred() const {
+  if (input_router_)
+    return input_router_->FlingCancellationIsDeferred();
+
+  return false;
 }
 
 void RenderWidgetHostImpl::OnRenderFrameMetadata(
