@@ -181,8 +181,13 @@ Document* TopDocumentRootScrollerController::TopDocument() const {
   return ToLocalFrame(page_->MainFrame())->GetDocument();
 }
 
-void TopDocumentRootScrollerController::DidUpdateCompositing() {
-  if (!page_)
+void TopDocumentRootScrollerController::DidUpdateCompositing(
+    const LocalFrameView& frame_view) {
+  if (!page_ || !global_root_scroller_)
+    return;
+
+  // We only care about compositing changes in the global root scroller's view.
+  if (global_root_scroller_->GetDocument().View() != &frame_view)
     return;
 
   // Let the compositor-side counterpart know about this change.
