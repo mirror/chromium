@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d6922e5_959e2d4a",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T16:45:04Z",
+      "side": 1,
+      "message": "Do you mean \"Ignore symbols that don\u0027t contain \u0027.\u0027\"?\n\nGenerally though I\u0027m not parsing this well. By opposite, do you mean the opposite of ignore is raise an error?",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "767ffc19f73d6990f8f7add3288edb012efd2055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38a16b9_fd7a6e46",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T16:45:04Z",
+      "side": 1,
+      "message": "Probably a collections.named_tuple would work better here. It also gives someone else a chance of using this function\u0027s outputs correctly :)",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "767ffc19f73d6990f8f7add3288edb012efd2055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac0db10_97c2aacb",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T16:45:04Z",
+      "side": 1,
+      "message": "first_symbols \u0026 second_symbols would be more consistent with using - for setdifference.",
+      "range": {
+        "startLine": 79,
+        "startChar": 33,
+        "endLine": 79,
+        "endChar": 45
+      },
+      "revId": "767ffc19f73d6990f8f7add3288edb012efd2055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bba1707_8e515e19",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-22T16:45:04Z",
+      "side": 1,
+      "message": "I wonder if a standard rank statistic (Kendall\u0027s tau \u0026 Spearman\u0027s rho are what I\u0027ve seen recommended, they are both on wikipedia) would be a little more interesting. They have known distributions, so one can compute significances from them.\n\nOTOH, since we\u0027re far from being a random process, I don\u0027t know if that significance would have any reasonable interpretation. I don\u0027t have much real experience with either of the metrics; I\u0027ve used them in the past when comparing rankings, and they gave numbers which qualitatively probably worked like your metric. \n\nAnd on the third hand, maybe there are some numerical problems with the distance metric you have here--for example, a small number of symbols moving around a large distance have a large contribution to the metric, it may be more noisy then, eg, tau.",
+      "revId": "767ffc19f73d6990f8f7add3288edb012efd2055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
