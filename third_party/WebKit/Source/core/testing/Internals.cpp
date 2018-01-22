@@ -1365,10 +1365,10 @@ void Internals::setSuggestedValue(Element* element,
   }
 
   if (auto* input = ToHTMLInputElementOrNull(*element))
-    input->SetSuggestedValue(value);
+    input->SetSuggestedValue(value.Substring(0, input->maxLength()));
 
   if (auto* textarea = ToHTMLTextAreaElementOrNull(*element))
-    textarea->SetSuggestedValue(value);
+    textarea->SetSuggestedValue(value.Substring(0, textarea->maxLength()));
 
   if (auto* select = ToHTMLSelectElementOrNull(*element))
     select->SetSuggestedValue(value);
@@ -1387,13 +1387,15 @@ void Internals::setAutofilledValue(Element* element,
 
   if (auto* input = ToHTMLInputElementOrNull(*element)) {
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    input->setValue(value, kDispatchInputAndChangeEvent);
+    input->setValue(value.Substring(0, input->maxLength()),
+                    kDispatchInputAndChangeEvent);
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
   if (auto* textarea = ToHTMLTextAreaElementOrNull(*element)) {
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    textarea->setValue(value, kDispatchInputAndChangeEvent);
+    textarea->setValue(value.Substring(0, textarea->maxLength()),
+                       kDispatchInputAndChangeEvent);
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
