@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "210ce7db_9afbcff9",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-22T19:15:51Z",
+      "side": 1,
+      "message": "I believe our fuzzers will catch NaN image sizes, that can only come from NaN object sizes that as far as I recall we check for farther up the stack. I\u0027d rather not take the hit to DCHECK enabled performance.",
+      "parentUuid": "385ab99e_d1017304",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c7fe90e_38a51f00",
         "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b168af07_4a18dbb0",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-22T19:15:51Z",
+      "side": 1,
+      "message": "Good idea. In reality these maps don\u0027t contain much stuff and I can put that in a comment.",
+      "parentUuid": "8c7fe90e_38a51f00",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec75c87_f61ce614",
         "filename": "third_party/WebKit/Source/platform/BUILD.gn",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380e48a0_9848cc94",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-22T19:15:51Z",
+      "side": 1,
+      "message": "Good catch. That\u0027s an error.",
+      "parentUuid": "bec75c87_f61ce614",
+      "range": {
+        "startLine": 871,
+        "startChar": 14,
+        "endLine": 871,
+        "endChar": 29
+      },
+      "revId": "37bdcdd858f7c3b9f9d91dbbfb2a7b6374b7d7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
