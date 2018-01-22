@@ -489,7 +489,7 @@ IN_PROC_BROWSER_TEST_F(PermissionDialogTest, SwitchBrowserWindow) {
                              TabStripModel::ADD_ACTIVE);
 
   // Clear the request. There should be no crash.
-  GetPermissionRequestManager()->CancelRequest(owned_requests_.back().get());
+  owned_requests_.back()->Cancelled();
   owned_requests_.clear();
 }
 
