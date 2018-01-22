@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd54b43_35bd6e9c",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-22T12:21:12Z",
+      "side": 1,
+      "message": "nit: To match other files in this directory, remove all \u003ctag\u003e indentations, else align the code to the \u003cscript\u003e tag?",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d8270a_08ecae8b",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-22T12:21:12Z",
+      "side": 1,
+      "message": "Here and elsewhere: Should this be \"Not using assert_regexp_match because \u003creason\u003e\" or \"TODO(hta): Use assert_regexp_match when \u003cissue\u003e has been resolved\" etc?\nAs-is, I would rather remove the comment.",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d943763_4d0236d8",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-22T12:21:12Z",
+      "side": 1,
+      "message": "nit: Add empty line between tests.",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3dbd862_6d67fc49",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-22T12:21:12Z",
+      "side": 1,
+      "message": "nit: Here and in two other places, remove trailing whitespaces shown in red.",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb5f3b3_ce9ec153",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-22T12:21:12Z",
+      "side": 1,
+      "message": "Note: I\u0027m don\u0027t know the supposed SDP differences between SDES on and off, so I\u0027m assuming this is correct as a reviewer. If this is something I should try to verify, do tell me.\nSame with regards to usage of the DtlsSrtpKeyAgreement constraint.",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
