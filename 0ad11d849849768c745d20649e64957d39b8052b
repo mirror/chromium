@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa880d9b_2c9d0014",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2018-01-22T17:21:55Z",
+      "side": 1,
+      "message": "Just curious, why do you think a 500 byte limit is good for this fuzzer?",
+      "revId": "0ad11d849849768c745d20649e64957d39b8052b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
