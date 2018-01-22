@@ -93,14 +93,8 @@ HistogramBase* GetTaskLatencyHistogram(StringPiece histogram_label,
 
 // Upper bound for the
 // TaskScheduler.BlockShutdownTasksPostedDuringShutdown histogram.
-const HistogramBase::Sample kMaxBlockShutdownTasksPostedDuringShutdown = 1000;
-
-void RecordNumBlockShutdownTasksPostedDuringShutdown(
-    HistogramBase::Sample value) {
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "TaskScheduler.BlockShutdownTasksPostedDuringShutdown", value, 1,
-      kMaxBlockShutdownTasksPostedDuringShutdown, 50);
-}
+constexpr HistogramBase::Sample kMaxBlockShutdownTasksPostedDuringShutdown =
+    1000;
 
 }  // namespace
 
@@ -236,7 +230,17 @@ TaskTracker::TaskTracker(StringPiece histogram_label,
                                    "UserVisibleTaskPriority_MayBlock")},
           {GetTaskLatencyHistogram(histogram_label, "UserBlockingTaskPriority"),
            GetTaskLatencyHistogram(histogram_label,
-                                   "UserBlockingTaskPriority_MayBlock")}} {
+                                   "UserBlockingTaskPriority_MayBlock")}},
+      num_block_shutdown_tasks_posted_during_shutdown_histogram_(
+          Histogram::FactoryGet(
+              JoinString(
+                  {"TaskScheduler.BlockShutdownTasksPostedDuringShutdown",
+                   histogram_label},
+                  "."),
+              1,
+              kMaxBlockShutdownTasksPostedDuringShutdown,
+              50,
+              HistogramBase::kUmaTargetedHistogramFlag)) {
   // Confirm that all |task_latency_histograms_| have been initialized above.
   DCHECK(*(&task_latency_histograms_[static_cast<int>(TaskPriority::HIGHEST) +
                                      1][0] -
@@ -475,7 +479,7 @@ void TaskTracker::PerformShutdown() {
     // recorded in BeforePostTask().
     if (num_block_shutdown_tasks_posted_during_shutdown_ <
         kMaxBlockShutdownTasksPostedDuringShutdown) {
-      RecordNumBlockShutdownTasksPostedDuringShutdown(
+      num_block_shutdown_tasks_posted_during_shutdown_histogram_->Add(
           num_block_shutdown_tasks_posted_during_shutdown_);
     }
   }
@@ -529,8 +533,8 @@ bool TaskTracker::BeforePostTask(TaskShutdownBehavior shutdown_behavior) {
         // histogram as soon as its upper bound is hit. That way, a value will
         // be recorded even if an infinite number of BLOCK_SHUTDOWN tasks are
         // posted, preventing shutdown to complete.
-        RecordNumBlockShutdownTasksPostedDuringShutdown(
-            num_block_shutdown_tasks_posted_during_shutdown_);
+        num_block_shutdown_tasks_posted_during_shutdown_histogram_->Add(
+            kMaxBlockShutdownTasksPostedDuringShutdown);
       }
     }
 

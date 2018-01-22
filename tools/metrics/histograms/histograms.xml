@@ -90782,8 +90782,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.BlockShutdownTasksPostedDuringShutdown"
-    units="tasks">
+<histogram base="true"
+    name="TaskScheduler.BlockShutdownTasksPostedDuringShutdown" units="tasks">
   <owner>fdoray@chromium.org</owner>
   <summary>
     Number of BLOCK_SHUTDOWN tasks that were posted to a base::TaskScheduler
@@ -90791,7 +90791,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.DetachDuration" units="ms">
+<histogram base="true" name="TaskScheduler.DetachDuration" units="ms">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -90803,7 +90803,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.NumTasksBeforeDetach" units="tasks">
+<histogram base="true" name="TaskScheduler.NumTasksBeforeDetach" units="tasks">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -90813,7 +90813,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TaskScheduler.NumTasksBetweenWaits" units="tasks">
+<histogram base="true" name="TaskScheduler.NumTasksBetweenWaits" units="tasks">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <owner>robliao@chromium.org</owner>
@@ -111805,6 +111805,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix base="true" name="ContentChild"
       label="TaskSchedulers for various instantiations of
              content::ChildProcess."/>
+  <affected-histogram
+      name="TaskScheduler.BlockShutdownTasksPostedDuringShutdown"/>
   <affected-histogram name="TaskScheduler.DetachDuration"/>
   <affected-histogram name="TaskScheduler.NumTasksBeforeDetach"/>
   <affected-histogram name="TaskScheduler.NumTasksBetweenWaits"/>
