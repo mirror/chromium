@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c4acbf_9d5f7530",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T21:37:16Z",
+      "side": 0,
+      "message": "All other use cases across the code base call into traits instead of the visitor, so I adjusted this. Now the call is actually gone.",
+      "range": {
+        "startLine": 223,
+        "startChar": 13,
+        "endLine": 223,
+        "endChar": 30
+      },
+      "revId": "a5882125b30449e82afbb79445c2e80cc33904bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b117cc4e_a7b17428",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T21:37:16Z",
+      "side": 0,
+      "message": "Should be void* here.",
+      "range": {
+        "startLine": 322,
+        "startChar": 52,
+        "endLine": 322,
+        "endChar": 56
+      },
+      "revId": "a5882125b30449e82afbb79445c2e80cc33904bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
