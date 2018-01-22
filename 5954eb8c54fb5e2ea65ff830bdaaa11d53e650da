@@ -70,6 +70,30 @@
       "revId": "5954eb8c54fb5e2ea65ff830bdaaa11d53e650da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84a48fd_496d7496",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-22T11:11:28Z",
+      "side": 1,
+      "message": "The corpus is not in the codebase due to copyright issues.",
+      "parentUuid": "7368fcf3_acd2ab58",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5954eb8c54fb5e2ea65ff830bdaaa11d53e650da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
