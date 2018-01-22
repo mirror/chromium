@@ -99,6 +99,7 @@ def _find_enum_longest_continuous_segment(property_, name_to_position_dictionary
 class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_paths):
         super(CSSValueIDMappingsWriter, self).__init__(json5_file_paths)
+        print('json5_file_path', json5_file_paths[0]);
         self._outputs = {
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }

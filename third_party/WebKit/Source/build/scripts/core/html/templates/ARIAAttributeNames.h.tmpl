@@ -1,0 +1,23 @@
+{% from 'templates/macros.tmpl' import license, source_files_for_generated_file %}
+{{license()}}
+
+{{source_files_for_generated_file(template_file, input_files)}}
+
+#ifndef ARIATaxonomy_h
+#define ARIATaxonomy_h
+
+#include "core/CoreExport.h"
+#include "core/dom/QualifiedName.h"
+#include <memory>
+
+
+namespace blink {
+
+class ARIARole {
+  // role name from enum
+  // list of roles which inherit from this role
+}
+
+}
+
+#endif ARIATaxonomy_h

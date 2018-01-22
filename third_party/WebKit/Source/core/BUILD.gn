@@ -1191,10 +1191,27 @@ code_generator("make_core_generated_css_value_keywords") {
   ]
 }
 
+code_generator("make_aria_generated_things") {
+  script = "../build/scripts/make_aria_things.py"
+  json_inputs = [
+    "html/ARIAProperties.json5",
+  ]
+  templates = []
+  outputs = [
+    "$blink_core_output_dir/ARIAKeywords.cpp",
+    "$blink_core_output_dir/ARIAKeywords.h",
+  ]
+  other_args = [
+    "--gperf",
+    gperf_exe,
+  ]
+}
+
 process_json5_files("make_core_generated_html_element_factory") {
   script = "../build/scripts/make_element_factory.py"
 
   in_files = [
+    "html/ARIAProperties.json5",
     "html/HTMLTagNames.json5",
     "html/HTMLAttributeNames.json5",
   ]
@@ -1810,7 +1827,6 @@ jumbo_source_set("unit_tests") {
     "frame/FrameTestHelpers.cpp",
     "frame/FrameTestHelpers.h",
     "frame/HistoryTest.cpp",
-    "frame/LocalFrameTest.cpp",
     "frame/LocalFrameViewTest.cpp",
     "frame/MHTMLTest.cpp",
     "frame/OriginsUsingFeaturesTest.cpp",

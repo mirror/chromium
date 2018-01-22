@@ -224,6 +224,7 @@ void DevToolsDataSource::StartBundledDataRequest(
   std::string filename = PathWithoutParams(path);
   base::StringPiece resource =
       content::DevToolsFrontendHost::GetFrontendResource(filename);
+  LOG(INFO) << "resource: " << resource;
 
   DLOG_IF(WARNING, resource.empty())
       << "Unable to find dev tool resource: " << filename

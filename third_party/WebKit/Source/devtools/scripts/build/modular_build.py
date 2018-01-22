@@ -49,6 +49,8 @@ def concatenate_scripts(file_names, module_dir, output_dir, output):
         output.write('/* %s */\n' % file_name)
         file_path = path.join(module_dir, file_name)
         if not path.isfile(file_path):
+            # what is output_dir?
+            # out/Release/resources/inspector
             file_path = path.join(output_dir, path.basename(module_dir), file_name)
         output.write(read_file(file_path))
         output.write(';')

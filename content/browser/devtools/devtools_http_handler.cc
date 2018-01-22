@@ -368,6 +368,7 @@ static std::string GetMimeType(const std::string& filename) {
 
 void ServerWrapper::OnHttpRequest(int connection_id,
                                   const net::HttpServerRequestInfo& info) {
+  LOG(INFO) << "OnHttpRequest";
   server_->SetSendBufferSize(connection_id, kSendBufferSizeForDevTools);
 
   if (base::StartsWith(info.path, "/json", base::CompareCase::SENSITIVE)) {
