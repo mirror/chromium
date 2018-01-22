@@ -16,6 +16,24 @@
       "revId": "bf28a98a311f90f70f78d1e4f827ec06e9ecc856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89212c2b_55da3c8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-22T23:37:38Z",
+      "side": 0,
+      "message": "It will, but it won\u0027t look good yet. This should only affect people who have it forced on at this point.",
+      "parentUuid": "0889c67f_14dccb38",
+      "revId": "bf28a98a311f90f70f78d1e4f827ec06e9ecc856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
