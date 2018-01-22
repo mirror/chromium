@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d4e503_9f20644f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5268,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-22T14:21:14Z",
+      "side": 1,
+      "message": "may also want to mark as \u0027Deprecated\u0027: True",
+      "range": {
+        "startLine": 5268,
+        "startChar": 7,
+        "endLine": 5268,
+        "endChar": 19
+      },
+      "revId": "03374d83609ec7ed0edb090c7ee33861a60bf1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
