@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "761853d6_7c0afbd9",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-22T04:06:32Z",
+      "side": 1,
+      "message": "By this comment, I can\u0027t figure out the responsibility of this function. (What is the difference with CommandUtil.getCommandEntry?)\nIf some logic in this function are specific to paste-into-folder command, it might be better to keep it in paste-into-command implementation.",
+      "revId": "fb640b2e6e610a090f448873ee9883c3bd4039ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
