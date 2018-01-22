@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65e6c4f_ba407006",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-22T15:57:05Z",
+      "side": 1,
+      "message": "*s",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "73999fe67ffcb00aebfb6c8d0d342b03b079cde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
