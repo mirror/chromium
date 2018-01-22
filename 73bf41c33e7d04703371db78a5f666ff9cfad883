@@ -16,6 +16,24 @@
       "revId": "73bf41c33e7d04703371db78a5f666ff9cfad883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccecdde3_14579c16",
+        "filename": "base/lazy_instance_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-22T15:05:29Z",
+      "side": 1,
+      "message": "Right, we can do a ref-counted-thread-safe scheme to manage the WaitableEvent\u0027s lifetime. I won\u0027t bother unless we decide to move forward with this.",
+      "parentUuid": "50287cf1_6118d191",
+      "revId": "73bf41c33e7d04703371db78a5f666ff9cfad883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
