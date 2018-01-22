@@ -85,6 +85,7 @@ void AppListPresenterImpl::Show(int64_t display_id) {
   if (view_) {
     ScheduleAnimation();
   } else {
+    LOG(ERROR) << "Show!!";
     presenter_delegate_ = factory_->GetDelegate(this);
     AppListViewDelegate* view_delegate = presenter_delegate_->GetViewDelegate();
     DCHECK(view_delegate);
