@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d2a8d18_0e18da36",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2018-01-22T10:18:40Z",
+      "side": 1,
+      "message": "Since this is a single retry and not retrying in a loop, I\u0027m fine with this approach instead of checking for only the \u0027device invalidated\u0027 error. My gut feeling is that it\u0027s more likely that we could get a generic error constant in some cases (e.g. if 3rd party components are in the picture) that are recoverable with a retry than to mask an error in FillRenderEndpointBufferWithSilence that we must not attempt to recover from.",
+      "parentUuid": "9869bc77_d33d12bf",
+      "revId": "8b6f38aacfc0851f0d3fb3e73fbffd9509664c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c8f9d4_0137c7ea",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 2
