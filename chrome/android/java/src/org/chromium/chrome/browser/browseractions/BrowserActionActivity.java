@@ -21,6 +21,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.contextmenu.ContextMenuParams;
+import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.gsa.GSAState;
 import org.chromium.chrome.browser.init.AsyncInitializationActivity;
 import org.chromium.chrome.browser.rappor.RapporServiceBridge;
@@ -101,7 +102,9 @@ public class BrowserActionActivity extends AsyncInitializationActivity {
         Runnable listener = new Runnable() {
             @Override
             public void run() {
-                startDelayedNativeInitialization();
+                if (FirstRunStatus.getFirstRunFlowComplete()) {
+                    startDelayedNativeInitialization();
+                }
             }
         };
         mHelper = new BrowserActionsContextMenuHelper(this, params, mActions, mCreatorPackageName,
@@ -174,5 +177,10 @@ public class BrowserActionActivity extends AsyncInitializationActivity {
                         "BrowserActions.ServiceClient.PackageNameThirdParty", mCreatorPackageName);
             }
         });
+    }
+
+    @Override
+    protected boolean requiresFirstRunToBeCompleted(Intent intent) {
+        return false;
     }
 }
