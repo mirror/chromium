@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0ecf2d89_c749ba44",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-22T23:51:51Z",
+      "side": 1,
+      "message": "I\u0027m fine with not hard-coding the enum values in the API itself and keeping this as string, i.e. kind of open-ended enum (defined in the app\u0027s scope).\n\nThough, I would prefer if the property was renamed to something like \"configuration\"/\"cofigurationName\", instead of \"configFile\", and have the service translate configuration value to the file path - logic would likely stay the same, but semantics would be slightly different, and little more flexible / easier to define).\n\nFor example, I think option 1 of the following two is little cleaner:\n1. chrome.setState({configuration: \u0027FaceDetection\u0027});\n2. chrome.setState({configFile: \u0027face_detection_config.txt\u0027});",
+      "parentUuid": "92a02278_50602b81",
+      "range": {
+        "startLine": 122,
+        "startChar": 23,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "969a7055b96b354514f115fd605c43cab3ef22f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1650a3b0_9dba0bfe",
         "filename": "extensions/test/data/media_perception_private/state/runtest.js",
         "patchSetId": 3
