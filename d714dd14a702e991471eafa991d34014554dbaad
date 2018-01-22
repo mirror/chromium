@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722730ff_d818fb5a",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-22T15:46:41Z",
+      "side": 1,
+      "message": "typo (\"scroll\")",
+      "range": {
+        "startLine": 292,
+        "startChar": 48,
+        "endLine": 292,
+        "endChar": 53
+      },
+      "revId": "d714dd14a702e991471eafa991d34014554dbaad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
