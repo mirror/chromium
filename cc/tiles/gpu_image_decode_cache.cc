@@ -1214,12 +1214,10 @@ bool GpuImageDecodeCache::EnsureCapacity(size_t required_size) {
   lifetime_max_items_in_cache_ =
       std::max(lifetime_max_items_in_cache_, persistent_cache_.size());
 
-  if (CanFitInWorkingSet(required_size) && !ExceedsPreferredCount())
-    return true;
-
   // While we are over memory or preferred item capacity, we iterate through
   // our set of cached image data in LRU order, removing unreferenced images.
-  for (auto it = persistent_cache_.rbegin(); it != persistent_cache_.rend();) {
+  for (auto it = persistent_cache_.rbegin();
+       it != persistent_cache_.rend() && ExceedsPreferredCount();) {
     if (it->second->decode.ref_count != 0 ||
         it->second->upload.ref_count != 0) {
       ++it;
@@ -1238,12 +1236,9 @@ bool GpuImageDecodeCache::EnsureCapacity(size_t required_size) {
       DeleteImage(it->second.get());
 
     it = persistent_cache_.Erase(it);
-
-    if (CanFitInWorkingSet(required_size) && !ExceedsPreferredCount())
-      return true;
   }
 
-  return false;
+  return CanFitInWorkingSet(required_size);
 }
 
 bool GpuImageDecodeCache::CanFitInWorkingSet(size_t size) const {
