@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c776882_ba93926b",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-22T01:21:46Z",
+      "side": 1,
+      "message": "To be precise, the existence of this file should be handled with\n use_v8_context_snapshot\ndefined in \"//tools/v8_context_snapshot/v8_context_snapshot.gni\".\n\nBut this CL also works because\n use_v8_context_snapshot \u003d v8_use_external_startup_data \u0026\u0026 (other_conditions)\nand\n v8_use_external_startup_data \u003d v8_use_snapshot \u0026\u0026 (other_conditions)\n\nJFYI.",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 23
+      },
+      "revId": "a3f0ece5deee50fceadd4ee1dcaeea0103d08385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
