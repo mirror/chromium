@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce87c252_1f136da9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T18:40:20Z",
+      "side": 1,
+      "message": "can we add a checkPendingSize(1) here?  Then we\u0027d be sure the tab modal doesn\u0027t reshow until after we exit the tab switcher?",
+      "range": {
+        "startLine": 330,
+        "startChar": 55,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "64ae615dc6dede6f181dc38ec1a66c058a537213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29a5f0d_b5e56652",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T18:40:20Z",
+      "side": 1,
+      "message": "I\u0027d recommend just calling closeAllTabs as tests can sometimes be weird where you get multiple tabs when you expect just 1 (and here we don\u0027t recall care if there was an already existing tab I don\u0027t think)",
+      "range": {
+        "startLine": 363,
+        "startChar": 23,
+        "endLine": 363,
+        "endChar": 38
+      },
+      "revId": "64ae615dc6dede6f181dc38ec1a66c058a537213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
