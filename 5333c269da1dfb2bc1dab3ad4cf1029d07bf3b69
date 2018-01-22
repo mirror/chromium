@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d780d4f2_0160e027",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-22T18:58:27Z",
+      "side": 1,
+      "message": "If the power setting in progress is \"enabled\", and the pending power is \"disabled\" given that the incoming request is \"enabled\", the pending_bluetotoh_power_target_ will be set to \"enabled\" to reflect the last request. What will happen if we perform the incoming \"enabled\" request after the in-progress \"enabled\" finished?",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 46
+      },
+      "revId": "5333c269da1dfb2bc1dab3ad4cf1029d07bf3b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1763528d_39f23619",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 1
