@@ -36,6 +36,11 @@
 
 #pragma mark - UIViewController
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self.view setUp];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self updateAllButtonsVisibility];
