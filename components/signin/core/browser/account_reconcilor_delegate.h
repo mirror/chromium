@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/time/time.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 
 class AccountReconcilor;
@@ -49,6 +50,17 @@ class AccountReconcilorDelegate {
   // Called when reconcile is finished.
   virtual void OnReconcileFinished(const std::string& first_account,
                                    bool reconcile_is_noop) {}
+
+  // Returns the desired timeout for account reconciliation. If reconciliation
+  // does not happen within this time, it is aborted and |this| delegate is
+  // informed via |OnReconcileTimeout|.
+  // If a delegate does not wish to set a timeout for account reconciliation,
+  // it should not override this method.
+  // Default: |base::TimeDelta::Max()|.
+  virtual base::TimeDelta GetReconcileTimeout() const;
+
+  // Called when account reconciliation times out and is aborted.
+  virtual void OnReconcileTimeout();
 
   void set_reconcilor(AccountReconcilor* reconcilor) {
     reconcilor_ = reconcilor;
