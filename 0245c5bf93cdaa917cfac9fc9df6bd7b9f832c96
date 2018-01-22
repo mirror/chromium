@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d85cd5ff_890bd4f7",
+        "filename": "chrome/common/extensions/api/enterprise_device_attributes.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T13:55:37Z",
+      "side": 1,
+      "message": "Quick question as I haven\u0027t found this in the proposal Doc - what is returned when the Asset ID is unset?",
+      "revId": "0245c5bf93cdaa917cfac9fc9df6bd7b9f832c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
