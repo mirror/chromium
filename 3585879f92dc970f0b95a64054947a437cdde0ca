@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d17e0d_04270014",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-22T12:13:26Z",
+      "side": 1,
+      "message": "This is good enough.\nnit: in general, try to avoid using \"we\" in comments.\nFeel free to rephase it in a way similar to the comment for WebRtcEventLogManager above. Possible alternative:\n\"This interface is used to turn WebRTC on and off. The default implementation\nsends messages to PeerConnectionTracker, whereas relevant unit tests use a\nmock implementation that just makes sure the correct messages were attempted\nto be sent\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "3585879f92dc970f0b95a64054947a437cdde0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
