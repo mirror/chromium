@@ -10928,6 +10928,88 @@
 
       If this policy is left not set then all Google accounts on the device will be visible in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.''',
     },
+    {
+      'name': 'PasswordProtectionWarningTrigger',
+      'type': 'int-enum',
+      'schema': {
+        'type': 'integer',
+        'enum': [ 0, 1, 2 ],
+      },
+      'items': [
+        {
+          'name': 'Off',
+          'value': 0,
+          'caption': '''Password protection warning is off''',
+        },
+        {
+          'name': 'PasswordReuse',
+          'value': 1,
+          'caption': '''Password protection warning is triggered by password reuse''',
+        },
+        {
+          'name': 'PhishingReuse',
+          'value': 2,
+          'caption': '''Password protection warning is triggered by password reuse on phishing page''',
+        },
+      ],
+      'supported_on': ['chrome.*:65-', 'chrome_os:65-'],
+      'features': {
+        'can_be_recommended': True,
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': 1,
+      'id': 411,
+      'caption': '''Password protection warning trigger''',
+      'tags': [],
+      'desc': '''Allows you to control the triggering of password protection warning.
+
+      If this policy is set to 2, password protection warning will be shown when users reuse google
+      passwords on phishing sites. If this policy is set to 1, password protection warning will be shown
+      when users reuse google passwords on any non-whitelisted sites. If this policy is set to 0,
+      no password protection warning will be shown.''',
+    },
+    {
+      'name': 'PasswordProtectionRiskTrigger',
+      'type': 'int-enum',
+      'schema': {
+        'type': 'integer',
+        'enum': [ 0, 1, 2 ],
+      },
+      'items': [
+        {
+          'name': 'Off',
+          'value': 0,
+          'caption': '''Password protection at-risk account flagging is off''',
+        },
+        {
+          'name': 'PasswordReuse',
+          'value': 1,
+          'caption': '''Password protection at-risk account flagging is triggered by password reuse''',
+        },
+        {
+          'name': 'PhishingReuse',
+          'value': 2,
+          'caption': '''Password protection at-risk account flagging is triggered by password reuse on phishing page''',
+        },
+      ],
+      'supported_on': ['chrome.*:65-', 'chrome_os:65-'],
+      'features': {
+        'can_be_recommended': True,
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': 1,
+      'id': 412,
+      'caption': '''Password protection at-risk account flagging trigger''',
+      'tags': [],
+      'desc': '''Allows you to control the triggering of password protection at-risk account flagging.
+
+      If this policy is set to 2, password protection at-risk account flagging will be triggered when users
+      reuse google passwords on phishing sites. If this policy is set to 1, password protection
+      at-risk account flagging will be triggered when users reuse google passwords on any non-whitelisted
+      sites. If this policy is set to 0, no password protection at-risk account flagging will be triggered.''',
+    },
   ],
 
   'messages': {
