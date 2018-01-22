@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5a8469_901de316",
+        "filename": "components/data_reduction_proxy/core/browser/warmup_url_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-22T16:50:09Z",
+      "side": 1,
+      "message": "Nice improvement",
+      "range": {
+        "startLine": 270,
+        "startChar": 23,
+        "endLine": 270,
+        "endChar": 40
+      },
+      "revId": "577d8f39907f6b78741efc36c374a8fa098e0380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
