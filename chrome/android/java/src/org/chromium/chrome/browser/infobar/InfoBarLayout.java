@@ -478,7 +478,7 @@ public final class InfoBarLayout extends ViewGroup implements View.OnClickListen
             // If there's an inline link, apply the necessary span for it.
             if (mMessageInlineLinkRangeEnd != 0) {
                 assert mMessageInlineLinkRangeStart < mMessageInlineLinkRangeEnd;
-                assert mMessageInlineLinkRangeEnd < mMessageMainText.length();
+                assert mMessageInlineLinkRangeEnd <= mMessageMainText.length();
 
                 spannedMessage.setSpan(createClickableSpan(), mMessageInlineLinkRangeStart,
                         mMessageInlineLinkRangeEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
