@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "135a59f5_9cb05db6",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-22T12:32:32Z",
+      "side": 1,
+      "message": "No indentation seems to be the norm. Modifying.",
+      "parentUuid": "ddd54b43_35bd6e9c",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d8270a_08ecae8b",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929dac43_30e4f3c6",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-22T12:32:32Z",
+      "side": 1,
+      "message": "The problem is that assert_regexp_match throws an error inside an async function inside a promise test. I\u0027ll just remove the comment; if I file an issue on testharness.js, I\u0027ll need a shorter demo.",
+      "parentUuid": "e1d8270a_08ecae8b",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "975c99f0_18ae014a",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-22T12:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d943763_4d0236d8",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3dbd862_6d67fc49",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c510ffd4_e688ed8b",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-22T12:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3dbd862_6d67fc49",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb5f3b3_ce9ec153",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-22T12:21:12Z",
       "side": 1,
       "message": "Note: I\u0027m don\u0027t know the supposed SDP differences between SDES on and off, so I\u0027m assuming this is correct as a reviewer. If this is something I should try to verify, do tell me.\nSame with regards to usage of the DtlsSrtpKeyAgreement constraint.",
+      "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5c98d78_2224e129",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdes-constraint.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-22T12:32:32Z",
+      "side": 1,
+      "message": "I think you can read what it does from the first tests (toggles between a\u003dfingerprint and a\u003dcrypto) - these tests are to verify that it does it consistently.\nNo need to dig deeper!",
+      "parentUuid": "6eb5f3b3_ce9ec153",
       "revId": "77a687372c0c8ff01faa1101ab12055739ccd455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
