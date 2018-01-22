@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ee3946_4c7c903e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "Note: |selection| is bound at L319 as\n  const VisibleSelectionInFlatTree\u0026 selection \u003d\n      this-\u003eSelection().ComputeVisibleSelectionInFlatTree();",
+      "range": {
+        "startLine": 347,
+        "startChar": 22,
+        "endLine": 347,
+        "endChar": 31
+      },
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c7aad10_4beedcef",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "We don\u0027t need to make selection as directional. Single click set\nis_directional to false.\n\nSee L694 of https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/page/EventHandler.cpp",
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc68ceb_b9a5ad13",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "Note: as same as L347",
+      "range": {
+        "startLine": 367,
+        "startChar": 20,
+        "endLine": 367,
+        "endChar": 29
+      },
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eee4824b_bb2254d9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "Same as L350",
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c28a846_3bdc7c1c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "Same as L350",
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b1f145_83b5cdf8",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "Off-topic\n\nBTW, we should rename this function UpdateSelectionIfNeeded() since this\nfunction take care selection_is_directional. \"NonDircional\" is confusing.\n\nNote: WebKit names this function as FrameSelection::setSelectionByMouseIfDifferent()|",
+      "range": {
+        "startLine": 848,
+        "startChar": 26,
+        "endLine": 848,
+        "endChar": 60
+      },
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a25880_cb57fad4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-22T08:05:43Z",
+      "side": 1,
+      "message": "This should be |selection_is_directional|.",
+      "range": {
+        "startLine": 897,
+        "startChar": 0,
+        "endLine": 898,
+        "endChar": 35
+      },
+      "revId": "5466054c97977621e4b9a1c3c18ebcbc420895cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
