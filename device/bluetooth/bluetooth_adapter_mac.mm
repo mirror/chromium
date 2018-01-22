@@ -18,6 +18,7 @@
 #include "base/mac/mac_util.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
@@ -30,6 +31,20 @@
 #include "device/bluetooth/bluetooth_discovery_session_outcome.h"
 #include "device/bluetooth/bluetooth_low_energy_central_manager_delegate.h"
 #include "device/bluetooth/bluetooth_socket_mac.h"
+
+extern "C" {
+// Undocumented IOBluetooth Preference API [1]. Used by `blueutil` [2] and
+// `Karabiner` [3] to programmatically control the Bluetooth state. Calling the
+// method with `1` powers the adapter on, calling it with `0` powers it off.
+// Using this API has the same effect as turning Bluetooth on or off using the
+// macOS System Preferences [4], and will effect all adapters.
+//
+// [1] https://goo.gl/Gbjm1x
+// [2] http://www.frederikseiffert.de/blueutil/
+// [3] https://pqrs.org/osx/karabiner/
+// [4] https://support.apple.com/kb/PH25091
+void IOBluetoothPreferenceSetControllerPowerState(int state);
+}
 
 namespace {
 
@@ -100,6 +115,8 @@ BluetoothAdapterMac::BluetoothAdapterMac()
     : BluetoothAdapter(),
       classic_powered_(false),
       num_discovery_sessions_(0),
+      power_state_function_(
+          base::BindRepeating(IOBluetoothPreferenceSetControllerPowerState)),
       should_update_name_(true),
       classic_discovery_manager_(
           BluetoothDiscoveryManagerMac::CreateClassic(this)),
@@ -129,6 +146,11 @@ BluetoothAdapterMac::~BluetoothAdapterMac() {
   // while being destroyed after this method. |devices_| is owned by
   // BluetoothAdapter.
   low_energy_central_manager_.reset();
+
+  // If there's a pending powered request, run its error callback.
+  if (powered_pending_) {
+    powered_error_callback_.Run();
+  }
 }
 
 std::string BluetoothAdapterMac::GetAddress() const {
@@ -174,19 +196,34 @@ bool BluetoothAdapterMac::IsPresent() const {
 }
 
 bool BluetoothAdapterMac::IsPowered() const {
-  bool is_powered = classic_powered_;
-  if (IsLowEnergyAvailable()) {
-    is_powered =
-        is_powered || (GetCBManagerState(low_energy_central_manager_) ==
-                       CBCentralManagerStatePoweredOn);
-  }
-  return is_powered;
+  return classic_powered_ || IsLowEnergyPowered();
 }
 
 void BluetoothAdapterMac::SetPowered(bool powered,
                                      const base::Closure& callback,
                                      const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
+  if (!IsLowEnergyAvailable()) {
+    // macOS APIs for this method are only available when BLE is available.
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
+    return;
+  }
+
+  if (powered_pending_) {
+    // Only allow one pending callback at a time.
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
+    return;
+  }
+
+  if (powered == IsLowEnergyPowered()) {
+    ui_task_runner_->PostTask(FROM_HERE, callback);
+    return;
+  }
+
+  powered_pending_ = true;
+  powered_state_ = powered;
+  powered_callback_ = callback;
+  powered_error_callback_ = error_callback;
+  power_state_function_.Run(base::strict_cast<int>(powered));
 }
 
 // TODO(krstnmnlsn): If this information is retrievable form IOBluetooth we
@@ -312,6 +349,11 @@ void BluetoothAdapterMac::SetCentralManagerForTesting(
 
 CBCentralManager* BluetoothAdapterMac::GetCentralManager() {
   return low_energy_central_manager_;
+}
+
+void BluetoothAdapterMac::SetPowerStateFunctionForTesting(
+    SetControllerPowerStateFunction power_state_function) {
+  power_state_function_ = std::move(power_state_function);
 }
 
 void BluetoothAdapterMac::AddDiscoverySession(
@@ -501,6 +543,15 @@ void BluetoothAdapterMac::ClassicDeviceAdded(IOBluetoothDevice* device) {
     observer.DeviceAdded(this, device_classic);
 }
 
+bool BluetoothAdapterMac::IsLowEnergyPowered() const {
+  if (!IsLowEnergyAvailable()) {
+    return false;
+  }
+
+  return GetCBManagerState(low_energy_central_manager_) ==
+         CBCentralManagerStatePoweredOn;
+}
+
 void BluetoothAdapterMac::LowEnergyDeviceUpdated(
     CBPeripheral* peripheral,
     NSDictionary* advertisement_data,
@@ -601,6 +652,13 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
 void BluetoothAdapterMac::LowEnergyCentralManagerUpdatedState() {
   VLOG(1) << "Central manager state updated: "
           << [low_energy_central_manager_ state];
+
+  if (powered_pending_) {
+    powered_pending_ = false;
+    powered_state_ == IsLowEnergyPowered() ? powered_callback_.Run()
+                                           : powered_error_callback_.Run();
+  }
+
   // A state with a value lower than CBCentralManagerStatePoweredOn implies that
   // scanning has stopped and that any connected peripherals have been
   // disconnected. Call DidDisconnectPeripheral manually to update the devices'

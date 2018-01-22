@@ -131,6 +131,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
       device::BluetoothDevice::PairingDelegate* pairing_delegate) override;
 
  private:
+  // Type of the underlying implementation of SetPowered(). It takes an int
+  // instead of a bool, since the production code calls into a C API that does
+  // not know about bool.
+  using SetControllerPowerStateFunction = base::RepeatingCallback<void(int)>;
+
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should
   // be called only when |IsLowEnergyAvailable()|.
@@ -138,6 +143,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
 
   // Returns the CBCentralManager instance.
   CBCentralManager* GetCentralManager();
+
+  // Allow the mocking out of setting the controller power state for testing.
+  void SetPowerStateFunctionForTesting(
+      SetControllerPowerStateFunction power_state_function);
 
   // The length of time that must elapse since the last Inquiry response (on
   // Classic devices) or call to BluetoothLowEnergyDevice::Update() (on Low
@@ -177,6 +186,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // connected to the local host.
   void ClassicDeviceAdded(IOBluetoothDevice* device);
 
+  // Checks if the low energy central manager is powered on. Returns false if
+  // BLE is not available.
+  bool IsLowEnergyPowered() const;
+
   // BluetoothLowEnergyDiscoveryManagerMac::Observer override:
   void LowEnergyDeviceUpdated(CBPeripheral* peripheral,
                               NSDictionary* advertisement_data,
@@ -206,6 +219,13 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   std::string address_;
   bool classic_powered_;
   int num_discovery_sessions_;
+
+  // SetPowered() implementation, callbacks and pending state.
+  SetControllerPowerStateFunction power_state_function_;
+  bool powered_pending_ = false;
+  bool powered_state_ = false;
+  base::Closure powered_callback_;
+  ErrorCallback powered_error_callback_;
 
   // Cached name. Updated in GetName if should_update_name_ is true.
   //
