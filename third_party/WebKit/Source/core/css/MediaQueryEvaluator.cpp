@@ -194,7 +194,8 @@ static bool CompareAspectRatioValue(const MediaQueryExpValue& value,
 }
 
 static bool NumberValue(const MediaQueryExpValue& value, float& result) {
-  if (value.is_value && value.unit == CSSPrimitiveValue::UnitType::kNumber) {
+  if (value.is_value && (value.unit == CSSPrimitiveValue::UnitType::kNumber ||
+                         value.unit == CSSPrimitiveValue::UnitType::kInteger)) {
     result = value.value;
     return true;
   }
