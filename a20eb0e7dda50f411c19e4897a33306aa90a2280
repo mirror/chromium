@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457c60a8_aa426394",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-22T22:03:15Z",
+      "side": 1,
+      "message": "sounds like an invalid test, can we fix the test instead?",
+      "revId": "a20eb0e7dda50f411c19e4897a33306aa90a2280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
