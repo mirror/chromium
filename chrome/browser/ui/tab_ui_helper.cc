@@ -75,8 +75,9 @@ bool TabUIHelper::ShouldHideThrobber() const {
   // We also want to hide a background tab's throbber during page load if it is
   // created by session restore. A restored tab's favicon is already fetched
   // by |SessionRestoreDelegate|.
-  if (created_by_session_restore_ && !was_active_at_least_once_)
-    return true;
+  // DO NOT SUBMIT
+  /*if (created_by_session_restore_ && !was_active_at_least_once_)
+    return true;*/
 
   return false;
 }

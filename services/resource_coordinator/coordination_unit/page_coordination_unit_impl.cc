@@ -16,8 +16,7 @@ namespace resource_coordinator {
 PageCoordinationUnitImpl::PageCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitInterface(id, std::move(service_ref)),
-      was_almost_idle_(false) {}
+    : CoordinationUnitInterface(id, std::move(service_ref)) {}
 
 PageCoordinationUnitImpl::~PageCoordinationUnitImpl() {
   for (auto* child_frame : frame_coordination_units_)
@@ -44,6 +43,10 @@ void PageCoordinationUnitImpl::RemoveFrame(const CoordinationUnitID& cu_id) {
     frame_cu->RemovePageCoordinationUnit(this);
 }
 
+void PageCoordinationUnitImpl::SetIsLoading(bool is_loading) {
+  SetProperty(mojom::PropertyType::kIsLoading, is_loading);
+}
+
 void PageCoordinationUnitImpl::SetVisibility(bool visible) {
   SetProperty(mojom::PropertyType::kVisible, visible);
 }
@@ -64,27 +67,6 @@ void PageCoordinationUnitImpl::OnMainFrameNavigationCommitted() {
   SendEvent(mojom::Event::kNavigationCommitted);
 }
 
-bool PageCoordinationUnitImpl::CheckAndUpdateAlmostIdleStateIfNeeded() {
-  auto* main_frame_cu = GetMainFrameCoordinationUnit();
-  if (!main_frame_cu)
-    return false;
-  auto* process_cu = main_frame_cu->GetProcessCoordinationUnit();
-  if (!process_cu)
-    return false;
-  int64_t main_thread_task_load_is_low = 0;
-  int64_t is_network_almost_idle = 0;
-  if (!process_cu->GetProperty(mojom::PropertyType::kMainThreadTaskLoadIsLow,
-                               &main_thread_task_load_is_low) ||
-      !main_frame_cu->GetProperty(mojom::PropertyType::kNetworkAlmostIdle,
-                                  &is_network_almost_idle)) {
-    return false;
-  }
-  bool is_almost_idle = main_thread_task_load_is_low && is_network_almost_idle;
-  if (!was_almost_idle_)
-    was_almost_idle_ = is_almost_idle;
-  return is_almost_idle;
-}
-
 std::set<ProcessCoordinationUnitImpl*>
 PageCoordinationUnitImpl::GetAssociatedProcessCoordinationUnits() const {
   std::set<ProcessCoordinationUnitImpl*> process_cus;
@@ -97,12 +79,8 @@ PageCoordinationUnitImpl::GetAssociatedProcessCoordinationUnits() const {
   return process_cus;
 }
 
-bool PageCoordinationUnitImpl::WasAlmostIdle() const {
-  return was_almost_idle_;
-}
-
 bool PageCoordinationUnitImpl::IsVisible() const {
-  int64_t is_visible;
+  int64_t is_visible = 0;
   bool has_property = GetProperty(mojom::PropertyType::kVisible, &is_visible);
   DCHECK(has_property && (is_visible == 0 || is_visible == 1));
   return is_visible;
@@ -116,7 +94,7 @@ double PageCoordinationUnitImpl::GetCPUUsage() const {
         process_cu->GetAssociatedPageCoordinationUnits().size();
     DCHECK_LE(1u, pages_in_process);
 
-    int64_t process_cpu_usage;
+    int64_t process_cpu_usage = 0;
     if (process_cu->GetProperty(mojom::PropertyType::kCPUUsage,
                                 &process_cpu_usage)) {
       cpu_usage += static_cast<double>(process_cpu_usage) / pages_in_process;
@@ -154,7 +132,6 @@ base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastVisibilityChange()
 void PageCoordinationUnitImpl::OnEventReceived(mojom::Event event) {
   if (event == mojom::Event::kNavigationCommitted) {
     navigation_committed_time_ = ResourceCoordinatorClock::NowTicks();
-    was_almost_idle_ = false;
   }
   for (auto& observer : observers())
     observer.OnPageEventReceived(this, event);
