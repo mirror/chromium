@@ -530,16 +530,24 @@ cr.define('print_preview', function() {
      */
     fetchMatchingDestination_(destinationMatch) {
       this.autoSelectMatchingDestination_ = destinationMatch;
-      const type = destinationMatch.getType();
-      if (type != null) {  // Local, Privet, or Extension.
-        this.startLoadDestinations(type);
-      } else if (
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.COOKIES) ||
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.DEVICE)) {
-        this.startLoadCloudDestinations();
-      }
+      const types = destinationMatch.getTypes();
+      let cloudLoading = false;
+      types.forEach(type => {
+        if (type != null &&
+            this.destinationSearchStatus_.get(type) !=
+                print_preview.DestinationStorePrinterSearchStatus.SEARCHING) {
+          // Local, extension, or privet printer, search not yet started
+          this.startLoadDestinations(type);
+        } else if (
+            !cloudLoading &&
+            (destinationMatch.matchOrigin(
+                 print_preview.DestinationOrigin.COOKIES) ||
+             destinationMatch.matchOrigin(
+                 print_preview.DestinationOrigin.DEVICE))) {
+          cloudLoading = true;
+          this.startLoadCloudDestinations();
+        }
+      });
     }
 
     /**
@@ -1202,7 +1210,7 @@ cr.define('print_preview', function() {
     }
 
     /**
-     * Called when the /search call completes, either successfully or not.
+     * Called when the search call completes, either successfully or not.
      * In case of success, stores fetched destinations.
      * @param {Event} event Contains the request result.
      * @private
