@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "285aa699_c563016c",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 1,
+      "message": "Somewhere in the \u0027implementation-defined behaviour, not API contract\u0027 side of things. The other platforms queried mostly as an optimization while we had the handles available and were iterating.\n\nIt certainly shouldn\u0027t have any side-effects. Does the bug description appropriately capture the scenarios and why it should be safe?",
+      "parentUuid": "f597c8f4_fc0afee7",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4040602b_30f2a47c",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 1,
+      "message": "Yes. In the new code, only the |trusted_cert| can have IsKnownRoot on the ssl_trust_store (AIUI from with Eric), while the above logic (474-480) walks the chain.\n\nIf IsKnownRoot was true for any intermediate, it would have been the TrustedCert and short-circuited chain building.",
+      "parentUuid": "16718071_e91eb00a",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc525e2_e680d992",
         "filename": "net/cert/cert_verify_proc_ios.cc",
         "patchSetId": 3
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d22e4805_19fffe0e",
+        "filename": "net/cert/cert_verify_proc_ios.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 1,
+      "message": "Yes, although the verify_result-\u003eReset() also ensures the \u003d false case here - it\u0027s unclear if you were concerned about the removal of the explicit assignment in the case of an empty loop or something else?",
+      "parentUuid": "1dc525e2_e680d992",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8051b4b_9e47c2a5",
         "filename": "net/cert/cert_verify_proc_mac.cc",
         "patchSetId": 3
@@ -81,6 +135,30 @@
       "writtenOn": "2018-01-22T18:42:44Z",
       "side": 1,
       "message": "This is a behavior change in that we\u0027ll look for known roots anywhere in the change now. I\u0027m assuming this is desirable/intentional. (Does indeed seem like a reasonable thing to do.)",
+      "range": {
+        "startLine": 390,
+        "startChar": 62,
+        "endLine": 390,
+        "endChar": 80
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aac7b90_5066b734",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 1,
+      "message": "I believe this was answered on the linked bug - https://bugs.chromium.org/p/chromium/issues/detail?id\u003d798186 - but did I misunderstand the question?\n\n(Yes, it\u0027s desirable, for the reasons outlined there)",
+      "parentUuid": "a8051b4b_9e47c2a5",
       "range": {
         "startLine": 390,
         "startChar": 62,
@@ -121,6 +199,30 @@
       "writtenOn": "2018-01-22T18:42:44Z",
       "side": 1,
       "message": "Nit: Not that it matters due to the empty check, but known_roots_.data().",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b42111_ed01c74a",
+        "filename": "net/cert/known_roots_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 1,
+      "message": "Did we allow that C++11ism yet? It was forbidden for a while due to std library issues",
+      "parentUuid": "7900206d_2f39fd4b",
       "range": {
         "startLine": 37,
         "startChar": 43,

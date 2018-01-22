@@ -39,6 +39,24 @@
       "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5332e3_bb1f65ff",
+        "filename": "net/cert/known_roots_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-22T21:35:20Z",
+      "side": 0,
+      "message": "Correct. The \"Not AuthRoot, but built-in\" also covers roots (particularly gov roots) that were removed by Microsoft - but which we include in our built-in list because we consider a cross-section against time - and were added back by users/enterprises. Think of things like the \"SHA-1 legacy CAs\" that made an exodus prior to the SHA-2 transition as examples of that.",
+      "parentUuid": "aebb59c3_f317109c",
+      "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
