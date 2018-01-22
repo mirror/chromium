@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a77c09bf_0f18e657",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T13:06:44Z",
+      "side": 1,
+      "message": "style: maybe less empty lines in this block?",
+      "revId": "1bf0855e47c2fd5c505efe9c74cf395c74fc2a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de01e96_fcc67acc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T13:06:44Z",
+      "side": 1,
+      "message": "style: early return instead?",
+      "revId": "1bf0855e47c2fd5c505efe9c74cf395c74fc2a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5175258a_a2656329",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T13:06:44Z",
+      "side": 1,
+      "message": "Maybe the comment should say that to remove a \"null\" String should be passed?",
+      "revId": "1bf0855e47c2fd5c505efe9c74cf395c74fc2a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e4ecde_d641fecc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T13:06:44Z",
+      "side": 1,
+      "message": "style: empty line above?",
+      "revId": "1bf0855e47c2fd5c505efe9c74cf395c74fc2a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f553642c_8afde6d6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-22T13:06:44Z",
+      "side": 1,
+      "message": "Why not an HTMLDivElement? and rename the member \"container\" - that would match what we usually do. p elements have margins added by Blink [1] so maybe that will need to be changed in the local stylesheet.\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/html.css?rcl\u003d656e6c9b224b3545200ffbd06828befc3f41b809\u0026l\u003d66",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 29
+      },
+      "revId": "1bf0855e47c2fd5c505efe9c74cf395c74fc2a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
