@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6d963c46_89acf7cf",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2018-01-22T07:24:17Z",
+      "side": 1,
+      "message": "I think these processes should be all OK so I use dcheck for all of them.\nJust like what the code do before. e.g. @136\nThey are unwrap handle and wrap handle actions.",
+      "parentUuid": "c6a2d39a_909f680e",
+      "revId": "e33473c0011ca94841a9427c6fbc9765b6946d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0361db16_74515b72",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 21
