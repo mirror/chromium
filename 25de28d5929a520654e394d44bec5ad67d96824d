@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665c5cbe_de2ce311",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-22T06:47:06Z",
+      "side": 1,
+      "message": "Do you mean we no longer need to persist state? saveState_ is called from two other places. Do we also need to remove those calls?\n\nAlso what happens to remember checkbox? Does it become to do nothing? Should we remove it?",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 557,
+        "endChar": 76
+      },
+      "revId": "25de28d5929a520654e394d44bec5ad67d96824d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
