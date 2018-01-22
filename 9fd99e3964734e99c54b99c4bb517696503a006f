@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8ac0cb0_ebb256bc",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-22T16:17:31Z",
+      "side": 1,
+      "message": "Good suggestion! Applied.",
+      "parentUuid": "6bd93371_aa61fbcf",
+      "revId": "9fd99e3964734e99c54b99c4bb517696503a006f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88a9458_b5a6b501",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9fd99e3964734e99c54b99c4bb517696503a006f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2740ab67_740c374b",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-22T16:17:31Z",
+      "side": 1,
+      "message": "Yes, that is better! Renamed.",
+      "parentUuid": "c88a9458_b5a6b501",
+      "revId": "9fd99e3964734e99c54b99c4bb517696503a006f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
