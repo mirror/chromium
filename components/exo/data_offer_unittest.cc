@@ -80,7 +80,9 @@ class TestFileHelper : public FileHelper {
   bool GetUrlFromFileSystemUrl(const std::string& app_id,
                                const GURL& url,
                                GURL* out) override {
-    return false;
+    *out =
+        GURL("content://org.chromium.arc.chromecontentprovider/path/to/file1");
+    return true;
   }
 
  private:
@@ -165,6 +167,26 @@ TEST_F(DataOfferTest, SetFileDropData) {
   EXPECT_EQ("text/uri-list", delegate.mime_types()[0]);
 }
 
+TEST_F(DataOfferTest, SetPickleDropData) {
+  TestDataOfferDelegate delegate;
+  DataOffer data_offer(&delegate);
+
+  TestFileHelper file_helper;
+  ui::OSExchangeData data;
+
+  base::Pickle pickle;
+  pickle.WriteUInt32(1);  // num files
+  pickle.WriteString("filesystem:chrome-extension://path/to/file1");
+  pickle.WriteInt64(1000);   // file size
+  pickle.WriteString("id");  // filesystem id
+  data.SetPickledData(
+      ui::Clipboard::GetFormatType("chromium/x-file-system-files"), pickle);
+  data_offer.SetDropData(&file_helper, data);
+
+  EXPECT_EQ(1u, delegate.mime_types().size());
+  EXPECT_EQ("text/uri-list", delegate.mime_types()[0]);
+}
+
 TEST_F(DataOfferTest, ReceiveString) {
   TestDataOfferDelegate delegate;
   DataOffer data_offer(&delegate);
@@ -201,6 +223,35 @@ TEST_F(DataOfferTest, ReceiveUriList) {
   base::string16 result;
   ASSERT_TRUE(ReadString16(std::move(read_pipe), &result));
   EXPECT_EQ(base::ASCIIToUTF16("file:///test/downloads/file"), result);
+}
+
+TEST_F(DataOfferTest, ReceiveUriListFromPickle) {
+  TestDataOfferDelegate delegate;
+  DataOffer data_offer(&delegate);
+
+  TestFileHelper file_helper;
+  ui::OSExchangeData data;
+
+  base::Pickle pickle;
+  pickle.WriteUInt32(1);  // num files
+  pickle.WriteString("filesystem:chrome-extension://path/to/file1");
+  pickle.WriteInt64(1000);   // file size
+  pickle.WriteString("id");  // filesystem id
+  data.SetPickledData(
+      ui::Clipboard::GetFormatType("chromium/x-file-system-files"), pickle);
+  data_offer.SetDropData(&file_helper, data);
+
+  base::ScopedFD read_pipe;
+  base::ScopedFD write_pipe;
+  CreatePipe(&read_pipe, &write_pipe);
+
+  data_offer.Receive("text/uri-list", std::move(write_pipe));
+  base::string16 result;
+  ASSERT_TRUE(ReadString16(std::move(read_pipe), &result));
+  EXPECT_EQ(
+      base::ASCIIToUTF16(
+          "content://org.chromium.arc.chromecontentprovider/path/to/file1"),
+      result);
 }
 
 TEST_F(DataOfferTest, SetClipboardData) {
