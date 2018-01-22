@@ -16,10 +16,15 @@
   "offline_enabled": true,
   "kiosk_secondary_apps": [
     {"id": "ihplaomghjbeafnpnjkhppmfpnmdihgd"},
+    {"id": "ihplaomghjbeafnpnjkhppmfpnmdihgd",
+     "enabled_on_launch": false},
+    {"id": "abcdabcdabcdabcdabcdabcdabcdabcd",
+     "enabled_on_launch": true},
     {"id": "abcdabcdabcdabcdabcdabcdabcdabcd",
      "enabled_on_launch": false},
     {"id": "fiehokkcgaojmbhfhlpiheggjhaedjoc",
-     "enabled_on_launch": true}
+     "enabled_on_launch": false},
+    {"id": "fiehokkcgaojmbhfhlpiheggjhaedjoc"}
   ],
   "permissions": [
     "power"
