@@ -35,8 +35,10 @@ void WindowPortForShutdown::OnWillMoveChild(size_t current_index,
 
 void WindowPortForShutdown::OnVisibilityChanged(bool visible) {}
 
-void WindowPortForShutdown::OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                              const gfx::Rect& new_bounds) {}
+void WindowPortForShutdown::OnDidChangeBounds(
+    const gfx::Rect& old_bounds,
+    const gfx::Rect& new_bounds,
+    const viz::LocalSurfaceId& id_for_autoresize) {}
 
 void WindowPortForShutdown::OnDidChangeTransform(
     const gfx::Transform& old_transform,
@@ -62,6 +64,8 @@ viz::SurfaceId WindowPortForShutdown::GetSurfaceId() const {
 }
 
 void WindowPortForShutdown::AllocateLocalSurfaceId() {}
+void WindowPortForShutdown::SetLocalSurfaceId(
+    const viz::LocalSurfaceId& local_surface_id) {}
 
 const viz::LocalSurfaceId& WindowPortForShutdown::GetLocalSurfaceId() {
   return local_surface_id_;

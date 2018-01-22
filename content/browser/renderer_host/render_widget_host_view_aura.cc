@@ -2047,7 +2047,12 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 }
 
 void RenderWidgetHostViewAura::WasResized() {
-  window_->AllocateLocalSurfaceId();
+  viz::LocalSurfaceId id_for_auto_resize;
+  GetLocalSurfaceIdForAutoResize(&id_for_auto_resize);
+  if (id_for_auto_resize.is_valid())
+    window_->SetLocalSurfaceId(id_for_auto_resize);
+  else
+    window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
   if (host_->auto_resize_enabled()) {
@@ -2361,6 +2366,22 @@ viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {
 
 viz::LocalSurfaceId RenderWidgetHostViewAura::GetLocalSurfaceId() const {
   return window_->GetLocalSurfaceId();
+}
+
+void RenderWidgetHostViewAura::GetLocalSurfaceIdForAutoResize(
+    viz::LocalSurfaceId* surface_id) const {
+  if (!host_->auto_resize_enabled())
+    return;
+
+  auto id_for_auto_resize = host_->last_auto_resize_surface_id();
+
+  // If our auto-resize ID does not have the same parent ID as our current ID,
+  // we've hit a conflict and should ignore the renderer-provided ID.
+  if (id_for_auto_resize.parent_sequence_number() !=
+      GetLocalSurfaceId().parent_sequence_number())
+    return;
+
+  *surface_id = id_for_auto_resize;
 }
 
 void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
