@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01d438fc_fc81966b",
+        "filename": "chrome/test/data/vr/e2e_test_files/resources/webxr_boilerplate.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-22T21:53:07Z",
+      "side": 1,
+      "message": "As written this loop isn\u0027t doing anything useful. You could safely drop it.",
+      "revId": "52a30eff130e951833edcfdaa0ecaf1346e66fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
