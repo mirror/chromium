@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be9ab590_239672f2",
+        "filename": "android_webview/browser/tracing/aw_trace_event_args_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-22T22:18:48Z",
+      "side": 1,
+      "message": "It seems like it\u0027d be good to share the implementation of the filtering with Chrome, and just have a separate whitelist - is it possible to move the filtering implementation into the lower-level base tracing code and just have the whitelist be provided?",
+      "revId": "ee99a88130c5202848a38cf474653d7e0f36bd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
