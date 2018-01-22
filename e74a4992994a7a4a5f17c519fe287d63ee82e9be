@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66b88f8_7151d901",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T12:51:44Z",
+      "side": 1,
+      "message": "I assume that there\u0027s a concrete motivation for componentizing this code. Can you detail it here?",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "e74a4992994a7a4a5f17c519fe287d63ee82e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
