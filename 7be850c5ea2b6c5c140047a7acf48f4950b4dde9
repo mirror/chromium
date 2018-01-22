@@ -175,6 +175,30 @@
       "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939239bf_74a9115e",
+        "filename": "components/metrics/metrics_service_accessor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T20:14:02Z",
+      "side": 1,
+      "message": "I removed the comment. Thanks for taking on making the switch work!",
+      "parentUuid": "cee998eb_6199922d",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "7be850c5ea2b6c5c140047a7acf48f4950b4dde9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
