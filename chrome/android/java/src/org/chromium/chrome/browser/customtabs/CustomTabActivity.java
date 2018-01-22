@@ -241,6 +241,7 @@ public class CustomTabActivity extends ChromeActivity {
             // will deduplicate additions, so it is safe to add both here as well as in
             // initializeMainTab().
             PageLoadMetrics.addObserver(mMetricsObserver);
+            PageLoadMetrics.addObserver(mFirstContentfulPaintObserver);
             tab.addObserver(mTabObserver);
         }
 
@@ -255,8 +256,25 @@ public class CustomTabActivity extends ChromeActivity {
         public void tabRemoved(Tab tab) {
             tab.removeObserver(mTabObserver);
             PageLoadMetrics.removeObserver(mMetricsObserver);
+            PageLoadMetrics.removeObserver(mFirstContentfulPaintObserver);
         }
     };
+
+    /**
+     * Notify the CustomTabObserver when we first contentful paint occurs. This is used to
+     * The CustomTabObserver uses the first contentful paint metric as part of its heuristic to
+     * determine when to send navigation information. See {@link NavigationInfoCaptureTrigger}.
+     */
+    private final PageLoadMetrics.Observer mFirstContentfulPaintObserver =
+            new PageLoadMetrics.Observer() {
+                @Override
+                public void onFirstMeaningfulPaint(WebContents webContents, long navigationId,
+                        long navigationStartTick, long firstContentfulPaintMs) {
+                    if (webContents != getActivityTab().getWebContents()) return;
+
+                    mTabObserver.onFirstMeaningfulPaint(getActivityTab());
+                }
+            };
 
     @Override
     protected Drawable getBackgroundDrawable() {
@@ -631,6 +649,7 @@ public class CustomTabActivity extends ChromeActivity {
         // Immediately add the observer to PageLoadMetrics to catch early events that may
         // be generated in the middle of tab initialization.
         PageLoadMetrics.addObserver(mMetricsObserver);
+        PageLoadMetrics.addObserver(mFirstContentfulPaintObserver);
         tab.addObserver(mTabObserver);
 
         prepareTabBackground(tab);
