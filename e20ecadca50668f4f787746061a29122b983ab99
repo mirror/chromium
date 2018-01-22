@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2e8d0b8_5249b27a",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done, since it has a return type now it looks more like a getter so I have renamed it as such.",
+      "parentUuid": "b448b88e_b5501036",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec7f66b_a2b49c9b",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -81,6 +105,24 @@
       "revId": "e20ecadca50668f4f787746061a29122b983ab99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0987074e_80de3170",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "got rid of the fixture",
+      "parentUuid": "833fe8f3_c1d9f3a9",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +173,30 @@
     },
     {
       "key": {
+        "uuid": "c6b516d3_178ce07d",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea92605_e5b74fab",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ebdd52_e9a47a33",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -151,6 +217,30 @@
       "revId": "e20ecadca50668f4f787746061a29122b983ab99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818a651d_8e84845c",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ebdd52_e9a47a33",
+      "range": {
+        "startLine": 29,
+        "startChar": 28,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +267,30 @@
     },
     {
       "key": {
+        "uuid": "68f04e5e_361f2d4f",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629266ff_1373785b",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9ea7149_db6cbe55",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -194,6 +308,24 @@
     },
     {
       "key": {
+        "uuid": "0e74b589_b5b0324e",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ea7149_db6cbe55",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d4a6f90_9ca8178f",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -208,6 +340,24 @@
       "revId": "e20ecadca50668f4f787746061a29122b983ab99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e313edd1_9c1fd498",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d4a6f90_9ca8178f",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +384,30 @@
     },
     {
       "key": {
+        "uuid": "d3feef49_00e39e6c",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef799cc_a426b38e",
+      "range": {
+        "startLine": 173,
+        "startChar": 23,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a947f8b_fdcfd20e",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -257,6 +431,30 @@
     },
     {
       "key": {
+        "uuid": "ce30035f_0170fd06",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a947f8b_fdcfd20e",
+      "range": {
+        "startLine": 188,
+        "startChar": 23,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef401722_642e5e07",
         "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
         "patchSetId": 2
@@ -271,6 +469,24 @@
       "revId": "e20ecadca50668f4f787746061a29122b983ab99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1297f25d_a8735c8b",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef401722_642e5e07",
+      "revId": "e20ecadca50668f4f787746061a29122b983ab99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
