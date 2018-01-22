@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ca9209df_b82a8e0a",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-22T19:41:49Z",
+      "side": 1,
+      "message": "Yes, my thinking is inline with Tommi\u0027s. It\u0027s further supported by reports from YouTube that they have nearly 50% success rates with simply retrying when they detect playback errors (of which audio renderer error is the most common). I\u0027ve expanded the comment to explain this.\n\nIt\u0027s possible we mask something, but since we\u0027re just calling Open() again without changing any parameters, we\u0027re unlikely to get a different answer in the event of programmer error. So the chances we mask an error where _we\u0027re_ the ones in the wrong, seems pretty low.",
+      "parentUuid": "0d2a8d18_0e18da36",
+      "revId": "8b6f38aacfc0851f0d3fb3e73fbffd9509664c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c8f9d4_0137c7ea",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 2
