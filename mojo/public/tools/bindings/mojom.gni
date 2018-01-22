@@ -258,6 +258,11 @@ if (enable_mojom_typemapping) {
 #   overridden_deps_blink (optional)
 #   component_deps_blink (optional)
 #       These two parameters are the blink variants of the previous two.
+#
+# check_includes_blink (optional)
+#     Overrides the check_includes variable for the blink variant.
+#     If check_includes_blink is not defined, the check_includes variable
+#     retains its original value.
 template("mojom") {
   assert(
       defined(invoker.sources) || defined(invoker.deps) ||
@@ -862,6 +867,14 @@ template("mojom") {
           }
           public_deps += invoker.component_deps
         }
+      }
+
+      # Outside of bindings_configuration.for_blink so that the
+      # check_includes_blink variable is always marked as used.
+      if (defined(invoker.check_includes_blink) &&
+          defined(bindings_configuration.for_blink) &&
+          bindings_configuration.for_blink) {
+        check_includes = invoker.check_includes_blink
       }
       foreach(typemap, active_typemaps) {
         _typemap_config = {
