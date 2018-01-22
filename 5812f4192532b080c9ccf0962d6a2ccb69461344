@@ -94,6 +94,30 @@
       "revId": "5812f4192532b080c9ccf0962d6a2ccb69461344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7211ce_67876e24",
+        "filename": "services/viz/public/cpp/compositing/paint_filter_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T22:44:36Z",
+      "side": 1,
+      "message": "You would make the |data| field in PaintFilter nullable:\n\n  struct PaintFilter {\n    array\u003cuint8\u003e? data;\n  };\n\nThen you\u0027d implement IsNull and SetToNull on the ArrayTraits above (see mojo/public/cpp/bindings/array_traits.h), but hold that thought...\n\nI don\u0027t think PaintFilterBuffer (or its ArrayTraits) even has a good reason to exist. I suspect it is an artifact from a time when mojom type-mapping was even more awkward.\n\nAssuming you make the above mojom change, data() can just directly return a base::Optional\u003cstd::vector\u003cuint8_t\u003e\u003e (returning base::nullopt if serialization can\u0027t be completed), and ReadData() can be called with a base::Optional\u003cstd::vector\u003cuint8_t\u003e\u003e*. Read() can succeed with an empty filter if the resulting optional data object has no value.",
+      "parentUuid": "1d6afb16_a97df8b8",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "5812f4192532b080c9ccf0962d6a2ccb69461344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
