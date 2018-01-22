@@ -264,6 +264,7 @@ static_library("content_shell_lib") {
     "//net:test_support",
     "//ppapi/features",
     "//sandbox",
+    "//services/network/public/cpp:network_features",
     "//services/service_manager/public/cpp",
     "//services/test/echo:lib",
     "//services/test/echo/public/interfaces",
