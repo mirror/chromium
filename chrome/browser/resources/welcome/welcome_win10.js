@@ -31,8 +31,9 @@ Polymer({
 
   ready: function() {
     this.isCombined = false;
-    this.isAccelerated = false;
+    this.isAccelerated = loadTimeData.getBoolean('accelerated_flow_enabled');
 
+    // The accelerated flow can be overridden with a query parameter.
     const FLOWTYPE_KEY = 'flowtype';
     const FLOW_TYPE_MAP = {'regular': false, 'accelerated': true};
     var params = new URLSearchParams(location.search);
