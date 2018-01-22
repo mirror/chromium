@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bb61268_946cb36f",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T18:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "491dece5_69a56002",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "21e201eb5fc0183642258d9f8e39aa243a551811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c6a4c0_7a4fca26",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "022727bb_efbd0ac4",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T18:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c6a4c0_7a4fca26",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 5
+      },
+      "revId": "21e201eb5fc0183642258d9f8e39aa243a551811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "986032d3_35d13e45",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-10T14:29:17Z",
       "side": 1,
       "message": "If so, then on iOS11 can this just be a typedef to NSDirectionalEdgeInsets?",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 58
+      },
+      "revId": "21e201eb5fc0183642258d9f8e39aa243a551811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a694110_a410f6b7",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T18:46:52Z",
+      "side": 1,
+      "message": "Unfortunately, no: it\u0027s a struct, so it needs to be defined at compile-time. But when we drop support for iOS 10, we\u0027d be able to replace this with NSDirectionalEdgeInsets.",
+      "parentUuid": "986032d3_35d13e45",
       "range": {
         "startLine": 18,
         "startChar": 35,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cc7209e4_b836513e",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T18:46:52Z",
+      "side": 1,
+      "message": "This mimics UIEdgeInsetsMake, but I can remove the inline if you insist. IMHO it makes sense to inline since this is just an alias to the struct declaration.",
+      "parentUuid": "7db1b111_b8a0e7de",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "21e201eb5fc0183642258d9f8e39aa243a551811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98990a35_913e7b7e",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.mm",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-10T14:29:17Z",
       "side": 1,
       "message": "This means that AddSomeConstraints can be just\n\nAddSameConstraintsToSides(view1, view2, Top | Bottom | Leading | Trailing)\n\nright?",
+      "range": {
+        "startLine": 154,
+        "startChar": 5,
+        "endLine": 154,
+        "endChar": 30
+      },
+      "revId": "21e201eb5fc0183642258d9f8e39aa243a551811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673a6fbd_256cb538",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-22T18:46:52Z",
+      "side": 1,
+      "message": "Technically yes, but AddSameLayoutConstraintsToSidesWithInsets involves creating a mutable array. I feel like if we care about the added performance from calling -activateConstraints: as little times as possible, maybe we should care about not using a mutable array when we can use an immutable one instead. \nI\u0027m don\u0027t feel strongly about this and if you do, I\u0027ll change other helpers.",
+      "parentUuid": "98990a35_913e7b7e",
       "range": {
         "startLine": 154,
         "startChar": 5,
