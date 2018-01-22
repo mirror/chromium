@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f597c8f4_fc0afee7",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "In Windows, Mac, and NSS, this CL has the additional side effect of querying each certificate against the OS store for is_issued_by_known_root, but because Android queries it in X509Util.java, Android still only looks at the end of the chain. Is this intentional?",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2cf17e_b2589f6e",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "[I assume this path cannot be empty here.]",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16718071_e91eb00a",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "In Windows, Mac, and NSS, this CL has the additional side effect of querying each certificate against the OS store for is_issued_by_known_root. This file still only looks at the end of the chain. Is this intentional?",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc525e2_e680d992",
+        "filename": "net/cert/cert_verify_proc_ios.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "[I assume this list cannot be empty here.]",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8051b4b_9e47c2a5",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "This is a behavior change in that we\u0027ll look for known roots anywhere in the change now. I\u0027m assuming this is desirable/intentional. (Does indeed seem like a reasonable thing to do.)",
+      "range": {
+        "startLine": 390,
+        "startChar": 62,
+        "endLine": 390,
+        "endChar": 80
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9bcd4a_e158c87c",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "Ditto re behavior change.",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7900206d_2f39fd4b",
+        "filename": "net/cert/known_roots_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 1,
+      "message": "Nit: Not that it matters due to the empty check, but known_roots_.data().",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

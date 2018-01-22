@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9004ecf0_6ca8193b",
+        "filename": "net/cert/cert_verify_proc_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 0,
+      "message": "Ditto re behavior change.",
+      "range": {
+        "startLine": 276,
+        "startChar": 32,
+        "endLine": 276,
+        "endChar": 49
+      },
+      "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebb59c3_f317109c",
+        "filename": "net/cert/known_roots_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T18:42:44Z",
+      "side": 0,
+      "message": "I see there is a sizable chunk of data points for \"Not AuthRoot, but built-in\". I\u0027m assuming we don\u0027t care because we\u0027ll cover those by way of the new logic?",
+      "revId": "42e6aaa10ad61136640ce075cbd47264465c89be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
