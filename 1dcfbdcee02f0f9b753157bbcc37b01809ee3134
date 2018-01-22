@@ -469,6 +469,30 @@
       "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafe16d0_d2e675ae",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2018-01-22T06:14:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a2dc6f_a525732d",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 174,
+        "endChar": 64
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
