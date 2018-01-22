@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb223d79_2f9128c3",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "Thanks for pointing out. Done.",
+      "parentUuid": "3f8067c9_00485dcc",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "437270ac_d873f1b8",
         "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-22T22:03:27Z",
       "side": 1,
       "message": "Are you going to remove this?",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dbfb9e_aa2edb1f",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "I\u0027ll make another CL to remove this. So in case something is wrong we can just revert that CL. BTW, the test is currently still running in other bots.",
+      "parentUuid": "437270ac_d873f1b8",
       "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "625137c3_f3d1ed0e",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "AFAIK that |dir| doesn\u0027t exist before this statement. But the code path is complex (at least complex enough to fool me on where is |icon_path| before the bug 794821 surface).\n\nSince the test shouldn\u0027t care whether it exists or not, I\u0027ve written the statement in this way. But I need to be sure that the icon isn\u0027t there before the test.",
+      "parentUuid": "6f07bae6_e1a879b5",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30be3221_82cabadb",
         "filename": "chrome/browser/profiles/profile_info_cache_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b64d7c2_fa238e4e",
+        "filename": "chrome/browser/profiles/profile_info_cache_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30be3221_82cabadb",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "db8e6fe9_91abf3d8",
+        "filename": "chrome/browser/profiles/profile_info_cache_unittest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58392763_a7e9e5cb",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef563c7a_bb1d9144",
         "filename": "chrome/test/base/testing_profile_manager.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35b4652_e553c756",
+        "filename": "chrome/test/base/testing_profile_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-22T22:50:15Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing out the new syntax. (I\u0027ve seen that in cxx, but have forgotten it.)",
+      "parentUuid": "ef563c7a_bb1d9144",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
