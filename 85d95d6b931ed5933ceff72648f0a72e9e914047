@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c215b9a_9ff6768c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-22T23:53:47Z",
+      "side": 1,
+      "message": "configurations",
+      "range": {
+        "startLine": 11,
+        "startChar": 55,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "85d95d6b931ed5933ceff72648f0a72e9e914047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75c569d_d0335e99",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-22T23:53:47Z",
+      "side": 1,
+      "message": "nit: add {}",
+      "revId": "85d95d6b931ed5933ceff72648f0a72e9e914047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
