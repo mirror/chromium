@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e58a579f_507c8f88",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-22T23:39:25Z",
+      "side": 1,
+      "message": "So in this file we\u0027d need to have a map of frame to ui::AXTree?",
+      "parentUuid": "2dc7bd8e_9907d922",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6862f_48780293",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-22T14:57:49Z",
       "side": 1,
       "message": "What is this doing? (It looks a bit strange to manipulate page settings while JavaScript is calling a DOM method.)",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3832d02_48b8fcd0",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-22T23:39:25Z",
+      "side": 1,
+      "message": "We should probably add a TODO here to create a finer-grained method for this.\n\nThis enabled the accessibility tree to be computed for this page.",
+      "parentUuid": "6bc6862f_48780293",
       "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
