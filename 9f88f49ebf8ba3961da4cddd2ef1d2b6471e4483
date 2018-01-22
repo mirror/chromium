@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "031b2458_5cd77777",
+        "filename": "ash/system/power/power_button_menu_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T20:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cab5ce5_567bf645",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed193cf8_4d7bc25a",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ed5e13b_6579f66d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T20:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed193cf8_4d7bc25a",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fed36014_03d8409d",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-20T20:20:07Z",
       "side": 1,
       "message": "This test is about: dismiss menu when attaching tablet. It might worthwhile to test not showing menu attached at first place. Or maybe, (1) attaching cannot show (2) detaching can show (3) attaching close the menu.",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a20e8b_82863953",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T20:02:10Z",
+      "side": 1,
+      "message": "I think this test did what you mentioned in different order. (1) detached can show (2) attached close the menu (3) attached cannot show. Will this be fine?",
+      "parentUuid": "fed36014_03d8409d",
       "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

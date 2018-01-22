@@ -880,6 +880,30 @@
     },
     {
       "key": {
+        "uuid": "d2c8c0b5_00cfc5db",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-22T20:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e64e37_3949d914",
+      "range": {
+        "startLine": 698,
+        "startChar": 25,
+        "endLine": 698,
+        "endChar": 64
+      },
+      "revId": "c9fdb3185a62473abba13aa4a678e06c64b68be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4324ca_7da72c7a",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
