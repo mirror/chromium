@@ -57,13 +57,15 @@ void AddVariationHeaders(const std::unique_ptr<net::URLFetcher>& fetcher) {
 //     urls: {
 //       url : <current_url>
 //     }
+//     // timestamp_usec is the timestamp for the page visit time.
+//     timestamp_usec: <visit_time>
 //     // stream_type = 1 corresponds to zero suggest suggestions.
 //     stream_type: 1
 //     // experiment_id is only set when <experiment_id> is well defined.
 //     experiment_id: <experiment_id>
 //
-std::string FormatRequestBodyExperimentalService(
-    const std::string& current_url) {
+std::string FormatRequestBodyExperimentalService(const std::string& current_url,
+                                                 const base::Time& visit_time) {
   auto request = std::make_unique<base::DictionaryValue>();
   auto url_list = std::make_unique<base::ListValue>();
   auto url_entry = std::make_unique<base::DictionaryValue>();
@@ -72,6 +74,9 @@ std::string FormatRequestBodyExperimentalService(
   request->Set("urls", std::move(url_list));
   // stream_type = 1 corresponds to zero suggest suggestions.
   request->SetInteger("stream_type", 1);
+  request->SetString(
+      "timestamp_usec",
+      std::to_string((visit_time - base::Time()).InMicroseconds()));
   const int experiment_id =
       OmniboxFieldTrial::GetZeroSuggestRedirectToChromeExperimentId();
   if (experiment_id >= 0)
@@ -96,13 +101,14 @@ ContextualSuggestionsService::~ContextualSuggestionsService() {}
 
 void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
     const std::string& current_url,
+    const base::Time& visit_time,
     const TemplateURLService* template_url_service,
     net::URLFetcherDelegate* fetcher_delegate,
     ContextualSuggestionsCallback callback) {
   const GURL experimental_suggest_url =
       ExperimentalContextualSuggestionsUrl(current_url, template_url_service);
   if (experimental_suggest_url.is_valid())
-    CreateExperimentalRequest(current_url, experimental_suggest_url,
+    CreateExperimentalRequest(current_url, visit_time, experimental_suggest_url,
                               fetcher_delegate, std::move(callback));
   else
     CreateDefaultRequest(current_url, template_url_service, fetcher_delegate,
@@ -234,6 +240,7 @@ void ContextualSuggestionsService::CreateDefaultRequest(
 
 void ContextualSuggestionsService::CreateExperimentalRequest(
     const std::string& current_url,
+    const base::Time& visit_time,
     const GURL& suggest_url,
     net::URLFetcherDelegate* fetcher_delegate,
     ContextualSuggestionsCallback callback) {
@@ -272,7 +279,8 @@ void ContextualSuggestionsService::CreateExperimentalRequest(
           }
         })");
   const int kFetcherID = 1;
-  std::string request_body = FormatRequestBodyExperimentalService(current_url);
+  std::string request_body =
+      FormatRequestBodyExperimentalService(current_url, visit_time);
   std::unique_ptr<net::URLFetcher> fetcher =
       net::URLFetcher::Create(kFetcherID, suggest_url,
                               /*request_type=*/net::URLFetcher::POST,

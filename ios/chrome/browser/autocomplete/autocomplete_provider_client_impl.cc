@@ -144,6 +144,10 @@ AutocompleteProviderClientImpl::GetBuiltinsToProvideAsUserTypes() {
           base::ASCIIToUTF16(kChromeUIVersionURL)};
 }
 
+base::Time AutocompleteProviderClientImpl::GetLastVisitTimestamp() const {
+  return base::Time();
+}
+
 bool AutocompleteProviderClientImpl::IsOffTheRecord() const {
   return browser_state_->IsOffTheRecord();
 }
