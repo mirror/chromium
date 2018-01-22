@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b35e1ac_3a86e2a5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T16:37:57Z",
+      "side": 1,
+      "message": "nit: 3rd?",
+      "range": {
+        "startLine": 304,
+        "startChar": 5,
+        "endLine": 304,
+        "endChar": 8
+      },
+      "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d55aef25_75a26a59",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2018-01-22T07:54:15Z",
       "side": 1,
       "message": "Just FYI:\n\nWe can share MutableData() directly with V8, and in that way, we do not need to copy back the data.  However, in that case, we need to use DOMArrayBuffer to externalize the v8::ArrayBuffer.  I\u0027m not sure which is faster, nor I do not understand why the original implementation didn\u0027t share the underlying buffer.",
+      "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc622c9e_05a82151",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T16:37:57Z",
+      "side": 1,
+      "message": "If user can keep the JS reference to |js_output_raw_ptrs| in one way or another, it can be a problem. Then user can try to send the array via MessagePort to another thread.\n\nIf there is way to prevent this while we can avoid the copy, I would love to know.",
+      "parentUuid": "d55aef25_75a26a59",
       "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
