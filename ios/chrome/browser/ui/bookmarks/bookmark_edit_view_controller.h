@@ -30,8 +30,11 @@ class ChromeBrowserState;
 - (BOOL)bookmarkEditor:(BookmarkEditViewController*)controller
     shoudDeleteAllOccurencesOfBookmark:(const bookmarks::BookmarkNode*)bookmark;
 
-// Called when the controller should be dismissed.
-- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller;
+// Called when the controller should be dismissed.  Scroll the tableView to
+// |bookmark| in case |bookmark| is outside of the visible area.
+- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller
+                        bookmarkNode:
+                            (const bookmarks::BookmarkNode*)bookmarkNode;
 
 // Called when the controller is going to commit the title or URL change.
 - (void)bookmarkEditorWillCommitTitleOrUrlChange:

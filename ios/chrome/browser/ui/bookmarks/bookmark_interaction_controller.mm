@@ -272,7 +272,8 @@ using bookmarks::BookmarkNode;
   return YES;
 }
 
-- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller {
+- (void)bookmarkEditorWantsDismissal:(BookmarkEditViewController*)controller
+                        bookmarkNode:(const BookmarkNode*)bookmarkNode {
   [self dismissBookmarkEditorAnimated:YES];
 }
 

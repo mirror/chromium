@@ -123,11 +123,16 @@ class ChromeBrowserState;
 // Returns the row position that is visible.
 - (CGFloat)contentPosition;
 
-// Scrolls the table view to the desired row position.
+// Scrolls the tableView to the desired row position.
 - (void)setContentPosition:(CGFloat)position;
 
 // Called when back or done button of navigation bar is tapped.
 - (void)navigateAway;
+
+// Scrolls the tableView to the bookmark node if it is outside the visible
+// area.
+- (void)scrollToBookmarkIfNotVisible:
+    (const bookmarks::BookmarkNode*)bookmarkNode;
 
 @end
 
