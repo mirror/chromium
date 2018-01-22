@@ -71,6 +71,7 @@ class ChromeDownloadManagerDelegate
   bool ShouldOpenDownload(
       content::DownloadItem* item,
       const content::DownloadOpenDelayedCallback& callback) override;
+  bool InterceptDownloadIfApplicable(const std::string& mime_type) override;
   bool GenerateFileHash() override;
   void GetSaveDir(content::BrowserContext* browser_context,
                   base::FilePath* website_save_dir,

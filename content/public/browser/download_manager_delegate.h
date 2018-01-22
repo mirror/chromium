@@ -122,6 +122,10 @@ class CONTENT_EXPORT DownloadManagerDelegate {
   virtual bool ShouldOpenDownload(DownloadItem* item,
                                   const DownloadOpenDelayedCallback& callback);
 
+  // Checks and hands off the downloading to be handled by another system based
+  // on mime type.
+  virtual bool InterceptDownloadIfApplicable(const std::string& mime_type);
+
   // Returns true if we need to generate a binary hash for downloads.
   virtual bool GenerateFileHash();
 

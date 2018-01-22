@@ -509,6 +509,11 @@ bool ChromeDownloadManagerDelegate::ShouldOpenDownload(
   return true;
 }
 
+bool ChromeDownloadManagerDelegate::InterceptDownloadIfApplicable(
+    const std::string& mime_type) {
+  return false;
+}
+
 bool ChromeDownloadManagerDelegate::GenerateFileHash() {
 #if defined(FULL_SAFE_BROWSING)
   return profile_->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled) &&
