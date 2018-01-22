@@ -5100,6 +5100,21 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="ForceRestartNotificationShown">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="ForceRestartNotification_AutoRestart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="ForceRestartNotification_Restart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
 <action name="ForeColor">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -15819,6 +15834,26 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="RecurringRestartNotificationShown">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RecurringRestartNotification_AutoRestart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RecurringRestartNotification_Ignore">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RecurringRestartNotification_Restart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
 <action name="Redo">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -15883,6 +15918,26 @@ should be able to be added at any place in this file.
 <action name="ResetProfile">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="RestartOnIdleNotificationShown">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RestartOnIdleNotification_AutoRestart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RestartOnIdleNotification_Ignore">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="RestartOnIdleNotification_Restart">
+  <owner>grt@chromium.org</owner>
+  <description>Please enter the description of the metric.</description>
 </action>
 
 <action name="RestoreTab">
