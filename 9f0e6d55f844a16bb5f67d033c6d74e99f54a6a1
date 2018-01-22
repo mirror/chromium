@@ -16,6 +16,24 @@
       "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33ef5b7_0622a5b2",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-22T20:07:01Z",
+      "side": 0,
+      "message": "But isn\u0027t it redundant with the \"downloading https://foo/package_version\" output in the next line? What does this line add that isn\u0027t already there?\n\n(I\u0027m happy to keep this line, just trying to understand the reasoning.)",
+      "parentUuid": "27cfbca1_6343bcdb",
+      "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

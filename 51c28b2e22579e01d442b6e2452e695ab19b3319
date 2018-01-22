@@ -16,6 +16,24 @@
       "revId": "51c28b2e22579e01d442b6e2452e695ab19b3319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa983ca_d4ed2aa5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-22T20:07:01Z",
+      "side": 1,
+      "message": "It was for less output in the nothing-happens cases, I don\u0027t think there is one for the \"hook does something\" case. (I might be misremembering.)",
+      "parentUuid": "bec7ee15_6f8ae81d",
+      "revId": "51c28b2e22579e01d442b6e2452e695ab19b3319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
