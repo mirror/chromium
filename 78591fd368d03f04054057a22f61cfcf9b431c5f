@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c44a44_7f06225a",
+        "filename": "third_party/WebKit/Source/platform/mojo/InterfaceInvalidatorTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-22T15:25:45Z",
+      "side": 1,
+      "message": "nit: ++called;",
+      "revId": "78591fd368d03f04054057a22f61cfcf9b431c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3376691a_3747b3d5",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakInterfacePtr.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-22T15:25:45Z",
+      "side": 1,
+      "message": "std::string is interesting in Platform.  Is anyone using this function, or will users of it prefer a WTF::String description?",
+      "revId": "78591fd368d03f04054057a22f61cfcf9b431c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
