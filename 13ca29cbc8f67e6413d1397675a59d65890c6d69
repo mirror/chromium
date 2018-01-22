@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56a31625_7c06c655",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:31:43Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "revId": "13ca29cbc8f67e6413d1397675a59d65890c6d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
