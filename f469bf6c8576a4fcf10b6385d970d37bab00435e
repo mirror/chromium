@@ -22,6 +22,30 @@
       "revId": "f469bf6c8576a4fcf10b6385d970d37bab00435e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374ce114_7a159f27",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-22T19:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187e7d1e_7fb46e4b",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 516,
+        "endChar": 33
+      },
+      "revId": "f469bf6c8576a4fcf10b6385d970d37bab00435e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
