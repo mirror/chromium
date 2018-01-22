@@ -374,6 +374,24 @@
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90154df7_bd008283",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-22T16:44:08Z",
+      "side": 1,
+      "message": "It my subsequent patch, I promptly ran into a situation where it was indeed too awkward to use the UI wrapper. tl;dr - I think I\u0027m wrong here and working with model seems good.",
+      "parentUuid": "52f8800f_ba1050c0",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
