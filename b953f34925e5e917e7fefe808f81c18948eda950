@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "14ae4437_99a64938",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T23:28:14Z",
+      "side": 1,
+      "message": "I think mostly I didn\u0027t realize the talk of cross-signing in the bug only mattered when IsKnownRoot used some hard-coded list (that might get out of sync and so we can\u0027t rely on things getting chopped off) rather than the OS.",
+      "parentUuid": "e7ec9815_401d19d1",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
