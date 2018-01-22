@@ -128,6 +128,17 @@ public class VrTransitionUtils {
     }
 
     /**
+     * WebXR version of enterPresentationOrFail since the condition to check is different between
+     * the two APIs.
+     */
+    public static void enterPresentationOrFailXr(ContentViewCore cvc) {
+        enterPresentation(cvc);
+        Assert.assertTrue(VrTestFramework.pollJavaScriptBoolean(
+                "exclusiveSession != null", POLL_TIMEOUT_LONG_MS, cvc.getWebContents()));
+        Assert.assertTrue(TestVrShellDelegate.getVrShellForTesting().getWebVrModeEnabled());
+    }
+
+    /**
      * @return Whether the VR back button is enabled.
      */
     public static Boolean isBackButtonEnabled() {
