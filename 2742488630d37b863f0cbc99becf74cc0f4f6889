@@ -52,6 +52,24 @@
       "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b87e4e1_9e29f951",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-22T19:25:45Z",
+      "side": 1,
+      "message": "I was referring to the last sentence - re: \"profile types match\" - which wouldn\u0027t allow incognito out, so assumed I misunderstood.",
+      "parentUuid": "daf49e2d_8ca016d8",
+      "revId": "2742488630d37b863f0cbc99becf74cc0f4f6889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

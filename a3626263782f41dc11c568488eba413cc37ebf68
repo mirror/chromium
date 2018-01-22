@@ -22,6 +22,30 @@
       "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f963871e_c537b0f7",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-22T19:25:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure how it prefers them? It says, \"Either the profile type must match - regular to regular, for example - or it can be from incognito if the disposition is singleton.\" That is, it excludes switch-to-tab switching profile type, and excludes singleton going to incognito.",
+      "parentUuid": "9342db85_d5e8827a",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 59
+      },
+      "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
