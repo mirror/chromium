@@ -4588,7 +4588,7 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryDelete) {
       share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryLockFail) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockFail) {
   const GLuint texture_id = 1;
   gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
   EXPECT_TRUE(
@@ -4610,7 +4610,7 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryLockFail) {
       share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryDoubleInitError) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureDoubleInitError) {
   const GLuint texture_id = 1;
   gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
   EXPECT_EQ(GL_NO_ERROR, CheckError());
@@ -4618,10 +4618,40 @@ TEST_F(GLES2ImplementationTest, DiscardableMemoryDoubleInitError) {
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
 }
 
-TEST_F(GLES2ImplementationTest, DiscardableMemoryLockError) {
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockError) {
   const GLuint texture_id = 1;
   EXPECT_FALSE(gl_->LockDiscardableTextureCHROMIUM(texture_id));
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
+}
+
+TEST_F(GLES2ImplementationTest, DiscardableTextureLockCounting) {
+  const GLint texture_id = 1;
+  gl_->InitializeDiscardableTextureCHROMIUM(texture_id);
+  EXPECT_TRUE(
+      share_group_->discardable_texture_manager()->TextureIsValid(texture_id));
+
+  // Bind the texture.
+  gl_->BindTexture(GL_TEXTURE_2D, texture_id);
+  GLint bound_texture_id = 0;
+  gl_->GetIntegerv(GL_TEXTURE_BINDING_2D, &bound_texture_id);
+  EXPECT_EQ(texture_id, bound_texture_id);
+
+  // Lock the texture 3 more times (for 4 locks total).
+  for (int i = 0; i < 3; ++i) {
+    gl_->LockDiscardableTextureCHROMIUM(texture_id);
+  }
+
+  // Unlock 4 times. Only after the last unlock should the texture be unbound.
+  for (int i = 0; i < 4; ++i) {
+    gl_->UnlockDiscardableTextureCHROMIUM(texture_id);
+    bound_texture_id = 0;
+    gl_->GetIntegerv(GL_TEXTURE_BINDING_2D, &bound_texture_id);
+    if (i < 3) {
+      EXPECT_EQ(texture_id, bound_texture_id);
+    } else {
+      EXPECT_EQ(0, bound_texture_id);
+    }
+  }
 }
 
 #include "base/macros.h"

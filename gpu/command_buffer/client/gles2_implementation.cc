@@ -4673,6 +4673,11 @@ void GLES2Implementation::DeleteTexturesHelper(
         "glDeleteTextures", "id not created by this context.");
     return;
   }
+  UnbindTexturesHelper(n, textures);
+}
+
+void GLES2Implementation::UnbindTexturesHelper(GLsizei n,
+                                               const GLuint* textures) {
   for (GLsizei ii = 0; ii < n; ++ii) {
     share_group_->discardable_texture_manager()->FreeTexture(textures[ii]);
 
@@ -7140,6 +7145,14 @@ void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
                "Texture ID not initialized");
     return;
   }
+
+  // If we have removed all locks on the texture, we must unbind it ont he
+  // client side to match service-side behavior.
+  bool should_unbind_texture = false;
+  manager->UnlockTexture(texture_id, &should_unbind_texture);
+  if (should_unbind_texture)
+    UnbindTexturesHelper(1, &texture_id);
+
   helper_->UnlockDiscardableTextureCHROMIUM(texture_id);
 }
 
