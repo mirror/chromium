@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33d9eeca_bfcc0ce1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T17:10:07Z",
+      "side": 1,
+      "message": "I removed the Stacks and replaced the ModalDialogManager when going in/out VR.",
+      "parentUuid": "df06764a_278248b9",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "4da2ca5cd737b5d2e91f54fbed21a4bd5ae5c9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b9a303_8a20ef43",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bff73eb9_15b51ff5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T17:10:07Z",
+      "side": 1,
+      "message": "positiveButtonText and negativeButtonText are removed",
+      "parentUuid": "71b9a303_8a20ef43",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "4da2ca5cd737b5d2e91f54fbed21a4bd5ae5c9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31630b0a_ba4534a9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 2
@@ -83,6 +131,30 @@
       "writtenOn": "2018-01-16T22:13:07Z",
       "side": 1,
       "message": "I wonder if this is still needed? ModalDialogManager will call prepareBeforeShow() before showing the dialog.",
+      "range": {
+        "startLine": 183,
+        "startChar": 13,
+        "endLine": 183,
+        "endChar": 25
+      },
+      "revId": "4da2ca5cd737b5d2e91f54fbed21a4bd5ae5c9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe1c82c_e946916f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T17:10:07Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "31630b0a_ba4534a9",
       "range": {
         "startLine": 183,
         "startChar": 13,
