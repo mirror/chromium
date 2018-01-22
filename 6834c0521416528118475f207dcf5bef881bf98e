@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271641e2_e93c68cb",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:12:14Z",
+      "side": 1,
+      "message": "Consider adding @param for helper methods in this file.",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "6834c0521416528118475f207dcf5bef881bf98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5c05a0_385f26c7",
+        "filename": "chrome/test/data/webui/extensions/extension_kiosk_mode_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:12:14Z",
+      "side": 1,
+      "message": "Can |invalid| be anything other than true/false here (undefined/null)? If not, then \"!!\" is probably not necessary. Same question for line 241 below.",
+      "range": {
+        "startLine": 238,
+        "startChar": 18,
+        "endLine": 238,
+        "endChar": 20
+      },
+      "revId": "6834c0521416528118475f207dcf5bef881bf98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
