@@ -530,16 +530,23 @@ cr.define('print_preview', function() {
      */
     fetchMatchingDestination_(destinationMatch) {
       this.autoSelectMatchingDestination_ = destinationMatch;
-      const type = destinationMatch.getType();
-      if (type != null) {  // Local, Privet, or Extension.
-        this.startLoadDestinations(type);
-      } else if (
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.COOKIES) ||
-          destinationMatch.matchOrigin(
-              print_preview.DestinationOrigin.DEVICE)) {
-        this.startLoadCloudDestinations();
-      }
+      const types = destinationMatch.getTypes();
+      let typesLoading =
+          /* @type {Map<print_preview.PrinterType, boolean>} */ (new Map([]));
+      types.forEach(type => {
+        if (typesLoading[type])
+          return;
+        typesLoading[type] = true;
+        if (type != null) {  // Local, Privet, or Extension.
+          this.startLoadDestinations(type);
+        } else if (
+            destinationMatch.matchOrigin(
+                print_preview.DestinationOrigin.COOKIES) ||
+            destinationMatch.matchOrigin(
+                print_preview.DestinationOrigin.DEVICE)) {
+          this.startLoadCloudDestinations();
+        }
+      });
     }
 
     /**
