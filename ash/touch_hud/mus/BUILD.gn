@@ -27,9 +27,9 @@ source_set("lib") {
     "//ui/views/mus:for_mojo_application",
   ]
 
-  data_deps = [
-    "//services/ui",
-  ]
+  # NOTE: this doesn't depend upon //services/ui. It's assumed that whoever
+  # depends upon this depends upon the right variation of //services/ui (for
+  # example, chrome includes ash, so it doesn't need //services/ui).
 }
 
 service("touch_hud") {
