@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c7029a_31f47682",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T19:16:37Z",
+      "side": 1,
+      "message": "This should be \"!ShadowRoot.prototype.__originalShadowRootElementFromPoint\".",
+      "revId": "aeac69be16c73c000b41c72eafd223835e9aa49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
