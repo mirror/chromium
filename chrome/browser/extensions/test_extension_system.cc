@@ -72,6 +72,12 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
+  if (!test_data_decoder_service_) {
+    test_data_decoder_service_ =
+        std::make_unique<data_decoder::TestDataDecoderService>();
+  }
+  extension_service_->set_connector_for_test(
+      test_data_decoder_service_->connector());
   extension_service_->ClearProvidersForTesting();
   return extension_service_.get();
 }
