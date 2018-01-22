@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "38664877_2f48d1de",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-22T15:23:15Z",
+      "side": 1,
+      "message": "s/wil/will",
+      "range": {
+        "startLine": 298,
+        "startChar": 44,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80de4c9_a191d546",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-22T15:23:15Z",
+      "side": 1,
+      "message": "Instead of the DCHECK, how about just if(result_view_at(0)) here? This avoids a potential crash if we\u0027re in some erroneous state where there are no children. And even if we can determine that there will definitely be at least one child at this point, the code could change in the future (maybe even such that we intentionally populate the popup after this block of code).",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14a3254a_58cce190",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
         "patchSetId": 3
@@ -37,6 +77,40 @@
     },
     {
       "key": {
+        "uuid": "4fa6992e_2b0df0a0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-22T15:23:15Z",
+      "side": 1,
+      "message": "Add a comment \"For testing only.\".",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3e7134_55e58235",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-22T15:23:15Z",
+      "side": 1,
+      "message": "I know many of the other tests here don\u0027t have any comment but could you add something that explains what this test is checking for? Any maybe FriendlyAccessibleLabel as well, since they are similar/related?",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57618598_671a4817",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
         "patchSetId": 3
@@ -51,6 +125,24 @@
       "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7014bdae_48fe8342",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-22T15:23:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57618598_671a4817",
+      "revId": "1075bd51b2471fe78c3f0ad112025227e226fdbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
