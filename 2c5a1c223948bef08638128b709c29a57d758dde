@@ -69,6 +69,24 @@
       "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9994b92_792e6055",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-22T20:45:12Z",
+      "side": 1,
+      "message": "Ah, in that case, please use BindColor now. I think it\u0027ll be a quick change and make you future proof.",
+      "parentUuid": "633f786c_aa214e3e",
+      "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
