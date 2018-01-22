@@ -22,6 +22,30 @@
       "revId": "678b36e7f8a7323d58af3a6432cd6a4704df3a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a63ffd_fb22784d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82533,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-22T22:08:14Z",
+      "side": 1,
+      "message": "No, however if all the affected histograms are obsolete, you can mark the histogram_suffixes as obsolete too.\n\nI didn\u0027t check if that was the case for you,",
+      "parentUuid": "fba2ce95_00ca7914",
+      "range": {
+        "startLine": 82533,
+        "startChar": 13,
+        "endLine": 82533,
+        "endChar": 0
+      },
+      "revId": "678b36e7f8a7323d58af3a6432cd6a4704df3a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
