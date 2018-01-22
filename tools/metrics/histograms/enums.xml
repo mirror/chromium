@@ -8938,6 +8938,10 @@ Called by update_net_error_codes.py.-->
   <int value="78" label="Web Share Target Picker"/>
   <int value="79" label="Zoom"/>
   <int value="80" label="Lock Screen Note App Toast"/>
+  <int value="81" label="PWA Confirmation"/>
+  <int value="82" label="Restart on Idle Critical Notification"/>
+  <int value="83" label="Recurring Restart Notification"/>
+  <int value="84" label="Forced Restart Notification"/>
 </enum>
 
 <enum name="DidNavigateToAd">
@@ -12477,6 +12481,7 @@ Called by update_net_error_codes.py.-->
   <int value="408" label="SpellcheckEnabled"/>
   <int value="409" label="AdsSettingForIntrusiveAdsSites"/>
   <int value="410" label="RestrictAccountsToPatterns"/>
+  <int value="411" label="ForceRestartAfterUpdate"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
