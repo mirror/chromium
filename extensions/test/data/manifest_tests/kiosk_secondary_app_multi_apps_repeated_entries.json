@@ -16,10 +16,11 @@
   "offline_enabled": true,
   "kiosk_secondary_apps": [
     {"id": "ihplaomghjbeafnpnjkhppmfpnmdihgd"},
-    {"id": "abcdabcdabcdabcdabcdabcdabcdabcd",
+    {"id": "ihplaomghjbeafnpnjkhppmfpnmdihgd",
      "disable_on_startup": true},
     {"id": "fiehokkcgaojmbhfhlpiheggjhaedjoc",
-     "disable_on_startup": false}
+     "disable_on_startup": true},
+    {"id": "fiehokkcgaojmbhfhlpiheggjhaedjoc"}
   ],
   "permissions": [
     "power"
