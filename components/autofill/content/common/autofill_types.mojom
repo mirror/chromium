@@ -111,6 +111,7 @@ struct FormFieldData {
 
 // autofill::FormData
 struct FormData {
+  uint64 id;
   string name;
   // TODO(crbug.com/788181): Either change type to Origin or rename to URL.
   url.mojom.Url origin;

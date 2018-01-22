@@ -308,7 +308,8 @@ bool AllTypesCaptured(const FormStructure& form,
 }  // namespace
 
 FormStructure::FormStructure(const FormData& form)
-    : form_name_(form.name),
+    : form_id_(form.id),
+      form_name_(form.name),
       source_url_(form.origin),
       target_url_(form.action),
       main_frame_origin_(form.main_frame_origin),
@@ -347,6 +348,8 @@ FormStructure::FormStructure(const FormData& form)
   form_signature_ = autofill::CalculateFormSignature(form);
   // Do further processing on the fields, as needed.
   ProcessExtractedFields();
+
+  LOG(ERROR) << "The form structure id is " << form_id_ << " " << form.id;
 }
 
 FormStructure::~FormStructure() {}
@@ -1037,6 +1040,7 @@ size_t FormStructure::active_field_count() const {
 
 FormData FormStructure::ToFormData() const {
   FormData data;
+  data.id = form_id_;
   data.name = form_name_;
   data.origin = source_url_;
   data.action = target_url_;

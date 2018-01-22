@@ -520,6 +520,7 @@ bool StructTraits<
 bool StructTraits<autofill::mojom::FormDataDataView, autofill::FormData>::Read(
     autofill::mojom::FormDataDataView data,
     autofill::FormData* out) {
+  out->id = data.id();
   if (!data.ReadName(&out->name))
     return false;
   if (!data.ReadOrigin(&out->origin))

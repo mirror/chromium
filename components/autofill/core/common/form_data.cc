@@ -17,7 +17,7 @@ namespace autofill {
 
 namespace {
 
-const int kPickleVersion = 6;
+const int kPickleVersion = 7;
 
 bool ReadGURL(base::PickleIterator* iter, GURL* url) {
   std::string spec;
@@ -71,7 +71,8 @@ void LogDeserializationError(int version) {
 FormData::FormData() : is_form_tag(true), is_formless_checkout(false) {}
 
 FormData::FormData(const FormData& data)
-    : name(data.name),
+    : id(data.id),
+      name(data.name),
       origin(data.origin),
       action(data.action),
       main_frame_origin(data.main_frame_origin),
@@ -146,6 +147,7 @@ void SerializeFormData(const FormData& form_data, base::Pickle* pickle) {
   pickle->WriteBool(form_data.is_form_tag);
   pickle->WriteBool(form_data.is_formless_checkout);
   pickle->WriteString(form_data.main_frame_origin.Serialize());
+  pickle->WriteUInt64(form_data.id);
 }
 
 void SerializeFormDataToBase64String(const FormData& form_data,
@@ -211,6 +213,13 @@ bool DeserializeFormData(base::PickleIterator* iter, FormData* form_data) {
 
   if (version >= 6) {
     if (!ReadOrigin(iter, &temp_form_data.main_frame_origin)) {
+      LogDeserializationError(version);
+      return false;
+    }
+  }
+
+  if (version >= 7) {
+    if (!iter->ReadUInt64(&temp_form_data.id)) {
       LogDeserializationError(version);
       return false;
     }

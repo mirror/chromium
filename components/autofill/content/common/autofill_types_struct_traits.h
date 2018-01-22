@@ -194,6 +194,8 @@ struct StructTraits<autofill::mojom::FormFieldDataDataView,
 
 template <>
 struct StructTraits<autofill::mojom::FormDataDataView, autofill::FormData> {
+  static uint64_t id(const autofill::FormData& r) { return r.id; }
+
   static const base::string16& name(const autofill::FormData& r) {
     return r.name;
   }

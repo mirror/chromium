@@ -187,6 +187,7 @@ std::vector<FormData> FormCache::ExtractNewForms() {
       static_cast<form_util::ExtractMask>(form_util::EXTRACT_VALUE |
                                           form_util::EXTRACT_OPTIONS);
 
+  size_t current_form_id = 0;
   size_t num_fields_seen = 0;
   for (size_t i = 0; i < web_forms.size(); ++i) {
     const WebFormElement& form_element = web_forms[i];
@@ -218,8 +219,11 @@ std::vector<FormData> FormCache::ExtractNewForms() {
         }
       }
 
+      form.id = ++current_form_id;
+      LOG(ERROR) << "Set the id to " << current_form_id;
       SaveInitialValues(control_elements);
       forms.push_back(form);
+      LOG(ERROR) << forms.back().id;
       parsed_forms_.insert(form);
     }
   }
@@ -249,6 +253,7 @@ std::vector<FormData> FormCache::ExtractNewForms() {
 
   if (!parsed_forms_.count(synthetic_form) &&
       IsFormInteresting(synthetic_form, num_editable_elements)) {
+    synthetic_form.id = ++current_form_id;
     SaveInitialValues(control_elements);
     forms.push_back(synthetic_form);
     parsed_forms_.insert(synthetic_form);

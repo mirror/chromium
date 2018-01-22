@@ -195,6 +195,8 @@ class FormStructure {
     return fields_.end();
   }
 
+  size_t form_id() const { return form_id_; }
+
   const base::string16& form_name() const { return form_name_; }
 
   const GURL& source_url() const { return source_url_; }
@@ -293,6 +295,9 @@ class FormStructure {
   // to those fields which are bound when POSTing.
   static base::string16 FindLongestCommonPrefix(
       const std::vector<base::string16>& strings);
+
+  // The unique id of the form in the frame.
+  size_t form_id_;
 
   // The name of the form.
   base::string16 form_name_;

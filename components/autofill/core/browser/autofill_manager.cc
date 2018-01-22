@@ -314,6 +314,7 @@ bool AutofillManager::ShouldShowCreditCardSigninPromo(
 
 void AutofillManager::OnFormsSeen(const std::vector<FormData>& forms,
                                   const TimeTicks timestamp) {
+  LOG(ERROR) << "OnFormsSeen";
   if (!IsValidFormDataVector(forms))
     return;
 

@@ -36,6 +36,8 @@ struct FormData {
   // Allow FormData to be a key in STL containers.
   bool operator<(const FormData& form) const;
 
+  // The unique id of the form in the frame.
+  size_t id;
   // The name of the form.
   base::string16 name;
   // The URL (minus query parameters) containing the form.
