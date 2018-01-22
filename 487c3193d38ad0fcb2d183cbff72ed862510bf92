@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8135d346_38f0f9bb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-addsourcebuffer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T19:33:38Z",
+      "side": 1,
+      "message": "This is non-normative behavior; other browsers may allow this. Chrome may also allow this someday (e.g. for midstream codec + bytestream changing).\n\nPlease move this test back downstream - either in a browsertest or (perhaps easier) as a Chrome-specific mediasource layout test (e.g. as mediasource-disallow-addsourcebuffer-after-init.html).",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 41
+      },
+      "revId": "487c3193d38ad0fcb2d183cbff72ed862510bf92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37652158_724d8cbc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-addsourcebuffer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T19:33:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 145,
+        "startChar": 10,
+        "endLine": 145,
+        "endChar": 41
+      },
+      "revId": "487c3193d38ad0fcb2d183cbff72ed862510bf92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057d2fbc_2bbef538",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-is-type-supported-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T19:33:38Z",
+      "side": 1,
+      "message": "this test is testing major type, not minor type (e.g. vp8 is not an audio codec). Of course, it\u0027s also testing minor type :)",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "487c3193d38ad0fcb2d183cbff72ed862510bf92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ed54ef_de57b02b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-is-type-supported-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T19:33:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "487c3193d38ad0fcb2d183cbff72ed862510bf92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
