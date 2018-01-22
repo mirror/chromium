@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21ce820e_062b566b",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-22T22:49:07Z",
+      "side": 1,
+      "message": "Returning false here would prevent a download from starting as a result of the BGL navigating to a download page. The typical scenario for this to be called is:\n\n1. BLO starts navigation to a page to save page\n2. page navigates to a pdf\n3. WebContents calls WebContentsDelegate::CanDownload to determine if download is allowed\n4. The WebContentsDelegate here is BackgroundLoaderContents, which defers to BLO\n5. BLO checks the request\u0027s policy (line 295). If policy allows, we allow the download to proceed and cancel the save page request. Otherwise, we disallow the download and cancel save page request\n6. If download is allowed, the download proceeds. The webcontents that initiated the download is not needed, so it\u0027s safe to destroy\n\nA legitimate download should have moved past this process via a different webcontents (one that\u0027s not controlled by BGL) or no longer relies on webcontents.\n\nThe typical scenario for a download to end up in request coordinator in the first place is:\n1. user starts offline and navigates to a page that should have been pdf page\n2. user clicks on \"download page later\" button\n3. user goes online, BLO starts navigation to page and encounters pdf download\n\nCurrently, BLO would \"hang\" and eventually time out resulting in failed download of page\n\nWith this patch, BLO will immediately fail if the namespace doesn\u0027t allow download. If namespace allows download, it will silently throttle the savepagerequest and allow downloads to take over.\n\nHappy to grab time to chat about this",
+      "parentUuid": "4a72d9d9_6af2ba7a",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de1378e_2d414189",
         "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "58f2def9_508182f2",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-22T22:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de1378e_2d414189",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f931bd_e9b10ebc",
         "filename": "components/offline_pages/content/background_loader/background_loader_contents.h",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea47bba_1eccb388",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-22T22:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f931bd_e9b10ebc",
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
