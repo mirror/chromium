@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "55a4eaaa_69c198bb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T21:55:10Z",
+      "side": 1,
+      "message": "IMO flake when running tests in parallel indicates bugs in the OS, code being tested or the tests themselves. We want to find these bugs and fix them. I don\u0027t think we want to avoid them by not using parallel execution. It\u0027s especially true in case of Fuchsia where we would also want to find and fix the bugs in the platforms.\nAlso when running multiple instances of qemu we are more likely to incur bugs in qemu or nested KVM on GCE. These are bugs we are less interested in.",
+      "parentUuid": "370beee5_44e88b03",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2638913_3b035c31",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
