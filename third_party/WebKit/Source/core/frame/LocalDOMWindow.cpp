@@ -99,6 +99,7 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/site_engagement.mojom-blink.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace blink {
 
@@ -1111,7 +1112,8 @@ ScriptPromise LocalDOMWindow::getComputedAccessibleNode(
   DCHECK(element);
   ComputedAccessibleNode* computed_accessible_node =
       element->GetComputedAccessibleNode();
-  return computed_accessible_node->ComputePromiseProperty(script_state);
+  return computed_accessible_node->ComputeAccessibleProperties(
+      script_state, WebLocalFrame::FrameForCurrentContext());
 }
 
 CSSRuleList* LocalDOMWindow::getMatchedCSSRules(

@@ -25,6 +25,7 @@
 #include "content/renderer/top_level_blame_context.h"
 #include "content/renderer/webpublicsuffixlist_impl.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
+#include "third_party/WebKit/public/platform/ComputedAXTree.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/platform/modules/webdatabase/web_database.mojom.h"
@@ -269,6 +270,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
 
+  blink::ComputedAXTree* GetOrCreateComputedAXTree() override;
+
  private:
   PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
   CreateNetworkURLLoaderFactory();
@@ -345,6 +348,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
+  std::unique_ptr<blink::ComputedAXTree> computed_ax_tree_;
 
   THREAD_CHECKER(main_thread_checker_);
 
