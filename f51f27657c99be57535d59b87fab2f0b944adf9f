@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb34360_8deee3b2",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Will we use this in followups?",
+      "range": {
+        "startLine": 30,
+        "startChar": 43,
+        "endLine": 30,
+        "endChar": 77
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c13340_36185e82",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Nit: please check the generate C++ to see if it\u0027s actually passing this by move. I suspect it won\u0027t be, so we may as well just pass it by const ref on line 41 as well and not bother with the std::move(). Same below.",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e667e6_ab542ffb",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "This means the service process died in the middle of print right? I think it might be better to give up this print attempt, since that means the utility process lost the state we already sent it.",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8f20b2_13a20422",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Nit: combining the set and the return is slightly more efficient. Something like:\n  return *compositor_map_.emplace(cookie, CreateCompositeRequest())-\u003efirst;\nshould work.",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86861c5_3aaad0c1",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Nit: individual",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9eaee4_bd3cf7c5",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Is it necessary to depend on a cookie value coming from the renderer?",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0183dc3_7b80cec2",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "How does the code handle the case of a subframe spanning two pages? Since print preview reuses the interface ptr, does that mean we only expect AddSubframeContent() to be called once in that case?",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

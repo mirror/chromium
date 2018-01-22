@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b50d977_969eac77",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Can you help me understand why this conversion is needed?",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c94e07_0d0026fa",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "What\u0027s the path where code can call AddSubframeContent() without calling Composite{Document,Page}ToPdf?",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeea5c15_770f69a6",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "If this was done first, and the subframe content map and shmem handle were stored in the FrameInfo for the root frame for printing, I think that would allow some simplification: the code below wouldn\u0027t have to make a copy of the map, and the shmem handle conversion would only have to happen once at the very beginning of this function.\n\n(FulfillRequest could just look up the root frame in the frame_info_map_ to get the data)",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 75
+      },
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cab2696_aa8b8740",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T13:07:40Z",
+      "side": 1,
+      "message": "Nit: if this returns by value, it might make the if statements below look slightly nicer (since they can just be written subframes[content_id]). Efficiency should be the same.",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
