@@ -1330,12 +1330,14 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
     std::set<ServerFieldType> seen_types;
     ServerFieldType previous_type = UNKNOWN_TYPE;
 
+    unsigned field_index = 0;
     for (const auto& field : fields_) {
       const ServerFieldType current_type = field->Type().GetStorableType();
       // All credit card fields belong to the same section that's different
       // from address sections.
       if (AutofillType(current_type).group() == CREDIT_CARD) {
         field->set_section("credit-card");
+        field_index++;
         continue;
       }
 
@@ -1347,12 +1349,15 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
       if (AutofillType(current_type).group() == PHONE_HOME)
         already_saw_current_type = false;
 
-      // Ignore non-focusable field and presentation role fields while inferring
-      // boundaries between sections.
       bool ignored_field =
           !field->is_focusable ||
           field->role == FormFieldData::ROLE_ATTRIBUTE_PRESENTATION;
-      if (ignored_field)
+      // Start a new section by an ignored field, only if the next field is also
+      // already seen.
+      if (ignored_field &&
+          !((field_index + 1) < fields_.size() &&
+            seen_types.count(
+                fields_[field_index + 1]->Type().GetStorableType()) > 0))
         already_saw_current_type = false;
 
       // Some forms have adjacent fields of the same type.  Two common examples:
@@ -1386,6 +1391,7 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
       }
 
       field->set_section(base::UTF16ToUTF8(current_section));
+      field_index++;
     }
   }
 
