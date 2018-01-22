@@ -35,7 +35,7 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
-#include "common/net/ip_address_space.mojom-shared.h"
+#include "public/common/net/ip_address_space.mojom-shared.h"
 #include "core/CoreExport.h"
 #include "core/exported/WorkerShadowPage.h"
 #include "core/workers/SharedWorkerReportingProxy.h"

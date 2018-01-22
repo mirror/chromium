@@ -35,7 +35,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
-#include "third_party/WebKit/common/service_worker/service_worker_state.mojom-shared.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_state.mojom-shared.h"
 
 namespace blink {
 
