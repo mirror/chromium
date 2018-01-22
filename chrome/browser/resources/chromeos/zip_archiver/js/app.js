@@ -551,7 +551,11 @@ unpacker.app = {
    * @param {!Array<!unpacker.types.FileSystemId>} fileSystemIdsArray
    */
   updateState: function(fileSystemIdsArray) {
-    unpacker.app.saveState_(fileSystemIdsArray);
+    // Do not store passwords because we are tentatively disabling mounting
+    // archive files after session restart due to performance issue,
+    // by the 'persistent' parameter for chrome.fileSystemProvider.mount.
+    // TODO(crbug.com/793981): Restore this line when the issue is resolved.
+    // unpacker.app.saveState_(fileSystemIdsArray);
   },
 
   /**
