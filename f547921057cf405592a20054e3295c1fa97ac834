@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c15ba2ba_cf07299b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T00:06:19Z",
+      "side": 1,
+      "message": "\u003e So you could create a private holder class to be saved in WebContentsUserData, or you could relax that assert to instanceof instead of exact equality.\n\nYes, found that the assert is only thing that stops me from doing what you suggested. Updated user data factory for each subclasses, and replaced the instanceof with isInstance to allow for subclass instance at run time.\n\nThen it becomes possible to decide which UserDataFactory to use at static initialization too, without doing it on every |create|. Didn\u0027t add it in the new patch though.",
+      "parentUuid": "56cfbad7_2cc0054d",
+      "range": {
+        "startLine": 146,
+        "startChar": 68,
+        "endLine": 146,
+        "endChar": 99
+      },
+      "revId": "f547921057cf405592a20054e3295c1fa97ac834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52bd8b82_bc8a3882",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
         "patchSetId": 12
@@ -102,6 +126,24 @@
       "side": 1,
       "message": "Well, as long as we know which Android version we\u0027re running on, we\u0027ll know which condition it is.",
       "parentUuid": "52bd8b82_bc8a3882",
+      "revId": "f547921057cf405592a20054e3295c1fa97ac834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1ec039_ed8ba092",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T00:06:19Z",
+      "side": 1,
+      "message": "Makes sense - maybe having one assert is enough. and now we have only one |fromWebContents| too.",
+      "parentUuid": "3b8f5927_f03f15f1",
       "revId": "f547921057cf405592a20054e3295c1fa97ac834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +199,24 @@
       "revId": "f547921057cf405592a20054e3295c1fa97ac834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682b61cd_ca750381",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T00:06:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e27f391_6395cb30",
+      "revId": "f547921057cf405592a20054e3295c1fa97ac834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
