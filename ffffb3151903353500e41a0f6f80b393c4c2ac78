@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aec6957_7a59198b",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:25:48Z",
+      "side": 1,
+      "message": "IsVisible() is OK in this case -- you could also invert and check Widget::IsClosed().\n\nAnother option: the body of the method that clears |g_manage_passwords_bubble_|\n\nManagePasswordsBubbleDelegateViewBase::\n    ~ManagePasswordsBubbleDelegateViewBase() {\n  if (g_manage_passwords_bubble_ \u003d\u003d this)\n    g_manage_passwords_bubble_ \u003d nullptr;\n}\n\ncould also be done in \n\nManagePasswordsBubbleDelegateViewBase::CloseBubble(), i.e.\n\nvoid ManagePasswordsBubbleDelegateViewBase::CloseBubble() {\n  mouse_handler_.reset();\n  if (g_manage_passwords_bubble_ \u003d\u003d this)\n    g_manage_passwords_bubble_ \u003d nullptr;\n  LocationBarBubbleDelegateView::CloseBubble();\n}\n\n\n\"Detaching\" from g_manage_passwords_bubble_ while the bubble waiting for its posted task to complete is probably a nicer contract, but it\u0027s likely to break some assumptions that tests are using.",
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b8848b_3ec988d2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:25:48Z",
+      "side": 1,
+      "message": "second sentence: maybe something like \"Otherwise, it is called later on when the bubble is destroyed.\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343249c8_365fb66d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:25:48Z",
+      "side": 1,
+      "message": "note there can be two different |widget|s passed in here -- the browser window (observed when BubbleDialogDelegateView::SetAnchorView is called) and the bubble widget.\n\nE.g. this method might be called twice on Windows when the browser window is closed with a bubble open. I think it will cause a bug, but it might worth a note.\n\nAlso note OnWidgetClosing() isn\u0027t guaranteed to be called (e.g. the Windows logoff sequence calls OnWingetDestroying, but not OnWidgetClosing). But ~ManagePasswordsBubbleModel() should deal with this already flow already - so I don\u0027t think there\u0027s a bug around this either. Just something to be wary of.",
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
