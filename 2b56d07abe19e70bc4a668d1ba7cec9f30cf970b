@@ -16,6 +16,24 @@
       "revId": "2b56d07abe19e70bc4a668d1ba7cec9f30cf970b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a26aa6_0ed490c3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-22T21:00:12Z",
+      "side": 1,
+      "message": "There are two main reasons why line 635 may execute: either (1) the SerializedScriptValue\u0027s mojo message was sent cross-process (causing it to drop its ArrayBufferContents), or (2) the caller of GetSharedArrayBufferFromId passed an invalid |id|. This check raises an alarm if it\u0027s certain that (2) is the cause.\n\nIf shared_array_buffer_contents is empty when GetSharedArrayBufferFromId is called, that suggests that the SSV was passed cross-process, and we\u0027re running into user error with serialization working as intended. If shared_array_buffer_contents is valid but not empty, and an invalid |id| is specified, then that suggests there is a larger problem.",
+      "parentUuid": "56fbdadc_fa4a8a79",
+      "revId": "2b56d07abe19e70bc4a668d1ba7cec9f30cf970b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
