@@ -22,6 +22,30 @@
       "revId": "bfae80fa252c4c786086e91499a86ada225c1ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deac9c9a_18c5d91a",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGResourceContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-22T18:32:39Z",
+      "side": 1,
+      "message": "Yepp, this is a bit of a hack until we\u0027ve managed to decouple the resource handling completely from the LayoutObject attachment.",
+      "parentUuid": "9192f3f8_e01bbbb5",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 42
+      },
+      "revId": "bfae80fa252c4c786086e91499a86ada225c1ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
