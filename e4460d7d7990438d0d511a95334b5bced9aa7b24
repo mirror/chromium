@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224fd878_064ea7ca",
+        "filename": "third_party/android_deps/android_deps.ensure",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2018-01-22T18:18:33Z",
+      "side": 1,
+      "message": "jbudorick@: I am going to generate DEPS entries instead of this file according to crbug.com/789809... how do you recommend I generate that code? Is there a way to as a sub DEPS file specifically for this directory? Or use start/end tokens of generated section like in https://chromium-review.googlesource.com/c/chromium/src/+/819771/17/third_party/android_deps/BUILD.gn ?",
+      "revId": "e4460d7d7990438d0d511a95334b5bced9aa7b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
