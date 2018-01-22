@@ -84,7 +84,7 @@
 }
 
 - (void)showPrerenderingAnimation {
-  // TODO(crbug.com/803377): Implement that.
+  [self.viewController showPrerenderingAnimation];
 }
 
 - (BOOL)isOmniboxFirstResponder {
