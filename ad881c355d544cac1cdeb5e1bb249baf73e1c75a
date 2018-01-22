@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c1f7d3_a98e09b1",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Maybe move this into UserCloudPolicyManagerChromeOS, because today it can be used only with this class and is not a generic thing to be used with other classes (otherwise it\u0027ll have to be placed elsewhere).",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b128a836_34db3a0e",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Consider reorder the arguments to make |enforcement_type| come before |policy_refresh_timeout| and |fatal_error_callback|, because |enforcement_type| really determines whether those arguments are required.",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1c7604_62a20e2a",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: What about something like \"requires_policy_user_property\" - it\u0027ll then be hinting that this value, unlike many other variables around, is loaded from persistent storage.",
+      "range": {
+        "startLine": 212,
+        "startChar": 30,
+        "endLine": 212,
+        "endChar": 45
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b4a2df_56a44bb4",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "Do you think adding a term \"\u0026\u0026 !is_stub_user\" would make sense here? I\u0027m asking because, technically, it\u0027d allow to omit \"!is_stub_user\" checks below - both for |enforcement_type| in line 277 and for AttemptUserExit() in line 287.\n\nOr this separation is needed because of some tests?",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f67e2f_0a2d827f",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Move this block up, right after |cannot_tell_if_policy_required| is calculated?",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b27fd2_24ed5864",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: This argument of the constructor is now renamed into |policy_refresh_timeout| - let\u0027s use that for consistency.",
+      "range": {
+        "startLine": 306,
+        "startChar": 18,
+        "endLine": 306,
+        "endChar": 46
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917231b4_340215ac",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Couldn\u0027t this part of the condition be omitted, for simplifying the logic here?\n\nIt only brings is two additional constraints: \"\u0026\u0026 !force_immediate_load\" and \"\u0026\u0026 !is_stub_user\". The first one shouldn\u0027t make any difference (the check in UserCloudPolicyManagerChromeOS::Connect() comes earlier). I\u0027m only missing context on the second constraint - is it maybe important for tests?",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 45
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512df02f_ad212f46",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Please add a documentation for this flag. Especially important to say something like \"don\u0027t introduce new usages of this flag\".",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7df6384_6c57c079",
+        "filename": "components/user_manager/known_user.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-22T19:37:37Z",
+      "side": 1,
+      "message": "nit: Add curly brackets for multi-line \"if\" body.",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
