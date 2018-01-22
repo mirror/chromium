@@ -266,6 +266,51 @@
             "$ref": "WallpaperSource"
           }
         ]
+      },
+      {
+        "name": "getCollectionNames",
+        "type": "function",
+        "description": "Gets the list of collection names from the Backdrop wallpaper service.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "function",
+            "name": "callback",
+            "description": "Function called upon completion.",
+            "parameters": [
+              {
+                "type": "array",
+                "name": "collectionNames",
+                "items": {"type": "string"}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getImagesInfo",
+        "type": "function",
+        "description": "Gets wallpaper related info (url, description etc.) for a particular collection from the Backdrop wallpaper service.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "collection_name",
+            "description": "The name of the collection whose info is requested."
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "description": "Function called upon completion.",
+            "parameters": [
+              {
+                "type": "object",
+                "name": "imagesInfo",
+                "additionalProperties": {"type": "any"}
+              }
+            ]
+          }
+        ]
       }
     ],
     "events": [
