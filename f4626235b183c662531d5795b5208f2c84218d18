@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b248ae_3386d6cf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "attachAnotherFrame1",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9d58c4_c3499530",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "attachFrame2",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81594d02_d99f2fae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "detachAnotherFrame1",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bad986_216abb9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "detachFrame2",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae77f46e_135f76f5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "- Let\u0027s pass frameId and not store it in referrals?\n- Rename referrals to referringSourceMaps.",
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de50bb5e_f91b8aa7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T18:56:45Z",
+      "side": 1,
+      "message": "Move this to the start, and then embed into removeSourceMap.\n\nif (!this._referrals.length) {\n}",
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
