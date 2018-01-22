@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cde6029_7097fe6c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9892,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "This should have a titlecase version.",
+      "range": {
+        "startLine": 9892,
+        "startChar": 21,
+        "endLine": 9892,
+        "endChar": 44
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879afb68_c48a50df",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9896,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "I would name this semantically, in case the text changes later. Maybe \"IDS_HIGH_CONTRAST_HEADER\"?",
+      "range": {
+        "startLine": 9896,
+        "startChar": 21,
+        "endLine": 9896,
+        "endChar": 42
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fc6a53_5211fe39",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "Change to constexpr",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02a26d4_477c742b",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "nit: Just \"return l10n_util::GetStringUTF16(IDS_DONE)\" in this method.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abdce09_006ad9cb",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "Label should have text_context passed in (CONTEXT_BODY_TEXT_LARGE probably?)",
+      "range": {
+        "startLine": 115,
+        "startChar": 17,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de5a14c_8737d008",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-22T20:04:04Z",
+      "side": 1,
+      "message": "nit: Use Button#set_tag to avoid saving pointer to the button.",
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
