@@ -123,6 +123,10 @@ class MockPasswordProtectionService
   MOCK_METHOD1(UserClickedThroughSBInterstitial, bool(content::WebContents*));
   MOCK_METHOD2(RemoveUnhandledSyncPasswordReuseOnURLsDeleted,
                void(bool, const history::URLRows&));
+  MOCK_METHOD0(IsEventLoggingEnabled, bool());
+  MOCK_METHOD1(
+      GetPasswordProtectionTriggerPref,
+      safe_browsing::PasswordProtectionTrigger(const std::string& pref_name));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPasswordProtectionService);
