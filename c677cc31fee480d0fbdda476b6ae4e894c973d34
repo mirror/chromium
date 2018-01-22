@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3080533_48d885f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T12:49:40Z",
+      "side": 1,
+      "message": "Could you extend this CL description (and the CL description for my suggested preceding CL that changes the observer interface) with the information that you gave me in our exchanges on the review about why these changes for necessary for the servicification? You can also mention that this is modeled after the approach taken by HID. Thanks!",
+      "revId": "c677cc31fee480d0fbdda476b6ae4e894c973d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f015cd37_453b0282",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T12:49:40Z",
+      "side": 1,
+      "message": "Could you separate out this change into its own CL that goes before this one? i.e., a CL that modifies the observer interface, followed by a CL that changes AddObserver() to AddObserverAndEnumerateStorages()?",
+      "revId": "c677cc31fee480d0fbdda476b6ae4e894c973d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401a3f7a_afabf33b",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T12:49:40Z",
+      "side": 1,
+      "message": "I assume that this method should go away now?",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "c677cc31fee480d0fbdda476b6ae4e894c973d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bbd594_003185ee",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T12:49:40Z",
+      "side": 1,
+      "message": "It would be good to change this name from Observer to Client to highlight that there\u0027s only one (based on the information that you gave me). That can be done in a separate CL though to minimize churn in this CL.",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 46
+      },
+      "revId": "c677cc31fee480d0fbdda476b6ae4e894c973d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
