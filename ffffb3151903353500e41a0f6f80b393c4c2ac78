@@ -56,6 +56,24 @@
       "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bdbe3b_5a8f166b",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T06:11:28Z",
+      "side": 1,
+      "message": "\u003e I think it will cause a bug, but it might worth a note.\n\nuhh, I think it *won\u0027t* cause a bug. (and might be worth a note).\n\nor you could do\n\n if (widget !\u003d GetWidget())\n   return;",
+      "parentUuid": "343249c8_365fb66d",
+      "revId": "ffffb3151903353500e41a0f6f80b393c4c2ac78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
