@@ -34,6 +34,24 @@
       "revId": "e57e209f14d881de581e6cfbb69477e53081c4fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3925e4_6f02cfb3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T17:10:26Z",
+      "side": 1,
+      "message": "Thanks. As kenichi says we would need to check the result of ToLocal, so I am leaving this as is for now.",
+      "parentUuid": "be374c48_49937529",
+      "revId": "e57e209f14d881de581e6cfbb69477e53081c4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
