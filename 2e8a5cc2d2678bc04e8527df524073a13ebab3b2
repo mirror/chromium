@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "073d8b89_ef51bc81",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T23:51:29Z",
+      "side": 1,
+      "message": "Can this also be wrapped in ifdef?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 71
+      },
+      "revId": "2e8a5cc2d2678bc04e8527df524073a13ebab3b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25751065_3638884b",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T23:51:29Z",
+      "side": 1,
+      "message": "Nit: The following convention makes it easier to read the code without having to seek the start of the ifdef block. It is already used within this file, but not consistently.\n\n#endif  // defined(OS_CHROMEOS)",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 6
+      },
+      "revId": "2e8a5cc2d2678bc04e8527df524073a13ebab3b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
