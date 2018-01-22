@@ -39,13 +39,11 @@ bool FieldTrialParamAssociator::GetFieldTrialParams(
   FieldTrial* field_trial = FieldTrialList::Find(trial_name);
   if (!field_trial)
     return false;
-
   // First try the local map, falling back to getting it from shared memory.
   if (GetFieldTrialParamsWithoutFallback(trial_name, field_trial->group_name(),
                                          params)) {
     return true;
   }
-
   // TODO(lawrencewu): add the params to field_trial_params_ for next time.
   return FieldTrialList::GetParamsFromSharedMemory(field_trial, params);
 }
