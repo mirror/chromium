@@ -16,6 +16,24 @@
       "revId": "6e95f6dfcc76b2f2bf7264f2308805378b320bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5892fed5_40cd551c",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-22T21:33:55Z",
+      "side": 1,
+      "message": "Good point. \nI didn\u0027t think of that (canceling the Accept). I am borrowing the Mandoline implementation. The original TCPServerSocket\u0027s Accept() has the connected socket as an argument rather than a return type (https://codereview.chromium.org/1873463003/diff/40001/mojo/services/network/public/interfaces/tcp_server_socket.mojom).\n\nWhich way is more idiomatic in mojo?\nIf we move |connected_socket| to return values, I guess it\u0027s easier for the caller since they don\u0027t need to cache the interface pointer until the callback is invoked?",
+      "parentUuid": "ba6137d7_a0f3c28a",
+      "revId": "6e95f6dfcc76b2f2bf7264f2308805378b320bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
