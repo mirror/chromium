@@ -495,6 +495,14 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
   // that are inexpensive should be near the top.
   const GURL& url = request()->url();
 
+  // Requests from foo.example.com will consult foo.example.com's service worker
+  // first (if one has been registered).  The service worker can handle requests
+  // from foo.example.com even if they are cross-origin (e.g. requests for
+  // bar.example.com).  This is okay and should not be blocked by XSDB.
+  // See also https://crbug.com/803672.
+  if (response->head.was_fetched_via_service_worker)
+    return false;
+
   // Check if the response's site needs to have its documents protected.  By
   // default, this will usually return false.
   // TODO(creis): This check can go away once the logic here is made fully
