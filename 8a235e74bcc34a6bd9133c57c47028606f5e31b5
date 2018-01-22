@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3c00c3_e06e7ed6",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:21:21Z",
+      "side": 1,
+      "message": "maybe let\u0027s put this into a separate method (named something like InitializeInlineReplyIcon) to keep the code a bit cleaner.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 35
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8290e392_ac606098",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:21:21Z",
+      "side": 1,
+      "message": "Could we add a TODO (maybe @ line 476) to put everything that is preceded by a comment into a separate function? Feel free to attach this bug which I\u0027ve just filed: crbug.com/804238\n\nI don\u0027t want you to have to clean this up in this CL, but at least I think we should track such a cleanup change. I think with well-named subfunctions the comments become unnecessary.\n\nThanks!",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 0
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266c47f0_cec853c3",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-22T09:21:21Z",
+      "side": 1,
+      "message": "1. Can we use unique_ptr here?\n\n2. [nit] maybe reorder this so the DISALLOW_COPY_AND_ASSIGN statement is always last.",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
