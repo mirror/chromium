@@ -25,6 +25,7 @@ import org.chromium.chrome.browser.document.DocumentActivity;
 import org.chromium.chrome.browser.document.IncognitoDocumentActivity;
 import org.chromium.chrome.browser.init.InvalidStartupDialog;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tabmodel.document.ActivityDelegateImpl;
 import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
@@ -100,7 +101,9 @@ public class ChromeApplication extends ContentApplication {
     }
 
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
+        CommandLineInitUtil.initCommandLine(
+                this, COMMAND_LINE_FILE, manager.getCommandLineOnNonRootedEnabled());
     }
 
     /**

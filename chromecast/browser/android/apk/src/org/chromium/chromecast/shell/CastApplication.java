@@ -40,6 +40,6 @@ public class CastApplication extends ContentApplication {
     }
 
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE, false);
     }
 }
