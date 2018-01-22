@@ -111,7 +111,8 @@ class _OctaneMeasurement(legacy_page_test.LegacyPageTest):
         all_scores.append(score)
     total = statistics.GeometricMean(all_scores)
     results.AddSummaryValue(
-        scalar.ScalarValue(None, 'Total.Score', 'score', total,
+        # Terrible hack until we migrate to press harness.
+        scalar.ScalarValue(story.Story(None, 'Score'), 'Total', 'score', total,
                            description='Geometric mean of the scores of each '
                            'individual benchmark in the Octane '
                            'benchmark collection.'))
