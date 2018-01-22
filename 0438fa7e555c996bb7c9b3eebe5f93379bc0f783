@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c53b8e65_ed5f4b46",
+        "filename": "android_webview/browser/browser_view_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-22T17:31:13Z",
+      "side": 1,
+      "message": "This use to auto reset scroll_offset_dip_ it no longer does that an auto resets the variable on the stack now.\n\nI think this might be causing the flaky tests that started recently.. (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d804369\u0026q\u003dtestScrollOffsetAfterCapturePicture\u0026colspec\u003dID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified)",
+      "revId": "0438fa7e555c996bb7c9b3eebe5f93379bc0f783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
