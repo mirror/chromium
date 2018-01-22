@@ -226,4 +226,8 @@ bool SoftwareOutputDeviceMac::SupportGetVSyncParametersIfAvailable() {
   return false;
 }
 
+bool SoftwareOutputDeviceMac::IsHWClock() const {
+  return false;
+}
+
 }  // namespace viz
