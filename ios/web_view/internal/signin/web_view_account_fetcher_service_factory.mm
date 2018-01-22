@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "components/image_fetcher/ios/ios_image_decoder_impl.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/signin/core/browser/account_fetcher_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -60,7 +61,8 @@ WebViewAccountFetcherServiceFactory::BuildServiceInstanceFor(
   service->Initialize(
       WebViewSigninClientFactory::GetForBrowserState(browser_state),
       WebViewOAuth2TokenServiceFactory::GetForBrowserState(browser_state),
-      WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state));
+      WebViewAccountTrackerServiceFactory::GetForBrowserState(browser_state),
+      image_fetcher::CreateIOSImageDecoder());
   return service;
 }
 
