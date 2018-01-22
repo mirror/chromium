@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea08344c_5208ca11",
+        "filename": "base/component_export.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-22T21:59:43Z",
+      "side": 1,
+      "message": "Actually, I think this can just expand to |,|.  At which point calling it COMPONENT_MACRO_CONDITIONAL_COMMA* makes sense.",
+      "range": {
+        "startLine": 68,
+        "startChar": 45,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "cfe5075905843d38ddd3e763bcacd875310f3904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
