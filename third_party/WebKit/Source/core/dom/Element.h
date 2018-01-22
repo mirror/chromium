@@ -501,12 +501,11 @@ class CORE_EXPORT Element : public ContainerNode {
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 
+  ShadowRoot* GetShadowRoot() const;
   ShadowRoot* OpenShadowRoot() const;
   ShadowRoot* ClosedShadowRoot() const;
   ShadowRoot* AuthorShadowRoot() const;
   ShadowRoot* UserAgentShadowRoot() const;
-
-  ShadowRoot* YoungestShadowRoot() const;
 
   ShadowRoot* ShadowRootIfV1() const;
 
@@ -949,8 +948,6 @@ class CORE_EXPORT Element : public ContainerNode {
 
   inline PseudoElement* CreatePseudoElementIfNeeded(PseudoId);
   void CreateAndAttachPseudoElementIfNeeded(PseudoId, AttachContext&);
-
-  ShadowRoot* GetShadowRoot() const;
 
   // FIXME: Everyone should allow author shadows.
   virtual bool AreAuthorShadowsAllowed() const { return true; }
