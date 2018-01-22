@@ -50,6 +50,23 @@
       "revId": "206ce4557aba03ab880cb4497cf5f07e088bd285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff4318a_c011b9fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T15:05:15Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t about Web Notifications vs. other notifications, but more about \"notifications shown through this system\" vs. \"notifications shown elsewhere\". I\u0027d rephrase this as:\n\n    // Notifications shown by other features may skip setting a tag.\n\nPersonally I\u0027d add a blank line before the comment for readability. But that\u0027s up to you.",
+      "revId": "206ce4557aba03ab880cb4497cf5f07e088bd285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
