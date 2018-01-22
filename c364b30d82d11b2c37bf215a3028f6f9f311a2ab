@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e59e97b_0ca70fc4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1bffe15_24b11027",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 8
+      },
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e40d13_5182e39c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "49845a39_17605f0a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e40d13_5182e39c",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "046651ae_69c88a2d",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1ffe03_1608b45e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "046651ae_69c88a2d",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9ee207b3_9f38fb9d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "As you say, I think it is better to call GetCompileOptions. Updated it to call GetCompileOptions. Added a DCHECK to check we don\u0027t produce cache here.",
+      "parentUuid": "6415f859_304a0800",
+      "range": {
+        "startLine": 655,
+        "startChar": 31,
+        "endLine": 655,
+        "endChar": 47
+      },
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db4a4cb_5fe47acf",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
         "patchSetId": 9
@@ -96,6 +180,24 @@
       "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29a93bc_38f7987f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db4a4cb_5fe47acf",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "bbf26470_c109d648",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e292ddc_97be021d",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c448537_f51ea661",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
         "patchSetId": 9
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "a710e46a_06f8b371",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c448537_f51ea661",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c18189a_cca1063e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
         "patchSetId": 9
@@ -147,6 +285,24 @@
       "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07fcbf5_a89da30d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunnerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-22T16:26:23Z",
+      "side": 1,
+      "message": "Done. In a different cl, I will also extend checking if GetCompileOptions is producing the correct options for other cases as well or atleast add a different test to test GetCompileOptions.",
+      "parentUuid": "2c18189a_cca1063e",
+      "revId": "c364b30d82d11b2c37bf215a3028f6f9f311a2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
