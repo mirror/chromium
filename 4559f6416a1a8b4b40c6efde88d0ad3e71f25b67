@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569f0952_62ea88e6",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-22T00:58:23Z",
+      "side": 1,
+      "message": "nit: Should we link this to cc/animations/README still for reading up on that animation engine?",
+      "range": {
+        "startLine": 55,
+        "startChar": 59,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "4559f6416a1a8b4b40c6efde88d0ad3e71f25b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c803221_e8eef0ab",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-22T00:58:23Z",
+      "side": 1,
+      "message": "nit: remove whitespace",
+      "range": {
+        "startLine": 71,
+        "startChar": 73,
+        "endLine": 71,
+        "endChar": 75
+      },
+      "revId": "4559f6416a1a8b4b40c6efde88d0ad3e71f25b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
