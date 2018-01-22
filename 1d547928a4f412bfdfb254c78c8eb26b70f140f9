@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "611c59e9_8ee07ff8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T22:39:28Z",
+      "side": 1,
+      "message": "Creating instance with |new| is okay but adding it to WebContentsImpl.userDataMap needs a little more changes. |fromWebContents| is the only method that does both. Do you prefer changing some method access level to public to set it to the map directly or adding a new method in WCUD that sets the passed object to the map? Or any other way?",
+      "parentUuid": "4f2b182a_f4c4e401",
+      "revId": "1d547928a4f412bfdfb254c78c8eb26b70f140f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bafd30ec_516afa00",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-22T17:19:13Z",
       "side": 1,
       "message": "huh? other way around?\n\ndoesn\u0027t this code fail with the existing code WebContentsAccessibilityImpl *isn\u0027t* an instance of OWebContentsAccessibilty for example",
+      "revId": "1d547928a4f412bfdfb254c78c8eb26b70f140f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb97d08_99342d7a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T22:39:28Z",
+      "side": 1,
+      "message": "The syntax is correct - Class.isInstance(Object o). It also returns true for o when it is an instance of a subclass of the |Class| or the class itself, and returns false if not.",
+      "parentUuid": "bafd30ec_516afa00",
       "revId": "1d547928a4f412bfdfb254c78c8eb26b70f140f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
