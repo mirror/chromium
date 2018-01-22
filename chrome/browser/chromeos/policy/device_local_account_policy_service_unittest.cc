@@ -25,6 +25,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account_policy_provider.h"
 #include "chrome/browser/chromeos/policy/fake_affiliated_invalidation_service_provider.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/settings/cros_settings_test_api.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
 #include "chrome/common/chrome_paths.h"
@@ -98,7 +99,7 @@ class DeviceLocalAccountPolicyServiceTestBase
 
   PolicyMap expected_policy_map_;
   UserPolicyBuilder device_local_account_policy_;
-  chromeos::CrosSettings cros_settings_;
+  std::unique_ptr<chromeos::CrosSettings> cros_settings_;
   scoped_refptr<base::TestSimpleTaskRunner> extension_cache_task_runner_;
   MockDeviceManagementService mock_device_management_service_;
   FakeAffiliatedInvalidationServiceProvider
@@ -136,9 +137,9 @@ DeviceLocalAccountPolicyServiceTestBase::
       account_2_user_id_(GenerateDeviceLocalAccountUserId(
           kAccount2,
           DeviceLocalAccount::TYPE_PUBLIC_SESSION)),
-      cros_settings_(&device_settings_service_),
-      extension_cache_task_runner_(new base::TestSimpleTaskRunner) {
-}
+      cros_settings_(chromeos::CrosSettingsTestApi::CreateForTest(
+          &device_settings_service_)),
+      extension_cache_task_runner_(new base::TestSimpleTaskRunner) {}
 
 void DeviceLocalAccountPolicyServiceTestBase::SetUp() {
   chromeos::DeviceSettingsTestBase::SetUp();
@@ -163,7 +164,7 @@ void DeviceLocalAccountPolicyServiceTestBase::TearDown() {
 
 void DeviceLocalAccountPolicyServiceTestBase::CreatePolicyService() {
   service_.reset(new DeviceLocalAccountPolicyService(
-      &session_manager_client_, &device_settings_service_, &cros_settings_,
+      &session_manager_client_, &device_settings_service_, cros_settings_.get(),
       &affiliated_invalidation_service_provider_,
       base::ThreadTaskRunnerHandle::Get(), extension_cache_task_runner_,
       base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get(),

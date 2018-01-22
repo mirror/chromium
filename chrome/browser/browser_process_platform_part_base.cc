@@ -7,7 +7,6 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/policy/chrome_browser_policy_connector.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 
 BrowserProcessPlatformPartBase::BrowserProcessPlatformPartBase() {
@@ -35,11 +34,6 @@ void BrowserProcessPlatformPartBase::AttemptExit() {
 }
 
 void BrowserProcessPlatformPartBase::PreMainMessageLoopRun() {
-}
-
-std::unique_ptr<policy::ChromeBrowserPolicyConnector>
-BrowserProcessPlatformPartBase::CreateBrowserPolicyConnector() {
-  return std::make_unique<policy::ChromeBrowserPolicyConnector>();
 }
 
 void BrowserProcessPlatformPartBase::RegisterInProcessServices(

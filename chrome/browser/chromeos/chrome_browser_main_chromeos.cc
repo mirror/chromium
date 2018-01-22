@@ -391,8 +391,8 @@ class DBusServices {
 
     // Initialize the device settings service so that we'll take actions per
     // signals sent from the session manager. This needs to happen before
-    // g_browser_process initializes BrowserPolicyConnector.
-    DeviceSettingsService::Initialize();
+    // ChromBrowserPolicyConnector::OnPreCreateThreads().
+    chromeos::DeviceSettingsService::Initialize();
     DeviceSettingsService::Get()->SetSessionManager(
         DBusThreadManager::Get()->GetSessionManagerClient(),
         OwnerSettingsServiceChromeOSFactory::GetInstance()->GetOwnerKeyUtil());
