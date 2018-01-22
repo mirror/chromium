@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3876cb3a_6cd67b5e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b248ae_3386d6cf",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e9d58c4_c3499530",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f4626235b183c662531d5795b5208f2c84218d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607bc121_bdf5f405",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9d58c4_c3499530",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "71f67105_323f9fd0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81594d02_d99f2fae",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20bad986_216abb9c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f00f8573_a4155c64",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/jssourcemap-bindings-overlapping-sources-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20bad986_216abb9c",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae77f46e_135f76f5",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
         "patchSetId": 3
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "67222a46_5ec99178",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae77f46e_135f76f5",
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de50bb5e_f91b8aa7",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
         "patchSetId": 3
@@ -125,6 +239,24 @@
       "revId": "f4626235b183c662531d5795b5208f2c84218d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66df55bd_3ea91b67",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T20:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de50bb5e_f91b8aa7",
+      "revId": "f4626235b183c662531d5795b5208f2c84218d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
