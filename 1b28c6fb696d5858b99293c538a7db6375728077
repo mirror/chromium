@@ -69,6 +69,24 @@
       "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aee2af73_e734fdf7",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-22T17:06:38Z",
+      "side": 0,
+      "message": "ACK.",
+      "parentUuid": "20a1e8cf_cb75cd67",
+      "revId": "1b28c6fb696d5858b99293c538a7db6375728077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

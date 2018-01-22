@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b2756b7c_25187187",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-22T17:06:38Z",
+      "side": 1,
+      "message": "optional: Prefer having a crbug for tracking this CL and potential follow-ups (and reverts/relands in unfortunate cases).",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2842c35_17a9d231",
         "filename": "third_party/WebKit/LayoutTests/mhtml/resource_not_found_in_archive-expected.html",
         "patchSetId": 7
@@ -142,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "ba11d964_26a1d743",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-22T17:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07c4a16e_915120c9",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc49c26_e4cdde8f",
         "filename": "third_party/WebKit/Source/core/css/CSSImageValue.cpp",
         "patchSetId": 7
@@ -209,6 +250,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d37a79_97bdd412",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-22T17:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "339c845c_8147c105",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +408,24 @@
       "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f9c987_68605a86",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheCorrectnessTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-22T17:06:38Z",
+      "side": 1,
+      "message": "I see, so this test should be cleaned up anyway, independently from this CL. ACK.",
+      "parentUuid": "0fead8af_b60f67f8",
+      "revId": "8741293c9d2cd753bb8d3012f7aa4b7931484ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
