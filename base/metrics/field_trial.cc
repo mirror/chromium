@@ -663,6 +663,52 @@ void FieldTrialList::AllStatesToString(std::string* output,
 }
 
 // static
+void FieldTrialList::AllParamsToString(std::string* output,
+                                       bool include_expired,
+                                       EscapeDataFunc encode_data_func) {
+  if (!global_)
+    return;
+  AutoLock auto_lock(global_->lock_);
+
+  for (const auto& registered : global_->registered_) {
+    FieldTrial::State trial;
+    if (!registered.second->GetStateWhileLocked(&trial, include_expired))
+      continue;
+    DCHECK_EQ(std::string::npos,
+              trial.trial_name->find(kPersistentStringSeparator));
+    DCHECK_EQ(std::string::npos,
+              trial.group_name->find(kPersistentStringSeparator));
+    std::map<std::string, std::string> params;
+    if (FieldTrialParamAssociator::GetInstance()
+            ->GetFieldTrialParamsWithoutFallback(*trial.trial_name,
+                                                 *trial.group_name, &params)) {
+      if (params.size() > 0) {
+        // Add comma to seprate from previous entry if it exists.
+        if (!output->empty())
+          output->append(1, ',');
+
+        output->append(encode_data_func(*trial.trial_name, false));
+        output->append(1, '.');
+        output->append(encode_data_func(*trial.group_name, false));
+        output->append(1, ':');
+
+        std::string param_str;
+        for (const auto& param : params) {
+          // Add separator from previous param information if it exists.
+          if (!param_str.empty())
+            param_str.append(1, kPersistentStringSeparator);
+          param_str.append(encode_data_func(param.first, false));
+          param_str.append(1, kPersistentStringSeparator);
+          param_str.append(encode_data_func(param.second, false));
+        }
+
+        output->append(param_str);
+      }
+    }
+  }
+}
+
+// static
 void FieldTrialList::GetActiveFieldTrialGroups(
     FieldTrial::ActiveGroups* active_groups) {
   DCHECK(active_groups->empty());
@@ -743,8 +789,13 @@ bool FieldTrialList::CreateTrialsFromString(
     const std::string trial_name = entry.trial_name.as_string();
     const std::string group_name = entry.group_name.as_string();
 
-    if (ContainsKey(ignored_trial_names, trial_name))
+    if (ContainsKey(ignored_trial_names, trial_name)) {
+      // This is to warn that the field trial forced through command-line
+      // input is unforcable.
+      // Use --enable-logging or --enable-logging=stderr to see this warning.
+      LOG(WARNING) << "Field trial: " << trial_name << " cannot be forced.";
       continue;
+    }
 
     FieldTrial* trial = CreateFieldTrial(trial_name, group_name);
     if (!trial)
