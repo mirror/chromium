@@ -42,8 +42,8 @@
                   {
                       testPreloadNone(t, aud, t.step_func(function()
                       {
-                          aud.src = URL.createObjectURL(stream);
-                          t.add_cleanup(function() { URL.revokeObjectURL(aud.src); });
+                          aud.srcObject = stream;
+                          t.add_cleanup(function() { aud.srcObject = null; });
                       }));
                   }),
                   t.unreached_func("getUserMedia error callback was invoked."));
