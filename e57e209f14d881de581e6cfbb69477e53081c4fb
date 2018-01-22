@@ -16,6 +16,24 @@
       "revId": "e57e209f14d881de581e6cfbb69477e53081c4fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be374c48_49937529",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-01-22T01:35:54Z",
+      "side": 1,
+      "message": "Drive-by:\n\nToLocal() has V8_WARN_UNUSED_RESULT so checking the return value is required here. (In an ideal world we should propagate MaybeLocal to force callers to check !IsEmpty() but it\u0027s a separate issue and passing MaybeLocal around requires many boilerplate I guess...)",
+      "parentUuid": "db3924f5_7bf0eb32",
+      "revId": "e57e209f14d881de581e6cfbb69477e53081c4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
