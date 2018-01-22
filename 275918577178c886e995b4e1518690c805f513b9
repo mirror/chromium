@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18d8181c_2c57bb19",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:53:09Z",
+      "side": 1,
+      "message": "Once a readonly property (see below), you\u0027ll be able to use dot notation for better readability.",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 45
+      },
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f342a4_95475c6f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:53:09Z",
+      "side": 1,
+      "message": "Comment is wrong.",
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e59b4a_6b9ecc47",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:53:09Z",
+      "side": 1,
+      "message": "Make it a readonly property.",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "275918577178c886e995b4e1518690c805f513b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
