@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55aef25_75a26a59",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-22T07:54:15Z",
+      "side": 1,
+      "message": "Just FYI:\n\nWe can share MutableData() directly with V8, and in that way, we do not need to copy back the data.  However, in that case, we need to use DOMArrayBuffer to externalize the v8::ArrayBuffer.  I\u0027m not sure which is faster, nor I do not understand why the original implementation didn\u0027t share the underlying buffer.",
+      "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
