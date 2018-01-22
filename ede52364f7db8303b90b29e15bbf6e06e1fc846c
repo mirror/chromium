@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8684c837_f9adb8b4",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:07:04Z",
+      "side": 1,
+      "message": "Can fit in one line?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed08e39_810114d0",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:07:04Z",
+      "side": 1,
+      "message": "\"dice\" is not self-documenting. Future reader would have to trace back the code to C++ to understand what this is. Consider adding a comment here explaining what is this boolean controlling.\n\nAlso should this be within a \"not chromeos\" \u003cif expr\u003e?",
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8151185_8adb4d7d",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:07:04Z",
+      "side": 1,
+      "message": "Is this boolean needed on CrOS builds?",
+      "range": {
+        "startLine": 293,
+        "startChar": 27,
+        "endLine": 293,
+        "endChar": 38
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef2b0cf_81092588",
+        "filename": "chrome/test/data/webui/settings/people_page_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-22T22:07:04Z",
+      "side": 1,
+      "message": "Copy paste? Does not sound relevant to the boolean below.",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 33
+      },
+      "revId": "ede52364f7db8303b90b29e15bbf6e06e1fc846c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
