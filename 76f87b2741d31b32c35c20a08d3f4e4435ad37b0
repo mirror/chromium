@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bc55ba14_d0fa2247",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-22T19:13:50Z",
+      "side": 1,
+      "message": "There are a couple other places I\u0027ve noted in case you missed them. If there\u0027s a reason to continue to use ServiceManagerConnection there then feel free to ignore my comments.",
+      "parentUuid": "e1c2ce98_2bc74547",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 26
+      },
+      "revId": "76f87b2741d31b32c35c20a08d3f4e4435ad37b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d62150_a5d92329",
         "filename": "extensions/browser/image_sanitizer.cc",
         "patchSetId": 22
