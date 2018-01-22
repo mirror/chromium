@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae83ecc_c9703ba9",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-22T19:57:04Z",
+      "side": 1,
+      "message": "Could you update this comment to be more specific?  Something to the effect that fullscreen observers are expected to show the toolbar when fullscreen is disabled, so we need to update internal state to match the fully shown toolbar.",
+      "revId": "0aa91b4be8cff5c87cdfc418902110e7d515f982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
