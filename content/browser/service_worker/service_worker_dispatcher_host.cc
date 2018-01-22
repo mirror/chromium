@@ -73,15 +73,17 @@ void SetMessageEventSource(
 
 bool IsValidSourceInfo(
     const blink::mojom::ServiceWorkerClientInfoPtr& source_info) {
+  DCHECK(source_info);
   return !source_info->client_uuid.empty();
 }
 
 bool IsValidSourceInfo(
     const blink::mojom::ServiceWorkerObjectInfoPtr& source_info) {
-  return source_info->handle_id !=
-             blink::mojom::kInvalidServiceWorkerHandleId &&
-         source_info->version_id !=
-             blink::mojom::kInvalidServiceWorkerVersionId;
+  DCHECK(
+      source_info &&
+      source_info->handle_id != blink::mojom::kInvalidServiceWorkerHandleId &&
+      source_info->version_id != blink::mojom::kInvalidServiceWorkerVersionId);
+  return true;
 }
 
 }  // namespace
