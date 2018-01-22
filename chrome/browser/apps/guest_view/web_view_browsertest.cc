@@ -3756,13 +3756,13 @@ IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, FocusAccessibility) {
   // Wait for focus to land on the "root web area" role, representing
   // focus on the main document itself.
   while (content::GetFocusedAccessibilityNodeInfo(web_contents).role !=
-             ui::AX_ROLE_ROOT_WEB_AREA) {
+             ax::mojom::Role::ROOT_WEB_AREA) {
     content::WaitForAccessibilityFocusChange();
   }
 
   // Now keep pressing the Tab key until focus lands on a button.
   while (content::GetFocusedAccessibilityNodeInfo(web_contents).role !=
-             ui::AX_ROLE_BUTTON) {
+             ax::mojom::Role::BUTTON) {
     content::SimulateKeyPress(web_contents, ui::DomKey::FromCharacter('\t'),
                               ui::DomCode::TAB, ui::VKEY_TAB, false, false,
                               false, false);
@@ -3773,7 +3773,7 @@ IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, FocusAccessibility) {
   // "Guest button".
   ui::AXNodeData node_data =
       content::GetFocusedAccessibilityNodeInfo(web_contents);
-  EXPECT_EQ("Guest button", node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+  EXPECT_EQ("Guest button", node_data.GetStringAttribute(ax::mojom::StringAttribute::NAME));
 }
 
 class WebContentsAccessibilityEventWatcher
@@ -3781,7 +3781,7 @@ class WebContentsAccessibilityEventWatcher
  public:
   WebContentsAccessibilityEventWatcher(
       content::WebContents* web_contents,
-      ui::AXEvent event)
+      ax::mojom::Event event)
       : content::WebContentsObserver(web_contents),
         event_(event),
         count_(0) {}
@@ -3812,7 +3812,7 @@ class WebContentsAccessibilityEventWatcher
 
  private:
   scoped_refptr<content::MessageLoopRunner> loop_runner_;
-  ui::AXEvent event_;
+  ax::mojom::Event event_;
   ui::AXNodeData node_data_;
   size_t count_;
 };
@@ -3826,9 +3826,9 @@ IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, DISABLED_TouchAccessibility) {
 
   // Listen for accessibility events on both WebContents.
   WebContentsAccessibilityEventWatcher main_event_watcher(
-      web_contents, ui::AX_EVENT_HOVER);
+      web_contents, ax::mojom::Event::HOVER);
   WebContentsAccessibilityEventWatcher guest_event_watcher(
-      guest_web_contents, ui::AX_EVENT_HOVER);
+      guest_web_contents, ax::mojom::Event::HOVER);
 
   // Send an accessibility touch event to the main WebContents, but
   // positioned on top of the button inside the inner WebView.
@@ -3845,7 +3845,7 @@ IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, DISABLED_TouchAccessibility) {
   guest_event_watcher.Wait();
   ui::AXNodeData hit_node = guest_event_watcher.node_data();
   EXPECT_EQ(1U, guest_event_watcher.count());
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, hit_node.role);
+  EXPECT_EQ(ax::mojom::Role::BUTTON, hit_node.role);
   EXPECT_EQ(0U, main_event_watcher.count());
 }
 

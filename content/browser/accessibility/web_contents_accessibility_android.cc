@@ -193,16 +193,16 @@ base::LazyInstance<base::string16>::Leaky g_all_search_keys =
 
 bool SectionPredicate(BrowserAccessibility* start, BrowserAccessibility* node) {
   switch (node->GetRole()) {
-    case ui::AX_ROLE_ARTICLE:
-    case ui::AX_ROLE_APPLICATION:
-    case ui::AX_ROLE_BANNER:
-    case ui::AX_ROLE_COMPLEMENTARY:
-    case ui::AX_ROLE_CONTENT_INFO:
-    case ui::AX_ROLE_HEADING:
-    case ui::AX_ROLE_MAIN:
-    case ui::AX_ROLE_NAVIGATION:
-    case ui::AX_ROLE_SEARCH:
-    case ui::AX_ROLE_REGION:
+    case ax::mojom::Role::ARTICLE:
+    case ax::mojom::Role::APPLICATION:
+    case ax::mojom::Role::BANNER:
+    case ax::mojom::Role::COMPLEMENTARY:
+    case ax::mojom::Role::CONTENT_INFO:
+    case ax::mojom::Role::HEADING:
+    case ax::mojom::Role::MAIN:
+    case ax::mojom::Role::NAVIGATION:
+    case ax::mojom::Role::SEARCH:
+    case ax::mojom::Role::REGION:
       return true;
     default:
       return false;
@@ -618,7 +618,7 @@ jint WebContentsAccessibilityAndroid::GetEditableTextSelectionStart(
   if (!node)
     return false;
 
-  return node->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START);
+  return node->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START);
 }
 
 jint WebContentsAccessibilityAndroid::GetEditableTextSelectionEnd(
@@ -629,7 +629,7 @@ jint WebContentsAccessibilityAndroid::GetEditableTextSelectionEnd(
   if (!node)
     return false;
 
-  return node->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END);
+  return node->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END);
 }
 
 jboolean WebContentsAccessibilityAndroid::PopulateAccessibilityNodeInfo(
@@ -673,7 +673,7 @@ jboolean WebContentsAccessibilityAndroid::PopulateAccessibilityNodeInfo(
       base::android::ConvertUTF16ToJavaString(env, node->GetText()),
       node->IsLink(), node->IsEditableText(),
       base::android::ConvertUTF16ToJavaString(
-          env, node->GetInheritedString16Attribute(ui::AX_ATTR_LANGUAGE)));
+          env, node->GetInheritedString16Attribute(ax::mojom::StringAttribute::LANGUAGE)));
   base::string16 element_id;
   if (node->GetHtmlAttribute("id", &element_id)) {
     Java_WebContentsAccessibility_setAccessibilityNodeInfoViewIdResourceName(
@@ -698,15 +698,15 @@ jboolean WebContentsAccessibilityAndroid::PopulateAccessibilityNodeInfo(
       base::android::ConvertUTF8ToJavaString(env, node->GetRoleString()),
       base::android::ConvertUTF16ToJavaString(env, node->GetRoleDescription()),
       base::android::ConvertUTF16ToJavaString(env, node->GetHint()),
-      node->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START),
-      node->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END));
+      node->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START),
+      node->GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END));
 
   Java_WebContentsAccessibility_setAccessibilityNodeInfoLollipopAttributes(
       env, obj, info, node->CanOpenPopup(), node->IsContentInvalid(),
       node->IsDismissable(), node->IsMultiLine(), node->AndroidInputType(),
       node->AndroidLiveRegionType());
 
-  bool has_character_locations = node->GetRole() == ui::AX_ROLE_STATIC_TEXT ||
+  bool has_character_locations = node->GetRole() == ax::mojom::Role::STATIC_TEXT ||
                                  node->IsInterestingOnAndroid();
   Java_WebContentsAccessibility_setAccessibilityNodeInfoOAttributes(
       env, obj, info, has_character_locations);
@@ -878,9 +878,9 @@ jboolean WebContentsAccessibilityAndroid::AdjustSlider(
   if (!android_node->IsSlider() || !android_node->IsEnabled())
     return false;
 
-  float value = node->GetFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE);
-  float min = node->GetFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE);
-  float max = node->GetFloatAttribute(ui::AX_ATTR_MAX_VALUE_FOR_RANGE);
+  float value = node->GetFloatAttribute(ax::mojom::FloatAttribute::VALUE_FOR_RANGE);
+  float min = node->GetFloatAttribute(ax::mojom::FloatAttribute::MIN_VALUE_FOR_RANGE);
+  float max = node->GetFloatAttribute(ax::mojom::FloatAttribute::MAX_VALUE_FOR_RANGE);
   if (max <= min)
     return false;
 
@@ -1046,7 +1046,7 @@ bool WebContentsAccessibilityAndroid::IsSlider(JNIEnv* env,
   if (!node)
     return false;
 
-  return node->GetRole() == ui::AX_ROLE_SLIDER;
+  return node->GetRole() == ax::mojom::Role::SLIDER;
 }
 
 void WebContentsAccessibilityAndroid::OnAutofillPopupDisplayed(
@@ -1066,12 +1066,13 @@ void WebContentsAccessibilityAndroid::OnAutofillPopupDisplayed(
   g_autofill_popup_proxy_node = BrowserAccessibility::Create();
   g_autofill_popup_proxy_node_ax_node = new ui::AXNode(nullptr, -1, -1);
   ui::AXNodeData ax_node_data;
-  ax_node_data.role = ui::AX_ROLE_MENU;
+  ax_node_data.role = ax::mojom::Role::MENU;
   ax_node_data.SetName("Autofill");
-  ax_node_data.AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_READ_ONLY);
-  ax_node_data.AddState(ui::AX_STATE_FOCUSABLE);
-  ax_node_data.AddState(ui::AX_STATE_SELECTABLE);
+  ax_node_data.AddIntAttribute(
+      ax::mojom::IntAttribute::RESTRICTION,
+      static_cast<int32_t>(ax::mojom::Restriction::READ_ONLY));
+  ax_node_data.AddState(ax::mojom::State::FOCUSABLE);
+  ax_node_data.AddState(ax::mojom::State::SELECTABLE);
   g_autofill_popup_proxy_node_ax_node->SetData(ax_node_data);
   g_autofill_popup_proxy_node->Init(root_manager_,
                                     g_autofill_popup_proxy_node_ax_node);

@@ -7,7 +7,7 @@
 #include <stddef.h>
 
 #include "base/strings/utf_string_conversions.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/accessibility/platform/ax_unique_id.h"
@@ -59,15 +59,15 @@ void AXWindowObjWrapper::GetChildren(
 
 void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   out_node_data->id = GetUniqueId().Get();
-  ui::AXRole role = window_->GetProperty(ui::kAXRoleOverride);
-  if (role != ui::AX_ROLE_NONE)
+  ax::mojom::Role role = window_->GetProperty(ui::kAXRoleOverride);
+  if (role != ax::mojom::Role::NONE)
     out_node_data->role = role;
   else
-    out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
-  out_node_data->AddStringAttribute(ui::AX_ATTR_NAME,
+    out_node_data->role = is_alert_ ? ax::mojom::Role::ALERT : ax::mojom::Role::WINDOW;
+  out_node_data->AddStringAttribute(ax::mojom::StringAttribute::NAME,
                                     base::UTF16ToUTF8(window_->GetTitle()));
   if (!window_->IsVisible())
-    out_node_data->AddState(ui::AX_STATE_INVISIBLE);
+    out_node_data->AddState(ax::mojom::State::INVISIBLE);
 
   out_node_data->location = gfx::RectF(window_->bounds());
   if (window_->parent()) {
@@ -89,7 +89,7 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
       return;
     }
 
-    out_node_data->AddIntAttribute(ui::AX_ATTR_CHILD_TREE_ID, child_ax_tree_id);
+    out_node_data->AddIntAttribute(ax::mojom::IntAttribute::CHILD_TREE_ID, child_ax_tree_id);
   }
 }
 
@@ -121,17 +121,17 @@ void AXWindowObjWrapper::OnWindowBoundsChanged(
   if (window != window_)
     return;
 
-  AXAuraObjCache::GetInstance()->FireEvent(this, ui::AX_EVENT_LOCATION_CHANGED);
+  AXAuraObjCache::GetInstance()->FireEvent(this, ax::mojom::Event::LOCATION_CHANGED);
 
   Widget* widget = Widget::GetWidgetForNativeView(window);
   if (widget) {
     AXAuraObjCache::GetInstance()->FireEvent(
         AXAuraObjCache::GetInstance()->GetOrCreate(widget),
-        ui::AX_EVENT_LOCATION_CHANGED);
+        ax::mojom::Event::LOCATION_CHANGED);
 
     views::View* root_view = widget->GetRootView();
     if (root_view)
-      root_view->NotifyAccessibilityEvent(ui::AX_EVENT_LOCATION_CHANGED, true);
+      root_view->NotifyAccessibilityEvent(ax::mojom::Event::LOCATION_CHANGED, true);
   }
 }
 
@@ -140,7 +140,7 @@ void AXWindowObjWrapper::OnWindowPropertyChanged(aura::Window* window,
                                                  intptr_t old) {
   if (window == window_ && key == ui::kChildAXTreeID) {
     AXAuraObjCache::GetInstance()->FireEvent(this,
-                                             ui::AX_EVENT_CHILDREN_CHANGED);
+                                             ax::mojom::Event::CHILDREN_CHANGED);
   }
 }
 

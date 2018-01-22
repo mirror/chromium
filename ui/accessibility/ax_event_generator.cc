@@ -81,7 +81,7 @@ void AXEventGenerator::ClearEvents() {
 
 void AXEventGenerator::AddEvent(ui::AXNode* node,
                                 AXEventGenerator::Event event) {
-  if (node->data().role == AX_ROLE_INLINE_TEXT_BOX)
+  if (node->data().role == ax::mojom::Role::INLINE_TEXT_BOX)
     return;
 
   // A newly created live region or alert should not *also* fire a
@@ -105,7 +105,7 @@ void AXEventGenerator::OnNodeDataWillChange(AXTree* tree,
   // We don't expose those to platform APIs, though, so suppress
   // CHILDREN_CHANGED events on static text nodes.
   if (new_node_data.child_ids != old_node_data.child_ids &&
-      new_node_data.role != ui::AX_ROLE_STATIC_TEXT) {
+      new_node_data.role != ax::mojom::Role::STATIC_TEXT) {
     AXNode* node = tree_->GetFromId(new_node_data.id);
     tree_events_[node].insert(Event::CHILDREN_CHANGED);
   }
@@ -113,23 +113,23 @@ void AXEventGenerator::OnNodeDataWillChange(AXTree* tree,
 
 void AXEventGenerator::OnRoleChanged(AXTree* tree,
                                      AXNode* node,
-                                     AXRole old_role,
-                                     AXRole new_role) {
+                                     ax::mojom::Role old_role,
+                                     ax::mojom::Role new_role) {
   DCHECK_EQ(tree_, tree);
   AddEvent(node, Event::ROLE_CHANGED);
 }
 
 void AXEventGenerator::OnStateChanged(AXTree* tree,
                                       AXNode* node,
-                                      AXState state,
+                                      ax::mojom::State state,
                                       bool new_value) {
   DCHECK_EQ(tree_, tree);
 
   AddEvent(node, Event::STATE_CHANGED);
-  if (state == ui::AX_STATE_EXPANDED) {
+  if (state == ax::mojom::State::EXPANDED) {
     AddEvent(node, new_value ? Event::EXPANDED : Event::COLLAPSED);
-    if (node->data().role == ui::AX_ROLE_ROW ||
-        node->data().role == ui::AX_ROLE_TREE_ITEM) {
+    if (node->data().role == ax::mojom::Role::ROW ||
+        node->data().role == ax::mojom::Role::TREE_ITEM) {
       ui::AXNode* container = node;
       while (container && !ui::IsRowContainer(container->data().role))
         container = container->parent();
@@ -137,7 +137,7 @@ void AXEventGenerator::OnStateChanged(AXTree* tree,
         AddEvent(container, Event::ROW_COUNT_CHANGED);
     }
   }
-  if (state == ui::AX_STATE_SELECTED) {
+  if (state == ax::mojom::State::SELECTED) {
     AddEvent(node, Event::SELECTED_CHANGED);
     ui::AXNode* container = node;
     while (container &&
@@ -150,29 +150,29 @@ void AXEventGenerator::OnStateChanged(AXTree* tree,
 
 void AXEventGenerator::OnStringAttributeChanged(AXTree* tree,
                                                 AXNode* node,
-                                                AXStringAttribute attr,
+                                                ax::mojom::StringAttribute attr,
                                                 const std::string& old_value,
                                                 const std::string& new_value) {
   DCHECK_EQ(tree_, tree);
 
   switch (attr) {
-    case ui::AX_ATTR_NAME:
+    case ax::mojom::StringAttribute::NAME:
       AddEvent(node, Event::NAME_CHANGED);
-      if (node->data().HasStringAttribute(ui::AX_ATTR_CONTAINER_LIVE_STATUS)) {
+      if (node->data().HasStringAttribute(ax::mojom::StringAttribute::CONTAINER_LIVE_STATUS)) {
         FireLiveRegionEvents(node);
       }
       break;
-    case ui::AX_ATTR_DESCRIPTION:
+    case ax::mojom::StringAttribute::DESCRIPTION:
       AddEvent(node, Event::DESCRIPTION_CHANGED);
       break;
-    case ui::AX_ATTR_VALUE:
+    case ax::mojom::StringAttribute::VALUE:
       AddEvent(node, Event::VALUE_CHANGED);
       break;
-    case ui::AX_ATTR_ARIA_INVALID_VALUE:
+    case ax::mojom::StringAttribute::ARIA_INVALID_VALUE:
       AddEvent(node, Event::INVALID_STATUS_CHANGED);
       break;
-    case ui::AX_ATTR_LIVE_STATUS:
-      if (node->data().role != ui::AX_ROLE_ALERT)
+    case ax::mojom::StringAttribute::LIVE_STATUS:
+      if (node->data().role != ax::mojom::Role::ALERT)
         AddEvent(node, Event::LIVE_REGION_CREATED);
       break;
     default:
@@ -183,27 +183,27 @@ void AXEventGenerator::OnStringAttributeChanged(AXTree* tree,
 
 void AXEventGenerator::OnIntAttributeChanged(AXTree* tree,
                                              AXNode* node,
-                                             AXIntAttribute attr,
+                                             ax::mojom::IntAttribute attr,
                                              int32_t old_value,
                                              int32_t new_value) {
   DCHECK_EQ(tree_, tree);
 
   switch (attr) {
-    case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
+    case ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID:
       AddEvent(node, Event::ACTIVE_DESCENDANT_CHANGED);
       active_descendant_changed_.push_back(node);
       break;
-    case ui::AX_ATTR_CHECKED_STATE:
+    case ax::mojom::IntAttribute::CHECKED_STATE:
       AddEvent(node, Event::CHECKED_STATE_CHANGED);
       break;
-    case ui::AX_ATTR_INVALID_STATE:
+    case ax::mojom::IntAttribute::INVALID_STATE:
       AddEvent(node, Event::INVALID_STATUS_CHANGED);
       break;
-    case ui::AX_ATTR_RESTRICTION:
+    case ax::mojom::IntAttribute::RESTRICTION:
       AddEvent(node, Event::STATE_CHANGED);
       break;
-    case ui::AX_ATTR_SCROLL_X:
-    case ui::AX_ATTR_SCROLL_Y:
+    case ax::mojom::IntAttribute::SCROLL_X:
+    case ax::mojom::IntAttribute::SCROLL_Y:
       AddEvent(node, Event::SCROLL_POSITION_CHANGED);
       break;
     default:
@@ -214,12 +214,12 @@ void AXEventGenerator::OnIntAttributeChanged(AXTree* tree,
 
 void AXEventGenerator::OnFloatAttributeChanged(AXTree* tree,
                                                AXNode* node,
-                                               AXFloatAttribute attr,
+                                               ax::mojom::FloatAttribute attr,
                                                float old_value,
                                                float new_value) {
   DCHECK_EQ(tree_, tree);
 
-  if (attr == ui::AX_ATTR_VALUE_FOR_RANGE)
+  if (attr == ax::mojom::FloatAttribute::VALUE_FOR_RANGE)
     AddEvent(node, Event::VALUE_CHANGED);
   else
     AddEvent(node, Event::OTHER_ATTRIBUTE_CHANGED);
@@ -227,7 +227,7 @@ void AXEventGenerator::OnFloatAttributeChanged(AXTree* tree,
 
 void AXEventGenerator::OnBoolAttributeChanged(AXTree* tree,
                                               AXNode* node,
-                                              AXBoolAttribute attr,
+                                              ax::mojom::BoolAttribute attr,
                                               bool new_value) {
   DCHECK_EQ(tree_, tree);
 
@@ -237,7 +237,7 @@ void AXEventGenerator::OnBoolAttributeChanged(AXTree* tree,
 void AXEventGenerator::OnIntListAttributeChanged(
     AXTree* tree,
     AXNode* node,
-    AXIntListAttribute attr,
+    ax::mojom::IntListAttribute attr,
     const std::vector<int32_t>& old_value,
     const std::vector<int32_t>& new_value) {
   DCHECK_EQ(tree_, tree);
@@ -247,7 +247,7 @@ void AXEventGenerator::OnIntListAttributeChanged(
 void AXEventGenerator::OnStringListAttributeChanged(
     AXTree* tree,
     AXNode* node,
-    AXStringListAttribute attr,
+    ax::mojom::StringListAttribute attr,
     const std::vector<std::string>& old_value,
     const std::vector<std::string>& new_value) {
   DCHECK_EQ(tree_, tree);
@@ -314,14 +314,14 @@ void AXEventGenerator::OnAtomicUpdateFinished(
 
   for (const auto& change : changes) {
     if ((change.type == NODE_CREATED || change.type == SUBTREE_CREATED)) {
-      if (change.node->data().HasStringAttribute(ui::AX_ATTR_LIVE_STATUS)) {
-        if (change.node->data().role == ui::AX_ROLE_ALERT)
+      if (change.node->data().HasStringAttribute(ax::mojom::StringAttribute::LIVE_STATUS)) {
+        if (change.node->data().role == ax::mojom::Role::ALERT)
           AddEvent(change.node, Event::ALERT);
         else
           AddEvent(change.node, Event::LIVE_REGION_CREATED);
       } else if (change.node->data().HasStringAttribute(
-                     ui::AX_ATTR_CONTAINER_LIVE_STATUS) &&
-                 change.node->data().HasStringAttribute(ui::AX_ATTR_NAME)) {
+                     ax::mojom::StringAttribute::CONTAINER_LIVE_STATUS) &&
+                 change.node->data().HasStringAttribute(ax::mojom::StringAttribute::NAME)) {
         FireLiveRegionEvents(change.node);
       }
     }
@@ -333,12 +333,12 @@ void AXEventGenerator::OnAtomicUpdateFinished(
 void AXEventGenerator::FireLiveRegionEvents(AXNode* node) {
   ui::AXNode* live_root = node;
   while (live_root &&
-         !live_root->data().HasStringAttribute(ui::AX_ATTR_LIVE_STATUS))
+         !live_root->data().HasStringAttribute(ax::mojom::StringAttribute::LIVE_STATUS))
     live_root = live_root->parent();
 
-  if (live_root && !live_root->data().GetBoolAttribute(ui::AX_ATTR_BUSY)) {
+  if (live_root && !live_root->data().GetBoolAttribute(ax::mojom::BoolAttribute::BUSY)) {
     // Fire LIVE_REGION_NODE_CHANGED on each node that changed.
-    if (!node->data().GetStringAttribute(ui::AX_ATTR_NAME).empty())
+    if (!node->data().GetStringAttribute(ax::mojom::StringAttribute::NAME).empty())
       AddEvent(node, Event::LIVE_REGION_NODE_CHANGED);
     // Fire LIVE_REGION_NODE_CHANGED on the root of the live region.
     AddEvent(live_root, Event::LIVE_REGION_CHANGED);
@@ -348,14 +348,14 @@ void AXEventGenerator::FireLiveRegionEvents(AXNode* node) {
 void AXEventGenerator::FireActiveDescendantEvents() {
   for (AXNode* node : active_descendant_changed_) {
     AXNode* descendant = tree_->GetFromId(
-        node->data().GetIntAttribute(ui::AX_ATTR_ACTIVEDESCENDANT_ID));
+        node->data().GetIntAttribute(ax::mojom::IntAttribute::ACTIVEDESCENDANT_ID));
     if (!descendant)
       continue;
     switch (descendant->data().role) {
-      case ui::AX_ROLE_MENU_ITEM:
-      case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
-      case ui::AX_ROLE_MENU_ITEM_RADIO:
-      case ui::AX_ROLE_MENU_LIST_OPTION:
+      case ax::mojom::Role::MENU_ITEM:
+      case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
+      case ax::mojom::Role::MENU_ITEM_RADIO:
+      case ax::mojom::Role::MENU_LIST_OPTION:
         AddEvent(descendant, Event::MENU_ITEM_SELECTED);
         break;
       default:

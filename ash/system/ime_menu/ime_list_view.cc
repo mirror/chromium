@@ -120,10 +120,11 @@ class ImeListItemView : public ActionableView {
 
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     ActionableView::GetAccessibleNodeData(node_data);
-    node_data->role = ui::AX_ROLE_CHECK_BOX;
-    const ui::AXCheckedState checked_state =
-        selected_ ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-    node_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+    node_data->role = ax::mojom::Role::CHECK_BOX;
+    const ax::mojom::CheckedState checked_state =
+        selected_ ? ax::mojom::CheckedState::TRUE_VALUE : ax::mojom::CheckedState::FALSE_VALUE;
+    node_data->AddIntAttribute(ax::mojom::IntAttribute::CHECKED_STATE,
+                               static_cast<int32_t>(checked_state));
   }
 
  private:

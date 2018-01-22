@@ -193,13 +193,13 @@ void LoginShelfView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (LockScreen::IsShown()) {
     int previous_id = views::AXAuraObjCache::GetInstance()->GetID(
         static_cast<views::Widget*>(LockScreen::Get()->window()));
-    node_data->AddIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID, previous_id);
+    node_data->AddIntAttribute(ax::mojom::IntAttribute::PREVIOUS_FOCUS_ID, previous_id);
   }
 
   Shelf* shelf = Shelf::ForWindow(GetWidget()->GetNativeWindow());
   int next_id =
       views::AXAuraObjCache::GetInstance()->GetID(shelf->GetStatusAreaWidget());
-  node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID, next_id);
+  node_data->AddIntAttribute(ax::mojom::IntAttribute::NEXT_FOCUS_ID, next_id);
 }
 
 void LoginShelfView::ButtonPressed(views::Button* sender,

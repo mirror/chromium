@@ -134,8 +134,8 @@ TEST_F(LabelButtonTest, Init) {
 
   ui::AXNodeData accessible_node_data;
   button.GetAccessibleNodeData(&accessible_node_data);
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_node_data.role);
-  EXPECT_EQ(text, accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
+  EXPECT_EQ(ax::mojom::Role::BUTTON, accessible_node_data.role);
+  EXPECT_EQ(text, accessible_node_data.GetString16Attribute(ax::mojom::StringAttribute::NAME));
 
   EXPECT_FALSE(button.is_default());
   EXPECT_EQ(button.style(), Button::STYLE_TEXTBUTTON);
@@ -184,9 +184,9 @@ TEST_F(LabelButtonTest, AccessibleState) {
   ui::AXNodeData accessible_node_data;
 
   button_->GetAccessibleNodeData(&accessible_node_data);
-  EXPECT_EQ(ui::AX_ROLE_BUTTON, accessible_node_data.role);
+  EXPECT_EQ(ax::mojom::Role::BUTTON, accessible_node_data.role);
   EXPECT_EQ(base::string16(),
-            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
+            accessible_node_data.GetString16Attribute(ax::mojom::StringAttribute::NAME));
 
   // Without a label (e.g. image-only), the accessible name should automatically
   // be set from the tooltip.
@@ -194,7 +194,7 @@ TEST_F(LabelButtonTest, AccessibleState) {
   button_->SetTooltipText(tooltip_text);
   button_->GetAccessibleNodeData(&accessible_node_data);
   EXPECT_EQ(tooltip_text,
-            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
+            accessible_node_data.GetString16Attribute(ax::mojom::StringAttribute::NAME));
   EXPECT_EQ(base::string16(), button_->GetText());
 
   // Setting a label overrides the tooltip text.
@@ -202,7 +202,7 @@ TEST_F(LabelButtonTest, AccessibleState) {
   button_->SetText(label_text);
   button_->GetAccessibleNodeData(&accessible_node_data);
   EXPECT_EQ(label_text,
-            accessible_node_data.GetString16Attribute(ui::AX_ATTR_NAME));
+            accessible_node_data.GetString16Attribute(ax::mojom::StringAttribute::NAME));
   EXPECT_EQ(label_text, button_->GetText());
 
   base::string16 tooltip;

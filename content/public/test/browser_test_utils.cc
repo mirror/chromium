@@ -1375,7 +1375,7 @@ ui::AXNodeData GetFocusedAccessibilityNodeInfo(WebContents* web_contents) {
 
 bool AccessibilityTreeContainsNodeWithName(BrowserAccessibility* node,
                                            const std::string& name) {
-  if (node->GetStringAttribute(ui::AX_ATTR_NAME) == name)
+  if (node->GetStringAttribute(ax::mojom::StringAttribute::NAME) == name)
     return true;
   for (unsigned i = 0; i < node->PlatformChildCount(); i++) {
     if (AccessibilityTreeContainsNodeWithName(node->PlatformGetChild(i), name))
@@ -1404,7 +1404,7 @@ void WaitForAccessibilityTreeToContainNodeWithName(WebContents* web_contents,
   while (!main_frame_manager || !AccessibilityTreeContainsNodeWithName(
              main_frame_manager->GetRoot(), name)) {
     AccessibilityNotificationWaiter accessibility_waiter(main_frame,
-                                                         ui::AX_EVENT_NONE);
+                                                         ax::mojom::Event::NONE);
     for (FrameTreeNode* node : frame_tree->Nodes()) {
       accessibility_waiter.ListenToAdditionalFrame(
           node->current_frame_host());

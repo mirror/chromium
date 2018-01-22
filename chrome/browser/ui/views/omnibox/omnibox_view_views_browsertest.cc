@@ -516,21 +516,21 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewViewsTest, FriendlyAccessibleLabel) {
   omnibox_view_views->GetAccessibleNodeData(&node_data);
   EXPECT_EQ(base::ASCIIToUTF16(
                 "Google https://google.com location from history, 1 of 1"),
-            node_data.GetString16Attribute(ui::AX_ATTR_VALUE));
+            node_data.GetString16Attribute(ax::mojom::StringAttribute::VALUE));
   // Selection offsets are moved over by length the inserted descriptive text
   // prefix ("Google") + 1 for the space.
   EXPECT_EQ(kFriendlyPrefixLength,
-            node_data.GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END));
+            node_data.GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_END));
   EXPECT_EQ(kFriendlyPrefixLength + static_cast<int>(match_url.size()),
-            node_data.GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START));
-  EXPECT_EQ("both", node_data.GetStringAttribute(ui::AX_ATTR_AUTO_COMPLETE));
-  EXPECT_EQ(ui::AX_ROLE_TEXT_FIELD, node_data.role);
+            node_data.GetIntAttribute(ax::mojom::IntAttribute::TEXT_SEL_START));
+  EXPECT_EQ("both", node_data.GetStringAttribute(ax::mojom::StringAttribute::AUTO_COMPLETE));
+  EXPECT_EQ(ax::mojom::Role::TEXT_FIELD, node_data.role);
 
   // Select second character -- even though the friendly "Google " prefix is
   // part of the exposed accessible text, setting the selection within select
   // the intended part of the editable text.
   ui::AXActionData set_selection_action_data;
-  set_selection_action_data.action = ui::AX_ACTION_SET_SELECTION;
+  set_selection_action_data.action = ax::mojom::Action::SET_SELECTION;
   set_selection_action_data.anchor_node_id = node_data.id;
   set_selection_action_data.focus_offset = kFriendlyPrefixLength + 1;
   set_selection_action_data.anchor_offset = kFriendlyPrefixLength + 3;
@@ -547,5 +547,5 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewViewsTest, FriendlyAccessibleLabel) {
   // edited text.
   omnibox_view_views->GetAccessibleNodeData(&node_data);
   EXPECT_EQ(base::ASCIIToUTF16("hxps://google.com"),
-            node_data.GetString16Attribute(ui::AX_ATTR_VALUE));
+            node_data.GetString16Attribute(ax::mojom::StringAttribute::VALUE));
 }

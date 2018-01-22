@@ -35,7 +35,7 @@ static gchar* ax_platform_atk_hyperlink_get_uri(AtkHyperlink* atk_hyperlink,
   if (index != 0)
     return nullptr;
 
-  return g_strdup(obj->GetStringAttribute(ui::AX_ATTR_URL).c_str());
+  return g_strdup(obj->GetStringAttribute(ax::mojom::StringAttribute::URL).c_str());
 }
 
 static AtkObject* ax_platform_atk_hyperlink_get_object(
@@ -155,7 +155,7 @@ static const gchar* ax_platform_atk_hyperlink_get_keybinding(AtkAction* action,
   if (!obj)
     return nullptr;
 
-  return obj->GetStringAttribute(ui::AX_ATTR_ACCESS_KEY).c_str();
+  return obj->GetStringAttribute(ax::mojom::StringAttribute::ACCESS_KEY).c_str();
 }
 
 static const gchar* ax_platform_atk_hyperlink_get_name(AtkAction* atk_action,
@@ -169,10 +169,10 @@ static const gchar* ax_platform_atk_hyperlink_get_name(AtkAction* atk_action,
     return nullptr;
 
   int action;
-  if (!obj->GetIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB, &action))
+  if (!obj->GetIntAttribute(ax::mojom::IntAttribute::DEFAULT_ACTION_VERB, &action))
     return nullptr;
   base::string16 action_verb = ui::ActionVerbToUnlocalizedString(
-      static_cast<ui::AXDefaultActionVerb>(action));
+      static_cast<ax::mojom::DefaultActionVerb>(action));
   ATK_AURALINUX_RETURN_STRING(base::UTF16ToUTF8(action_verb));
 }
 
@@ -188,10 +188,10 @@ static const gchar* ax_platform_atk_hyperlink_get_localized_name(
     return nullptr;
 
   int action;
-  if (!obj->GetIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB, &action))
+  if (!obj->GetIntAttribute(ax::mojom::IntAttribute::DEFAULT_ACTION_VERB, &action))
     return nullptr;
   base::string16 action_verb = ui::ActionVerbToLocalizedString(
-      static_cast<ui::AXDefaultActionVerb>(action));
+      static_cast<ax::mojom::DefaultActionVerb>(action));
   ATK_AURALINUX_RETURN_STRING(base::UTF16ToUTF8(action_verb));
 }
 

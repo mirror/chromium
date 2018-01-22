@@ -211,7 +211,7 @@ void BrowserPlugin::Attach() {
     if (!ax_element.IsDetached()) {
       render_frame->render_accessibility()->HandleAXEvent(
           ax_element,
-          ui::AX_EVENT_CHILDREN_CHANGED);
+          ax::mojom::Event::CHILDREN_CHANGED);
     }
   }
 

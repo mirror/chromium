@@ -1,0 +1,809 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// TODO(nektar): Migrate entire file to Mojoq.
+// Must also be kept in sync with chrome/common/extensions/api/automation.idl.
+module ax.mojom;
+
+// For new entries to the following four enums, also add to
+// chrome/common/extensions/api/automation.idl. This is enforced
+// by a PRESUBMIT check.
+//
+// Explanation of the comments next to these events:
+//
+// Web: this event is only used in web content. Unless a specific platform
+//      is specified, it fires a native event on multiple platforms.
+//
+// Native: this event is only used in native UI.
+//
+// Implicit: it would be cleaner if we just updated the AX node
+//     and each platform fired the appropriate events to indicate which
+//     platform-specific attributes changed.
+//
+// If unspecified, the event is used across web and native on multiple
+// platforms.
+enum Event {
+  NONE,
+  ACTIVEDESCENDANTCHANGED,   // Web
+  ALERT,
+  ARIA_ATTRIBUTE_CHANGED,    // Implicit
+  AUTOCORRECTION_OCCURED,    // Unknown: http://crbug.com/392498
+  BLUR,                      // Remove: http://crbug.com/392502
+  CHECKED_STATE_CHANGED,     // Implicit
+  CHILDREN_CHANGED,
+  CLICKED,
+  DOCUMENT_SELECTION_CHANGED,
+  EXPANDED_CHANGED,          // Web
+  FOCUS,
+  HIDE,                      // Remove: http://crbug.com/392502
+  HIT_TEST_RESULT,
+  HOVER,
+  IMAGE_FRAME_UPDATED,       // Web
+  INVALID_STATUS_CHANGED,    // Implicit
+  LAYOUT_COMPLETE,           // Web
+  LIVE_REGION_CREATED,       // Implicit
+  LIVE_REGION_CHANGED,       // Web
+  LOAD_COMPLETE,             // Web
+  LOCATION_CHANGED,          // Web
+  MEDIA_STARTED_PLAYING,     // Automation
+  MEDIA_STOPPED_PLAYING,     // Automation
+  MENU_END,                  // Native / Win
+  MENU_LIST_ITEM_SELECTED,   // Web
+  MENU_LIST_VALUE_CHANGED,   // Web
+  MENU_POPUP_END,            // Native / Win
+  MENU_POPUP_START,          // Native / Win
+  MENU_START,                // Native / Win
+  MOUSE_CANCELED,
+  MOUSE_DRAGGED,
+  MOUSE_MOVED_VALUE,
+  MOUSE_PRESSED,
+  MOUSE_RELEASED,
+  ROW_COLLAPSED,             // Web / Mac
+  ROW_COUNT_CHANGED,         // Web / Mac
+  ROW_EXPANDED,              // Web / Mac
+  SCROLL_POSITION_CHANGED,   // Web
+  SCROLLED_TO_ANCHOR,        // Web
+  SELECTED_CHILDREN_CHANGED, // Web
+  SELECTION,                 // Native
+  SELECTION_ADD,             // Native
+  SELECTION_REMOVE,          // Native
+  SHOW,                      // Remove: http://crbug.com/392502
+  TEXT_CHANGED,
+  TEXT_SELECTION_CHANGED,
+  TREE_CHANGED,              // Accessibility tree changed. Don't
+                             // explicitly fire an accessibility event,
+                             // only implicitly due to the change.
+  VALUE_CHANGED,
+  LAST = VALUE_CHANGED,
+};
+
+enum Role {
+  NONE,
+  ABBR,
+  ALERT_DIALOG,
+  ALERT,
+  ANCHOR,
+  ANNOTATION,
+  APPLICATION,
+  ARTICLE,
+  AUDIO,
+  BANNER,
+  BLOCKQUOTE,
+  BUTTON,
+  BUTTON_DROP_DOWN,  // Not used on Web.
+  CANVAS,
+  CAPTION,
+  CARET,
+  CELL,
+  CHECK_BOX,
+  CLIENT,
+  COLOR_WELL,
+  COLUMN_HEADER,
+  COLUMN,
+  COMBO_BOX_GROUPING,
+  COMBO_BOX_MENU_BUTTON,
+  COMPLEMENTARY,
+  CONTENT_INFO,
+  DATE,
+  DATE_TIME,
+  DEFINITION,
+  DESCRIPTION_LIST_DETAIL,
+  DESCRIPTION_LIST,
+  DESCRIPTION_LIST_TERM,
+  DESKTOP,
+  DETAILS,
+  DIALOG,
+  DIRECTORY,
+  DISCLOSURE_TRIANGLE,
+  DOCUMENT,
+  EMBEDDED_OBJECT,
+  FEED,
+  FIGCAPTION,
+  FIGURE,
+  FOOTER,
+  FORM,
+  GENERIC_CONTAINER,
+  GRID,
+  GROUP,
+  HEADING,
+  IFRAME,
+  IFRAME_PRESENTATIONAL,
+  IGNORED,
+  IMAGE_MAP,
+  IMAGE,
+  INLINE_TEXT_BOX,
+  INPUT_TIME,
+  LABEL_TEXT,
+  LEGEND,
+  LINE_BREAK,
+  LINK,
+  LIST_BOX_OPTION,
+  LIST_BOX,
+  LIST_ITEM,
+  LIST_MARKER,
+  LIST,
+  LOCATION_BAR,
+  LOG,
+  MAIN,
+  MARK,
+  MARQUEE,
+  MATH,
+  MENU,
+  MENU_BAR,
+  MENU_BUTTON,
+  MENU_ITEM,
+  MENU_ITEM_CHECK_BOX,
+  MENU_ITEM_RADIO,
+  MENU_LIST_OPTION,
+  MENU_LIST_POPUP,
+  METER,
+  NAVIGATION,
+  NOTE,
+  PANE,
+  PARAGRAPH,
+  POP_UP_BUTTON,
+  PRE,
+  PRESENTATIONAL,
+  PROGRESS_INDICATOR,
+  RADIO_BUTTON,
+  RADIO_GROUP,
+  REGION,
+  ROOT_WEB_AREA,
+  ROW_HEADER,
+  ROW,
+  RUBY,
+  SVG_ROOT,
+  SCROLL_BAR,
+  SEARCH,
+  SEARCH_BOX,
+  SLIDER,
+  SLIDER_THUMB,
+  SPIN_BUTTON_PART,
+  SPIN_BUTTON,
+  SPLITTER,
+  STATIC_TEXT,
+  STATUS,
+  SWITCH,
+  TAB_LIST,
+  TAB_PANEL,
+  TAB,
+  TABLE_HEADER_CONTAINER,
+  TABLE,
+  TERM,
+  TEXT_FIELD,
+  TEXT_FIELD_WITH_COMBO_BOX,
+  TIME,
+  TIMER,
+  TITLE_BAR,
+  TOGGLE_BUTTON,
+  TOOLBAR,
+  TREE_GRID,
+  TREE_ITEM,
+  TREE,
+  UNKNOWN,
+  TOOLTIP,
+  VIDEO,
+  WEB_AREA,
+  WEB_VIEW,
+  WINDOW,
+  LAST = WINDOW,
+};
+
+enum State {
+  NONE,
+  COLLAPSED,
+  DEFAULT,
+  EDITABLE,
+  EXPANDED,
+  FOCUSABLE,
+  HASPOPUP,
+  // Grows horizontally, e.g. most toolbars and separators.
+  HORIZONTAL,
+  HOVERED,
+  INVISIBLE,
+  LINKED,
+  MULTILINE,
+  MULTISELECTABLE,
+  PROTECTED,
+  REQUIRED,
+  RICHLY_EDITABLE,
+  SELECTABLE,
+  SELECTED,
+  // Grows vertically, e.g. menu or combo box.
+  VERTICAL,
+  VISITED,
+  LAST = VISITED,
+};
+
+// An action to be taken on an accessibility node.
+// In contrast to |AXDefaultActionVerb|, these describe what happens to the
+// object, e.g. "FOCUS".
+enum Action {
+  NONE,
+  BLUR,
+
+  CUSTOM_ACTION,
+
+  // Decrement a slider or range control by one step value.
+  DECREMENT,
+
+  // Do the default action for an object, typically this means "click".
+  DO_DEFAULT,
+
+  FOCUS,
+
+  // Return the content of this image object in the image_data attribute.
+  GET_IMAGE_DATA,
+
+  // Given a point, find the object it corresponds to and fire a
+  // |AXActionData.hit_test_event_to_fire| event on it in response.
+  HIT_TEST,
+
+  // Increment a slider or range control by one step value.
+  INCREMENT,
+
+  // Load inline text boxes for this subtree, providing information
+  // about word boundaries, line layout, and individual character
+  // bounding boxes.
+  LOAD_INLINE_TEXT_BOXES,
+
+  // Delete any selected text in the control's text value and
+  // insert |AXActionData::value| in its place, like when typing or pasting.
+  REPLACE_SELECTED_TEXT,
+
+  // Scrolls by approximately one screen in a specific direction. Should be
+  // called on a node that has scrollable boolean set to true.
+  SCROLL_BACKWARD,
+  SCROLL_FORWARD,
+  SCROLL_UP,
+  SCROLL_DOWN,
+  SCROLL_LEFT,
+  SCROLL_RIGHT,
+
+  // Scroll any scrollable containers to make the target object visible
+  // on the screen.  Optionally pass a subfocus rect in
+  // AXActionData.target_rect, in node-local coordinates.
+  SCROLL_TO_MAKE_VISIBLE,
+
+  // Scroll the given object to a specified point on the screen in
+  // global screen coordinates. Pass a point in AXActionData.target_point.
+  SCROLL_TO_POINT,
+
+  SET_SCROLL_OFFSET,
+  SET_SELECTION,
+
+  // Don't focus this node, but set it as the sequential focus navigation
+  // starting point, so that pressing Tab moves to the next element
+  // following this one, for example.
+  SET_SEQUENTIAL_FOCUS_NAVIGATION_STARTING_POINT,
+
+  // Replace the value of the control with AXActionData::value and
+  // reset the selection, if applicable.
+  SET_VALUE,
+
+  SHOW_CONTEXT_MENU,
+  LAST = SHOW_CONTEXT_MENU,
+};
+
+enum ActionFlags {
+  NONE,
+  REQUEST_IMAGES,
+  REQUEST_INLINE_TEXT_BOXES,
+  LAST = REQUEST_INLINE_TEXT_BOXES,
+};
+
+// A list of valid values for the |AXIntAttribute| |default_action_verb|.
+// These will describe the action that will be performed on a given node when
+// executing the default action, which is a click.
+// In contrast to |AXAction|, these describe what the user can do on the
+// object, e.g. "PRESS", not what happens to the object as a result.
+// Only one verb can be used at a time to describe the default action.
+enum DefaultActionVerb {
+  NONE,
+  ACTIVATE,
+  CHECK,
+  CLICK,
+
+  // A click will be performed on one of the node's ancestors.
+  // This happens when the node itself is not clickable, but one of its
+  // ancestors has click handlers attached which are able to capture the click
+  // as it bubbles up.
+  CLICK_ANCESTOR,
+
+  JUMP,
+  OPEN,
+  PRESS,
+  SELECT,
+  UNCHECK,
+  LAST = UNCHECK,
+};
+
+// A change to the accessibility tree.
+enum Mutation {
+  NONE,
+  NODE_CREATED,
+  SUBTREE_CREATED,
+  NODE_CHANGED,
+  NODE_REMOVED,
+  LAST = NODE_REMOVED,
+};
+
+enum StringAttribute {
+  NONE,
+  ACCESS_KEY,
+  // Only used when invalid_state == invalid_state_other.
+  ARIA_INVALID_VALUE,
+  AUTO_COMPLETE,
+  CHROME_CHANNEL,  // Automation only.
+  CLASS_NAME, // views and Android
+  CONTAINER_LIVE_RELEVANT,
+  CONTAINER_LIVE_STATUS,
+  DESCRIPTION,
+  DISPLAY,
+  // Only present when different from parent.
+  FONT_FAMILY,
+  HTML_TAG,
+  IMAGE_DATA_URL,
+  INNER_HTML,
+  KEY_SHORTCUTS,
+  // Only present when different from parent.
+  LANGUAGE,
+  NAME,
+  LIVE_RELEVANT,
+  LIVE_STATUS,
+  PLACEHOLDER,
+  ROLE,
+  ROLE_DESCRIPTION,
+  URL,
+  VALUE,
+  LAST = VALUE,
+};
+
+enum IntAttribute {
+  NONE,
+  DEFAULT_ACTION_VERB,
+  // Scrollable container attributes.
+  SCROLL_X,
+  SCROLL_X_MIN,
+  SCROLL_X_MAX,
+  SCROLL_Y,
+  SCROLL_Y_MIN,
+  SCROLL_Y_MAX,
+
+  // Attributes for retrieving the endpoints of a selection.
+  TEXT_SEL_START,
+  TEXT_SEL_END,
+
+  // aria_col* and aria_row* attributes
+  ARIA_COLUMN_COUNT,
+  ARIA_CELL_COLUMN_INDEX,
+  ARIA_ROW_COUNT,
+  ARIA_CELL_ROW_INDEX,
+
+  // Table attributes.
+  TABLE_ROW_COUNT,
+  TABLE_COLUMN_COUNT,
+  TABLE_HEADER_ID,
+
+  // Table row attributes.
+  TABLE_ROW_INDEX,
+  TABLE_ROW_HEADER_ID,
+
+  // Table column attributes.
+  TABLE_COLUMN_INDEX,
+  TABLE_COLUMN_HEADER_ID,
+
+  // Table cell attributes.
+  TABLE_CELL_COLUMN_INDEX,
+  TABLE_CELL_COLUMN_SPAN,
+  TABLE_CELL_ROW_INDEX,
+  TABLE_CELL_ROW_SPAN,
+  SORT_DIRECTION,
+
+  // Tree control attributes.
+  HIERARCHICAL_LEVEL,
+
+  // What information was used to compute the object's name
+  // (of type AXNameFrom).
+  NAME_FROM,
+
+  // What information was used to compute the object's description
+  // (of type AXDescriptionFrom).
+  DESCRIPTION_FROM,
+
+  // Relationships between this element and other elements.
+  ACTIVEDESCENDANT_ID,
+  DETAILS_ID,
+  ERRORMESSAGE_ID,
+  IN_PAGE_LINK_TARGET_ID,
+  MEMBER_OF_ID,
+  NEXT_ON_LINE_ID,
+  PREVIOUS_ON_LINE_ID,
+
+  // Identifies a child tree which this node hosts.
+  CHILD_TREE_ID,
+
+  // Input restriction, if any, such as readonly or disabled.
+  // Of type AXRestriction, see below.
+  // No value or enabled control or other object that is not disabled.
+  RESTRICTION,
+
+  // Position or Number of items in current set of listitems or treeitems
+  SET_SIZE,
+  POS_IN_SET,
+
+  // In the case of AX_ROLE_COLOR_WELL, specifies the selected color.
+  COLOR_VALUE,
+
+  // Indicates the element that represents the current item within a container
+  // or set of related elements.
+  ARIA_CURRENT_STATE,
+
+  // Text attributes.
+
+  // Foreground and background color in RGBA.
+  BACKGROUND_COLOR,
+  COLOR,
+
+  // Indicates if a form control has invalid input or
+  // if an element has an aria-invalid attribute.
+  INVALID_STATE,
+
+  // Of type AXCheckedState
+  CHECKED_STATE,
+
+  // Specifies the direction of the text, e.g., right-to-left.
+  TEXT_DIRECTION,
+
+  // Bold, italic, underline, etc.
+  TEXT_STYLE,
+
+  // Focus traversal in views and Android.
+  PREVIOUS_FOCUS_ID,
+  NEXT_FOCUS_ID,
+  LAST = NEXT_FOCUS_ID,
+};
+
+enum FloatAttribute {
+  NONE,
+  // Range attributes.
+  VALUE_FOR_RANGE,
+  MIN_VALUE_FOR_RANGE,
+  MAX_VALUE_FOR_RANGE,
+  STEP_VALUE_FOR_RANGE,
+
+  // Text attributes.
+  // Font size is in pixels.
+  FONT_SIZE,
+  LAST = FONT_SIZE,
+};
+
+enum BoolAttribute {
+  NONE,
+  // Generic busy state, does not have to be on a live region.
+  BUSY,
+  // The object is at the root of an editable field, such as a content
+  // editable.
+  EDITABLE_ROOT,
+
+  // Live region attributes.
+  CONTAINER_LIVE_ATOMIC,
+  CONTAINER_LIVE_BUSY,
+  LIVE_ATOMIC,
+
+  // If a dialog box is marked as explicitly modal
+  MODAL,
+
+  // If this is set, all of the other fields in this struct should
+  // be ignored and only the locations should change.
+  UPDATE_LOCATION_ONLY,
+
+  // Set on a canvas element if it has fallback content.
+  CANVAS_HAS_FALLBACK,
+
+  // Indicates this node is scrollable (Android only).
+  SCROLLABLE,
+
+  // A hint to clients that the node is clickable.
+  CLICKABLE,
+
+  // Indicates that this node clips its children, i.e. may have
+  // overflow: hidden or clip children by default.
+  CLIPS_CHILDREN,
+  LAST = CLIPS_CHILDREN,
+};
+
+enum IntListAttribute {
+  NONE,
+  // Ids of nodes that are children of this node logically, but are
+  // not children of this node in the tree structure. As an example,
+  // a table cell is a child of a row, and an 'indirect' child of a
+  // column.
+  INDIRECT_CHILD_IDS,
+
+  // Relationships between this element and other elements.
+  CONTROLS_IDS,
+  DESCRIBEDBY_IDS,
+  FLOWTO_IDS,
+  LABELLEDBY_IDS,
+  RADIO_GROUP_IDS,
+
+  // For static text. Character indices where line breaks occur. Note that
+  // this attribute is only available on Chrome OS and will be deprecated
+  // soon.
+  LINE_BREAKS,
+
+  // For static text. These int lists must be the same size; they represent
+  // the start and end character offset of each marker. Examples of markers
+  // include spelling and grammar errors, and find-in-page matches.
+  MARKER_TYPES,
+  MARKER_STARTS,
+  MARKER_ENDS,
+
+  // For a table, the cell ids in row-major order, with duplicate entries
+  // when there's a rowspan or colspan, and with -1 for missing cells.
+  // There are always exactly rows * columns entries.
+  CELL_IDS,
+
+  // For a table, the unique cell ids in row-major order of their first
+  // occurrence.
+  UNIQUE_CELL_IDS,
+
+  // For inline text. This is the pixel position of the end of this
+  // character within the bounding rectangle of this object, in the
+  // direction given by AX_ATTR_TEXT_DIRECTION. For example, for left-to-right
+  // text, the first offset is the right coordinate of the first character
+  // within the object's bounds, the second offset is the right coordinate
+  // of the second character, and so on.
+  CHARACTER_OFFSETS,
+
+  // Used for caching. Do not read directly. Use
+  // |AXNode::GetOrComputeLineStartOffsets|
+  // For all text fields and content editable roots: A list of the start
+  // offsets of each line inside this object.
+  CACHED_LINE_STARTS,
+
+  // For inline text. These int lists must be the same size; they represent
+  // the start and end character offset of each word within this text.
+  WORD_STARTS,
+  WORD_ENDS,
+
+  // Used for an UI element to define custom actions for it. For example, a
+  // list UI will allow a user to reorder items in the list by dragging the
+  // items. Developer can expose those actions as custom actions. Currently
+  // custom actions are used only in Android window.
+  CUSTOM_ACTION_IDS,
+  LAST = CUSTOM_ACTION_IDS,
+};
+
+enum StringListAttribute {
+  NONE,
+  // Descriptions for custom actions. This must be aligned with
+  // custom_action_ids.
+  CUSTOM_ACTION_DESCRIPTIONS,
+  LAST = CUSTOM_ACTION_DESCRIPTIONS,
+};
+
+// TODO(dmazzoni, nektar): make this list not grow exponentially as new
+// MarkerTypes are added
+enum MarkerType {
+  NONE,
+  // Assignments are ignored by the parser, but are kept here for clarity.
+  SPELLING = 1,
+  GRAMMAR = 2,
+  SPELLING_GRAMMAR = 3,
+  TEXT_MATCH = 4,
+  SPELLING_TEXT_MATCH = 5,
+  GRAMMAR_TEXT_MATCH = 6,
+  SPELLING_GRAMMAR_TEXT_MATCH = 7,
+  // DocumentMarker::MarkerType::Composition = 8 is ignored for accessibility
+  // purposes
+  ACTIVE_SUGGESTION = 16,
+  SPELLING_ACTIVE_SUGGESTION = 17,
+  GRAMMAR_ACTIVE_SUGGESTION = 18,
+  SPELLING_GRAMMAR_ACTIVE_SUGGESTION = 19,
+  TEXT_MATCH_ACTIVE_SUGGESTION = 20,
+  SPELLING_TEXT_MATCH_ACTIVE_SUGGESTION = 21,
+  GRAMMAR_TEXT_MATCH_ACTIVE_SUGGESTION = 22,
+  SPELLING_GRAMMAR_TEXT_MATCH_ACTIVE_SUGGESTION = 23,
+  SUGGESTION = 32,
+  SPELLING_SUGGESTION = 33,
+  GRAMMAR_SUGGESTION = 34,
+  SPELLING_GRAMMAR_SUGGESTION = 35,
+  TEXT_MATCH_SUGGESTION = 36,
+  SPELLING_TEXT_MATCH_SUGGESTION = 37,
+  GRAMMAR_TEXT_MATCH_SUGGESTION = 38,
+  SPELLING_GRAMMAR_TEXT_MATCH_SUGGESTION = 39,
+  // We again skip over DocumentMarker::MarkerType::Composition = 8 here
+  ACTIVE_SUGGESTION_SUGGESTION = 48,
+  SPELLING_ACTIVE_SUGGESTION_SUGGESTION = 49,
+  GRAMMAR_ACTIVE_SUGGESTION_SUGGESTION = 50,
+  SPELLING_GRAMMAR_ACTIVE_SUGGESTION_SUGGESTION = 51,
+  TEXT_MATCH_ACTIVE_SUGGESTION_SUGGESTION = 52,
+  SPELLING_TEXT_MATCH_ACTIVE_SUGGESTION_SUGGESTION = 53,
+  GRAMMAR_TEXT_MATCH_ACTIVE_SUGGESTION_SUGGESTION = 54,
+  SPELLING_GRAMMAR_TEXT_MATCH_ACTIVE_SUGGESTION_SUGGESTION = 55,
+  LAST = SPELLING_GRAMMAR_TEXT_MATCH_ACTIVE_SUGGESTION_SUGGESTION,
+};
+
+enum TextDirection {
+  NONE,
+  LTR,
+  RTL,
+  TTB,
+  BTT,
+  LAST = BTT,
+};
+
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.ui.accessibility
+enum TextStyle {
+  NONE,
+  // Assignments are ignored by the parser, but are kept here for clarity.
+  TEXT_STYLE_BOLD = 1,
+  TEXT_STYLE_ITALIC = 2,
+  TEXT_STYLE_BOLD_ITALIC = 3,
+  TEXT_STYLE_UNDERLINE = 4,
+  TEXT_STYLE_BOLD_UNDERLINE = 5,
+  TEXT_STYLE_ITALIC_UNDERLINE = 6,
+  TEXT_STYLE_BOLD_ITALIC_UNDERLINE = 7,
+  TEXT_STYLE_LINE_THROUGH = 8,
+  TEXT_STYLE_BOLD_LINE_THROUGH = 9,
+  TEXT_STYLE_ITALIC_LINE_THROUGH = 10,
+  TEXT_STYLE_BOLD_ITALIC_LINE_THROUGH = 11,
+  TEXT_STYLE_UNDERLINE_LINE_THROUGH = 12,
+  TEXT_STYLE_BOLD_UNDERLINE_LINE_THROUGH = 13,
+  TEXT_STYLE_ITALIC_UNDERLINE_LINE_THROUGH = 14,
+  TEXT_STYLE_BOLD_ITALIC_UNDERLINE_LINE_THROUGH = 15,
+  LAST = TEXT_STYLE_BOLD_ITALIC_UNDERLINE_LINE_THROUGH,
+};
+
+enum AriaCurrentState {
+  NONE,
+  FALSE_VALUE,
+  TRUE_VALUE,
+  PAGE,
+  STEP,
+  LOCATION,
+  UNCLIPPED_LOCATION,
+  DATE,
+  TIME,
+  LAST = TIME,
+};
+
+enum InvalidState {
+  NONE,
+  FALSE_VALUE,
+  TRUE_VALUE,
+  SPELLING,
+  GRAMMAR,
+  OTHER,
+  LAST = OTHER,
+};
+
+// Input restriction associated with an object.
+// No value for a control means it is enabled.
+// Use read_only for a textbox that allows focus/selection but not input.
+// Use disabled for a control or group of controls that disallows input.
+enum Restriction {
+  NONE,
+  READ_ONLY,
+  DISABLED,
+  LAST = DISABLED,
+};
+
+enum CheckedState {
+  NONE,
+  FALSE_VALUE,
+  TRUE_VALUE,
+  MIXED,
+  LAST = MIXED,
+};
+
+enum SortDirection {
+  NONE,
+  UNSORTED,
+  ASCENDING,
+  DESCENDING,
+  OTHER,
+  LAST = OTHER,
+};
+
+enum NameFrom {
+  NONE,
+  UNINITIALIZED,
+  ATTRIBUTE,
+  ATTRIBUTE_EXPLICITLY_EMPTY,
+  CONTENTS,
+  PLACEHOLDER,
+  RELATED_ELEMENT,
+  VALUE,
+  LAST = VALUE,
+};
+
+enum DescriptionFrom {
+  NONE,
+  UNINITIALIZED,
+  ATTRIBUTE,
+  CONTENTS,
+  PLACEHOLDER,
+  RELATED_ELEMENT,
+  LAST = RELATED_ELEMENT,
+};
+
+enum EventFrom {
+  NONE,
+  USER,
+  PAGE,
+  ACTION,
+  LAST = ACTION,
+};
+
+// Touch gestures on Chrome OS.
+enum Gesture {
+  NONE,
+  CLICK,
+  SWIPE_LEFT_1,
+  SWIPE_UP_1,
+  SWIPE_RIGHT_1,
+  SWIPE_DOWN_1,
+  SWIPE_LEFT_2,
+  SWIPE_UP_2,
+  SWIPE_RIGHT_2,
+  SWIPE_DOWN_2,
+  SWIPE_LEFT_3,
+  SWIPE_UP_3,
+  SWIPE_RIGHT_3,
+  SWIPE_DOWN_3,
+  SWIPE_LEFT_4,
+  SWIPE_UP_4,
+  SWIPE_RIGHT_4,
+  SWIPE_DOWN_4,
+  TAP_2,
+  LAST = TAP_2,
+};
+
+enum TextAffinity {
+  NONE,
+  DOWNSTREAM,
+  UPSTREAM,
+  LAST = UPSTREAM,
+};
+
+// Compares two nodes in an accessibility tree in pre-order traversal.
+enum TreeOrder {
+  NONE,
+  // Not in the same tree, or other error.
+  UNDEFINED,
+
+  // First node is before the second one.
+  BEFORE,
+
+  // Nodes are the same.
+  EQUAL,
+
+  // First node is after the second one.
+  AFTER,
+  LAST = AFTER,
+};

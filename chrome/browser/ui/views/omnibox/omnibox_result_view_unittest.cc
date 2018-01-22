@@ -215,24 +215,24 @@ TEST_F(OmniboxResultViewTest, AccessibleNodeData) {
   result_view()->SetMatch(match);
   ui::AXNodeData result_node_data;
   result_view()->GetAccessibleNodeData(&result_node_data);
-  EXPECT_TRUE(result_node_data.HasState(ui::AX_STATE_SELECTABLE));
-  EXPECT_FALSE(result_node_data.HasState(ui::AX_STATE_SELECTED));
-  EXPECT_EQ(result_node_data.role, ui::AX_ROLE_LIST_BOX_OPTION);
+  EXPECT_TRUE(result_node_data.HasState(ax::mojom::State::SELECTABLE));
+  EXPECT_FALSE(result_node_data.HasState(ax::mojom::State::SELECTED));
+  EXPECT_EQ(result_node_data.role, ax::mojom::Role::LIST_BOX_OPTION);
   EXPECT_EQ(
-      result_node_data.GetString16Attribute(ui::AX_ATTR_NAME),
+      result_node_data.GetString16Attribute(ax::mojom::StringAttribute::NAME),
       base::ASCIIToUTF16("Google https://google.com location from history"));
-  EXPECT_EQ(result_node_data.GetIntAttribute(ui::AX_ATTR_POS_IN_SET),
+  EXPECT_EQ(result_node_data.GetIntAttribute(ax::mojom::IntAttribute::POS_IN_SET),
             kTestResultViewIndex + 1);
-  EXPECT_EQ(result_node_data.GetIntAttribute(ui::AX_ATTR_SET_SIZE), 6);
+  EXPECT_EQ(result_node_data.GetIntAttribute(ax::mojom::IntAttribute::SET_SIZE), 6);
 
   // Select it and check selected state.
   result_view()->OnMousePressed(
       CreateEvent(ui::ET_MOUSE_PRESSED, ui::EF_LEFT_MOUSE_BUTTON));
   result_view()->GetAccessibleNodeData(&result_node_data);
-  EXPECT_TRUE(result_node_data.HasState(ui::AX_STATE_SELECTED));
+  EXPECT_TRUE(result_node_data.HasState(ax::mojom::State::SELECTED));
 
   // Check accessibility of list box.
   ui::AXNodeData popup_node_data;
   popup_view()->GetAccessibleNodeData(&popup_node_data);
-  EXPECT_EQ(popup_node_data.role, ui::AX_ROLE_LIST_BOX);
+  EXPECT_EQ(popup_node_data.role, ax::mojom::Role::LIST_BOX);
 }

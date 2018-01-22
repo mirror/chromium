@@ -37,6 +37,7 @@
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "ui/accessibility/ax_action_data.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_host_delegate.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 
@@ -208,7 +209,7 @@ class AutomationWebContentsObserver
     std::vector<content::AXEventNotificationDetails> details;
     content::AXEventNotificationDetails detail;
     detail.ax_tree_id = id.first->GetAXTreeID();
-    detail.event_type = ui::AX_EVENT_MEDIA_STARTED_PLAYING;
+    detail.event_type = ax::mojom::Event::MEDIA_STARTED_PLAYING;
     details.push_back(detail);
     AccessibilityEventReceived(details);
   }
@@ -220,7 +221,7 @@ class AutomationWebContentsObserver
     std::vector<content::AXEventNotificationDetails> details;
     content::AXEventNotificationDetails detail;
     detail.ax_tree_id = id.first->GetAXTreeID();
-    detail.event_type = ui::AX_EVENT_MEDIA_STOPPED_PLAYING;
+    detail.event_type = ax::mojom::Event::MEDIA_STOPPED_PLAYING;
     details.push_back(detail);
     AccessibilityEventReceived(details);
   }
@@ -239,7 +240,7 @@ class AutomationWebContentsObserver
 
       content::AXEventNotificationDetails detail;
       detail.ax_tree_id = rfh->GetAXTreeID();
-      detail.event_type = ui::AX_EVENT_MEDIA_STARTED_PLAYING;
+      detail.event_type = ax::mojom::Event::MEDIA_STARTED_PLAYING;
       details.push_back(detail);
       AccessibilityEventReceived(details);
     }
@@ -336,17 +337,17 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
   action->request_id = request_id ? *request_id : -1;
   switch (params->args.action_type) {
     case api::automation_internal::ACTION_TYPE_DODEFAULT:
-      action->action = ui::AX_ACTION_DO_DEFAULT;
+      action->action = ax::mojom::Action::DO_DEFAULT;
       break;
     case api::automation_internal::ACTION_TYPE_FOCUS:
-      action->action = ui::AX_ACTION_FOCUS;
+      action->action = ax::mojom::Action::FOCUS;
       break;
     case api::automation_internal::ACTION_TYPE_GETIMAGEDATA: {
       api::automation_internal::GetImageDataParams get_image_data_params;
       EXTENSION_FUNCTION_VALIDATE(
           api::automation_internal::GetImageDataParams::Populate(
               params->opt_args.additional_properties, &get_image_data_params));
-      action->action = ui::AX_ACTION_GET_IMAGE_DATA;
+      action->action = ax::mojom::Action::GET_IMAGE_DATA;
       action->target_rect = gfx::Rect(0, 0, get_image_data_params.max_width,
                                       get_image_data_params.max_height);
       break;
@@ -356,34 +357,34 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
       EXTENSION_FUNCTION_VALIDATE(
           api::automation_internal::HitTestParams::Populate(
               params->opt_args.additional_properties, &hit_test_params));
-      action->action = ui::AX_ACTION_HIT_TEST;
+      action->action = ax::mojom::Action::HIT_TEST;
       action->target_point = gfx::Point(hit_test_params.x, hit_test_params.y);
       action->hit_test_event_to_fire =
-          ui::ParseAXEvent(hit_test_params.event_to_fire);
-      if (action->hit_test_event_to_fire == ui::AX_EVENT_NONE)
+          ui::ParseEvent(hit_test_params.event_to_fire.c_str());
+      if (action->hit_test_event_to_fire == ax::mojom::Event::NONE)
         return RespondNow(NoArguments());
       break;
     }
     case api::automation_internal::ACTION_TYPE_MAKEVISIBLE:
-      action->action = ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE;
+      action->action = ax::mojom::Action::SCROLL_TO_MAKE_VISIBLE;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLBACKWARD:
-      action->action = ui::AX_ACTION_SCROLL_BACKWARD;
+      action->action = ax::mojom::Action::SCROLL_BACKWARD;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLFORWARD:
-      action->action = ui::AX_ACTION_SCROLL_FORWARD;
+      action->action = ax::mojom::Action::SCROLL_FORWARD;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLUP:
-      action->action = ui::AX_ACTION_SCROLL_UP;
+      action->action = ax::mojom::Action::SCROLL_UP;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLDOWN:
-      action->action = ui::AX_ACTION_SCROLL_DOWN;
+      action->action = ax::mojom::Action::SCROLL_DOWN;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLLEFT:
-      action->action = ui::AX_ACTION_SCROLL_LEFT;
+      action->action = ax::mojom::Action::SCROLL_LEFT;
       break;
     case api::automation_internal::ACTION_TYPE_SCROLLRIGHT:
-      action->action = ui::AX_ACTION_SCROLL_RIGHT;
+      action->action = ax::mojom::Action::SCROLL_RIGHT;
       break;
     case api::automation_internal::ACTION_TYPE_SETSELECTION: {
       api::automation_internal::SetSelectionParams selection_params;
@@ -394,17 +395,17 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
       action->anchor_offset = selection_params.anchor_offset;
       action->focus_node_id = selection_params.focus_node_id;
       action->focus_offset = selection_params.focus_offset;
-      action->action = ui::AX_ACTION_SET_SELECTION;
+      action->action = ax::mojom::Action::SET_SELECTION;
       break;
     }
     case api::automation_internal::ACTION_TYPE_SHOWCONTEXTMENU: {
-      action->action = ui::AX_ACTION_SHOW_CONTEXT_MENU;
+      action->action = ax::mojom::Action::SHOW_CONTEXT_MENU;
       break;
     }
     case api::automation_internal::
         ACTION_TYPE_SETSEQUENTIALFOCUSNAVIGATIONSTARTINGPOINT: {
       action->action =
-          ui::AX_ACTION_SET_SEQUENTIAL_FOCUS_NAVIGATION_STARTING_POINT;
+          ax::mojom::Action::SET_SEQUENTIAL_FOCUS_NAVIGATION_STARTING_POINT;
       break;
     }
     case api::automation_internal::ACTION_TYPE_CUSTOMACTION: {
@@ -414,7 +415,7 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
           api::automation_internal::PerformCustomActionParams::Populate(
               params->opt_args.additional_properties,
               &perform_custom_action_params));
-      action->action = ui::AX_ACTION_CUSTOM_ACTION;
+      action->action = ax::mojom::Action::CUSTOM_ACTION;
       action->custom_action_id = perform_custom_action_params.custom_action_id;
       break;
     }
