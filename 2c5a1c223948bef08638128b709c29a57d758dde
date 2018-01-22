@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae89fde4_34dbb3e3",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T20:22:42Z",
+      "side": 1,
+      "message": "Based on offline discussion, I added TODO to fix this when main content quad started to use ScaledDepthAdjuster",
+      "parentUuid": "163fd26a_53617c1e",
+      "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef5d826d_61580c24",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "633f786c_aa214e3e",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-22T20:22:42Z",
+      "side": 1,
+      "message": "This is not for WebVR. This CL is an update for the existing indicators in browsing mode. However, we only have one fixed color for the indicators at this moment. I\u0027ll add the binding when we have design with different colors in different modes. (comment is added)",
+      "parentUuid": "ef5d826d_61580c24",
+      "revId": "2c5a1c223948bef08638128b709c29a57d758dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
