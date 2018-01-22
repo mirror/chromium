@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25f2eac_05d3a181",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:19:54Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  } else if (data.HasString() \u0026\u0026 data.GetString(\u0026text)) {\n    ...",
+      "revId": "718abde7a8e55a36db039d933ffa8c5b8a37eecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
