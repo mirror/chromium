@@ -53,7 +53,11 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                      IDS_BOOKMARK_MANAGER_NAME_INPUT_PLACE_HOLDER);
   AddLocalizedString(source, "editDialogUrlInput",
                      IDS_BOOKMARK_MANAGER_URL_INPUT_PLACE_HOLDER);
-  AddLocalizedString(source, "emptyList", IDS_MD_BOOKMARK_MANAGER_EMPTY_LIST);
+  if (profile->GetProfileType() == Profile::GUEST_PROFILE)
+    AddLocalizedString(source, "emptyList",
+                       IDS_MD_BOOKMARK_MANAGER_EMPTY_LIST_GUEST);
+  else
+    AddLocalizedString(source, "emptyList", IDS_MD_BOOKMARK_MANAGER_EMPTY_LIST);
   AddLocalizedString(source, "folderLabel",
                      IDS_MD_BOOKMARK_MANAGER_FOLDER_LABEL);
   AddLocalizedString(source, "itemsSelected",
