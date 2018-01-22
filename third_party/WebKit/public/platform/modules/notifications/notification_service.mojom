@@ -8,6 +8,10 @@ import "mojo/common/string16.mojom";
 import "third_party/WebKit/public/platform/modules/notifications/notification.mojom";
 import "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom";
 
+interface NonPersistentNotificationListener {
+  OnShow();
+};
+
 // Service through which Blink can request notifications to be shown, closed or
 // retrieved from the embedder.
 interface NotificationService {

@@ -9,16 +9,21 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "content/common/content_export.h"
 #include "content/public/browser/notification_database_data.h"
 #include "content/public/browser/notification_event_dispatcher.h"
+#include "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom.h"
 
 namespace content {
 
-class NotificationEventDispatcherImpl : public NotificationEventDispatcher {
+class CONTENT_EXPORT NotificationEventDispatcherImpl
+    : public NotificationEventDispatcher {
  public:
   // Returns the instance of the NotificationEventDispatcherImpl. Must be called
   // on the UI thread.
   static NotificationEventDispatcherImpl* GetInstance();
+
+  ~NotificationEventDispatcherImpl() override;
 
   // NotificationEventDispatcher implementation.
   void DispatchNotificationClickEvent(
@@ -50,9 +55,14 @@ class NotificationEventDispatcherImpl : public NotificationEventDispatcher {
                                          int renderer_id,
                                          int request_id);
 
+  // Register a listener to receive show, click and close events for the given
+  // |notification_id|.
+  void RegisterNonPersistentNotificationListener(
+      const std::string& notification_id,
+      blink::mojom::NonPersistentNotificationListenerPtr listener);
+
  private:
   NotificationEventDispatcherImpl();
-  ~NotificationEventDispatcherImpl() override;
 
   // Notification Id -> renderer Id.
   std::map<std::string, int> renderer_ids_;
@@ -60,7 +70,13 @@ class NotificationEventDispatcherImpl : public NotificationEventDispatcher {
   // Notification Id -> request Id.
   std::map<std::string, int> request_ids_;
 
+  // Registered event listeners for non-persistent notification events, keyed by
+  // the ID of the notification they listen to.
+  std::map<std::string, blink::mojom::NonPersistentNotificationListenerPtr>
+      non_persistent_listeners_;
+
   friend struct base::DefaultSingletonTraits<NotificationEventDispatcherImpl>;
+  friend class NotificationEventDispatcherImplTest;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationEventDispatcherImpl);
 };

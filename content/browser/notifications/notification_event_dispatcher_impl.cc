@@ -430,8 +430,20 @@ void NotificationEventDispatcherImpl::RegisterNonPersistentNotification(
   request_ids_[notification_id] = request_id;
 }
 
+void NotificationEventDispatcherImpl::RegisterNonPersistentNotificationListener(
+    const std::string& notification_id,
+    blink::mojom::NonPersistentNotificationListenerPtr listener) {
+  non_persistent_listeners_.emplace(notification_id, std::move(listener));
+}
+
 void NotificationEventDispatcherImpl::DispatchNonPersistentShowEvent(
     const std::string& notification_id) {
+  if (non_persistent_listeners_.count(notification_id)) {
+    non_persistent_listeners_[notification_id]->OnShow();
+    return;
+  }
+  // TODO(https://crbug.com/796990): Delete the legacy IPC code below, once
+  // fully migrated to mojo for non-persistent notifications.
   if (!renderer_ids_.count(notification_id))
     return;
   DCHECK(request_ids_.count(notification_id));
