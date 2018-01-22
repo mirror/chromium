@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1da8540c_e793dc03",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T14:29:29Z",
+      "side": 1,
+      "message": "nit: Maybe inline into the header file so that all user-facing calls are inline defined.",
+      "range": {
+        "startLine": 243,
+        "startChar": 29,
+        "endLine": 243,
+        "endChar": 42
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84ed6083_38be0028",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
@@ -19,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "09f64579_255746c5",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T14:29:29Z",
+      "side": 1,
+      "message": "nit: Remove your todo.",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 14
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5009680_6892f07c",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T14:29:29Z",
+      "side": 1,
+      "message": "nit: Now that you are cleaning up this interface, can you add\n  static_assert(sizeof(T), \"...\") (see below)\nto all entry points?",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 20
+      },
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0113e49_4f20fa08",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 5
@@ -30,6 +99,29 @@
       "writtenOn": "2018-01-22T14:06:21Z",
       "side": 1,
       "message": "Nit: Trace wrappers in non-main worlds.",
+      "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4365da8f_e697571f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-22T14:29:29Z",
+      "side": 1,
+      "message": "nit: Move to other Dispatch* methods.",
+      "range": {
+        "startLine": 194,
+        "startChar": 7,
+        "endLine": 194,
+        "endChar": 41
+      },
       "revId": "953a4b15ded46216bcfe5b44e6ada773abaea3ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
