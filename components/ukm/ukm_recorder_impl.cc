@@ -8,10 +8,15 @@
 #include <string>
 #include <utility>
 
+#include "base/containers/flat_map.h"
+#include "base/feature_list.h"
+#include "base/lazy_instance.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/metrics_hashes.h"
+#include "base/rand_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "components/ukm/ukm_source.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
@@ -23,6 +28,52 @@
 namespace ukm {
 
 namespace {
+
+const base::Feature kUkmSamplingRateFeature{"UkmSamplingRate",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
+
+struct SamplingInfo {
+  base::Lock lock;
+  bool initialized = false;
+
+  int default_sampling_rate = 1000;  // 1 in 1000
+  base::flat_map<uint64_t, int> sampling_rates;
+};
+
+base::LazyInstance<SamplingInfo>::Leaky g_sampling_info;
+
+void LoadExperimentSamplingInfoWhileLocked(SamplingInfo* info) {
+  DCHECK(!info->initialized);
+  std::map<std::string, std::string> params;
+
+  if (base::FeatureList::IsEnabled(kUkmSamplingRateFeature)) {
+    // Enabled may have various parameters to control sampling.
+    if (base::GetFieldTrialParamsByFeature(kUkmSamplingRateFeature, &params)) {
+      for (const auto& kv : params) {
+        const std::string& key = kv.first;
+        if (key.length() == 0)
+          continue;
+        if (key.at(0) == '_') {
+          if (key == "_default_sampling") {
+            int sampling;
+            if (base::StringToInt(kv.second, &sampling) && sampling >= 0)
+              info->default_sampling_rate = sampling;
+          }
+          continue;
+        }
+
+        int sampling;
+        if (base::StringToInt(kv.second, &sampling) && sampling >= 0)
+          info->sampling_rates[base::HashMetricName(key)] = sampling;
+      }
+    }
+  } else {
+    // Disabled means no sampling at all; send everything.
+    info->default_sampling_rate = 1;
+  }
+
+  info->initialized = true;
+}
 
 // Gets the list of whitelisted Entries as string. Format is a comma seperated
 // list of Entry names (as strings).
@@ -256,6 +307,27 @@ void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
   if (!whitelisted_entry_hashes_.empty() &&
       !base::ContainsKey(whitelisted_entry_hashes_, entry->event_hash)) {
     RecordDroppedEntry(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  int sampling_rate;
+  {
+    SamplingInfo& info = g_sampling_info.Get();
+    base::AutoLock lock(info.lock);
+    if (!info.initialized)
+      LoadExperimentSamplingInfoWhileLocked(&info);
+    auto found = info.sampling_rates.find(entry->event_hash);
+    if (found != info.sampling_rates.end())
+      sampling_rate = found->second;
+    else
+      sampling_rate = info.default_sampling_rate;
+  }
+
+  if (sampling_rate == 0 ||
+      (sampling_rate > 1 && base::RandInt(1, sampling_rate) != 1)) {
+    // Aggregate metrics could be accumulated here.
+    // for (auto& metric : entry->metrics)
+    //   aggregates[metric->metric_hash].dropped_due_to_sampling++;
     return;
   }
 
