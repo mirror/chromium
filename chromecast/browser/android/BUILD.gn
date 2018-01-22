@@ -68,6 +68,7 @@ android_library("cast_shell_java") {
     "$java_src_dir/org/chromium/chromecast/shell/CastWebContentsActivity.java",
     "$java_src_dir/org/chromium/chromecast/shell/CastWebContentsService.java",
     "$java_src_dir/org/chromium/chromecast/shell/CastWebContentsComponent.java",
+    "$java_src_dir/org/chromium/chromecast/shell/DumpStreamConstructor.java",
     "$java_src_dir/org/chromium/chromecast/shell/LogcatElision.java",
     "$java_src_dir/org/chromium/chromecast/shell/LogcatExtractor.java",
   ]
@@ -102,6 +103,7 @@ android_library("cast_shell_java") {
 junit_binary("cast_shell_junit_tests") {
   java_files = [
     "junit/src/org/chromium/chromecast/shell/CastWebContentsComponentTest.java",
+    "junit/src/org/chromium/chromecast/shell/DumpStreamConstructorUnitTest.java",
     "junit/src/org/chromium/chromecast/shell/LogcatElisionUnitTest.java",
     "junit/src/org/chromium/chromecast/shell/LogcatExtractorUnitTest.java",
   ]
