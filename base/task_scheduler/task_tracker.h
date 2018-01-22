@@ -269,11 +269,19 @@ class BASE_EXPORT TaskTracker {
   // Number of currently scheduled background sequences.
   int num_scheduled_background_sequences_ = 0;
 
-  // TaskScheduler.TaskLatency.[task priority].[may block] histograms. The first
-  // index is a TaskPriority. The second index is 0 for non-blocking tasks, 1
-  // for blocking tasks. Intentionally leaked.
+  // TaskScheduler.TaskLatencyMicroseconds.[histogram_label].
+  //    [task priority]_[may block] histograms.
+  // The first index is a TaskPriority. The second index is 0 for non-blocking
+  // tasks, 1 for blocking tasks. Intentionally leaked.
   HistogramBase* const
       task_latency_histograms_[static_cast<int>(TaskPriority::HIGHEST) + 1][2];
+
+  // TaskScheduler.BlockShutdownTasksPostedDuringShutdown.[histogram_label]
+  // histogram. |num_block_shutdown_tasks_posted_during_shutdown_| is reported
+  // to it when Shutdown() completes (or before if it reaches
+  // kMaxBlockShutdownTasksPostedDuringShutdown).
+  HistogramBase* const
+      num_block_shutdown_tasks_posted_during_shutdown_histogram_;
 
   // Number of BLOCK_SHUTDOWN tasks posted during shutdown.
   HistogramBase::Sample num_block_shutdown_tasks_posted_during_shutdown_ = 0;
