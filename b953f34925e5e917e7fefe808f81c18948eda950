@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "3ac02b13_25975fd5",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T23:01:08Z",
+      "side": 1,
+      "message": "Ah, I see. Thanks!",
+      "parentUuid": "24cca745_47419051",
+      "revId": "b953f34925e5e917e7fefe808f81c18948eda950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2cf17e_b2589f6e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
