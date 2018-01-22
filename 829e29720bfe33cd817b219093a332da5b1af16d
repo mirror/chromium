@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2167eceb_c61f7a7c",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-22T21:06:57Z",
+      "side": 1,
+      "message": "This will break Windows since wchar_t is used on this platform. You can use store_utils::ToDatabaseFilePath.",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
