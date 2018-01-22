@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bb72045_8d6f23e3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T23:50:22Z",
+      "side": 1,
+      "message": "While you\u0027re here, we shouldn\u0027t be calling this every frame, Cancel() isn\u0027t free. Might need to add boolean state for whether a timeout is pending.",
+      "range": {
+        "startLine": 464,
+        "startChar": 4,
+        "endLine": 464,
+        "endChar": 34
+      },
+      "revId": "c76bbb0ac7c94018c30bfec134ba57be43ea49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e08de3_eedf5704",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T23:50:22Z",
+      "side": 1,
+      "message": "Don\u0027t think you really need any of these conditionals, just call ScheduleOrCancelWebVrFrameTimeout() here every frame, and remove the call from OnWebVRFrameAvailable.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 1,
+        "endLine": 1267,
+        "endChar": 55
+      },
+      "revId": "c76bbb0ac7c94018c30bfec134ba57be43ea49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e995c9_c404394d",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T23:50:22Z",
+      "side": 1,
+      "message": "s/Can/Should?",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "c76bbb0ac7c94018c30bfec134ba57be43ea49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f17e7a4_c5106019",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T23:50:22Z",
+      "side": 1,
+      "message": "awaiting_min_splash_screen_duration()?",
+      "range": {
+        "startLine": 709,
+        "startChar": 33,
+        "endLine": 710,
+        "endChar": 56
+      },
+      "revId": "c76bbb0ac7c94018c30bfec134ba57be43ea49cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
