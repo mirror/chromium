@@ -22,6 +22,30 @@
       "revId": "ea7180bba6d3608354d861056e033d3147147b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4e9b3f_c1a62597",
+        "filename": "content/test/fuzzer/fuzzer_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-22T00:42:00Z",
+      "side": 1,
+      "message": "If V8_USE_EXT_STARTUP and !USE_V8_CONTEXT, we have to define kSnapshotType\u003dkDefault.\nand if !V8_USE_EXT_STARTUP, we don\u0027t need either.",
+      "parentUuid": "491dc15d_43bed729",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "ea7180bba6d3608354d861056e033d3147147b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
