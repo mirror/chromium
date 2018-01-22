@@ -170,5 +170,49 @@ TEST_F(NavigationItemTest, GetDisplayTitleForURL) {
   EXPECT_EQ("1.gz", base::UTF16ToUTF8(title));
 }
 
+// Tests state transitions between ErrorRetryStates.
+TEST_F(NavigationItemTest, SetErrorRetryState) {
+  NavigationItemImpl item;
+
+  // item is not tracked in error_retry_states_ so should default to NO_ERROR.
+  EXPECT_EQ(ErrorRetryState::NO_NAVIGATION_ERROR, item.GetErrorRetryState());
+
+  // The orders below matter because not all state transitions are valid.
+  // Invalid transitions are not tested because death tests are not supported in
+  // iOS simulator build.
+  item.SetErrorRetryState(
+      ErrorRetryState::READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION);
+  ASSERT_EQ(ErrorRetryState::READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION,
+            item.GetErrorRetryState());
+
+  item.SetErrorRetryState(
+      ErrorRetryState::DISPLAYING_ERROR_FOR_FAILED_NAVIGATION);
+  ASSERT_EQ(ErrorRetryState::DISPLAYING_ERROR_FOR_FAILED_NAVIGATION,
+            item.GetErrorRetryState());
+
+  item.SetErrorRetryState(
+      ErrorRetryState::NAVIGATING_TO_FAILED_NAVIGATION_ITEM);
+  ASSERT_EQ(ErrorRetryState::NAVIGATING_TO_FAILED_NAVIGATION_ITEM,
+            item.GetErrorRetryState());
+
+  item.SetErrorRetryState(ErrorRetryState::RETRY_FAILED_NAVIGATION_ITEM);
+  ASSERT_EQ(ErrorRetryState::RETRY_FAILED_NAVIGATION_ITEM,
+            item.GetErrorRetryState());
+
+  item.SetErrorRetryState(
+      ErrorRetryState::READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION);
+  ASSERT_EQ(ErrorRetryState::READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION,
+            item.GetErrorRetryState());
+
+  // Cycle through again, this time, terminate in no error.
+  item.SetErrorRetryState(
+      ErrorRetryState::DISPLAYING_ERROR_FOR_FAILED_NAVIGATION);
+  item.SetErrorRetryState(
+      ErrorRetryState::NAVIGATING_TO_FAILED_NAVIGATION_ITEM);
+  item.SetErrorRetryState(ErrorRetryState::RETRY_FAILED_NAVIGATION_ITEM);
+  item.SetErrorRetryState(ErrorRetryState::NO_NAVIGATION_ERROR);
+  ASSERT_EQ(ErrorRetryState::NO_NAVIGATION_ERROR, item.GetErrorRetryState());
+}
+
 }  // namespace
 }  // namespace web

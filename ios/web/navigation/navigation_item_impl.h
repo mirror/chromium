@@ -21,6 +21,23 @@ namespace web {
 class NavigationItemStorageBuilder;
 enum class NavigationInitiationType;
 
+// Defines the states of a NavigationItem that failed to load. This is used by
+// CRWWebController to coordinate the display of native error views.
+enum class ErrorRetryState {
+  // This navigation item is either new or last loaded without error.
+  NO_NAVIGATION_ERROR,
+  // This navigation item has a corresponding entry in the session history.
+  // Ready to present error in native view.
+  READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION,
+  // This navigation item failed to load and a native error was displayed.
+  DISPLAYING_ERROR_FOR_FAILED_NAVIGATION,
+  // This navigation item is reactivated due to back/forward navigation and
+  // needs to try reloading.
+  NAVIGATING_TO_FAILED_NAVIGATION_ITEM,
+  // This navigation item is ready to be reloaded in web view.
+  RETRY_FAILED_NAVIGATION_ITEM
+};
+
 // Implementation of NavigationItem.
 class NavigationItemImpl : public web::NavigationItem {
  public:
@@ -109,6 +126,12 @@ class NavigationItemImpl : public web::NavigationItem {
   // non-persisted state, as documented on the members below.
   void ResetForCommit();
 
+  // Setter and getter for the ErrorRetryState associated with this item. Used
+  // exclusively by CRWWebController to manage when to display error in native
+  // view.
+  void SetErrorRetryState(ErrorRetryState state);
+  ErrorRetryState GetErrorRetryState() const;
+
   // Returns the title string to be used for a page with |url| if that page
   // doesn't specify a title.
   static base::string16 GetDisplayTitleForURL(const GURL& url);
@@ -143,6 +166,7 @@ class NavigationItemImpl : public web::NavigationItem {
   bool is_created_from_hash_change_;
   bool should_skip_repost_form_confirmation_;
   NSData* post_data_;
+  ErrorRetryState error_retry_state_;
 
   // The navigation initiation type of the item.  This decides whether the URL
   // should be displayed before the navigation commits.  It is cleared in
