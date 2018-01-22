@@ -16,6 +16,24 @@
       "revId": "243607671a3606b10c3379fc1ebb216cf58fa6c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c977ba_72d2c861",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFO.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T19:06:15Z",
+      "side": 1,
+      "message": "I\u0027ve thought about it, but it depends how you want to trace it. If things crashes because of CHECK, TRACE would not matter at all any way.\n\nBut when it works, I would like to time this method as accurately as possible.",
+      "parentUuid": "7f778072_8ce304c8",
+      "revId": "243607671a3606b10c3379fc1ebb216cf58fa6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
