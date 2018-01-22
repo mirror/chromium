@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5894500d_bc34a404",
+        "filename": "base/component_export.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T22:19:53Z",
+      "side": 1,
+      "message": "I continue to be amazed by the things MSVC does or does not complain about. Done!",
+      "parentUuid": "5d92ba37_c33e61d9",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "cfe5075905843d38ddd3e763bcacd875310f3904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea08344c_5208ca11",
         "filename": "base/component_export.h",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "cfe5075905843d38ddd3e763bcacd875310f3904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14825f2_fa78b83f",
+        "filename": "base/component_export.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T22:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea08344c_5208ca11",
+      "range": {
+        "startLine": 68,
+        "startChar": 45,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "cfe5075905843d38ddd3e763bcacd875310f3904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
