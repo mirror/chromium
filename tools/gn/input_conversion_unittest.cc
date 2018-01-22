@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "tools/gn/input_conversion.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/err.h"
-#include "tools/gn/input_conversion.h"
 #include "tools/gn/input_file.h"
 #include "tools/gn/parse_tree.h"
 #include "tools/gn/scheduler.h"
@@ -22,7 +23,7 @@ class InputConversionTest : public testing::Test {
 
  private:
   TestWithScope setup_;
-
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler_;
 };
 

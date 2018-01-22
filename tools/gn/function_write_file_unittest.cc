@@ -7,6 +7,7 @@
 #include "base/files/file.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/functions.h"
 #include "tools/gn/scheduler.h"
@@ -34,6 +35,7 @@ bool CallWriteFile(Scope* scope,
 }  // namespace
 
 TEST(WriteFile, WithData) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 

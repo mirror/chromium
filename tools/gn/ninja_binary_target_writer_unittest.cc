@@ -8,6 +8,7 @@
 #include <sstream>
 #include <utility>
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/config.h"
 #include "tools/gn/scheduler.h"
@@ -823,6 +824,7 @@ TEST(NinjaBinaryTargetWriter, GCCPrecompiledHeaders) {
 // Should throw an error with the scheduler if a duplicate object file exists.
 // This is dependent on the toolchain's object file mapping.
 TEST(NinjaBinaryTargetWriter, DupeObjFileError) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
 
   TestWithScope setup;

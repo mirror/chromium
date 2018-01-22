@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
 TEST(FunctionForwardVariablesFrom, List) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   Err err;
   std::string program =
@@ -51,6 +53,7 @@ TEST(FunctionForwardVariablesFrom, List) {
 }
 
 TEST(FunctionForwardVariablesFrom, LiteralList) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -73,6 +76,7 @@ TEST(FunctionForwardVariablesFrom, LiteralList) {
 }
 
 TEST(FunctionForwardVariablesFrom, ListWithExclusion) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -101,6 +105,7 @@ TEST(FunctionForwardVariablesFrom, ListWithExclusion) {
 }
 
 TEST(FunctionForwardVariablesFrom, ErrorCases) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -191,6 +196,7 @@ TEST(FunctionForwardVariablesFrom, ErrorCases) {
 }
 
 TEST(FunctionForwardVariablesFrom, Star) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 
@@ -219,6 +225,7 @@ TEST(FunctionForwardVariablesFrom, Star) {
 
 
 TEST(FunctionForwardVariablesFrom, StarWithExclusion) {
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler;
   TestWithScope setup;
 

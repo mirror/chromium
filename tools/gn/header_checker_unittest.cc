@@ -4,6 +4,7 @@
 
 #include <vector>
 
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/config.h"
 #include "tools/gn/header_checker.h"
@@ -52,8 +53,8 @@ class HeaderCheckerTest : public testing::Test {
   }
 
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment;
   Scheduler scheduler_;
-
   TestWithScope setup_;
 
   // Some headers that are automatically set up with a public dependency chain.
