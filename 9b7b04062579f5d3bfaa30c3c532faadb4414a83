@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4819b3_492ab38b",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-22T02:38:31Z",
+      "side": 1,
+      "message": "nit: Should be const?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "9b7b04062579f5d3bfaa30c3c532faadb4414a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39988452_f0366368",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-22T02:38:31Z",
+      "side": 1,
+      "message": "If OSExchangeData contains both PickledData and File, the uri list will be overridden by the uri list obtained from File.\nTo avoid redundant fetching, could you change this so that it does not fetch PickledData when OSExchangeData contains File?",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 72
+      },
+      "revId": "9b7b04062579f5d3bfaa30c3c532faadb4414a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
