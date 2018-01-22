@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c657024_9b615d6d",
+        "filename": "base/component_export.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-22T17:35:33Z",
+      "side": 1,
+      "message": "nit: maybe just IS_##component##_IMPL to limit the depth of the expansion ...",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "1dcbb08fe82966411ce48a7fce98a33bdfe199b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
