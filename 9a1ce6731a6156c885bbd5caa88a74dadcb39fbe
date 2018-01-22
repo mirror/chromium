@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efc41b5e_0ede3cd7",
+        "filename": "storage/browser/blob/blob_data_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-22T23:09:13Z",
+      "side": 1,
+      "message": "BlobDataItem::Type is already shorter than network::DataElement::TYPE... And yeah, I think adding some kind of type alias would either end up being confusing because of how short it made it or not be very beneficial since it wouldn\u0027t reduce the length much.",
+      "parentUuid": "0c61214c_9d2f92c4",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 39
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "110a11ab_ebbee27d",
         "filename": "storage/browser/blob/blob_data_item.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3692dae_df2d96be",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-22T23:09:13Z",
+      "side": 1,
+      "message": "Yeah, some kind of unifying treatment of future files vs future bytes might be nice. Either getting rid of kBytesDesription entirely just like there is no separate kFutureFile type either, or having both kFutureBytes and kFutureFile might work. But that seems more a possible future improvement indeed.",
+      "parentUuid": "110a11ab_ebbee27d",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c7fa153_14d38e09",
         "filename": "storage/browser/blob/blob_data_item.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-22T22:52:15Z",
       "side": 1,
       "message": "Is there a need for bytes where we assume ownership? Can someone create a blob and not have byte copies?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c53941f_eb831ff5",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-22T23:09:13Z",
+      "side": 1,
+      "message": "You can CreateBytesDescription, AllocateBytes and then directly write into mutable_bytes() (which is what BlobDataBuilder::FutureData does). I originally did have a CreateBytes that took a std::vector to move-create a BlobDataItem, but since nothing would currently benefit from that (since BlobDataBuilder::AppendData always copies data anyway) it didn\u0027t make sense to keep.\n\nOf course it might indeed make sense to add a AppendData overload that moves a vector, but I\u0027m not sure how much use that would get. The only current callsite I could see benefiting from that is NoneNeededTransportStrategy::AddBytesElement (i.e. when a blob is being built with all the data embedded in the Register call), but since that only happens for small blobs the benefit of not copying data doesn\u0027t seem significant.",
+      "parentUuid": "4c7fa153_14d38e09",
       "range": {
         "startLine": 59,
         "startChar": 0,
