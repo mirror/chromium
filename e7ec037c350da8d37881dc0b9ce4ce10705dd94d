@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04754c29_e7e85131",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T17:19:29Z",
+      "side": 1,
+      "message": "Where do we handle the case of \"0\" gain? I think this should be actually \"0\"...",
+      "range": {
+        "startLine": 512,
+        "startChar": 6,
+        "endLine": 512,
+        "endChar": 15
+      },
+      "revId": "e7ec037c350da8d37881dc0b9ce4ce10705dd94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5ba813_47264ddc",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-22T17:19:29Z",
+      "side": 1,
+      "message": "Since you\u0027re fixing it...\n\nnit: |source_bus| and |gain|",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 24
+      },
+      "revId": "e7ec037c350da8d37881dc0b9ce4ce10705dd94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
