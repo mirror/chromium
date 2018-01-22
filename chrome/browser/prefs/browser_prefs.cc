@@ -284,6 +284,10 @@
 #include "chrome/browser/ui/browser_view_prefs.h"
 #endif
 
+#if (defined(OS_POSIX) && !defined(OS_CHROMEOS)) || defined(OS_WIN)
+#include "chrome/browser/prefs/force_restart_after_update_pref.h"
+#endif
+
 namespace {
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -463,6 +467,10 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 
 #if defined(TOOLKIT_VIEWS)
   RegisterBrowserViewLocalPrefs(registry);
+#endif
+
+#if (defined(OS_POSIX) && !defined(OS_CHROMEOS)) || defined(OS_WIN)
+  RegisterForceRestartAfterUpdatePref(registry);
 #endif
 }
 

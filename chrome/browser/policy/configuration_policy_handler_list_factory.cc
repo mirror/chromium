@@ -742,6 +742,12 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     prefs::kThirdPartyBlockingEnabled,
     base::Value::Type::BOOLEAN },
 #endif
+
+#if (defined(OS_POSIX) && !defined(OS_CHROMEOS)) || defined(OS_WIN)
+  { key::kForceRestartAfterUpdate,
+    prefs::kForceRestartAfterUpdate,
+    base::Value::Type::INTEGER },
+#endif
 };
 // clang-format on
 
