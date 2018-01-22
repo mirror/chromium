@@ -6,13 +6,12 @@ package org.chromium.content.browser.accessibility;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
 import org.chromium.content_public.browser.WebContents;
 
 /**
@@ -20,12 +19,16 @@ import org.chromium.content_public.browser.WebContents;
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
+public class KitKatWebContentsAccessibility extends WebContentsAccessibilityImpl {
     private String mSupportedHtmlElementTypes;
 
-    KitKatWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, String productVersion) {
-        super(context, containerView, webContents, productVersion);
+    static final class UserDataFactoryLazyHolder {
+        static final UserDataFactory<WebContentsAccessibilityImpl> INSTANCE =
+                KitKatWebContentsAccessibility::new;
+    }
+
+    KitKatWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
     }
 
     @Override
