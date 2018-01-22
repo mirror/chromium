@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2eddb927_69e2835b",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e4e211_4fac2ad3",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 14
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e96e80_cee5abb6",
         "filename": "media/cast/net/udp_transport_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T23:19:02Z",
       "side": 1,
       "message": "I\u0027m not sure if we were being too pedantic here about receiving \"stray\" UDP packets. Someday we should figure out if this is necessary. If it\u0027s not necessary, then PacketReceiverCallbackWithStatus need not return a bool. (Note this is related to the new OnPacketReceived() method you\u0027ve added in this change.)",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 7
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f75d9e3_ba19463c",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "Yes. Maybe we should just remove the check below. The packet receiver always checks whether the packet is valid.",
+      "parentUuid": "71e96e80_cee5abb6",
       "range": {
         "startLine": 225,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa922254_04997c86",
+        "filename": "media/cast/net/udp_transport_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "Yes, some refactoring might need be done to remove this ref-counting. Added the TODO.",
+      "parentUuid": "6db7a917_e3e605d0",
+      "range": {
+        "startLine": 383,
+        "startChar": 31,
+        "endLine": 383,
+        "endChar": 72
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ae86ca_b8d3e08d",
         "filename": "media/cast/net/udp_transport_impl.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "917ced80c411e630d12879b09685aed8384ec608",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbf8701_900ccdd1",
+        "filename": "media/cast/net/udp_transport_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ae86ca_b8d3e08d",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 64
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "50fd1b11_9895fa22",
+        "filename": "media/cast/net/udp_transport_interface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "I agree to change this to using a data pipe if it is used by cast receiver in future. Added a TODO comment.",
+      "parentUuid": "1bdf2c07_213582b6",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae98c460_fe658432",
         "filename": "media/cast/net/udp_transport_unittest.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "72c91ab9_27697281",
+        "filename": "media/cast/net/udp_transport_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae98c460_fe658432",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d65b6d95_a429ef20",
         "filename": "media/cast/net/udp_transport_unittest.cc",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-19T23:19:02Z",
       "side": 1,
       "message": "We can avoid making a copy of the data if this argument were just std::vector\u003cuint8_t\u003e. Then, line 75 below changes to: packets_.emplace_back(std::move(packet));",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "917ced80c411e630d12879b09685aed8384ec608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61ff39a_e534d99b",
+        "filename": "media/cast/net/udp_transport_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-22T18:10:40Z",
+      "side": 1,
+      "message": "This will implement the mojo interface (array\u003cuint8\u003e) in future. Can we remove the const?",
+      "parentUuid": "d65b6d95_a429ef20",
       "range": {
         "startLine": 73,
         "startChar": 24,
