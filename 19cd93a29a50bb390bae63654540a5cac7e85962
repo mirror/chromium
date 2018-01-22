@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b3a801_4fc1b4cb",
+        "filename": "components/metrics_services_manager/metrics_services_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-22T19:56:45Z",
+      "side": 1,
+      "message": "state?",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "19cd93a29a50bb390bae63654540a5cac7e85962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

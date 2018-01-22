@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f9aaa5_09ad0a89",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-22T19:56:45Z",
+      "side": 0,
+      "message": "This function is used throughout the code and it is possible that some those cases should be moved to metrics_state_manager_-\u003eIsMetricsReportingEnabled() as well.\n\nMaybe we can open a bug to investigate ?",
+      "range": {
+        "startLine": 603,
+        "startChar": 36,
+        "endLine": 603,
+        "endChar": 69
+      },
+      "revId": "bc084a8b5afa3744a74927344e304c02ae54189f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
