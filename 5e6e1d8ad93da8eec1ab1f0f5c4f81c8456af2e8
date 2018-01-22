@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab54df8_61c1b830",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-22T11:10:02Z",
+      "side": 1,
+      "message": "Can you also drop the first [Default\u003dUndefined]? I suspect the generated code will be identical since it\u0027s not optional any longer.",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "5e6e1d8ad93da8eec1ab1f0f5c4f81c8456af2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
