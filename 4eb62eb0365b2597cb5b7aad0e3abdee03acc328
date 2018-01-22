@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "009a50d8_3fc1ea78",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-22T23:02:36Z",
+      "side": 1,
+      "message": "Could you add a unittest? This method is very long, so starting a unittest targeted at\nthese lines of code is a good start.",
+      "parentUuid": "d19fc282_8d897b37",
+      "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92cd1592_1a874ae3",
         "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Same as above, unrelated to test but missed in the earlier CL (https://chromium-review.googlesource.com/664898) when ContentsSize changed from Document to Frame size. This code wants to use document size since it recomputes the find text rects when this changes (i.e. page layout changes).",
       "parentUuid": "92cd1592_1a874ae3",
+      "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5f345f_e69ef4d3",
+        "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-22T23:02:36Z",
+      "side": 1,
+      "message": "Could you add a unittest? TextFinderTest appears to already have some examples.",
+      "parentUuid": "2d0ee323_57cf558e",
       "revId": "4eb62eb0365b2597cb5b7aad0e3abdee03acc328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
