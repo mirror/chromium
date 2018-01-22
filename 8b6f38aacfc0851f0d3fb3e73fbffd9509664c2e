@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9869bc77_d33d12bf",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-22T10:11:16Z",
+      "side": 1,
+      "message": "OK, so this is not a workaround, but expected to happen. Seems like a big hammer to reopen whatever the error was. What if we mask some bug in say FillRenderEndpointBufferWithSilence() that doesn\u0027t reappear if reopening? Since the OS will give an AUDCLNT_E_DEVICE_INVALIDATED error, I suggest checking for that.",
+      "parentUuid": "666685e1_a5b0373e",
+      "revId": "8b6f38aacfc0851f0d3fb3e73fbffd9509664c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c8f9d4_0137c7ea",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 2
