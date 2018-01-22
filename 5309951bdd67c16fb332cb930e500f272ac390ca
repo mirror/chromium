@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdc6e04_4ddb1bfa",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-22T22:40:34Z",
+      "side": 1,
+      "message": "Will this have side effects that we don\u0027t want at initialization?  Other than the new state about displays, why didn\u0027t we do update sinks at initialization before?",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
