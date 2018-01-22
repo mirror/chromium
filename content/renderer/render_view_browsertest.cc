@@ -90,6 +90,10 @@
 #include "ui/gfx/range/range.h"
 #include "ui/native_theme/native_theme_features.h"
 
+#if defined(OS_MACOSX)
+#include "base/mac/mac_util.h"
+#endif
+
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
 #endif
@@ -2168,37 +2172,62 @@ TEST_F(RenderViewImplTest, NavigationStartForCrossProcessHistoryNavigation) {
 }
 
 TEST_F(RenderViewImplTest, PreferredSizeZoomed) {
-  LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
-           "width:400px; height:400px;'/></body>");
-  view()->webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
-      false);
+#if defined(OS_MACOSX)
+  // Flaky on OS X < 10.12: http://crbug.com/785088
+  if (!base::mac::IsAtLeastOS10_12())
+    return;
+#endif
+  LoadHTML(
+      "<style>::-webkit-scrollbar { width: 20px; height: 20px; } </style>"
+      "<body style='margin:0;'>"
+      "<div style='display:inline-block; "
+      "width:400px; height:400px;'/></body>");
   EnablePreferredSizeMode();
 
+#if defined(OS_ANDROID)
+  // Android ignores scrollbar styling.
+  int scrollbar_width = 0;
+#else
+  int scrollbar_width = 20;
+#endif
+
   gfx::Size size = GetPreferredSize();
-  EXPECT_EQ(gfx::Size(400, 400), size);
+  EXPECT_EQ(gfx::Size(400 + scrollbar_width, 400), size);
 
   SetZoomLevel(ZoomFactorToZoomLevel(2.0));
   size = GetPreferredSize();
-  EXPECT_EQ(gfx::Size(800, 800), size);
+  EXPECT_EQ(gfx::Size(800 + scrollbar_width * 2, 800), size);
 }
 
 TEST_F(RenderViewImplScaleFactorTest, PreferredSizeWithScaleFactor) {
+#if defined(OS_MACOSX)
+  // Flaky on OS X < 10.12: http://crbug.com/785088
+  if (!base::mac::IsAtLeastOS10_12())
+    return;
+#endif
   DoSetUp();
-  LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
-           "width:400px; height:400px;'/></body>");
-  view()->webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
-      false);
+  LoadHTML(
+      "<style>::-webkit-scrollbar { width: 20px; height: 20px; } </style>"
+      "<body style='margin:0;'><div style='display:inline-block; "
+      "width:400px; height:400px;'/></body>");
   EnablePreferredSizeMode();
 
+#if defined(OS_ANDROID)
+  // Android ignores scrollbar styling.
+  int scrollbar_width = 0;
+#else
+  int scrollbar_width = 20;
+#endif
+
   gfx::Size size = GetPreferredSize();
-  EXPECT_EQ(gfx::Size(400, 400), size);
+  EXPECT_EQ(gfx::Size(400 + scrollbar_width, 400), size);
 
   // The size is in DIP. Changing the scale factor should not change
   // the preferred size. (Caveat: a page may apply different layout for
   // high DPI, in which case, the size may differ.)
   SetDeviceScaleFactor(2.f);
   size = GetPreferredSize();
-  EXPECT_EQ(gfx::Size(400, 400), size);
+  EXPECT_EQ(gfx::Size(400 + scrollbar_width, 400), size);
 }
 
 // Ensure the RenderViewImpl history list is properly updated when starting a
