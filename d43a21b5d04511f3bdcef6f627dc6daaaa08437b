@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b1a87da7_ef45fa07",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T23:17:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02dbfb9e_aa2edb1f",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f07bae6_e1a879b5",
         "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
         "patchSetId": 7
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "AFAIK that |dir| doesn\u0027t exist before this statement. But the code path is complex (at least complex enough to fool me on where is |icon_path| before the bug 794821 surface).\n\nSince the test shouldn\u0027t care whether it exists or not, I\u0027ve written the statement in this way. But I need to be sure that the icon isn\u0027t there before the test.",
       "parentUuid": "6f07bae6_e1a879b5",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e98ae4_0ac59438",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-22T23:17:11Z",
+      "side": 1,
+      "message": "Testing your CL locally, each ProfileAttributesStorageTest has its own profile directory. Given this, there is no reason to believe |dir| would exist beforehand. So it would be better for the test to be more deterministic. e.g.\n\nASSERT_FALSE(base::DirectoryExists(dir));\nASSERT_TRUE(base::CreateDirectory(dir));\n\nIf |dir| already exists, then something is wrong. In which case, fail to indicate the condition rather than accepting it and trying to continue.",
+      "parentUuid": "625137c3_f3d1ed0e",
       "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
