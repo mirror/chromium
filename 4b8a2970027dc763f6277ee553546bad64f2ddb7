@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff68715_520201a2",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:34:45Z",
+      "side": 1,
+      "message": "Nit: Stupid trick possibility: Can you do \"\u003d expected_formatted_full_url\" here and omit the third arg from all the cases below where it\u0027s a dupe?  Or does that not compile?  (I don\u0027t know what the language allows.)",
+      "revId": "4b8a2970027dc763f6277ee553546bad64f2ddb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b779b7f_2f12e773",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:34:45Z",
+      "side": 1,
+      "message": "Hmm, don\u0027t we want to ellipsize here instead of just truncating?",
+      "revId": "4b8a2970027dc763f6277ee553546bad64f2ddb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
