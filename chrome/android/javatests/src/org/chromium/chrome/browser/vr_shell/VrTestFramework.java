@@ -130,6 +130,15 @@ public class VrTestFramework {
     }
 
     /**
+     * Checks whether an XRDevice was actually found.
+     * @param webContents The WebContents to run the JavaScript through.
+     * @return Whether an XRDevice was found.
+     */
+    public static boolean xrDeviceFound(WebContents webContents) {
+        return !runJavaScriptOrFail("xrDevice", POLL_TIMEOUT_SHORT_MS, webContents).equals("null");
+    }
+
+    /**
      * Helper function to run the given JavaScript, return the return value,
      * and fail if a timeout/interrupt occurs so we don't have to catch or
      * declare exceptions all the time.
