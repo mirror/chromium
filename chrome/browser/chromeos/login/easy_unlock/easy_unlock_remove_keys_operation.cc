@@ -7,8 +7,10 @@
 #include "base/bind.h"
 #include "chrome/browser/chromeos/login/easy_unlock/easy_unlock_key_manager.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
-#include "chromeos/cryptohome/homedir_methods.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
+#include "chromeos/dbus/cryptohome_client.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 
 namespace chromeos {
@@ -53,19 +55,19 @@ void EasyUnlockRemoveKeysOperation::RemoveKey() {
       EasyUnlockKeyManager::GetKeyLabel(key_index_));
   // TODO(crbug.com/558497): Use ListKeyEx and delete by label instead of by
   // index.
-  cryptohome::HomedirMethods::GetInstance()->RemoveKeyEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->RemoveKeyEx(
       cryptohome::Identification((user_context_.GetAccountId())),
       cryptohome::CreateAuthorizationRequest(auth_key->GetLabel(),
                                              auth_key->GetSecret()),
       request,
-      base::Bind(&EasyUnlockRemoveKeysOperation::OnKeyRemoved,
-                 weak_ptr_factory_.GetWeakPtr()));
+      base::BindOnce(&EasyUnlockRemoveKeysOperation::OnKeyRemoved,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void EasyUnlockRemoveKeysOperation::OnKeyRemoved(
-    bool success,
-    cryptohome::MountError return_code) {
-  if (success) {
+    base::Optional<cryptohome::BaseReply> reply) {
+  cryptohome::MountError return_code = cryptohome::BaseReplyToMountError(reply);
+  if (return_code == cryptohome::MOUNT_ERROR_NONE) {
     ++key_index_;
     RemoveKey();
     return;

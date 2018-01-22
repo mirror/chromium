@@ -84,8 +84,7 @@ class CHROMEOS_EXPORT ExtendedAuthenticatorImpl : public ExtendedAuthenticator {
   void OnOperationComplete(const std::string& time_marker,
                            const UserContext& context,
                            const base::Closure& success_callback,
-                           bool success,
-                           cryptohome::MountError return_code);
+                           base::Optional<cryptohome::BaseReply> reply);
 
   bool salt_obtained_;
   std::string system_salt_;
