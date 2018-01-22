@@ -16,6 +16,41 @@
       "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e56cc5f_780f6b13",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:42:27Z",
+      "side": 1,
+      "message": "I think that\u0027s preferable -- it forces any future new calls to this API to choose the right thing.",
+      "parentUuid": "41cd6570_143fd951",
+      "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0794d820_c4d42bf4",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:42:27Z",
+      "side": 1,
+      "message": "If we passed ElideUrl() an arg for this instead, we\u0027d maybe also want to pass an arg here?  I dunno.",
+      "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
