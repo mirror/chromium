@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d8949f_4992ca39",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:17:14Z",
+      "side": 1,
+      "message": "It seems like we don\u0027t need both of these flags; can we add a TODO here to send a PSA out to tell people to switch to blink_symbol_level, and then remove this?",
+      "revId": "64f511230f01298261afb4037eea1112aba1dbf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb9ef09_24cf0b71",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T20:17:14Z",
+      "side": 1,
+      "message": "Can we add logic here so that if neither blink_symbol_level nor remove_webcore_debug_symbols was set, we just default to whatever symbol_level is set to?\n\nThen the other places where can just unconditionally :default_symbols and add blink_symbols_config.",
+      "revId": "64f511230f01298261afb4037eea1112aba1dbf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
