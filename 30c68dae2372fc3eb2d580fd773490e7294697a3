@@ -16,6 +16,24 @@
       "revId": "30c68dae2372fc3eb2d580fd773490e7294697a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4450fd8f_4ee57768",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-22T15:10:43Z",
+      "side": 1,
+      "message": "I updated the comment at line 2084 to remove reference to Android.",
+      "parentUuid": "37015f38_86749d6b",
+      "revId": "30c68dae2372fc3eb2d580fd773490e7294697a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
