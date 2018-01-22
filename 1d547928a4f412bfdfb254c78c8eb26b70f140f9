@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b846cb42_38e5a24a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-22T22:48:42Z",
+      "side": 1,
+      "message": "\u003e Creating instance with |new| is okay but adding it to WebContentsImpl.userDataMap needs a little more changes.\n\nI\u0027m still not clear what the problem is.. what\u0027s wrong with this?\n\nprivate static class Factory implements UserDataFactory\u003cWebContentsAccessibilityImpl\u003e {\n    public WebContentsAccessibilityImpl create(WebContents wc) {\n        if (SDK_INT \u003e O) {\n            return new OWebContentsAccessibility(wc);\n        } else if ...\n    }\n}\n\nprivate static final class UserDataFactoryLazyHolder {\n  private static final UserDataFactory\u003cWebContentsAccessibilityImpl\u003e INSTANCE \u003d new Factory();\n}\n  \n\n\u003e |fromWebContents| is the only method that does both. Do you prefer changing some method access level to public to set it to the map directly or adding a new method in WCUD that sets the passed object to the map? Or any other way?",
+      "parentUuid": "611c59e9_8ee07ff8",
+      "revId": "1d547928a4f412bfdfb254c78c8eb26b70f140f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bafd30ec_516afa00",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
         "patchSetId": 14
