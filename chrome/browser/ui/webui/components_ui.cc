@@ -213,6 +213,7 @@ base::string16 ComponentsUI::ComponentEventToString(Events event) {
     case Events::COMPONENT_UPDATED:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_UPDATED);
     case Events::COMPONENT_NOT_UPDATED:
+    case Events::COMPONENT_UPDATE_ERROR:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_NOTUPDATED);
     case Events::COMPONENT_UPDATE_DOWNLOADING:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_DOWNLOADING);

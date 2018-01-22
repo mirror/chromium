@@ -1013,7 +1013,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_DOWNLOADING,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(AtLeast(1));
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
                                   "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
   }
   {
@@ -1543,7 +1543,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
         .Times(AtLeast(1));
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_READY,
                                   "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
                                   "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
   }
 
@@ -2811,7 +2811,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_FOUND,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(1);
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(1);
   }
@@ -2925,7 +2925,7 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
   EXPECT_CALL(observer, OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
                                 "jebgalgnebhfojomionfpkfelancnnkf"))
       .Times(1);
-  EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+  EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
                                 "jebgalgnebhfojomionfpkfelancnnkf"))
       .Times(1)
       .WillOnce(Invoke([&update_client](Events event, const std::string& id) {
