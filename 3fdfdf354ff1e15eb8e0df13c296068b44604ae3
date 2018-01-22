@@ -45,6 +45,30 @@
       "revId": "3fdfdf354ff1e15eb8e0df13c296068b44604ae3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcaa3c0_6ce2cbba",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T10:03:55Z",
+      "side": 1,
+      "message": "\u003e static bool IsMirrorEnabledForProfile() {\n\nSmall mistake: this should take a profile as a parameter:\nstatic bool IsMirrorEnabledForProfile(Profile * profile);",
+      "parentUuid": "5eedd132_324924fa",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 3
+      },
+      "revId": "3fdfdf354ff1e15eb8e0df13c296068b44604ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
