@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30eade3_abf321cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-22T23:23:10Z",
+      "side": 1,
+      "message": "I\u0027d say \"Learn more\\u2026\"",
+      "revId": "87cc62d085ad613e607214e752038ff84e0f7067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
