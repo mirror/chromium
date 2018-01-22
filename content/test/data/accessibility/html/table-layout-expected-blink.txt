@@ -1,0 +1,36 @@
+rootWebArea name='Table example #2'
+++table-layout
+++++row-layout
+++++++cell-layout name='1'
+++++++++staticText name='1'
+++++++++++inlineTextBox name='1'
+++++++cell-layout name='2'
+++++++++staticText name='2'
+++++++++++inlineTextBox name='2'
+++++++cell-layout name='3'
+++++++++staticText name='3'
+++++++++++inlineTextBox name='3'
+++++row-layout
+++++++cell-layout name='4'
+++++++++staticText name='4'
+++++++++++inlineTextBox name='4'
+++++++cell-layout name='5'
+++++++++staticText name='5'
+++++++++++inlineTextBox name='5'
+++++++cell-layout name='6'
+++++++++staticText name='6'
+++++++++++inlineTextBox name='6'
+++++row-layout
+++++++cell-layout name='7'
+++++++++staticText name='7'
+++++++++++inlineTextBox name='7'
+++++++cell-layout name='8'
+++++++++staticText name='8'
+++++++++++inlineTextBox name='8'
+++++++cell-layout name='9'
+++++++++staticText name='9'
+++++++++++inlineTextBox name='9'
+++++column-layout
+++++column-layout
+++++column-layout
+++++tableHeaderContainer

@@ -1661,6 +1661,10 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityTableSimple) {
   RunHtmlTest(FILE_PATH_LITERAL("table-simple.html"));
 }
 
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityTableLayout) {
+  RunHtmlTest(FILE_PATH_LITERAL("table-layout.html"));
+}
+
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
                        AccessibilityTableThColHeader) {
   RunHtmlTest(FILE_PATH_LITERAL("table-th-colheader.html"));
