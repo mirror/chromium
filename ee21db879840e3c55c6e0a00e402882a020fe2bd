@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a6616d_0715c8a1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-source/mediasource-is-type-supported.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-22T22:13:40Z",
+      "side": 1,
+      "message": "Nit. Hmm. I think make test comment be \"major/minor\" or just \"mime\". Or split out those subtests (like this case) which indeed are testing minor (vp8 in mp4 [minor], for a video [major]) mimetype.",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "ee21db879840e3c55c6e0a00e402882a020fe2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
