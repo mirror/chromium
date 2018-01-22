@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02e70b06_73013a03",
+        "filename": "services/metrics/public/cpp/ukm_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-22T13:12:37Z",
+      "side": 1,
+      "message": "drive-by, not intending to slow down the CL: Is this API why all of the friend classes above exist? If so, could you put a corresponding comment on the top of that list? At first blush it looks conceptually incorrect to have this class know anything at all about those higher layers (even just for friending); if it\u0027s for reasons of auditing usage of the API for privacy constraints that makes sense though!",
+      "range": {
+        "startLine": 164,
+        "startChar": 15,
+        "endLine": 164,
+        "endChar": 30
+      },
+      "revId": "c958a3841013203e211772d847d7278aa976f1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
