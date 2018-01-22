@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd84c99_ea454b8c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/canonicalizeFilter/no-arguments.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-22T22:41:35Z",
+      "side": 1,
+      "message": "fwiw: These tests didn\u0027t have any error messages because there are no expectations that error messages will be the same across browsers. The spec says that calling requestDevice() with no arguments should throw an error but it doesn\u0027t say anything about what the error should say. So we shouldn\u0027t add a test for the error message.",
+      "revId": "2b921fe55fc2f1b8c5f3c5807030e6fe3f8f5288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
