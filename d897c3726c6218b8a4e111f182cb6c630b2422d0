@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e02de6d_28df6eac",
+        "filename": "base/component_export_import_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-22T18:54:23Z",
+      "side": 1,
+      "message": "nit: maybe IS_TEST_COMPONENT_C_IMPL is defined as 2 or as XXXX",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d897c3726c6218b8a4e111f182cb6c630b2422d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
