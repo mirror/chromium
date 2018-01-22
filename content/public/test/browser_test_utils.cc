@@ -147,8 +147,9 @@ class InterstitialObserver : public content::WebContentsObserver {
 
 // Specifying a prototype so that we can add the WARN_UNUSED_RESULT attribute.
 bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
-                         const std::string& original_script,
-                         bool user_gesture,
+                         const std::string& script,
+                         bool create_user_gesture,
+                         bool consume_user_gesture,
                          std::unique_ptr<base::Value>* result)
     WARN_UNUSED_RESULT;
 
@@ -157,14 +158,20 @@ bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
 // in |result|.  Returns true on success.
 bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
                          const std::string& script,
-                         bool user_gesture,
+                         bool create_user_gesture,
+                         bool consume_user_gesture,
                          std::unique_ptr<base::Value>* result) {
   // TODO(lukasza): Only get messages from the specific |render_frame_host|.
   DOMMessageQueue dom_message_queue(
       WebContents::FromRenderFrameHost(render_frame_host));
-  if (user_gesture) {
-    render_frame_host->ExecuteJavaScriptWithUserGestureForTests(
-        base::UTF8ToUTF16(script));
+  if (create_user_gesture) {
+    if (!consume_user_gesture) {
+      render_frame_host->ExecuteJavaScriptWithUserGestureForTests(
+          base::UTF8ToUTF16(script));
+    } else {
+      render_frame_host->ExecuteJavaScriptWithScopedUserGestureForTests(
+          base::UTF8ToUTF16(script));
+    }
   } else {
     render_frame_host->ExecuteJavaScriptForTests(base::UTF8ToUTF16(script));
   }
@@ -190,7 +197,8 @@ bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
 
 bool ExecuteScriptWithUserGestureControl(RenderFrameHost* frame,
                                          const std::string& script,
-                                         bool user_gesture) {
+                                         bool create_user_gesture,
+                                         bool consume_user_gesture) {
   // TODO(lukasza): ExecuteScript should just call
   // ExecuteJavaScriptWithUserGestureForTests and avoid modifying the original
   // script (and at that point we should merge it with and remove
@@ -205,7 +213,8 @@ bool ExecuteScriptWithUserGestureControl(RenderFrameHost* frame,
       script.c_str(), expected_response.c_str());
 
   std::unique_ptr<base::Value> value;
-  if (!ExecuteScriptHelper(frame, new_script, user_gesture, &value) ||
+  if (!ExecuteScriptHelper(frame, new_script, create_user_gesture,
+                           consume_user_gesture, &value) ||
       !value.get()) {
     return false;
   }
@@ -1046,13 +1055,19 @@ RenderFrameHost* ConvertToRenderFrameHost(RenderFrameHost* render_frame_host) {
 bool ExecuteScript(const ToRenderFrameHost& adapter,
                    const std::string& script) {
   return ExecuteScriptWithUserGestureControl(adapter.render_frame_host(),
-                                             script, true);
+                                             script, true, false);
 }
 
 bool ExecuteScriptWithoutUserGesture(const ToRenderFrameHost& adapter,
                                      const std::string& script) {
   return ExecuteScriptWithUserGestureControl(adapter.render_frame_host(),
-                                             script, false);
+                                             script, false, false);
+}
+
+bool ExecuteScriptWithScopedUserGesture(const ToRenderFrameHost& adapter,
+                                        const std::string& script) {
+  return ExecuteScriptWithUserGestureControl(adapter.render_frame_host(),
+                                             script, true, true);
 }
 
 void ExecuteScriptAsync(const ToRenderFrameHost& adapter,
@@ -1065,7 +1080,8 @@ bool ExecuteScriptAndExtractDouble(const ToRenderFrameHost& adapter,
                                    const std::string& script, double* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, &value) ||
+  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, false,
+                           &value) ||
       !value.get()) {
     return false;
   }
@@ -1077,7 +1093,8 @@ bool ExecuteScriptAndExtractInt(const ToRenderFrameHost& adapter,
                                 const std::string& script, int* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, &value) ||
+  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, false,
+                           &value) ||
       !value.get()) {
     return false;
   }
@@ -1089,7 +1106,8 @@ bool ExecuteScriptAndExtractBool(const ToRenderFrameHost& adapter,
                                  const std::string& script, bool* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, &value) ||
+  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, false,
+                           &value) ||
       !value.get()) {
     return false;
   }
@@ -1118,7 +1136,8 @@ bool ExecuteScriptAndExtractString(const ToRenderFrameHost& adapter,
                                    std::string* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, &value) ||
+  if (!ExecuteScriptHelper(adapter.render_frame_host(), script, true, false,
+                           &value) ||
       !value.get()) {
     return false;
   }
@@ -1132,7 +1151,7 @@ bool ExecuteScriptWithoutUserGestureAndExtractDouble(
     double* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  return ExecuteScriptHelper(adapter.render_frame_host(), script, false,
+  return ExecuteScriptHelper(adapter.render_frame_host(), script, false, false,
                              &value) &&
          value && value->GetAsDouble(result);
 }
@@ -1143,7 +1162,7 @@ bool ExecuteScriptWithoutUserGestureAndExtractInt(
     int* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  return ExecuteScriptHelper(adapter.render_frame_host(), script, false,
+  return ExecuteScriptHelper(adapter.render_frame_host(), script, false, false,
                              &value) &&
          value && value->GetAsInteger(result);
 }
@@ -1154,7 +1173,7 @@ bool ExecuteScriptWithoutUserGestureAndExtractBool(
     bool* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  return ExecuteScriptHelper(adapter.render_frame_host(), script, false,
+  return ExecuteScriptHelper(adapter.render_frame_host(), script, false, false,
                              &value) &&
          value && value->GetAsBoolean(result);
 }
@@ -1165,7 +1184,7 @@ bool ExecuteScriptWithoutUserGestureAndExtractString(
     std::string* result) {
   DCHECK(result);
   std::unique_ptr<base::Value> value;
-  return ExecuteScriptHelper(adapter.render_frame_host(), script, false,
+  return ExecuteScriptHelper(adapter.render_frame_host(), script, false, false,
                              &value) &&
          value && value->GetAsString(result);
 }
