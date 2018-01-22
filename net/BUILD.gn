@@ -5265,7 +5265,6 @@ test("net_unittests") {
     "test/embedded_test_server/http_request_unittest.cc",
     "test/embedded_test_server/http_response_unittest.cc",
     "test/run_all_unittests.cc",
-    "test/tcp_socket_proxy_unittest.cc",
     "third_party/nist-pkits/pkits_testcases-inl.h",
     "tools/content_decoder_tool/content_decoder_tool.cc",
     "tools/content_decoder_tool/content_decoder_tool.h",
@@ -5435,6 +5434,10 @@ test("net_unittests") {
       "ntlm/ntlm_test_data.h",
       "ntlm/ntlm_unittest.cc",
     ]
+  }
+
+  if (use_remote_test_server) {
+    sources += [ "test/tcp_socket_proxy_unittest.cc" ]
   }
 
   if (enable_python_utils) {
