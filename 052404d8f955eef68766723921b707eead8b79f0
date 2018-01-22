@@ -16,6 +16,24 @@
       "revId": "052404d8f955eef68766723921b707eead8b79f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecc752b_26d7ce12",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-22T19:57:55Z",
+      "side": 1,
+      "message": "It won\u0027t be I think. We defer commits UNTIL we have a new LocalSurfaceId for the given content source ID. Is that right Saman?",
+      "parentUuid": "ea6ab7f8_832d36bd",
+      "revId": "052404d8f955eef68766723921b707eead8b79f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
