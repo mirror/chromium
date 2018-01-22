@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204daf48_d017d2ba",
+        "filename": "chromecast/graphics/cast_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001985
+      },
+      "writtenOn": "2018-01-22T21:14:21Z",
+      "side": 1,
+      "message": "Since these are override settings, it\u0027s probably worth moving them to the top of the function and only apply them if both flags are present.\n\nIf GraphicsPropertiesShlib::k1080p is supported, the overrides will never take place.",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
