@@ -19,6 +19,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_errors.h"
 #include "net/websockets/websocket_frame.h"
 #include "net/websockets/websocket_frame_parser.h"
@@ -26,6 +27,26 @@
 namespace net {
 
 namespace {
+
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("web_socket_basic_stream", R"(
+      semantics {
+        sender: "Web Socket Basic Stream"
+        description: "..."
+        trigger: "..."
+        data: "..."
+        destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+      }
+      policy {
+        cookies_allowed: NO
+        setting: "..."
+        chrome_policy {
+          [POLICY_NAME] {
+            [POLICY_NAME]: ... //(value to disable it)
+          }
+        }
+        policy_exception_justification: "..."
+      })");
 
 // This uses type uint64_t to match the definition of
 // WebSocketFrameHeader::payload_length in websocket_frame.h.
@@ -205,12 +226,10 @@ int WebSocketBasicStream::WriteEverything(
     // The use of base::Unretained() here is safe because on destruction we
     // disconnect the socket, preventing any further callbacks.
     int result = connection_->socket()->Write(
-        buffer.get(),
-        buffer->BytesRemaining(),
+        buffer.get(), buffer->BytesRemaining(),
         base::Bind(&WebSocketBasicStream::OnWriteComplete,
-                   base::Unretained(this),
-                   buffer,
-                   callback));
+                   base::Unretained(this), buffer, callback),
+        kTrafficAnnotation);
     if (result > 0) {
       UMA_HISTOGRAM_COUNTS_100000("Net.WebSocket.DataUse.Upstream", result);
       buffer->DidConsume(result);
