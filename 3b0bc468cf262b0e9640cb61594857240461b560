@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab867909_ac7cbb49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-22T19:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c65ad7_3af45a60",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 31
+      },
+      "revId": "3b0bc468cf262b0e9640cb61594857240461b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233a0b14_e265b378",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3b0bc468cf262b0e9640cb61594857240461b560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e114485_ba91a273",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-22T19:15:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233a0b14_e265b378",
+      "range": {
+        "startLine": 262,
+        "startChar": 26,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "3b0bc468cf262b0e9640cb61594857240461b560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
