@@ -445,6 +445,30 @@
       "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a2dc6f_a525732d",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-22T02:21:48Z",
+      "side": 1,
+      "message": "\u003e fail the test immediately.\n\nI don\u0027t think so. Your function returns true, even if |clock_id| is not found in |arc_timer_store| unexpectedly.\n\n\u003e The CreateTimersCallback helps in doing this.\n\nIt adds a fatal error on error cases (or non-fatal errors at L163 in PS42),\nbut it looks not to help failing the test immediately.",
+      "parentUuid": "1ce44eb5_bf87e734",
+      "range": {
+        "startLine": 174,
+        "startChar": 3,
+        "endLine": 174,
+        "endChar": 64
+      },
+      "revId": "1dcfbdcee02f0f9b753157bbcc37b01809ee3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17171deb_b4511899",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-22T02:21:48Z",
+      "side": 1,
+      "message": "for consisntency, \"const std::unique_ptr\u003cArcTimer, DeleteOnSequence\u003e\u0026\" please.",
+      "range": {
+        "startLine": 130,
+        "startChar": 14,
+        "endLine": 130,
+        "endChar": 64
+      },
+      "revId": "c2fed2239d03c3aa590d7870839af6274f6c48f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f185e7d2_6a7597f6",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-22T02:21:48Z",
+      "side": 1,
+      "message": "nit: for consistency with ArcTimerBridge::DeleteOnSequence, remove this? Or add dtor to that class?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 32
+      },
+      "revId": "c2fed2239d03c3aa590d7870839af6274f6c48f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
