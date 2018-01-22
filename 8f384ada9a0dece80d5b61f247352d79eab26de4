@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0eb40461_d6fc005f",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T10:36:29Z",
+      "side": 1,
+      "message": "This field should show the data you send.",
+      "range": {
+        "startLine": 292,
+        "startChar": 17,
+        "endLine": 292,
+        "endChar": 24
+      },
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5ae8bf_4a5f3a5f",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T10:36:29Z",
+      "side": 1,
+      "message": "You may add a sentence saying something like \u0027however, it will only be requested if user has signed in.\u0027",
+      "range": {
+        "startLine": 298,
+        "startChar": 55,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e466a107_b61bd0e9",
         "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
         "patchSetId": 19
