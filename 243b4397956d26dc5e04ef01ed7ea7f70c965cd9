@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50f0bb5_f4441bf2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-22T08:26:46Z",
+      "side": 1,
+      "message": "Add comments for each value?",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf31500_1ba89673",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-22T08:26:46Z",
+      "side": 1,
+      "message": "Why can\u0027t we move this to NGPhysicalLineBoxFragment now?",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657cc32c_a439332a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-22T08:26:46Z",
+      "side": 1,
+      "message": "What does the \"continuation\" means here?  \"Continuation\" is used in different meaning in the current layout engine. It\u0027s better not to use the same terminology for different meaning.\n\nIf all what you want to know is forced break, \"forced break\" is a good naming. What about the block boundary? It has DCHECK, so I can\u0027t determine the intention. If you want to return true when this is a wrapped line, \"wrapped line\" is another candidate.",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e95adc5_03659df5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-22T08:26:46Z",
+      "side": 1,
+      "message": "Why do we have this function in addition to |IsFragmentContinuationFromLastLine|?",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791ceee4_1707f74e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-22T08:26:46Z",
+      "side": 1,
+      "message": "We only need the current and the last line, IIUC the logic below, correct?\n\nCan we run the logic within this loop, instead of collecting all lines up to the end of the block?",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
