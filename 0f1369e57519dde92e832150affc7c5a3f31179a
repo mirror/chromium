@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8987d7_1cdc6615",
+        "filename": "net/websockets/websocket_basic_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-22T14:16:42Z",
+      "side": 1,
+      "message": "It might be worth mentioning that the annotation in websocket_stream.cc will also need to be changed in this case. And perhaps put a comment there referencing back here as well?",
+      "revId": "0f1369e57519dde92e832150affc7c5a3f31179a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
