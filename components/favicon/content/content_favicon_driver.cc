@@ -150,7 +150,7 @@ void ContentFaviconDriver::OnFaviconUpdated(
     const gfx::Image& image) {
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
-  DCHECK(entry && entry->GetURL() == page_url);
+  // DCHECK(entry && entry->GetURL() == page_url);
 
   if (notification_icon_type == FaviconDriverObserver::NON_TOUCH_16_DIP) {
     entry->GetFavicon().valid = true;

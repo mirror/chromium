@@ -1,0 +1,20 @@
+[
+   {
+      "action" : {
+         "type" : "blacklist"
+      },
+      "condition" : {
+         "urlFilter" : "google"
+      },
+      "id" : 1
+   },
+   {
+      "action" : {
+         "type" : "blacklist"
+      },
+      "condition" : {
+         "resourceTypes" : ["image", "stylesheet"]
+      },
+      "id" : 2
+   }
+]
