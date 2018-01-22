@@ -2583,10 +2583,10 @@ static_library("test_support") {
     "log/test_net_log_util.h",
     "nqe/network_quality_estimator_test_util.cc",
     "nqe/network_quality_estimator_test_util.h",
-    "proxy/mock_proxy_resolver.cc",
-    "proxy/mock_proxy_resolver.h",
     "proxy/mock_pac_file_fetcher.cc",
     "proxy/mock_pac_file_fetcher.h",
+    "proxy/mock_proxy_resolver.cc",
+    "proxy/mock_proxy_resolver.h",
     "proxy/proxy_config_service_common_unittest.cc",
     "proxy/proxy_config_service_common_unittest.h",
     "socket/socket_test_util.cc",
@@ -4975,6 +4975,8 @@ test("net_unittests") {
     "proxy/mojo_proxy_resolver_v8_tracing_bindings_unittest.cc",
     "proxy/multi_threaded_proxy_resolver_unittest.cc",
     "proxy/network_delegate_error_observer_unittest.cc",
+    "proxy/pac_file_decider_unittest.cc",
+    "proxy/pac_file_fetcher_impl_unittest.cc",
     "proxy/proxy_bypass_rules_unittest.cc",
     "proxy/proxy_config_service_android_unittest.cc",
     "proxy/proxy_config_service_linux_unittest.cc",
@@ -4985,8 +4987,6 @@ test("net_unittests") {
     "proxy/proxy_resolver_v8_tracing_unittest.cc",
     "proxy/proxy_resolver_v8_tracing_wrapper_unittest.cc",
     "proxy/proxy_resolver_v8_unittest.cc",
-    "proxy/pac_file_decider_unittest.cc",
-    "proxy/pac_file_fetcher_impl_unittest.cc",
     "proxy/proxy_server_unittest.cc",
     "proxy/proxy_service_unittest.cc",
     "quic/chromium/bidirectional_stream_quic_impl_unittest.cc",
@@ -5263,7 +5263,6 @@ test("net_unittests") {
     "test/embedded_test_server/http_request_unittest.cc",
     "test/embedded_test_server/http_response_unittest.cc",
     "test/run_all_unittests.cc",
-    "test/tcp_socket_proxy_unittest.cc",
     "third_party/nist-pkits/pkits_testcases-inl.h",
     "tools/content_decoder_tool/content_decoder_tool.cc",
     "tools/content_decoder_tool/content_decoder_tool.h",
@@ -5433,6 +5432,10 @@ test("net_unittests") {
       "ntlm/ntlm_test_data.h",
       "ntlm/ntlm_unittest.cc",
     ]
+  }
+
+  if (use_remote_test_server) {
+    sources += [ "test/tcp_socket_proxy_unittest.cc" ]
   }
 
   if (enable_python_utils) {
