@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1af50714_55830a1a",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-22T20:59:51Z",
+      "side": 1,
+      "message": "Thanks for the comment. Do you mean that when pref\u003d\u003denabled and powered\u003d\u003dfalse, user could still open the subpage from here, and in the subpage, we should add additional message for this state:\npref\u003d\u003denabled and powered\u003d\u003dtrue     \"On\"\npref\u003d\u003denabled and powered \u003d\u003d false   \"Enabling\"\npref\u003d\u003ddisabled                       \"Off\"",
+      "parentUuid": "a04b09da_2949e2f8",
+      "revId": "7fe295a8eea07832251d9403f5469fea4e89388e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3258f6b_c2ef2b29",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
         "patchSetId": 4
@@ -81,6 +99,24 @@
       "writtenOn": "2018-01-22T18:46:30Z",
       "side": 1,
       "message": "This should probably use the actual adapter \u0027powered\u0027 state. Same below.",
+      "revId": "7fe295a8eea07832251d9403f5469fea4e89388e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacc17c5_590d19b5",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2018-01-22T20:59:51Z",
+      "side": 1,
+      "message": "When the pref\u003d\u003ddisabled and powered is still \u003d\u003d enabled, will that be a little confusing to user since he already toggle off the button but these devices list are still showing? Maybe we could have a \"Bluetooth disabling\" message in addition to the \"enabling\" message?\n\nThat said, I\u0027m bit worried that if the power off request failed somehow, and settings don\u0027t know about it, the UI will get stuck in the disabling state. \nWhat is the concern about making the UI a pure refection of the pref value?",
+      "parentUuid": "4e07c6ef_75cc04c1",
       "revId": "7fe295a8eea07832251d9403f5469fea4e89388e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
