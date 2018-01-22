@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd83b66_c75c07a3",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "Nit: clear() /might/ be slightly more efficient (ditto below). it\u0027s possible that the compiler can optimize this case though (whereas it generally does a worse job on the std::string(\"\") case)\n\n(I guess this is just moving existing code, so feel free to ignore)",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfea4920_9ca9255c",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "This value is coming from the renderer right? We shouldn\u0027t be parsing in the browser. I mentioned this in the .mojom, but is it possible to send more structured data here rather than relying on JSON parsing? In general, we trust our JSON parsers very little.",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfa66b2_dd28728b",
+        "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "Nit: std::string() instead of \"\"",
+      "range": {
+        "startLine": 190,
+        "startChar": 37,
+        "endLine": 190,
+        "endChar": 39
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ec201a_f88ed6f5",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "Can this mention what it contains above and beyond initiator_origin? Having opaque strings here is a bit unfortunate, but I\u0027m guessing it would be non-trivial to do otherwise atm.",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1254e8_0edf8361",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 6743,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "Or base::make_optional.",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728a6e33_9cf141a9",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T20:16:52Z",
+      "side": 1,
+      "message": "Hmm... that means we need to capture when we create the scheduled navigation right? Is there a bug tracking that? If not, could we create one and link it in the TODO here?",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
