@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c046b04e_a9a37d61",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-22T08:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a95ec6_adb7d9b4",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6bcf16c_933a561b",
         "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "541d355f_08e20416",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-22T08:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6bcf16c_933a561b",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ea2b14_414e9c1a",
         "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-19T20:07:13Z",
       "side": 1,
       "message": "Are you sure that GetViewBounds().OffsetFromOrigin() is scaled?",
+      "revId": "6067441547099380363cfc73f39ea271d4c098b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38571105_aed71fa4",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-22T08:43:07Z",
+      "side": 1,
+      "message": "Ah .. it is not scaled. I just scale it as Windows one does.",
+      "parentUuid": "61ea2b14_414e9c1a",
       "revId": "6067441547099380363cfc73f39ea271d4c098b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
