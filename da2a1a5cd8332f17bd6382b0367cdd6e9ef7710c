@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc7bd8e_9907d922",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "What happens if:\n\n1) ComputeAccessibilityTree is called for frame 1.\n2) ComputeAccessibilityTree is called for frame 2.\n3) GetNameForAXNode is called for frame 1.\n\n? Won\u0027t it confuse the result of 3)?\n\ni.e., I guess we need to create AomContentAxTree per frame, not per renderer.",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc6862f_48780293",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "What is this doing? (It looks a bit strange to manipulate page settings while JavaScript is calling a DOM method.)",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6950f63b_bd73107b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "I think we should use GetFrame() associated this LocalDOMWindow.",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95381e3c_3bc39dc3",
+        "filename": "third_party/WebKit/public/platform/ComputedAXTree.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d97403_0999c07c",
+        "filename": "third_party/WebKit/public/platform/ComputedAXTree.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "WebComputedAXTree\n\nPublic classes should be prefixed with \"Web\" (although some classes don\u0027t follow the rule...).",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654a0815_11d7ee74",
+        "filename": "third_party/WebKit/public/platform/ComputedAXTree.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "This should return WebString.",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8702b63_09a3ccf5",
+        "filename": "third_party/WebKit/public/platform/ComputedAXTree.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T14:57:49Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
