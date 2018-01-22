@@ -20,8 +20,8 @@ source_set("browser") {
     "spellcheck_platform_mac.mm",
     "spellchecker_session_bridge_android.cc",
     "spellchecker_session_bridge_android.h",
-    "spelling_service_client.cc",
     "spelling_service_client.h",
+    "spelling_service_client2.cc",
   ]
 
   public_deps = [
