@@ -16,6 +16,8 @@ class CriticalNotificationBubbleView : public views::BubbleDialogDelegateView {
 
   // views::BubbleDialogDelegateView overrides:
   base::string16 GetWindowTitle() const override;
+  gfx::ImageSkia GetWindowIcon() override;
+  bool ShouldShowWindowIcon() const override;
   void WindowClosing() override;
   bool Cancel() override;
   bool Accept() override;
@@ -25,16 +27,24 @@ class CriticalNotificationBubbleView : public views::BubbleDialogDelegateView {
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
 
+  // ui::DialogModel:
+  int GetDialogButtons() const override;
+
  private:
-  // Helper function to calculate the remaining time (in seconds) until
-  // spontaneous reboot.
-  int GetRemainingTime() const;
+  // Helper function to calculate the remaining time until spontaneous reboot.
+  base::TimeDelta GetRemainingTime() const;
+
+  // Schedules the next call to OnCountdown.
+  void ScheduleNextCountdownRefresh(base::TimeDelta remaining_time);
 
   // Called when the timer fires each time the clock ticks.
   void OnCountdown();
 
+  // An index into the style properties array for the chosen style of the view.
+  const int style_index_;
+
   // A timer to refresh the bubble to show new countdown value.
-  base::RepeatingTimer refresh_timer_;
+  base::OneShotTimer refresh_timer_;
 
   // When the bubble was created.
   base::TimeTicks bubble_created_;

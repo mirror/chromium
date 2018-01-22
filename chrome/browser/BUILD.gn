@@ -3110,6 +3110,8 @@ split_static_library("browser") {
       "platform_util.cc",
       "policy/cloud/user_policy_signin_service.cc",
       "policy/cloud/user_policy_signin_service.h",
+      "prefs/force_restart_after_update_pref.cc",
+      "prefs/force_restart_after_update_pref.h",
       "profiles/avatar_menu_actions_desktop.cc",
       "profiles/avatar_menu_actions_desktop.h",
       "profiles/avatar_menu_desktop.cc",

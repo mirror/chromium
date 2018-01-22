@@ -726,6 +726,10 @@ extern const char kEnableMediaRouter[];
 extern const char kShowCastIconInToolbar[];
 #endif  // !defined(OS_ANDROID)
 
+#if (defined(OS_POSIX) && !defined(OS_CHROMEOS)) || defined(OS_WIN)
+extern const char kForceRestartAfterUpdate[];
+#endif
+
 #if !defined(OS_ANDROID)
 extern const char kAttemptedToEnableAutoupdate[];
 
