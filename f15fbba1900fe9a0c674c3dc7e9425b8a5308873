@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "936aec90_4ca7f47a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-22T22:06:02Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "ecfffab0_4e6d546d",
+      "range": {
+        "startLine": 9,
+        "startChar": 53,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "f15fbba1900fe9a0c674c3dc7e9425b8a5308873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc53bbd2_15cd888c",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f15fbba1900fe9a0c674c3dc7e9425b8a5308873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01163538_6e1f6246",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2018-01-22T22:06:02Z",
+      "side": 1,
+      "message": "Done! That was an old comment (originally we returned on ARC). I think the if statement explains itself fine, so I removed the comment completely but kept the TODO.",
+      "parentUuid": "fc53bbd2_15cd888c",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 395,
+        "endChar": 11
+      },
+      "revId": "f15fbba1900fe9a0c674c3dc7e9425b8a5308873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
