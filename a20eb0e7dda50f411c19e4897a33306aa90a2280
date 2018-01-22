@@ -52,6 +52,24 @@
       "revId": "a20eb0e7dda50f411c19e4897a33306aa90a2280",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2242f29c_6348ec61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-22T22:26:20Z",
+      "side": 1,
+      "message": "Done. The other crash reports came later...",
+      "parentUuid": "ae8d9efd_90957d81",
+      "revId": "a20eb0e7dda50f411c19e4897a33306aa90a2280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
