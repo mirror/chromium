@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea91fd9_b158a998",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T15:53:54Z",
+      "side": 1,
+      "message": "merge error?",
+      "revId": "d359e83546301c73796910206543c4276352cb53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179a4285_d2bb2740",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-22T15:53:54Z",
+      "side": 1,
+      "message": "Is this something that we might want to do in the constructor? It\u0027s not code we\u0027ll be able to get rid of anytime soon, so correct usage will depend on calling this immediately after constructing it anyway.\n\nIt would make this code simpler as well --\n\n    settings_map-\u003eRegisterUserModifiableProvider(\n        HostContentSettingsMap::NOTIFICATION_ANDROID_PROVIDER,\n        std::make_unique\u003cNotificationChannelsProviderAndroid\u003e(\n            profile-\u003eGetPrefs(), settings_map-\u003eGetPrefProvider()));",
+      "revId": "d359e83546301c73796910206543c4276352cb53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
