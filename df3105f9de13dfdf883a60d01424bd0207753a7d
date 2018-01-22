@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad443a18_403918f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-22T13:44:49Z",
+      "side": 1,
+      "message": "s/non-popular/personal/ ? (the existing formulation confused me for a while...)",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "df3105f9de13dfdf883a60d01424bd0207753a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e6b062_478a5a16",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-22T13:44:49Z",
+      "side": 1,
+      "message": "Just to double-check: Everything except POPULAR* should count as personal, including HOMEPAGE?",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "df3105f9de13dfdf883a60d01424bd0207753a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
