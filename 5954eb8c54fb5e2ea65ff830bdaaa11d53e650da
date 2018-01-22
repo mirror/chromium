@@ -46,6 +46,30 @@
       "revId": "5954eb8c54fb5e2ea65ff830bdaaa11d53e650da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7368fcf3_acd2ab58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-22T11:09:02Z",
+      "side": 1,
+      "message": "Yes, but where in the codebase is it?",
+      "parentUuid": "91035794_0ab01ce7",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5954eb8c54fb5e2ea65ff830bdaaa11d53e650da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
