@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dff0364_ab7e2a1a",
+        "filename": "chrome/browser/media/cast_transport_host_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T20:51:13Z",
+      "side": 1,
+      "message": "How is anyone maintaining this code supposed to know that/why this needs to be disambiguated from a name in a completely unrelated part of the code? It just seems so arbitrary.",
+      "revId": "6795ed9049950dc696295de42008143acd4c7ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
