@@ -26,6 +26,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
+import java.util.Collections;
 
 /**
  * Crash crashdump uploader. Scans the crash dump location provided by CastCrashReporterClient for
@@ -91,7 +94,6 @@ public final class CastCrashUploader {
      * upload.
      *
      * @param synchronous Whether or not this function should block on queued uploads
-     * @param log Log to include, if any
      */
     private void queueAllCrashDumpUploads(boolean synchronous) {
         if (mCrashDumpPath == null) return;
@@ -100,12 +102,14 @@ public final class CastCrashUploader {
         List<Future> tasks = new ArrayList<Future>();
         File crashDumpDirectory = new File(mCrashDumpPath);
 
-        final String log = getLogs(crashDumpDirectory);
-
         for (final File potentialDump : crashDumpDirectory.listFiles()) {
             String dumpName = potentialDump.getName();
             if (dumpName.matches(DUMP_FILE_REGEX)) {
-                tasks.add(mExecutorService.submit(() -> uploadCrashDump(potentialDump, log)));
+                DumpStream.DumpStreamBuilder dumpStreamBuilder = new DumpStream.DumpStreamBuilder(
+                        mUuid, mApplicationFeedback, potentialDump);
+                DumpStream dumpStream = dumpStreamBuilder.constructDumpStream();
+
+                tasks.add(mExecutorService.submit(() -> uploadCrashDump(dumpStream)));
             }
         }
 
@@ -120,100 +124,21 @@ public final class CastCrashUploader {
         }
     }
 
-    private String getLogs(File crashDumpDirectory) {
-        String log = null;
-        if (crashDumpDirectory.listFiles().length > 0) {
-            try {
-                Log.i(TAG, "Getting logcat");
-                log = LogcatExtractor.getElidedLogcat();
-                Log.d(TAG, "Log size" + log.length());
-                return log;
-
-            } catch (IOException | InterruptedException e) {
-                Log.e(TAG, "Getting logcat failed ", e);
-            }
-        }
-        return null;
-    }
-
-    /** Enqueues a background task to upload a single crash dump file. */
-    private void uploadCrashDump(final File dumpFile, final String log) {
-        Log.i(TAG, "Uploading dump crash log: %s", dumpFile.getName());
-
+    private void uploadCrashDump(DumpStream dumpStream) {
         try {
-            InputStream uploadCrashDumpStream = new FileInputStream(dumpFile);
-            // Dump file is already in multipart MIME format and has a boundary throughout.
-            // Scrape the first line, remove two dashes, call that the "boundary" and add it
-            // to the content-type.
-            FileInputStream dumpFileStream = new FileInputStream(dumpFile);
-            String dumpFirstLine = getFirstLine(dumpFileStream);
-            String mimeBoundary = dumpFirstLine.substring(2);
-
-            if (log != null) {
-                Log.i(TAG, "Including log file");
-                StringBuilder logHeader = new StringBuilder();
-                logHeader.append(dumpFirstLine);
-                logHeader.append("\n");
-                logHeader.append(
-                        "Content-Disposition: form-data; name=\"log.txt\"; filename=\"log.txt\"\n");
-                logHeader.append("Content-Type: text/plain\n\n");
-                logHeader.append(log);
-                logHeader.append("\n");
-                InputStream logHeaderStream = new ByteArrayInputStream(
-                        logHeader.toString().getBytes(Charset.forName("UTF-8")));
-                // Upload: prepend the log file for uploading
-                uploadCrashDumpStream =
-                        new SequenceInputStream(logHeaderStream, uploadCrashDumpStream);
-            }
-
-            Log.d(TAG, "UUID: " + mUuid);
-            if (!mUuid.equals("")) {
-                StringBuilder uuidBuilder = new StringBuilder();
-                uuidBuilder.append(dumpFirstLine);
-                uuidBuilder.append("\n");
-                uuidBuilder.append("Content-Disposition: form-data; name=\"comments\"\n");
-                uuidBuilder.append("Content-Type: text/plain\n\n");
-                uuidBuilder.append(mUuid);
-                uuidBuilder.append("\n");
-                uploadCrashDumpStream = new SequenceInputStream(
-                        new ByteArrayInputStream(
-                                uuidBuilder.toString().getBytes(Charset.forName("UTF-8"))),
-                        uploadCrashDumpStream);
-            } else {
-                Log.d(TAG, "No UUID");
-            }
-
-            if (!mApplicationFeedback.equals("")) {
-                Log.i(TAG, "Including feedback");
-                StringBuilder feedbackHeader = new StringBuilder();
-                feedbackHeader.append(dumpFirstLine);
-                feedbackHeader.append("\n");
-                feedbackHeader.append(
-                        "Content-Disposition: form-data; name=\"application_feedback.txt\"; filename=\"application.txt\"\n");
-                feedbackHeader.append("Content-Type: text/plain\n\n");
-                feedbackHeader.append(mApplicationFeedback);
-                feedbackHeader.append("\n");
-                InputStream feedbackHeaderStream = new ByteArrayInputStream(
-                        feedbackHeader.toString().getBytes(Charset.forName("UTF-8")));
-                // Upload: prepend the log file for uploading
-                uploadCrashDumpStream =
-                        new SequenceInputStream(feedbackHeaderStream, uploadCrashDumpStream);
-            } else {
-                Log.d(TAG, "No Feedback");
-            }
-
             HttpURLConnection connection =
                     (HttpURLConnection) new URL(mCrashReportUploadUrl).openConnection();
 
             // Expect a report ID as the entire response
             try {
                 connection.setDoOutput(true);
-                connection.setRequestProperty(
-                        "Content-Type", "multipart/form-data; boundary=" + mimeBoundary);
+                connection.setRequestProperty("Content-Type",
+                        "multipart/form-data; boundary=" + dumpStream.getMimeBoundary());
 
-                streamCopy(uploadCrashDumpStream, connection.getOutputStream());
+                streamCopy(dumpStream.getStream(), connection.getOutputStream());
 
-                String responseLine = getFirstLine(connection.getInputStream());
+                String responseLine =
+                        DumpStream.DumpStreamBuilder.getFirstLine(connection.getInputStream());
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK
@@ -239,11 +164,8 @@ public final class CastCrashUploader {
                 Log.wtf(TAG, "UTF-8 not supported");
             } finally {
                 connection.disconnect();
-                dumpFileStream.close();
             }
-
-            // Delete the file so we don't re-upload it next time.
-            dumpFile.delete();
+            dumpStream.close();
         } catch (IOException e) {
             Log.e(TAG, "Error occurred trying to upload crash dump", e);
         }
@@ -266,22 +188,6 @@ public final class CastCrashUploader {
         }
         inStream.close();
         outStream.close();
-    }
-
-    /**
-     * Gets the first line from an input stream
-     *
-     * @return First line of the input stream.
-     * @throws IOException
-     */
-    private String getFirstLine(InputStream inputStream) throws IOException {
-        try (InputStreamReader streamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader reader = new BufferedReader(streamReader)) {
-            return reader.readLine();
-        } catch (UnsupportedCharsetException e) {
-            Log.wtf(TAG, "UTF-8 not supported");
-            return "";
-        }
     }
 
     /**
