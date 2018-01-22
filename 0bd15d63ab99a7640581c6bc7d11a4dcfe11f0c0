@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf53706_3336b60f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-22T14:04:27Z",
+      "side": 1,
+      "message": "add an empty line before Bug and change it to Bug: 798653",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "0bd15d63ab99a7640581c6bc7d11a4dcfe11f0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2b12c2_6cf81f56",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-22T14:04:27Z",
+      "side": 1,
+      "message": "s/IDS_MD_BOOKMARK_MANAGER_EMPTY_LIST_GUEST/IDS_MD_BOOKMARK_MANAGER_EMPTY_LIST_GUEST_MODE",
+      "range": {
+        "startLine": 404,
+        "startChar": 18,
+        "endLine": 404,
+        "endChar": 58
+      },
+      "revId": "0bd15d63ab99a7640581c6bc7d11a4dcfe11f0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
