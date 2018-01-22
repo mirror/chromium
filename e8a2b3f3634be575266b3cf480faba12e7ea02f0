@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29f3c3ed_8e05a287",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-22T06:52:42Z",
+      "side": 1,
+      "message": "Done. Yeah currently there is not any more work needed after this CL, and later when we mojofy other ServiceWorkerHost methods {GetClient,SkipWaiting, etc.} we\u0027d also need this wrapper.",
+      "parentUuid": "c084564f_310948e5",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab293b3_fa0120e3",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38071623_93d71b31",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-22T06:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab293b3_fa0120e3",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1f6e1168_b18d9786",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-22T06:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c31465_f1539fab",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54504bbc_1302f315",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 3
@@ -85,6 +139,24 @@
       "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c8f1a4_0d8cd3bb",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-22T06:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54504bbc_1302f315",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
