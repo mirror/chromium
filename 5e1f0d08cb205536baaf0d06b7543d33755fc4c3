@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "997e18ff_e8e4b182",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T12:58:23Z",
+      "side": 1,
+      "message": "The promos UI is only presented when full DICE is enabled for this profile. Note that I did not change the chrome_signin_helper to use this new function as in that case we actually want to remove the account if the user undo the enable sync operation. And in that case, we should always have a good token and never take the user to the reauth page.\n\nDo you think I should be using the new function EnableSync from the chrome_signin_helper (here https://cs.chromium.org/chromium/src/chrome/browser/signin/chrome_signin_helper.cc?rcl\u003d8898229c569b5ed2f2e11510399669ba82ce45ad\u0026l\u003d251 )?",
+      "parentUuid": "c2d13ed4_1c06b396",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eddeb841_32af869a",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "62b3fc34_778f8e56",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T12:58:23Z",
+      "side": 1,
+      "message": "Nothing. We must never switch the sync account.",
+      "parentUuid": "eddeb841_32af869a",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 10
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da3f29a_7b3c7778",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9c484d_b141a165",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-22T12:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da3f29a_7b3c7778",
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
