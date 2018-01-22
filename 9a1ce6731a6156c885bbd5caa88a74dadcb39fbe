@@ -140,6 +140,30 @@
       "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f319e47_2ae5a1f3",
+        "filename": "storage/browser/blob/blob_data_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-22T23:15:49Z",
+      "side": 1,
+      "message": "Hm... in general I feel like people should be able to use blobs without doing extra memory copying, where they can pass their buffer. I guess sometimes this doesn\u0027t matter when we append data, but it seems like it should be possible for someone to be able to create a blob with a buffer they give us ownership of.\n\nIf it\u0027s a lot of extra work then don\u0027t worry about it, I just don\u0027t want it to be impossible to have a non-copy here.",
+      "parentUuid": "8c53941f_eb831ff5",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "9a1ce6731a6156c885bbd5caa88a74dadcb39fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
