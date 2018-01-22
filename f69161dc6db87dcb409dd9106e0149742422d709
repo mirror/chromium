@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ec508a_af8ac1b7",
+        "filename": "content/browser/service_worker/service_worker_handle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "We should move this comment to line 101 as it\u0027s clear `delete this` destroys this.\n\nIt\u0027s not too clear what S13n has to do with this block, so I\u0027d add some comment:\n// S13nServiceWorker: This handle may have been precreated before registering to a dispatcher host. Just self-destruct since we\u0027re no longer needed.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c833cf2b_f62d22ab",
+        "filename": "content/browser/service_worker/service_worker_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "detects",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bffe3f0_98b75a8e",
+        "filename": "content/browser/service_worker/service_worker_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "Couple things about this comment:\n- It\u0027s a bit puzzling: if the dispatcher host owns this, then this shouldn\u0027t need to unregister itself when destructed. Just remove the \"unregisters\" part as it\u0027s an impl level detail.\n- Should tell the caller that they need to use RegisterIntoDispatcherHost() in the null case.\n- Should say the non-null path is only supported by S13nSW.\n\nSo I\u0027d do:\n\"This instance registers itself into |dispatcher_host| to be owned by the dispatcher host. S13nServiceWorker: |dispatcher_host| may be null. RegisterIntoDispatcherHost() should be called later to register the handle once the host is known.\"",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879930ed_f945e92e",
+        "filename": "content/browser/service_worker/service_worker_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "valid throughout the lifetime of |this|.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b18f7c1_301c9832",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "register the pre-created handle for the controller service worker with the dispatcher host, now that it exists.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac79c2e_678e5083",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d81d318_f046afe9",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "in this scope i would just call these |active|, |waiting|, |installing|",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e4a18a_0332ca45",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "Can you change this name to CreateForServiceWorkerExecutionContext\n\n(i spent a few minutes puzzled... I thought this test was related to the controller ServiceWorker objects, esp as \"SetController\" is below)",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7329d16c_f94b46d5",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "nit: consider shortening all these active/waiting/installing or active_host/waiting_host/installing_host or something (throughout this file). It\u0027d be easier to distinguish between them without much loss of clarity, I think.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4fe510_91caaaeb",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "mojo -\u003e Mojo\nof -\u003e to (?)",
+      "range": {
+        "startLine": 32,
+        "startChar": 27,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5f820d_6cc64ce9",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 33,
+        "startChar": 62,
+        "endLine": 33,
+        "endChar": 66
+      },
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438aacd4_3bf059b6",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "I\u0027d phrase this as:\nRefreshes the JavaScript ServiceWorkerRegistration object (|proxy_|) with the {installing,waiting,active} service worker object infos from |info_|.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12da433f_a5ae5d6c",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "This comment seems a bit low-level for this Mojo struct. Can it just be something like:\n\n// This object\u0027s host in the browser process.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2501856_b22a3dbf",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:10:42Z",
+      "side": 1,
+      "message": "// The browser-side host of one ServiceWorker JavaScript object. The renderer uses this interface to ask the browser process to do operations needed to implement ServiceWorker methods.",
+      "revId": "f69161dc6db87dcb409dd9106e0149742422d709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
