@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "414c42d3_3a14cfff",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-22T19:48:38Z",
+      "side": 1,
+      "message": "Done. The address family in IPAddress matters. Caller needs to specify whether they want IPv4 or IPv6. I have clarified in the comment as well.",
+      "parentUuid": "cfd69957_50bc2a58",
+      "range": {
+        "startLine": 161,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 9
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e019e7dc_72c9f3f9",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-17T19:30:43Z",
       "side": 1,
       "message": "You mention local_address being 0, but it\u0027s optional (Unlike the above method).  Think we should be consistent here, unless there\u0027s a reason not to.",
+      "range": {
+        "startLine": 170,
+        "startChar": 40,
+        "endLine": 170,
+        "endChar": 41
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b60d35d_ef420b20",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-22T19:48:38Z",
+      "side": 1,
+      "message": "This one is slightly different, because we know |remote_addr| and so we can use the same address family (IPv4 or IPv6) as |remote_addr| in opening a socket. In the most common cases, caller of this method doesn\u0027t care about choosing a local address, so I made |local_addr| optional.\n\nThe method above requires |local_addr| because address family needs to be specified.\n\n(If IPEndPoint has an unspecified address family, it is considered invalid in mojo serialization: https://cs.chromium.org/chromium/src/net/interfaces/ip_endpoint_struct_traits.cc?rcl\u003de7d29252dda05fead8340e77d4b91c5a69abdbe0\u0026l\u003d19.)",
+      "parentUuid": "e019e7dc_72c9f3f9",
       "range": {
         "startLine": 170,
         "startChar": 40,
@@ -68,6 +116,30 @@
       "revId": "208b00f9b21576c713280547725872fde87cf1a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d6f587_1aae3773",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-22T19:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003ee7f2_d6372281",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "208b00f9b21576c713280547725872fde87cf1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
