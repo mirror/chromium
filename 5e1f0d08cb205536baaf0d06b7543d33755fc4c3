@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "402e070d_45b4d6f8",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T13:42:53Z",
+      "side": 1,
+      "message": "No, I think the function should not be used there.",
+      "parentUuid": "997e18ff_e8e4b182",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eddeb841_32af869a",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d8076877_270b96f6",
+        "filename": "chrome/browser/signin/signin_ui_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T13:42:53Z",
+      "side": 1,
+      "message": "Should this be a NOTREACHED(), or should we DCHECK_EQ(account, signin_manager-\u003eGetAuthenticatedAccount())?",
+      "parentUuid": "62b3fc34_778f8e56",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 10
+      },
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da3f29a_7b3c7778",
         "filename": "chrome/browser/signin/signin_ui_util.cc",
         "patchSetId": 1
@@ -128,6 +176,23 @@
       "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41b9d1c5_b05621a8",
+        "filename": "chrome/browser/signin/signin_ui_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-22T13:42:53Z",
+      "side": 1,
+      "message": "Maybe we should expand this comment a bit. Suggestion:\n\"Enables sync for |account| using an existing token if there is one, or triggering a re-auth flow if the token is missing or invalid.\"",
+      "revId": "5e1f0d08cb205536baaf0d06b7543d33755fc4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
