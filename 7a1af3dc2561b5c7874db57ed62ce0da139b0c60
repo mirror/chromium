@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93489a4d_e4df7969",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-22T06:27:49Z",
+      "side": 0,
+      "message": "I think this test was only relevant when the request could be cancelled. The request was being removed (by being cancelled) and then the callback would be run by the delayed timer. Now the request will never be removed from the PermissionManager until the callback is destroyed, but that won\u0027t happen while the timer is running. If the timer outlasts the PermissionManager/PCB, it will get cancelled appropriately.",
+      "revId": "7a1af3dc2561b5c7874db57ed62ce0da139b0c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
