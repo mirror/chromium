@@ -16,6 +16,24 @@
       "revId": "dd58d52553b3dfbd7567d0643fbd58cb4ffe9dc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc5e406_ea391c66",
+        "filename": "win10/delegate_execute/delegate_execute.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-22T07:19:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "880d7816_e2e7b1e4",
+      "revId": "dd58d52553b3dfbd7567d0643fbd58cb4ffe9dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
