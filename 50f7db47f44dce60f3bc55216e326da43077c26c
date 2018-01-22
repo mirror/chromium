@@ -22,6 +22,30 @@
       "revId": "50f7db47f44dce60f3bc55216e326da43077c26c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c02cb1f_115c4fff",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/module.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-22T02:33:43Z",
+      "side": 1,
+      "message": "It\u0027s almost OK. The dependency on InterfaceInvalidator.cpp isn\u0027t quite correct, since it isn\u0027t header-only. So, //mojo/public/cpp/bindings:wtf_support should depend on InterfaceInvalidator.cpp, but it can\u0027t if it\u0027s in the platform component, since that would sometimes be a circular dependency.\n\nTo do this correctly, InterfaceInvalidator.cpp should live in its own component that //mojo/public/cpp/bindings:wtf_support depends on. In practice though, essentially every mojom is either part of platform or depends on platform so this might just work as is.",
+      "parentUuid": "53c6efa3_6c7200ee",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 69
+      },
+      "revId": "50f7db47f44dce60f3bc55216e326da43077c26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
