@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bcbc83cd_f76514f1",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-22T21:23:40Z",
+      "side": 1,
+      "message": "Nit: I think it would be slightly clearer to check the \"types are equal\" case first, since that\u0027s the \"typical\" case.",
+      "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9342db85_d5e8827a",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
