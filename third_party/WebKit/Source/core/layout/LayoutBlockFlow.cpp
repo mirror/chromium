@@ -36,6 +36,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDialogElement.h"
+#include "core/html/forms/LabelableElement.h"
 #include "core/layout/HitTestLocation.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutFlowThread.h"
@@ -4401,18 +4402,26 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     return true;
   }
 
+#if 0
   // Non-container appearances (checkboxes and radio) behave as if it creates
   // BFC. LayoutNG requires when empty non-NG LayoutObject has intrinsic sizes,
   // it must create a new BFC.
   if (StyleRef().HasAppearance() &&
       !LayoutTheme::GetTheme().IsControlContainer(StyleRef().Appearance()))
     return true;
+#endif
 
   // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.
   // Create a new formatting context for non-NG node to prevent margin
   // collapsing.
-  if (RuntimeEnabledFeatures::LayoutNGEnabled())
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    if (Node* node = GetNode()) {
+      if (node->IsHTMLElement() &&
+          LabelableElement::ShouldForceLegacyLayout(ToHTMLElement(*node)))
+        return true;
+    }
     return StyleRef().UserModify() != EUserModify::kReadOnly;
+  }
 
   return false;
 }
