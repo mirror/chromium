@@ -46,6 +46,30 @@
       "revId": "1dcbb08fe82966411ce48a7fce98a33bdfe199b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601ffb8d_aacbebc0",
+        "filename": "base/component_export.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-22T17:58:43Z",
+      "side": 1,
+      "message": "Actually, it shouldn\u0027t now... Done :)",
+      "parentUuid": "8cf3fd6b_b095d64c",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "1dcbb08fe82966411ce48a7fce98a33bdfe199b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
