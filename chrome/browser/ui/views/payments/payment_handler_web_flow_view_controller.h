@@ -40,6 +40,7 @@ class PaymentHandlerWebFlowViewController
 
   base::string16 GetSheetTitle() override;
   void FillContentView(views::View* content_view) override;
+  bool ShouldShowSecondaryButton() override;
 
   // content::WebContentsObserver:
   void DidFinishNavigation(
