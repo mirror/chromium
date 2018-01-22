@@ -22,6 +22,23 @@
       "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decc95ab_523610ce",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-22T14:50:23Z",
+      "side": 1,
+      "message": "what does this flag mean? Is this true for --enable-viz? If so, why do you need it? If it\u0027s for hit testing, then it is misnamed. It would be desirable to let us turn this on without --enable-viz\u003dtrue yes? In particular, we may want to roll out Xianda\u0027s change much more aggressively than the --enable-viz flag.",
+      "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
