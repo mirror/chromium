@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9a88de_04609f01",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T11:20:04Z",
+      "side": 1,
+      "message": "I agree that the test meant to do ExecuteScriptWithScopedUserGesture instead of content::ExecuteScript. I also think that it\u0027s applicable to all \u0027ExecuteScript\u0027 instances in this file and not just 6 calls.\nI don\u0027t understand though why the tests are failing with ExecuteScript in the new architecture. Do you have an explanation and corresponding logs?",
+      "range": {
+        "startLine": 594,
+        "startChar": 14,
+        "endLine": 594,
+        "endChar": 57
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9272751_26ab743c",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T11:20:04Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s common for Chrome to omit the parameters. Doesn\u0027t WARN_UNUSED_RESULT work if you apply if to definition?",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 30
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e23f3d_5fe8daf5",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-22T11:20:04Z",
+      "side": 1,
+      "message": "Does this code path make sense for any of the tests we have? It seems strange because if the user gesture isn\u0027t needed for executing |script| then the function can just use ExecuteJavaScriptForTests.",
+      "range": {
+        "startLine": 168,
+        "startChar": 1,
+        "endLine": 169,
+        "endChar": 37
+      },
+      "revId": "73d052170dce722e6144e949b004df75e59da093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
