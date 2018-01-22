@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b607a992_b04a8248",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "I could combine them - I kept them separate just to keep the code more organized - mMetricsObserver purely listens for metrics and forwards them on to mConnection.\n\nmFirstContentfulPaintObserver still listens for metrics, but does something different with them (notifies mTabObserver when does stuff more heavyweight than just sending some metrics along).",
+      "parentUuid": "b092ba93_1cecee46",
+      "range": {
+        "startLine": 268,
+        "startChar": 43,
+        "endLine": 268,
+        "endChar": 72
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02dea640_a77b8518",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aec0e31_d42f39ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02dea640_a77b8518",
+      "range": {
+        "startLine": 273,
+        "startChar": 20,
+        "endLine": 273,
+        "endChar": 73
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6703f8a4_a9da1b3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c82e5480_4f2443df",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c93a23_aaf3934d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-22T13:07:55Z",
       "side": 1,
       "message": "This would only allow a capture after resetPageLoadTracking() is called, which is typically not true before onload(), right?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 10
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c085c6_73cf8543",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "You\u0027re saying that this line would prevent capturing if First Meaningful Paint triggers before onload?\n\nDo you know what the line was originally doing (it was at line 236 before).",
+      "parentUuid": "f6c93a23_aaf3934d",
       "range": {
         "startLine": 220,
         "startChar": 8,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "0f6a306a_d498f651",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "I checked with the client app that requested this change - are there any others I should be aware of?",
+      "parentUuid": "51a06322_a0d5c061",
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e55170a5_069aba05",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164b7a41_e6f8b3c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55170a5_069aba05",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 9
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "fb068f05_1bbdf0c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d20f2ade_7bd92652",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1f631e9_7adee16f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4
@@ -177,6 +339,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5690984_65f4aa2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f631e9_7adee16f",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "a8492ab5_da614761",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c210643f_270b827a",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c4c73f_e7a9545e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4
@@ -223,6 +433,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73892e5f_66bd4f7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c4c73f_e7a9545e",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "bbb71809_fed822ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82fc829d_a5a00e94",
+      "range": {
+        "startLine": 101,
+        "startChar": 20,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db3edf3_b6f469f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4
@@ -260,6 +518,30 @@
       "writtenOn": "2018-01-22T12:21:43Z",
       "side": 1,
       "message": "Maybe you should also remove the callback from the handler?",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dfa7b3_ea7ca937",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done - although now I think that the \"if (mCancelled) return;\" check on line 99 is now redundant? Do you agree?",
+      "parentUuid": "9db3edf3_b6f469f6",
       "range": {
         "startLine": 118,
         "startChar": 12,
@@ -292,6 +574,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18c3cb0_7f09d1e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-22T16:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb8a62c_93b1599a",
+      "range": {
+        "startLine": 123,
+        "startChar": 56,
+        "endLine": 123,
+        "endChar": 80
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
