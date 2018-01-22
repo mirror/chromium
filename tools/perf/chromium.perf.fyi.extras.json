@@ -291,8 +291,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -324,8 +326,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -352,7 +356,7 @@
         "isolate_name": "performance_test_suite",
         "name": "performance_test_suite",
         "override_compile_targets": [
-          "peformance_test_suite"
+          "performance_test_suite"
         ],
         "merge": {
           "args": [
