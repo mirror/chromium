@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "7d81bfb7_9f3982ea",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-22T20:57:20Z",
+      "side": 1,
+      "message": "Filed crbug.com/804470. See bug description for places where this guard is present. I noticed a suggestion that this could be nullptr in tests, but the rest had no explanation to why the guard is there. I will do a more in-depth look (e.g. your (b) suggestion) to figure out whether there is something more sensible that I can add as an explanation.",
+      "parentUuid": "6e56dc96_58d41127",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52917056_d8bb3524",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 3
@@ -357,6 +375,30 @@
       "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaec45c_22e5d8a4",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-22T20:57:20Z",
+      "side": 1,
+      "message": "Yes, I am checking whether the cache contains any results. I updated the code to make sure that this is indeed what gets checked, so that there is no dependence on the conversion. Note that I updated the comment for this function to explain all the possibilities that involve \"cache updating\".",
+      "parentUuid": "1b92289c_103135fa",
+      "range": {
+        "startLine": 353,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
