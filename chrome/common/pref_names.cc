@@ -1952,6 +1952,11 @@ const char kEnableMediaRouter[] = "media_router.enable_media_router";
 const char kShowCastIconInToolbar[] = "media_router.show_cast_icon_in_toolbar";
 #endif  // !defined(OS_ANDROID)
 
+#if (defined(OS_POSIX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID)) || \
+    defined(OS_WIN)
+const char kForceRestartAfterUpdate[] = "browser.force_restart_after_update";
+#endif
+
 // *************** SERVICE PREFS ***************
 // These are attached to the service process.
 
