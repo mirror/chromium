@@ -112,25 +112,6 @@ class ResultHolder {
 
 }  // namespace
 
-IN_PROC_BROWSER_TEST_F(DomDistillerDistillablePageUtilsTest, TestIsOGArticle) {
-  LoadURL(kArticlePath);
-  base::RunLoop run_loop_;
-  ResultHolder holder(run_loop_.QuitClosure());
-  IsOpenGraphArticle(shell()->web_contents(), holder.GetCallback());
-  run_loop_.Run();
-  ASSERT_TRUE(holder.GetResult());
-}
-
-IN_PROC_BROWSER_TEST_F(DomDistillerDistillablePageUtilsTest,
-                       TestIsNotOGArticle) {
-  LoadURL(kNonArticlePath);
-  base::RunLoop run_loop_;
-  ResultHolder holder(run_loop_.QuitClosure());
-  IsOpenGraphArticle(shell()->web_contents(), holder.GetCallback());
-  run_loop_.Run();
-  ASSERT_FALSE(holder.GetResult());
-}
-
 IN_PROC_BROWSER_TEST_F(DomDistillerDistillablePageUtilsTest,
                        TestIsDistillablePage) {
   std::unique_ptr<AdaBoostProto> proto(new AdaBoostProto);
