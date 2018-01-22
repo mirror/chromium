@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d45c988_9804d423",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-22T21:31:16Z",
+      "side": 1,
+      "message": "don\u0027t you want to do the same with InspectorFrontendHost.connectionReady method? it was introduced in the same commit as this one: https://chromium.googlesource.com/chromium/src/+/57b92ce65dd6c04bf7849ccad3efcab19db1f368",
+      "range": {
+        "startLine": 909,
+        "startChar": 8,
+        "endLine": 909,
+        "endChar": 29
+      },
+      "revId": "b999ada6019e2956567fe305589d6df944b8045e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
