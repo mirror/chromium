@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8c48c0_4fcdc07c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:32:06Z",
+      "side": 1,
+      "message": "*prerendering?",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82de639d_cda3914f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:32:06Z",
+      "side": 1,
+      "message": "In https://chromium-review.googlesource.com/#/c/865906/, marq advised on the convention to use \"subclassing\" instead of \"protected\", but the file was not renamed accordingly.",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28a24c9_93a59112",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller+protected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:32:06Z",
+      "side": 1,
+      "message": "s/protected/subclassing",
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f469cc_98ae3bad",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-22T16:32:06Z",
+      "side": 1,
+      "message": "Shows.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "f5c6c5296d15fb36355718f095dfedcd8e1bca99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
