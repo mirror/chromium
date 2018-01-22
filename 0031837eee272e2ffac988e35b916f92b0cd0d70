@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7da85a35_49104144",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-22T01:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a14f0c_510313d5",
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c554784_35975467",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
         "patchSetId": 4
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "b5e6d724_865c8c98",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-22T01:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae9d913_d91f17ba",
+      "range": {
+        "startLine": 362,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 58
+      },
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed7a33f_5ad8dd0a",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.h",
         "patchSetId": 4
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "dc886198_19b9f15d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilities.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-22T01:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed7a33f_5ad8dd0a",
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884dba05_054e0327",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilitiesTest.cpp",
         "patchSetId": 4
@@ -94,6 +154,24 @@
       "writtenOn": "2018-01-18T19:08:23Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10888d64_fc5b8941",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditingCommandsUtilitiesTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-22T01:57:15Z",
+      "side": 1,
+      "message": "After checking EditingUtilitiesTest.cpp, I think here just only need one copyright header.",
+      "parentUuid": "884dba05_054e0327",
       "revId": "0031837eee272e2ffac988e35b916f92b0cd0d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
