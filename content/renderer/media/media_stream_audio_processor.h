@@ -191,9 +191,6 @@ class CONTENT_EXPORT MediaStreamAudioProcessor
   // Receives processing output.
   std::unique_ptr<MediaStreamAudioBus> output_bus_;
 
-  // FIFO to provide 10 ms render chunks when the AEC is enabled.
-  std::unique_ptr<MediaStreamAudioFifo> render_fifo_;
-
   // These are mutated on the main render thread in OnCaptureFormatChanged().
   // The caller guarantees this does not run concurrently with accesses on the
   // capture audio thread.
