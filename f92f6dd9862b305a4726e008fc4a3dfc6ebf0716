@@ -22,6 +22,30 @@
       "revId": "f92f6dd9862b305a4726e008fc4a3dfc6ebf0716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b65387e_dd5e0175",
+        "filename": "chrome/test/chromedriver/chrome/version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1246609
+      },
+      "writtenOn": "2018-01-22T20:35:58Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "c272ba25_f72b2c7b",
+      "range": {
+        "startLine": 12,
+        "startChar": 59,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "f92f6dd9862b305a4726e008fc4a3dfc6ebf0716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
