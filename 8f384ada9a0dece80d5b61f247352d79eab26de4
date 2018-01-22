@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e466a107_b61bd0e9",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T04:46:11Z",
+      "side": 1,
+      "message": "you could also overload Initialize(), or call it InitializeForTest(), and pass in the TestImageDecoder to the AccountFetcherService::Initialize as the last argument. Even better if the implementation of TestImageDecoder can move entirely to the .cc",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0cae98_83f84982",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T04:46:11Z",
+      "side": 1,
+      "message": "Comment describing what it does",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4e9226_f7c32c5d",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T04:46:11Z",
+      "side": 1,
+      "message": "public:\n TestImageDecoder();  // \u003d default in .cc",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787d9684_615315ad",
+        "filename": "components/signin/core/browser/fake_account_fetcher_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T04:46:11Z",
+      "side": 1,
+      "message": "private:\n DISALLOW_COPY_AND_ASSIGN(TestImageDecoder);",
+      "revId": "8f384ada9a0dece80d5b61f247352d79eab26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
