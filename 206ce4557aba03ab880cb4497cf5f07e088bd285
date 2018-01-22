@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87b4a6e_b5c46918",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-22T15:04:34Z",
+      "side": 1,
+      "message": "optional: It\u0027s a more standard pattern in java to set the type of your collection variable to the base interface type (List in this case) even though you instantiate it to a particular implementation (ArrayList in this case) so you\u0027re not tied down to one implementation. Doesn\u0027t actually make a difference here though, I just noticed it looked odd :P",
+      "revId": "206ce4557aba03ab880cb4497cf5f07e088bd285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d77a77_3e1231ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-22T15:04:34Z",
+      "side": 1,
+      "message": "now that you don\u0027t need to index into |result| because it\u0027s an array list this can become a for-each loop again :)",
+      "revId": "206ce4557aba03ab880cb4497cf5f07e088bd285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15983de_3cf90fc8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-22T15:04:34Z",
+      "side": 1,
+      "message": "s/this could mean/this means",
+      "revId": "206ce4557aba03ab880cb4497cf5f07e088bd285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
