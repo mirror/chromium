@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "881db603_f13e4272",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-22T22:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f50ebb1_6af6b96b",
+      "range": {
+        "startLine": 338,
+        "startChar": 12,
+        "endLine": 338,
+        "endChar": 18
+      },
+      "revId": "390c1516f682086d97be4a491ec70a1d22c437ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5a925b_3260ee7e",
         "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "390c1516f682086d97be4a491ec70a1d22c437ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dc42b1_6a97623c",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-22T22:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5a925b_3260ee7e",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 340,
+        "endChar": 36
+      },
+      "revId": "390c1516f682086d97be4a491ec70a1d22c437ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

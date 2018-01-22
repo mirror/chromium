@@ -22,6 +22,30 @@
       "revId": "d9bf22c73be84e77dad6e11edda0bff3f0f004af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d488fd_fdf28722",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-22T22:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1cdbae3_9d1dff6e",
+      "range": {
+        "startLine": 350,
+        "startChar": 45,
+        "endLine": 350,
+        "endChar": 55
+      },
+      "revId": "d9bf22c73be84e77dad6e11edda0bff3f0f004af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
