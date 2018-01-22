@@ -110,6 +110,8 @@
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/browsing_data/mock_browsing_data_flash_lso_helper.h"
+#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
+#include "chrome/browser/plugins/plugin_utils.h"
 #endif
 
 using content::BrowsingDataFilterBuilder;
@@ -734,6 +736,38 @@ class RemovePluginDataTester {
   scoped_refptr<TestBrowsingDataFlashLSOHelper> helper_;
 
   DISALLOW_COPY_AND_ASSIGN(RemovePluginDataTester);
+};
+
+// Waits until a change is observed in content settings.
+class FlashContentSettingsChangeWaiter : public content_settings::Observer {
+ public:
+  explicit FlashContentSettingsChangeWaiter(Profile* profile)
+      : profile_(profile) {
+    HostContentSettingsMapFactory::GetForProfile(profile)->AddObserver(this);
+  }
+  ~FlashContentSettingsChangeWaiter() override {
+    HostContentSettingsMapFactory::GetForProfile(profile_)->RemoveObserver(
+        this);
+  }
+
+  // content_settings::Observer:
+  void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
+                               const ContentSettingsPattern& secondary_pattern,
+                               ContentSettingsType content_type,
+                               std::string resource_identifier) override {
+    if (content_type == CONTENT_SETTINGS_TYPE_PLUGINS)
+      Proceed();
+  }
+
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  void Proceed() { run_loop_.Quit(); }
+
+  Profile* profile_;
+  base::RunLoop run_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(FlashContentSettingsChangeWaiter);
 };
 #endif
 
@@ -2380,6 +2414,45 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearPermissionPromptCounts) {
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
+// Check the |CONTENT_SETTINGS_TYPE_PLUGINS_DATA| content setting is cleared
+// with browsing data.
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearFlashPreviouslyChanged) {
+  ChromePluginServiceFilter::GetInstance()->RegisterResourceContext(
+      GetProfile(), GetProfile()->GetResourceContext());
+  FlashContentSettingsChangeWaiter waiter(GetProfile());
+
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetProfile());
+  host_content_settings_map->SetContentSettingDefaultScope(
+      kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS, std::string(),
+      CONTENT_SETTING_ALLOW);
+  host_content_settings_map->SetContentSettingDefaultScope(
+      kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS, std::string(),
+      CONTENT_SETTING_BLOCK);
+  waiter.Wait();
+
+  // Check that as a result, the PLUGINS_DATA prefs were populated.
+  EXPECT_NE(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+  EXPECT_NE(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+
+  std::unique_ptr<BrowsingDataFilterBuilder> filter(
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::BLACKLIST));
+  BlockUntilOriginDataRemoved(
+      AnHourAgo(), base::Time::Max(),
+      ChromeBrowsingDataRemoverDelegate::DATA_TYPE_CONTENT_SETTINGS,
+      std::move(filter));
+  EXPECT_EQ(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+  EXPECT_EQ(nullptr, host_content_settings_map->GetWebsiteSetting(
+                         kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                         std::string(), nullptr));
+}
+
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemovePluginData) {
   RemovePluginDataTester tester(GetProfile());
 
