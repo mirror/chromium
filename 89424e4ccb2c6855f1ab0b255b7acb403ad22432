@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b37705a_d1819255",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-22T14:24:42Z",
+      "side": 1,
+      "message": "nit/optional: you can simplify as:\nconst base::Optional\u003cBaseReply\u003e reply(base::in_place);",
+      "revId": "89424e4ccb2c6855f1ab0b255b7acb403ad22432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886b21a7_6e70528f",
+        "filename": "chromeos/cryptohome/cryptohome_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-22T14:24:42Z",
+      "side": 1,
+      "message": "style: kConstantVariable is the style in chromium.",
+      "revId": "89424e4ccb2c6855f1ab0b255b7acb403ad22432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
