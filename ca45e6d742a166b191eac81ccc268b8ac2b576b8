@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6b2690_5b26fb28",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T21:37:07Z",
+      "side": 1,
+      "message": "The \"enable command line on non-rooted devices\" is a Chrome level feature.  I think this (and the param below) should just say, \"Force enabled by the embedder\".  The embedder here is Chrome but could be other layers based on their policy.",
+      "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be77403a_28c03394",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T21:37:07Z",
+      "side": 1,
+      "message": "Since we have the setter in ChromePreferenceManager, I feel we should have the getter there as well.  I would move the pref key to that file as well.",
+      "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b50040a_4f04153d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-22T21:37:07Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 10
+      },
+      "revId": "ca45e6d742a166b191eac81ccc268b8ac2b576b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
