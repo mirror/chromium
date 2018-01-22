@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15832b83_bc68355e",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 44
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-22T23:30:23Z",
+      "side": 1,
+      "message": "`android or fuchsia` turns out to be wrong.\n\nWhat we want is \n\n  if android:\n    ...\n  elif fuchsia:\n    label \u003d isolate_map[target][\u0027label\u0027]\n    runtime_deps_targets \u003d [ \n      \u0027obj/%s.stamp.runtime_deps\u0027 % label.replace(\u0027:\u0027, \u0027/\u0027)]\n  elif ...\n\ni.e., with your change, we want to *only* look for the obj/ runtime_deps file\nthat the group target would produce, and *stop* looking for the runtime_deps file\nnext to the .exe.\n\nThe problem with the failed tryjob is that it looked for both, and found the stale old one first and used that.",
+      "revId": "eca52900ec76be70487c6ec738ffe26be424e5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
