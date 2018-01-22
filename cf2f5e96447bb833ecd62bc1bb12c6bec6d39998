@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dbceefc2_86c383b9",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-22T21:48:04Z",
+      "side": 1,
+      "message": "Agreed that \"history\" word can be confusing. How about these new names?\n\nJust to clarify, non-committed navigation only transition into HAS_HISTORY_ENTRY (now READY_TO_DISPLAY_ERROR_FOR_FAILED_NAVIGATION) after [_webView loadRequest:placeholderRequest], which inserts a placeholder item.",
+      "parentUuid": "b18703d0_d75b8d9c",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e3b2123_a6775d81",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 4
@@ -164,6 +188,30 @@
       "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81e72a5_4f1190d4",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-22T21:48:04Z",
+      "side": 1,
+      "message": "Done. Moved API to NavigationItemImpl.",
+      "parentUuid": "3b6e66fd_94657f4c",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 33
+      },
+      "revId": "cf2f5e96447bb833ecd62bc1bb12c6bec6d39998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
