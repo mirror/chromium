@@ -104,6 +104,24 @@
       "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed9c679_40eb9b93",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-22T21:40:52Z",
+      "side": 1,
+      "message": "oops, I was not in a clear mind of finding this. LGTM.",
+      "parentUuid": "50a20e8b_82863953",
+      "revId": "9f88f49ebf8ba3961da4cddd2ef1d2b6471e4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
