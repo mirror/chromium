@@ -390,6 +390,10 @@ void ShelfController::OnNotificationAdded(const std::string& notification_id) {
   message_center::Notification* notification =
       message_center::MessageCenter::Get()->FindVisibleNotificationById(
           notification_id);
+
+  if (!notification)
+    return;
+
   // If the notification is for an ARC app, return early.
   // TODO(newcomer): Support ARC app notifications.
   if (notification->notifier_id().type !=
