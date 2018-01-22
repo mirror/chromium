@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558cf3e3_275a2ca9",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-22T19:24:24Z",
+      "side": 1,
+      "message": "nit: rename either this parameter, or the location_access member. It\u0027s not clear what \u0027location_access\u0027 being enabled means.",
+      "range": {
+        "startLine": 130,
+        "startChar": 32,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "f7c9caab74f96dd383e9f98d679544a3d1bcfb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
