@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9504851b_90cc39eb",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-22T21:01:56Z",
+      "side": 1,
+      "message": "Did we used to have issues with this sort of thing where GuestViews could be detached before being destroyed, making the root view inaccessible?\n\nI notice that we unregister the FrameSinkId with the RWHIER in BrowserPluginGuest::OnDetach(), so maybe that would be a better approach?",
+      "revId": "b0c0bb3c787729d50da9a8dd158a1f937c431221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
