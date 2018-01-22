@@ -63,6 +63,30 @@
       "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd79b06_bcbec6ad",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T22:41:20Z",
+      "side": 1,
+      "message": "As this iterates based on activation order, I guess this seems fine.",
+      "parentUuid": "f963871e_c537b0f7",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 59
+      },
+      "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
