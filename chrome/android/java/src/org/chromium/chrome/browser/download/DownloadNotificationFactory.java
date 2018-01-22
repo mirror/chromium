@@ -70,6 +70,7 @@ public final class DownloadNotificationFactory {
                                 true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_DOWNLOADS)
                         .setLocalOnly(true)
                         .setGroup(NotificationConstants.GROUP_DOWNLOADS)
+                        .setGroupSummary(true)
                         .setAutoCancel(true);
 
         String contentText;
