@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08687eb0_f6c89d3e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Perhaps more trouble than is worth it, but probably makeHtmlPageWithSimpleLinkTo should internally be responsible for URL-encoding things.",
+      "range": {
+        "startLine": 307,
+        "startChar": 67,
+        "endLine": 307,
+        "endChar": 75
+      },
+      "revId": "2343abfe61750dc87c56de336a4089bfb53e1e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abae5d9_fd1f9f23",
+        "filename": "ios/net/protocol_handler_util_unittest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 0,
+      "message": "Looks like this was just to test that garbage characters are parsed as expected. I suppose we could put in a ? or something. :-)",
+      "range": {
+        "startLine": 167,
+        "startChar": 35,
+        "endLine": 167,
+        "endChar": 36
+      },
+      "revId": "a6bfaaa7154655078e4adf098a854f3e31de5bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

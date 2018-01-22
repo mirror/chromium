@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d9fae57_c2a2931a",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidViewIntegrationTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Huh. I was going to suggest that this really ought to be done at the place where the data is assembled into a data URI, but that function is this public API:\nhttps://developer.android.com/reference/android/webkit/WebView.html#loadData(java.lang.String,%20java.lang.String,%20java.lang.String)\n\nwhich actually says the caller is responsible for doing this escaping! :-/ That\u0027s such a ridiculous API.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdb8adc6_94002bd3",
+        "filename": "chrome/browser/resources/chromeos/chromevox/testing/common.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Perhaps use encodeURIComponent? That\u0027ll also escape any %s that may be in the input. It\u0027ll also escape \u003c and \u0027 \u0027, but oh well.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdd01c4_1b147469",
+        "filename": "chrome/renderer/autofill/form_autofill_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "net/base/escape.h has some functions which might be better (if the input has % of its own). Perhaps net::EscapeQueryParamValue with use_plus\u003dfalse? It\u0027ll escape a bunch of stuff that doesn\u0027t need to be escaped, but meh.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104fb90d_cf80cecf",
+        "filename": "chrome/renderer/autofill/password_generation_agent_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Since this is HTML, I\u0027d maybe call a suitable escaping function wherever the data URL is constructed. (I think this is RenderViewTest::LoadHTML, but I\u0027m not positive.)",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe3dabd_de78f362",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "If you fix LoadHTML, I don\u0027t think this needs to change?",
+      "range": {
+        "startLine": 386,
+        "startChar": 28,
+        "endLine": 386,
+        "endChar": 31
+      },
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4ba083_5e432942",
+        "filename": "components/printing/test/print_render_frame_helper_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 844,
+        "startChar": 9,
+        "endLine": 844,
+        "endChar": 13
+      },
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8551faff_4e8bcc59",
+        "filename": "content/browser/accessibility/accessibility_win_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Maybe fix AccessibilityWinBrowserTest::LoadInitialAccessibilityTreeFromHtml instead.",
+      "range": {
+        "startLine": 249,
+        "startChar": 17,
+        "endLine": 249,
+        "endChar": 20
+      },
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a95fb1_f2b6da52",
+        "filename": "content/browser/renderer_host/input/composited_scrolling_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Since kCompositedScrollingDataURL is already a data URL, fixing the string seems better.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e54432_e9a2623a",
+        "filename": "content/browser/renderer_host/input/touch_input_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24447c9b_d3a48a25",
+        "filename": "content/browser/renderer_host/input/wheel_scroll_latching_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3674c16_55c31ab1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Ditto that fixing the URLs seems better. In fact, line 1048 is even pre-escaped.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda1c0f4_d7e4e2a4",
+        "filename": "content/public/test/render_view_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "(If you fix LoadHTML itself, I\u0027m guessing this won\u0027t need to be virtual.)",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 9
+      },
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91682b6_d859f3f0",
+        "filename": "content/renderer/render_view_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Ditto re just fixing LoadHTML itself.",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b64197b_5a4bdedd",
+        "filename": "content/test/fuzzer/renderer_fuzzer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "(Why\u0027d the fuzzers need to change?)",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9396417_0ded3015",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "Previously this code didn\u0027t make a copy of things. It\u0027d be nice if this were a StringPiece, but perhaps that\u0027s better done separately given the size of this CL. :-)",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97609b59_3f1faff7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/url/data-uri-fragment-expected.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-22T19:43:58Z",
+      "side": 1,
+      "message": "\\o/",
+      "revId": "5f3423e61eb3e1a9115ec95fda3b877ee6d2cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
