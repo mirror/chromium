@@ -323,6 +323,8 @@ void ExtensionServiceTestBase::CreateExtensionService(
   service_->RegisterInstallGate(ExtensionPrefs::DELAY_REASON_WAIT_FOR_IMPORTS,
                                 service_->shared_module_service());
 
+  service_->set_connector_for_test(test_data_decoder_service_.connector());
+
 #if defined(OS_CHROMEOS)
   InstallLimiter::Get(profile_.get())->DisableForTest();
 #endif

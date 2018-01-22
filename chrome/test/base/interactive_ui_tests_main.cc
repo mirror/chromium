@@ -10,6 +10,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "gpu/ipc/service/image_transport_surface.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "ui/base/test/ui_controls.h"
 
 #if defined(USE_AURA)
@@ -132,6 +133,8 @@ int main(int argc, char** argv) {
   InProcessBrowserTest::set_global_browser_set_up_function(
       &ui_test_utils::BringBrowserWindowToFront);
 #endif
+
+  mojo::edk::Init();
 
   // Run interactive_ui_tests serially, they do not support running in parallel.
   size_t parallel_jobs = 1U;

@@ -72,6 +72,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_host.h"
@@ -1234,6 +1235,12 @@ void ExtensionService::RemoveComponentExtension(
     ExtensionRegistry::Get(profile_)->TriggerOnUninstalled(
         extension.get(), extensions::UNINSTALL_REASON_COMPONENT_REMOVED);
   }
+}
+
+service_manager::Connector* ExtensionService::GetConnector() {
+  if (connector_for_test_)
+    return connector_for_test_.get();
+  return content::ServiceManagerConnection::GetForProcess()->GetConnector();
 }
 
 void ExtensionService::UnloadAllExtensionsForTest() {
