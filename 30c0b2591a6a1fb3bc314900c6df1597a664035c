@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620a8f44_425faddb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-22T17:48:39Z",
+      "side": 1,
+      "message": "Maybe footerSection? Or above \"Fit to window\" at least?\n\nCan we also get a title describing this in a little more detail?",
+      "range": {
+        "startLine": 209,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 29
+      },
+      "revId": "30c0b2591a6a1fb3bc314900c6df1597a664035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
