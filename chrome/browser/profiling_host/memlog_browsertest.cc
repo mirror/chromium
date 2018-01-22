@@ -81,6 +81,7 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   options.stack_mode = GetParam().stack_mode;
   options.profiling_already_started =
       GetParam().start_profiling_with_command_line_flag;
+  options.include_thread_names = true;
 
   EXPECT_TRUE(driver.RunTest(options));
 }

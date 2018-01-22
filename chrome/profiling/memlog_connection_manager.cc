@@ -111,7 +111,8 @@ void MemlogConnectionManager::OnNewConnection(
     mojo::ScopedHandle sender_pipe_end,
     mojo::ScopedHandle receiver_pipe_end,
     mojom::ProcessType process_type,
-    profiling::mojom::StackMode stack_mode) {
+    profiling::mojom::StackMode stack_mode,
+    bool include_thread_names) {
   base::AutoLock lock(connections_lock_);
 
   // Attempting to start profiling on an already profiled processs should have
@@ -158,7 +159,8 @@ void MemlogConnectionManager::OnNewConnection(
       base::Bind(&MemlogReceiverPipe::StartReadingOnIOThread, new_pipe));
 
   // Request the client start sending us data.
-  connection->client->StartProfiling(std::move(sender_pipe_end), stack_mode);
+  connection->client->StartProfiling(std::move(sender_pipe_end), stack_mode,
+                                     include_thread_names);
 
   connections_[pid] = std::move(connection);  // Transfers ownership.
 }
