@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "c12f1a77_ba8e69ae",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-22T09:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a05e9c3b_847bdb0b",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f397ddb7_d65b71df",
         "filename": "ash/magnifier/magnification_controller.cc",
         "patchSetId": 8
@@ -102,6 +120,24 @@
       "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d388da_9c19edab",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-22T09:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f397ddb7_d65b71df",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +173,24 @@
       "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89523ba_0866889c",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-22T09:56:31Z",
+      "side": 1,
+      "message": "Talked with lpalmaro@ in other place, and confirmed that this is intended behavior. For web page, Chrome provides buttons to change current zoom level.",
+      "parentUuid": "f05a8fd2_c48e0ecb",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
