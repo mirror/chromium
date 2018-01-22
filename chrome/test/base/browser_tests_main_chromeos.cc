@@ -7,8 +7,11 @@
 #include "chrome/test/base/chrome_test_launcher.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/mash_browser_tests_main.h"
+#include "mojo/edk/embedder/embedder.h"
 
 int main(int argc, char** argv) {
+  mojo::edk::Init();
+
   int exit_code = 0;
   if (RunMashBrowserTests(argc, argv, &exit_code))
     return exit_code;
