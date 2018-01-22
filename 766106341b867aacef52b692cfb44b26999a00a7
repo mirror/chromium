@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65feea94_8f13086e",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:48:05Z",
+      "side": 1,
+      "message": "It\u0027s a little confusing now that we pass the timeout to both StartRequestWithCustomTimeout and DispatchSyncEvent.  Can we clearly document about the effect of S13nSW flag on these APIs? In my understanding:\n\nFor SWVersion::StartRequest, S13nSW ignores the timeout passed here. Non-S13nSW uses the timeout.\nFor EventDispatcher/SWTimeoutTimer: S13nSW uses the timeout passed here. Non-S13nSW ignores the timeout.",
+      "revId": "766106341b867aacef52b692cfb44b26999a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7d9110_f592a4ec",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:48:05Z",
+      "side": 1,
+      "message": "\"for which a \u0027push\u0027 event should be allowed to run\"\n\nCan you add a comment about how this isn\u0027t defined by the specification, it\u0027s just a decision for Chrome\u0027s implementation to make the timeout for push events shorter than the default timeout of 5 minuts.",
+      "revId": "766106341b867aacef52b692cfb44b26999a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4704af_e7d043d9",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:48:05Z",
+      "side": 1,
+      "message": "|timeout| is the amount of time to allow this event to finish.",
+      "revId": "766106341b867aacef52b692cfb44b26999a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9973db27_d26972a3",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:48:05Z",
+      "side": 1,
+      "message": "Can we add a paragraph here about the timeout?",
+      "revId": "766106341b867aacef52b692cfb44b26999a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8409425f_d3639472",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:48:05Z",
+      "side": 1,
+      "message": "CustomTimeouts?",
+      "revId": "766106341b867aacef52b692cfb44b26999a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
