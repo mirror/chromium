@@ -390,7 +390,8 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       breaking_news_raw_data_provider_(
           std::move(breaking_news_raw_data_provider)),
       debug_logger_(debug_logger),
-      fetch_timeout_timer_(std::move(fetch_timeout_timer)) {
+      fetch_timeout_timer_(std::move(fetch_timeout_timer)),
+      current_fetch_(FetchRequestStatus::NONE) {
   DCHECK(debug_logger_);
   DCHECK(fetch_timeout_timer_);
   RestoreCategoriesFromPrefs();
@@ -563,6 +564,7 @@ void RemoteSuggestionsProviderImpl::
 void RemoteSuggestionsProviderImpl::FetchSuggestions(
     bool interactive_request,
     FetchStatusCallback callback) {
+  DCHECK_EQ(FetchRequestStatus::NONE, current_fetch_);
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
   if (!ready()) {
     if (callback) {
@@ -573,6 +575,7 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     return;
   }
 
+  current_fetch_ = FetchRequestStatus::IN_PROGRESS;
   // |count_to_fetch| is actually ignored, because the server does not support
   // this functionality.
   RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt,
@@ -724,6 +727,19 @@ void RemoteSuggestionsProviderImpl::ClearHistory(
   // because it is not known which history entries were used for the suggestions
   // personalization.
   ClearHistoryDependentState();
+  if (current_fetch_ == FetchRequestStatus::IN_PROGRESS ||
+      current_fetch_ == FetchRequestStatus::IN_PROGRESS_NEEDS_REFETCH) {
+    current_fetch_ = FetchRequestStatus::IN_PROGRESS_IGNORED;
+  }
+}
+
+void RemoteSuggestionsProviderImpl::ClearCachedSuggestions() {
+  ClearCachedSuggestionsImpl();
+  if (current_fetch_ == FetchRequestStatus::IN_PROGRESS) {
+    // Called by external cache-cleared trigger. As this can be caused by
+    // language change, we need to refetch a potentiall ongoing fetch.
+    current_fetch_ = FetchRequestStatus::IN_PROGRESS_NEEDS_REFETCH;
+  }
 }
 
 void RemoteSuggestionsProviderImpl::OnSignInStateChanged(bool has_signed_in) {
@@ -895,7 +911,20 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     bool interactive_request,
     Status status,
     RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories) {
+  DCHECK_NE(FetchRequestStatus::NONE, current_fetch_);
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
+
+  if (current_fetch_ == FetchRequestStatus::IN_PROGRESS_NEEDS_REFETCH) {
+    // Disregard the results and start a fetch again.
+    current_fetch_ = FetchRequestStatus::NONE;
+    FetchSuggestions(interactive_request, std::move(callback));
+    return;
+  } else if (current_fetch_ == FetchRequestStatus::IN_PROGRESS_IGNORED) {
+    // Disregard the results.
+    current_fetch_ = FetchRequestStatus::NONE;
+    return;
+  }
+  current_fetch_ = FetchRequestStatus::NONE;
 
   if (!ready()) {
     // TODO(tschumann): What happens if this was a user-triggered, interactive
@@ -918,6 +947,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
                        base::Unretained(this), std::move(callback),
                        interactive_request, status,
                        std::move(fetched_categories)));
+    current_fetch_ = FetchRequestStatus::IN_PROGRESS;
     return;
   }
 
@@ -1333,16 +1363,18 @@ void RemoteSuggestionsProviderImpl::ClearHistoryDependentState() {
     return;
   }
 
+  debug_logger_->Log(FROM_HERE, /*message=*/std::string());
   NukeAllSuggestions();
   remote_suggestions_scheduler_->OnHistoryCleared();
 }
 
-void RemoteSuggestionsProviderImpl::ClearCachedSuggestions() {
+void RemoteSuggestionsProviderImpl::ClearCachedSuggestionsImpl() {
   if (!initialized()) {
     clear_cached_suggestions_when_initialized_ = true;
     return;
   }
 
+  debug_logger_->Log(FROM_HERE, /*message=*/std::string());
   NukeAllSuggestions();
   remote_suggestions_scheduler_->OnSuggestionsCleared();
 }
@@ -1469,7 +1501,10 @@ void RemoteSuggestionsProviderImpl::OnStatusChanged(
         DCHECK(state_ == State::READY);
         // Clear nonpersonalized suggestions (and notify the scheduler there are
         // no suggestions).
-        ClearCachedSuggestions();
+        ClearCachedSuggestionsImpl();
+        if (current_fetch_ == FetchRequestStatus::IN_PROGRESS) {
+          current_fetch_ = FetchRequestStatus::IN_PROGRESS_NEEDS_REFETCH;
+        }
       } else {
         EnterState(State::READY);
       }
@@ -1480,7 +1515,10 @@ void RemoteSuggestionsProviderImpl::OnStatusChanged(
         DCHECK(state_ == State::READY);
         // Clear personalized suggestions (and notify the scheduler there are
         // no suggestions).
-        ClearCachedSuggestions();
+        ClearCachedSuggestionsImpl();
+        if (current_fetch_ == FetchRequestStatus::IN_PROGRESS) {
+          current_fetch_ = FetchRequestStatus::IN_PROGRESS_NEEDS_REFETCH;
+        }
       } else {
         EnterState(State::READY);
       }
@@ -1521,7 +1559,7 @@ void RemoteSuggestionsProviderImpl::EnterState(State state) {
       UpdateAllCategoryStatus(CategoryStatus::AVAILABLE);
 
       if (clear_cached_suggestions_when_initialized_) {
-        ClearCachedSuggestions();
+        ClearCachedSuggestionsImpl();
         clear_cached_suggestions_when_initialized_ = false;
       }
       if (clear_history_dependent_state_when_initialized_) {
@@ -1547,7 +1585,7 @@ void RemoteSuggestionsProviderImpl::EnterState(State state) {
         clear_history_dependent_state_when_initialized_ = false;
         ClearHistoryDependentState();
       }
-      ClearCachedSuggestions();
+      ClearCachedSuggestionsImpl();
       clear_cached_suggestions_when_initialized_ = false;
 
       if (breaking_news_raw_data_provider_ &&

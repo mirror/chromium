@@ -161,6 +161,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
                            CallsSchedulerWhenSignedIn);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
                            CallsSchedulerWhenSignedOut);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
+                           RestartsFetchWhenSignedInWhileFetching);
   FRIEND_TEST_ALL_PREFIXES(
       RemoteSuggestionsProviderImplTest,
       ShouldNotSetExclusiveCategoryWhenFetchingSuggestions);
@@ -204,6 +206,13 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
     ERROR_OCCURRED,
 
     COUNT
+  };
+
+  enum class FetchRequestStatus {
+    NONE,
+    IN_PROGRESS,
+    IN_PROGRESS_IGNORED,
+    IN_PROGRESS_NEEDS_REFETCH
   };
 
   struct CategoryContent {
@@ -333,6 +342,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // Clears suggestions because any history item has been removed.
   void ClearHistoryDependentState();
 
+  // Clears the cached suggestions
+  void ClearCachedSuggestionsImpl();
+
   // Clears all stored suggestions and updates the observer.
   void NukeAllSuggestions();
 
@@ -447,6 +459,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // A Timer for canceling too long fetches.
   std::unique_ptr<base::OneShotTimer> fetch_timeout_timer_;
+
+  // Stores what kind of fetch is currently in progress.
+  FetchRequestStatus current_fetch_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };
