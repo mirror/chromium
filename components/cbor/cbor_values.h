@@ -6,6 +6,7 @@
 #define COMPONENTS_CBOR_CBOR_VALUES_H_
 
 #include <stdint.h>
+
 #include <string>
 #include <tuple>
 #include <vector>
@@ -114,6 +115,7 @@ class CBOR_EXPORT CBORValue {
   explicit CBORValue(MapValue&& in_map) noexcept;
 
   explicit CBORValue(SimpleValue in_simple);
+  explicit CBORValue(bool boolean_value);
 
   CBORValue& operator=(CBORValue&& that) noexcept;
 
@@ -137,9 +139,14 @@ class CBOR_EXPORT CBORValue {
   bool is_array() const { return type() == Type::ARRAY; }
   bool is_map() const { return type() == Type::MAP; }
   bool is_simple() const { return type() == Type::SIMPLE_VALUE; }
+  bool is_bool() const {
+    return is_simple() && (simple_value_ == SimpleValue::TRUE_VALUE ||
+                           simple_value_ == SimpleValue::FALSE_VALUE);
+  }
 
   // These will all fatally assert if the type doesn't match.
   SimpleValue GetSimpleValue() const;
+  bool GetBool() const;
   const int64_t& GetInteger() const;
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;

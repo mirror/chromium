@@ -95,6 +95,11 @@ CBORValue::CBORValue(SimpleValue in_simple)
   CHECK(static_cast<int>(in_simple) >= 20 && static_cast<int>(in_simple) <= 23);
 }
 
+CBORValue::CBORValue(bool boolean_value) : type_(Type::SIMPLE_VALUE) {
+  simple_value_ = boolean_value ? CBORValue::SimpleValue::TRUE_VALUE
+                                : CBORValue::SimpleValue::FALSE_VALUE;
+}
+
 CBORValue& CBORValue::operator=(CBORValue&& that) noexcept {
   InternalCleanup();
   InternalMoveConstructFrom(std::move(that));
@@ -169,6 +174,11 @@ const CBORValue::MapValue& CBORValue::GetMap() const {
 CBORValue::SimpleValue CBORValue::GetSimpleValue() const {
   CHECK(is_simple());
   return simple_value_;
+}
+
+bool CBORValue::GetBool() const {
+  CHECK(is_bool());
+  return simple_value_ == SimpleValue::TRUE_VALUE;
 }
 
 void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
