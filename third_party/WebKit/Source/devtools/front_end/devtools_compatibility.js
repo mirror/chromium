@@ -485,7 +485,11 @@
      * @param {string} url
      */
     openInNewTab(url) {
-      DevToolsAPI.sendMessageToEmbedder('openInNewTab', [url], null);
+      var lowerURL = url.toLowerCase();
+      var isSafeScheme =
+          lowerURL.startsWith('ftp://') || lowerURL.startsWith('http://') || lowerURL.startsWith('https://');
+      if (isSafeScheme || window.confirm('Are you sure you want to open: ' + url))
+        DevToolsAPI.sendMessageToEmbedder('openInNewTab', [url], null);
     }
 
     /**
