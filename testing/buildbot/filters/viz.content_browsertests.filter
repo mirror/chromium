@@ -16,10 +16,12 @@
 -ContentBrowserTestSanityTest.SingleProcess
 -DomSerializerTests.*
 -IndexedDBBrowserTestSingleProcess.RenderThreadShutdownTest
+-InProcessGpuTest.*
 -RenderThreadImplDiscardableMemoryBrowserTest.*
 -RenderViewBrowserTest.ConfirmCacheInformationPlumbed
 -ResourceFetcherTests.*
 -SavableResourcesTest.*
+-SlownInProcessGpuTest.*
 -WebRtcCaptureFromElementBrowserTest.CaptureFromCanvas2DHandlesContextLoss
 -WebRtcCaptureFromElementBrowserTest.CaptureFromOpaqueCanvas2DHandlesContextLoss
 
