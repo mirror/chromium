@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e585ad2b_8d26c21e",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-22T18:01:54Z",
+      "side": 1,
+      "message": "Hmm, this will make the tests using the fake device run twice on Windows. We might be able to solve this by adding a |kTargetVideoCaptureImplementationsForFakeDevice| and |kTargetVideoCaptureImplementationsForRealWebcam| instead of the single |kTargetVideoCaptureImplementations|.",
+      "revId": "b404e911109fb0020c3340ece01d88d52e3a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
