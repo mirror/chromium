@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f995ff36_de40666c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/MediaElementAudioSourceNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-22T19:27:41Z",
+      "side": 1,
+      "message": "It\u0027s good to limit the scope of the lock, but is this change relevant to fixing lock order inversion?",
+      "revId": "0c3bd678275edc92172ff291bdea153166f0acad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
