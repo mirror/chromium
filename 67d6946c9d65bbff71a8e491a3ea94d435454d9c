@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef262af8_c013647d",
+        "filename": "chrome/common/stack_sampling_configuration.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T23:01:37Z",
+      "side": 1,
+      "message": "Nit: now -\u003e currently",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "67d6946c9d65bbff71a8e491a3ea94d435454d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77687425_93efe627",
+        "filename": "chrome/common/stack_sampling_configuration.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T23:01:37Z",
+      "side": 1,
+      "message": "Nit: \"to get created\" -\u003e \"to have already been created\"\n\n(Assuming that\u0027s what you mean.)",
+      "range": {
+        "startLine": 41,
+        "startChar": 71,
+        "endLine": 41,
+        "endChar": 74
+      },
+      "revId": "67d6946c9d65bbff71a8e491a3ea94d435454d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
