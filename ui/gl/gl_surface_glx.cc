@@ -168,6 +168,8 @@ class OMLSyncControlVSyncProvider : public SyncControlVSyncProvider {
     return true;
   }
 
+  bool IsHWClock() const override { return true; }
+
  private:
   GLXWindow glx_window_;
 
@@ -361,7 +363,8 @@ class SGIVideoSyncVSyncProvider
     return false;
   }
 
-  bool SupportGetVSyncParametersIfAvailable() override { return false; }
+  bool SupportGetVSyncParametersIfAvailable() const override { return false; }
+  bool IsHWClock() const override { return false; }
 
  private:
   void PendingCallbackRunner(const base::TimeTicks timebase,
@@ -610,12 +613,12 @@ bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
 
   if (g_glx_oml_sync_control_supported) {
     vsync_provider_.reset(new OMLSyncControlVSyncProvider(glx_window_));
-    presentation_helper_ = std::make_unique<GLSurfacePresentationHelper>(
-        vsync_provider_.get(), true);
+    presentation_helper_ =
+        std::make_unique<GLSurfacePresentationHelper>(vsync_provider_.get());
   } else if (g_glx_sgi_video_sync_supported) {
     vsync_provider_.reset(new SGIVideoSyncVSyncProvider(parent_window_));
-    presentation_helper_ = std::make_unique<GLSurfacePresentationHelper>(
-        vsync_provider_.get(), false);
+    presentation_helper_ =
+        std::make_unique<GLSurfacePresentationHelper>(vsync_provider_.get());
   } else {
     // Assume a refresh rate of 59.9 Hz, which will cause us to skip
     // 1 frame every 10 seconds on a 60Hz monitor, but will prevent us
