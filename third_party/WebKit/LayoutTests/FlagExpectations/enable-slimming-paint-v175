@@ -88,10 +88,6 @@ crbug.com/771643 external/wpt/css/css-backgrounds/background-attachment-local/at
 crbug.com/771643 external/wpt/css/css-backgrounds/background-attachment-local/attachment-local-clipping-image-5.html [ Failure ]
 # Reflection mask outset is clipped.
 crbug.com/771643 fast/reflections/reflection-masks-outset.html [ Pass Failure ]
-# Incorrect painting of dragged image.
-crbug.com/771643 images/drag-image-transformed-parent.html [ Failure ]
-crbug.com/771643 virtual/exotic-color-space/images/drag-image-transformed-parent.html [ Failure ]
-crbug.com/771643 virtual/gpu-rasterization/images/drag-image-transformed-parent.html [ Failure ]
 # This will pass with --root-layer-scrolls.
 crbug.com/771643 scrollbars/custom-scrollbars-paint-outside-iframe.html [ Failure ]
 # A few (sub?)-pixels clipped off.
