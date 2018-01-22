@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db1b49b3_247a6307",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-22T15:35:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8520a891_f50bc3c1",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "877da2cd_eed70592",
         "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cdb38a_d03a0ee1",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-22T15:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877da2cd_eed70592",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3f3db17_b1c5a543",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-22T15:35:21Z",
+      "side": 1,
+      "message": "Done. Also worth noting that the content area did not to be specifically activated or focused, so the loop was indeed unnecessary. I made sure the test still failed if I ran it without the fix.",
+      "parentUuid": "8ce2d53d_6c1e031c",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b75e234c_25b7b4ac",
         "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "73ecdff7_133e7ce2",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-22T15:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b75e234c_25b7b4ac",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22f35b6_0ea16ebf",
         "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2f093b_b632a87c",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-22T15:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22f35b6_0ea16ebf",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
