@@ -271,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "939d040d_aa1954ff",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:40:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc8766e1_bd20a33f",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eea4fa7_5c194149",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 3
@@ -335,6 +353,24 @@
       "side": 1,
       "message": "I was kinda hoping to avoid knowing about how the ui sets fullscreen. I\u0027d like to chat with you offline about poking ui vs model. There\u0027s a lot of both in this file, but I think if we\u0027d like to make things consistent, I\u0027d vote for talking to ui_ rather than model_. Might be needlessly awkward, though.",
       "parentUuid": "e3df593f_0a9af67d",
+      "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f8800f_ba1050c0",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-22T16:40:50Z",
+      "side": 1,
+      "message": "Sure, lets chat!  At one point, I\u0027m certain you wanted the UI wrapper to disappear.",
+      "parentUuid": "7189f2f1_fe3bf764",
       "revId": "37b9533dcbb8e2a33ad81ab593428ffa8f7ed223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
