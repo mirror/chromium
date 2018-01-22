@@ -905,7 +905,9 @@ Main.BackendSettingsSync = class {
   }
 
   _updateAutoAttach() {
-    InspectorFrontendHost.setOpenNewWindowForPopups(this._autoAttachSetting.get());
+    // When running on older host browser, this may be missing.
+    if (InspectorFrontendHost.setOpenNewWindowForPopups)
+      InspectorFrontendHost.setOpenNewWindowForPopups(this._autoAttachSetting.get());
   }
 
   _update() {
