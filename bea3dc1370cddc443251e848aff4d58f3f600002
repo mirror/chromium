@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75617d03_b07f59ef",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T16:28:14Z",
+      "side": 1,
+      "message": "BookmarkNode is a C++ class, so that should be nullptr here and below.",
+      "range": {
+        "startLine": 382,
+        "startChar": 64,
+        "endLine": 382,
+        "endChar": 67
+      },
+      "revId": "bea3dc1370cddc443251e848aff4d58f3f600002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32aabe79_37a81af4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T16:28:14Z",
+      "side": 1,
+      "message": "AFAICT there is no need to copy the \"folder\" variable here (and below) as they are pointers, not references.",
+      "revId": "bea3dc1370cddc443251e848aff4d58f3f600002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a81cfe8_58daf7f3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T16:28:14Z",
+      "side": 1,
+      "message": "I think that \"node\" may be invalid by that point (for example if the node is deleted remotely and sync happens before the next loop cycle). I don\u0027t really know how to prevent against this though.\n\nMaybe wrap the BookmarkNodes in some structure that is a BookmarkModelObserver and set the pointer to null if OnWillRemoveAllUserBookmarks is invoked? Or maybe reference nodes by path (list of indexes from root, though this may also change if the model is mutated).\n\nIt appears that the node is never dereferenced. So maybe this is safe-ish.\n\nCan we pass an IndexPath instead here?",
+      "revId": "bea3dc1370cddc443251e848aff4d58f3f600002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a176bae_7e268b68",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-22T16:28:14Z",
+      "side": 1,
+      "message": "ditto: no need to copy",
+      "revId": "bea3dc1370cddc443251e848aff4d58f3f600002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
