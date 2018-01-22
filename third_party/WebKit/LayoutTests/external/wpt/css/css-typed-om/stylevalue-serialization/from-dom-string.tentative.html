@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Serialization of CSSStyleValue constructed from DOMString</title>
+<!-- Tentative because how this is implemented for <calc> expressions is still
+     being discussed:
+     https://github.com/w3c/css-houdini-drafts/issues/556 -->
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylevalue-serialization">
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#parse-a-cssstylevalue">
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#dom-cssnumericvalue-parse">
+<meta name="assert" content="Test CSSStyleValues constructed from DOMStrings preserve their input" />
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+// Implementations are permitted to strip leading and trailing
+// whitespace/comments, so input preservation only really matters
+// for custom properties and numbers.
+const gTestArguments = [
+  {
+    subclass: 'CSSUnparsedValue',
+    property: '--Foo',
+    value: ' auto/* */ '
+  },
+  {
+    subclass: 'CSSUnitValue',
+    property: 'width',
+    value: '1.000px'
+  },
+  {
+    subclass: 'CSSPositionValue',
+    property: 'object-position',
+    value: '1.00px 1.00px'
+  },
+];
+
+for (const {subclass, property, value} of gTestArguments) {
+  test(() => {
+    const result = CSSStyleValue.parse(property, value);
+    assert_equals(result.toString(), value);
+  }, subclass + ' constructed from parsing serializes exactly to the ' +
+     'original string');
+}
+
+test(() => {
+  const result = CSSStyleValue.parseAll('transition-duration', '1.0s, 2.0s');
+  assert_equals(result.length, 2);
+  assert_equals(result[0].toString(), '1.0s');
+  assert_equals(result[1].toString(), '2.0s');
+}, 'CSSStyleValues constructed from parsing list-valued property serializes ' +
+   'to each original item in the list');
+
+test(() => {
+  const result = CSSStyleValue.parse('width', 'calc(1.0em + 1.0px - 1.0rem)');
+  assert_equals(result.constructor.name, CSSMathSum.name);
+  assert_equals(result.values[0].toString(), '1.0em');
+  assert_equals(result.values[1].toString(), '1.0px');
+  assert_equals(result.values[2].toString(), '- 1.0rem');
+}, 'CSSNumericValues constructed from CSSStyleValue.parse expressions ' +
+   'serializes to parts of the original string');
+
+</script>
