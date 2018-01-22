@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "55c31465_f1539fab",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-22T04:44:59Z",
+      "side": 1,
+      "message": "+1 for moving the lambda to a function in the anonymous namespace.",
+      "parentUuid": "3a68704a_a34c780a",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54504bbc_1302f315",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 3
