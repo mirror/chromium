@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47be9bb9_6b26a5fd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLAllCollectionCustom.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-22T09:32:13Z",
+      "side": 1,
+      "message": "s/Undefined/Null/",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "5f8461cfbc302323f64390e250686159cf434283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0389548f_c73efa33",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLAllCollectionCustom.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-22T09:32:13Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "5f8461cfbc302323f64390e250686159cf434283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
