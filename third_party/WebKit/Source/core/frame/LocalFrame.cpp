@@ -456,6 +456,22 @@ LayoutView* LocalFrame::ContentLayoutObject() const {
   return GetDocument() ? GetDocument()->GetLayoutView() : nullptr;
 }
 
+void LocalFrame::IntrinsicDimensionsChanged() {
+  if (!Owner())
+    return;
+  // Notofiy the owner. For remote frame owners, notify via
+  // an IPC to the parent renderer; otherwise notify directly.
+  if (Owner()->IsRemote()) {
+    IntrinsicSizingInfo sizing_info;
+    ComputeIntrinsicSizingInfo(sizing_info);
+    WebLocalFrameImpl::FromFrame(GetFrame())
+        ->FrameWidget()
+        ->IntrinsicDimensionsChanged(sizing_info);
+  } else {
+    Owner()->IntrinsicDimensionsChanged();
+  }
+}
+
 void LocalFrame::DidChangeVisibilityState() {
   if (GetDocument())
     GetDocument()->DidChangeVisibilityState();
