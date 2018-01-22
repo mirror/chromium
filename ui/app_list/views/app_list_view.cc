@@ -1181,7 +1181,10 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   DCHECK(!is_side_shelf_);
   if (app_list_state_ == AppListViewState::CLOSED)
     return;
-
+  if (fullscreen_widget_->GetLayer()->GetAnimator()->IsAnimatingProperty(
+          ui::LayerAnimationElement::TRANSFORM))
+    fullscreen_widget_->GetLayer()->GetAnimator()->StopAnimatingProperty(
+        ui::LayerAnimationElement::TRANSFORM);
   SetIsInDrag(true);
   background_opacity_ = background_opacity;
   gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
@@ -1191,8 +1194,10 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   new_widget_bounds.set_y(app_list_y_position_in_screen_);
   gfx::NativeView native_view = fullscreen_widget_->GetNativeView();
   ::wm::ConvertRectFromScreen(native_view->parent(), &new_widget_bounds);
-  native_view->SetBounds(new_widget_bounds);
+  if (native_view->bounds() == new_widget_bounds)
+    return;
 
+  native_view->SetBounds(new_widget_bounds);
   DraggingLayout();
 }
 
