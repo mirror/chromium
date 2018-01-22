@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb78dbd3_88f11d5b",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T15:23:17Z",
+      "side": 1,
+      "message": "Mis-edit.",
+      "revId": "f6b8da6a1fa10a142c55407f1cb3340433d475b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
