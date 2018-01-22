@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e0b9f5d_08641d78",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-22T23:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce87c252_1f136da9",
+      "range": {
+        "startLine": 330,
+        "startChar": 55,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "64ae615dc6dede6f181dc38ec1a66c058a537213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29a5f0d_b5e56652",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-22T18:40:20Z",
       "side": 1,
       "message": "I\u0027d recommend just calling closeAllTabs as tests can sometimes be weird where you get multiple tabs when you expect just 1 (and here we don\u0027t recall care if there was an already existing tab I don\u0027t think)",
+      "range": {
+        "startLine": 363,
+        "startChar": 23,
+        "endLine": 363,
+        "endChar": 38
+      },
+      "revId": "64ae615dc6dede6f181dc38ec1a66c058a537213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0feb5fe_d7e5bc0e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-22T23:42:04Z",
+      "side": 1,
+      "message": "Because closeAllTabs is undo-able, and thus it will wait for allTabsPendingClosure instead of having TabModelImpl#finalizeTabClosure() called.\n\nIf using this, we would need another callback to wait for tab actually destroyed. I instead close out all the excessive tabs if there is any. PTAL.",
+      "parentUuid": "c29a5f0d_b5e56652",
       "range": {
         "startLine": 363,
         "startChar": 23,
