@@ -237,6 +237,53 @@
     },
     {
       "key": {
+        "uuid": "2ea77711_260611b9",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-22T16:15:51Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "635bebc5_3ecce67f",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 80
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9332431b_7bd969cc",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2018-01-22T16:15:51Z",
+      "side": 1,
+      "message": "Nit: ASSERT_EQ(expected, actual);",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 687,
+        "endChar": 59
+      },
+      "revId": "4f512a489ca880d5c7a86c8c8ca003a28a6873f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26d196f0_cec03850",
         "filename": "components/policy/core/common/cloud/cloud_policy_client_unittest.cc",
         "patchSetId": 5
