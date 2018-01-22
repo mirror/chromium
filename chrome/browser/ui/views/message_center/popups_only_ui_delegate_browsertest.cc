@@ -89,6 +89,9 @@ class PopupsOnlyUiDelegateTest : public InProcessBrowserTest {
 
 // TODO(dewittj): More exhaustive testing.
 IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, WebNotifications) {
+  if (base::FeatureList::IsEnabled(features::kNativeNotifications))
+    return;
+
   MessageCenter* message_center = MessageCenter::Get();
 
   // Add a notification.
@@ -117,8 +120,7 @@ IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, WebNotifications) {
   EXPECT_FALSE(HasNotification("id2"));
 }
 
-// This test is flaky on the bots. TODO(estade): Fix the test or remove as we
-// switch to native notifications.
+// This test is flaky on the bots.
 #if defined(OS_LINUX)
 #define MAYBE_WebNotificationPopupBubble DISABLED_WebNotificationPopupBubble
 #else
@@ -126,6 +128,9 @@ IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, WebNotifications) {
 #endif
 IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest,
                        MAYBE_WebNotificationPopupBubble) {
+  if (base::FeatureList::IsEnabled(features::kNativeNotifications))
+    return;
+
   auto delegate = std::make_unique<PopupsOnlyUiDelegate>();
 
   // Adding a notification should show the popup bubble.
@@ -147,6 +152,9 @@ IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest,
 }
 
 IN_PROC_BROWSER_TEST_F(PopupsOnlyUiDelegateTest, ManyPopupNotifications) {
+  if (base::FeatureList::IsEnabled(features::kNativeNotifications))
+    return;
+
   auto delegate = std::make_unique<PopupsOnlyUiDelegate>();
 
   // Add the max visible popup notifications +1, ensure the correct num visible.

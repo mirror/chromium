@@ -596,6 +596,8 @@ TEST_F(DisplayPrefsTest, PreventStore) {
   // display preferences should not stored meanwhile.
   ash::Shell* shell = ash::Shell::Get();
 
+  NotificationDisplayServiceTester display_service(
+
   display::ManagedDisplayMode old_mode(gfx::Size(400, 300));
   display::ManagedDisplayMode new_mode(gfx::Size(500, 400));
   EXPECT_TRUE(shell->resolution_notification_controller()
@@ -611,16 +613,11 @@ TEST_F(DisplayPrefsTest, PreventStore) {
   EXPECT_FALSE(property->GetInteger("width", &width));
   EXPECT_FALSE(property->GetInteger("height", &height));
 
-  // Revert the change. When timeout, 2nd button is revert.
-  message_center::MessageCenter::Get()->ClickOnNotificationButton(
-      ResolutionNotificationController::kNotificationId, 1);
+  // Revert the change.
+  shell->resolution_notification_controller()->RevertResolutionChange(false);
   RunAllPendingInMessageLoop();
-  EXPECT_FALSE(
-      message_center::MessageCenter::Get()->FindVisibleNotificationById(
-          ResolutionNotificationController::kNotificationId));
 
-  // Once the notification is removed, the specified resolution will be stored
-  // by SetDisplayMode.
+  // The specified resolution will be stored by SetDisplayMode.
   ash::Shell::Get()->display_manager()->SetDisplayMode(
       id, display::ManagedDisplayMode(gfx::Size(300, 200), 60.0f, false, true));
   UpdateDisplay("300x200#500x400|400x300|300x200");
