@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ae5a924_0d909804",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:03:27Z",
+      "side": 1,
+      "message": "Pretty much the whole UI is non-modal, so this name and usage else where is really confusing. I think you\u0027re really want something like FocusNextAccessibleUi?",
+      "parentUuid": "1741dddf_4e15a4c1",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 67
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d0d976c_713dbaed",
         "filename": "chrome/browser/ui/browser_window.h",
         "patchSetId": 13
@@ -41,6 +65,75 @@
         "startChar": 28,
         "endLine": 202,
         "endChar": 30
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93574de5_7b3bf40b",
+        "filename": "chrome/browser/ui/views/accelerator_table.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:03:27Z",
+      "side": 1,
+      "message": "How come you are changing all of this? (if you say git cl format changed it, that\u0027s fine, I just want to make sure you didn\u0027t edit it by hand).",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 4
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e6fa16_d7a8e267",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:03:27Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 1047,
+        "startChar": 74,
+        "endLine": 1047,
+        "endChar": 76
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f46110_c8fdc3ac",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:03:27Z",
+      "side": 1,
+      "message": "Class names are not meant for RTTI like this. For example, if a subclass of BubbleIconView overrode GetClassName to return something else you would incorrectly not pick it up here. Either keep a vector of the BubbleIconViews, or use a class property.",
+      "range": {
+        "startLine": 658,
+        "startChar": 8,
+        "endLine": 658,
+        "endChar": 62
       },
       "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
