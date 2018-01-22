@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9342db85_d5e8827a",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-22T17:23:46Z",
+      "side": 1,
+      "message": "This seems unusual to me. This effectively allows preferring singleton tabs in incognito. Why do we want that?",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 59
+      },
+      "revId": "a3626263782f41dc11c568488eba413cc37ebf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
