@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b29c6a0_9bc212d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-22T23:33:22Z",
+      "side": 1,
+      "message": "This seems to contradict \"Furthermore, a NoDestructor\u003cT\u003e should never have global scope as that may require a static initializer.\" in base/no_destructor.h. I am guessing that most folks will read the code via codesearch, not via git\u0027s history, so the file comment will prevail.\n\nIs this intended?",
+      "revId": "73999fe67ffcb00aebfb6c8d0d342b03b079cde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e65e6c4f_ba407006",
         "filename": "base/no_destructor.h",
         "patchSetId": 16
