@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3404250_cb0c6671",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T11:00:30Z",
+      "side": 1,
+      "message": "nit: please insert space before quotation mark.",
+      "range": {
+        "startLine": 298,
+        "startChar": 64,
+        "endLine": 298,
+        "endChar": 65
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe19a2b_54f5160c",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T11:00:30Z",
+      "side": 1,
+      "message": "nit: please insert space before quotation mark.",
+      "range": {
+        "startLine": 299,
+        "startChar": 66,
+        "endLine": 299,
+        "endChar": 67
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1ad8c7_c15c073c",
+        "filename": "components/signin/core/browser/account_fetcher_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-22T11:00:30Z",
+      "side": 1,
+      "message": "I think \u0027web\u0027 is not very clear to general audience. Can\u0027t we say Chrome?\n\nAlso unimportant nit: You can use the whole line. The formatting here would not affect the annotations report.",
+      "range": {
+        "startLine": 300,
+        "startChar": 40,
+        "endLine": 300,
+        "endChar": 43
+      },
+      "revId": "93a83e82ac7df3e9abef6dccc3a79824ac26ccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
