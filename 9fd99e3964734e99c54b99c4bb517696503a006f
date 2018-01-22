@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd93371_aa61fbcf",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:13:18Z",
+      "side": 1,
+      "message": "Maybe \"DidStartWorkerForSyncEvent\"",
+      "revId": "9fd99e3964734e99c54b99c4bb517696503a006f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88a9458_b5a6b501",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T13:13:18Z",
+      "side": 1,
+      "message": "how about \"DidStartActiveWorker\"? That feels like more natural naming here, since the other functions aren\u0027t prefixed with SWContextWrapper. We only come here from StartActiveWorkerForPattern -\u003e FoundReadyRegistrationForStartActiveWorker -\u003e DidStartActiveWorker.",
+      "revId": "9fd99e3964734e99c54b99c4bb517696503a006f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
