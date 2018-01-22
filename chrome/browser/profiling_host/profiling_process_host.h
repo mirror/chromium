@@ -101,13 +101,15 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   static Mode GetModeForStartup();
   static Mode ConvertStringToMode(const std::string& input);
   static profiling::mojom::StackMode GetStackModeForStartup();
+  static bool GetIncludeThreadNamesForStartup();
   bool ShouldProfileNonRendererProcessType(int process_type);
 
   // Launches the profiling process and returns a pointer to it.
   static ProfilingProcessHost* Start(
       content::ServiceManagerConnection* connection,
       Mode mode,
-      profiling::mojom::StackMode stack_mode);
+      profiling::mojom::StackMode stack_mode,
+      bool include_thread_names);
 
   // Returns true if Start() has been called.
   static bool has_started() { return has_started_; }
@@ -258,6 +260,9 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // The stack mode determines the type of information that is stored for each
   // stack.
   profiling::mojom::StackMode stack_mode_;
+
+  // Whether to include thread names for NATIVE stack_mode.
+  bool include_thread_names_;
 
   // Whether or not the profiling host is started.
   static bool has_started_;

@@ -39,5 +39,6 @@ jboolean TestAndroidShim::RunTestForMode(
   options.stack_mode = pseudo_stacks ? profiling::mojom::StackMode::PSEUDO
                                      : profiling::mojom::StackMode::NATIVE;
   options.profiling_already_started = !dynamically_start_profiling;
+  options.include_thread_names = true;
   return driver.RunTest(options);
 }

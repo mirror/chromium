@@ -1610,11 +1610,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"PasswordForceSaving",
-     flag_descriptions::kPasswordForceSavingName,
+    {"PasswordForceSaving", flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kPasswordForceSaving)},
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
@@ -3201,6 +3199,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::
          kOutOfProcessHeapProfilingKeepSmallAllocationsDescription,
      kOsAll, SINGLE_VALUE_TYPE(switches::kMemlogKeepSmallAllocations)},
+
+    {"memlog-include-thread-names",
+     flag_descriptions::kOutOfProcessHeapProfilingIncludeThreadNames,
+     flag_descriptions::kOutOfProcessHeapProfilingIncludeThreadNamesDescription,
+     kOsAll, SINGLE_VALUE_TYPE(switches::kMemlogIncludeThreadNames)},
 
     {"memlog-stack-mode", flag_descriptions::kOOPHPStackModeName,
      flag_descriptions::kOOPHPStackModeDescription, kOsAll,

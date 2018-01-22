@@ -47,10 +47,11 @@ class ProfilingTestDriver {
     profiling::mojom::StackMode stack_mode;
 
     // Whether the caller has already started profiling with the given mode.
-    // TODO(erikchen): Implement and test the case where this member is false.
-    // Starting profiling is an asynchronous operation, so this requires adding
-    // some more plumbing. https://crbug.com/753218.
+    // When false, the test driver is responsible for starting profiling.
     bool profiling_already_started;
+
+    // Whether to include thread names in native stacks.
+    bool include_thread_names;
   };
 
   ProfilingTestDriver();
