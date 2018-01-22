@@ -179,9 +179,13 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
       GetClientFilterableStateForVersion(current_version);
 
   VariationsSeed seed;
+  bool run_in_safe_mode =
+      safe_seed_manager->ShouldRunInSafeMode() &&
+      GetSeedStore()->LoadSafeSeed(&seed, client_filterable_state.get());
+
   std::string seed_data;
   std::string base64_seed_signature;
-  if (!LoadSeed(&seed, &seed_data, &base64_seed_signature))
+  if (!run_in_safe_mode && !LoadSeed(&seed, &seed_data, &base64_seed_signature))
     return false;
 
   // Note that passing |&ui_string_overrider_| via base::Unretained below is
@@ -195,9 +199,13 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
       low_entropy_provider.get(), feature_list);
 
   // Store into the |safe_seed_manager| the combined server and client data used
-  // to create the field trials.
-  safe_seed_manager->SetActiveSeedState(seed_data, base64_seed_signature,
-                                        std::move(client_filterable_state));
+  // to create the field trials. But, as an optimization, skip this step when
+  // running in safe mode – once running in safe mode, there's can never be a
+  // need to save the active state to the safe seed prefs.
+  if (!run_in_safe_mode) {
+    safe_seed_manager->SetActiveSeedState(seed_data, base64_seed_signature,
+                                          std::move(client_filterable_state));
+  }
 
   UMA_HISTOGRAM_TIMES("Variations.SeedProcessingTime",
                       base::TimeTicks::Now() - start_time);
@@ -210,6 +218,9 @@ VariationsFieldTrialCreator::GetClientFilterableStateForVersion(
   std::unique_ptr<ClientFilterableState> state =
       std::make_unique<ClientFilterableState>();
   state->locale = client_->GetApplicationLocale();
+  // TODO(isherman): Some data -- namely the reference date and the permanent
+  // consistency country -- are not computed directly from what's on
+  // disk. What's appropriate for the safe seed?
   state->reference_date = GetReferenceDateForExpiryChecks(local_state());
   state->version = version;
   state->channel = GetChannelForVariations(client_->GetChannel());
@@ -331,7 +342,7 @@ void VariationsFieldTrialCreator::OverrideVariationsPlatform(
 bool VariationsFieldTrialCreator::LoadSeed(VariationsSeed* seed,
                                            std::string* seed_data,
                                            std::string* base64_signature) {
-  if (!LoadSeedFromStore(seed, seed_data, base64_signature))
+  if (!GetSeedStore()->LoadSeed(seed, seed_data, base64_signature))
     return false;
 
   const base::Time last_fetch_time =
@@ -356,13 +367,6 @@ bool VariationsFieldTrialCreator::LoadSeed(VariationsSeed* seed,
   UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.SeedFreshness", seed_age.InMinutes(),
                               1, base::TimeDelta::FromDays(30).InMinutes(), 50);
   return true;
-}
-
-bool VariationsFieldTrialCreator::LoadSeedFromStore(
-    VariationsSeed* seed,
-    std::string* seed_data,
-    std::string* base64_signature) {
-  return seed_store_.LoadSeed(seed, seed_data, base64_signature);
 }
 
 bool VariationsFieldTrialCreator::SetupFieldTrials(
@@ -436,5 +440,9 @@ bool VariationsFieldTrialCreator::SetupFieldTrials(
 
   return has_seed;
 }
+
+VariationsSeedStore* VariationsFieldTrialCreator::GetSeedStore() {
+  return &seed_store_;
+};
 
 }  // namespace variations
