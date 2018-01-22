@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c084564f_310948e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:35:19Z",
+      "side": 1,
+      "message": "Could be nice for this CL description to be different from https://chromium-review.googlesource.com/866212\n\nThe difference is this one is for ServiceWorkerContextClient? Are GetClients and Claim the only functions that need this wrapper, and is there any more work needed for this bug?",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab293b3_fa0120e3",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:35:19Z",
+      "side": 1,
+      "message": "Can you add a comment with a TODO about this mechanism. Points to cover (IIUC):\n- this is needed because we\u0027re using ThreadSafeAssociatedInterfacePtr\n- so we need to ensure Web*Callbacks are destructed on the worker thread, even if the worker thread dies before the callbacks can run\n- if the worker thread dies before the callback is run, this gets notified in WillStopCurrentWorkerThread() and deletes itself and the callback on the worker thread.\n- otherwise, it runs the callback on the worker thread as normal and deletes itself\n- this workaround can away once Mojofication is complete?",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a68704a_a34c780a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:35:19Z",
+      "side": 1,
+      "message": "I\u0027m not too sure using the lambda is improving readability, this is super nested already. We might also get a better symbolic stack trace by just making a function DidGetClients in the anon namespace. WDYT?",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54504bbc_1302f315",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-22T04:35:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e8a2b3f3634be575266b3cf480faba12e7ea02f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
