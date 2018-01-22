@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73584fe4_5c102a94",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T22:21:38Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "7eeb34c15216c5aa9ab8fafe40cd9153d0e646f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b495d310_b8ab9de2",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T22:21:38Z",
+      "side": 1,
+      "message": "suggest to rename it to kUdpSendSocketBufferSize. For consistency with the constants above and also because jambo builds, see https://chromium-review.googlesource.com/723305",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "7eeb34c15216c5aa9ab8fafe40cd9153d0e646f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b740df84_5fe491c0",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T22:21:38Z",
+      "side": 1,
+      "message": "is this called anywhere? I suggest removing this function and placing this code in P2PSocketHostUdp::Init() next to th SetReceiveBufferSize() call.",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 49
+      },
+      "revId": "7eeb34c15216c5aa9ab8fafe40cd9153d0e646f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb180675_9677793a",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-22T22:21:38Z",
+      "side": 1,
+      "message": "better to call socket_-\u003eSetSendBufferSize() directly, same as we do setting default receive buffer size.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 16
+      },
+      "revId": "7eeb34c15216c5aa9ab8fafe40cd9153d0e646f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
