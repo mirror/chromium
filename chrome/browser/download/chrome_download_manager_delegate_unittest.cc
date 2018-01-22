@@ -1046,6 +1046,9 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
   AndroidDownloadInfobarCounter infobar_counter(web_contents());
 
   for (const auto& test_case : kTestCases) {
+    LOG(ERROR) << "joy: test case";
+
+    LOG(ERROR) << "joy: creating download item";
     std::unique_ptr<content::MockDownloadItem> download_item =
         CreateActiveDownloadItem(1);
     EXPECT_CALL(*download_item, GetWebContents())
@@ -1055,6 +1058,7 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
     EXPECT_CALL(*download_item, GetURL()).WillRepeatedly(ReturnRef(url));
     infobar_counter.CheckAndResetInfobarCount();
 
+    LOG(ERROR) << "joy: creating loop";
     base::RunLoop loop;
     const auto callback = base::Bind(
         [](const base::Closure& quit_closure,
@@ -1062,6 +1066,10 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
            const base::FilePath& expected_path,
            DownloadConfirmationResult actual_result,
            const base::FilePath& actual_path) {
+          LOG(ERROR) << "joy: expected_result: "
+                     << expected_result " actual_result: " << actual_result;
+          LOG(ERROR) << "joy: expected_path: " << expected_path
+                     << " actual_path: " << actual_path;
           EXPECT_EQ(expected_result, actual_result);
           EXPECT_EQ(expected_path, actual_path);
           quit_closure.Run();
@@ -1072,6 +1080,7 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
                                     test_case.confirmation_reason, callback);
     loop.Run();
 
+    LOG(ERROR) << "joy: expect info_bar equals";
     EXPECT_EQ(test_case.info_bar == ExpectInfoBar::YES ? 1 : 0,
               infobar_counter.CheckAndResetInfobarCount());
   }
