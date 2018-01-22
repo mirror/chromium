@@ -25,6 +25,8 @@ function bytesToHexString(bytes)
 {
     if (!bytes)
         return null;
+    if (bytes.length === 0)
+        return "";
 
     bytes = new Uint8Array(bytes);
     var hexBytes = [];
