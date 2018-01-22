@@ -289,6 +289,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Same as StartRequest, but allows the caller to specify a custom timeout for
   // the event, as well as the behavior for when the request times out.
+  // S13nServiceWorker: |timeout| and |timeout_behavior| don't have any
+  // effect. They are just ignored.
   int StartRequestWithCustomTimeout(ServiceWorkerMetrics::EventType event_type,
                                     StatusCallback error_callback,
                                     const base::TimeDelta& timeout,

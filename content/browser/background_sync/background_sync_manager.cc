@@ -786,13 +786,17 @@ void BackgroundSyncManager::DispatchSyncEvent(
   auto repeating_callback =
       base::AdaptCallbackForRepeating(std::move(callback));
 
+  // Non-S13nServiceWorker the timeout is used in ServiceWorkerVersion.
+  // S13nServiceWorker: ignores the timeout.
   int request_id = active_version->StartRequestWithCustomTimeout(
       ServiceWorkerMetrics::EventType::SYNC, repeating_callback,
       parameters_->max_sync_event_duration,
       ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
 
+  // Non-S13nServiceWorker ignores the timeout.
+  // S13nServiceWorker: the timeout is used in ServiceWorkerContextClient.
   active_version->event_dispatcher()->DispatchSyncEvent(
-      tag, last_chance,
+      tag, last_chance, parameters_->max_sync_event_duration,
       base::BindOnce(&OnSyncEventFinished, std::move(active_version),
                      request_id, repeating_callback));
 }
