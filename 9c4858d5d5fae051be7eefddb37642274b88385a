@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8520a891_f50bc3c1",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:02:54Z",
+      "side": 1,
+      "message": "I filed http://crbug.com/804184 for Mac -- it looks like this line triggers 3 focus events.",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877da2cd_eed70592",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:02:54Z",
+      "side": 1,
+      "message": "nit: // views::FocusChangeListener:",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce2d53d_6c1e031c",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:02:54Z",
+      "side": 1,
+      "message": "I don\u0027t think it affects the test really, but note the test browser() starts with 1 tab already - so this adds a second and activates the first tab on the first iteration, then adds a third tab, and activates the second for the next iteration.\n\nI think you can replace this loop with just\n\n chrome::AddSelectedTabWithURL(browser(), url, ui::PAGE_TRANSITION_TYPED);\n\nor\n\n AddTabAtIndex(1, url, ui::PAGE_TRANSITION_TYPED);\n\nEither of those adds a second, selected tab. Ctrl+Tab will cycle through and select the first. Note the second might be more robust - it waits for the navigation to complete in the new tab, but I don\u0027t think AddSelectedTabWithURL does.",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75e234c_25b7b4ac",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:02:54Z",
+      "side": 1,
+      "message": "nit: needs curlies",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22f35b6_0ea16ebf",
+        "filename": "chrome/browser/ui/views/frame/browser_view_focus_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-22T00:02:54Z",
+      "side": 1,
+      "message": "perhaps, \n\n ASSERT_FALSE(focused_classes.empty());\n EXPECT_EQ(views::WebView::kViewClassName, focused_classes.back());",
+      "revId": "9c4858d5d5fae051be7eefddb37642274b88385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
