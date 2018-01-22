@@ -21,136 +21,105 @@ const int CacheStorageBlobToDiskCache::kBufferSize = 1024 * 512;
 CacheStorageBlobToDiskCache::CacheStorageBlobToDiskCache()
     : cache_entry_offset_(0),
       disk_cache_body_index_(0),
-      buffer_(new net::IOBufferWithSize(kBufferSize)),
-      weak_ptr_factory_(this) {
-}
+      handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
+      weak_ptr_factory_(this) {}
 
-CacheStorageBlobToDiskCache::~CacheStorageBlobToDiskCache() {
-  if (blob_request_)
-    request_context_getter_->RemoveObserver(this);
-}
+CacheStorageBlobToDiskCache::~CacheStorageBlobToDiskCache() = default;
 
 void CacheStorageBlobToDiskCache::StreamBlobToCache(
     disk_cache::ScopedEntryPtr entry,
     int disk_cache_body_index,
-    net::URLRequestContextGetter* request_context_getter,
-    std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
+    blink::mojom::BlobPtr blob,
     EntryAndBoolCallback callback) {
   DCHECK(entry);
   DCHECK_LE(0, disk_cache_body_index);
-  DCHECK(blob_data_handle);
-  DCHECK(!blob_request_);
-  DCHECK(request_context_getter);
+  DCHECK(blob);
+  DCHECK(!consumer_handle_.get());
+  DCHECK(!pending_read_);
 
-  if (!request_context_getter->GetURLRequestContext()) {
+  mojo::ScopedDataPipeProducerHandle producer_handle;
+  MojoResult result =
+      CreateDataPipe(nullptr, &producer_handle, &consumer_handle_);
+  if (result != MOJO_RESULT_OK) {
     std::move(callback).Run(std::move(entry), false /* success */);
     return;
   }
 
   disk_cache_body_index_ = disk_cache_body_index;
-
   entry_ = std::move(entry);
   callback_ = std::move(callback);
-  request_context_getter_ = request_context_getter;
 
-  blob_request_ = storage::BlobProtocolHandler::CreateBlobRequest(
-      std::move(blob_data_handle),
-      request_context_getter->GetURLRequestContext(), this);
-  request_context_getter_->AddObserver(this);
-  blob_request_->Start();
-}
+  blob->ReadAll(std::move(producer_handle), nullptr);
 
-void CacheStorageBlobToDiskCache::OnResponseStarted(net::URLRequest* request,
-                                                    int net_error) {
-  DCHECK_NE(net::ERR_IO_PENDING, net_error);
-
-  if (net_error != net::OK) {
-    RunCallbackAndRemoveObserver(false);
-    return;
-  }
-
+  handle_watcher_.Watch(
+      consumer_handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
+      base::BindRepeating(&CacheStorageBlobToDiskCache::OnDataPipeReadable,
+                          base::Unretained(this)));
   ReadFromBlob();
 }
 
-void CacheStorageBlobToDiskCache::OnReadCompleted(net::URLRequest* request,
-                                                  int bytes_read) {
-  if (bytes_read < 0) {
-    if (bytes_read != net::ERR_IO_PENDING) {
-      RunCallbackAndRemoveObserver(false);
-      return;
-    }
+void CacheStorageBlobToDiskCache::OnDataPipeReadable(MojoResult unused) {
+  // Get the handle_ from a previous read operation if we have one.
+  if (pending_read_) {
+    DCHECK(pending_read_->IsComplete());
+    consumer_handle_ = pending_read_->ReleaseHandle();
+    pending_read_ = nullptr;
   }
 
-  if (bytes_read == 0) {
-    RunCallbackAndRemoveObserver(true);
+  uint32_t available = 0;
+
+  MojoResult result = network::MojoToNetPendingBuffer::BeginRead(
+      &consumer_handle_, &pending_read_, &available);
+
+  if (result == MOJO_RESULT_SHOULD_WAIT) {
+    handle_watcher_.ArmOrNotify();
     return;
   }
+
+  if (result == MOJO_RESULT_FAILED_PRECONDITION) {
+    // Done reading.
+    std::move(callback_).Run(std::move(entry_), true /* success */);
+    return;
+  }
+
+  if (result != MOJO_RESULT_OK) {
+    std::move(callback_).Run(std::move(entry_), false /* success */);
+    return;
+  }
+
+  int bytes_to_read = std::min<int>(kBufferSize, available);
+
+  auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
+      pending_read_.get(), bytes_to_read);
 
   net::CompletionCallback cache_write_callback =
       base::AdaptCallbackForRepeating(
           base::BindOnce(&CacheStorageBlobToDiskCache::DidWriteDataToEntry,
-                         weak_ptr_factory_.GetWeakPtr(), bytes_read));
+                         weak_ptr_factory_.GetWeakPtr(), bytes_to_read));
 
   int rv = entry_->WriteData(disk_cache_body_index_, cache_entry_offset_,
-                             buffer_.get(), bytes_read, cache_write_callback,
+                             buffer.get(), bytes_to_read, cache_write_callback,
                              true /* truncate */);
   if (rv != net::ERR_IO_PENDING)
     cache_write_callback.Run(rv);
-}
 
-void CacheStorageBlobToDiskCache::OnReceivedRedirect(
-    net::URLRequest* request,
-    const net::RedirectInfo& redirect_info,
-    bool* defer_redirect) {
-  NOTREACHED();
-}
-
-void CacheStorageBlobToDiskCache::OnAuthRequired(
-    net::URLRequest* request,
-    net::AuthChallengeInfo* auth_info) {
-  NOTREACHED();
-}
-void CacheStorageBlobToDiskCache::OnCertificateRequested(
-    net::URLRequest* request,
-    net::SSLCertRequestInfo* cert_request_info) {
-  NOTREACHED();
-}
-void CacheStorageBlobToDiskCache::OnSSLCertificateError(
-    net::URLRequest* request,
-    const net::SSLInfo& ssl_info,
-    bool fatal) {
-  NOTREACHED();
-}
-
-void CacheStorageBlobToDiskCache::OnContextShuttingDown() {
-  DCHECK(blob_request_);
-  RunCallbackAndRemoveObserver(false);
-}
-
-void CacheStorageBlobToDiskCache::ReadFromBlob() {
-  int bytes_read = blob_request_->Read(buffer_.get(), buffer_->size());
-  if (bytes_read != net::ERR_IO_PENDING)
-    OnReadCompleted(blob_request_.get(), bytes_read);
 }
 
 void CacheStorageBlobToDiskCache::DidWriteDataToEntry(int expected_bytes,
                                                       int rv) {
   if (rv != expected_bytes) {
-    RunCallbackAndRemoveObserver(false);
+    std::move(callback_).Run(std::move(entry_), false /* success */);
     return;
   }
   if (rv > 0)
     storage::RecordBytesWritten("DiskCache.CacheStorage", rv);
   cache_entry_offset_ += rv;
+
   ReadFromBlob();
 }
 
-void CacheStorageBlobToDiskCache::RunCallbackAndRemoveObserver(bool success) {
-  DCHECK(request_context_getter_);
-
-  request_context_getter_->RemoveObserver(this);
-  blob_request_.reset();
-  std::move(callback_).Run(std::move(entry_), success);
+void CacheStorageBlobToDiskCache::ReadFromBlob() {
+  handle_watcher_.ArmOrNotify();
 }
 
 }  // namespace content
