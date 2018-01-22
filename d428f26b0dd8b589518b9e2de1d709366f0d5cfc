@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11f3ee9e_427ec77f",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:15:45Z",
+      "side": 1,
+      "message": "Please add unit tests for this function.",
+      "range": {
+        "startLine": 668,
+        "startChar": 73,
+        "endLine": 668,
+        "endChar": 0
+      },
+      "revId": "d428f26b0dd8b589518b9e2de1d709366f0d5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53031849_f1ff4c76",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:15:45Z",
+      "side": 1,
+      "message": "I\u0027m worried about holding this lock and calling into GetFieldTrialParamsWithoutFallback() which has its own lock.\n\nIf some other code grabs those two locks in the reverse order, it becomes a deadlock.\n\nPlease structure the code such that you get the state from FieldTrialList first and release the lock and then iterate over that state and do the FieldTrialParamAssociator thing.",
+      "range": {
+        "startLine": 671,
+        "startChar": 37,
+        "endLine": 671,
+        "endChar": 0
+      },
+      "revId": "d428f26b0dd8b589518b9e2de1d709366f0d5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620d475e_44df399a",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:15:45Z",
+      "side": 1,
+      "message": "Nit: GetInstance once outside the loop instead of calling it for each trial.",
+      "revId": "d428f26b0dd8b589518b9e2de1d709366f0d5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390253c4_36cb2bf3",
+        "filename": "components/variations/net/variations_cmd_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:15:45Z",
+      "side": 1,
+      "message": "I don\u0027t like naming things \"helper\". How about \"variations_command_line.cc/h\"?",
+      "range": {
+        "startLine": 5,
+        "startChar": 60,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "d428f26b0dd8b589518b9e2de1d709366f0d5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dbfeba_e020de91",
+        "filename": "components/variations/net/variations_cmd_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-22T22:15:45Z",
+      "side": 1,
+      "message": "Return it as a string, instead of using an out param.",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "d428f26b0dd8b589518b9e2de1d709366f0d5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
