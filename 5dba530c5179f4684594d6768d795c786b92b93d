@@ -71,6 +71,46 @@
     },
     {
       "key": {
+        "uuid": "f6c93a23_aaf3934d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-22T13:07:55Z",
+      "side": 1,
+      "message": "This would only allow a capture after resetPageLoadTracking() is called, which is typically not true before onload(), right?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 10
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a06322_a0d5c061",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-22T13:07:55Z",
+      "side": 1,
+      "message": "According to the comment here, we may send multiple screenshots to the client application, the \"initial\" one and the \"backup\" of \"FMP\" one.\n\nI\u0027m not sure that client apps are ready to support that.",
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e55170a5_069aba05",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4

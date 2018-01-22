@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ebe8364_883c871c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-22T13:07:55Z",
+      "side": 1,
+      "message": "Could we only use a single observer?",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 27
+      },
+      "revId": "bcf44f2358d438c2f146e74067c9988509e99d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "403c8054_79454e97",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 3
