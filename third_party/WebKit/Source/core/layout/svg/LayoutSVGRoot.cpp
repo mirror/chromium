@@ -101,6 +101,9 @@ bool LayoutSVGRoot::IsEmbeddedThroughFrameContainingSVGDocument() const {
   if (!frame || !frame->GetDocument()->IsSVGDocument())
     return false;
 
+  if (frame->Owner() && frame->Owner()->IsRemote())
+    return true;
+
   // If our frame has an owner layoutObject, we're embedded through eg.
   // object/embed/iframe, but we only negotiate if we're in an SVG document
   // inside a embedded object (object/embed).
@@ -278,8 +281,7 @@ void LayoutSVGRoot::IntrinsicDimensionsChanged() const {
   // document, or not embedded in a way that supports/allows size negotiation.
   if (!IsEmbeddedThroughFrameContainingSVGDocument())
     return;
-  if (FrameOwner* frame_owner = GetFrame()->Owner())
-    frame_owner->IntrinsicDimensionsChanged();
+  GetFrame()->IntrinsicDimensionsChanged();
 }
 
 void LayoutSVGRoot::StyleDidChange(StyleDifference diff,

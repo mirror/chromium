@@ -17,6 +17,7 @@
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "third_party/WebKit/public/web/WebRemoteFrame.h"
 #include "third_party/WebKit/public/web/WebRemoteFrameClient.h"
+#include "ui/gfx/geometry/size_f.h"
 #include "url/origin.h"
 
 #if defined(USE_AURA)
@@ -200,6 +201,11 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                             const viz::SurfaceSequence& sequence);
+
+  void OnIntrinsicSizeOfChildChanged(gfx::SizeF size,
+                                     gfx::SizeF aspect_ratio,
+                                     bool has_width,
+                                     bool has_height);
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;

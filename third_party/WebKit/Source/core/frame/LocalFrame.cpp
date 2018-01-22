@@ -456,6 +456,20 @@ LayoutView* LocalFrame::ContentLayoutObject() const {
   return GetDocument() ? GetDocument()->GetLayoutView() : nullptr;
 }
 
+void LocalFrame::IntrinsicDimensionsChanged() {
+  if (!Owner())
+    return;
+  if (Owner()->IsRemote()) {
+    IntrinsicSizingInfo sizing_info;
+    ComputeIntrinsicSizingInfo(sizing_info);
+    WebLocalFrameImpl::FromFrame(GetFrame())
+        ->FrameWidget()
+        ->IntrinsicDimensionsChanged(sizing_info);
+  } else {
+    Owner()->IntrinsicDimensionsChanged();
+  }
+}
+
 void LocalFrame::DidChangeVisibilityState() {
   if (GetDocument())
     GetDocument()->DidChangeVisibilityState();
