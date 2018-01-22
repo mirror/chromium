@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d2367d7_6563381f",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fd83b66_c75c07a3",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfea4920_9ca9255c",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-22T20:16:52Z",
       "side": 1,
       "message": "This value is coming from the renderer right? We shouldn\u0027t be parsing in the browser. I mentioned this in the .mojom, but is it possible to send more structured data here rather than relying on JSON parsing? In general, we trust our JSON parsers very little.",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd42424_63b4d102",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "Yep, it\u0027s coming from the renderer. Well, I wouldn\u0027t say that passing it in a structured way is impossible, but it\u0027s still quite impractical -- it\u0027s a structure defined in the devtools protocol that contains another structure defined in V8 protocol (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/inspector/browser_protocol.pdl?rcl\u003d3d96428eda57adc334f8a53f9202499a84829025\u0026l\u003d3467). Spelling it out in mojo would be quite unfortunate and would force us to add and maintain a lot of boilerplate code to convert it back-and-forth.\n\nWRT trusing JSON parser -- well, we already use it to parse strings from non-trusted sources in a few places:\nhttps://cs.chromium.org/chromium/src/chrome/browser/devtools/devtools_protocol.cc?rcl\u003d8aa06a97852df56583204001684a1218ea97372d\u0026l\u003d134\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/devtools/device/devtools_device_discovery.cc?rcl\u003d630072d1912ceb39915e4f526333f752b63d5d5f\u0026l\u003d468",
+      "parentUuid": "dfea4920_9ca9255c",
       "range": {
         "startLine": 1132,
         "startChar": 41,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f27a955a_acc18097",
+        "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bfa66b2_dd28728b",
+      "range": {
+        "startLine": 190,
+        "startChar": 37,
+        "endLine": 190,
+        "endChar": 39
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5ec201a_f88ed6f5",
         "filename": "content/common/navigation_params.mojom",
         "patchSetId": 11
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-22T20:16:52Z",
       "side": 1,
       "message": "Can this mention what it contains above and beyond initiator_origin? Having opaque strings here is a bit unfortunate, but I\u0027m guessing it would be non-trivial to do otherwise atm.",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cd3866_61bcd26d",
+        "filename": "content/common/navigation_params.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "I\u0027ve added a reference to DevTools protocol here. I think it\u0027s actually logically opaque here -- basically, it\u0027s for DevTools purposes and is sent verbatim to the front-end and is not intended for consumption by others.",
+      "parentUuid": "a5ec201a_f88ed6f5",
       "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "3556267b_38888777",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 6743,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d1254e8_0edf8361",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "728a6e33_9cf141a9",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 11
@@ -113,6 +215,24 @@
       "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1acdcdc_872be5c4",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-22T22:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "728a6e33_9cf141a9",
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
