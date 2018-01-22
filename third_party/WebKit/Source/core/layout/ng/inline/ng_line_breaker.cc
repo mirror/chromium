@@ -274,14 +274,23 @@ void NGLineBreaker::UpdatePosition(const NGInlineItemResults& results) {
 }
 
 void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
-  LayoutUnit bfc_line_offset = line_.line_left_bfc_offset;
-  LayoutUnit available_width = line_.AvailableWidth();
-
   // Negative margins can make the position negative, but the inline size is
   // always positive or 0.
-  line_info->SetLineBfcOffset({bfc_line_offset, bfc_block_offset_},
-                              available_width,
-                              line_.position.ClampNegativeToZero());
+  LayoutUnit inline_size = line_.position.ClampNegativeToZero();
+
+  // A line with zero inline-size (just a <br>) can fit into zero or even
+  // negative available space created by 100% floats. Because it is rare, adjust
+  // the block offset instead of computing zero-inline-size opportunity.
+  // TODO(kojii): line_left_bfc_offset should be at the edge of the floats, but
+  // it is not implemented yet.
+  LayoutUnit bfc_block_offset = bfc_block_offset_;
+  if (line_.is_after_forced_break && !inline_size &&
+      bfc_block_offset != constraint_space_.BfcOffset().block_offset) {
+    bfc_block_offset = constraint_space_.BfcOffset().block_offset;
+  }
+
+  line_info->SetLineBfcOffset({line_.line_left_bfc_offset, bfc_block_offset},
+                              line_.AvailableWidth(), inline_size);
 }
 
 NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
