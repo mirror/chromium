@@ -8,6 +8,7 @@
 #include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/logging.h"
+#include "base/synchronization/waitable_event.h"
 
 // Helper methods used by LazyInstance and a few other base APIs for thread-safe
 // lazy construction.
@@ -22,7 +23,8 @@ constexpr subtle::AtomicWord kLazyInstanceStateCreating = 1;
 // Helper for GetOrCreateLazyPointer(). Checks if instance needs to be created.
 // If so returns true otherwise if another thread has beat us, waits for
 // instance to be created and returns false.
-BASE_EXPORT bool NeedsLazyInstance(subtle::AtomicWord* state);
+BASE_EXPORT bool NeedsLazyInstance(subtle::AtomicWord* state,
+                                   WaitableEvent** construction_event);
 
 // Helper for GetOrCreateLazyPointer(). After creating an instance, this is
 // called to register the dtor to be called at program exit and to update the
@@ -30,7 +32,8 @@ BASE_EXPORT bool NeedsLazyInstance(subtle::AtomicWord* state);
 BASE_EXPORT void CompleteLazyInstance(subtle::AtomicWord* state,
                                       subtle::AtomicWord new_instance,
                                       void (*destructor)(void*),
-                                      void* destructor_arg);
+                                      void* destructor_arg,
+                                      WaitableEvent** construction_event);
 
 // If |state| is uninitialized (zero), constructs a value using |creator_func|,
 // stores it into |state| and registers |destructor| to be called with
@@ -46,13 +49,15 @@ template <typename CreatorFunc>
 void* GetOrCreateLazyPointer(subtle::AtomicWord* state,
                              const CreatorFunc& creator_func,
                              void (*destructor)(void*),
-                             void* destructor_arg) {
+                             void* destructor_arg,
+                             WaitableEvent** construction_event = nullptr) {
   DCHECK(state);
 
   // If any bit in the created mask is true, the instance has already been
   // fully constructed.
   constexpr subtle::AtomicWord kLazyInstanceCreatedMask =
-      ~internal::kLazyInstanceStateCreating;
+      ~(internal::kLazyInstanceStateCreating |
+        (internal::kLazyInstanceStateCreating + 1));
 
   // We will hopefully have fast access when the instance is already created.
   // Since a thread sees |state| == 0 or kLazyInstanceStateCreating at most
@@ -61,12 +66,13 @@ void* GetOrCreateLazyPointer(subtle::AtomicWord* state,
   // to acquire visibility over the associated data. Pairing Release_Store is in
   // CompleteLazyInstance().
   if (!(subtle::Acquire_Load(state) & kLazyInstanceCreatedMask) &&
-      NeedsLazyInstance(state)) {
+      NeedsLazyInstance(state, construction_event)) {
     // This thread won the race and is now responsible for creating the instance
     // and storing it back into |state|.
     subtle::AtomicWord instance =
         reinterpret_cast<subtle::AtomicWord>(creator_func());
-    CompleteLazyInstance(state, instance, destructor, destructor_arg);
+    CompleteLazyInstance(state, instance, destructor, destructor_arg,
+                         construction_event);
   }
   return reinterpret_cast<void*>(subtle::NoBarrier_Load(state));
 }
