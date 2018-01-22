@@ -118,6 +118,30 @@
       "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77077897_3907fa69",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-22T22:44:34Z",
+      "side": 1,
+      "message": "My rough understanding (which may be incorrect) is that there are three separate issues here:\n\n(A) do function prototypes exist in a header file?\n(B) are the functions defined, in other words does the build link successfully?\n(C) are the functions present at runtime?\n\nWith the old NDK, all three of these were false, hence the workarounds.\n\nThe base/android/android_hardware_buffer_abi.h file was intended to address (A). Now we have third_party/android_tools/ndk/sysroot/usr/include/android/hardware_buffer.h which should be a drop-in replacement for that, and (unless there\u0027s secret magic happening) it unconditionally provides declarations (prototypes) independent of __ANDROID_API_.\n\nI\u0027m fairly sure that (B) and (C) are still not solved by the new SDK. We only get function definitions by setting the platform level to 26+, and that would make the Chrome application disappear from the Play Store for devices older than that because those older devices aren\u0027t able to run it. So we\u0027ll still need to use dlsym for dynamic symbol loading.",
+      "parentUuid": "50fea42c_d5cc67a0",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "75d3b510d6d9331a9b5e1b840760c94f7308c65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
