@@ -27,6 +27,7 @@
 #include "gin/converter.h"
 #include "gin/data_object_builder.h"
 #include "ipc/message_filter.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -462,7 +463,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
          AutomationAXTreeWrapper* tree_wrapper) {
         result.Set(CreateV8String(
             isolate,
-            ToString(tree_wrapper->tree()->data().sel_anchor_affinity)));
+            ui::ToString(tree_wrapper->tree()->data().sel_anchor_affinity)));
       });
   RouteTreeIDFunction(
       "GetFocusObjectID",
@@ -484,7 +485,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
          AutomationAXTreeWrapper* tree_wrapper) {
         result.Set(CreateV8String(
             isolate,
-            ToString(tree_wrapper->tree()->data().sel_focus_affinity)));
+            ui::ToString(tree_wrapper->tree()->data().sel_focus_affinity)));
       });
 
   // Bindings that take a Tree ID and Node ID and return a property of the node.
@@ -625,7 +626,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          ui::AXNode* node, const std::string& attribute_name) {
         ui::AXStringAttribute attribute =
-            ui::ParseAXStringAttribute(attribute_name);
+            ui::ParseStringAttribute(attribute_name.c_str());
         std::string attr_value;
         if (!node->data().GetStringAttribute(attribute, &attr_value))
           return;
@@ -637,7 +638,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          ui::AXNode* node, const std::string& attribute_name) {
         ui::AXBoolAttribute attribute =
-            ui::ParseAXBoolAttribute(attribute_name);
+            ui::ParseBoolAttribute(attribute_name.c_str());
         bool attr_value;
         if (!node->data().GetBoolAttribute(attribute, &attr_value))
           return;
@@ -648,7 +649,8 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       "GetIntAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          ui::AXNode* node, const std::string& attribute_name) {
-        ui::AXIntAttribute attribute = ui::ParseAXIntAttribute(attribute_name);
+        ui::AXIntAttribute attribute =
+            ui::ParseIntAttribute(attribute_name.c_str());
         int attr_value;
         if (!node->data().GetIntAttribute(attribute, &attr_value))
           return;
@@ -660,7 +662,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          ui::AXNode* node, const std::string& attribute_name) {
         ui::AXFloatAttribute attribute =
-            ui::ParseAXFloatAttribute(attribute_name);
+            ui::ParseFloatAttribute(attribute_name.c_str());
         float attr_value;
 
         if (!node->data().GetFloatAttribute(attribute, &attr_value))
@@ -673,7 +675,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          ui::AXNode* node, const std::string& attribute_name) {
         ui::AXIntListAttribute attribute =
-            ui::ParseAXIntListAttribute(attribute_name);
+            ui::ParseIntListAttribute(attribute_name.c_str());
         if (!node->data().HasIntListAttribute(attribute))
           return;
         const std::vector<int32_t>& attr_value =
@@ -709,30 +711,31 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       "GetBold", [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
                     AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
         bool value = (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
-                      ui::AX_TEXT_STYLE_BOLD) != 0;
+                      static_cast<int32_t>(ui::AX_TEXT_STYLE_BOLD)) != 0;
         result.Set(v8::Boolean::New(isolate, value));
       });
   RouteNodeIDFunction(
       "GetItalic", [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
                       AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
         bool value = (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
-                      ui::AX_TEXT_STYLE_ITALIC) != 0;
+                      static_cast<int32_t>(ui::AX_TEXT_STYLE_ITALIC)) != 0;
         result.Set(v8::Boolean::New(isolate, value));
       });
-  RouteNodeIDFunction("GetUnderline", [](v8::Isolate* isolate,
-                                         v8::ReturnValue<v8::Value> result,
-                                         AutomationAXTreeWrapper* tree_wrapper,
-                                         ui::AXNode* node) {
-    bool value = (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
-                  ui::AX_TEXT_STYLE_UNDERLINE) != 0;
-    result.Set(v8::Boolean::New(isolate, value));
-  });
+  RouteNodeIDFunction(
+      "GetUnderline",
+      [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
+         AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
+        bool value = (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
+                      static_cast<int32_t>(ui::AX_TEXT_STYLE_UNDERLINE)) != 0;
+        result.Set(v8::Boolean::New(isolate, value));
+      });
   RouteNodeIDFunction(
       "GetLineThrough",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
          AutomationAXTreeWrapper* tree_wrapper, ui::AXNode* node) {
-        bool value = (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
-                      ui::AX_TEXT_STYLE_LINE_THROUGH) != 0;
+        bool value =
+            (node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE) &
+             static_cast<int32_t>(ui::AX_TEXT_STYLE_LINE_THROUGH)) != 0;
         result.Set(v8::Boolean::New(isolate, value));
       });
   RouteNodeIDFunction(
@@ -770,7 +773,7 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
                                        ui::AXNode* node) {
     const ui::AXCheckedState checked_state = static_cast<ui::AXCheckedState>(
         node->data().GetIntAttribute(ui::AX_ATTR_CHECKED_STATE));
-    if (checked_state) {
+    if (checked_state != ui::AX_CHECKED_STATE_NONE) {
       const std::string checked_str = ui::ToString(checked_state);
       result.Set(v8::String::NewFromUtf8(isolate, checked_str.c_str()));
     }
@@ -1044,7 +1047,7 @@ void AutomationInternalCustomBindings::GetState(
   uint32_t state_pos = 0, state_shifter = node->data().state;
   while (state_shifter) {
     if (state_shifter & 1)
-      state.Set(ToString(static_cast<ui::AXState>(state_pos)), true);
+      state.Set(ui::ToString(static_cast<ui::AXState>(state_pos)), true);
     state_shifter = state_shifter >> 1;
     state_pos++;
   }
@@ -1311,7 +1314,7 @@ void AutomationInternalCustomBindings::SendAutomationEvent(
   event_params->SetInteger("treeID", params.tree_id);
   event_params->SetInteger("targetID", target_id);
   event_params->SetString("eventType", api::automation::ToString(event_type));
-  event_params->SetString("eventFrom", ToString(params.event_from));
+  event_params->SetString("eventFrom", ui::ToString(params.event_from));
   event_params->SetInteger("actionRequestID", params.action_request_id);
   event_params->SetInteger("mouseX", params.mouse_location.x());
   event_params->SetInteger("mouseY", params.mouse_location.y());

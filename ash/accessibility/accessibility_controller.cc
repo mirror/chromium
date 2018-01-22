@@ -27,6 +27,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/accessibility_manager.mojom.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/base/cursor/cursor_type.h"
 

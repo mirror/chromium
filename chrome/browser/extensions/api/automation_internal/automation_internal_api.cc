@@ -37,6 +37,7 @@
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "ui/accessibility/ax_action_data.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_host_delegate.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 
@@ -359,7 +360,7 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
       action->action = ui::AX_ACTION_HIT_TEST;
       action->target_point = gfx::Point(hit_test_params.x, hit_test_params.y);
       action->hit_test_event_to_fire =
-          ui::ParseAXEvent(hit_test_params.event_to_fire);
+          ui::ParseEvent(hit_test_params.event_to_fire.c_str());
       if (action->hit_test_event_to_fire == ui::AX_EVENT_NONE)
         return RespondNow(NoArguments());
       break;

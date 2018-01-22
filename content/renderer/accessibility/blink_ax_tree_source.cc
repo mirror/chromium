@@ -37,6 +37,7 @@
 #include "third_party/WebKit/public/web/WebPlugin.h"
 #include "third_party/WebKit/public/web/WebPluginContainer.h"
 #include "third_party/WebKit/public/web/WebView.h"
+#include "ui/accessibility/ax_enum_util.h"
 
 using base::ASCIIToUTF16;
 using base::UTF16ToUTF8;

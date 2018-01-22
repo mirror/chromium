@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/common/extensions/chrome_extension_messages.h"
 #include "components/exo/wm_helper.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/platform/ax_android_constants.h"
 #include "ui/aura/window.h"
 #include "ui/views/focus/focus_manager.h"
@@ -190,7 +191,7 @@ void PopulateAXRole(arc::mojom::AccessibilityNodeInfoData* node,
   if (GetStringProperty(node,
                         arc::mojom::AccessibilityStringProperty::CHROME_ROLE,
                         &chrome_role)) {
-    ui::AXRole role_value = ui::ParseAXRole(chrome_role);
+    ui::AXRole role_value = ui::ParseRole(chrome_role.c_str());
     if (role_value != ui::AX_ROLE_NONE) {
       out_data->role = role_value;
       return;
@@ -270,12 +271,14 @@ void PopulateAXState(arc::mojom::AccessibilityNodeInfoData* node,
         GetBooleanProperty(node, AXBooleanProperty::CHECKED);
     const ui::AXCheckedState checked_state =
         is_checked ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE;
-    out_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
+    out_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE,
+                              static_cast<int32_t>(checked_state));
   }
 
   if (!GetBooleanProperty(node, AXBooleanProperty::ENABLED)) {
-    out_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                              ui::AX_RESTRICTION_DISABLED);
+    out_data->AddIntAttribute(
+        ui::AX_ATTR_RESTRICTION,
+        static_cast<int32_t>(ui::AX_RESTRICTION_DISABLED));
   }
 
   if (!GetBooleanProperty(node, AXBooleanProperty::VISIBLE_TO_USER)) {
