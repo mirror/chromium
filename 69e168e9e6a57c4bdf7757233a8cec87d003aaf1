@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2c5b566_2dc2e448",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-22T18:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "491e8b2d_5f33c794",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfab1e66_ddd26008",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e79749f6_2e01ad3b",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-22T18:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfab1e66_ddd26008",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac636d5_a2dc539a",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-22T18:31:59Z",
       "side": 1,
       "message": "SetIsFolder(true) before AddChromeItem",
+      "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d1dc94_9e9f5efd",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-22T18:48:08Z",
+      "side": 1,
+      "message": "Is it necessary? I think this will be set in L335.",
+      "parentUuid": "4ac636d5_a2dc539a",
       "revId": "69e168e9e6a57c4bdf7757233a8cec87d003aaf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
