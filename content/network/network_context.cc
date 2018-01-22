@@ -442,6 +442,21 @@ void NetworkContext::SetNetworkConditions(
                                       std::move(network_conditions));
 }
 
+void NetworkContext::CreateTCPServerSocket(
+    const net::IPEndPoint& local_addr,
+    network::mojom::TCPServerSocketRequest socket,
+    CreateTCPServerSocketCallback callback) {
+  // TODO(crbug.com/721401): Implement this.
+}
+
+void NetworkContext::CreateTCPConnectedSocket(
+    const base::Optional<net::IPEndPoint>& local_addr,
+    const net::IPEndPoint& remote_addr,
+    network::mojom::TCPConnectedSocketRequest socket,
+    CreateTCPConnectedSocketCallback callback) {
+  // TODO(crbug.com/721401): Implement this.
+}
+
 void NetworkContext::AddHSTSForTesting(const std::string& host,
                                        base::Time expiry,
                                        bool include_subdomains,

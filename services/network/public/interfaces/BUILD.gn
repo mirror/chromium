@@ -47,6 +47,7 @@ mojom("interfaces") {
     "proxy_config.mojom",
     "request_context_frame_type.mojom",
     "restricted_cookie_manager.mojom",
+    "tcp_socket.mojom",
     "url_loader.mojom",
     "url_loader_factory.mojom",
   ]
@@ -54,6 +55,7 @@ mojom("interfaces") {
   public_deps = [
     ":data_pipe_interface",
     "//mojo/common:common_custom_types",
+    "//net/interfaces:interfaces",
     "//services/proxy_resolver/public/interfaces",
     "//url/mojo:url_mojom_gurl",
   ]
