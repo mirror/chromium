@@ -139,6 +139,24 @@
       "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e58e943_487524b1",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-22T02:40:50Z",
+      "side": 1,
+      "message": "Okay, a follow-up CL is fine.",
+      "parentUuid": "3541fd03_7a4d2085",
+      "revId": "3a19c889a8b7edaab87a0deed4437483adf91049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
