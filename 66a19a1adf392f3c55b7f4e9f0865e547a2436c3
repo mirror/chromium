@@ -22,6 +22,29 @@
       "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12c4c0d_f77537aa",
+        "filename": "chromecast/graphics/cast_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-22T21:21:26Z",
+      "side": 1,
+      "message": "As a thought, would we ever want to override one but not the other? It would seem to be an unintended behavior to override just one dimension.\n\nAs a suggestion, maybe just have --cast-initial-screen-size\u003d1280x720 and fail back to the default if parsing fails.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "66a19a1adf392f3c55b7f4e9f0865e547a2436c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
