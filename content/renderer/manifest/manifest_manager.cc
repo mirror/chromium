@@ -98,6 +98,17 @@ void ManifestManager::DidCommitProvisionalLoad(
 }
 
 void ManifestManager::FetchManifest() {
+  // Do not fetch the manifest if we are on a unique origin.
+  if (render_frame()
+          ->GetWebFrame()
+          ->GetDocument()
+          .GetSecurityOrigin()
+          .IsUnique()) {
+    ManifestUmaUtil::FetchFailed(ManifestUmaUtil::FETCH_FROM_UNIQUE_ORIGIN);
+    ResolveCallbacks(ResolveStateFailure);
+    return;
+  }
+
   manifest_url_ = render_frame()->GetWebFrame()->GetDocument().ManifestURL();
 
   if (manifest_url_.is_empty()) {

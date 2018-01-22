@@ -20,6 +20,15 @@ ManifestChangeNotifier::ManifestChangeNotifier(RenderFrame* render_frame)
 ManifestChangeNotifier::~ManifestChangeNotifier() = default;
 
 void ManifestChangeNotifier::DidChangeManifest() {
+  // Manifests are not considered when the current page has a unique origin.
+  if (render_frame()
+          ->GetWebFrame()
+          ->GetDocument()
+          .GetSecurityOrigin()
+          .IsUnique()) {
+    return;
+  }
+
   if (weak_factory_.HasWeakPtrs())
     return;
 
