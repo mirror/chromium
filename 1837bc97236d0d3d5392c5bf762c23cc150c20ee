@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "986f92d6_9562e64c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T12:31:01Z",
+      "side": 1,
+      "message": "Do you mind CCing me on the future implementation CLs that affect this file, even if they don\u0027t change a mojom to trigger a security review?",
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e11d6cb_9742b302",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T12:31:01Z",
+      "side": 1,
+      "message": "Should this be privateMethod?\n\n(Maybe call it privateAnnotatedMethod to make it clear that it\u0027s not exposed even though it\u0027s annotated?)",
+      "range": {
+        "startLine": 79,
+        "startChar": 17,
+        "endLine": 79,
+        "endChar": 37
+      },
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a85c79_1c16d039",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T12:31:01Z",
+      "side": 1,
+      "message": "unannotatedMethod?",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d67f528_7365383b",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-22T12:31:01Z",
+      "side": 1,
+      "message": "Why do we want to support passing a null annotation class?",
+      "revId": "1837bc97236d0d3d5392c5bf762c23cc150c20ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
