@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de649135_e080e034",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-22T23:13:11Z",
+      "side": 1,
+      "message": "you need to remove the URLDownloader that\u0027s added to url_download_handlers_, or otherwise they will still doing network requests.",
+      "revId": "6b702991e23ef5a2677bdb71157c1a2e2b740117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
