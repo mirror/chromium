@@ -119,7 +119,9 @@ void UkmEntryChecker::ExpectNewEntry(const std::string& entry_name,
   num_entries_[entry_name]++;  // There should only be 1 more entry than before.
   std::vector<const ukm::mojom::UkmEntry*> entries =
       ukm_recorder_.GetEntriesByName(entry_name);
-  EXPECT_EQ(NumEntries(entry_name), entries.size());
+  EXPECT_EQ(num_entries_[entry_name], entries.size())
+      << "Expected " << num_entries_[entry_name] << " entries, found "
+      << entries.size() << " for " << entry_name;
 
   // Verify the entry is associated with the correct URL.
   const ukm::mojom::UkmEntry* entry = entries.back();
