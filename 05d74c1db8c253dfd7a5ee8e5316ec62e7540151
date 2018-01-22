@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9119622a_31c08625",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-22T19:19:34Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a reason for test removal, as the relevant code paths still exist.\n\nCan we make the internal functions private static members of RenderedPosition, and expose them to test with friend class?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
