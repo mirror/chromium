@@ -26,6 +26,7 @@ aggregate_vector_icons("views_vector_icons") {
     "menu_check.icon",
     "menu_radio_empty.icon",
     "menu_radio_selected.icon",
+    "notification_inline_reply.icon",
     "radio_button_active.icon",
     "radio_button_normal.icon",
     "submenu_arrow.1x.icon",
