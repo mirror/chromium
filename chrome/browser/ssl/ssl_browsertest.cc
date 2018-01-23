@@ -6866,6 +6866,10 @@ MakeDynamicInterstitial(const std::vector<DynamicInterstitialInfo>& list) {
 
     for (const std::string& hash : info.spki_hashes)
       filter->add_sha256_hash(hash);
+
+    filter->set_issuer_common_name_regex(info.issuer_common_name_regex);
+    filter->set_issuer_organization_regex(info.issuer_organization_regex);
+    filter->set_mitm_software_name(info.mitm_software_name);
   }
 
   return config_proto;
@@ -6892,6 +6896,14 @@ class SSLUIDynamicInterstitialTest : public CertVerifierBrowserTest {
                                            net::ERR_CERT_COMMON_NAME_INVALID);
   }
 
+  const std::string GetCertIssuerCommonName() const {
+    return https_server_.GetCertificate().get()->issuer().common_name;
+  }
+
+  const std::string GetCertIssuerOrganizationName() const {
+    return https_server_.GetCertificate().get()->issuer().organization_names[0];
+  }
+
   net::EmbeddedTestServer* https_server() { return &https_server_; }
 
  private:
@@ -6916,12 +6928,16 @@ IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest, Match) {
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{"sha256/kingfisher",
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
         chrome_browser_ssl::DynamicInterstitial::ERR_CERT_COMMON_NAME_INVALID,
         GURL()));
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{kDynamicInterstitialCert,
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::
             INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
         0, GURL()));
@@ -6954,14 +6970,102 @@ IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest, MatchUnknownCertError) {
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{"sha256/kingfisher",
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
         chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{kDynamicInterstitialCert,
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::
             INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
         chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
+
+    SSLErrorHandler::SetErrorAssistantProto(MakeDynamicInterstitial(list));
+    ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() >
+                0);
+
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
+    WaitForInterstitial(tab);
+
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_TRUE(interstitial_page);
+    ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    interstitial_page->DontProceed();
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest,
+                       MatchEmptyCommonNameRegex) {
+  ASSERT_TRUE(https_server()->Start());
+
+  SetUpCertVerifier();
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  {
+    std::vector<DynamicInterstitialInfo> list;
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{"sha256/kingfisher",
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
+        chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{kDynamicInterstitialCert,
+                                        "sha256/flycatcher"},
+        std::string(), GetCertIssuerOrganizationName(), kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::
+            INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
+        chrome_browser_ssl::DynamicInterstitial::ERR_CERT_COMMON_NAME_INVALID,
+        GURL()));
+
+    SSLErrorHandler::SetErrorAssistantProto(MakeDynamicInterstitial(list));
+    ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() >
+                0);
+
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
+    WaitForInterstitial(tab);
+
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_TRUE(interstitial_page);
+    ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    interstitial_page->DontProceed();
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest,
+                       MatchEmptyOrganizationRegex) {
+  ASSERT_TRUE(https_server()->Start());
+
+  SetUpCertVerifier();
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  {
+    std::vector<DynamicInterstitialInfo> list;
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{"sha256/kingfisher",
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
+        chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{kDynamicInterstitialCert,
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), std::string(), kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::
+            INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
+        chrome_browser_ssl::DynamicInterstitial::ERR_CERT_COMMON_NAME_INVALID,
+        GURL()));
 
     SSLErrorHandler::SetErrorAssistantProto(MakeDynamicInterstitial(list));
     ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() >
@@ -6993,11 +7097,15 @@ IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest, MismatchHash) {
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{"sha256/kingfisher",
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::
             INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
         chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{"sha256/sapsucker"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::
             INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
         chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
@@ -7031,11 +7139,96 @@ IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest, MismatchCertError) {
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{"sha256/kingfisher",
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
         chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
     list.push_back(DynamicInterstitialInfo(
         std::unordered_set<std::string>{kDynamicInterstitialCert,
                                         "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::
+            INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
+        chrome_browser_ssl::DynamicInterstitial::ERR_CERT_AUTHORITY_INVALID,
+        GURL()));
+
+    SSLErrorHandler::SetErrorAssistantProto(MakeDynamicInterstitial(list));
+    ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() >
+                0);
+
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
+    WaitForInterstitial(tab);
+
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_TRUE(interstitial_page);
+    EXPECT_NE(CaptivePortalBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest, MismatchCommonNameRegex) {
+  ASSERT_TRUE(https_server()->Start());
+
+  SetUpCertVerifier();
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  {
+    std::vector<DynamicInterstitialInfo> list;
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{"sha256/kingfisher",
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
+        chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{kDynamicInterstitialCert,
+                                        "sha256/flycatcher"},
+        "beeeater", GetCertIssuerOrganizationName(), kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::
+            INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
+        chrome_browser_ssl::DynamicInterstitial::ERR_CERT_AUTHORITY_INVALID,
+        GURL()));
+
+    SSLErrorHandler::SetErrorAssistantProto(MakeDynamicInterstitial(list));
+    ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() >
+                0);
+
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
+    WaitForInterstitial(tab);
+
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_TRUE(interstitial_page);
+    EXPECT_NE(CaptivePortalBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUIDynamicInterstitialTest,
+                       MismatchOrganizationRegex) {
+  ASSERT_TRUE(https_server()->Start());
+
+  SetUpCertVerifier();
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  {
+    std::vector<DynamicInterstitialInfo> list;
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{"sha256/kingfisher",
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), GetCertIssuerOrganizationName(),
+        kTestMITMSoftwareName,
+        chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL,
+        chrome_browser_ssl::DynamicInterstitial::UNKNOWN_CERT_ERROR, GURL()));
+    list.push_back(DynamicInterstitialInfo(
+        std::unordered_set<std::string>{kDynamicInterstitialCert,
+                                        "sha256/flycatcher"},
+        GetCertIssuerCommonName(), "beeeater", kTestMITMSoftwareName,
         chrome_browser_ssl::DynamicInterstitial::
             INTERSTITIAL_PAGE_CAPTIVE_PORTAL,
         chrome_browser_ssl::DynamicInterstitial::ERR_CERT_AUTHORITY_INVALID,
