@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7bce9418_e3959b51",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-23T18:28:42Z",
+      "side": 1,
+      "message": "My concern is that this is verifying CSS spec in a place where it\u0027s a bit unexpected. I\u0027ve re-added it though, to keep the code changes to a minimum.",
+      "parentUuid": "a65e4abf_44c5f761",
+      "revId": "2c61a57ed14405a4674a12d8e279cf46565babf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29eca08b_3b06876a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
         "patchSetId": 4
