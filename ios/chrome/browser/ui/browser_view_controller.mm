@@ -4229,6 +4229,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 #pragma mark - WebToolbarDelegate (Public)
 
 - (void)locationBarDidBecomeFirstResponder {
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:YES];
+
   if (_locationBarHasFocus)
     return;  // TODO(crbug.com/244366): This should not be necessary.
   _locationBarHasFocus = YES;
@@ -4250,6 +4252,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)locationBarDidResignFirstResponder {
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:NO];
+
   if (!_locationBarHasFocus)
     return;  // TODO(crbug.com/244366): This should not be necessary.
   _locationBarHasFocus = NO;

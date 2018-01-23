@@ -1942,6 +1942,12 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   }
 }
 
+#pragma mark - private
+
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  [self animateMaterialOmnibox];
+}
+
 @end
 
 #pragma mark - Testing only.
