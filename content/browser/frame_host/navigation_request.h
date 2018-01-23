@@ -242,10 +242,12 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   // A version of OnRequestFailed() that allows skipping throttles, to be used
   // when a request failed due to a throttle result itself.
-  void OnRequestFailedInternal(bool has_stale_copy_in_cache,
-                               int net_error,
-                               const base::Optional<net::SSLInfo>& ssl_info,
-                               bool skip_throttles);
+  void OnRequestFailedInternal(
+      bool has_stale_copy_in_cache,
+      int net_error,
+      const base::Optional<net::SSLInfo>& ssl_info,
+      bool skip_throttles,
+      const base::Optional<std::string>& error_page_content);
 
   // Called when the NavigationThrottles have been checked by the
   // NavigationHandle.
