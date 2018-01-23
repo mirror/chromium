@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "53656661_8306c5ea",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T23:28:34Z",
+      "side": 1,
+      "message": "We already have WrapSharedMemoryHandle in mojo/public/cpp/system/platform_handle.h - use that.\n\nThe TLDR general rule is: don\u0027t ever use the EDK APIs. :)\n\nThe long version is that EDK APIs are intended *only* to support two things:\n\n  (1) initializating a process which wants to start using Mojo\n  (2) bootstrapping connectivity between two processes that use Mojo\n\nIf you\u0027re not doing either of those things explicitly, you should definitely not be using any EDK APIs.",
+      "parentUuid": "a7355395_5de935eb",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffa47c81_dee3c589",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 22
