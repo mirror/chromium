@@ -450,6 +450,8 @@ class CC_EXPORT LayerImpl {
 
   void EnsureValidPropertyTreeIndices() const;
 
+  virtual bool is_surface_layer() const;
+
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,
             int id,
