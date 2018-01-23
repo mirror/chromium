@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/debug/stack_trace.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -198,11 +199,15 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
 #if !BUILDFLAG(ENABLE_EXTENSIONS)
         NOTREACHED();
 #endif
+        LOG(ERROR) << "IncreaseRendererCrashCount(prefs::kStabilityExtensionRendererCrashCount)";
+        base::debug::StackTrace(15).Print();
         IncrementPrefValue(prefs::kStabilityExtensionRendererCrashCount);
 
         base::UmaHistogramSparse("CrashExitCodes.Extension",
                                  MapCrashExitCodeForHistogram(exit_code));
       } else {
+        LOG(ERROR) << "IncreaseRendererCrashCount(prefs::kStabilityRendererCrashCount)";
+        base::debug::StackTrace(15).Print();
         IncrementPrefValue(prefs::kStabilityRendererCrashCount);
 
         base::UmaHistogramSparse("CrashExitCodes.Renderer",
