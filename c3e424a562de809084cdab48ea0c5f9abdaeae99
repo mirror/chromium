@@ -22,6 +22,30 @@
       "revId": "c3e424a562de809084cdab48ea0c5f9abdaeae99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bbfd72_38d5d667",
+        "filename": "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T10:21:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f40e1154_67843c2a",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "c3e424a562de809084cdab48ea0c5f9abdaeae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
