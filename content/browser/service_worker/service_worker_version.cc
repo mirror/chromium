@@ -1045,7 +1045,6 @@ void ServiceWorkerVersion::OnReportConsoleMessage(int source_identifier,
 bool ServiceWorkerVersion::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ServiceWorkerVersion, message)
-    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_GetClient, OnGetClient)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewTab, OnOpenNewTab)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenPaymentHandlerWindow,
                         OnOpenPaymentHandlerWindow)
@@ -1130,19 +1129,26 @@ void ServiceWorkerVersion::GetClients(
                  base::Passed(std::move(callback))));
 }
 
-void ServiceWorkerVersion::OnGetClientsFinished(
-    GetClientsCallback callback,
-    std::unique_ptr<ServiceWorkerClientPtrs> clients) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  // When Clients.matchAll() is called on the script evaluation phase, the
-  // running status can be STARTING here.
-  if (running_status() != EmbeddedWorkerStatus::STARTING &&
-      running_status() != EmbeddedWorkerStatus::RUNNING) {
+void ServiceWorkerVersion::GetClient(const std::string& client_uuid,
+                                     GetClientCallback callback) {
+  if (!context_) {
+    OnGetClientFinished(std::move(callback),
+                        blink::mojom::ServiceWorkerClientInfo::New());
     return;
   }
-
-  std::move(callback).Run(std::move(*clients));
+  ServiceWorkerProviderHost* provider_host =
+      context_->GetProviderHostByClientID(client_uuid);
+  if (!provider_host ||
+      provider_host->document_url().GetOrigin() != script_url_.GetOrigin()) {
+    // The promise will be resolved to 'undefined'.
+    OnGetClientFinished(std::move(callback),
+                        blink::mojom::ServiceWorkerClientInfo::New());
+    return;
+  }
+  service_worker_client_utils::GetClient(
+      provider_host,
+      base::BindOnce(&ServiceWorkerVersion::OnGetClientFinished,
+                     weak_factory_.GetWeakPtr(), std::move(callback)));
 }
 
 void ServiceWorkerVersion::OnSetCachedMetadataFinished(int64_t callback_id,
@@ -1164,44 +1170,35 @@ void ServiceWorkerVersion::OnClearCachedMetadataFinished(int64_t callback_id,
     listener.OnCachedMetadataUpdated(this, 0);
 }
 
-void ServiceWorkerVersion::OnGetClient(int request_id,
-                                       const std::string& client_uuid) {
-  if (!context_)
-    return;
-  TRACE_EVENT_ASYNC_BEGIN1("ServiceWorker", "ServiceWorkerVersion::OnGetClient",
-                           request_id, "client_uuid", client_uuid);
-  ServiceWorkerProviderHost* provider_host =
-      context_->GetProviderHostByClientID(client_uuid);
-  if (!provider_host ||
-      provider_host->document_url().GetOrigin() != script_url_.GetOrigin()) {
-    // The promise will be resolved to 'undefined'.
-    OnGetClientFinished(request_id,
-                        blink::mojom::ServiceWorkerClientInfo::New());
-    return;
-  }
-  service_worker_client_utils::GetClient(
-      provider_host, base::BindOnce(&ServiceWorkerVersion::OnGetClientFinished,
-                                    weak_factory_.GetWeakPtr(), request_id));
-}
-
-void ServiceWorkerVersion::OnGetClientFinished(
-    int request_id,
-    blink::mojom::ServiceWorkerClientInfoPtr client_info) {
+void ServiceWorkerVersion::OnGetClientsFinished(
+    GetClientsCallback callback,
+    std::unique_ptr<ServiceWorkerClientPtrs> clients) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  TRACE_EVENT_ASYNC_END1(
-      "ServiceWorker", "ServiceWorkerVersion::OnGetClient", request_id,
-      "client_type",
-      ServiceWorkerUtils::ClientTypeToString(client_info->client_type));
 
-  // When Clients.get() is called on the script evaluation phase, the running
-  // status can be STARTING here.
+  // When Clients.matchAll() is called on the script evaluation phase, the
+  // running status can be STARTING here.
   if (running_status() != EmbeddedWorkerStatus::STARTING &&
       running_status() != EmbeddedWorkerStatus::RUNNING) {
     return;
   }
 
-  embedded_worker_->SendIpcMessage(
-      ServiceWorkerMsg_DidGetClient(request_id, *client_info));
+  std::move(callback).Run(std::move(*clients));
+}
+
+void ServiceWorkerVersion::OnGetClientFinished(
+    GetClientCallback callback,
+    blink::mojom::ServiceWorkerClientInfoPtr client_info) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // When Clients.get() is called on the script evaluation phase, the running
+  // status can be STARTING here.
+  if (running_status() != EmbeddedWorkerStatus::STARTING &&
+      running_status() != EmbeddedWorkerStatus::RUNNING) {
+    std::move(callback).Run(blink::mojom::ServiceWorkerClientInfo::New());
+    return;
+  }
+
+  std::move(callback).Run(std::move(client_info));
 }
 
 void ServiceWorkerVersion::OnSimpleEventFinished(
