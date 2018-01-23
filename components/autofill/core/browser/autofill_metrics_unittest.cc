@@ -1513,7 +1513,8 @@ TEST_F(AutofillMetricsTest, QualityMetrics_BasedOnAutocomplete) {
       std::make_unique<TestFormStructure>(form);
   TestFormStructure* form_structure_ptr = form_structure.get();
   form_structure->DetermineHeuristicTypes(nullptr /* ukm_recorder */);
-  autofill_manager_->form_structures()->push_back(std::move(form_structure));
+  (*autofill_manager_->form_structures())[form_structure->form_signature()] =
+      std::move(form_structure);
 
   AutofillQueryResponseContents response;
   // Server response will match with autocomplete.

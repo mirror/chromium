@@ -2980,6 +2980,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_ComponentizedNumbers) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3008,7 +3009,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_ComponentizedNumbers) {
     EXPECT_EQ(base::string16(), response_data.fields[7].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3067,6 +3070,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_WholeNumbers) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3091,7 +3095,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_WholeNumbers) {
     EXPECT_EQ(base::string16(), response_data.fields[3].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3160,6 +3166,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_FillPartsOnceOnly) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3189,7 +3196,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_FillPartsOnceOnly) {
     EXPECT_EQ(base::string16(), response_data.fields[7].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3258,6 +3267,7 @@ TEST_F(AutofillManagerTest,
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3283,7 +3293,9 @@ TEST_F(AutofillManagerTest,
     EXPECT_EQ(base::string16(), response_data.fields[4].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3344,6 +3356,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_BestEfforFilling) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3369,7 +3382,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_BestEfforFilling) {
     EXPECT_EQ(base::string16(), response_data.fields[3].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3426,6 +3441,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_FocusOnSecondPhoneNumber) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3453,7 +3469,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_FocusOnSecondPhoneNumber) {
     EXPECT_EQ(ASCIIToUTF16("6505554567"), response_data.fields[3].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3513,6 +3531,7 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_HiddenFieldShouldNotCount) {
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3537,7 +3556,9 @@ TEST_F(AutofillManagerTest, FillFirstPhoneNumber_HiddenFieldShouldNotCount) {
     EXPECT_EQ(ASCIIToUTF16("6505554567"), response_data.fields[3].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
@@ -3606,6 +3627,7 @@ TEST_F(AutofillManagerTest,
   std::vector<FormData> forms_copy;
   forms_copy.push_back(form_data_copy);
 
+  // Test with feature enabled.
   {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(
@@ -3658,7 +3680,9 @@ TEST_F(AutofillManagerTest,
     EXPECT_EQ(base::string16(), response_data.fields[8].value);
   }
 
+  // Test with feature disabled.
   {
+    autofill_manager_->ClearFormStructures();
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndDisableFeature(
         autofill::kAutofillRationalizeFieldTypePredictions);
