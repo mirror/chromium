@@ -34,6 +34,24 @@
       "revId": "0c2a3bb4967a4ef2f3dae9b1c1f4570d92ae7726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283d2c15_b521fbf8",
+        "filename": "base/test/trace_to_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-23T23:27:18Z",
+      "side": 1,
+      "message": "If we can do that and it fixes this issue, then it\u0027s a win-win, and this CL doesn\u0027t need to happen. Would you mind investigating that further?",
+      "parentUuid": "fb34943f_fb7fc386",
+      "revId": "0c2a3bb4967a4ef2f3dae9b1c1f4570d92ae7726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
