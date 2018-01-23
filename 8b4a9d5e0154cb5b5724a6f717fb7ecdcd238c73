@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "56aeae4b_9e4d7b09",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9894,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:32:57Z",
+      "side": 1,
+      "message": "We are the appropriate individuals :)\n\nI agree this should be changed; I didn\u0027t notice the missing article on the first pass. I like \"Browse the web in high contrast mode\" (\"the\" should also be lowercase in the titlecase version).",
+      "parentUuid": "d7bfd293_81dfb0ae",
+      "range": {
+        "startLine": 9894,
+        "startChar": 8,
+        "endLine": 9894,
+        "endChar": 40
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879afb68_c48a50df",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
