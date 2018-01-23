@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3eab6b2e_f13db783",
+        "filename": "ash/public/cpp/app_list/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-23T20:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a301aa7_bcac581d",
+      "range": {
+        "startLine": 2,
+        "startChar": 32,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "06b10e5ee48a434e686227e534d49a2070c649b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997c2348_f4570114",
         "filename": "ash/public/cpp/app_list/app_list_types.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T19:17:41Z",
       "side": 1,
       "message": "Style for enums in Chrome is now kFoo (see discussions on chromium-dev is you\u0027re curious).",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "06b10e5ee48a434e686227e534d49a2070c649b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91d9a98_338ba840",
+        "filename": "ash/public/cpp/app_list/app_list_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-23T20:19:30Z",
+      "side": 1,
+      "message": "Done. Thanks for this information. How about those in mojom files?",
+      "parentUuid": "997c2348_f4570114",
       "range": {
         "startLine": 15,
         "startChar": 2,
