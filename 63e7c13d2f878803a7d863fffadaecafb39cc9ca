@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eafab930_27cc7aee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T18:01:46Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with this API. If the search option is shown in the overflow instead of as an icon (e.g. if there\u0027s not enough screen width to show it), do these methods still get invoked?",
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0ef5cf_637953ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T18:01:46Z",
+      "side": 1,
+      "message": "nit: Query has been..",
+      "range": {
+        "startLine": 233,
+        "startChar": 25,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29912193_29781912",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T18:01:46Z",
+      "side": 1,
+      "message": "If there are no passwords because they\u0027ve all been filtered out due to a search, calling displayManageAccountLink() is a no-op, correct?",
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd426513_e52e2608",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T18:01:46Z",
+      "side": 1,
+      "message": "Why getUrl() here instead of getUserName()?",
+      "range": {
+        "startLine": 684,
+        "startChar": 53,
+        "endLine": 684,
+        "endChar": 59
+      },
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
