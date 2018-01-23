@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -282,6 +283,10 @@ FileSystemBackend* FileSystemContext::GetFileSystemBackend(
   if (found != backend_map_.end())
     return found->second;
   NOTREACHED() << "Unknown filesystem type: " << type;
+  LOG(ERROR) << "GetFileSystemBackend "
+             "Unknown filesytem type: " 
+             << type <<
+             " >>> " << base::debug::StackTrace().ToString() << "<<<";
   return NULL;
 }
 

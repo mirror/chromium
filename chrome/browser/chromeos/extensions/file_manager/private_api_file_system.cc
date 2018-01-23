@@ -856,6 +856,84 @@ void FileManagerPrivateInternalResolveIsolatedEntriesFunction::
   SendResponse(true);
 }
 
+bool FileManagerPrivateInternalCreateIsolatedEntriesFunction::RunAsync() {
+  using extensions::api::file_manager_private_internal::CreateIsolatedEntries::
+      Params;
+  const std::unique_ptr<Params> params(Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params);
+
+  scoped_refptr<storage::FileSystemContext> file_system_context =
+      file_manager::util::GetFileSystemContextForRenderFrameHost(
+          GetProfile(), render_frame_host());
+  DCHECK(file_system_context.get());
+
+  const storage::ExternalFileSystemBackend* external_backend =
+      file_system_context->external_backend();
+  DCHECK(external_backend);
+
+  file_manager::util::FileDefinitionList file_definition_list;
+  for (size_t i = 0; i < params->urls.size(); ++i) {
+    const FileSystemURL file_system_url =
+        file_system_context->CrackURL(GURL(params->urls[i]));
+    DCHECK(external_backend->CanHandleType(file_system_url.type()));
+    FileDefinition file_definition;
+
+    LOG(ERROR) << "CreateIsolatedEntries A: "
+               << file_system_url.DebugString();
+    storage::FileSystemURL isolated_url =
+        file_manager::util::CreateIsolatedURLFromVirtualPath(
+            *file_system_context, file_system_url.origin(),
+            file_system_url.virtual_path()
+
+                );
+    LOG(ERROR) << "CreateIsolatedEntries B: "
+               << isolated_url.DebugString();
+
+    DCHECK(isolated_url.is_valid());
+
+    file_definition.virtual_path = isolated_url.virtual_path();
+    // The API only supports isolated files. It still works for directories,
+    // as the value is ignored for existing entries.
+    file_definition.is_directory = false;
+    file_definition_list.push_back(file_definition);
+  }
+
+  file_manager::util::ConvertFileDefinitionListToEntryDefinitionList(
+      GetProfile(), extension_->id(),
+      file_definition_list,  // Safe, since copied internally.
+      base::Bind(
+          &FileManagerPrivateInternalCreateIsolatedEntriesFunction::
+              RunAsyncAfterConvertFileDefinitionListToEntryDefinitionList,
+          this));
+  return true;
+}
+
+void FileManagerPrivateInternalCreateIsolatedEntriesFunction::
+    RunAsyncAfterConvertFileDefinitionListToEntryDefinitionList(
+        std::unique_ptr<file_manager::util::EntryDefinitionList>
+            entry_definition_list) {
+  LOG(ERROR) << "CreateIsolatedEntries C";
+  using extensions::api::file_manager_private_internal::EntryDescription;
+  std::vector<EntryDescription> entries;
+
+  for (const auto& definition : *entry_definition_list) {
+    if (definition.error != base::File::FILE_OK) {
+      LOG(ERROR) << "CreateIsolatedEntries C2: definition.error";
+      continue;
+    }
+    EntryDescription entry;
+    entry.file_system_name = definition.file_system_name;
+    entry.file_system_root = definition.file_system_root_url;
+    entry.file_full_path = "/" + definition.full_path.AsUTF8Unsafe();
+    entry.file_is_directory = definition.is_directory;
+    entries.push_back(std::move(entry));
+  }
+
+  results_ = extensions::api::file_manager_private_internal::
+      CreateIsolatedEntries::Results::Create(entries);
+  SendResponse(true);
+}
+
 FileManagerPrivateInternalComputeChecksumFunction::
     FileManagerPrivateInternalComputeChecksumFunction()
     : digester_(new drive::util::FileStreamMd5Digester()) {
