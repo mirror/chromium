@@ -22,6 +22,30 @@
       "revId": "1126981939358b079809eca0f558132d3130162a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c8adce_b34bf8dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-23T21:54:48Z",
+      "side": 1,
+      "message": "Definitely seems safer to use the WeakReference. Made mWebContents protected instead since I only want it exposed to subclasses anyway.",
+      "parentUuid": "81b704a7_0af8ff73",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 27
+      },
+      "revId": "1126981939358b079809eca0f558132d3130162a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
