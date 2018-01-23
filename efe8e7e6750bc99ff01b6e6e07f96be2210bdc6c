@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343b6046_e01974c7",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ScreenOrientationListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-23T13:58:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to comment out the other annotations.",
+      "revId": "efe8e7e6750bc99ff01b6e6e07f96be2210bdc6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
