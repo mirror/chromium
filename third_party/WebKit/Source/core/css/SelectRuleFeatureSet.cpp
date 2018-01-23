@@ -38,7 +38,7 @@ namespace blink {
 
 void SelectRuleFeatureSet::CollectFeaturesFromSelectorList(
     const CSSSelectorList& list) {
-  for (const CSSSelector* selector = list.First(); selector;
+  for (const CSSSelector* selector = list.FirstInMatchesTransform(); selector;
        selector = CSSSelectorList::Next(*selector)) {
     for (const CSSSelector* component = selector; component;
          component = component->TagHistory()) {
