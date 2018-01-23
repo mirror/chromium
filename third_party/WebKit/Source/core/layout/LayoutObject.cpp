@@ -1013,7 +1013,8 @@ LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
     object = SpannerPlaceholder()->ContainingBlock();
   } else {
     while (object && ((object->IsInline() && !object->IsAtomicInlineLevel()) ||
-                      !object->IsLayoutBlock())) {
+                      !object->IsLayoutBlock() || object->IsTableSection() ||
+                      object->IsTableRow() || object->IsLayoutTableCol())) {
       if (skip_info)
         skip_info->Update(*object);
       object = object->Parent();
