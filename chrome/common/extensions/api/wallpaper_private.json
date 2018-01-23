@@ -266,6 +266,53 @@
             "$ref": "WallpaperSource"
           }
         ]
+      },
+      {
+        "name": "getCollectionNames",
+        "type": "function",
+        "description": "Gets the list of collection names from the backend service. A collection is a category such as Art, Landscape etc.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "function",
+            "name": "callback",
+            "description": "Function called upon completion.",
+            "parameters": [
+              {
+                "type": "object",
+                "name": "collectionNames",
+                "additionalProperties": {"type": "string"}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getImagesInfo",
+        "type": "function",
+        "description": "Gets wallpaper related info (url, description etc.) for a particular collection (ie. category) from the backend service.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "collectionId",
+            "description": "The id of the collection whose info is requested."
+          },
+          {
+            "type": "function",
+            "name": "callback",
+            "description": "Function called upon completion.",
+            "parameters": [
+              {
+                "type": "array",
+                "name": "imagesInfo",
+                "items": {"type": "object",
+                          "additionalProperties": {"type": "string"}
+                          }
+              }
+            ]
+          }
+        ]
       }
     ],
     "events": [
