@@ -16,6 +16,24 @@
       "revId": "52451432f5b069f26b3df596c78f4580f4cf4539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a625e33_8f6e958d",
+        "filename": "pdf/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-23T19:27:50Z",
+      "side": 1,
+      "message": "No. The reason range_set.h has PDF_EXPORT is because it is needed for pdf_unittests. It should not actually be exported otherwise. To make up for that, GN has the \"public\" header restriction to enforce what can be used from outside of this .gn file. If someone tries to use range_set.h from outside of this file, \"gn check\" would fail.\n\nFor reference, look for \"public\" on https://chromium.googlesource.com/chromium/src/+/master/docs/component_build.md which describes this procedure.",
+      "parentUuid": "62e380b7_d887c6c1",
+      "revId": "52451432f5b069f26b3df596c78f4580f4cf4539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
