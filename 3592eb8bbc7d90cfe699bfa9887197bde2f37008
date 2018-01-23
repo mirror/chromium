@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d82bc467_c231b88d",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T19:15:10Z",
+      "side": 1,
+      "message": "That addresses my concern, thanks!",
+      "parentUuid": "ff5f78c1_972eb211",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec5b6dd_0f7ab1a9",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 1
