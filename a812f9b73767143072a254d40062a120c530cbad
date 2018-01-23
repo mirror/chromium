@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2af08a0a_d9f816bf",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T08:58:43Z",
+      "side": 1,
+      "message": "It looks like the pattern for showing bubbles is for the function ShowBubble to return void and have the test access the |menu_bubble_|.\n\nSee:\n* profile_chooser_view\n* ime_warning_bubble_view (https://cs.chromium.org/chromium/src/chrome/browser/ui/views/ime/ime_warning_bubble_view.h?rcl\u003de712b35b1db176bf4757164cf6a5754e1b1e2518\u0026l\u003d54)\netc\n\nSo:\n1. Change the function ShowBubble to return void.\n2. Make the test DiceAccountsMenuTest a friend of DiceAccountsMenuTest. Add a function DiceAccountsMenuTest::GetDiceMenuWidget that returns DiceAccountsMenu::menu_bubble_-\u003eGetWidget(). Use it from your tests.",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "a812f9b73767143072a254d40062a120c530cbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a016a74f_0e38f57a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T08:58:43Z",
+      "side": 1,
+      "message": "Current tests do not create dice user menus with accounts, so we do not know is that works or not. Please add a test that creates a DiceAccountsMenu with at least one account.",
+      "range": {
+        "startLine": 73,
+        "startChar": 33,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "a812f9b73767143072a254d40062a120c530cbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
