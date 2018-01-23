@@ -124,6 +124,24 @@
       "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d2ef34_e266d7c9",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T14:40:47Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2a6eb273_c518202f",
+      "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
