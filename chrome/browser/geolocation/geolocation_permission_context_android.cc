@@ -146,23 +146,6 @@ void GeolocationPermissionContextAndroid::RequestPermission(
       web_contents, id, requesting_frame_origin, user_gesture, callback);
 }
 
-void GeolocationPermissionContextAndroid::CancelPermissionRequest(
-    content::WebContents* web_contents,
-    const PermissionRequestID& id) {
-  // TODO(timloh): This could cancel a infobar from an unrelated request.
-  if (permission_update_infobar_) {
-    permission_update_infobar_->RemoveSelf();
-    permission_update_infobar_ = nullptr;
-  }
-
-  if (id == location_settings_dialog_request_id_) {
-    location_settings_dialog_request_id_ = PermissionRequestID(0, 0, 0);
-    location_settings_dialog_callback_.Reset();
-  }
-
-  GeolocationPermissionContext::CancelPermissionRequest(web_contents, id);
-}
-
 void GeolocationPermissionContextAndroid::UserMadePermissionDecision(
     const PermissionRequestID& id,
     const GURL& requesting_origin,
