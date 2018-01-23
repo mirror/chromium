@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/logging.h"
 #include "build/build_config.h"
 
 // The entry point for all invocations of Chromium, browser and renderer. On
@@ -14,5 +15,6 @@ int ChromeMain(int argc, const char** argv);
 }
 
 int main(int argc, const char** argv) {
+  LOG(ERROR) << "Hello chrome_exe_main_erua!!!";
   return ChromeMain(argc, argv);
 }
