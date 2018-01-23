@@ -18,6 +18,11 @@ class ProxyResolutionService;
 
 namespace cronet {
 
+// Ensure that one time initialization of Cronet global state is done. Can be
+// called from any thread. The initalization is performed on initialization
+// thread.
+void EnsureInitialized();
+
 // Returns true when running on initialization thread.
 // Only callable after initialization thread is started.
 bool OnInitThread();
@@ -32,6 +37,10 @@ std::unique_ptr<net::ProxyConfigService> CreateProxyConfigService(
 std::unique_ptr<net::ProxyResolutionService> CreateProxyService(
     std::unique_ptr<net::ProxyConfigService> proxy_config_service,
     net::NetLog* net_log);
+
+// Creates default User-Agent request value, combining optional
+// |partial_user_agent| with system-dependent values.
+std::string CreateDefaultUserAgent(const std::string& partial_user_agent);
 
 }  // namespace cronet
 
