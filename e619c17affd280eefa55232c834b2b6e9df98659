@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783582f8_05e20c9b",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-23T18:01:04Z",
+      "side": 1,
+      "message": "nit: auto (to match the other CL)",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "e619c17affd280eefa55232c834b2b6e9df98659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3055938_1d22ff38",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-23T18:01:04Z",
+      "side": 1,
+      "message": "Can this ever legitimately be null? If not, we shouldn\u0027t check it.",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "e619c17affd280eefa55232c834b2b6e9df98659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562aa45f_437d84fa",
+        "filename": "content/public/gpu/content_gpu_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-23T18:01:04Z",
+      "side": 1,
+      "message": "nit: IO",
+      "range": {
+        "startLine": 47,
+        "startChar": 24,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "e619c17affd280eefa55232c834b2b6e9df98659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
