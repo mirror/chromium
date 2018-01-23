@@ -20,6 +20,7 @@
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/mus_util.h"
+#include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
@@ -230,9 +231,8 @@ gfx::Rect RenderWidgetHostViewGuest::GetBoundsInRootWindow() {
   return GetViewBounds();
 }
 
-namespace {
-
-RenderWidgetHostViewBase* GetRootView(RenderWidgetHostViewBase* rwhv) {
+RenderWidgetHostViewBase* RenderWidgetHostViewGuest::GetRootView(
+    RenderWidgetHostViewBase* rwhv) {
   // If we're a pdf in a WebView, we could have nested guest views here.
   while (rwhv && rwhv->IsRenderWidgetHostViewGuest()) {
     rwhv = static_cast<RenderWidgetHostViewGuest*>(rwhv)
@@ -249,8 +249,6 @@ RenderWidgetHostViewBase* GetRootView(RenderWidgetHostViewBase* rwhv) {
   }
   return rwhv;
 }
-
-}  // namespace
 
 gfx::PointF RenderWidgetHostViewGuest::TransformPointToRootCoordSpaceF(
     const gfx::PointF& point) {
@@ -329,6 +327,10 @@ void RenderWidgetHostViewGuest::RenderProcessGone(
 void RenderWidgetHostViewGuest::Destroy() {
   if (platform_view_)  // The platform view might have been destroyed already.
     platform_view_->Destroy();
+
+  RenderWidgetHostViewBase* root_view = GetRootView(this);
+  if (root_view)
+    root_view->GetCursorManager()->ViewBeingDestroyed(this);
 
   // RenderWidgetHostViewChildFrame::Destroy destroys this object.
   RenderWidgetHostViewChildFrame::Destroy();
@@ -459,9 +461,9 @@ void RenderWidgetHostViewGuest::UpdateCursor(const WebCursor& cursor) {
   // and so we will always hit this code path.
   if (!guest_)
     return;
-  RenderWidgetHostViewBase* rwhvb = GetOwnerRenderWidgetHostView();
-  if (rwhvb)
-    rwhvb->UpdateCursor(cursor);
+  RenderWidgetHostViewBase* rwhvb = GetRootView(this);
+  if (rwhvb && rwhvb->GetCursorManager())
+    rwhvb->GetCursorManager()->UpdateCursor(this, cursor);
 }
 
 void RenderWidgetHostViewGuest::SetIsLoading(bool is_loading) {
