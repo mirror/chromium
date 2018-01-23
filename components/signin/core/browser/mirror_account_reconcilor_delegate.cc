@@ -4,14 +4,27 @@
 
 #include "components/signin/core/browser/mirror_account_reconcilor_delegate.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/logging.h"
 #include "components/signin/core/browser/account_reconcilor.h"
+#include "components/signin/core/browser/reconcilor_delegate_helper.h"
+
+namespace {
+constexpr base::TimeDelta kAccountReconcilorTimeout =
+    base::TimeDelta::FromSeconds(10);
+}
 
 namespace signin {
 
 MirrorAccountReconcilorDelegate::MirrorAccountReconcilorDelegate(
-    SigninManagerBase* signin_manager)
-    : signin_manager_(signin_manager) {
+    SigninManagerBase* signin_manager,
+    std::unique_ptr<ReconcilorDelegateHelper> helper,
+    bool is_child_account)
+    : signin_manager_(signin_manager),
+      helper_(std::move(helper)),
+      is_child_account_(is_child_account) {
   DCHECK(signin_manager_);
   signin_manager_->AddObserver(this);
 }
@@ -55,5 +68,24 @@ void MirrorAccountReconcilorDelegate::GoogleSignedOut(
     const std::string& username) {
   reconcilor()->DisableReconcile(true /* logout_all_gaia_accounts */);
 }
+
+#if defined(OS_CHROMEOS)
+base::TimeDelta MirrorAccountReconcilorDelegate::GetReconcileTimeout() const {
+  if (is_child_account_)
+    return kAccountReconcilorTimeout;
+
+  // Do not set a reconciliation timeout.
+  return base::TimeDelta::Max();
+}
+
+void MirrorAccountReconcilorDelegate::OnReconcileTimeout() {
+  // As of now, this method should only be called for Unicorn users.
+  if (!is_child_account_)
+    return;
+
+  helper_->ForceUserOnlineSignIn();
+  helper_->AttemptUserExit();
+}
+#endif
 
 }  // namespace signin

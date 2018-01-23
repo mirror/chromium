@@ -68,6 +68,8 @@ static_library("browser") {
     "profile_management_switches.h",
     "profile_oauth2_token_service.cc",
     "profile_oauth2_token_service.h",
+    "reconcilor_delegate_helper.cc",
+    "reconcilor_delegate_helper.h",
     "signin_client.cc",
     "signin_client.h",
     "signin_cookie_changed_subscription.cc",
