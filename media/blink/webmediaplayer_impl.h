@@ -121,6 +121,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(blink::WebLayer* web_layer) override;
   void UnregisterContentsLayer(blink::WebLayer* web_layer) override;
+  void OnSurfaceIdUpdated(uint32_t client_id,
+                          uint32_t frame_sink_id,
+                          uint32_t parent_id,
+                          base::UnguessableToken nonce) override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
@@ -132,7 +136,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
-  void PictureInPicture() override;
+  void EnterPictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -867,6 +871,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  // Keeps track of the components of FrameSinkId and SurfaceId for picture in
+  // picture. This is used to route the video to be shown in the picture in
+  // picture window.
+  viz::FrameSinkId frame_sink_id_;
+  uint32_t parent_id_;
+  base::UnguessableToken nonce_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };
