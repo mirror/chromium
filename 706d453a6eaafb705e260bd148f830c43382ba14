@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92d7d18c_ae0819ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-23T19:31:38Z",
+      "side": 1,
+      "message": "This method feels like it would be safe to call more than once if someone made future changes to the class.  The addObserver() has persistent implications beyond the initial query.  Should we pull the observer out and leave that back up in initialize()?",
+      "range": {
+        "startLine": 740,
+        "startChar": 17,
+        "endLine": 740,
+        "endChar": 37
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4212ae57_1e056b77",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-23T19:31:38Z",
+      "side": 1,
+      "message": "Can you add a comment saying this will fail if the cache hasn\u0027t been loaded?  It\u0027s unexpected from the API standpoint.  I\u0027m ok with removing the method for now though until we need it.  I think it\u0027ll be easier to add once this backend always hits the DB?",
+      "range": {
+        "startLine": 256,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 56
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7485c64_925fff74",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-23T19:31:38Z",
+      "side": 1,
+      "message": "Is this ok or should we be persisting the remove request?  You could probably just have a complete closure (that you can share for all API calls) to re-call the calling method if the state isn\u0027t loaded.  Is this be a problem for pause/resume too?",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 11
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269b7c71_a5e4d2fe",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-23T19:31:38Z",
+      "side": 1,
+      "message": "Can we add a comment/TODO to start clearing once we can handle the open case without the cached items?",
+      "range": {
+        "startLine": 376,
+        "startChar": 24,
+        "endLine": 376,
+        "endChar": 36
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071bad2a_27f69b48",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-23T19:31:38Z",
+      "side": 1,
+      "message": "This check feels redundant with the ones in OnOfflinePagesLoaded and OnRequestsLoaded.  Does it make sense to do it only here?  I guess the downside is you\u0027ll have a larger intermediate list that you could have pruned earlier, but you want a check here in case something happened to an offline item while you were getting all of the requests.",
+      "range": {
+        "startLine": 519,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 15
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
