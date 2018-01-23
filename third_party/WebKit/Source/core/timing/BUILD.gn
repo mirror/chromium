@@ -20,6 +20,7 @@ blink_core_sources("timing") {
     "PerformanceLongTaskTiming.h",
     "PerformanceMark.cpp",
     "PerformanceMark.h",
+    "PerformanceMeasure.cpp",
     "PerformanceMeasure.h",
     "PerformanceNavigation.cpp",
     "PerformanceNavigation.h",

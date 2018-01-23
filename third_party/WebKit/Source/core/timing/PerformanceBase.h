@@ -32,6 +32,7 @@
 #ifndef PerformanceBase_h
 #define PerformanceBase_h
 
+#include "bindings/core/v8/string_or_double.h"
 #include "core/CoreExport.h"
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/dom/events/EventTarget.h"
@@ -59,13 +60,13 @@ class SecurityOrigin;
 class UserTiming;
 class ScriptState;
 class ScriptValue;
+class StringOrDoubleOrPerformanceMeasureOptions;
 class SubTaskAttribution;
 class V8ObjectBuilder;
 
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 
 class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
-
  public:
   ~PerformanceBase() override;
 
@@ -134,10 +135,21 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   void clearMarks(const String& mark_name);
 
-  void measure(const String& measure_name,
-               const String& start_mark,
-               const String& end_mark,
-               ExceptionState&);
+  void measure(ScriptState*, const String& measure_name, ExceptionState&);
+
+  void measure(
+      ScriptState*,
+      const String& measure_name,
+      const StringOrDoubleOrPerformanceMeasureOptions& start_or_options,
+      ExceptionState&);
+
+  void measure(
+      ScriptState*,
+      const String& measure_name,
+      const StringOrDoubleOrPerformanceMeasureOptions& start_or_options,
+      const StringOrDouble& end,
+      ExceptionState&);
+
   void clearMeasures(const String& measure_name);
 
   void UnregisterPerformanceObserver(PerformanceObserver&);
@@ -163,33 +175,43 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
     kLoadEventStart = 7,
     kLoadEventEnd = 8,
     kOther = 9,
+    kNull = 10,
+    kTimeStamp = 11,
     kPerformanceMeasurePassedInParameterCount
   };
 
   static PerformanceMeasurePassedInParameterType
-  ToPerformanceMeasurePassedInParameterType(const String& s) {
-    // All passed-in objects will be stringified into this type.
-    if (s == "[object Object]")
-      return kObjectObject;
-    // The following names come from
-    // https://w3c.github.io/navigation-timing/#sec-PerformanceNavigationTiming.
-    if (s == "unloadEventStart")
-      return kUnloadEventStart;
-    if (s == "unloadEventEnd")
-      return kUnloadEventEnd;
-    if (s == "domInteractive")
-      return kDomInteractive;
-    if (s == "domContentLoadedEventStart")
-      return kDomContentLoadedEventStart;
-    if (s == "domContentLoadedEventEnd")
-      return kDomContentLoadedEventEnd;
-    if (s == "domComplete")
-      return kDomComplete;
-    if (s == "loadEventStart")
-      return kLoadEventStart;
-    if (s == "loadEventEnd")
-      return kLoadEventEnd;
-    return kOther;
+  ToPerformanceMeasurePassedInParameterType(const StringOrDouble& p) {
+    if (p.IsString()) {
+      const String& s = p.GetAsString();
+      // All passed-in objects will be stringified into this type.
+      if (s == "[object Object]")
+        return kObjectObject;
+      // The following names come from
+      // https://w3c.github.io/navigation-timing/#sec-PerformanceNavigationTiming.
+      if (s == "unloadEventStart")
+        return kUnloadEventStart;
+      if (s == "unloadEventEnd")
+        return kUnloadEventEnd;
+      if (s == "domInteractive")
+        return kDomInteractive;
+      if (s == "domContentLoadedEventStart")
+        return kDomContentLoadedEventStart;
+      if (s == "domContentLoadedEventEnd")
+        return kDomContentLoadedEventEnd;
+      if (s == "domComplete")
+        return kDomComplete;
+      if (s == "loadEventStart")
+        return kLoadEventStart;
+      if (s == "loadEventEnd")
+        return kLoadEventEnd;
+      return kOther;
+    }
+    if (p.IsNull()) {
+      return kNull;
+    }
+    DCHECK(p.IsDouble());
+    return kTimeStamp;
   }
 
   static bool AllowsTimingRedirect(const Vector<ResourceResponse>&,
@@ -209,6 +231,13 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
                                      ExecutionContext*);
 
   void AddPaintTiming(PerformancePaintTiming::PaintType, double start_time);
+
+  void measure(ScriptState*,
+               const String& measure_name,
+               const StringOrDouble& start,
+               const StringOrDouble& end,
+               const ScriptValue& detail,
+               ExceptionState&);
 
  protected:
   PerformanceBase(double time_origin, scoped_refptr<WebTaskRunner>);

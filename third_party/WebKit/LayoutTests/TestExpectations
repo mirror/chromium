@@ -1738,6 +1738,7 @@ crbug.com/711529 http/tests/workers/shared-worker-performance-timeline.html [ Ti
 
 # This test requires enabling the flag CustomUserTiming in a virtual test.
 crbug.com/758385 http/tests/performance-timing/custom-user-timing/po-customusertiming-mark.html [ Skip ]
+crbug.com/758385 http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html [ Skip ]
 
 # Expected failures during incremental implementation of mojo notification.
 crbug.com/595685 virtual/mojo-notifications/http/tests/notifications/click-dedicated-worker.html [ Skip ]
