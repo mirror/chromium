@@ -19,11 +19,11 @@
 #include "content/public/common/content_switches.h"
 #include "ui/accessibility/platform/ax_system_caret_win.h"
 #include "ui/base/view_prop.h"
+#include "ui/base/win/direct_manipulation.h"
 #include "ui/base/win/internal_constants.h"
 #include "ui/base/win/window_event_target.h"
 #include "ui/display/win/screen_win.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/win/direct_manipulation.h"
 
 namespace content {
 
@@ -72,10 +72,14 @@ HWND LegacyRenderWidgetHostHWND::GetParent() {
 
 void LegacyRenderWidgetHostHWND::Show() {
   ::ShowWindow(hwnd(), SW_SHOW);
+  if (direct_manipulation_helper_)
+    direct_manipulation_helper_->Activate(hwnd());
 }
 
 void LegacyRenderWidgetHostHWND::Hide() {
   ::ShowWindow(hwnd(), SW_HIDE);
+  if (direct_manipulation_helper_)
+    direct_manipulation_helper_->Deactivate(hwnd());
 }
 
 void LegacyRenderWidgetHostHWND::SetBounds(const gfx::Rect& bounds) {
@@ -84,8 +88,6 @@ void LegacyRenderWidgetHostHWND::SetBounds(const gfx::Rect& bounds) {
   ::SetWindowPos(hwnd(), NULL, bounds_in_pixel.x(), bounds_in_pixel.y(),
                  bounds_in_pixel.width(), bounds_in_pixel.height(),
                  SWP_NOREDRAW);
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->SetBounds(bounds_in_pixel);
 }
 
 void LegacyRenderWidgetHostHWND::MoveCaretTo(const gfx::Rect& bounds) {
@@ -94,6 +96,12 @@ void LegacyRenderWidgetHostHWND::MoveCaretTo(const gfx::Rect& bounds) {
 }
 
 void LegacyRenderWidgetHostHWND::OnFinalMessage(HWND hwnd) {
+  // Stop the animation observer when window close.
+  if (direct_manipulation_helper_) {
+    host_->RemoveCompositorAnimationObserver(
+        compositor_animation_observer_.get());
+  }
+
   if (host_) {
     host_->OnLegacyWindowDestroyed();
     host_ = NULL;
@@ -104,6 +112,24 @@ void LegacyRenderWidgetHostHWND::OnFinalMessage(HWND hwnd) {
 
   delete this;
 }
+
+// DirectManipulation needs pull gestures each frame while finger gesturing.
+class CompositorAnimationObserverForDirectManipulation
+    : public ui::CompositorAnimationObserver {
+ public:
+  CompositorAnimationObserverForDirectManipulation(
+      LegacyRenderWidgetHostHWND* window)
+      : window_(window) {}
+  void OnAnimationStep(base::TimeTicks timestamp) override {
+    window_->OnAnimationStep();
+  }
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+
+ private:
+  LegacyRenderWidgetHostHWND* window_;
+
+  DISALLOW_COPY_AND_ASSIGN(LegacyRenderWidgetHostHWND);
+};
 
 LegacyRenderWidgetHostHWND::LegacyRenderWidgetHostHWND(HWND parent)
     : mouse_tracking_enabled_(false), host_(nullptr) {
@@ -139,10 +165,13 @@ bool LegacyRenderWidgetHostHWND::Init() {
 
   // Direct Manipulation is enabled on Windows 10+. The CreateInstance function
   // returns NULL if Direct Manipulation is not available.
-  direct_manipulation_helper_ =
-      gfx::win::DirectManipulationHelper::CreateInstance();
-  if (direct_manipulation_helper_)
-    direct_manipulation_helper_->Initialize(hwnd());
+  direct_manipulation_helper_ = ui::DirectManipulationHelper::CreateInstance();
+  if (direct_manipulation_helper_) {
+    compositor_animation_observer_.reset(
+        new CompositorAnimationObserverForDirectManipulation(this));
+    direct_manipulation_helper_->Initialize(hwnd(),
+                                            GetWindowEventTarget(GetParent()));
+  }
 
   // Disable pen flicks (http://crbug.com/506977)
   base::win::DisableFlicks(hwnd());
@@ -276,12 +305,6 @@ LRESULT LegacyRenderWidgetHostHWND::OnMouseRange(UINT message,
       ret = ::DefWindowProc(GetParent(), message, w_param, l_param);
       handled = TRUE;
     }
-  }
-
-  if (direct_manipulation_helper_ &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
   }
   return ret;
 }
@@ -446,6 +469,32 @@ LRESULT LegacyRenderWidgetHostHWND::OnWindowPosChanged(UINT message,
   }
   SetMsgHandled(FALSE);
   return 0;
+}
+
+LRESULT LegacyRenderWidgetHostHWND::OnPointerHitTest(UINT message,
+                                                     WPARAM w_param,
+                                                     LPARAM l_param) {
+  if (!direct_manipulation_helper_)
+    return 0;
+  DCHECK(host_);
+
+  if (direct_manipulation_helper_->OnPointerHitTest(w_param))
+    host_->AddCompositorAnimationObserver(compositor_animation_observer_.get());
+
+  return 0;
+}
+
+void LegacyRenderWidgetHostHWND::OnAnimationStep() {
+  if (!direct_manipulation_helper_)
+    return;
+  DCHECK(host_);
+
+  if (direct_manipulation_helper_->OnAnimationStep()) {
+    host_->AddCompositorAnimationObserver(compositor_animation_observer_.get());
+  } else {
+    host_->RemoveCompositorAnimationObserver(
+        compositor_animation_observer_.get());
+  }
 }
 
 }  // namespace content
