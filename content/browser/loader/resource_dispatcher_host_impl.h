@@ -530,7 +530,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       ResourceRequesterInfo* requester_info,
       int routing_id,
       int request_id,
-      bool is_sync_load,
+      uint32_t url_loader_options,
       const network::ResourceRequest& request_data,
       network::mojom::URLLoaderRequest mojo_request,
       network::mojom::URLLoaderClientPtr url_loader_client,
@@ -561,7 +561,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   void BeginRequest(ResourceRequesterInfo* requester_info,
                     int request_id,
                     const network::ResourceRequest& request_data,
-                    bool is_sync_load,
+                    uint32_t url_loader_options,
                     int route_id,
                     network::mojom::URLLoaderRequest mojo_request,
                     network::mojom::URLLoaderClientPtr url_loader_client,
@@ -579,7 +579,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       scoped_refptr<ResourceRequesterInfo> requester_info,
       int request_id,
       const network::ResourceRequest& request_data,
-      bool is_sync_load,
+      uint32_t url_loader_options,
       int route_id,
       const net::HttpRequestHeaders& headers,
       network::mojom::URLLoaderRequest mojo_request,
@@ -598,14 +598,16 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int child_id,
       ResourceContext* resource_context,
       network::mojom::URLLoaderRequest mojo_request,
-      network::mojom::URLLoaderClientPtr url_loader_client);
+      network::mojom::URLLoaderClientPtr url_loader_client,
+      uint32_t url_loader_options);
 
   // Creates either MojoAsyncResourceHandler or AsyncResourceHandler.
   std::unique_ptr<ResourceHandler> CreateBaseResourceHandler(
       net::URLRequest* request,
       network::mojom::URLLoaderRequest mojo_request,
       network::mojom::URLLoaderClientPtr url_loader_client,
-      ResourceType resource_type);
+      ResourceType resource_type,
+      uint32_t url_loader_options);
 
   // Wraps |handler| in the standard resource handlers for normal resource
   // loading and navigation requests. This adds MimeTypeResourceHandler and
