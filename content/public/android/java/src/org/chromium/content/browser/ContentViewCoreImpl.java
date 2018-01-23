@@ -64,9 +64,9 @@ import java.util.List;
  * Implementation of the interface {@ContentViewCore}.
  */
 @JNINamespace("content")
-public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObserver,
-                                            SystemCaptioningBridge.SystemCaptioningBridgeListener,
-                                            WindowAndroidProvider, ImeEventObserver {
+public class ContentViewCoreImpl
+        implements ContentViewCore, DisplayAndroidObserver,
+                   SystemCaptioningBridge.SystemCaptioningBridgeListener, ImeEventObserver {
     private static final String TAG = "cr_ContentViewCore";
 
     /**
@@ -323,7 +323,8 @@ public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObser
         ImeAdapterImpl imeAdapter = ImeAdapterImpl.create(
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         imeAdapter.addEventObserver(this);
-        mTextSuggestionHost = new TextSuggestionHost(this);
+        mTextSuggestionHost =
+                new TextSuggestionHost(mContext, mWebContents, windowAndroid, mContainerView);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
