@@ -57,6 +57,7 @@ class RemoteSuggestionsFetcherImpl : public RemoteSuggestionsFetcher {
 
   const std::string& GetLastStatusForDebugging() const override;
   const std::string& GetLastJsonForDebugging() const override;
+  bool WasLastFetchAuthenticatedForDebugging() const override;
   const GURL& GetFetchUrlForDebugging() const override;
 
   // Overrides internal clock for testing purposes.
@@ -120,6 +121,7 @@ class RemoteSuggestionsFetcherImpl : public RemoteSuggestionsFetcher {
   // Info on the last finished fetch.
   std::string last_status_;
   std::string last_fetch_json_;
+  bool last_fetch_authenticated_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsFetcherImpl);
 };
