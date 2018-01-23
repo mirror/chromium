@@ -3417,6 +3417,10 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kVoiceSearchOnLocalNtp)},
 #endif  // !defined(OS_ANDROID)
 
+    {"pwa-ambient-badge", flag_descriptions::kPwaAmbientBadgeName,
+     flag_descriptions::kPwaAmbientBadgeDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kPwaAmbientBadge)},
+
     {"click-to-open-pdf", flag_descriptions::kClickToOpenPDFName,
      flag_descriptions::kClickToOpenPDFDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kClickToOpenPDFPlaceholder)},
