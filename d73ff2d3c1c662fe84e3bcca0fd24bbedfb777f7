@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03fe78b1_2352ae75",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T05:01:04Z",
+      "side": 1,
+      "message": "Done - but I\u0027ve added a default arg, consistent with ElideHost. The rationale being that only Mac code should have to worry about all this crud.",
+      "parentUuid": "4e56cc5f_780f6b13",
+      "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0794d820_c4d42bf4",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-22T21:42:27Z",
       "side": 1,
       "message": "If we passed ElideUrl() an arg for this instead, we\u0027d maybe also want to pass an arg here?  I dunno.",
+      "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7629226e_37033f30",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T05:01:04Z",
+      "side": 1,
+      "message": "\u003e If we passed ElideUrl() an arg for this instead, we\u0027d maybe also want to pass an arg here?  I dunno.\n\nHere it didn\u0027t feel right. There\u0027s only one consumer of this method outside of tests -- chrome/browser/vr/elements/url_bar_texture.cc . I\u0027ve been trying not to bother non-Mac code with the typesetter stuff. This function has an `out` parameter, so I can\u0027t make a signature with a trailing default argument.",
+      "parentUuid": "0794d820_c4d42bf4",
       "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
