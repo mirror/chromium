@@ -282,21 +282,7 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
 
 namespace gpu {
 
-CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
-  // When command buffer is compiled as a standalone library, the process might
-  // not have a Java environment.
-  if (base::android::IsVMInitialized()) {
-    gpu_info->machine_model_name =
-        base::android::BuildInfo::GetInstance()->model();
-  }
-
-  // At this point GL bindings have been initialized already.
-  CollectInfoResult result = CollectGraphicsInfoGL(gpu_info);
-  gpu_info->basic_info_state = result;
-  gpu_info->context_info_state = result;
-  return result;
-}
-
+namespace internal {
 CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   // When command buffer is compiled as a standalone library, the process might
   // not have a Java environment.
@@ -310,6 +296,22 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   CollectInfoResult result = CollectDriverInfo(gpu_info);
   if (result == kCollectInfoSuccess)
     result = CollectDriverInfoGL(gpu_info);
+  gpu_info->basic_info_state = result;
+  gpu_info->context_info_state = result;
+  return result;
+}
+}  // namespace internal
+
+CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
+  // When command buffer is compiled as a standalone library, the process might
+  // not have a Java environment.
+  if (base::android::IsVMInitialized()) {
+    gpu_info->machine_model_name =
+        base::android::BuildInfo::GetInstance()->model();
+  }
+
+  // At this point GL bindings have been initialized already.
+  CollectInfoResult result = CollectGraphicsInfoGL(gpu_info);
   gpu_info->basic_info_state = result;
   gpu_info->context_info_state = result;
   return result;

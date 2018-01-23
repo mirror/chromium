@@ -9,16 +9,7 @@
 
 namespace gpu {
 
-CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
-  DCHECK(gpu_info);
-
-  TRACE_EVENT0("gpu", "gpu_info_collector::CollectGraphicsInfo");
-
-  CollectInfoResult result = CollectGraphicsInfoGL(gpu_info);
-  gpu_info->context_info_state = result;
-  return result;
-}
-
+namespace internal {
 CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   DCHECK(gpu_info);
 
@@ -33,6 +24,17 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   }
 
   return gpu_info->basic_info_state;
+}
+}  // namespace internal
+
+CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
+  DCHECK(gpu_info);
+
+  TRACE_EVENT0("gpu", "gpu_info_collector::CollectGraphicsInfo");
+
+  CollectInfoResult result = CollectGraphicsInfoGL(gpu_info);
+  gpu_info->context_info_state = result;
+  return result;
 }
 
 CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {

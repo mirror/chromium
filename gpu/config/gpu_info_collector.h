@@ -15,13 +15,27 @@ namespace angle {
 struct SystemInfo;
 }
 
+namespace base {
+class CommandLine;
+}
+
 namespace gpu {
+
+namespace internal {
 
 // Collects basic GPU info without creating a GL/DirectX context (and without
 // the danger of crashing), including vendor_id and device_id.
 // This is called at browser process startup time.
 // The subset each platform collects may be different.
-GPU_EXPORT CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info);
+CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info);
+
+}  // namespace internal
+
+// Similar to above, except it handles the case where kUseGL is set to use
+// a software renderer.
+GPU_EXPORT CollectInfoResult
+CollectBasicGraphicsInfo(const base::CommandLine* command_line,
+                         GPUInfo* gpu_info);
 
 // Create a GL/DirectX context and collect related info.
 // This is called at GPU process startup time.

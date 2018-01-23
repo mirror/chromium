@@ -6,13 +6,15 @@
 
 namespace gpu {
 
-CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
+namespace internal {
+CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   // TODO(crbug.com/707031): Implement this.
   NOTIMPLEMENTED();
   return kCollectInfoFatalFailure;
 }
+}  // namespace internal
 
-CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
+CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   // TODO(crbug.com/707031): Implement this.
   NOTIMPLEMENTED();
   return kCollectInfoFatalFailure;

@@ -57,6 +57,54 @@ void DeviceIDToVendorAndDevice(const std::wstring& id,
 
 }  // namespace anonymous
 
+namespace internal {
+CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
+  TRACE_EVENT0("gpu", "CollectPreliminaryGraphicsInfo");
+
+  DCHECK(gpu_info);
+
+  // nvd3d9wrap.dll is loaded into all processes when Optimus is enabled.
+  HMODULE nvd3d9wrap = GetModuleHandleW(L"nvd3d9wrap.dll");
+  gpu_info->optimus = nvd3d9wrap != NULL;
+
+  // Taken from http://www.nvidia.com/object/device_ids.html
+  DISPLAY_DEVICE dd;
+  dd.cb = sizeof(DISPLAY_DEVICE);
+  std::wstring id;
+  for (int i = 0; EnumDisplayDevices(NULL, i, &dd, 0); ++i) {
+    if (dd.StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) {
+      id = dd.DeviceID;
+      break;
+    }
+  }
+
+  if (id.length() <= 20) {
+    // EnumDisplayDevices returns an empty id when called inside a remote
+    // session (unless that session happens to be attached to the console). In
+    // that case, we do not want to fail, as we should be able to grab the
+    // device/vendor ids from the D3D context, below. Therefore, only fail if
+    // the device string is not one of either the RDP mirror driver "RDPUDD
+    // Chained DD" or the citrix display driver.
+    if (wcscmp(dd.DeviceString, L"RDPUDD Chained DD") != 0 &&
+        wcscmp(dd.DeviceString, L"Citrix Systems Inc. Display Driver") != 0) {
+      gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
+      return kCollectInfoNonFatalFailure;
+    }
+  }
+
+  DeviceIDToVendorAndDevice(id, &gpu_info->gpu.vendor_id,
+                            &gpu_info->gpu.device_id);
+  // TODO(zmo): we only need to call CollectDriverInfoD3D() if we use ANGLE.
+  if (!CollectDriverInfoD3D(id, gpu_info)) {
+    gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
+    return kCollectInfoNonFatalFailure;
+  }
+
+  gpu_info->basic_info_state = kCollectInfoSuccess;
+  return kCollectInfoSuccess;
+}
+}  // namespace internal
+
 #if defined(GOOGLE_CHROME_BUILD) && defined(OFFICIAL_BUILD)
 // This function has a real implementation for official builds that can
 // be found in src/third_party/amd.
@@ -274,52 +322,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   }
 
   gpu_info->context_info_state = kCollectInfoSuccess;
-  return kCollectInfoSuccess;
-}
-
-CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
-  TRACE_EVENT0("gpu", "CollectPreliminaryGraphicsInfo");
-
-  DCHECK(gpu_info);
-
-  // nvd3d9wrap.dll is loaded into all processes when Optimus is enabled.
-  HMODULE nvd3d9wrap = GetModuleHandleW(L"nvd3d9wrap.dll");
-  gpu_info->optimus = nvd3d9wrap != NULL;
-
-  // Taken from http://www.nvidia.com/object/device_ids.html
-  DISPLAY_DEVICE dd;
-  dd.cb = sizeof(DISPLAY_DEVICE);
-  std::wstring id;
-  for (int i = 0; EnumDisplayDevices(NULL, i, &dd, 0); ++i) {
-    if (dd.StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) {
-      id = dd.DeviceID;
-      break;
-    }
-  }
-
-  if (id.length() <= 20) {
-    // EnumDisplayDevices returns an empty id when called inside a remote
-    // session (unless that session happens to be attached to the console). In
-    // that case, we do not want to fail, as we should be able to grab the
-    // device/vendor ids from the D3D context, below. Therefore, only fail if
-    // the device string is not one of either the RDP mirror driver "RDPUDD
-    // Chained DD" or the citrix display driver.
-    if (wcscmp(dd.DeviceString, L"RDPUDD Chained DD") != 0 &&
-        wcscmp(dd.DeviceString, L"Citrix Systems Inc. Display Driver") != 0) {
-      gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
-      return kCollectInfoNonFatalFailure;
-    }
-  }
-
-  DeviceIDToVendorAndDevice(id, &gpu_info->gpu.vendor_id,
-                            &gpu_info->gpu.device_id);
-  // TODO(zmo): we only need to call CollectDriverInfoD3D() if we use ANGLE.
-  if (!CollectDriverInfoD3D(id, gpu_info)) {
-    gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
-    return kCollectInfoNonFatalFailure;
-  }
-
-  gpu_info->basic_info_state = kCollectInfoSuccess;
   return kCollectInfoSuccess;
 }
 

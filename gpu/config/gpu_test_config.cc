@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/sys_info.h"
 #include "gpu/config/gpu_info.h"
@@ -244,9 +245,11 @@ bool GPUTestBotConfig::Matches(const std::string& config_data) const {
 
 bool GPUTestBotConfig::LoadCurrentConfig(const GPUInfo* gpu_info) {
   bool rt;
-  if (gpu_info == NULL) {
+  if (gpu_info == nullptr) {
     GPUInfo my_gpu_info;
-    CollectInfoResult result = CollectBasicGraphicsInfo(&my_gpu_info);
+    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+    CollectInfoResult result =
+        CollectBasicGraphicsInfo(command_line, &my_gpu_info);
     if (result != kCollectInfoSuccess) {
       LOG(ERROR) << "Fail to identify GPU";
       rt = false;
@@ -296,4 +299,3 @@ bool GPUTestBotConfig::GpuBlacklistedOnBot() {
 }
 
 }  // namespace gpu
-
