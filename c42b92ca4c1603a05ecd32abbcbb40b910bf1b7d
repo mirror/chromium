@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39aa3bd7_a5a8fba8",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:26:30Z",
+      "side": 1,
+      "message": "nit: Maybe we should reset() client_ and MaybeDeleteSelf() in this failure case?",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10e615d_7c2b9b84",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:26:30Z",
+      "side": 1,
+      "message": "I think you want separate error handlers for binding_ and client_. Keep in mind that detecting a connection error DOES NOT unbind the object, so you still want to e.g. client_.reset() in the client_\u0027s error handler. Both handlers would end by invoking MaybeDeleteSelf.",
+      "range": {
+        "startLine": 225,
+        "startChar": 7,
+        "endLine": 225,
+        "endChar": 24
+      },
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c794499_97b4190f",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:26:30Z",
+      "side": 1,
+      "message": "There\u0027s no way it\u0027s safe to access a RenderProcessHost OR BrowserContext on the IO thread, so you\u0027ll need to pass the process ID and any other data in at this point rather than extracting it within GetExtensionInfo.\n\nWe should also at least file a bug and add a TODO to clean this up if we\u0027re going to hop to the IO thread just to read InfoMap data we already have on the main thread. I agree that something like an InfoProxy would be worse, but I think we could still fix existing code and tests in a more elegant manner with some extra time investment.",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fc9b07_63e758f8",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:26:30Z",
+      "side": 1,
+      "message": "Maybe this comment should be accompanied by a DCHECK_CURRENTLY_ON?",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
