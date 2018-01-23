@@ -172,30 +172,38 @@ TEST_F(SafeBrowsingApiHandlerUtilTest, NoSubresourceFilterSubTypes) {
 TEST_F(SafeBrowsingApiHandlerUtilTest, SubresourceFilterSubTypes) {
   typedef SubresourceFilterLevel Level;
   typedef SubresourceFilterType Type;
+  // If possible, keep these test cases identical to
+  // V4GetHashProtocolManagerTest.TestParseSubresourceFilterMetadata.
   const struct {
-    const char* abusive_type;
-    const char* bas_type;
+    std::vector<std::pair<const char*, const char*>> metadata;
     SubresourceFilterMatch expected_match;
   } test_cases[] = {
-      {"warn",
-       "enforce",
-       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
-      {nullptr,
-       "warn",
-       {{{Type::BETTER_ADS, Level::WARN}}, base::KEEP_FIRST_OF_DUPES}},
-      {"asdf",
-       "",
-       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
-      {"warn",
-       nullptr,
-       {{{Type::ABUSIVE, Level::WARN}}, base::KEEP_FIRST_OF_DUPES}},
-      {nullptr, nullptr, {}},
-      {"",
-       "",
-       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
+      {{}, {}},
+      {{{"bleh", "asdf"}}, {}},
+      {{{"nothing", ""}, {"stillnothing", ""}}, {}},
+      {{{"a", ""}}, {{{Type::ABUSIVE, Level::ENFORCE}}}},
+      {{{"b", ""}}, {{{Type::BETTER_ADS, Level::ENFORCE}}}},
+      // sf_* entries have precedence (arbitrary).
+      {{{"a", ""}, {"sf_absv", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"b", ""}, {"sf_bas", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", ""}, {"b", "enforce"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"a", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"b", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", "warn"}, {"b", "warn"}},
+       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", "enforce"}, {"b", "warn"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", ""}}, {{{Type::ABUSIVE, Level::ENFORCE}}}},
+      {{{"sf_bas", ""}}, {{{Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"sf_absv", ""}, {"sf_bas", "enforce"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"sf_absv", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"sf_bas", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", "warn"}, {"sf_bas", "warn"}},
+       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", "enforce"}, {"sf_bas", "warn"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::WARN}}}},
   };
 
   for (const auto& test_case : test_cases) {
@@ -203,17 +211,15 @@ TEST_F(SafeBrowsingApiHandlerUtilTest, SubresourceFilterSubTypes) {
         "matches" : [{
           "threat_type":"13"
           %s
-          %s
         }]
       })";
-    auto put_kv = [](const char* k, const char* v) {
-      if (!v)
-        return std::string();
-      return base::StringPrintf(",\"%s\":\"%s\"", k, v);
-    };
-    json = base::StringPrintf(json.c_str(),
-                              put_kv("sf_absv", test_case.abusive_type).c_str(),
-                              put_kv("sf_bas", test_case.bas_type).c_str());
+    std::string metadata;
+    for (auto it : test_case.metadata) {
+      std::string entry =
+          base::StringPrintf(",\"%s\":\"%s\"", it.first, it.second);
+      metadata += entry;
+    }
+    json = base::StringPrintf(json.c_str(), metadata.c_str());
     SCOPED_TRACE(testing::Message() << json);
 
     ASSERT_EQ(UMA_STATUS_MATCH, ResetAndParseJson(json));
