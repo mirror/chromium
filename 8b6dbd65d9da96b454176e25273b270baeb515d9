@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c408e81d_1cfed614",
+        "filename": "chrome/browser/resources/chromeos/user_images_grid.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2018-01-23T16:14:23Z",
+      "side": 1,
+      "message": "Not really, this.cameraStream_ is a strong reference to the stream, so the object will be kept alive until \"this\" becomes unreachable.",
+      "parentUuid": "659c959e_074ff681",
+      "range": {
+        "startLine": 237,
+        "startChar": 13,
+        "endLine": 237,
+        "endChar": 26
+      },
+      "revId": "8b6dbd65d9da96b454176e25273b270baeb515d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c30b0d9_bc2c83eb",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 4
