@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8fd77d_ad2181bb",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T03:19:59Z",
+      "side": 1,
+      "message": "Let\u0027s make a separated CL for blink_platform_impl.cc, blink_image_resource.grd, and *.png.",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7855ae_0a9b14fd",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T03:19:59Z",
+      "side": 1,
+      "message": "We must not add new web-exposed appearance value. This should be \"-internal-assist-button\" to hide from web developers.",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a4e59f_52fc6e87",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T03:19:59Z",
+      "side": 1,
+      "message": "These fields should be moved to TextFieldInputType.",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0eeb54_59d7a4fe",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T03:19:59Z",
+      "side": 1,
+      "message": "We must not add new -webkit-* pseudo.  It should be changed to \"-internal-assist-button\".",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b979cd3_1c40a598",
+        "filename": "third_party/WebKit/public/web/WebInputElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T03:19:59Z",
+      "side": 1,
+      "message": "IMO, these enums should be defined inside of WebInputElement.",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
