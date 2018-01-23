@@ -134,6 +134,10 @@
   return nil;
 }
 
+- (id<OmniboxFocuser>)omniboxFocuser {
+  return self.locationBarCoordinator;
+}
+
 - (void)showPrerenderingAnimation {
   // TODO(crbug.com/799438): Implement that.
 }
@@ -171,15 +175,7 @@
   // TODO(crbug.com/799601): Delete this once it is not needed.
 }
 
-#pragma mark - OmniboxFocuser
-
-- (void)focusOmnibox {
-  // TODO(crbug.com/799438): Implement that.
-}
-
-- (void)cancelOmniboxEdit {
-  // TODO(crbug.com/799438): Implement that.
-}
+#pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
   // TODO(crbug.com/799438): Implement that.
@@ -218,36 +214,6 @@
 }
 
 #pragma mark - LocationBarDelegate
-
-- (void)loadGURLFromLocationBar:(const GURL&)url
-                     transition:(ui::PageTransition)transition {
-  if (url.SchemeIs(url::kJavaScriptScheme)) {
-    // Evaluate the URL as JavaScript if its scheme is JavaScript.
-    NSString* jsToEval = [base::SysUTF8ToNSString(url.GetContent())
-        stringByRemovingPercentEncoding];
-    [self.URLLoader loadJavaScriptFromLocationBar:jsToEval];
-  } else {
-    // When opening a URL, force the omnibox to resign first responder.  This
-    // will also close the popup.
-
-    // TODO(crbug.com/785244): Is it ok to call |cancelOmniboxEdit| after
-    // |loadURL|?  It doesn't seem to be causing major problems.  If we call
-    // cancel before load, then any prerendered pages get destroyed before the
-    // call to load.
-    [self.URLLoader loadURL:url
-                   referrer:web::Referrer()
-                 transition:transition
-          rendererInitiated:NO];
-
-    if (google_util::IsGoogleSearchUrl(url)) {
-      UMA_HISTOGRAM_ENUMERATION(
-          kOmniboxQueryLocationAuthorizationStatusHistogram,
-          [CLLocationManager authorizationStatus],
-          kLocationAuthorizationStatusCount);
-    }
-  }
-  [self cancelOmniboxEdit];
-}
 
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
