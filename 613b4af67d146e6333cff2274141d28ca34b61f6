@@ -16,6 +16,24 @@
       "revId": "613b4af67d146e6333cff2274141d28ca34b61f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9914cc60_584a6ed3",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-23T20:28:31Z",
+      "side": 1,
+      "message": "Oops. My bad. \nYes please remove the last sentence. \nSorry about that.",
+      "parentUuid": "caf0ec01_a9331c80",
+      "revId": "613b4af67d146e6333cff2274141d28ca34b61f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
