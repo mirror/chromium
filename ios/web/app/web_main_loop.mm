@@ -20,7 +20,6 @@
 #include "base/system_monitor/system_monitor.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/task_scheduler.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #import "ios/web/net/cookie_notification_bridge.h"
 #include "ios/web/public/app/web_main_parts.h"
@@ -128,8 +127,6 @@ int WebMainLoop::CreateThreads(
     init_params = std::move(init_params_callback).Run();
   }
   ios_global_state::StartTaskScheduler(init_params.get());
-
-  base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
 
   base::Thread::Options io_message_loop_options;
   io_message_loop_options.message_loop_type = base::MessageLoop::TYPE_IO;
