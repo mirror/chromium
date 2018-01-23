@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec78667f_94a40ada",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-23T01:37:54Z",
+      "side": 1,
+      "message": "Please include a bug ID.",
+      "revId": "489e50e78959057a3dd5bcc6c5d864016c09217e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9175553_a1ffba32",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-23T01:37:54Z",
+      "side": 1,
+      "message": "Nit: This could maybe be shortened or clarified?\n\n  const auto\u0026 response_codes \u003d GetResponseCodeList();\n  const auto found \u003d std::find(response_codes.begin(), response_codes.end(), buffer[0]);\n  return found \u003d\u003d response_codes.end() ? CTAPDeviceResponseCode::kCtap2ErrInvalidCBOR : CTAPDeviceResponseCode(*found);",
+      "revId": "489e50e78959057a3dd5bcc6c5d864016c09217e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8131cd3c_9c34e55a",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-23T01:37:54Z",
+      "side": 1,
+      "message": "Should (some form of) this comment go in the .h file?",
+      "revId": "489e50e78959057a3dd5bcc6c5d864016c09217e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
