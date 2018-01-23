@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "359a7af6_18c7353b",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-23T05:21:18Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused (what is \"this\" in your comment?) The enclosing method is the constructor for NotificationViewMD, right?\n\nIt seems like we already relegate significant chunks of logic to CreateOrUpdateViews and UpdateControlButtonsVisibilityWithNotification; is there something significantly different about the rest of the constructor?",
+      "parentUuid": "d906fb2f_8b7717da",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 0
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266c47f0_cec853c3",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 1
