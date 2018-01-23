@@ -24,6 +24,7 @@
 </if>
 
 <if expr="not chromeos">
+<link rel="import" href="../people_page/sync_account_section.html">
 <link rel="import" href="../default_browser_page/default_browser_page.html">
 </if>
 
@@ -92,6 +93,12 @@
       iron-icon {
         -webkit-margin-start: 16px;
       }
+
+      /* This is a special case in which the element's visibility needs to be
+       * determined by its sibling. */
+      :-webkit-any(.expanded, .expanding) settings-sync-account-section {
+        display: none;
+      }
     </style>
     <template is="dom-if" if="[[showBasicPage_(
         currentRoute_, inSearchMode, hasExpandedSection_)]]">
@@ -139,6 +146,12 @@
         <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
           <settings-section page-title="$i18n{peoplePageTitle}"
               section="people">
+<if expr="not chromeos">
+            <template is="dom-if" if="[[diceEnabled_]]">
+              <settings-sync-account-section prefs="{{prefs}}">
+              </settings-sync-account-section>
+            </template>
+</if>
             <settings-people-page prefs="{{prefs}}"></settings-people-page>
           </settings-section>
         </template>

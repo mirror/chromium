@@ -18,6 +18,13 @@ Polymer({
       notify: true,
     },
 
+    // <if expr="not chromeos">
+    diceEnabled_: {
+      type: Boolean,
+      value: loadTimeData.getBoolean('diceEnabled'),
+    },
+    // </if>
+
     // <if expr="chromeos">
     showAndroidApps: Boolean,
 

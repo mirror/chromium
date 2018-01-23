@@ -102,55 +102,62 @@
     <settings-animated-pages id="pages" section="people"
         focus-config="[[focusConfig_]]">
       <neon-animatable route-path="default">
-        <div id="picture-subpage-trigger" class="settings-box first two-line">
-          <template is="dom-if" if="[[syncStatus]]">
-            <div id="profile-icon" on-tap="onPictureTap_" actionable
-                style="background-image: [[getIconImageSet_(profileIconUrl_)]]">
-            </div>
 <if expr="not chromeos">
-            <div class="middle two-line no-min-width"
-                on-tap="onProfileTap_" actionable>
+        <template is="dom-if" if="[[!diceEnabled_]]">
 </if>
-<if expr="chromeos">
-            <div class="middle two-line no-min-width" on-tap="onPictureTap_"
-                actionable>
-</if>
-              <div class="flex text-elide">
-                <span id="profile-name">[[profileName_]]</span>
-                <div class="secondary" hidden="[[!syncStatus.signedIn]]">
-                  [[syncStatus.signedInUsername]]
-                </div>
+          <div id="picture-subpage-trigger" class="settings-box first two-line">
+            <template is="dom-if" if="[[syncStatus]]">
+              <div id="profile-icon" on-tap="onPictureTap_" actionable
+                  style="background-image: [[getIconImageSet_(
+                      profileIconUrl_)]]">
               </div>
 <if expr="not chromeos">
-              <button class="subpage-arrow" is="paper-icon-button-light"
-                  aria-label="$i18n{editPerson}"
-                  aria-describedby="profile-name"></button>
+              <div class="middle two-line no-min-width"
+                  on-tap="onProfileTap_" actionable>
 </if>
 <if expr="chromeos">
-              <button class="subpage-arrow" is="paper-icon-button-light"
-                  aria-label="$i18n{changePictureTitle}"
-                  aria-describedby="profile-name"></button>
+              <div class="middle two-line no-min-width" on-tap="onPictureTap_"
+                  actionable>
 </if>
-            </div>
+                <div class="flex text-elide">
+                  <span id="profile-name">[[profileName_]]</span>
+                  <div class="secondary" hidden="[[!syncStatus.signedIn]]">
+                    [[syncStatus.signedInUsername]]
+                  </div>
+                </div>
 <if expr="not chromeos">
-            <template is="dom-if" if="[[showSignin_(syncStatus)]]">
-              <div class="separator"></div>
-              <paper-button class="primary-button" on-tap="onSigninTap_"
-                  disabled="[[syncStatus.setupInProgress]]">
-                $i18n{syncSignin}
-              </paper-button>
-            </template>
-            <template is="dom-if" if="[[syncStatus.signedIn]]">
-              <div class="separator"></div>
-              <paper-button id="disconnectButton" class="secondary-button"
-                  on-tap="onDisconnectTap_"
-                  disabled="[[syncStatus.setupInProgress]]">
-                $i18n{syncDisconnect}
-              </paper-button>
-            </template>
+                <button class="subpage-arrow" is="paper-icon-button-light"
+                    aria-label="$i18n{editPerson}"
+                    aria-describedby="profile-name"></button>
 </if>
-          </template>
-        </div>
+<if expr="chromeos">
+                <button class="subpage-arrow" is="paper-icon-button-light"
+                    aria-label="$i18n{changePictureTitle}"
+                    aria-describedby="profile-name"></button>
+</if>
+              </div>
+<if expr="not chromeos">
+              <template is="dom-if" if="[[showSignin_(syncStatus)]]">
+                <div class="separator"></div>
+                <paper-button class="primary-button" on-tap="onSigninTap_"
+                    disabled="[[syncStatus.setupInProgress]]">
+                  $i18n{syncSignin}
+                </paper-button>
+              </template>
+              <template is="dom-if" if="[[syncStatus.signedIn]]">
+                <div class="separator"></div>
+                <paper-button id="disconnectButton" class="secondary-button"
+                    on-tap="onDisconnectTap_"
+                    disabled="[[syncStatus.setupInProgress]]">
+                  $i18n{syncDisconnect}
+                </paper-button>
+              </template>
+</if>
+            </template>
+          </div>
+<if expr="not chromeos">
+        </template> <!-- if="[[!diceEnabled_]]" -->
+</if>
 
         <template is="dom-if" if="[[!syncStatus.signedIn]]">
           <div class="settings-box two-line"
