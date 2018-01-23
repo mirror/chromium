@@ -544,8 +544,8 @@ void PaintLayerScrollableArea::InvalidatePaintForScrollOffsetChange(
   }
 
   if (requires_paint_invalidation) {
-    GetLayoutBox()
-        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    GetLayoutBox()->SetShouldDoFullPaintInvalidation();
+    GetLayoutBox()->SetMayNeedPaintInvalidationSubtree();
   }
 }
 
