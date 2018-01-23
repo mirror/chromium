@@ -22,6 +22,7 @@
 
 .object-properties-section li {
     -webkit-user-select: text;
+    min-width: fit-content;
 }
 
 .object-properties-section li::before {
@@ -54,4 +55,8 @@
 
 .object-properties-section .editable-div {
     overflow: hidden;
+}
+
+.object-properties-section > ol.children {
+    width: 0;
 }
