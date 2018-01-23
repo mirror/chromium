@@ -46,6 +46,30 @@
       "revId": "2343abfe61750dc87c56de336a4089bfb53e1e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aff2676_7d65d505",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-23T17:39:45Z",
+      "side": 1,
+      "message": "Oops, sorry, I thought I\u0027d deleted that comment. I wrote that one before I looked at loadDataSync and was confused anyway.\n\nYeah, the root issue is loadDataSync having the wrong API per the previous comment. Agreed that leaving it as-is is fine. As you say, makeHtmlPageWithSimpleLinkTo is supposed to return HTML. The problem is loadDataSync doesn\u0027t take HTML. So the Correct(TM) fix would be to do escape(CommonResources.makeHtmlPageWithSimpleLinkTo(\"#anchor\")).",
+      "parentUuid": "0d8e3b81_4b3eceb6",
+      "range": {
+        "startLine": 307,
+        "startChar": 67,
+        "endLine": 307,
+        "endChar": 75
+      },
+      "revId": "2343abfe61750dc87c56de336a4089bfb53e1e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

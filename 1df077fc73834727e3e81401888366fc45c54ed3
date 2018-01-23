@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de273f41_c08f7836",
+        "filename": "chrome/browser/resources/chromeos/chromevox/testing/common.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-23T17:39:45Z",
+      "side": 1,
+      "message": "Huh, does that work? I would have expected encodeURIComponent(TestUtils.collapse[...])",
+      "revId": "1df077fc73834727e3e81401888366fc45c54ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41f2177_83c922dd",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-23T17:39:45Z",
+      "side": 1,
+      "message": "Should this be %23? Where\u0027s the double-escaping coming from? Ditto below.",
+      "range": {
+        "startLine": 611,
+        "startChar": 29,
+        "endLine": 611,
+        "endChar": 33
+      },
+      "revId": "1df077fc73834727e3e81401888366fc45c54ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
