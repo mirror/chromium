@@ -332,6 +332,8 @@ extern const char kEnableOutOfProcessHeapProfilingModeBrowser[];
 extern const char kEnableOutOfProcessHeapProfilingModeGpu[];
 extern const char kEnableOutOfProcessHeapProfilingModeManual[];
 extern const char kEnableOutOfProcessHeapProfilingModeRendererSampling[];
+extern const char kOutOfProcessHeapProfilingIncludeThreadNames[];
+extern const char kOutOfProcessHeapProfilingIncludeThreadNamesDescription[];
 extern const char kOutOfProcessHeapProfilingKeepSmallAllocations[];
 extern const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[];
 
