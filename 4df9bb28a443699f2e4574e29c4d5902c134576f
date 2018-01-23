@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cec62dc8_de0359db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "common",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896ccf62_30b470b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "that\n(otherwise I parsed up to the comma differently).",
+      "range": {
+        "startLine": 11,
+        "startChar": 63,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0c8f08_4fea0eed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "[optional] The new default formatting is\nBug: XXXX",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdc8da1_08d8efb1",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "side-question: where do we enable this?",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88de6d6_22e6468a",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "Instead of the \"deprecated\" comment, can you use the [deprecated\u003dtrue] field option.\n\n(https://developers.google.com/protocol-buffers/docs/proto)",
+      "range": {
+        "startLine": 45,
+        "startChar": 41,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5335a025_c17f87ca",
+        "filename": "net/cert/cert_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "Either this should be updated to 1\u003c\u003c6 to reclaim the removed slot, or we should leave a comment in that 1\u003c\u003c6 is reserved.\n\nWe don\u0027t serialize VerifyFlags right? In which case let\u0027s just shift the values.",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d5f164_ca40ad43",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "This seems like a misnomer, as the error relates to matching against subject alt names...",
+      "range": {
+        "startLine": 523,
+        "startChar": 34,
+        "endLine": 523,
+        "endChar": 65
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579bfedc_2f59bd6d",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 1,
+      "message": "Can you update this comment? It doesn\u0027t read well now that common name matching is not an option.",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

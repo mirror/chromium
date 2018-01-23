@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c48a1d4a_5d3b9769",
+        "filename": "components/ssl_config/ssl_config_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:18:35Z",
+      "side": 0,
+      "message": "When we removed preference keys, do you know what happens to existing preference files that specified it?\n\nDoes the unused value linger, do we vacuum it out, or do values for unregistered preference keys get cleared when saving the prefs?\n\nI am assuming it just lingers. But asking in case we have an established process for deleting prefs.",
+      "revId": "1f65ad79494a05653e7478202e221ec229d9ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a54135b4_45614049",
         "filename": "net/cert/x509_certificate.cc",
         "patchSetId": 5
