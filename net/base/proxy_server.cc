@@ -75,6 +75,17 @@ ProxyServer::ProxyServer(Scheme scheme, const HostPortPair& host_port_pair)
   }
 }
 
+ProxyServer::ProxyServer(Scheme scheme,
+                         const HostPortPair& host_port_pair,
+                         bool is_trusted_spdy_proxy)
+    : ProxyServer(scheme, host_port_pair) {
+  if (is_trusted_spdy_proxy) {
+    is_trusted_spdy_proxy_ = true;
+    // A proxy must be HTTPS to use SPDY.
+    DCHECK_EQ(scheme_, SCHEME_HTTPS);
+  }
+}
+
 const HostPortPair& ProxyServer::host_port_pair() const {
   // Doesn't make sense to call this if the URI scheme doesn't
   // have concept of a host.
