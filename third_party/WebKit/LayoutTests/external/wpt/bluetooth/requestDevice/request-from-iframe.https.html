@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
-<script src="../../resources/testdriver.js"></script>
-<script src="../../resources/testdriver-vendor.js"></script>
-<script src="../../resources/bluetooth/bluetooth-helpers.js"></script>
-<script src="../../external/wpt/bluetooth/resources/bluetooth-helpers.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
 <script>
 'use strict';
 const test_desc = 'Concurrent requestDevice calls in iframes work.';
@@ -18,7 +17,7 @@ bluetooth_test(() => setUpHealthThermometerAndHeartRateDevices()
   .then(() => {
     let promises = [];
     for (let iframe of iframes) {
-      iframe.src = '../../resources/bluetooth/requestDevice-in-iframe.html';
+      iframe.src = '/bluetooth/resources/health-thermometer-iframe.html';
       document.body.appendChild(iframe);
       promises.push(new Promise(resolve =>
         iframe.addEventListener('load', resolve)));
@@ -37,7 +36,9 @@ bluetooth_test(() => setUpHealthThermometerAndHeartRateDevices()
 
     for (let iframe of iframes) {
       await callWithTrustedClick(
-          () => iframe.contentWindow.postMessage('Go', '*'));
+          () => iframe.contentWindow.postMessage({
+            type: 'RequestDevice'
+          }, '*'));
     }
 })), test_desc);
 </script>
