@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "57a3660c_84983b9d",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-23T00:11:11Z",
+      "side": 1,
+      "message": "OK, good to know. Done.",
+      "parentUuid": "94d5b0c1_538ca0f0",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9e7d26_d119c4c3",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 14
@@ -300,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "e104899b_b4f1980c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-23T00:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1418c1dd_aaafef3f",
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23c6562_c53ec22e",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
         "patchSetId": 14
@@ -346,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "4fef875b_e18fe052",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-23T00:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ebb836_f0da1c24",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d6073f_bd96caa0",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_view.mm",
         "patchSetId": 14
@@ -366,6 +432,30 @@
       "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed22a7fc_b05639d5",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-23T00:11:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d6073f_bd96caa0",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
