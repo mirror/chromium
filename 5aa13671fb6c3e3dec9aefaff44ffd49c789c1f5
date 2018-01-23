@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de8f181_4af50def",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T11:34:25Z",
+      "side": 1,
+      "message": "Hmm, also looking at logcat, I see I\u0027m causing a StrictPolicy violation for doing I/O on UI thread. Is there another thread I should post this work to?",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
