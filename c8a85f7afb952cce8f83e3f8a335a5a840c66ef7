@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d85798d_371a4f3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T00:40:27Z",
+      "side": 1,
+      "message": "nit: when",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "c8a85f7afb952cce8f83e3f8a335a5a840c66ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d1f273_20c2c1f2",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T00:40:27Z",
+      "side": 1,
+      "message": "nit: Add space.",
+      "range": {
+        "startLine": 1700,
+        "startChar": 64,
+        "endLine": 1700,
+        "endChar": 65
+      },
+      "revId": "c8a85f7afb952cce8f83e3f8a335a5a840c66ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
