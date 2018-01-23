@@ -2606,6 +2606,11 @@ const FeatureEntry kFeatureEntries[] = {
     {"PasswordImport", flag_descriptions::kPasswordImportName,
      flag_descriptions::kPasswordImportDescription, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordImport)},
+#if defined(OS_ANDROID)
+    {"password-search", flag_descriptions::kPasswordSearchName,
+     flag_descriptions::kPasswordSearchDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordSearch)},
+#endif  // OS_ANDROID
 #if defined(OS_CHROMEOS)
     {"enable-experimental-accessibility-features",
      flag_descriptions::kExperimentalAccessibilityFeaturesName,
