@@ -97,6 +97,10 @@ if (media_use_ffmpeg) {
   media_subcomponent_deps += [ "//media/ffmpeg" ]
 }
 
+if (use_cras && current_toolchain != default_toolchain) {
+  use_cras = false
+}
+
 # Use a second declare_args() to pick up possible overrides of |use_cras|.
 declare_args() {
   # Enables runtime selection of PulseAudio library.

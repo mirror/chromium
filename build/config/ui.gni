@@ -39,6 +39,8 @@ declare_args() {
                   !is_chromecast && !is_fuchsia
 }
 
+use_ozone = use_ozone && current_toolchain == default_toolchain
+
 # Additional dependent variables -----------------------------------------------
 #
 # These variables depend on other variables and can't be set externally.

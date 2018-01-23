@@ -63,6 +63,14 @@ declare_args() {
   }
 }
 
+if (current_toolchain != default_toolchain) {
+  ozone_platform_cast = false
+  ozone_platform_gbm = false
+  ozone_platform_headless = false
+  ozone_platform_x11 = false
+  ozone_platform_wayland = false
+}
+
 assert(use_ozone || !(ozone_platform_cast || ozone_platform_gbm ||
                           ozone_platform_headless || ozone_platform_x11 ||
                           ozone_platform_wayland),
