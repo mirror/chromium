@@ -139,7 +139,8 @@ RemoteSuggestionsFetcherImpl::RemoteSuggestionsFetcherImpl(
       fetch_url_(api_endpoint),
       api_key_(api_key),
       clock_(base::DefaultClock::GetInstance()),
-      user_classifier_(user_classifier) {}
+      user_classifier_(user_classifier),
+      last_fetch_authenticated_(false) {}
 
 RemoteSuggestionsFetcherImpl::~RemoteSuggestionsFetcherImpl() = default;
 
@@ -150,6 +151,10 @@ const std::string& RemoteSuggestionsFetcherImpl::GetLastStatusForDebugging()
 const std::string& RemoteSuggestionsFetcherImpl::GetLastJsonForDebugging()
     const {
   return last_fetch_json_;
+}
+bool RemoteSuggestionsFetcherImpl::WasLastFetchAuthenticatedForDebugging()
+    const {
+  return last_fetch_authenticated_;
 }
 const GURL& RemoteSuggestionsFetcherImpl::GetFetchUrlForDebugging() const {
   return fetch_url_;
@@ -200,6 +205,7 @@ void RemoteSuggestionsFetcherImpl::FetchSnippetsNonAuthenticated(
   builder.SetUrl(
       GURL(base::StringPrintf(kSnippetsServerNonAuthorizedFormat,
                               fetch_url_.spec().c_str(), api_key_.c_str())));
+  last_fetch_authenticated_ = false;
   StartRequest(std::move(builder), std::move(callback));
 }
 
@@ -212,6 +218,7 @@ void RemoteSuggestionsFetcherImpl::FetchSnippetsAuthenticated(
       .SetAuthentication(identity_manager_->GetPrimaryAccountInfo().account_id,
                          base::StringPrintf(kAuthorizationRequestHeaderFormat,
                                             oauth_access_token.c_str()));
+  last_fetch_authenticated_ = true;
   StartRequest(std::move(builder), std::move(callback));
 }
 
