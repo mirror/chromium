@@ -40,7 +40,7 @@ fi
 script_dir="$(dirname "${0}")"
 source "${script_dir}/variables.sh"
 
-executables=(goobspatch xzdec)
+executables=(goobspatch replace_file xzdec)
 libraries=(liblzma_decompress.dylib)
 declare -a everything
 

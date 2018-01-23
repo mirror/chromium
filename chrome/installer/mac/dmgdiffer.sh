@@ -264,6 +264,7 @@ make_patch_fs() {
   if ! cp -p "${SCRIPT_DIR}/dirpatcher.sh" \
              "${SCRIPT_DIR}/goobspatch" \
              "${SCRIPT_DIR}/liblzma_decompress.dylib" \
+             "${SCRIPT_DIR}/replace_file" \
              "${SCRIPT_DIR}/xzdec" \
              "${patch_dotpatch_dir}/"; then
     err "could not copy patching tools"
