@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ddfba67_8e758e35",
+        "filename": "mojo/public/interfaces/bindings/tests/ping_service.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-23T02:49:58Z",
+      "side": 1,
+      "message": "Why is this sync now?  So you can test sync calls as well?  Maybe point that out in the change description?",
+      "revId": "6ebadc092c7b50624787d156c4f05787c4aebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
