@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaac3867_5b166a61",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-23T01:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32cb0b9d_744cb60c",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 110,
+        "endChar": 70
+      },
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7bf89e8_509fc67f",
         "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "302c3066_8e39df4e",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-23T01:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7bf89e8_509fc67f",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 28
+      },
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f81d31e_5f6b24b4",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 7
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-23T00:48:23Z",
       "side": 1,
       "message": "Each call to startLoadDestinations() will trigger a \"start\" and \"end\" event, but those events do not seem to be parameterized by the type of destination, see [1] and [2]. Is there a race condition possible where the 1st printer triggers an \"end\" event, but other printers are still being fetched? I am not familiar with how these events are processed.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d1124\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d836",
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917a5dca_fdc86471",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-23T01:00:16Z",
+      "side": 1,
+      "message": "Should be fine. These are both just used for UI updates.\n\nThe \"end\" event causes destination search to reflow/update lists and check if the spinner can be removed (but it looks at the destinationSearchStatus, which is parameterized by type, to determine this). Similarly the start event updates spinners by checking the same status.",
+      "parentUuid": "2f81d31e_5f6b24b4",
       "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
