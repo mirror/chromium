@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cee597e_c3be9411",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "The naming is not clear: x1, x2, x \n\nHere is my understanding based on reading the test. \nx1, x2 are effectively the range that you expect the user\nto scroll inside. \n\nx is the final expected value after snapping and verified\nagainst. \n\nHere is a better naming IMHO:\nscroll_region in \"{x:, y:, w:, h:}\" or [x,y,w,h] form.\nexpected_offset in {x: , y: } form",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72dcb4c_f63e0fc2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "nit:s/alignmemnt/alignment/",
+      "range": {
+        "startLine": 80,
+        "startChar": 43,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baeedddb_eb8d8895",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "Instead of instruction to \"scroll until backgroud yellow\" should we instead draw\nthe intended \"region\" x1,y1-\u003ex2,y2 and ask the user to scroll that region to\ntop left corner?",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 36
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55132aae_e58e68ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "should this be alignTo?",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce57fc6b_a89744fc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "Hmmm, so each test now depend on the state left over from last test.\nThis seems unnecessary and potentially flaky.\nWhy don\u0027t we always scroll the element to 0,0 instead?\n\nAlternatively, why not have a different container, scroller elements for each\ntest case, and simply hide everything except the testcase currently under\nconsideration:\n\n\u003cul id\u003d\u0027testcases\u0027\u003e \n   \u003cdiv class\u003d\"scroller\" class\u003d\"direction_horizontal align_center scroll_right\"\n                         date-region\u003d\"[x,y,w,h]\" data-expected\u003d\"{x:100, y: null}\"\u003e\n    \u003cdiv id\u003d\"content\"\u003e\n      \u003cdiv id\u003d\"target\"\u003e\u003c/div\u003e\n    \u003c/div\u003e\n   \u003c/div\u003e\n\u003c/ul\u003e\n\nThen setup is simply hiding others and showing this one:\nSetup() {\ntestcaseId++;\n$(\u0027testcases\u0027).display\u003d\"hide\";\n$(testcaseId).display\u003d\"show\";\n}\n\nJust an idea. The nice thing here is that all test cases are captured in markup and independent.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a89a02_cffb2036",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom-view/snap_points-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-23T21:55:32Z",
+      "side": 1,
+      "message": "Why exactly do we care that the user scrolls to a specific region?",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 49
+      },
+      "revId": "2575e0bcc7b82049e5b95e661a3d6d0fd02cfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
