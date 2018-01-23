@@ -1283,6 +1283,8 @@ ComputedAccessibleNode* Element::GetComputedAccessibleNode() {
   if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
+  // TODO(meredithl): Create finer grain method for enabling accessibility.
+  GetDocument().GetPage()->GetSettings().SetAccessibilityEnabled(true);
   ElementRareData& rare_data = EnsureElementRareData();
   return rare_data.EnsureComputedAccessibleNode(this);
 }

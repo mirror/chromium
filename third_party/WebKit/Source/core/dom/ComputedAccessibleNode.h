@@ -5,16 +5,22 @@
 #ifndef ComputedAccessibleNode_h
 #define ComputedAccessibleNode_h
 
-#include "bindings/core/v8/ScriptPromiseProperty.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/events/EventTarget.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/text/AtomicString.h"
-
-class ScriptPromise;
-class ScriptState;
+#include "third_party/WebKit/Source/core/dom/Element.h"
+#include "third_party/WebKit/public/platform/WebComputedAXTree.h"
+#include "third_party/WebKit/public/platform/WebString.h"
 
 namespace blink {
+
+class ScriptPromiseResolver;
+class ScriptState;
+
+class WebFrame;
 
 class ComputedAccessibleNode : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -23,28 +29,25 @@ class ComputedAccessibleNode : public ScriptWrappable {
   static ComputedAccessibleNode* Create(Element*);
   virtual ~ComputedAccessibleNode();
 
-  // Start compution of the accessibility properties of the stored element and
-  // return a promise.
-  ScriptPromise ComputePromiseProperty(ScriptState*);
+  void Trace(Visitor*);
 
-  void Trace(blink::Visitor*);
+  // Starts computation of the accessibility properties of the stored element.
+  ScriptPromise ComputeAccessibleProperties(ScriptState*, WebFrame*);
 
-  const AtomicString& role() const;
-  const String name() const;
+  // String attribute accessors. These can return blank strings if the element
+  // has no node in the computed accessible tree, or property does not apply.
+  const WebString role() const;
+  const WebString name() const;
 
  private:
-  using ComputedPromiseProperty =
-      ScriptPromiseProperty<Member<ComputedAccessibleNode>,
-                            Member<ComputedAccessibleNode>,
-                            Member<DOMException>>;
-
   explicit ComputedAccessibleNode(Element*);
 
-  Member<ComputedPromiseProperty> computed_property_;
-  Member<Element> element_;
+  // content::ComputedAXTree callback.
+  void OnSnapshotResponse(ScriptPromiseResolver*);
 
-  // TODO(meredithl): This should eventually create AXTree and subscribe to
-  // accessibility updates from the Document.
+  Member<Element> element_;
+  Member<AXObjectCache> cache_;
+  blink::WebComputedAXTree* tree_;
 };
 
 }  // namespace blink
