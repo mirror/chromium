@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5c58388a_edbbce3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-23T13:36:04Z",
+      "side": 1,
+      "message": "I got my hands on a Motorla G2 (slowest available test device in our devices lab). It was still faster than my emulator and handled 5000 passwords like they were 20.\nWe shouldn\u0027t need to worry about performance for the foreseeable future.",
+      "parentUuid": "d4913417_7a41e485",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 35
+      },
+      "revId": "5dfbe7234ee08b4f372e956c96979299fea13d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29a24fc5_75b33b37",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 15
