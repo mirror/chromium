@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3aad927_08a507e9",
+        "filename": "chromecast/browser/cast_touch_device_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001985
+      },
+      "writtenOn": "2018-01-23T18:27:34Z",
+      "side": 1,
+      "message": "Is screen rotation handled here or at the higher levels in Aura? For example if the root aura window has a 90deg rotation, is it this codes responsibility of will aura know to rotate the touch events?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "3ce9ce592558a729dc21b37b4576ffc5b6cef20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0b4387_82d5e9d3",
+        "filename": "chromecast/browser/cast_touch_device_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001985
+      },
+      "writtenOn": "2018-01-23T18:27:34Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3ce9ce592558a729dc21b37b4576ffc5b6cef20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
