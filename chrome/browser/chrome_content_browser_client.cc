@@ -186,6 +186,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/browser/browser_ppapi_host.h"
@@ -316,6 +317,7 @@
 #include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/payments/payment_request_factory.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 #include "chrome/browser/search/instant_service.h"
 #include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/ui/search/new_tab_page_navigation_throttle.h"
@@ -3890,4 +3892,21 @@ ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
   }
 
   return safe_browsing_url_checker_delegate_.get();
+}
+
+void ChromeContentBrowserClient::UpdatePictureInPictureSurfaceId(
+    content::RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce) {
+#if !defined(OS_ANDROID)
+  WebContents* web_contents = WebContents::FromRenderFrameHost(frame_host);
+
+  pip_window_controller_.reset(
+      PictureInPictureWindowController::GetOrCreateForWebContents(
+          web_contents));
+  pip_window_controller_->Init();
+  pip_window_controller_->EmbedSurface(frame_sink_id, parent_id, nonce);
+  pip_window_controller_->Show();
+#endif
 }
