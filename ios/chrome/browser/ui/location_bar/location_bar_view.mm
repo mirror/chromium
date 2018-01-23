@@ -128,10 +128,8 @@ const CGFloat kTextFieldTrailingOffset = 3;
       [NSLayoutConstraint activateConstraints:@[
         [_textFieldContainer.trailingAnchor
             constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
-        [_textFieldContainer.topAnchor
-            constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor],
-        [_textFieldContainer.bottomAnchor
-            constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor],
+        [_textFieldContainer.centerYAnchor
+            constraintEqualToAnchor:self.centerYAnchor],
         _leadingTextfieldConstraint,
       ]];
 
