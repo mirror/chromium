@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "930d1028_e934edfe",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_elf_relocations.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-23T12:25:38Z",
+      "side": 0,
+      "message": "It\u0027s really nice to be able to remove all this templated stuff :)",
+      "revId": "49cbc798bd8aa36a035147867f7c8bd97d0f0449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
