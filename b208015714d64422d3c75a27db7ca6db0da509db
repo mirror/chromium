@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52753235_d1ebdfb9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4232,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71eb0c3_f4d4a702",
+      "range": {
+        "startLine": 4232,
+        "startChar": 0,
+        "endLine": 4232,
+        "endChar": 75
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67793652_cfe279a1",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8200b187_abfdcacc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4255,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67793652_cfe279a1",
+      "range": {
+        "startLine": 4255,
+        "startChar": 0,
+        "endLine": 4255,
+        "endChar": 74
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b8c7e734_780b5bde",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ebf6f28_257f23f8",
+      "range": {
+        "startLine": 159,
+        "startChar": 18,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0674301_9add4787",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbf9111_de1c6373",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0674301_9add4787",
+      "range": {
+        "startLine": 300,
+        "startChar": 7,
+        "endLine": 300,
+        "endChar": 11
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "752d4253_ccca06e5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done: It is called 4 times. I\u0027ve renamed it.",
+      "parentUuid": "c402edcb_db4bbc64",
+      "range": {
+        "startLine": 524,
+        "startChar": 18,
+        "endLine": 524,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66d4c24_39ead56e",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
         "patchSetId": 2
@@ -161,6 +281,30 @@
       "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554b4a48_907d4f8a",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66d4c24_39ead56e",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 75
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "44ee197b_ffc09353",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "You said it didn\u0027t matter where I put this method! I\u0027ve renamed the pragma to Toolbar.",
+      "parentUuid": "43a1f70e_9a739a13",
+      "range": {
+        "startLine": 1945,
+        "startChar": 15,
+        "endLine": 1945,
+        "endChar": 22
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a23512_6fde94e0",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
@@ -207,6 +375,30 @@
       "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e457c0d_1c5d506b",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T17:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a23512_6fde94e0",
+      "range": {
+        "startLine": 1948,
+        "startChar": 8,
+        "endLine": 1948,
+        "endChar": 30
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
