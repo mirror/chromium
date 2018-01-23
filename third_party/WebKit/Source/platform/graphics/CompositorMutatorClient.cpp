@@ -42,8 +42,4 @@ void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
   client_ = client;
 }
 
-bool CompositorMutatorClient::HasAnimators() {
-  return mutator_->HasAnimators();
-}
-
 }  // namespace blink
