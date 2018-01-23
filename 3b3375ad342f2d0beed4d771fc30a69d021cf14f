@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3216046b_831e2fc1",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: Please put them in the same line and keep 80 chars? i.e.\n\n// NotificationInputTextfieldMD ////////////////////////(omitted)///////",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6727a32_4c8fce3d",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: Could you use Sk_ColorTRANSPARENT instead of SkColorSetARGB?",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040c6bb7_25c30dff",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: can we just simply use inline_reply_-\u003etextfield() rather than adding textfield_ as a new member of NotificationViewMD?",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca1bd91_ededaacd",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: I\u0027m wondering if it\u0027s possible to move to .cc file.\nIn general, it\u0027s encouraged to keep the header small in chromium.",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829d9f85_5d42725a",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: Can we move NotificationInputReplyButtonMD to anonymous namespace in notification_view_md.cc? Then in the header:\n\n private:\n  views::ImageView* const button_;\n\nMaybe we don\u0027t need separate class at all, but it\u0027s up to you.",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028f55df_a12523ba",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T09:29:00Z",
+      "side": 1,
+      "message": "nit: NotificationInputTextfieldMD* GetTextfield() -\u003e NotificationInputTextfieldMD* textfield() const\nFYI:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "revId": "3b3375ad342f2d0beed4d771fc30a69d021cf14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
