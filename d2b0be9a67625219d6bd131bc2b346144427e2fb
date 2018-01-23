@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9619163_289c0760",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T01:42:09Z",
+      "side": 1,
+      "message": "Make sense.\nGood catch!",
+      "range": {
+        "startLine": 852,
+        "startChar": 49,
+        "endLine": 852,
+        "endChar": 76
+      },
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e09acb3_8cd4ea7f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T01:42:09Z",
+      "side": 1,
+      "message": "Could you use EditingTestBase::SetSelectionTextToBody()?\n(We need to make IMCTest to inherit from EditnigTestBase)\n\nGetFrame().Selection.SetSelecitonAndEndTyping(\n  SetSelectionTextToBody(\"\u003cdiv ...\"));\nconst Element* const div \u003d GetDocument().getElementById(\"div\"));",
+      "range": {
+        "startLine": 3167,
+        "startChar": 0,
+        "endLine": 3175,
+        "endChar": 20
+      },
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56df8f5c_d8f800e9",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3185,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T01:42:09Z",
+      "side": 1,
+      "message": "Could you use EditingTestBase::GetSelectionTextFromBody()?\n(We need to make IMCTest to inherit from EditnigTestBase)\n\nEXPECT_EQ(\n  \"\u003cdiv ...\u003e\",\n  GetSelectionTextFromBody(GetFrame().Selection().GetSelectionInDOMText()));",
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8520d8ca_467d8648",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T01:42:09Z",
+      "side": 1,
+      "message": "Could you use EditingTestBase::GetSelectionTextFromBody()?\n(We need to make IMCTest to inherit from EditnigTestBase)\n\n\nCould you use EditingTestBase::GetSelectionTextFromBody()?\n(We need to make IMCTest to inherit from EditnigTestBase)\n\nEXPECT_EQ(\n  \"\u003cdiv ...\u003e\",\n  GetSelectionTextFromBody(\n    SelectionInDOMTree::Builder()\n     .SetBaseAndExtent(Controller().CompositionEphemeralRange())\n     .Build()));",
+      "range": {
+        "startLine": 3187,
+        "startChar": 0,
+        "endLine": 3190,
+        "endChar": 43
+      },
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
