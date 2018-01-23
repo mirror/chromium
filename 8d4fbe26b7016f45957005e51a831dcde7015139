@@ -22,6 +22,30 @@
       "revId": "8d4fbe26b7016f45957005e51a831dcde7015139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216bfd70_32805a1c",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-23T20:45:28Z",
+      "side": 1,
+      "message": "I\u0027ve generally been asked to keep things that aren\u0027t used outside of a single file within an anonymous namespace inside that file.  I don\u0027t have a preference.\n\nI\u0027ll refactor it, then.",
+      "parentUuid": "5726d9ee_dca1a19f",
+      "range": {
+        "startLine": 316,
+        "startChar": 4,
+        "endLine": 316,
+        "endChar": 35
+      },
+      "revId": "8d4fbe26b7016f45957005e51a831dcde7015139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
