@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "688790bf_14f08c96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T13:40:55Z",
+      "side": 1,
+      "message": "Use \"But: None\" or reference an existing bug.\nI don\u0027t know, maybe you can even enter a https:// to github issue?\n0 is an invalid bug reference.",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce258cf_1d5f1f28",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T13:40:55Z",
+      "side": 1,
+      "message": "Just a thought for a possible follow-up, probably not something we want to do until we need it, but it would be nice to be able to validate \"I got this stats object, the stats that are implemented are of the correct type and any reference it has lead to existing stats objects\" without having to also validate \"the stats objects are fully implemented, all mandatory stats are present\". Essentially an argument to turn \"assert_blah\"s into \"assert_optional_blah\"s.\n\nThis would allow test testing the behavior \"before we connect, track stats should be present\" with a lower bar for what it means to be \"track stats\", as to not fail because the behavior \"track stats are fully implemented\" fails.\n\nThere will likely be some stats missing here and there for quite some time and WPT are implemented against the spec.",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab28b8ac_0ddf083a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T13:40:55Z",
+      "side": 1,
+      "message": "Unless this is already shipped by anyone, file a bug to rename this to averageRtcpInterval?",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17932c7_3ce07164",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T13:40:55Z",
+      "side": 1,
+      "message": "Does it make more sense to use value of \u0027remoteSource\u0027, or does that mean something else?",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d44b1a5_6096b961",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T13:40:55Z",
+      "side": 1,
+      "message": "\"Valid but missing\" should be phrased as a TODO-comment I think.\nHow about assert_optional_number_field in the meantime, and TODO(hta): Make this assert_number_field once implemented.\n\nOtherwise, how many tests do we FAIL (how much test coverage do we lose rather) if we assert it the way the spec says? Ideally we can write tests that FAIL without having tests for other behaviors also fail because they touch this stats object.",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
