@@ -118,7 +118,8 @@ void AccessibilityWinBrowserTest::LoadInitialAccessibilityTreeFromHtml(
     ui::AXMode accessibility_mode) {
   AccessibilityNotificationWaiter waiter(
       shell()->web_contents(), accessibility_mode, ui::AX_EVENT_LOAD_COMPLETE);
-  GURL html_data_url("data:text/html," + html);
+  GURL html_data_url("data:text/html," +
+                     net::EscapeQueryParamValue(html, false));
   NavigateToURL(shell(), html_data_url);
   waiter.WaitForNotification();
 }
@@ -246,7 +247,7 @@ void AccessibilityWinBrowserTest::SetUpSampleParagraph(
       "<!DOCTYPE html><html>"
       "<body>"
       "<p><b>Game theory</b> is \"the study of "
-      "<a href=\"#\" title=\"Mathematical model\">mathematical models</a> "
+      "<a href=\"# title=\"Mathematical model\">mathematical models</a> "
       "of conflict and<br>cooperation between intelligent rational "
       "decision-makers.\"</p></body></html>",
       accessibility_mode);
@@ -263,7 +264,7 @@ void AccessibilityWinBrowserTest::SetUpSampleParagraphWithScroll(
       "<!DOCTYPE html><html>"
       "<body style=\"overflow: scroll; margin-top: 100vh\">"
       "<p><b>Game theory</b> is \"the study of "
-      "<a href=\"#\" title=\"Mathematical model\">mathematical models</a> "
+      "<a href=\"# title=\"Mathematical model\">mathematical models</a> "
       "of conflict and<br>cooperation between intelligent rational "
       "decision-makers.\"</p></body></html>",
       accessibility_mode);
@@ -2101,9 +2102,9 @@ IN_PROC_BROWSER_TEST_F(AccessibilityWinBrowserTest, TestScrollTo) {
   LoadInitialAccessibilityTreeFromHtml(
       "<!DOCTYPE html><html><body>"
       "<div style='height: 5000px;'></div>"
-      "<img src='#' alt='Target1'>"
+      "<img src='# alt='Target1'>"
       "<div style='height: 5000px;'></div>"
-      "<img src='#' alt='Target2'>"
+      "<img src='# alt='Target2'>"
       "<div style='height: 5000px;'></div>"
       "</body></html>");
 

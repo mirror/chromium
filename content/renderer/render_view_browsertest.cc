@@ -1658,7 +1658,7 @@ TEST_F(RenderViewImplTest, OnDeleteSurroundingTextInCodePoints) {
   // Load an HTML page consisting of an input field.
   LoadHTML(
       // "ab" + trophy + space + "cdef" + trophy + space + "gh".
-      "<input id=\"test1\" value=\"ab&#x1f3c6; cdef&#x1f3c6; gh\">");
+      "<input id=\"test1\" value=\"ab&#x1f3c6; cdef&#gh\">");
   ExecuteJavaScriptForTests("document.getElementById('test1').focus();");
 
   frame()->SetEditableSelectionOffsets(4, 4);
