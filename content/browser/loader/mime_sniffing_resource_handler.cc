@@ -27,6 +27,7 @@
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/webplugininfo.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
@@ -414,6 +415,10 @@ bool MimeSniffingResourceHandler::MaybeStartInterception() {
   if (!must_download) {
     if (blink::IsSupportedMimeType(mime_type))
       return true;
+    if (base::FeatureList::IsEnabled(features::kSignedHTTPExchange) &&
+        mime_type == "application/http-exchange+cbor") {
+      return true;
+    }
 
     bool handled_by_plugin;
     if (!CheckForPluginHandler(&handled_by_plugin))
