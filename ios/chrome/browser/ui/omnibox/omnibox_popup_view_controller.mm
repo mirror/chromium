@@ -359,10 +359,8 @@ UIColor* BackgroundColorIncognito() {
 }
 
 - (void)updateContentInsetForKeyboard {
-  UIView* toView =
-      [UIApplication sharedApplication].keyWindow.rootViewController.view;
   CGRect absoluteRect =
-      [self.tableView convertRect:self.tableView.bounds toView:toView];
+      [self.tableView convertRect:self.tableView.bounds toView:nil];
   CGFloat screenHeight = CurrentScreenHeight();
   CGFloat bottomInset = screenHeight - self.tableView.contentSize.height -
                         _keyboardHeight - absoluteRect.origin.y -
