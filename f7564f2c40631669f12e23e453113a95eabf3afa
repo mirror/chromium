@@ -22,6 +22,30 @@
       "revId": "f7564f2c40631669f12e23e453113a95eabf3afa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7306a8a4_cacb0032",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-23T15:57:15Z",
+      "side": 1,
+      "message": "Good point. \n\nSuch an additional field felt ugly to me so I decided to carry it over as another parameter.",
+      "parentUuid": "594321ea_2481d7be",
+      "range": {
+        "startLine": 208,
+        "startChar": 36,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "f7564f2c40631669f12e23e453113a95eabf3afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
