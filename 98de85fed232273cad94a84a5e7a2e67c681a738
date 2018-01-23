@@ -69,6 +69,24 @@
       "revId": "98de85fed232273cad94a84a5e7a2e67c681a738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae6d18d_e2af7ba3",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-23T23:43:40Z",
+      "side": 1,
+      "message": "Presumably, if this were set as a default, anyone who overrode it manually would get the override behavior.\n\nSeparately, auditing these does sound like it might make sense.",
+      "parentUuid": "102edef9_c2273d41",
+      "revId": "98de85fed232273cad94a84a5e7a2e67c681a738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
