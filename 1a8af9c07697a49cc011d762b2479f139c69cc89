@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba29095a_ac35edf9",
+        "filename": "base/time/time.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "289e2aed_fc68dfb4",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f3e912_23d19ceb",
         "filename": "base/time/time.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8994c5_30d7a983",
+        "filename": "base/time/time.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f3e912_23d19ceb",
+      "range": {
+        "startLine": 517,
+        "startChar": 72,
+        "endLine": 518,
+        "endChar": 64
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ffe6c79_cf31dc5d",
+        "filename": "base/time/time.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "The windows bots were complaining before I added them here. Either way, don\u0027t need the friends anymore :)",
+      "parentUuid": "6717cf2b_43eeb609",
+      "range": {
+        "startLine": 667,
+        "startChar": 9,
+        "endLine": 667,
+        "endChar": 20
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c055791b_4c2bc342",
         "filename": "base/time/time_fuchsia.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0d085f_3d443d02",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "Sounds good. Yeah, the private constructors were the reason.",
+      "parentUuid": "c055791b_4c2bc342",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6e5d697a_97646a5a",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbc526b_00ee52b1",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe814f3_2d449d52",
         "filename": "base/time/time_override.h",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc44dfd0_6202be37",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe814f3_2d449d52",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1fdd9501_9e219eb8",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "Yeah, was thinking about tests. As you mention, resetting the override is necessary even for the simple unit tests in this patch. The comment about |nullptr| isn\u0027t accurate anymore (forgot to remove it). Returning the old override seemed simpler, but I could remove that and replace it with handling nullptr correctly in the implementations if you prefer?\n\nI like the scoped override, will add it. I\u0027ll keep the Set*ClockOverride functions to implement it, if that\u0027s alright?",
+      "parentUuid": "c4ca3d67_d9875722",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f6a07f_90e235ba",
         "filename": "base/time/time_win.cc",
         "patchSetId": 11
@@ -183,6 +351,30 @@
       "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10327295_d242220e",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-23T09:26:31Z",
+      "side": 1,
+      "message": "You\u0027re right, it should. Not sure if the thread fuzzer will complain about this though..",
+      "parentUuid": "e7f6a07f_90e235ba",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 43
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
