@@ -199,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "b04ae98e_f069b72e",
+        "filename": "net/cert/cert_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:44:08Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d590875",
+      "parentUuid": "767f56ef_4a18c190",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d5f164_ca40ad43",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 5
