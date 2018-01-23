@@ -118,7 +118,7 @@ void AccessibilityWinBrowserTest::LoadInitialAccessibilityTreeFromHtml(
     ui::AXMode accessibility_mode) {
   AccessibilityNotificationWaiter waiter(
       shell()->web_contents(), accessibility_mode, ui::AX_EVENT_LOAD_COMPLETE);
-  GURL html_data_url("data:text/html," + html);
+  GURL html_data_url("data:text/html," + html.replace("#", "%23"));
   NavigateToURL(shell(), html_data_url);
   waiter.WaitForNotification();
 }
