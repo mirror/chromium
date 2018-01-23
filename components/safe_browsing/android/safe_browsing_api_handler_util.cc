@@ -135,13 +135,18 @@ SubresourceFilterMatch ParseSubresourceFilterMatch(
     return value == "warn" ? SubresourceFilterLevel::WARN
                            : SubresourceFilterLevel::ENFORCE;
   };
+  // TODO(csharrison): When M65 clients and lower are sufficiently small
+  // population, remove sf_absv and sf_bas in favor of the smaller metadata
+  // keys.
   std::string absv_value;
-  if (match->GetString("sf_absv", &absv_value)) {
+  if (match->GetString("sf_absv", &absv_value) ||
+      match->GetString("a", &absv_value)) {
     subresource_filter_match[SubresourceFilterType::ABUSIVE] =
         get_enforcement(absv_value);
   }
   std::string bas_value;
-  if (match->GetString("sf_bas", &bas_value)) {
+  if (match->GetString("sf_bas", &bas_value) ||
+      match->GetString("b", &bas_value)) {
     subresource_filter_match[SubresourceFilterType::BETTER_ADS] =
         get_enforcement(bas_value);
   }

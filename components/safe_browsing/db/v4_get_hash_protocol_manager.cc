@@ -689,10 +689,13 @@ void V4GetHashProtocolManager::ParseMetadata(const ThreatMatch& match,
         return value == "warn" ? SubresourceFilterLevel::WARN
                                : SubresourceFilterLevel::ENFORCE;
       };
-      if (m.key() == "sf_absv") {
+      // TODO(csharrison): When M65 clients and lower are sufficiently small
+      // population, remove sf_absv and sf_bas in favor of the smaller metadata
+      // keys.
+      if (m.key() == "sf_absv" || m.key() == "a") {
         metadata->subresource_filter_match[SubresourceFilterType::ABUSIVE] =
             get_enforcement(m.value());
-      } else if (m.key() == "sf_bas") {
+      } else if (m.key() == "sf_bas" || m.key() == "b") {
         metadata->subresource_filter_match[SubresourceFilterType::BETTER_ADS] =
             get_enforcement(m.value());
       }

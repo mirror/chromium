@@ -503,35 +503,41 @@ TEST_F(V4GetHashProtocolManagerTest, TestParseHashThreatPatternType) {
 TEST_F(V4GetHashProtocolManagerTest, TestParseSubresourceFilterMetadata) {
   typedef SubresourceFilterLevel Level;
   typedef SubresourceFilterType Type;
+  // If possible, keep these test cases identical to
+  // SafeBrowsingApiHandlerUtilTest.SubresourceFilterSubTypes.
   const struct {
-    const char* abusive_type;
-    const char* bas_type;
+    std::vector<std::pair<const char*, const char*>> metadata;
     SubresourceFilterMatch expected_match;
   } test_cases[] = {
-      {"warn",
-       "enforce",
-       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
-      {nullptr,
-       "warn",
-       {{{Type::BETTER_ADS, Level::WARN}}, base::KEEP_FIRST_OF_DUPES}},
-      {"asdf",
-       "",
-       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
-      {"warn",
-       nullptr,
-       {{{Type::ABUSIVE, Level::WARN}}, base::KEEP_FIRST_OF_DUPES}},
-      {nullptr, nullptr, {}},
-      {"",
-       "",
-       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}},
-        base::KEEP_FIRST_OF_DUPES}},
+      {{}, {}},
+      {{{"bleh", "asdf"}}, {}},
+      {{{"nothing", ""}, {"stillnothing", ""}}, {}},
+      {{{"a", ""}}, {{{Type::ABUSIVE, Level::ENFORCE}}}},
+      {{{"b", ""}}, {{{Type::BETTER_ADS, Level::ENFORCE}}}},
+      // sf_* entries have precedence (arbitrary).
+      {{{"a", ""}, {"sf_absv", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"b", ""}, {"sf_bas", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", ""}, {"b", "enforce"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"a", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"b", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", "warn"}, {"b", "warn"}},
+       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"a", "enforce"}, {"b", "warn"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", ""}}, {{{Type::ABUSIVE, Level::ENFORCE}}}},
+      {{{"sf_bas", ""}}, {{{Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"sf_absv", ""}, {"sf_bas", "enforce"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::ENFORCE}}}},
+      {{{"sf_absv", "warn"}}, {{{Type::ABUSIVE, Level::WARN}}}},
+      {{{"sf_bas", "warn"}}, {{{Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", "warn"}, {"sf_bas", "warn"}},
+       {{{Type::ABUSIVE, Level::WARN}, {Type::BETTER_ADS, Level::WARN}}}},
+      {{{"sf_absv", "enforce"}, {"sf_bas", "warn"}},
+       {{{Type::ABUSIVE, Level::ENFORCE}, {Type::BETTER_ADS, Level::WARN}}}},
   };
 
   for (const auto& test_case : test_cases) {
-    SCOPED_TRACE(testing::Message() << "abusive: " << test_case.abusive_type
-                                    << " better ads: " << test_case.bas_type);
     std::unique_ptr<V4GetHashProtocolManager> pm(CreateProtocolManager());
 
     base::Time now = base::Time::UnixEpoch();
@@ -545,20 +551,11 @@ TEST_F(V4GetHashProtocolManagerTest, TestParseSubresourceFilterMetadata) {
     FullHash full_hash("Everything's shiny, Cap'n.");
     sf->mutable_threat()->set_hash(full_hash);
 
-    // sf_absv.
-    if (test_case.abusive_type != nullptr) {
-      ThreatEntryMetadata::MetadataEntry* sf_absv =
+    for (auto it : test_case.metadata) {
+      ThreatEntryMetadata::MetadataEntry* entry =
           sf->mutable_threat_entry_metadata()->add_entries();
-      sf_absv->set_key("sf_absv");
-      sf_absv->set_value(test_case.abusive_type);
-    }
-
-    // sf_bas
-    if (test_case.bas_type != nullptr) {
-      ThreatEntryMetadata::MetadataEntry* sf_bas =
-          sf->mutable_threat_entry_metadata()->add_entries();
-      sf_bas->set_key("sf_bas");
-      sf_bas->set_value(test_case.bas_type);
+      entry->set_key(it.first);
+      entry->set_value(it.second);
     }
 
     std::string sf_data;
