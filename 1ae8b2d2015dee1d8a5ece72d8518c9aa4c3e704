@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "695ec163_16d9db8e",
+        "filename": "ios/chrome/browser/ui/util/label_link_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-23T02:15:40Z",
+      "side": 1,
+      "message": "Can we just set this from within TransparentLinkButton?",
+      "revId": "1ae8b2d2015dee1d8a5ece72d8518c9aa4c3e704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
