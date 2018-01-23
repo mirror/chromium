@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cc2344e_1046d0b3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-23T06:34:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b35e1ac_3a86e2a5",
+      "range": {
+        "startLine": 304,
+        "startChar": 5,
+        "endLine": 304,
+        "endChar": 8
+      },
+      "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d55aef25_75a26a59",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 1
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "If user can keep the JS reference to |js_output_raw_ptrs| in one way or another, it can be a problem. Then user can try to send the array via MessagePort to another thread.\n\nIf there is way to prevent this while we can avoid the copy, I would love to know.",
       "parentUuid": "d55aef25_75a26a59",
+      "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ba47c6_44822469",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-23T06:34:04Z",
+      "side": 1,
+      "message": "Ah, I see.  Then, anyway we want a copy of the output.  Then, it makes sense to not use externalized array buffers.",
+      "parentUuid": "dc622c9e_05a82151",
       "revId": "eb0d27667fe1852bb3ccce6d84c90ccc09cb4016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
