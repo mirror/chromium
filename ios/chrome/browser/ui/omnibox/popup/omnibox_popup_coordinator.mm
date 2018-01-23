@@ -28,6 +28,7 @@
 @implementation OmniboxPopupCoordinator
 
 @synthesize browserState = _browserState;
+@synthesize canShowPopup = _canShowPopup;
 @synthesize mediator = _mediator;
 @synthesize popupViewController = _popupViewController;
 @synthesize positioner = _positioner;
@@ -60,6 +61,8 @@
       initWithPopupPositioner:self.positioner
           popupViewController:self.popupViewController];
 
+  self.canShowPopup = YES;
+
   self.popupViewController.imageRetriever = self.mediator;
   self.popupViewController.delegate = self.mediator;
 
@@ -68,6 +71,13 @@
 
 - (void)stop {
   _popupView.reset();
+}
+
+#pragma mark - Property accessor
+
+- (void)setCanShowPopup:(BOOL)canShowPopup {
+  _canShowPopup = canShowPopup;
+  self.mediator.presenter.canShowPopup = canShowPopup;
 }
 
 @end
