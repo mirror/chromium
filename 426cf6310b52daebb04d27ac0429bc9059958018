@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b73be6_ed634146",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:06:34Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have to check html attributes, we have the MODAL boolean\nattribute implemented. Per the spec it\u0027s only set if the role is dialog\nor alertdialog - were you trying to catch any additional cases?",
+      "revId": "426cf6310b52daebb04d27ac0429bc9059958018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
