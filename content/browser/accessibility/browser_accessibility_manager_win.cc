@@ -56,8 +56,8 @@ ui::AXTreeUpdate
     BrowserAccessibilityManagerWin::GetEmptyDocument() {
   ui::AXNodeData empty_document;
   empty_document.id = 0;
-  empty_document.role = ui::AX_ROLE_ROOT_WEB_AREA;
-  empty_document.AddBoolAttribute(ui::AX_ATTR_BUSY, true);
+  empty_document.role = ax::mojom::Role::ROOT_WEB_AREA;
+  empty_document.AddBoolAttribute(ax::mojom::BoolAttribute::BUSY, true);
 
   ui::AXTreeUpdate update;
   update.root_id = empty_document.id;
@@ -105,14 +105,14 @@ void BrowserAccessibilityManagerWin::FireFocusEvent(
 }
 
 void BrowserAccessibilityManagerWin::FireBlinkEvent(
-    ui::AXEvent event_type,
+    ax::mojom::Event event_type,
     BrowserAccessibility* node) {
   BrowserAccessibilityManager::FireBlinkEvent(event_type, node);
   switch (event_type) {
-    case ui::AX_EVENT_LOCATION_CHANGED:
+    case ax::mojom::Event::LOCATION_CHANGED:
       FireWinAccessibilityEvent(IA2_EVENT_VISIBLE_DATA_CHANGED, node);
       break;
-    case ui::AX_EVENT_SCROLLED_TO_ANCHOR:
+    case ax::mojom::Event::SCROLLED_TO_ANCHOR:
       FireWinAccessibilityEvent(EVENT_SYSTEM_SCROLLINGSTART, node);
       break;
     default:
@@ -213,7 +213,7 @@ void BrowserAccessibilityManagerWin::FireWinAccessibilityEvent(
 
   // Inline text boxes are an internal implementation detail, we don't
   // expose them to Windows.
-  if (node->GetRole() == ui::AX_ROLE_INLINE_TEXT_BOX)
+  if (node->GetRole() == ax::mojom::Role::INLINE_TEXT_BOX)
     return;
 
   // Pass the negation of this node's unique id in the |child_id|

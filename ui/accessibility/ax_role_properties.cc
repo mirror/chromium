@@ -6,138 +6,138 @@
 
 namespace ui {
 
-bool IsRoleClickable(AXRole role) {
+bool IsRoleClickable(ax::mojom::Role role) {
   switch (role) {
-    case AX_ROLE_BUTTON:
-    case AX_ROLE_CHECK_BOX:
-    case AX_ROLE_COLOR_WELL:
-    case AX_ROLE_DISCLOSURE_TRIANGLE:
-    case AX_ROLE_LINK:
-    case AX_ROLE_LIST_BOX_OPTION:
-    case AX_ROLE_MENU_BUTTON:
-    case AX_ROLE_MENU_ITEM:
-    case AX_ROLE_MENU_ITEM_CHECK_BOX:
-    case AX_ROLE_MENU_ITEM_RADIO:
-    case AX_ROLE_MENU_LIST_OPTION:
-    case AX_ROLE_MENU_LIST_POPUP:
-    case AX_ROLE_POP_UP_BUTTON:
-    case AX_ROLE_RADIO_BUTTON:
-    case AX_ROLE_SWITCH:
-    case AX_ROLE_TAB:
-    case AX_ROLE_TOGGLE_BUTTON:
+    case ax::mojom::Role::BUTTON:
+    case ax::mojom::Role::CHECK_BOX:
+    case ax::mojom::Role::COLOR_WELL:
+    case ax::mojom::Role::DISCLOSURE_TRIANGLE:
+    case ax::mojom::Role::LINK:
+    case ax::mojom::Role::LIST_BOX_OPTION:
+    case ax::mojom::Role::MENU_BUTTON:
+    case ax::mojom::Role::MENU_ITEM:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
+    case ax::mojom::Role::MENU_LIST_OPTION:
+    case ax::mojom::Role::MENU_LIST_POPUP:
+    case ax::mojom::Role::POP_UP_BUTTON:
+    case ax::mojom::Role::RADIO_BUTTON:
+    case ax::mojom::Role::SWITCH:
+    case ax::mojom::Role::TAB:
+    case ax::mojom::Role::TOGGLE_BUTTON:
       return true;
     default:
       return false;
   }
 }
 
-bool IsDocument(ui::AXRole role) {
+bool IsDocument(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_ROOT_WEB_AREA:
-    case ui::AX_ROLE_WEB_AREA:
+    case ax::mojom::Role::ROOT_WEB_AREA:
+    case ax::mojom::Role::WEB_AREA:
       return true;
     default:
       return false;
   }
 }
 
-bool IsCellOrTableHeaderRole(ui::AXRole role) {
+bool IsCellOrTableHeaderRole(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_CELL:
-    case ui::AX_ROLE_COLUMN_HEADER:
-    case ui::AX_ROLE_ROW_HEADER:
+    case ax::mojom::Role::CELL:
+    case ax::mojom::Role::COLUMN_HEADER:
+    case ax::mojom::Role::ROW_HEADER:
       return true;
     default:
       return false;
   }
 }
 
-bool IsTableLikeRole(ui::AXRole role) {
+bool IsTableLikeRole(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_TABLE:
-    case ui::AX_ROLE_GRID:
-    case ui::AX_ROLE_TREE_GRID:
+    case ax::mojom::Role::TABLE:
+    case ax::mojom::Role::GRID:
+    case ax::mojom::Role::TREE_GRID:
       return true;
     default:
       return false;
   }
 }
 
-bool IsContainerWithSelectableChildrenRole(ui::AXRole role) {
+bool IsContainerWithSelectableChildrenRole(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_COMBO_BOX_GROUPING:
-    case ui::AX_ROLE_COMBO_BOX_MENU_BUTTON:
-    case ui::AX_ROLE_GRID:
-    case ui::AX_ROLE_LIST_BOX:
-    case ui::AX_ROLE_MENU:
-    case ui::AX_ROLE_MENU_BAR:
-    case ui::AX_ROLE_RADIO_GROUP:
-    case ui::AX_ROLE_TAB_LIST:
-    case ui::AX_ROLE_TOOLBAR:
-    case ui::AX_ROLE_TREE:
-    case ui::AX_ROLE_TREE_GRID:
+    case ax::mojom::Role::COMBO_BOX_GROUPING:
+    case ax::mojom::Role::COMBO_BOX_MENU_BUTTON:
+    case ax::mojom::Role::GRID:
+    case ax::mojom::Role::LIST_BOX:
+    case ax::mojom::Role::MENU:
+    case ax::mojom::Role::MENU_BAR:
+    case ax::mojom::Role::RADIO_GROUP:
+    case ax::mojom::Role::TAB_LIST:
+    case ax::mojom::Role::TOOLBAR:
+    case ax::mojom::Role::TREE:
+    case ax::mojom::Role::TREE_GRID:
       return true;
     default:
       return false;
   }
 }
 
-bool IsRowContainer(ui::AXRole role) {
+bool IsRowContainer(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_TREE:
-    case ui::AX_ROLE_TREE_GRID:
-    case ui::AX_ROLE_GRID:
-    case ui::AX_ROLE_TABLE:
+    case ax::mojom::Role::TREE:
+    case ax::mojom::Role::TREE_GRID:
+    case ax::mojom::Role::GRID:
+    case ax::mojom::Role::TABLE:
       return true;
     default:
       return false;
   }
 }
 
-bool IsControl(ui::AXRole role) {
+bool IsControl(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_BUTTON:
-    case ui::AX_ROLE_CHECK_BOX:
-    case ui::AX_ROLE_COLOR_WELL:
-    case ui::AX_ROLE_COMBO_BOX_MENU_BUTTON:
-    case ui::AX_ROLE_DISCLOSURE_TRIANGLE:
-    case ui::AX_ROLE_LIST_BOX:
-    case ui::AX_ROLE_MENU:
-    case ui::AX_ROLE_MENU_BAR:
-    case ui::AX_ROLE_MENU_BUTTON:
-    case ui::AX_ROLE_MENU_ITEM:
-    case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
-    case ui::AX_ROLE_MENU_ITEM_RADIO:
-    case ui::AX_ROLE_MENU_LIST_OPTION:
-    case ui::AX_ROLE_MENU_LIST_POPUP:
-    case ui::AX_ROLE_POP_UP_BUTTON:
-    case ui::AX_ROLE_RADIO_BUTTON:
-    case ui::AX_ROLE_SCROLL_BAR:
-    case ui::AX_ROLE_SEARCH_BOX:
-    case ui::AX_ROLE_SLIDER:
-    case ui::AX_ROLE_SPIN_BUTTON:
-    case ui::AX_ROLE_SWITCH:
-    case ui::AX_ROLE_TAB:
-    case ui::AX_ROLE_TEXT_FIELD:
-    case ui::AX_ROLE_TEXT_FIELD_WITH_COMBO_BOX:
-    case ui::AX_ROLE_TOGGLE_BUTTON:
-    case ui::AX_ROLE_TREE:
+    case ax::mojom::Role::BUTTON:
+    case ax::mojom::Role::CHECK_BOX:
+    case ax::mojom::Role::COLOR_WELL:
+    case ax::mojom::Role::COMBO_BOX_MENU_BUTTON:
+    case ax::mojom::Role::DISCLOSURE_TRIANGLE:
+    case ax::mojom::Role::LIST_BOX:
+    case ax::mojom::Role::MENU:
+    case ax::mojom::Role::MENU_BAR:
+    case ax::mojom::Role::MENU_BUTTON:
+    case ax::mojom::Role::MENU_ITEM:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
+    case ax::mojom::Role::MENU_LIST_OPTION:
+    case ax::mojom::Role::MENU_LIST_POPUP:
+    case ax::mojom::Role::POP_UP_BUTTON:
+    case ax::mojom::Role::RADIO_BUTTON:
+    case ax::mojom::Role::SCROLL_BAR:
+    case ax::mojom::Role::SEARCH_BOX:
+    case ax::mojom::Role::SLIDER:
+    case ax::mojom::Role::SPIN_BUTTON:
+    case ax::mojom::Role::SWITCH:
+    case ax::mojom::Role::TAB:
+    case ax::mojom::Role::TEXT_FIELD:
+    case ax::mojom::Role::TEXT_FIELD_WITH_COMBO_BOX:
+    case ax::mojom::Role::TOGGLE_BUTTON:
+    case ax::mojom::Role::TREE:
       return true;
     default:
       return false;
   }
 }
 
-bool IsMenuRelated(ui::AXRole role) {
+bool IsMenuRelated(ax::mojom::Role role) {
   switch (role) {
-    case ui::AX_ROLE_MENU:
-    case ui::AX_ROLE_MENU_BAR:
-    case ui::AX_ROLE_MENU_BUTTON:
-    case ui::AX_ROLE_MENU_ITEM:
-    case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
-    case ui::AX_ROLE_MENU_ITEM_RADIO:
-    case ui::AX_ROLE_MENU_LIST_OPTION:
-    case ui::AX_ROLE_MENU_LIST_POPUP:
+    case ax::mojom::Role::MENU:
+    case ax::mojom::Role::MENU_BAR:
+    case ax::mojom::Role::MENU_BUTTON:
+    case ax::mojom::Role::MENU_ITEM:
+    case ax::mojom::Role::MENU_ITEM_CHECK_BOX:
+    case ax::mojom::Role::MENU_ITEM_RADIO:
+    case ax::mojom::Role::MENU_LIST_OPTION:
+    case ax::mojom::Role::MENU_LIST_POPUP:
       return true;
     default:
       return false;
