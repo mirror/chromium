@@ -14,13 +14,13 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 #include "build/build_config.h"
+#include "media/audio/audio_debug_recording_helper.h"
 #include "media/audio/audio_device_description.h"
 #include "media/audio/audio_logging.h"
 #include "media/audio/audio_thread.h"
 #include "media/base/audio_parameters.h"
 
 namespace base {
-class FilePath;
 class SingleThreadTaskRunner;
 }
 
@@ -175,7 +175,9 @@ class MEDIA_EXPORT AudioManager {
 
   // Enable debug recording. InitializeDebugRecording() must be called before
   // this function.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name) = 0;
+  virtual void EnableDebugRecording(
+      const AudioDebugRecordingHelper::CreateFileCallback&
+          create_file_callback) = 0;
 
   // Disable debug recording.
   virtual void DisableDebugRecording() = 0;
