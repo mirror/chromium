@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13b8abeb_da3a4ce6",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "Thanks for the info. Done.",
+      "parentUuid": "ca3b1680_d61547cf",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb20b46_f713a4e0",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 52
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8536cff8_27025c71",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb20b46_f713a4e0",
+      "range": {
+        "startLine": 108,
+        "startChar": 44,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef3e6185_4eec28af",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 52
@@ -62,6 +110,24 @@
       "revId": "26c2217752998600ba88feb05c1dc197184db90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0055495_9d30349d",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "For example, the request is for frame A who depends on frame B. Frame B may depends on C. If frame C\u0027s content is painted now (but B is not yet), although A doesn\u0027t directly wait on C, we still need C in frame_map.\n\nAdded more comments, hope it helps.",
+      "parentUuid": "ef3e6185_4eec28af",
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e36ec428_857d2585",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "|pending_subframes| is an output parameter. It is needed outside of this function. We should not need to clear() here for this file since we always created it right before calling this function. It is mainly for testing, and sanity.\n\nAlternatively, I can return pair\u003cflat_set, bool\u003e, but the caller side will a bit cumbersome.",
+      "parentUuid": "20442302_071fa690",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3df79c_5c679775",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 52
@@ -102,6 +192,24 @@
       "revId": "26c2217752998600ba88feb05c1dc197184db90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dfa36f_40641d86",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc3df79c_5c679775",
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

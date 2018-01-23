@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "addbee80_3d127370",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "oh, sth changed. Now it works. Removed this adaptor.",
+      "parentUuid": "f0d8a068_15118aff",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c94e07_0d0026fa",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 49
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "OK, I don\u0027t quite understand how this condition would be hit, but I\u0027ll wait for the followups.",
       "parentUuid": "f8f7f33f_7ecd64b1",
+      "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeaf2b23_5c1e3967",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "|request_| is created when CompositePageToPdf() or CompositeDocumentToPdf() is called. It is possible that the subframe is painted before the main frame. In this case, AddSubframeContent() is called first and |request_| is not created yet.\n\nAdded more comments.",
+      "parentUuid": "d47fc831_b990720c",
       "revId": "ff1c149dd723db3c85442b04ebe759272e15aecb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

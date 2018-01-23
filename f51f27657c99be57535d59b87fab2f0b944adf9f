@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a209ccaa_90d06682",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea7a42e6_7325c760",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e667e6_ab542ffb",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 46
@@ -284,6 +308,24 @@
       "side": 1,
       "message": "I would kind of like this to be an UnguessableToken for consistency, but as used, this also seems fine, so I guess we can just leave it for now. Thanks for the explanation.",
       "parentUuid": "935fd94b_63145317",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e2d6070_1e4f644e",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-23T18:54:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63e6e0af_0e39781b",
       "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
