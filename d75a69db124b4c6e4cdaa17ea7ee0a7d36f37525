@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "49cd1907_39ea5e35",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T00:06:10Z",
+      "side": 1,
+      "message": "All things that call this are throttled, so I think we are ok.",
+      "parentUuid": "0380ec6d_9ed473b1",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8ec5df_1e2eff07",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSStyleSheetHeader.js",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "side": 1,
       "message": "We can store this together with stylesheet content on backend. WDYT?",
       "parentUuid": "ac8ec5df_1e2eff07",
+      "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452a0a11_e66faebd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSStyleSheetHeader.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T00:06:10Z",
+      "side": 1,
+      "message": "We talked about it offline and and decided to do it on the front end to avoid linking the CSS and JS backends, but isolating this code to bindings.",
+      "parentUuid": "89aed104_36aa2578",
       "revId": "d75a69db124b4c6e4cdaa17ea7ee0a7d36f37525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
