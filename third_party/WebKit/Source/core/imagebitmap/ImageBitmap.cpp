@@ -96,6 +96,7 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
     parsed_options.crop_rect = IntRect(0, 0, source_width, source_height);
   } else {
     parsed_options.crop_rect = NormalizeRect(*crop_rect);
+    parsed_options.crop_rect.Intersect(IntRect(IntPoint(), source_size));
   }
   if (!options.hasResizeWidth() && !options.hasResizeHeight()) {
     parsed_options.resize_width = parsed_options.crop_rect.Width();

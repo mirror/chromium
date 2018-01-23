@@ -5,7 +5,7 @@
 function testImageBitmap(source)
 {
     return createImageBitmap(source, 0, 0, 0x8000, 0x8000, {imageOrientation: "flipY", premultiplyAlpha: "none"}).then(function() {
-        assert_true(false, "Promise should be rejected if the cropRect is too big.");
+        assert_true(true, "Promise should be resolved when the requested size is too big but the source size is valid.");
     }, function() {
         return createImageBitmap(source, 5, 5, 10, 10, {resizeWidth: 0x8000, resizeHeight: 0x8000}).then(function() {
             assert_true(false, "Promise should be rejected if the resizeWidth or resizeHeight is too big.");

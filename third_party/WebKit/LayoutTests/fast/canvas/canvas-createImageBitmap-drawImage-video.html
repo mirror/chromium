@@ -1,13 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html>
-<head>
-<script src="../../resources/js-test.js"></script>
-</head>
-<body>
+<!DOCTYPE HTML>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
 <script>
-
-description("Ensure correct behavior of drawImage with ImageBitmaps from video elements.");
-window.jsTestIsAsync = true;
 
 function jsWrapperClass(node)
 {
@@ -22,17 +16,14 @@ function jsWrapperClass(node)
 
 function shouldBeType(expression, className)
 {
-    shouldBe("jsWrapperClass(" + expression + ")", "'" + className + "'");
+    assert_equals(jsWrapperClass(expression), className);
 }
 
 function shouldBeClear(canvas, x, y) {
     // should be transparent black pixels
     var ctx = canvas.getContext('2d');
     d = ctx.getImageData(x, y, 1, 1).data;
-    if (d[0] != 0 || d[1] != 0 || d[2] != 0 || d[3] != 0) {
-        testFailed("This pixel must be clear, but it is" + d);
-        finishJSTest();
-    }
+    assert_array_equals(d, [0, 0, 0, 0], "Pixel must be clear");
 }
 
 function clearContext(ctx, ctx1) {
@@ -56,50 +47,64 @@ video.addEventListener("canplaythrough", videoLoaded, false);
 video.src = "../../compositing/resources/video.ogv";
 
 function videoLoaded() {
-    var imageBitmaps = {};
-    var p1 = createImageBitmap(video).then(
-        function (image) { imageBitmaps.noCrop = image });
-    var p2 = createImageBitmap(video, 0, 0, 100, 100).then(
-        function (image) { imageBitmaps.crop = image });
-    var p3 = createImageBitmap(video, 50, 50, 100, 100).then(
-        function (image) { imageBitmaps.cropRight = image });
-    var p4 = createImageBitmap(video, 100, 100, 100, 100).then(
-        function (image) { imageBitmaps.cropCenter = image });
-    var p5 = createImageBitmap(video, -100, -100, 600, 600).then(
-        function (image) { imageBitmaps.overCrop = image });
-    var p6 = createImageBitmap(video, 100, 100, 500, 500).then(
-        function (image) { imageBitmaps.overCropRight = image });
-    var p7 = createImageBitmap(video, 100, 100, -100, -100).then(
-        function (image) { imageBitmaps.negativeCrop = image });
-    var p8 = createImageBitmap(video, -300, -300, 300, 300).then(
-        function (image) { imageBitmaps.empty = image });
-    var p9 = createImageBitmap(video, 400, 300, 300, 300).then(
-        function (image) { imageBitmaps.emptyTwo = image });
-    var p10 = createImageBitmap(video, 0, 0, Math.pow(10, 6),
-                                Math.pow(10, 6)).then(
-        function(image) { imageBitmaps.hugeCrop = image });
+    promise_test(function() {
+        return createImageBitmap(video).then(
+            function (image) { checkNoCrop(image); });
+    }, 'createImageBitmap from video with no crop rect.');
 
-    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]).then(function() {
-        checkNoCrop(imageBitmaps.noCrop);
-        checkCrop(imageBitmaps.crop, 0, 0, 100, 100);
-        checkCrop(imageBitmaps.cropRight, 50, 50, 100, 100);
-        checkCrop(imageBitmaps.cropCenter, 100, 100, 100, 100);
-        checkOverCrop(imageBitmaps.overCrop);
-        checkOverCropRight(imageBitmaps.overCropRight);
-        checkCrop(imageBitmaps.negativeCrop, 0, 0, 100, 100);
-        checkEmpty(imageBitmaps.empty);
-        checkEmpty(imageBitmaps.emptyTwo);
-        createImageBitmap(video, 0, 0, 0x8000, 0x8000).then(function() {
-            testFailed('Creating a huge ImageBitmap is resolved unexpectedly.');
-            finishJSTest();
-         }, function() {
-             testPassed('Creating a huge ImageBitmap is rejected as expected.');
-             finishJSTest();
-         });
-    }, function() {
-        testFailed("Promise was rejected.");
-        finishJSTest();
-    });
+    promise_test(function() {
+        return createImageBitmap(video, 0, 0, 100, 100).then(
+            function (image) { checkCrop(image, 0, 0, 100, 100); });
+    }, 'createImageBitmap from video with crop rect.');
+
+    promise_test(function() {
+        return createImageBitmap(video, 50, 50, 100, 100).then(
+            function (image) { checkCrop(image, 50, 50, 100, 100); });
+    }, 'createImageBitmap from video with crop rect from right.');
+
+    promise_test(function() {
+        return createImageBitmap(video, 100, 100, 100, 100).then(
+            function (image) { checkCrop(image, 100, 100, 100, 100); });
+    }, 'createImageBitmap from video with crop rect from center.');
+
+    promise_test(function() {
+        return createImageBitmap(video, -100, -100, 600, 600).then(
+            function (image) { checkOverCrop(image); });
+    }, 'createImageBitmap from video with over crop.');
+
+    promise_test(function() {
+        return createImageBitmap(video, 100, 100, 500, 500).then(
+            function (image) { checkOverCropRight(image); });
+    }, 'createImageBitmap from video with over crop from right.');
+
+    promise_test(function() {
+        return createImageBitmap(video, 100, 100, -100, -100).then(
+            function (image) { checkCrop(image, 0, 0, 100, 100); });
+    }, 'createImageBitmap from video with negative size crop rect.');
+
+    promise_test(function() {
+        return createImageBitmap(video, 0, 0, Math.pow(10, 6), Math.pow(10, 6))
+            .then(
+                function (image) { checkNoCrop(image); });
+    }, 'createImageBitmap from video with huge crop rect.');
+
+    async_test(t => {
+        createImageBitmap(video, -300, -300, 300, 300).then(function() {
+            assert_not_reached('Asking for an empty ImageBitmap should be rejected');
+            t.done();
+        }, function() {
+            t.done();
+        });
+    }, "Asking for an empty ImageBitmap should be rejected (1).");
+
+    async_test(t => {
+        createImageBitmap(video, 400, 300, 300, 300).then(function() {
+            assert_not_reached('Asking for an empty ImageBitmap should be rejected');
+            t.done();
+        }, function() {
+            t.done();
+        });
+    }, "Asking for an empty ImageBitmap should be rejected (2).");
 }
 
 function compareTwoCanvases(sx, sy, sw, sh, ctx, ctx1)
@@ -115,15 +120,12 @@ function compareTwoCanvases(sx, sy, sw, sh, ctx, ctx1)
             break;
         }
     }
-    if (!dataMatched) {
-        testFailed("The imageBitmap doesn't match the original video.");
-        finishJSTest();
-    }
+    assert_true(dataMatched);
 }
 
 function checkNoCrop(imageBitmap) {
     bitmap = imageBitmap;
-    shouldBeType("bitmap", "ImageBitmap");
+    shouldBeType(bitmap, "ImageBitmap");
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
@@ -162,7 +164,7 @@ function checkNoCrop(imageBitmap) {
 
 function checkCrop(imageBitmap, sx, sy, sw, sh) {
     bitmap = imageBitmap;
-    shouldBeType("bitmap", "ImageBitmap");
+    shouldBeType(bitmap, "ImageBitmap");
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
@@ -175,7 +177,7 @@ function checkCrop(imageBitmap, sx, sy, sw, sh) {
 
 function checkOverCrop(imageBitmap) {
     bitmap = imageBitmap;
-    shouldBeType("bitmap", "ImageBitmap");
+    shouldBeType(bitmap, "ImageBitmap");
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
@@ -188,7 +190,7 @@ function checkOverCrop(imageBitmap) {
 
 function checkOverCropRight(imageBitmap) {
     bitmap = imageBitmap;
-    shouldBeType("bitmap", "ImageBitmap");
+    shouldBeType(bitmap, "ImageBitmap");
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
@@ -201,7 +203,7 @@ function checkOverCropRight(imageBitmap) {
 
 function checkEmpty(imageBitmap) {
     bitmap = imageBitmap;
-    shouldBeType("bitmap", "ImageBitmap");
+    shouldBeType(bitmap, "ImageBitmap");
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
