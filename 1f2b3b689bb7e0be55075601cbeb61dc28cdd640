@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c49f70_7666dca8",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-23T17:26:39Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "1f2b3b689bb7e0be55075601cbeb61dc28cdd640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d029ddc_f8a2907c",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-23T17:26:39Z",
+      "side": 1,
+      "message": "no curlies?",
+      "revId": "1f2b3b689bb7e0be55075601cbeb61dc28cdd640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fa18d2_49464496",
+        "filename": "chrome/browser/ui/views/payments/payment_handler_web_flow_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-23T17:26:39Z",
+      "side": 1,
+      "message": "nit: const?",
+      "revId": "1f2b3b689bb7e0be55075601cbeb61dc28cdd640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
