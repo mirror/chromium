@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ed7e38_2c01c182",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:11:20Z",
+      "side": 1,
+      "message": "Please replace \u0027ensure correctness\u0027 with something a bit more detailed (something like associate the data with one printing request together)",
+      "revId": "9ca37b0fdd1e74cf2c76827ef6704664d7ea3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882df3e2_18068edb",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:11:20Z",
+      "side": 1,
+      "message": "Nit: add a class-level comment for this struct, something like:\n\n// Holds the result of printing one local subtree that will be composited\n// together.",
+      "revId": "9ca37b0fdd1e74cf2c76827ef6704664d7ea3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22cbc32a_9f10c08d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:11:20Z",
+      "side": 1,
+      "message": "Nit: we don\u0027t generally add IPC messages for unimplemented messages. Let\u0027s just move this part to the followup CL, it\u0027s fairly trivial.",
+      "revId": "9ca37b0fdd1e74cf2c76827ef6704664d7ea3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
