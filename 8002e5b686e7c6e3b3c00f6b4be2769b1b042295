@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a607e578_2dcd2dfc",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "yeah, the same pattern is used just event names are changed.",
+      "parentUuid": "403086cc_71a57be6",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbd71648_4a68173c",
         "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6726a1d5_2e8d8f41",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd71648_4a68173c",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "95645ae5_fc0b8c4f",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6daedcf_ea7b75da",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ac5d58_ab0de3f0",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationAbsoluteController.cpp",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-23T01:47:17Z",
       "side": 1,
       "message": "Maybe would it be tidier to merge LogToConsolePolicyFeaturesDisabled into CheckPolicyFeatures?\n\ni.e., you can write the code like this:\n\nif (!CheckFeaturePolicies(frame, ...))  // This adds a console message if necessary.\n  return;",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a4a079_735965b9",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationAbsoluteController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "Moved FP check to the parent class, as proposed by timvolodine@",
+      "parentUuid": "b3ac5d58_ab0de3f0",
       "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "558863eb_1aa6e211",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "The checks must correspond to https://github.com/WICG/feature-policy/blob/gh-pages/features.md#sensor-features, so we should not ask for magnetometer FP here (unlike DeviceOrientationAbsoluteController).\nAFAIK fallbacks rely on fusion algorithms on browser side (juncai@ could you confirm?)",
+      "parentUuid": "63ee5de6_31e0ee6b",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b41e0c2b_bd6bae95",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-23T02:32:39Z",
       "side": 1,
       "message": "Would it make sense to implement this in the superclass (i.e. DeviceSingleWindowEventController)?",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d811a97_5599df58",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-23T13:39:38Z",
+      "side": 1,
+      "message": "Indeed, thanks for proposal! Done",
+      "parentUuid": "b41e0c2b_bd6bae95",
       "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
