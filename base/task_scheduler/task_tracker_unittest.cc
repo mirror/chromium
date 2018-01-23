@@ -209,7 +209,7 @@ class TaskSchedulerTaskTrackerTest
   }
 
   // Calls tracker_->Flush() on a new thread.
-  void CallFlushAsync() {
+  void CallFlushFromAnotherThread() {
     ASSERT_FALSE(thread_calling_flush_);
     thread_calling_flush_.reset(
         new CallbackThread(Bind(&TaskTracker::Flush, Unretained(&tracker_))));
@@ -582,13 +582,24 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingDelayedTask) {
   tracker_.Flush();
 }
 
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncPendingDelayedTask) {
+  const Task delayed_task(FROM_HERE, BindOnce(&DoNothing),
+                          TaskTraits(GetParam()), TimeDelta::FromDays(1));
+  tracker_.WillPostTask(delayed_task);
+  // FlushAsync() should callback even if the delayed task didn't run.
+  bool called_back = false;
+  tracker_.FlushAsync(BindOnce([](bool* called_back) { *called_back = true; },
+                               Unretained(&called_back)));
+  EXPECT_TRUE(called_back);
+}
+
 TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
   Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
   // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -597,13 +608,30 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
 }
 
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAsyncPendingUndelayedTask) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsync() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsync(BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // FlushAsync() should callback after the undelayed task runs.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+  event.Wait();
+}
+
 TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
   Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
   // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -624,6 +652,35 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
 }
 
+TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlushAsync) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsync() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsync(BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Simulate posting another undelayed task.
+  Task other_undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                            TimeDelta());
+  tracker_.WillPostTask(other_undelayed_task);
+
+  // Run the first undelayed task.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+
+  // FlushAsync() shouldn't callback before the second undelayed task runs.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // FlushAsync() should callback after the second undelayed task runs.
+  DispatchAndRunTaskWithTracker(std::move(other_undelayed_task));
+  event.Wait();
+}
+
 TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
   // Simulate posting a delayed and an undelayed task.
   Task delayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
@@ -634,7 +691,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
   tracker_.WillPostTask(undelayed_task);
 
   // Flush() shouldn't return before the undelayed task runs.
-  CallFlushAsync();
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -651,6 +708,37 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
 
   // Flush() should now return.
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlushAsync) {
+  // Simulate posting a delayed and an undelayed task.
+  Task delayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                    TimeDelta::FromDays(1));
+  tracker_.WillPostTask(delayed_task);
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsync() shouldn't callback before the undelayed task runs.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsync(BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Run the delayed task.
+  DispatchAndRunTaskWithTracker(std::move(delayed_task));
+
+  // FlushAsync() shouldn't callback since there is still a pending undelayed
+  // task.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Run the undelayed task.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+
+  // FlushAsync() should now callback.
+  event.Wait();
 }
 
 TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdown) {
@@ -671,6 +759,27 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdown) {
   tracker_.Flush();
 }
 
+TEST_P(TaskSchedulerTaskTrackerTest, FlushAfterShutdownAsync) {
+  if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN)
+    return;
+
+  // Simulate posting a task.
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // Shutdown() should return immediately since there are no pending
+  // BLOCK_SHUTDOWN tasks.
+  tracker_.Shutdown();
+
+  // Flush() should callback immediately after shutdown, even if an undelayed
+  // task hasn't run.
+  bool called_back = false;
+  tracker_.FlushAsync(BindOnce([](bool* called_back) { *called_back = true; },
+                               Unretained(&called_back)));
+  EXPECT_TRUE(called_back);
+}
+
 TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
   if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN)
     return;
@@ -682,7 +791,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
 
   // Flush() shouldn't return before the undelayed task runs or
   // shutdown completes.
-  CallFlushAsync();
+  CallFlushFromAnotherThread();
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
@@ -692,6 +801,44 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlush) {
 
   // Flush() should now return, even if an undelayed task hasn't run.
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlushAsync) {
+  if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN)
+    return;
+
+  // Simulate posting a task.
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsync() shouldn't callback before the undelayed task runs or shutdown
+  // completes.
+  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsync(BindOnce(&WaitableEvent::Signal, Unretained(&event)));
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  EXPECT_FALSE(event.IsSignaled());
+
+  // Shutdown() should return immediately since there are no pending
+  // BLOCK_SHUTDOWN tasks.
+  tracker_.Shutdown();
+
+  // FlushAsync() should now callback, even if an undelayed task hasn't run.
+  event.Wait();
+}
+
+TEST_P(TaskSchedulerTaskTrackerTest, DoublePendingFlushAsyncFails) {
+  Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
+                      TimeDelta());
+  tracker_.WillPostTask(undelayed_task);
+
+  // FlushAsync() should callback even if the delayed task didn't run.
+  bool called_back = false;
+  tracker_.FlushAsync(BindOnce([](bool* called_back) { *called_back = true; },
+                               Unretained(&called_back)));
+  EXPECT_FALSE(called_back);
+  EXPECT_DCHECK_DEATH({ tracker_.FlushAsync(BindOnce([]() {})); });
 }
 
 INSTANTIATE_TEST_CASE_P(
