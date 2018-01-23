@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c911d7_fdea738b",
+        "filename": "ui/ozone/platform/drm/gpu/drm_overlay_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Are we still scheduling the opaque fb for plane 0?\nIf that\u0027s the case, would it be an issue that we test the configuration with a slightly different format?",
+      "revId": "5a4c179a7cdeaaf813e6bb2bfb1c8322cd43fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
