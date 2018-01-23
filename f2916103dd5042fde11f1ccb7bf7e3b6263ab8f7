@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445469de_6ade4931",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2018-01-23T10:08:43Z",
+      "side": 1,
+      "message": "Please add a link to the check in the commit message in case someone goes looking for it: https://clang.llvm.org/extra/clang-tidy/checks/performance-move-const-arg.html",
+      "revId": "f2916103dd5042fde11f1ccb7bf7e3b6263ab8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
