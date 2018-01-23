@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/pointer_gesture_pinch_delegate.h"
+#include "components/exo/shell_surface_base.h"
 #include "components/exo/surface.h"
 #include "components/exo/wm_helper.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -336,8 +337,10 @@ void Pointer::OnDisplayConfigurationChanged() {
 // Pointer, private:
 
 Surface* Pointer::GetEffectiveTargetForEvent(ui::Event* event) const {
-  Surface* target =
-      Surface::AsSurface(static_cast<aura::Window*>(event->target()));
+  aura::Window* window = static_cast<aura::Window*>(event->target());
+  Surface* target = Surface::AsSurface(window);
+  if (!target)
+    target = ShellSurfaceBase::GetMainSurface(window);
   if (!target)
     return nullptr;
 
