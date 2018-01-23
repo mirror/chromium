@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb65959_ddb32969",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-23T11:32:12Z",
+      "side": 0,
+      "message": "nit: I would leave this as it is.",
+      "revId": "080b22b4192d83776e75d9217c4ffcf4789276f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4a700e_0fd49956",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-23T11:32:12Z",
+      "side": 0,
+      "message": "ditto, and same for other similar unrelated removals in the CL.",
+      "revId": "080b22b4192d83776e75d9217c4ffcf4789276f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a6d9e_4e5b4ec9",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-23T11:32:12Z",
+      "side": 0,
+      "message": "nit: Please keep it.",
+      "revId": "080b22b4192d83776e75d9217c4ffcf4789276f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433115a9_75d3482e",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-23T11:32:12Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "080b22b4192d83776e75d9217c4ffcf4789276f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
