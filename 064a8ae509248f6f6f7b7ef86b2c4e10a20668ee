@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8747fcb2_ba5e1c85",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-23T18:09:06Z",
+      "side": 1,
+      "message": "One further comment: the ResourceBundle holds onto the gfx::Image returned by GetNativeImageNamed, which in turn holds onto the converted NSImage object. So there should be no advantage to using a static here, and just looking up GetNativeImageNamed().ToNSImage() should be sufficiently fast.",
+      "parentUuid": "2e6513ba_09cbd173",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1418c1dd_aaafef3f",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
         "patchSetId": 14
