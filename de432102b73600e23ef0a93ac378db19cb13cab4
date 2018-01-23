@@ -16,6 +16,24 @@
       "revId": "de432102b73600e23ef0a93ac378db19cb13cab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a013fb58_da30d789",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T14:39:15Z",
+      "side": 1,
+      "message": "Uh... I can make this constexpr, but it\u0027s in an anonymous namespace and therefore only used in this compilation unit. The exported method from the header is not inline and therefore can\u0027t be made constexpr (see CL:880958).",
+      "parentUuid": "bcee86f7_3885e9c9",
+      "revId": "de432102b73600e23ef0a93ac378db19cb13cab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
