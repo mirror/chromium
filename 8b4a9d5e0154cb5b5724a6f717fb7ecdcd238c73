@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "8909d0f3_414433c1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9894,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T15:30:30Z",
+      "side": 1,
+      "message": "Was there a review cycle for this text?\n\n\"Browse the web in high contrast mode\"\nor\n\"Browse in high contrast mode\"\n\nboth sound much better to my ears.",
+      "range": {
+        "startLine": 9894,
+        "startChar": 8,
+        "endLine": 9894,
+        "endChar": 40
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879afb68_c48a50df",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -71,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "3412d790_46475148",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T15:30:30Z",
+      "side": 1,
+      "message": "+1. may as well clean up the constants below, too.",
+      "parentUuid": "e9fc6a53_5211fe39",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f02a26d4_477c742b",
         "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
         "patchSetId": 5
@@ -82,6 +129,30 @@
       "writtenOn": "2018-01-22T20:04:04Z",
       "side": 1,
       "message": "nit: Just \"return l10n_util::GetStringUTF16(IDS_DONE)\" in this method.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7f2704_36851e66",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T15:30:30Z",
+      "side": 1,
+      "message": "+1. a DCHECK_EQ would be good as well.",
+      "parentUuid": "f02a26d4_477c742b",
       "range": {
         "startLine": 102,
         "startChar": 4,
