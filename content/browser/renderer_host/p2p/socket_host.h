@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
+#include "content/common/p2p.mojom.h"
 #include "content/common/p2p_socket_type.h"
 #include "content/public/browser/render_process_host.h"
 #include "net/base/ip_endpoint.h"

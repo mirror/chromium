@@ -1,0 +1,90 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module mojom;
+
+import "content/common/p2p.mojom";
+import "net/interfaces/ip_address.mojom";
+import "net/interfaces/ip_endpoint.mojom";
+
+[Native]
+struct IPAddressList;
+
+[Native]
+struct NetworkInterfaceList;
+
+[Native]
+struct P2PSocketType;
+
+[Native]
+struct P2PHostAndIPEndPoint;
+
+[Native]
+struct P2PPortRange;
+
+[Native]
+struct TimeTicks;
+
+[Native]
+struct P2PSendPacketMetrics;
+
+[Native]
+struct P2PSocketOption;
+
+interface P2PHostControl {
+  StartNetworkNotifications();
+  StopNetworkNotifications();
+  GetHostAddress(
+      string host_name,
+      int32 request_id);
+  CreateSocket(
+      P2PSocketType type,
+      int32 socket_id,
+      net.interfaces.IPEndPoint local_address,
+      P2PPortRange port_range,
+      P2PHostAndIPEndPoint remote_address);
+  AcceptIncomingTcpConnection(
+      int32 listen_socket_id,
+      net.interfaces.IPEndPoint remote_address,
+      int32 connected_socket_id);
+  Send(
+      int32 socket_id,
+      net.interfaces.IPEndPoint socket_address,
+      array<uint8> data,
+      content.mojom.PacketOptions packet_options,
+      uint64 packet_id);
+  DestroySocket(
+      int32 socket_id);
+  SetOption(
+      int32 socket_id,
+      P2PSocketOption socket_option_type,
+      int32 value);
+};
+
+interface P2PControl {
+  NetworkListChanged(
+      NetworkInterfaceList networks,
+      net.interfaces.IPAddress default_ipv4_local_address,
+      net.interfaces.IPAddress default_ipv6_local_address);
+  GetHostAddressResult(
+      int32 request_id,
+      IPAddressList address_list);
+  OnSocketCreated(
+      int32 socket_id,
+      net.interfaces.IPEndPoint local_address,
+      net.interfaces.IPEndPoint remote_address);
+  OnSendComplete(
+      int32 socket_id,
+      P2PSendPacketMetrics send_metrics);
+  OnError(
+      int32 socket_id);
+  OnIncomingTcpConnection(
+      int32 socket_id,
+      net.interfaces.IPEndPoint socket_address);
+  OnDataReceived(
+      int32 socket_id,
+      net.interfaces.IPEndPoint socket_address,
+      array<uint8> data,
+      TimeTicks timestamp);
+};

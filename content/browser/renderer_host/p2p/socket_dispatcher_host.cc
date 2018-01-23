@@ -116,48 +116,37 @@ class P2PSocketDispatcherHost::DnsRequest {
 P2PSocketDispatcherHost::P2PSocketDispatcherHost(
     content::ResourceContext* resource_context,
     net::URLRequestContextGetter* url_context)
-    : BrowserMessageFilter(P2PMsgStart),
+    : RefCountedDeleteOnSequence<P2PSocketDispatcherHost>(
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
       resource_context_(resource_context),
       url_context_(url_context),
       monitoring_networks_(false),
       dump_incoming_rtp_packet_(false),
       dump_outgoing_rtp_packet_(false),
       network_list_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE})) {}
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE})),
+      binding_(this) {}
 
-void P2PSocketDispatcherHost::OnChannelClosing() {
-  // Since the IPC sender is gone, close pending connections.
+void P2PSocketDispatcherHost::Bind(
+    mojom::P2PSocketDispatcherHostRequest request) {
+  if (binding_)
+    return;
+  binding_.Bind(std::move(request),
+                BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+}
+
+bool P2PSocketDispatcherHost::Send(IPC::Message* msg) {
+  return false;
+}
+
+void P2PSocketDispatcherHost::OnError() {
   sockets_.clear();
-
   dns_requests_.clear();
 
   if (monitoring_networks_) {
     net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
     monitoring_networks_ = false;
   }
-}
-
-void P2PSocketDispatcherHost::OnDestruct() const {
-  BrowserThread::DeleteOnIOThread::Destruct(this);
-}
-
-bool P2PSocketDispatcherHost::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(P2PSocketDispatcherHost, message)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_StartNetworkNotifications,
-                        OnStartNetworkNotifications)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_StopNetworkNotifications,
-                        OnStopNetworkNotifications)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_GetHostAddress, OnGetHostAddress)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_CreateSocket, OnCreateSocket)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_AcceptIncomingTcpConnection,
-                        OnAcceptIncomingTcpConnection)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_Send, OnSend)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_SetOption, OnSetOption)
-    IPC_MESSAGE_HANDLER(P2PHostMsg_DestroySocket, OnDestroySocket)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
 }
 
 void P2PSocketDispatcherHost::OnNetworkChanged(
@@ -215,7 +204,7 @@ P2PSocketHost* P2PSocketDispatcherHost::LookupSocket(int socket_id) {
   return (it == sockets_.end()) ? nullptr : it->second.get();
 }
 
-void P2PSocketDispatcherHost::OnStartNetworkNotifications() {
+void P2PSocketDispatcherHost::StartNetworkNotifications() {
   if (!monitoring_networks_) {
     net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
     monitoring_networks_ = true;
@@ -226,15 +215,15 @@ void P2PSocketDispatcherHost::OnStartNetworkNotifications() {
       base::BindOnce(&P2PSocketDispatcherHost::DoGetNetworkList, this));
 }
 
-void P2PSocketDispatcherHost::OnStopNetworkNotifications() {
+void P2PSocketDispatcherHost::StopNetworkNotifications() {
   if (monitoring_networks_) {
     net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
     monitoring_networks_ = false;
   }
 }
 
-void P2PSocketDispatcherHost::OnGetHostAddress(const std::string& host_name,
-                                               int32_t request_id) {
+void P2PSocketDispatcherHost::GetHostAddress(const std::string& host_name,
+                                             int32_t request_id) {
   std::unique_ptr<DnsRequest> request = std::make_unique<DnsRequest>(
       request_id, resource_context_->GetHostResolver());
   DnsRequest* request_ptr = request.get();
@@ -244,21 +233,21 @@ void P2PSocketDispatcherHost::OnGetHostAddress(const std::string& host_name,
                                   base::Unretained(this), request_ptr));
 }
 
-void P2PSocketDispatcherHost::OnCreateSocket(
+void P2PSocketDispatcherHost::CreateSocket(
     P2PSocketType type,
-    int socket_id,
+    int32_t socket_id,
     const net::IPEndPoint& local_address,
     const P2PPortRange& port_range,
     const P2PHostAndIPEndPoint& remote_address) {
   if (port_range.min_port > port_range.max_port ||
       (port_range.min_port == 0 && port_range.max_port != 0)) {
-    bad_message::ReceivedBadMessage(this, bad_message::SDH_INVALID_PORT_RANGE);
+    // TODO(watk): Is there an alternative way to log the bad message enum?
+    binding_.ReportBadMessage("bad_message::SDH_INVALID_PORT_RANGE");
     return;
   }
 
   if (LookupSocket(socket_id)) {
-    LOG(ERROR) << "Received P2PHostMsg_CreateSocket for socket "
-        "that already exists.";
+    LOG(ERROR) << "CreateSocket() for socket that already exists.";
     return;
   }
 
@@ -282,9 +271,10 @@ void P2PSocketDispatcherHost::OnCreateSocket(
   }
 }
 
-void P2PSocketDispatcherHost::OnAcceptIncomingTcpConnection(
-    int listen_socket_id, const net::IPEndPoint& remote_address,
-    int connected_socket_id) {
+void P2PSocketDispatcherHost::AcceptIncomingTcpConnection(
+    int32_t listen_socket_id,
+    const net::IPEndPoint& remote_address,
+    int32_t connected_socket_id) {
   P2PSocketHost* socket = LookupSocket(listen_socket_id);
   if (!socket) {
     LOG(ERROR) << "Received P2PHostMsg_AcceptIncomingTcpConnection "
@@ -304,49 +294,48 @@ void P2PSocketDispatcherHost::OnAcceptIncomingTcpConnection(
   }
 }
 
-void P2PSocketDispatcherHost::OnSend(int socket_id,
-                                     const net::IPEndPoint& socket_address,
-                                     const std::vector<char>& data,
-                                     const rtc::PacketOptions& options,
-                                     uint64_t packet_id) {
+void P2PSocketDispatcherHost::Send2(int32_t socket_id,
+                                    const net::IPEndPoint& socket_address,
+                                    const std::vector<int8_t>& data,
+                                    const rtc::PacketOptions& options,
+                                    uint64_t packet_id) {
   P2PSocketHost* socket = LookupSocket(socket_id);
   if (!socket) {
-    LOG(ERROR) << "Received P2PHostMsg_Send for invalid socket_id.";
+    LOG(ERROR) << "Invalid socket_id.";
     return;
   }
 
   if (data.size() > kMaximumPacketSize) {
-    LOG(ERROR) << "Received P2PHostMsg_Send with a packet that is too big: "
-               << data.size();
+    LOG(ERROR) << "Packet too big: " << data.size();
     Send(new P2PMsg_OnError(socket_id));
     sockets_.erase(socket_id);  // deletes the socket
     return;
   }
 
+  // Ugly, but we can't automatically convert a vector<int8_t> or
+  // vector<uint8_t> to vector<char>.
+  std::vector<char> char_data(data.begin(), data.end());
+
   // TODO(crbug.com/656607): Get annotation from IPC message.
-  socket->Send(socket_address, data, options, packet_id,
+  socket->Send(socket_address, char_data, options, packet_id,
                NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
-void P2PSocketDispatcherHost::OnSetOption(int socket_id,
-                                          P2PSocketOption option,
-                                          int value) {
+void P2PSocketDispatcherHost::SetOption(int32_t socket_id,
+                                        P2PSocketOption option,
+                                        int32_t value) {
   P2PSocketHost* socket = LookupSocket(socket_id);
   if (!socket) {
-    LOG(ERROR) << "Received P2PHostMsg_SetOption for invalid socket_id.";
+    LOG(ERROR) << "Invalid socket_id.";
     return;
   }
 
   socket->SetOption(option, value);
 }
 
-void P2PSocketDispatcherHost::OnDestroySocket(int socket_id) {
-  SocketsMap::iterator it = sockets_.find(socket_id);
-  if (it != sockets_.end()) {
-    sockets_.erase(it);  // deletes the socket
-  } else {
-    LOG(ERROR) << "Received P2PHostMsg_DestroySocket for invalid socket_id.";
-  }
+void P2PSocketDispatcherHost::DestroySocket(int32_t socket_id) {
+  if (!sockets_.erase(socket_id))
+    LOG(ERROR) << "Invalid socket_id.";
 }
 
 void P2PSocketDispatcherHost::DoGetNetworkList() {

@@ -34,6 +34,7 @@
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
+#include "content/common/p2p.mojom.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
 #include "content/common/storage_partition_service.mojom.h"

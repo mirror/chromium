@@ -1,0 +1,26 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//content/common/p2p.mojom"
+public_headers = [
+  "//third_party/webrtc/rtc_base/asyncpacketsocket.h",
+  "//content/common/p2p_socket_type.h",
+]
+traits_headers = [
+  "//content/common/p2p_struct_traits.h",
+  "//content/common/p2p_messages.h",
+]
+sources = []
+deps = []
+public_deps = [
+  "//third_party/webrtc/rtc_base",
+]
+type_mappings = [
+  "content.mojom.PacketOptions=rtc::PacketOptions",
+  "content.mojom.P2PSendPacketMetrics=content::P2PSendPacketMetrics",
+  "content.mojom.P2PPortRange=content::P2PPortRange",
+  "content.mojom.P2PHostAndIPEndPoint=content::P2PHostAndIPEndPoint",
+  "content.mojom.P2PSocketOption=content::P2PSocketOption",
+  "content.mojom.P2PSocketType=content::P2PSocketType",
+]

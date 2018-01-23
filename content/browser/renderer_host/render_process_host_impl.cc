@@ -258,6 +258,7 @@
 #include "content/browser/renderer_host/p2p/socket_dispatcher_host.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/media/aec_dump_messages.h"
+#include "content/common/p2p.mojom.h"
 #include "content/public/browser/webrtc_log.h"
 #endif
 
@@ -1776,12 +1777,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       storage_partition_impl_->GetServiceWorkerContext());
   AddFilter(service_worker_filter.get());
 
-#if BUILDFLAG(ENABLE_WEBRTC)
-  p2p_socket_dispatcher_host_ = new P2PSocketDispatcherHost(
-      resource_context, request_context.get());
-  AddFilter(p2p_socket_dispatcher_host_.get());
-#endif
-
   AddFilter(new TraceMessageFilter(GetID()));
   AddFilter(new ResolveProxyMsgHelper(request_context.get()));
 
@@ -1915,6 +1910,15 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&RenderProcessHostImpl::CreateMediaStreamDispatcherHost,
                  base::Unretained(this), media_stream_manager));
+
+  // TODO: This is created eagerly (before a connection) in case StartRtpDump()
+  // is called before a connection is made. It could be refactored, or may not
+  // be possible due to external guarantees.
+  p2p_socket_dispatcher_host_ = new P2PSocketDispatcherHost(
+      browser_context->GetResourceContext(),
+      storage_partition_impl_->GetURLRequestContext());
+  registry->AddInterface(
+      base::Bind(&P2PSocketDispatcherHost::Bind, p2p_socket_dispatcher_host_));
 #endif
 
   registry->AddInterface(
@@ -3181,7 +3185,8 @@ RenderProcessHostImpl::StartRtpDump(
     bool incoming,
     bool outgoing,
     const WebRtcRtpPacketCallback& packet_callback) {
-  if (!p2p_socket_dispatcher_host_.get())
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!p2p_socket_dispatcher_host_)
     return WebRtcStopRtpDumpCallback();
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,

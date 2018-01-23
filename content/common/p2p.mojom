@@ -1,0 +1,74 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/time.mojom";
+import "net/interfaces/ip_endpoint.mojom";
+import "net/interfaces/ip_address.mojom";
+
+[Native]
+enum DiffServCodePoint;
+
+[Native]
+struct PacketTimeUpdateParams;
+
+[Native]
+struct PacketOptions;
+
+[Native]
+enum P2PSocketOption;
+
+[Native]
+enum P2PSocketType;
+
+[Native]
+struct P2PHostAndIPEndPoint;
+
+[Native]
+struct P2PSendPacketMetrics;
+
+[Native]
+struct P2PPortRange;
+
+interface P2PSocketDispatcherHost {
+  StartNetworkNotifications();
+  StopNetworkNotifications();
+  GetHostAddress(string host_name, int32 request_id);
+  CreateSocket(P2PSocketType type,
+               int32 socket_id,
+               net.interfaces.IPEndPoint local_address,
+               P2PPortRange port_range,
+               P2PHostAndIPEndPoint remote_address);
+  AcceptIncomingTcpConnection(int32 listen_socket_id,
+                              net.interfaces.IPEndPoint remote_address,
+                              int32 connected_socket_id);
+  Send2(int32 socket_id,
+       net.interfaces.IPEndPoint socket_address,
+       array<int8> data,
+       content.mojom.PacketOptions options,
+       uint64 packet_id);
+  DestroySocket(int32 socket_id);
+  SetOption(int32 socket_id, P2PSocketOption option, int32 value);
+};
+
+interface P2PSocketDispatcher {
+  // TODO: Make a mojom for net::NetworkInterface.
+  NetworkListChanged(array<string> networks,
+                     net.interfaces.IPAddress default_ipv4_local_address,
+                     net.interfaces.IPAddress default_ipv6_local_address);
+  GetHostAddressResult(int32 request_id,
+                       array<net.interfaces.IPAddress> addresses);
+  OnSocketCreated(int32 socket_id,
+                  net.interfaces.IPEndPoint local_address,
+                  net.interfaces.IPEndPoint remote_address);
+  OnSendComplete(int32 socket_id, P2PSendPacketMetrics send_metrics);
+  OnError(int32 socket_id);
+  OnIncomingTcpConnection(int32 socket_id,
+                          net.interfaces.IPEndPoint socket_address);
+  OnDataReceived(int32 socket_id,
+                 net.interfaces.IPEndPoint socket_address,
+                 array<int8> data,
+                 mojo.common.mojom.TimeTicks timestamp);
+};

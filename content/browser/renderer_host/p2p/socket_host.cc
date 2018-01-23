@@ -203,8 +203,8 @@ P2PSocketHost* P2PSocketHost::Create(IPC::Sender* message_sender,
     case P2P_SOCKET_STUN_TCP_CLIENT:
     case P2P_SOCKET_STUN_SSLTCP_CLIENT:
     case P2P_SOCKET_STUN_TLS_CLIENT:
-      return new P2PSocketHostStunTcp(
-          message_sender, socket_id, type, url_context);
+      return new P2PSocketHostStunTcp(message_sender, socket_id, type,
+                                      url_context);
   }
 
   NOTREACHED();

@@ -1,0 +1,20 @@
+# Copyright 2016 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//p2p.mojom"
+public_headers = []
+traits_headers = [ "//content/common/p2p_messages.h" ]
+deps = [
+  "//ipc",
+]
+type_mappings = [
+  "mojom.IPAddressList=::net::IPAddressList",
+  "mojom.NetworkInterfaceList=::net::NetworkInterfaceList",
+  "mojom.P2PHostAndIPEndPoint=::content::P2PHostAndIPEndPoint",
+  "mojom.P2PPortRange=::content::P2PPortRange",
+  "mojom.P2PSendPacketMetrics=::content::P2PSendPacketMetrics",
+  "mojom.P2PSocketOption=::content::P2PSocketOption",
+  "mojom.P2PSocketType=::content::P2PSocketType",
+  "mojom.TimeTicks=::base::TimeTicks",
+]
