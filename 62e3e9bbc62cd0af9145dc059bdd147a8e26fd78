@@ -140,6 +140,30 @@
       "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70722daf_69043bcc",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T23:21:14Z",
+      "side": 1,
+      "message": "I\u0027m no auth expert, but normally we reuse sockets.  See, for instance:  https://cs.chromium.org/chromium/src/net/http/http_network_transaction_unittest.cc?type\u003dcs\u0026q\u003dProxy-Connection\u0026sq\u003dpackage:chromium\u0026l\u003d4075\n\nIf we\u0027re never reusing the sockets in this path, that means NTLM and Negotiate auth may not work, since they both require socket reuse.\n\nFor tunnels, the reuse logic should mostly be HttpProxyClientSocketWrapper, though it does require at least a little interaction from its consumer.",
+      "parentUuid": "2e0a2091_4be738b9",
+      "range": {
+        "startLine": 436,
+        "startChar": 27,
+        "endLine": 436,
+        "endChar": 39
+      },
+      "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
