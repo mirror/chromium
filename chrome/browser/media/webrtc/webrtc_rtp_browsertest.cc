@@ -31,9 +31,10 @@ class WebRtcRtpBrowserTest : public WebRtcTestBase {
  protected:
   void StartServer() { ASSERT_TRUE(embedded_test_server()->Start()); }
 
-  void OpenTab(content::WebContents** tab) {
+  void OpenTab(content::WebContents** tab,
+               const char* page = kMainWebrtcTestHtmlPage) {
     // TODO(hbos): Just open the tab, don't "AndGetUserMediaInNewTab".
-    *tab = OpenTestPageAndGetUserMediaInNewTab(kMainWebrtcTestHtmlPage);
+    *tab = OpenTestPageAndGetUserMediaInNewTab(page);
   }
 
   void StartServerAndOpenTabs() {
@@ -414,4 +415,12 @@ IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest,
   EXPECT_EQ("test-passed",
             ExecuteJavascript(
                 "testRTCRtpSenderReplaceTrackSendsNewVideoTrack()", left_tab_));
+}
+
+IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest, LaunchSimpleCallPage) {
+  StartServer();
+  left_tab_ = OpenTestPageInNewTab("/webrtc/simple-call.https.html");
+  right_tab_ = OpenTestPageInNewTab("/webrtc/simple-call.https.html");
+  base::RunLoop run_loop;
+  run_loop.Run();
 }
