@@ -41,6 +41,9 @@
     </div>
     <template is="dom-if" if="[[showPages_.settings]]">
       <settings-basic-page prefs="{{prefs}}"
+<if expr="not chromeos">
+          dice-enabled="[[diceEnabled]]"
+</if>
           page-visibility="[[pageVisibility]]"
           show-android-apps="[[showAndroidApps]]"
           show-multidevice="[[showMultidevice]]"

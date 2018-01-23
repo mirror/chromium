@@ -25,6 +25,10 @@ Polymer({
       notify: true,
     },
 
+    // <if expr="not chromeos">
+    diceEnabled: Boolean,
+    // </if>
+
     /**
      * The current sync status, supplied by SyncBrowserProxy.
      * @type {?settings.SyncStatus}
@@ -262,7 +266,7 @@ Polymer({
 
   // <if expr="not chromeos">
   /** @private */
-  onProfileNameTap_: function() {
+  onProfileTap_: function() {
     settings.navigateTo(settings.routes.MANAGE_PROFILE);
   },
   // </if>
@@ -275,7 +279,11 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
-    cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    // <if expr="not chromeos">
+    // If DICE-enabled, this button won't exist here.
+    if (!this.diceEnabled)
+    // </if>
+      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();
