@@ -16,6 +16,24 @@
       "revId": "05973160e5accbb9d8e9b414f2ed15ebe16be76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9a236d_27c9a424",
+        "filename": "base/android/java/src/org/chromium/base/CommandLine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-23T18:34:53Z",
+      "side": 1,
+      "message": "we discussed this a bit at lunch right? this is arguably an early/developer warning that \"we\u0027re doing it wrong\"",
+      "parentUuid": "4b02634e_3d7c6a37",
+      "revId": "05973160e5accbb9d8e9b414f2ed15ebe16be76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
