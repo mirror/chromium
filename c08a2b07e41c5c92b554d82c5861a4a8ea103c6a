@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30914bb_5142fbeb",
+        "filename": "components/ui_devtools/views/root_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T19:48:02Z",
+      "side": 1,
+      "message": "I am not sure if RootElement is the right thing to do here. I would expect you would want something that deals with gfx::NativeView (or NativeWindow?) instead. (so that it works correctly with views::NativeViewHost etc.). That should also take care of hosting the root.\n\nEven if you don\u0027t do that, it should be possible to use the WidgetElement as the root (since all the View tree lives under a Widget).",
+      "revId": "c08a2b07e41c5c92b554d82c5861a4a8ea103c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
