@@ -1060,26 +1060,44 @@ void HWNDMessageHandler::HandleParentChanged() {
   touch_ids_.clear();
 }
 
+void HWNDMessageHandler::DManipPinchBegin() {
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
+
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_BEGIN);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(event);
+}
+
+void HWNDMessageHandler::DManipPinchEnd() {
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
+
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_END);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(event);
+}
+
 void HWNDMessageHandler::ApplyDManipScale(float scale) {
-  // TODO(chaopeng) Send pinch-zoom event here.
-  gfx::Vector2d offset =
-      scale > 1 ? gfx::Vector2d(120, 120) : gfx::Vector2d(-120, -120);
+  POINT cursor_pos = {0};
+  ::GetCursorPos(&cursor_pos);
+  ScreenToClient(hwnd(), &cursor_pos);
 
-  POINT root_location = {0};
-  ::GetCursorPos(&root_location);
+  ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_UPDATE);
+  event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+  event_details.set_scale(scale);
 
-  POINT location = {root_location.x, root_location.y};
-  ScreenToClient(hwnd(), &root_location);
-
-  gfx::Point cursor_location(location.x, location.y);
-  gfx::Point cursor_root_location(root_location.x, root_location.y);
-
-  ui::MouseWheelEvent wheel_event(offset, cursor_location, cursor_root_location,
-                                  base::TimeTicks::Now(), ui::EF_CONTROL_DOWN,
-                                  ui::EF_NONE);
-  wheel_event.set_precise_scrolling_deltas(true);
-
-  delegate_->HandleMouseEvent(wheel_event);
+  ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
+                         base::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(event);
 }
 
 void HWNDMessageHandler::ApplyDManipScroll(float scroll_x, float scroll_y) {

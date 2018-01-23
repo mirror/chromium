@@ -90,10 +90,16 @@ class UI_BASE_EXPORT WindowEventTarget {
   virtual void HandleParentChanged() = 0;
 
   // Apply the transform from Direct Manipulation API.
+
+  // Pinch gesture phase from Direct Manipulation API.
+  virtual void DManipPinchBegin() = 0;
+  virtual void DManipPinchEnd() = 0;
+
   // ApplyDManipScale is the pinch-zoom gesture. scale is the scale factor.
+  virtual void ApplyDManipScale(float scale) = 0;
+
   // ApplyDManipScroll is the pan gesture, scroll_x and scroll_y are pixel
   // precison scroll offset.
-  virtual void ApplyDManipScale(float scale) = 0;
   virtual void ApplyDManipScroll(float scroll_x, float scroll_y) = 0;
 
  protected:
