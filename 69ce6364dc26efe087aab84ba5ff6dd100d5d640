@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253c956e_a9ee0d66",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T02:19:04Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "69ce6364dc26efe087aab84ba5ff6dd100d5d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3ec02a_e4681056",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T02:19:04Z",
+      "side": 1,
+      "message": "Should we be querying loadTimeData once in settings-ui and passing down the boolean to everyone else? Similar to the other similar booleans at [1]?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_ui/settings_ui.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d70-73",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "69ce6364dc26efe087aab84ba5ff6dd100d5d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
