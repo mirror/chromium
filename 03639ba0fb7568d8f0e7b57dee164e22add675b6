@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b86d2626_0a65e35c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97154,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-23T15:32:12Z",
+      "side": 0,
+      "message": "Ah, I didn\u0027t realize we should keep the description around. Undoing both changes to this file.",
+      "parentUuid": "5affc852_5cfb73e1",
+      "range": {
+        "startLine": 97154,
+        "startChar": 15,
+        "endLine": 97154,
+        "endChar": 23
+      },
+      "revId": "03639ba0fb7568d8f0e7b57dee164e22add675b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32632fee_439fdc43",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "03639ba0fb7568d8f0e7b57dee164e22add675b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea297f9_5ae0e3dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97163,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-23T15:32:12Z",
+      "side": 0,
+      "message": "This was removed earlier but I\u0027ll keep it around too.",
+      "parentUuid": "32632fee_439fdc43",
+      "revId": "03639ba0fb7568d8f0e7b57dee164e22add675b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
