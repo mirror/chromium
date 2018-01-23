@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37363646_8a437302",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T22:33:46Z",
+      "side": 1,
+      "message": "nit: Could you just put in a NOTIMPLEMENTED() so if something strange happens and some code calls this path before you fill in the blank, a flag gets raised?  (Also below.)",
+      "range": {
+        "startLine": 449,
+        "startChar": 27,
+        "endLine": 449,
+        "endChar": 28
+      },
+      "revId": "17be4ed8631e2fd66940ecf6248d772dc6e74dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44963283_e031d458",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T22:33:46Z",
+      "side": 1,
+      "message": "Naively, I\u0027d think this would be a pretty important use case.  Servers which can have multiple clients aren\u0027t going to want to have a window (between Accept() completing and the new Accept() being initiated) during which incoming connections will fail.",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "17be4ed8631e2fd66940ecf6248d772dc6e74dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
