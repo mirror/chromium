@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b59627_91e9ab10",
+        "filename": "chromecast/media/cma/backend/android/java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-01-23T21:23:03Z",
+      "side": 1,
+      "message": "usable",
+      "range": {
+        "startLine": 654,
+        "startChar": 34,
+        "endLine": 654,
+        "endChar": 41
+      },
+      "revId": "2e529160150b771f92da0bae91cf1fd9799fd302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9fe799b_24e3c4a6",
+        "filename": "chromecast/media/cma/backend/android/java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-01-23T21:23:03Z",
+      "side": 1,
+      "message": "Note that if your media clock rate doesn\u0027t match your system clock rate, this value will lag the real value quite a bit. For example if the media clock rate is faster than the system clock by 20 parts per million (\u003d 20 microseconds per second), then this estimate will lag the real timestamp by ~90 microseconds.",
+      "range": {
+        "startLine": 670,
+        "startChar": 16,
+        "endLine": 671,
+        "endChar": 95
+      },
+      "revId": "2e529160150b771f92da0bae91cf1fd9799fd302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
