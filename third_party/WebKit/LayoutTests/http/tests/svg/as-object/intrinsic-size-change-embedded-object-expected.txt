@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 810
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x316
+  LayoutBlockFlow {HTML} at (0,0) size 785x316
+    LayoutBlockFlow {BODY} at (8,8) size 769x300
+      LayoutBlockFlow {DIV} at (0,0) size 400x300
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 400x798 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutEmbeddedObject {OBJECT} at (0,0) size 400x798 [border: (1px solid #000000)]
+    layer at (0,0) size 398x796
+      LayoutView at (0,0) size 398x796
+    layer at (0,0) size 398x796
+      LayoutSVGRoot {svg} at (0,0) size 398x796
