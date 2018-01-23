@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e65810_c348f0ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-23T12:47:17Z",
+      "side": 1,
+      "message": "nit: can you add a bug number?",
+      "revId": "c8e236393d023a53a5c1d16f4f6d9896a4bc846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
