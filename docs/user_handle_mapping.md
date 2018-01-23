@@ -19,6 +19,7 @@ For Chromium contributors that have different nicks on other domains.
 | benhenry          | benry           | benhenry        |
 | bnutter           |                 | bnutter         |
 | bxx               | bxs             | bxx             |
+| carlosil          | carlosil        | carlosil        |
 | ccameron          | ccameron        | ccameron        |
 | csharp            | csharp1         | csharp          |
 | cthomp            | cthomp          | cthomp          |
