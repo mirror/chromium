@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e07f19_0870d7f5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T07:16:17Z",
+      "side": 1,
+      "message": "We don\u0027t need to pass IsDirectional() here.\n\nFor ShouldConsiderSelectionAsDirectional(), IsDirecional() is always true\nand set by SetNonDirecionalSelectionIfNeeded().\n\nFor MacOs case, is_direcional is false by ExtendSelectionAsNonDirectional()",
+      "revId": "51404412c6c94e07236f3366fbef602c862c4ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
