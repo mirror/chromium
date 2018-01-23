@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e77f7a60_85b7ccfe",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T20:29:56Z",
+      "side": 1,
+      "message": "OK, so let\u0027s stick with allocating a new id.",
+      "parentUuid": "bc627505_be5e3655",
+      "range": {
+        "startLine": 699,
+        "startChar": 57,
+        "endLine": 699,
+        "endChar": 78
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2abd9ff_53cb331a",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
         "patchSetId": 6
