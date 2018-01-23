@@ -176,6 +176,10 @@ class DownloadUIAdapter : public OfflineContentProvider,
   // during the |ItemDeleted| callback.
   void DeleteItemHelper(const std::string& guid);
 
+  void ReplyWithAllItems(OfflineContentProvider::MultipleItemCallback callback);
+
+  void OpenItemByGuid(const std::string& guid);
+
   // A valid offline content aggregator, supplied at construction.
   OfflineContentAggregator* aggregator_;
 
@@ -193,11 +197,17 @@ class DownloadUIAdapter : public OfflineContentProvider,
   // The cache of UI items. The key is OfflineItem.guid.
   OfflineItems items_;
 
+  // The callbacks for GetAllItems waiting for cache initialization.
+  std::vector<OfflineContentProvider::MultipleItemCallback>
+      postponed_callbacks_;
+
+  // The requests to OpenItem waiting for cache initialization.
+  std::vector<std::string> postponed_open_item_guids_;
+
   std::unique_ptr<ItemInfo> deleting_item_;
 
   // The observers.
   base::ObserverList<OfflineContentProvider::Observer> observers_;
-  int observers_count_;
 
   base::WeakPtrFactory<DownloadUIAdapter> weak_ptr_factory_;
 
