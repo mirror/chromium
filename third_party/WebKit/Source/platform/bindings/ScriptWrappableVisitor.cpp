@@ -170,8 +170,7 @@ void ScriptWrappableMarkingVisitor::RegisterV8Reference(
 
   ScriptWrappable* script_wrappable =
       reinterpret_cast<ScriptWrappable*>(internal_fields.second);
-
-  wrapper_type_info->TraceWrappers(this, script_wrappable);
+  TraceWrappersFromGeneratedCode(script_wrappable);
 }
 
 void ScriptWrappableMarkingVisitor::RegisterV8References(
