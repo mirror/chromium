@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ff5f78c1_972eb211",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T15:47:31Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/net/cert/cert_verify_proc.h?rcl\u003d5f305aa904cc18b8977af87408db3ad716150674\u0026l\u003d134 explained those policies. I\u0027ve gone and updated the header, since I forgot to with the 825 day adoption :)",
+      "parentUuid": "e7101a30_6948777f",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec5b6dd_0f7ab1a9",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 1
