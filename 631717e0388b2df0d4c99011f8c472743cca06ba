@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b33d30_4270fd10",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-23T03:27:06Z",
+      "side": 1,
+      "message": "It would be better to comment here why using egl_image_format_fourcc_.",
+      "revId": "631717e0388b2df0d4c99011f8c472743cca06ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
