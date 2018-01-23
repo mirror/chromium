@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b44aff5_3c15af34",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-23T21:56:27Z",
+      "side": 1,
+      "message": "no longer private in the newest patch",
+      "parentUuid": "253c956e_a9ee0d66",
+      "revId": "69ce6364dc26efe087aab84ba5ff6dd100d5d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf3ec02a_e4681056",
         "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "69ce6364dc26efe087aab84ba5ff6dd100d5d640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3cb540_2b82a758",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-23T21:56:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf3ec02a_e4681056",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "69ce6364dc26efe087aab84ba5ff6dd100d5d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
