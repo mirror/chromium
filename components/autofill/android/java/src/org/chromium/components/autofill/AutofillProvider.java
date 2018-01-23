@@ -105,10 +105,10 @@ public abstract class AutofillProvider {
 
     /**
      * Invoked when current form will be submitted.
-     *
+     * @param source the submission source, could be any member defined in SubmissionSource.java
      */
     @CalledByNative
-    protected abstract void onWillSubmitForm();
+    protected abstract void onFormSubmitted(int source);
 
     /**
      * Invoked when focus field changed.
