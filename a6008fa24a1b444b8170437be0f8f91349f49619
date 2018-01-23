@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6da5a84a_22262d47",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectAuditorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T20:30:21Z",
+      "side": 1,
+      "message": "boliu: This replicates this code:\n\nhttps://chromium.googlesource.com/chromium/src/+/66c1709ec979d06ca7f0f9dcd6ffec02cda93b01/content/browser/android/java/gin_java_method_invocation_helper.cc#121\n\nBut I\u0027m a little confused. If I look up this tag in Android (frameworks/base/core/java/android/webkit/EventLogTags.logtags), I see:\n\n70151 exp_det_attempt_to_call_object_getclass (app_signature|3)\n\nwhich means that the argument should be a string (described as app_signature), not an integer UID.\n\nThe previous implementation (NPAPI) threw a SecurityError in this case but didn\u0027t use EventLog AFAICT (https://chromium.googlesource.com/chromium/src/+/07fe3ade9b8870d8e08f004ae75ba9c0420e86ac); the code to audit in this way was added here (https://chromium.googlesource.com/chromium/src/+/869365302661dbf642e6be8e8265862496dbae5c) but no mention is made of why a different parameter type than the one declared in the Android framework was used.\n\nDo you know why? (I\u0027ve also attempted to cc mnaganov, who now works on Android proper.)",
+      "revId": "a6008fa24a1b444b8170437be0f8f91349f49619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
