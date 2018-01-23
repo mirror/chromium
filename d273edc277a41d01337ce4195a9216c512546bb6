@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d98b00d_163ae8ac",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T21:02:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1e7d8c1_2441f631",
+      "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b444707_312ba394",
         "filename": "ui/gfx/render_text_test_api.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T16:19:55Z",
       "side": 1,
       "message": "A comment on the fade elision CL requested a NOTREACHED in a base class to cover the non-harfbuzz case.  There\u0027s a preexisting method without this protection that we should also fix.  However, there\u0027s no base class, unless we further split this class into a RenderTextTestApi and RenderTextApiHarfbuzz, which creates pain for clients.  I don\u0027t see a way to ask a RenderText instance whether it\u0027s a harfbuzz instance...  that feels like the ideal solution here.  Thoughts?",
+      "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccf1846_ca7380c5",
+        "filename": "ui/gfx/render_text_test_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T21:02:50Z",
+      "side": 1,
+      "message": "I\u0027d prefer that the Harfbuzz-only methods be moved to the RenderText base class (either as pure virtual or with NOTIMPLEMENTED/NOTREACHED stub impls) and then provide real impl overrides on RenderTextHarfBuzz, while RenderTextMac would inherit the stub impls (or provide the no-op stubs as overrides of the pure virtual functions itself). Then the test api doesn\u0027t need to know about the underlying impl. WDYT?",
+      "parentUuid": "1b444707_312ba394",
       "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
