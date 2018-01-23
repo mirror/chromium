@@ -258,6 +258,8 @@ void AppListPresenterImpl::OnWindowFocused(aura::Window* gained_focus,
     if (applist_container->Contains(lost_focus) &&
         (!gained_focus || !applist_container->Contains(gained_focus)) &&
         !switches::ShouldNotDismissOnBlur()) {
+      if (view_->is_tablet_mode())
+        return;
       Dismiss();
     }
   }

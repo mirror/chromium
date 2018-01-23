@@ -186,6 +186,27 @@ void AppListPresenterDelegate::ProcessLocatedEvent(ui::LocatedEvent* event) {
   }
 
   aura::Window* window = view_->GetWidget()->GetNativeView()->parent();
+
+  aura::Window* shelf_window =
+      RootWindowController::ForWindow(target)->GetContainer(
+          kShellWindowId_ShelfContainer);
+  const gfx::Rect ALB_Bounds =
+      gfx::Rect(gfx::Point(40, 1024 - 60), gfx::Size(60, 60));
+  const gfx::Rect other_ALB_bounds(gfx::Point(40, 768 - 60), gfx::Size(60, 60));
+  gfx::Point event_location = event->location();
+  ::wm::ConvertPointToScreen(shelf_window, &event_location);
+  const bool experimental_tablet_mode =
+      (other_ALB_bounds.Contains(event->root_location()) ||
+       ALB_Bounds.Contains(event->root_location())) &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled();
+  if (experimental_tablet_mode) {
+    // dont close on tablet mode.
+    view_->ScrollToFirstPage();
+    return;
+  }
+
   if (!window->Contains(target) &&
       !app_list::switches::ShouldNotDismissOnBlur()) {
     presenter_->Dismiss();
