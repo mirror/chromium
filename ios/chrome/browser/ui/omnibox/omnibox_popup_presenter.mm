@@ -19,9 +19,9 @@
 namespace {
 const CGFloat kExpandAnimationDuration = 0.1;
 const CGFloat kCollapseAnimationDuration = 0.05;
-const CGFloat kWhiteBackgroundHeight = 74;
+const CGFloat kShadowHeight = 10;
 NS_INLINE CGFloat ShadowHeight() {
-  return IsIPadIdiom() ? 10 : 0;
+  return IsIPadIdiom() ? kShadowHeight : 0;
 }
 }  // namespace
 
@@ -37,6 +37,7 @@ NS_INLINE CGFloat ShadowHeight() {
 @end
 
 @implementation OmniboxPopupPresenter
+@synthesize canShowPopup = _canShowPopup;
 @synthesize viewController = _viewController;
 @synthesize positioner = _positioner;
 @synthesize popupContainerView = _popupContainerView;
@@ -50,34 +51,63 @@ NS_INLINE CGFloat ShadowHeight() {
     _positioner = positioner;
     _viewController = viewController;
 
-    if (IsIPadIdiom()) {
-      _popupContainerView = [OmniboxPopupPresenter newBackgroundViewIpad];
-    } else {
-      _popupContainerView = [OmniboxPopupPresenter newBackgroundViewIPhone];
-    }
-    _popupContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView* popupContainer = [[UIView alloc] init];
+    popupContainer.translatesAutoresizingMaskIntoConstraints = NO;
 
     _heightConstraint =
-        [_popupContainerView.heightAnchor constraintEqualToConstant:0];
+        [popupContainer.heightAnchor constraintEqualToConstant:0];
     _heightConstraint.active = YES;
 
     CGRect popupControllerFrame = viewController.view.frame;
     popupControllerFrame.origin = CGPointZero;
     viewController.view.frame = popupControllerFrame;
-    [_popupContainerView addSubview:viewController.view];
+    [popupContainer addSubview:viewController.view];
+
+    UIImageView* shadowView = [[UIImageView alloc]
+        initWithImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
+    [shadowView setUserInteractionEnabled:NO];
+    [shadowView setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    if (IsIPadIdiom() || base::FeatureList::IsEnabled(kCleanToolbar)) {
+      [popupContainer addSubview:shadowView];
+      [NSLayoutConstraint activateConstraints:@[
+        [shadowView.leadingAnchor
+            constraintEqualToAnchor:popupContainer.leadingAnchor],
+        [shadowView.trailingAnchor
+            constraintEqualToAnchor:popupContainer.trailingAnchor],
+      ]];
+    }
+
+    if (IsIPadIdiom()) {
+      [shadowView.topAnchor constraintEqualToAnchor:popupContainer.bottomAnchor]
+          .active = YES;
+    } else if (base::FeatureList::IsEnabled(kCleanToolbar)) {
+      // IPhone with the clean toolbar enabled.
+      [shadowView.topAnchor
+          constraintEqualToAnchor:viewController.view.topAnchor]
+          .active = YES;
+    }
+    _popupContainerView = popupContainer;
   }
   return self;
 }
 
 - (void)updateHeightAndAnimateAppearanceIfNecessary {
+  if (!self.canShowPopup)
+    return;
+
   UIView* popup = self.popupContainerView;
-  UIView* siblingView = [self.positioner popupAnchorView];
   BOOL newlyAdded = ([popup superview] == nil);
 
-  if (IsIPadIdiom()) {
-    [[siblingView superview] insertSubview:popup aboveSubview:siblingView];
+  if (!base::FeatureList::IsEnabled(kCleanToolbar)) {
+    UIView* siblingView = [self.positioner popupAnchorView];
+    if (IsIPadIdiom()) {
+      [[siblingView superview] insertSubview:popup aboveSubview:siblingView];
+    } else {
+      [[siblingView superview] insertSubview:popup belowSubview:siblingView];
+    }
   } else {
-    [[siblingView superview] insertSubview:popup belowSubview:siblingView];
+    [[self.positioner popupParentView] addSubview:popup];
   }
 
   if (newlyAdded) {
@@ -133,6 +163,14 @@ NS_INLINE CGFloat ShadowHeight() {
       completion:^(BOOL) {
         [retainedPopupView removeFromSuperview];
       }];
+}
+
+#pragma mark - Property accessor
+
+- (void)setCanShowPopup:(BOOL)canShowPopup {
+  _canShowPopup = canShowPopup;
+  if (canShowPopup)
+    [self updateHeightAndAnimateAppearanceIfNecessary];
 }
 
 #pragma mark - Private
@@ -206,40 +244,6 @@ NS_INLINE CGFloat ShadowHeight() {
                                   multiplier:1
                                     constant:0]];
 
-  return view;
-}
-
-+ (UIView*)newBackgroundViewIPhone {
-  UIView* view = [[UIView alloc] init];
-
-  // Add a white background to prevent seeing the logo scroll through the
-  // omnibox.
-  UIView* whiteBackground = [[UIView alloc] initWithFrame:CGRectZero];
-  [view addSubview:whiteBackground];
-  [whiteBackground setBackgroundColor:[UIColor whiteColor]];
-
-  // Set constraints to |whiteBackground|.
-  [whiteBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSDictionary* metrics = @{ @"height" : @(kWhiteBackgroundHeight) };
-  NSDictionary* views = NSDictionaryOfVariableBindings(whiteBackground);
-  [view addConstraints:[NSLayoutConstraint
-                           constraintsWithVisualFormat:@"H:|[whiteBackground]|"
-                                               options:0
-                                               metrics:nil
-                                                 views:views]];
-  [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
-                                               @"V:[whiteBackground(==height)]"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-  [view addConstraint:[NSLayoutConstraint
-                          constraintWithItem:whiteBackground
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:view
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:0]];
   return view;
 }
 

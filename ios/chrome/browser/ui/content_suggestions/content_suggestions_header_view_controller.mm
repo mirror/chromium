@@ -313,6 +313,12 @@ const CGFloat kHintLabelSidePadding = 12;
 
 - (void)fakeOmniboxTapped:(id)sender {
   [self.dispatcher focusFakebox];
+
+  if (!self.isShowing)
+    return;
+
+  self.omniboxFocused = YES;
+  [self shiftTilesUp];
 }
 
 // If Google is not the default search engine, hide the logo, doodle and

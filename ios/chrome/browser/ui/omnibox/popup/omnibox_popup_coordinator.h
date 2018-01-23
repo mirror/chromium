@@ -27,6 +27,8 @@ class ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // Positioner for the popup.
 @property(nonatomic, weak) id<OmniboxPopupPositioner> positioner;
+// Whether the popup coordinator can currently show the popup or not.
+@property(nonatomic, assign) BOOL canShowPopup;
 
 - (void)start;
 - (void)stop;
