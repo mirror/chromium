@@ -34,6 +34,24 @@
       "revId": "6ebadc092c7b50624787d156c4f05787c4aebdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55353e2c_240b48a5",
+        "filename": "mojo/public/interfaces/bindings/tests/ping_service.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1253352
+      },
+      "writtenOn": "2018-01-23T03:31:01Z",
+      "side": 1,
+      "message": "Changed the commit message, hopefully it makes sense.",
+      "parentUuid": "7ddfba67_8e758e35",
+      "revId": "6ebadc092c7b50624787d156c4f05787c4aebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
