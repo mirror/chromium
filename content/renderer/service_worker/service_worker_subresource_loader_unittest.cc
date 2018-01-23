@@ -7,11 +7,13 @@
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/test/scoped_task_environment.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/network/network_context.h"
+#include "content/network/url_loader.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_type.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "content/renderer/loader/child_url_loader_factory_getter_impl.h"
 #include "content/renderer/service_worker/controller_service_worker_connector.h"
@@ -19,10 +21,10 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/http/http_util.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
-#include "storage/browser/blob/blob_data_builder.h"
-#include "storage/browser/blob/blob_data_handle.h"
+#include "services/network/test/test_data_pipe_getter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/origin.h"
 
@@ -30,9 +32,9 @@ namespace content {
 
 namespace {
 
-// This class need to set ChildURLLoaderFactoryGetter. CreateLoaderAndStart()
-// need to implement. todo(emim): Merge this and the one in
-// service_worker_url_loader_job_unittest.cc.
+// A simple URLLoaderFactory that responds with status 200 to every request.
+// This is the default network loader factory for
+// ServiceWorkerSubresourceLoaderTest.
 class FakeNetworkURLLoaderFactory final
     : public network::mojom::URLLoaderFactory {
  public:
@@ -76,6 +78,43 @@ class FakeNetworkURLLoaderFactory final
   DISALLOW_COPY_AND_ASSIGN(FakeNetworkURLLoaderFactory);
 };
 
+// A URLLoaderFactory that sends the request to network.
+// ServiceWorkerSubresourceLoaderTest can set the network loader factory to this
+// class via ChildURLLoaderFactoryGetter, and set up an EmbeddedTestServer so
+// network requests go to the test server. This is useful if the test needs more
+// sophisticated network behavior than what FakeNetworkURLLoaderFactory
+// provides.
+class NetworkServiceURLLoaderFactory final
+    : public network::mojom::URLLoaderFactory {
+ public:
+  explicit NetworkServiceURLLoaderFactory(NetworkContext* context)
+      : context_(context) {}
+
+  // network::mojom::URLLoaderFactory implementation.
+  void CreateLoaderAndStart(network::mojom::URLLoaderRequest url_loader_request,
+                            int32_t routing_id,
+                            int32_t request_id,
+                            uint32_t options,
+                            const network::ResourceRequest& request,
+                            network::mojom::URLLoaderClientPtr client,
+                            const net::MutableNetworkTrafficAnnotationTag&
+                                traffic_annotation) override {
+    // URLLoader deletes itself.
+    new URLLoader(context_, std::move(url_loader_request), options, request,
+                  false /* report_raw_headers */, std::move(client),
+                  TRAFFIC_ANNOTATION_FOR_TESTS, 0 /* process_id */);
+  }
+
+  void Clone(network::mojom::URLLoaderFactoryRequest factory) override {
+    NOTREACHED();
+  }
+
+ private:
+  NetworkContext* context_;
+
+  DISALLOW_COPY_AND_ASSIGN(NetworkServiceURLLoaderFactory);
+};
+
 class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
  public:
   FakeControllerServiceWorker() = default;
@@ -114,13 +153,30 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
 
   void ReadRequestBody(std::string* out_string) {
     ASSERT_TRUE(request_body_);
-    const std::vector<network::DataElement>* elements =
-        request_body_->elements();
+    std::vector<network::DataElement>* elements =
+        request_body_->elements_mutable();
     // So far this test expects a single bytes element.
     ASSERT_EQ(1u, elements->size());
-    const network::DataElement& element = elements->front();
-    ASSERT_EQ(network::DataElement::TYPE_BYTES, element.type());
-    *out_string = std::string(element.bytes(), element.length());
+    network::DataElement& element = elements->front();
+    if (element.type() == network::DataElement::TYPE_BYTES) {
+      *out_string = std::string(element.bytes(), element.length());
+    } else if (element.type() == network::DataElement::TYPE_DATA_PIPE) {
+      // Read the content into |data_pipe|.
+      mojo::DataPipe data_pipe;
+      network::mojom::DataPipeGetterPtr ptr = element.ReleaseDataPipeGetter();
+      base::RunLoop run_loop;
+      ptr->Read(
+          std::move(data_pipe.producer_handle),
+          base::BindOnce([](const base::Closure& quit_closure, int32_t status,
+                            uint64_t size) { quit_closure.Run(); },
+                         run_loop.QuitClosure()));
+      run_loop.Run();
+      // Copy the content to |out_string|.
+      mojo::common::BlockingCopyToString(std::move(data_pipe.consumer_handle),
+                                         out_string);
+    } else {
+      NOTREACHED();
+    }
   }
 
   // mojom::ControllerServiceWorker:
@@ -199,7 +255,8 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
             base::Time::Now());
         std::move(callback).Run(
             blink::mojom::ServiceWorkerEventStatus::COMPLETED, base::Time());
-      } break;
+        break;
+      }
     }
     if (fetch_event_callback_)
       std::move(fetch_event_callback_).Run();
@@ -301,11 +358,12 @@ class FakeServiceWorkerContainerHost
 
 }  // namespace
 
-
 class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
  protected:
   ServiceWorkerSubresourceLoaderTest()
-      : fake_container_host_(&fake_controller_) {}
+      : fake_container_host_(&fake_controller_),
+        scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
   ~ServiceWorkerSubresourceLoaderTest() override = default;
 
   void SetUp() override {
@@ -317,6 +375,11 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     loader_factory_getter_ =
         base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
             std::move(fake_loader_factory), nullptr);
+  }
+
+  void SetChildURLLoaderFactoryGetter(
+      scoped_refptr<ChildURLLoaderFactoryGetter> getter) {
+    loader_factory_getter_ = std::move(getter);
   }
 
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory>
@@ -353,11 +416,67 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     return request;
   }
 
-  TestBrowserThreadBundle thread_bundle_;
+  // Performs a request with the given |request_body|, and checks that the body
+  // passed to the fetch event and the network fallback request equals
+  // |expected_body|.
+  void RunFallbackWithRequestBodyTest(
+      scoped_refptr<network::ResourceRequestBody> request_body,
+      const std::string& expected_body) {
+    // Set up the test server in order to echo the request.
+    net::EmbeddedTestServer test_server;
+    test_server.AddDefaultHandlers(
+        base::FilePath(FILE_PATH_LITERAL("content/test/data")));
+    ASSERT_TRUE(test_server.Start());
+
+    // Set the network URL loader factory to actually go to "network" (the
+    // test server will handle requests).
+    network::mojom::URLLoaderFactoryPtr fake_loader_factory;
+    std::unique_ptr<NetworkContext> network_context =
+        NetworkContext::CreateForTesting();
+    mojo::MakeStrongBinding(
+        std::make_unique<NetworkServiceURLLoaderFactory>(network_context.get()),
+        MakeRequest(&fake_loader_factory));
+    loader_factory_getter_ =
+        base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
+            std::move(fake_loader_factory), nullptr);
+    std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
+        CreateSubresourceLoaderFactory();
+
+    // Create a request with the body.
+    network::ResourceRequest request =
+        CreateRequest(test_server.GetURL("/echo"));
+    request.method = "POST";
+    request.request_body = std::move(request_body);
+
+    // Set the service worker to do network fallback to test that the body is
+    // included in the fallback request.
+    fake_controller_.RespondWithFallback();
+
+    // Perform the request.
+    network::mojom::URLLoaderPtr loader;
+    std::unique_ptr<TestURLLoaderClient> client;
+    StartRequest(factory.get(), request, &loader, &client);
+    client->RunUntilComplete();
+
+    // Verify that the request body was passed to the fetch event.
+    std::string fetch_event_body;
+    fake_controller_.ReadRequestBody(&fetch_event_body);
+    EXPECT_EQ(expected_body, fetch_event_body);
+
+    // Also verify the fallback network request sent the request body (the test
+    // server echoes the request body).
+    std::string response;
+    EXPECT_TRUE(client->response_body().is_valid());
+    EXPECT_TRUE(mojo::common::BlockingCopyToString(
+        client->response_body_release(), &response));
+    EXPECT_EQ(expected_body, response);
+  }
+
   scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter_;
   scoped_refptr<ControllerServiceWorkerConnector> connector_;
 
   FakeServiceWorkerContainerHost fake_container_host_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   FakeControllerServiceWorker fake_controller_;
   base::test::ScopedFeatureList feature_list_;
 
@@ -365,7 +484,6 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
 };
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, Basic) {
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
   network::ResourceRequest request =
@@ -384,7 +502,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, Basic) {
 TEST_F(ServiceWorkerSubresourceLoaderTest, Abort) {
   fake_controller_.AbortEventWithNoResponse();
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -400,7 +517,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, Abort) {
 }
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
   {
@@ -455,7 +571,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
 }
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, NoController) {
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
   {
@@ -494,7 +609,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, NoController) {
 }
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_RestartFetchEvent) {
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -551,7 +665,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_TooManyRestart) {
   // Simulate the container host fails to start a service worker.
   fake_container_host_.set_fake_controller(nullptr);
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
   network::ResourceRequest request =
@@ -578,7 +691,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
   fake_controller_.RespondWithStream(mojo::MakeRequest(&stream_callback),
                                      std::move(data_pipe.consumer_handle));
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -628,7 +740,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
 TEST_F(ServiceWorkerSubresourceLoaderTest, FallbackResponse) {
   fake_controller_.RespondWithFallback();
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -648,7 +759,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, FallbackResponse) {
 TEST_F(ServiceWorkerSubresourceLoaderTest, ErrorResponse) {
   fake_controller_.RespondWithError();
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -666,7 +776,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, ErrorResponse) {
 TEST_F(ServiceWorkerSubresourceLoaderTest, RedirectResponse) {
   fake_controller_.RespondWithRedirect("https://www.example.com/bar.png");
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -743,7 +852,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, TooManyRedirects) {
       std::string("https://www.example.com/redirect_") +
       base::IntToString(count);
   fake_controller_.RespondWithRedirect(redirect_location);
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -789,7 +897,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, TooManyRedirects) {
 TEST_F(ServiceWorkerSubresourceLoaderTest, CORSFallbackResponse) {
   fake_controller_.RespondWithFallback();
 
-  const GURL kScope("https://www.example.com/");
   std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
       CreateSubresourceLoaderFactory();
 
@@ -855,34 +962,24 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, CORSFallbackResponse) {
   }
 }
 
-// Test that the request body is passed to the fetch event.
-TEST_F(ServiceWorkerSubresourceLoaderTest, RequestBody) {
-  const GURL kUrl("https://www.example.com");
-  std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
-      CreateSubresourceLoaderFactory();
-
-  // Create a request with a body.
+TEST_F(ServiceWorkerSubresourceLoaderTest, FallbackWithRequestBody_String) {
+  const std::string kData = "Hi, this is the request body (string)";
   auto request_body = base::MakeRefCounted<network::ResourceRequestBody>();
-  const std::string kData = "hi this is the request body";
+  network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
   request_body->AppendBytes(kData.c_str(), kData.length());
-  network::ResourceRequest request = CreateRequest(kUrl);
-  request.method = "POST";
-  request.request_body = request_body;
 
-  // This test doesn't use the response to the fetch event, so just have the
-  // service worker do simple network fallback.
-  fake_controller_.RespondWithFallback();
+  RunFallbackWithRequestBodyTest(std::move(request_body), kData);
+}
 
-  // Perform the request.
-  network::mojom::URLLoaderPtr loader;
-  std::unique_ptr<TestURLLoaderClient> client;
-  StartRequest(factory.get(), request, &loader, &client);
-  fake_controller_.RunUntilFetchEvent();
+TEST_F(ServiceWorkerSubresourceLoaderTest, FallbackWithRequestBody_DataPipe) {
+  const std::string kData = "Hi, this is the request body (data pipe)";
+  auto request_body = base::MakeRefCounted<network::ResourceRequestBody>();
+  network::mojom::DataPipeGetterPtr data_pipe_getter_ptr;
+  auto data_pipe_getter = std::make_unique<network::TestDataPipeGetter>(
+      kData, mojo::MakeRequest(&data_pipe_getter_ptr));
+  request_body->AppendDataPipe(std::move(data_pipe_getter_ptr));
 
-  // Verify that the request body was passed to the fetch event.
-  std::string body;
-  fake_controller_.ReadRequestBody(&body);
-  EXPECT_EQ(kData, body);
+  RunFallbackWithRequestBodyTest(std::move(request_body), kData);
 }
 
 }  // namespace content

@@ -48,6 +48,7 @@ specific_include_rules = {
     "+ui/ozone/public/client_native_pixmap_factory_ozone.h",
   ],
   "service_worker_subresource_loader_unittest\.cc": [
-    "+storage/browser",
+    "+content/network/network_context.h",
+    "+content/network/url_loader.h"
   ]
 }
