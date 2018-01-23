@@ -11,7 +11,7 @@
 #include "base/memory/free_deleter.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/dhcpcsvc_init_win.h"
@@ -58,16 +58,14 @@ void DhcpProxyScriptAdapterFetcher::Fetch(
   wait_timer_.Start(FROM_HERE, ImplGetTimeout(),
                     this, &DhcpProxyScriptAdapterFetcher::OnTimeout);
   scoped_refptr<DhcpQuery> dhcp_query(ImplCreateDhcpQuery());
-  task_runner_->PostTaskAndReply(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      base::Bind(
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(
           &DhcpProxyScriptAdapterFetcher::DhcpQuery::GetPacURLForAdapter,
-          dhcp_query.get(),
-          adapter_name),
-      base::Bind(
-          &DhcpProxyScriptAdapterFetcher::OnDhcpQueryDone,
-          AsWeakPtr(),
-          dhcp_query));
+          dhcp_query.get(), adapter_name),
+      base::BindOnce(&DhcpProxyScriptAdapterFetcher::OnDhcpQueryDone,
+                     AsWeakPtr(), dhcp_query));
 }
 
 void DhcpProxyScriptAdapterFetcher::Cancel() {
