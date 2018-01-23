@@ -3173,6 +3173,11 @@ const FeatureEntry kFeatureEntries[] = {
          kOutOfProcessHeapProfilingKeepSmallAllocationsDescription,
      kOsAll, SINGLE_VALUE_TYPE(switches::kMemlogKeepSmallAllocations)},
 
+    {"memlog-include-thread-names",
+     flag_descriptions::kOutOfProcessHeapProfilingIncludeThreadNames,
+     flag_descriptions::kOutOfProcessHeapProfilingIncludeThreadNamesDescription,
+     kOsAll, SINGLE_VALUE_TYPE(switches::kMemlogIncludeThreadNames)},
+
     {"memlog-stack-mode", flag_descriptions::kOOPHPStackModeName,
      flag_descriptions::kOOPHPStackModeDescription, kOsAll,
      MULTI_VALUE_TYPE(kOOPHPStackModeChoices)},
