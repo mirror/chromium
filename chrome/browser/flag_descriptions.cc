@@ -516,6 +516,14 @@ const char kEnableOutOfProcessHeapProfilingModeRendererSampling[] =
     "Profile a random sampling of renderer processes, ensuring only one is "
     "ever profiled at a time.";
 
+const char kOutOfProcessHeapProfilingIncludeThreadNames[] =
+    "Include thread names in memlog native stack heap dumps";
+
+const char kOutOfProcessHeapProfilingIncludeThreadNamesDescription[] =
+    "By default, native stack heap dumps do not include thread name. Enable "
+    "this property to emit the thread name as the first frame in each stack "
+    "trace.";
+
 const char kOutOfProcessHeapProfilingKeepSmallAllocations[] =
     "Emit small allocations in memlog heap dumps.";
 const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[] =

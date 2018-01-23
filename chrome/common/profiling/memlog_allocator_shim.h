@@ -17,9 +17,12 @@ namespace profiling {
 void InitTLSSlot();
 
 // Begin profiling all allocations in the process. Send the results to
-// |sender_pipe|.
+// |sender_pipe|. |stack_mode| describes the type of stack to record for each
+// allocation. |include_thread_names| describes whether to insert thread names
+// into NATIVE stacks.
 void InitAllocatorShim(MemlogSenderPipe* sender_pipe,
-                       mojom::StackMode stack_mode);
+                       mojom::StackMode stack_mode,
+                       bool include_thread_names);
 
 // Stop profiling allocations by dropping shim callbacks. There is no way to
 // consistently, synchronously stop the allocator shim without negatively

@@ -27,7 +27,8 @@ void ChromeBrowserMainExtraPartsProfiling::ServiceManagerConnectionStarted(
   if (mode != profiling::ProfilingProcessHost::Mode::kNone) {
     profiling::ProfilingProcessHost::Start(
         connection, mode,
-        profiling::ProfilingProcessHost::GetStackModeForStartup());
+        profiling::ProfilingProcessHost::GetStackModeForStartup(),
+        profiling::ProfilingProcessHost::GetIncludeThreadNamesForStartup());
   }
 #endif
 }
