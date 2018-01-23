@@ -11,8 +11,10 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (0,0) size 36x18
           text run at (0,0) width 36: "Hello"
         LayoutTextControl {INPUT} at (35.55,0) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (166,0) size 5x18
           text run at (166,0) width 5: ":"
 layer at (47,45) size 125x13
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
 caret: position 1 of child 1 {INPUT} of child 2 {DIV} of body

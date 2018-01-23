@@ -5,6 +5,8 @@ layer at (0,0) size 800x600
     LayoutBlockFlow {BODY} at (8,8) size 784x576
       LayoutBlockFlow (anonymous) at (0,0) size 784x22
         LayoutTextControl {INPUT} at (0,0) size 600x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 596x16
+            LayoutBlockFlow {DIV} at (0,0) size 596x16
         LayoutText {#text} at (600,1) size 4x19
           text run at (600,1) width 4: " "
         LayoutBR {BR} at (604,16) size 0x0
@@ -35,7 +37,7 @@ layer at (0,0) size 800x600
           LayoutText {#text} at (0,0) size 326x19
             text run at (0,0) width 326: "Success: document.execCommand(\"Paste\") == true"
 layer at (10,11) size 596x16
-  LayoutBlockFlow {DIV} at (2,3) size 596x16
+  LayoutBlockFlow {DIV} at (0,0) size 596x16
     LayoutText {#text} at (0,0) size 513x16
       text run at (0,0) width 513: "This styled text, and link will be pasted into the textfield. All richness should be stripped."
-caret: position 94 of child 0 {#text} of child 0 {DIV} of {#document-fragment} of child 0 {INPUT} of body
+caret: position 94 of child 0 {#text} of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 0 {INPUT} of body

@@ -8,7 +8,13 @@ Input before setting suggested values:
 |   this.value="initial value"
 |   <shadow:root>
 |     <div>
-|       "initial value"
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
+|           "initial value"
 | <br>
 | "
 "
@@ -25,6 +31,12 @@ Input before setting suggested values:
 |       shadow:pseudoId="-webkit-input-placeholder"
 |       "initial placeholder"
 |     <div>
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
 | <br>
 | "
 "
@@ -91,7 +103,13 @@ Input after setting suggestedValue:
 |       shadow:pseudoId="-internal-input-suggested"
 |       "suggested value"
 |     <div>
-|       "initial value"
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
+|           "initial value"
 | <br>
 | "
 "
@@ -108,6 +126,12 @@ Input after setting suggestedValue:
 |       shadow:pseudoId="-internal-input-suggested"
 |       "suggested value"
 |     <div>
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
 | <br>
 | "
 "
@@ -184,7 +208,13 @@ After resetting suggestedValue value:
 |   this.value="initial value"
 |   <shadow:root>
 |     <div>
-|       "initial value"
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
+|           "initial value"
 | <br>
 | "
 "
@@ -201,6 +231,12 @@ After resetting suggestedValue value:
 |       shadow:pseudoId="-webkit-input-placeholder"
 |       "initial placeholder"
 |     <div>
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
 | <br>
 | "
 "

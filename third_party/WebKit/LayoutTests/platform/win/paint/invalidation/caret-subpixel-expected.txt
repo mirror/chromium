@@ -15,6 +15,16 @@
           "object": "LayoutBlockFlow DIV",
           "rect": [10, 11, 201, 16],
           "reason": "subtree"
+        },
+        {
+          "object": "LayoutBlockFlow DIV id='editing-view-port'",
+          "rect": [10, 11, 201, 16],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutFlexibleBox DIV id='text-field-container'",
+          "rect": [10, 11, 201, 16],
+          "reason": "subtree"
         }
       ]
     }
@@ -22,6 +32,14 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTextControl INPUT id='target'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutFlexibleBox DIV id='text-field-container'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV id='editing-view-port'",
       "reason": "subtree"
     },
     {
