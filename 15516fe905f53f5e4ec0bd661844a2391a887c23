@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8bd11a_3fb328e0",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "Why do we have to handle this? Between the TabStripModelObserver and the WebContentsObservers, we know exactly when WebContents detach from any tab-strip, and when they reattach. This seems like an awkward way of maintaining this state...",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043c46d5_d72d877e",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "Why not have a different code path for WebContentsDestroyed?",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 46
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8f4c66_0e63ffcf",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "Please be precise and define interaction.\n\nAlso, if the tab was active in the previous interval and continued being so until this interval, then will it be active in this interval? \"Became active\" implies that it must not previously has been active.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e0315f_0fdca1b1",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "AddTabToIntervalMap maybe?",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dceb8c_4a67c4b1",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "Better as a map from interval length to the tab state map?",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82481e0_a700c1f8",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "that currently exist.\n\n(Use consistency of language between comment and variable name)",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 38
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecfc2093_0f5fd54e",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "exist*",
+      "range": {
+        "startLine": 147,
+        "startChar": 40,
+        "endLine": 147,
+        "endChar": 46
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82befd2d_433597f8",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T16:11:54Z",
+      "side": 1,
+      "message": "Some of the old ones? This is cryptic. Under what conditions will old ones still be here?",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
