@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31bf406e_4c0d20f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-23T13:37:20Z",
+      "side": 1,
+      "message": "So this is still arguably a bit problematic in that it forces all chrome starts and processes (regardless of flag setting) to read shared preference on startup and earlier than our existing \"warm up\" logic. I see what we\u0027re trying to do by caching through shared prefs but it\u0027s still not \"free\" :/\n\nI need to think about this cause I don\u0027t have a great suggestion. If we wanted to move forward with this approach (one could argue that the impact is likely minimal but we should grab startup trace to see as I suspect we block main thread a bit cause of the IO where previously it was happening async). More importantly though I\u0027d want us to rip out the \"warmup\" ChromeBrowserInitializer.warmUpSharedPrefs cause it\u0027s moot and confusing at that point.\n\nOne option I\u0027m wondering about is perhaps the issue is that we\u0027re trying to set the command line \"early enough\" and it\u0027s forcing us to do it too early. If we instead switched to a pull-model such that the first time someone actually tries to read a flag we ensure it\u0027s init\u0027d that might solve the issue (granted it\u0027s a larger refactoring).",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
