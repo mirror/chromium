@@ -6,12 +6,13 @@
 
 #include "chrome/browser/ui/views/passwords/credentials_selection_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/passwords/manage_password_pending_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/styled_label.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/grid_layout.h"
 
 ManagePasswordUpdatePendingView::ManagePasswordUpdatePendingView(
@@ -24,20 +25,15 @@ ManagePasswordUpdatePendingView::ManagePasswordUpdatePendingView(
                                             anchor_point,
                                             reason),
       selection_view_(nullptr) {
-  views::GridLayout* layout =
-      SetLayoutManager(std::make_unique<views::GridLayout>(this));
-  layout->set_minimum_size(
-      gfx::Size(ManagePasswordsBubbleView::kDesiredBubbleWidth, 0));
-
   // Credential row.
   if (model()->ShouldShowMultipleAccountUpdateUI()) {
-    ManagePasswordsBubbleView::BuildColumnSet(
-        layout, ManagePasswordsBubbleView::SINGLE_VIEW_COLUMN_SET);
-    layout->StartRow(0, ManagePasswordsBubbleView::SINGLE_VIEW_COLUMN_SET);
-    layout->AddView(new CredentialsSelectionView(model()));
+    SetLayoutManager(std::make_unique<views::FillLayout>());
+    AddChildView(new CredentialsSelectionView(model()));
   } else {
     const autofill::PasswordForm& password_form = model()->pending_password();
-    ManagePasswordsBubbleView::BuildCredentialRows(
+    views::GridLayout* layout =
+        SetLayoutManager(std::make_unique<views::GridLayout>(this));
+    ManagePasswordPendingView::BuildCredentialRows(
         layout, CreateUsernameLabel(password_form).release(),
         CreatePasswordLabel(password_form,
                             IDS_PASSWORD_MANAGER_SIGNIN_VIA_FEDERATION, false)
@@ -50,9 +46,10 @@ ManagePasswordUpdatePendingView::ManagePasswordUpdatePendingView(
 ManagePasswordUpdatePendingView::~ManagePasswordUpdatePendingView() = default;
 
 gfx::Size ManagePasswordUpdatePendingView::CalculatePreferredSize() const {
-  return gfx::Size(ManagePasswordsBubbleView::kDesiredBubbleWidth,
+  constexpr int kDesiredBubbleWidth = 370;
+  return gfx::Size(kDesiredBubbleWidth,
                    GetLayoutManager()->GetPreferredHeightForWidth(
-                       this, ManagePasswordsBubbleView::kDesiredBubbleWidth));
+                       this, kDesiredBubbleWidth));
 }
 
 base::string16 ManagePasswordUpdatePendingView::GetDialogButtonLabel(

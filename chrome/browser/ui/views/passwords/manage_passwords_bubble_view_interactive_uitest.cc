@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h"
 
 #include <memory>
 #include <utility>
@@ -48,9 +48,10 @@ namespace {
 const char kDisplayDispositionMetric[] = "PasswordBubble.DisplayDisposition";
 
 bool IsBubbleShowing() {
-  return ManagePasswordsBubbleView::manage_password_bubble() &&
-      ManagePasswordsBubbleView::manage_password_bubble()->
-          GetWidget()->IsVisible();
+  return ManagePasswordsBubbleDelegateViewBase::manage_password_bubble() &&
+         ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()
+             ->GetWidget()
+             ->IsVisible();
 }
 
 const views::DialogClientView* GetDialogClientView(
@@ -104,9 +105,9 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, BasicOpenAndClose) {
   EXPECT_TRUE(IsBubbleShowing());
   const ManagePasswordPendingView* bubble =
       static_cast<const ManagePasswordPendingView*>(
-          ManagePasswordsBubbleView::manage_password_bubble());
+          ManagePasswordsBubbleDelegateViewBase::manage_password_bubble());
   EXPECT_FALSE(bubble->GetFocusManager()->GetFocusedView());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
   // Drain message pump to ensure the bubble view is cleared so that it can be
   // created again (it is checked on Mac to prevent re-opening the bubble when
@@ -119,12 +120,12 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, BasicOpenAndClose) {
       ->ShowManagePasswordsBubble(true /* user_action */);
   EXPECT_TRUE(IsBubbleShowing());
   bubble = static_cast<const ManagePasswordPendingView*>(
-      ManagePasswordsBubbleView::manage_password_bubble());
+      ManagePasswordsBubbleDelegateViewBase::manage_password_bubble());
   // A pending password with empty username should initially focus on the
   // username field.
   EXPECT_EQ(bubble->username_field(),
             bubble->GetFocusManager()->GetFocusedView());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
 }
 
@@ -138,11 +139,11 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, CommandControlsBubble) {
   ExecuteManagePasswordsCommand();
   EXPECT_TRUE(IsBubbleShowing());
   const LocationBarBubbleDelegateView* bubble =
-      ManagePasswordsBubbleView::manage_password_bubble();
+      ManagePasswordsBubbleDelegateViewBase::manage_password_bubble();
   EXPECT_TRUE(GetDialogClientView(bubble)->ok_button());
   EXPECT_EQ(GetDialogClientView(bubble)->ok_button(),
             bubble->GetFocusManager()->GetFocusedView());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
   // Drain message pump to ensure the bubble view is cleared so that it can be
   // created again (it is checked on Mac to prevent re-opening the bubble when
@@ -152,7 +153,7 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, CommandControlsBubble) {
   // And, just for grins, ensure that we can re-open the bubble.
   ExecuteManagePasswordsCommand();
   EXPECT_TRUE(IsBubbleShowing());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
 }
 
@@ -184,11 +185,12 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest,
   EXPECT_TRUE(IsBubbleShowing());
 
   // Bubble should not be focused by default.
-  EXPECT_FALSE(ManagePasswordsBubbleView::manage_password_bubble()->
-      GetFocusManager()->GetFocusedView());
+  EXPECT_FALSE(ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()
+                   ->GetFocusManager()
+                   ->GetFocusedView());
   // Bubble can be active if user clicks it.
-  EXPECT_TRUE(ManagePasswordsBubbleView::manage_password_bubble()->
-      CanActivate());
+  EXPECT_TRUE(ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()
+                  ->CanActivate());
 
   std::unique_ptr<base::HistogramSamples> samples(
       GetSamples(kDisplayDispositionMetric));
@@ -209,7 +211,7 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest,
   // Open once with pending password: automagical!
   SetupPendingPassword();
   EXPECT_TRUE(IsBubbleShowing());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   // Drain message pump to ensure the bubble view is cleared so that it can be
   // created again (it is checked on Mac to prevent re-opening the bubble when
   // clicking the location bar button repeatedly).
@@ -237,7 +239,7 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest,
                        CommandExecutionInAutomaticSaveState) {
   SetupAutomaticPassword();
   EXPECT_TRUE(IsBubbleShowing());
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   content::RunAllPendingInMessageLoop();
   // Re-opening should count as manual.
   ExecuteManagePasswordsCommand();
@@ -260,8 +262,9 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest,
 IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, CloseOnClick) {
   SetupPendingPassword();
   EXPECT_TRUE(IsBubbleShowing());
-  EXPECT_FALSE(ManagePasswordsBubbleView::manage_password_bubble()->
-      GetFocusManager()->GetFocusedView());
+  EXPECT_FALSE(ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()
+                   ->GetFocusManager()
+                   ->GetFocusedView());
   ui_test_utils::ClickOnView(browser(), VIEW_ID_TAB_CONTAINER);
   EXPECT_FALSE(IsBubbleShowing());
 }
@@ -284,8 +287,9 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, CloseOnKey) {
   focus_observer.Wait();
   SetupPendingPassword();
   EXPECT_TRUE(IsBubbleShowing());
-  EXPECT_FALSE(ManagePasswordsBubbleView::manage_password_bubble()->
-      GetFocusManager()->GetFocusedView());
+  EXPECT_FALSE(ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()
+                   ->GetFocusManager()
+                   ->GetFocusedView());
   EXPECT_TRUE(ui_test_utils::IsViewFocused(browser(), VIEW_ID_TAB_CONTAINER));
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -334,8 +338,9 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, TwoTabsWithBubbleClose) {
   // now). Ideally this would use ui_controls::SendKeyPress(..), but picking
   // the event that would activate a button is tricky. It's also hard to send
   // events directly to the button, since that's buried in private classes.
-  // Instead, simulate the action in ManagePasswordsBubbleView::PendingView::
-  // ButtonPressed(), and simulate the OS event queue by posting a task.
+  // Instead, simulate the action in
+  // ManagePasswordsBubbleDelegateViewBase::PendingView:: ButtonPressed(), and
+  // simulate the OS event queue by posting a task.
   auto press_button = [](ManagePasswordsBubbleDelegateViewBase* bubble,
                          bool* ran) {
     bubble->model()->OnNeverForThisSiteClicked();
@@ -382,7 +387,7 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, AutoSignin) {
   SetupAutoSignin(std::move(local_credentials));
   EXPECT_TRUE(IsBubbleShowing());
 
-  ManagePasswordsBubbleView::CloseCurrentBubble();
+  ManagePasswordsBubbleDelegateViewBase::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
   content::RunAllPendingInMessageLoop();
   content::WebContents* web_contents =
