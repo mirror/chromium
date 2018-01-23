@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "133cf9a9_55632668",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e23aaa49_cddd48c9",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db6a56e_dc2160b9",
         "filename": "components/cronet/cronet_global_state.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8094730b_e5a25ec5",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db6a56e_dc2160b9",
+      "range": {
+        "startLine": 25,
+        "startChar": 30,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f6d80957_4f4bc42b",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65628c56_f6c7012a",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ecb0dc0_5fde0b6f",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-23T15:46:59Z",
       "side": 1,
       "message": "any reason this needs to be cached in the global state?  could we just recalculate when a CronetEngine is created?  This would simplify things.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf304541_0e45b1c9",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "The API returns char*, so we need to keep it somewhere. \nCould be either global state or engine instance, and it seems that without parameter it will be the same for all engines..",
+      "parentUuid": "5ecb0dc0_5fde0b6f",
       "range": {
         "startLine": 28,
         "startChar": 33,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "c3d39862_5cd1ea5a",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec04603_e4f294b3",
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b866fb_ff44b963",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "4e25935e_d724298b",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b866fb_ff44b963",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e19d98_ef098748",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -145,6 +283,30 @@
       "writtenOn": "2018-01-23T15:46:59Z",
       "side": 1,
       "message": "this line looks like it could be problematic, say for example someone does:\nStartNetLog()\nStopNetLog()\nand then on another thread:\nStartNetLog()\nStopNetLog()\nthere are dereferences of stop_netlog_complete_ in StopNetLog() and OnStopNetLog() that could crash if stop_netlog_complete_ is nullptr.",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1371c640_8810639b",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Hrm, I don\u0027t quite get it, but I\u0027ve changed |stop_netlog_complete_| to be an instance. \nDoes this fix the race?",
+      "parentUuid": "58e19d98_ef098748",
       "range": {
         "startLine": 151,
         "startChar": 33,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "569b0cbb_03e157bf",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Uhm, can\u0027t. It is signaled from network thread.",
+      "parentUuid": "c1ccf95a_7dc9ebe9",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c783ab7_f657c9d3",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -200,6 +386,30 @@
       "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d454cd_2bab0340",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c783ab7_f657c9d3",
+      "range": {
+        "startLine": 259,
+        "startChar": 62,
+        "endLine": 259,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "ad6d0e65_6d5db96f",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5521c97_ce82f87f",
+      "range": {
+        "startLine": 264,
+        "startChar": 42,
+        "endLine": 264,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46130c31_8aad459c",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -246,6 +480,30 @@
       "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000d587a_de0482c6",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46130c31_8aad459c",
+      "range": {
+        "startLine": 269,
+        "startChar": 51,
+        "endLine": 269,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "cd8c90af_aec8dfa4",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c91901_07266e3f",
+      "range": {
+        "startLine": 274,
+        "startChar": 51,
+        "endLine": 274,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9410383c_bb9889f9",
         "filename": "components/cronet/native/engine.h",
         "patchSetId": 7
@@ -292,6 +574,30 @@
       "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c226d1_3c4534a5",
+        "filename": "components/cronet/native/engine.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-23T23:22:40Z",
+      "side": 1,
+      "message": "Yes. Updated comment.",
+      "parentUuid": "9410383c_bb9889f9",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
