@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75faf30a_b20308ab",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T00:07:17Z",
+      "side": 1,
+      "message": "note I don\u0027t think you need this separate bool. I think the class can enforce an invariant: if foo_callback_ is non-null, then there is a pending request.",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8a7700_aca520ac",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T00:07:17Z",
+      "side": 1,
+      "message": "base::Closure is deprecated in favour of OnceClosure or RepeatingClosure. I think ideally  *both* of these callbacks should cleared out when *either* are run? (e.g. what if a closure has bound a scoped_refptr -- there could be a reference held on when it shouldn\u0027t be). A std::unique_ptr to struct is a neat way to do this and well understood. a std::optional to std::tuple is neither.\n\nSorry - I don\u0027t understand the aversion to struct -- there\u0027s plenty of precedent for this in bluetooth code -- see bluetooth_socket_mac.h (AcceptRequest,SendRequest,ReceiveCallbacks,ConnectCallbacks), bluetooth_socket_net.h (WriteRequest)\n\nPerhaps Android\u0027s remote characteristic can share the same struct. But simple bespoke structs like this tend to be good for code maintainability and encapsulation.",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796efd52_25b8db70",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T00:07:17Z",
+      "side": 1,
+      "message": "great comment! Thanks.",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25357aa_2993592b",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T00:07:17Z",
+      "side": 1,
+      "message": "heh, this is the first time I\u0027ve seen BindLambdaForTesting -- I usually end up doing\n\nbase::Bind([](bool* called, BluetoothAdapter* adapter), \u0026error_callback_called_, adapter.get())\n\nI\u0027m not sure whether capturing an expression into a reference technically violates the style guide rule that you can\u0027t have non-const reference arguments. But ¯\\_(ツ)_/¯ - what you have looks OK.\n\nI think if you\u0027re going this route you could also bind |this| and just refer to adapter_-\u003e in the lambda. i.e. base::BindFoo([this,\u0026] {\n\nthat might be simpler than the \u0026adapter thing",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
