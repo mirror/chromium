@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6376a475_30b19f86",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "Debugging comment accidentally uploaded ... removed.",
+      "parentUuid": "e0dd7ba8_0ba6f3b3",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "743c8249_abf53757",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 47
@@ -33,6 +51,24 @@
       "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b469b9_5d9cc031",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "Sure, reworded and replaced.",
+      "parentUuid": "743c8249_abf53757",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8bf48afa_0355edd4",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "ToDone",
+      "parentUuid": "a4b95871_03646fc9",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df46c7f_fa5669b0",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 47
@@ -73,6 +133,24 @@
       "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47b57b0_a729721d",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "Yes.\nAll of the calls need to support the case where they get called before SetGlobalScope.\nDo you think that is helpful to leave in the codebase in english as well as code?",
+      "parentUuid": "9df46c7f_fa5669b0",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "08e0e2ed_84f9aaee",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "This is timely.  I\u0027m not sure we want to rely on the destruction mechanism of the call stack in the normal path.  it may have other things to do before destroying the last parameter of the task, no?",
+      "parentUuid": "2cef67fb_88f9ab29",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b01cf59_1e75796b",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 47
@@ -104,6 +200,24 @@
       "writtenOn": "2018-01-19T02:47:37Z",
       "side": 1,
       "message": "nit: Maybe call this ScopedSignal?",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f3f623_6ed842cd",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "I don\u0027t think that reads as clearly in the used code.\n\nIf it was a general utility class, sure, but the class is a private here.",
+      "parentUuid": "1b01cf59_1e75796b",
       "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "d5e6ec01_31f04ac0",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimator.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0706db46_9bc2f708",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5029c17_a218d505",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 47
@@ -138,6 +270,30 @@
       "writtenOn": "2018-01-19T02:47:37Z",
       "side": 1,
       "message": "Set implies that it is destructive, but this is called for all outputs implying its additive. Should this be AddMutationUpdate / AppendMutationUpdate? Or perhaps the client_ should take the entire list of updates.",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb8c831_decf350b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "I believe the time and place to make that comment was here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/613860/9/cc/trees/layer_tree_mutator.h\nor at latest\nhttps://chromium-review.googlesource.com/c/chromium/src/+/613860/32/cc/trees/layer_tree_mutator.h\n\nAlternately it is up to the client to determine what the overlay/stacking rules are for the contents, rather than a presumption from the interface.  I would go with \"ProvideMutationUpdate\", TBH, but no-one asked me.  I also don\u0027t think refactoring and renaming that belongs in this CL.  We can make it a pre-req if you believe that the threaded nature makes it incompatible with landing this way.",
+      "parentUuid": "d5029c17_a218d505",
       "range": {
         "startLine": 51,
         "startChar": 13,
@@ -170,6 +326,30 @@
       "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faa9b19_411eca47",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-23T21:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3711f3_917a7e3d",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
