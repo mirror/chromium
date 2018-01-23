@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ab0ce9_6ed88b18",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 0,
+      "message": "This test is introduced with RP::IsVisible() by http://crrev.com/c/600544\n\nCould you rewrite this test with ComputeCompositedSelection() to check\nCompositedSelectionBound.hidden which holds value of IsVisible().",
+      "revId": "c6abefd153ea09f3734a7f5d409e316a0accd9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76186414_2521750e",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPositionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 0,
+      "message": "Could you add a comment to GetSamplePointForVisibility(), it is file\nlocal function now, as example of this result?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "c6abefd153ea09f3734a7f5d409e316a0accd9d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

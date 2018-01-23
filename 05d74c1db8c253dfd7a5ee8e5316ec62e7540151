@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "88ce6816_b3806c57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "nit: s/_// local variable should not end with underscore.",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9119622a_31c08625",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -43,6 +66,74 @@
         "endLine": 22,
         "endChar": 18
       },
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e57966f_fa5b7b21",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "Could add TODO comment we\u0027ll move |IsVisible()| implementation here to\nremove this forward declaration?",
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65dadf46_9fb388ad",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "nit: s/bool/static bool/",
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e76bfdf_92ad038b",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "nit: s/Node*/Node* const/",
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5609f2_b3140c62",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "nit: Please remove this macro since this patch removes the test.",
       "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
