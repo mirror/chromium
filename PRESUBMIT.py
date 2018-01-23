@@ -2066,17 +2066,20 @@ class PydepsChecker(object):
   def DetermineIfStale(self, pydeps_path):
     """Runs print_python_deps.py to see if the files is stale."""
     import difflib
+    import os
+
     old_pydeps_data = self._LoadFile(pydeps_path).splitlines()
-    cmd = old_pydeps_data[1][1:].strip()
-    env = {
-      'PYTHONDONTWRITEBYTECODE': '1'
-    }
+    cmd = old_pydeps_data[1][1:].strip().split()
+    env = dict(os.environ)
+    env['PYTHONDONTWRITEBYTECODE'] = '1'
     new_pydeps_data = self._input_api.subprocess.check_output(
-        cmd  + ' --output ""', shell=True, env=env)
+        cmd + ['--output', ''], env=env)
     old_contents = old_pydeps_data[2:]
     new_contents = new_pydeps_data.splitlines()[2:]
     if old_pydeps_data[2:] != new_pydeps_data.splitlines()[2:]:
-      return cmd, '\n'.join(difflib.context_diff(old_contents, new_contents))
+      return (
+          ' '.join(cmd),
+          '\n'.join(difflib.context_diff(old_contents, new_contents)))
 
 
 def _CheckPydepsNeedsUpdating(input_api, output_api, checker_for_tests=None):

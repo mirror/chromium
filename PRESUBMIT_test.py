@@ -695,7 +695,7 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     ]
 
     def mock_check_output(cmd, shell=False, env=None):
-      self.assertEqual('CMD A --output ""', cmd)
+      self.assertEqual(['CMD', 'A', '--output', ''], cmd)
       return self.checker._file_cache['A.pydeps']
 
     self.mock_input_api.subprocess.check_output = mock_check_output
@@ -713,7 +713,7 @@ class PydepsNeedsUpdatingTest(unittest.TestCase):
     ]
 
     def mock_check_output(cmd, shell=False, env=None):
-      self.assertEqual('CMD A --output ""', cmd)
+      self.assertEqual(['CMD', 'A', '--output', ''], cmd)
       return 'changed data'
 
     self.mock_input_api.subprocess.check_output = mock_check_output
