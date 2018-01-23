@@ -8,9 +8,13 @@
 
 #include "base/bind.h"
 #include "base/memory/shared_memory_handle.h"
+#include "components/printing/common/print_messages.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "printing/printing_utils.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::PrintCompositeClient);
@@ -23,6 +27,49 @@ PrintCompositeClient::PrintCompositeClient(content::WebContents* web_contents)
 }
 
 PrintCompositeClient::~PrintCompositeClient() {}
+
+void PrintCompositeClient::OnDidPrintFrameContent(
+    content::RenderFrameHost* render_frame_host,
+    int cookie,
+    const PrintHostMsg_DidPrintContent_Params& params) {
+  int page_num = 0;
+  auto& compositor = GetCompositeRequest(cookie, page_num);
+  DCHECK(compositor.is_bound());
+
+  mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
+      params.metafile_data_handle, params.data_size,
+      mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
+  auto frame_guid = GenFrameGuid(render_frame_host->GetProcess()->GetID(),
+                                 render_frame_host->GetRoutingID());
+  compositor->AddSubframeContent(
+      frame_guid, std::move(buffer_handle),
+      ConvertContentProxyToFrameMap(web_contents(), render_frame_host,
+                                    params.subframe_content_info));
+}
+
+void PrintCompositeClient::PrintSubframe(const gfx::Rect& rect,
+                                         int cookie,
+                                         content::RenderFrameHost* dst_host) {
+  // Send the request to remote frame.
+  PrintMsg_PrintFrame_Params params;
+  params.printable_area = rect;
+  params.document_cookie = cookie;
+  dst_host->Send(
+      new PrintMsg_PrintFrameContent(dst_host->GetRoutingID(), params));
+}
+
+bool PrintCompositeClient::OnMessageReceived(
+    const IPC::Message& message,
+    content::RenderFrameHost* render_frame_host) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(PrintCompositeClient, message,
+                                   render_frame_host)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintFrameContent,
+                        OnDidPrintFrameContent)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
 
 void PrintCompositeClient::DoCompositePageToPdf(
     int document_cookie,
@@ -90,6 +137,24 @@ void PrintCompositeClient::OnDidCompositeDocumentToPdf(
     mojo::ScopedSharedBufferHandle handle) {
   RemoveCompositeRequest(document_cookie, base::nullopt);
   std::move(callback).Run(status, std::move(handle));
+}
+
+ContentToFrameMap PrintCompositeClient::ConvertContentProxyToFrameMap(
+    content::WebContents* web_contents,
+    content::RenderFrameHost* render_frame_host,
+    const ContentToProxyIdMap& content_proxy_map) {
+  ContentToFrameMap content_frame_map;
+  for (ContentToProxyIdMap::const_iterator it = content_proxy_map.begin();
+       it != content_proxy_map.end(); ++it) {
+    auto process_id = render_frame_host->GetProcess()->GetID();
+    content::RenderFrameHost* rfh = web_contents->FindFrameByFrameTreeNodeId(
+        content::RenderFrameHost::GetFrameTreeNodeIdForRoutingId(process_id,
+                                                                 it->second),
+        process_id);
+    content_frame_map[it->first] =
+        GenFrameGuid(process_id, rfh->GetRoutingID());
+  }
+  return content_frame_map;
 }
 
 mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(

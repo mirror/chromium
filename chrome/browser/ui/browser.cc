@@ -1935,6 +1935,19 @@ gfx::Size Browser::GetSizeForNewRenderView(WebContents* web_contents) const {
   return size;
 }
 
+#if BUILDFLAG(ENABLE_PRINTING)
+void Browser::PrintSubframe(content::WebContents* web_contents,
+                            const gfx::Rect& rect,
+                            uint64_t content_id,
+                            content::RenderFrameHost* dst_host) const {
+  auto* client = printing::PrintCompositeClient::FromWebContents(web_contents);
+  // TODO(weili): Use correct cookie here.
+  int cookie = static_cast<int>(content_id);
+  if (client)
+    client->PrintSubframe(rect, cookie, dst_host);
+}
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, CoreTabHelperDelegate implementation:
 
