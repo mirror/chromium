@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3089bf9_33d7e90c",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-23T20:09:42Z",
+      "side": 1,
+      "message": "I found it amusing that apparently you *can* write a do nothing lambda as all-the-parens:\n\n[](){}\n\n(changed to base::DoNothing)",
+      "parentUuid": "7bb5a535_5cbf123a",
+      "range": {
+        "startLine": 908,
+        "startChar": 31,
+        "endLine": 908,
+        "endChar": 37
+      },
+      "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1eb232f_8d9d7ebf",
         "filename": "chromeos/printing/ppd_provider_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b843a488_9a46a2ef",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-23T20:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1eb232f_8d9d7ebf",
+      "range": {
+        "startLine": 80,
+        "startChar": 45,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a15affc9_d58a05e9",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-23T20:09:42Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it an explicit choice for future test writers, I think.",
+      "parentUuid": "c75b9f9c_aef3cdf0",
+      "range": {
+        "startLine": 84,
+        "startChar": 49,
+        "endLine": 84,
+        "endChar": 73
+      },
+      "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3145c3c9_c2d5214c",
         "filename": "chromeos/printing/ppd_provider_unittest.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "acd1dc28_114de16e",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-23T20:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3145c3c9_c2d5214c",
+      "range": {
+        "startLine": 848,
+        "startChar": 2,
+        "endLine": 850,
+        "endChar": 56
+      },
+      "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf36b43c_5f3468b1",
         "filename": "chromeos/printing/ppd_provider_unittest.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa151490_590b9777",
+        "filename": "chromeos/printing/ppd_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-23T20:09:42Z",
+      "side": 1,
+      "message": "Done.  Also reversed the order of operations w.r.t. the file write, as I think that\u0027s probably more intuitive.",
+      "parentUuid": "cf36b43c_5f3468b1",
+      "range": {
+        "startLine": 854,
+        "startChar": 2,
+        "endLine": 855,
+        "endChar": 70
+      },
+      "revId": "8d38b9d12abe0809303210fd740f902ba1927644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
