@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/containers/queue.h"
+#include "base/sequence_checker.h"
 #include "net/http/http_response_info.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
@@ -252,6 +253,13 @@ class TestDownloadHttpResponse : public net::test_server::HttpResponse {
 
 class TestDownloadResponseHandler {
  public:
+  class Observer {
+   public:
+    virtual ~Observer() = default;
+    virtual void OnRequestComplete(
+        TestDownloadHttpResponse::CompletedRequest* completed_request) = 0;
+  };
+
   static std::unique_ptr<net::test_server::HttpResponse>
   HandleTestDownloadRequest(
       const TestDownloadHttpResponse::OnResponseSentCallback& callback,
@@ -259,6 +267,8 @@ class TestDownloadResponseHandler {
 
   TestDownloadResponseHandler();
   ~TestDownloadResponseHandler();
+
+  void SetObserver(Observer* observer);
 
   // Register to the embedded test |server|.
   void RegisterToTestServer(net::test_server::EmbeddedTestServer* server);
@@ -272,7 +282,33 @@ class TestDownloadResponseHandler {
 
  private:
   CompletedRequests completed_requests_;
+  Observer* observer_;
+  SEQUENCE_CHECKER(sequence_checker_);
+
   DISALLOW_COPY_AND_ASSIGN(TestDownloadResponseHandler);
+};
+
+// Observer that can wait for a certain number of requests completed in
+// TestDownloadResponseHandler.
+// TestDownloadResponseHandler must outlive this class.
+class DownloadResponseObserver : public TestDownloadResponseHandler::Observer {
+ public:
+  explicit DownloadResponseObserver(TestDownloadResponseHandler* handler);
+  ~DownloadResponseObserver() override;
+
+  void WaitUntilCompletion(size_t request_count);
+
+ private:
+  // TestDownloadResponseHandler::Observer implementation.
+  void OnRequestComplete(
+      TestDownloadHttpResponse::CompletedRequest* completed_request) override;
+
+  TestDownloadResponseHandler* handler_;
+  base::RunLoop run_loop_;
+  size_t request_count_;
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  DISALLOW_COPY_AND_ASSIGN(DownloadResponseObserver);
 };
 
 }  // namespace content
