@@ -70,6 +70,30 @@
       "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30abdc14_f0ef106d",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T18:32:48Z",
+      "side": 1,
+      "message": "Thank you for the detailed explanation! I understand it now.",
+      "parentUuid": "505df4f9_368fce24",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 67
+      },
+      "revId": "f05de2187e3fc3faa0e44b115b4dbacfa2ad99e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
