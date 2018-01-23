@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e4675e0_1683568c",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T20:20:12Z",
+      "side": 1,
+      "message": "Fady, can you explain why you changed the device scale factor here? If we just use device_scale_factor_2, as we did in the last SubmitCompositorFrame, we wouldn\u0027t have to allocate a new id.",
+      "range": {
+        "startLine": 699,
+        "startChar": 57,
+        "endLine": 699,
+        "endChar": 78
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2abd9ff_53cb331a",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T20:20:12Z",
+      "side": 1,
+      "message": "Not sure if this DCHECK is necessary. We\u0027ll just crash on the next line.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc236d17_d4e38133",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T20:20:12Z",
+      "side": 1,
+      "message": "This is not needed.",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b4ea62_8d16a65a",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T20:20:12Z",
+      "side": 1,
+      "message": "Should we just use the Submit that DCHECKs?",
+      "range": {
+        "startLine": 1989,
+        "startChar": 0,
+        "endLine": 1993,
+        "endChar": 23
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
