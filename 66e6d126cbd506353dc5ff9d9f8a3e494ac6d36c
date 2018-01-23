@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2cad558e_12d6628a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2626,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-23T19:00:30Z",
+      "side": 1,
+      "message": "Reworked the observer so we can\u0027t endlessly leak them, it actually had to be a WebContentsObserver too.",
+      "parentUuid": "b2b8a601_114b2700",
+      "range": {
+        "startLine": 2626,
+        "startChar": 23,
+        "endLine": 2626,
+        "endChar": 34
+      },
+      "revId": "66e6d126cbd506353dc5ff9d9f8a3e494ac6d36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "148b0563_36c2d01b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "156ca7d0_baa4c447",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-23T19:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148b0563_36c2d01b",
+      "range": {
+        "startLine": 2629,
+        "startChar": 58,
+        "endLine": 2629,
+        "endChar": 72
+      },
+      "revId": "66e6d126cbd506353dc5ff9d9f8a3e494ac6d36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56b07217_9c55f4a3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "66e6d126cbd506353dc5ff9d9f8a3e494ac6d36c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8f7358_e7519f16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-23T19:00:30Z",
+      "side": 1,
+      "message": "There doesn\u0027t seem to be a way to just check that from the Java-side TemplateUrlService unless I\u0027m misunderstanding you. I\u0027ve also moved the observer so now the URL this receives is removed from the |url| we create get above.",
+      "parentUuid": "56b07217_9c55f4a3",
+      "range": {
+        "startLine": 2632,
+        "startChar": 37,
+        "endLine": 2632,
+        "endChar": 81
+      },
+      "revId": "66e6d126cbd506353dc5ff9d9f8a3e494ac6d36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
