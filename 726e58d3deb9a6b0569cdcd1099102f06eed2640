@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c37b713_473e9e23",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T07:02:01Z",
+      "side": 1,
+      "message": "Remove this change.",
+      "revId": "726e58d3deb9a6b0569cdcd1099102f06eed2640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0a47ed_8c5551ba",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T07:02:01Z",
+      "side": 1,
+      "message": "Remove this change.",
+      "revId": "726e58d3deb9a6b0569cdcd1099102f06eed2640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d3db38_1642b0d1",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T07:02:01Z",
+      "side": 1,
+      "message": "This should return String. WebString is a type used only at the boundary between Blink and //content/.",
+      "revId": "726e58d3deb9a6b0569cdcd1099102f06eed2640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc706c60_2b084119",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T07:02:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "726e58d3deb9a6b0569cdcd1099102f06eed2640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
