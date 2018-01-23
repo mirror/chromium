@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3fa068_03599f0e",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T21:02:33Z",
+      "side": 1,
+      "message": "Very similar, but could you run executeJavaScriptAndWaitForResult(\"window.location.href \u003d \u0027success.html\u0027; \"); instead just to be par with the other test?",
+      "range": {
+        "startLine": 1071,
+        "startChar": 12,
+        "endLine": 1071,
+        "endChar": 36
+      },
+      "revId": "4ae28dfc8f946bdece4b348eea4e7fed3f783070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
