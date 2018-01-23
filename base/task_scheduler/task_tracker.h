@@ -109,6 +109,13 @@ class BASE_EXPORT TaskTracker {
   // other threads during the call. Returns immediately when shutdown completes.
   void Flush();
 
+  // Returns and calls |flush_callback| when there are no incomplete undelayed
+  // tasks. |flush_callback| may be called back on any thread and should not
+  // perform a lot of work. May be used when additional work on the current
+  // thread needs to be performed during a flush. Only one FlushAsync() may be
+  // pending at any given time.
+  void FlushAsync(OnceClosure flush_callback);
+
   // Informs this TaskTracker that |task| is about to be posted. Returns true if
   // this operation is allowed (|task| should be posted if-and-only-if it is).
   bool WillPostTask(const Task& task);
@@ -223,6 +230,9 @@ class BASE_EXPORT TaskTracker {
   // for |task|.
   void RecordTaskLatencyHistogram(const Task& task);
 
+  // Calls |flush_callback_| if one is available in a lock-safe manner.
+  void CallFlushCallback();
+
   // Number of tasks blocking shutdown and boolean indicating whether shutdown
   // has started.
   const std::unique_ptr<State> state_;
@@ -236,12 +246,16 @@ class BASE_EXPORT TaskTracker {
   // Lock associated with |flush_cv_|. Partially synchronizes access to
   // |num_incomplete_undelayed_tasks_|. Full synchronization isn't needed
   // because it's atomic, but synchronization is needed to coordinate waking and
-  // sleeping at the right time.
+  // sleeping at the right time. Fully synchronizes access to |flush_callback_|.
   mutable SchedulerLock flush_lock_;
 
   // Signaled when |num_incomplete_undelayed_tasks_| is zero or when shutdown
   // completes.
   const std::unique_ptr<ConditionVariable> flush_cv_;
+
+  // Called when |num_incomplete_undelayed_tasks_| is zero or when shutdown
+  // completes.
+  OnceClosure flush_callback_;
 
   // Synchronizes access to shutdown related members below.
   mutable SchedulerLock shutdown_lock_;

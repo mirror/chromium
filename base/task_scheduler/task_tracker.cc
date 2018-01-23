@@ -249,9 +249,12 @@ void TaskTracker::Shutdown() {
   PerformShutdown();
   DCHECK(IsShutdownComplete());
 
-  // Unblock Flush() when shutdown completes.
-  AutoSchedulerLock auto_lock(flush_lock_);
-  flush_cv_->Signal();
+  // Unblock Flush() and callback FlushAsync() when shutdown completes.
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    flush_cv_->Signal();
+  }
+  CallFlushCallback();
 }
 
 void TaskTracker::Flush() {
@@ -259,6 +262,21 @@ void TaskTracker::Flush() {
   while (subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) != 0 &&
          !IsShutdownComplete()) {
     flush_cv_->Wait();
+  }
+}
+
+void TaskTracker::FlushAsync(OnceClosure flush_callback) {
+  DCHECK(flush_callback);
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    DCHECK(!flush_callback_)
+        << "Only one FlushAsync() may be pending at any time.";
+    flush_callback_ = std::move(flush_callback);
+  }
+
+  if (subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) == 0 ||
+      IsShutdownComplete()) {
+    CallFlushCallback();
   }
 }
 
@@ -611,8 +629,11 @@ void TaskTracker::DecrementNumIncompleteUndelayedTasks() {
       subtle::Barrier_AtomicIncrement(&num_incomplete_undelayed_tasks_, -1);
   DCHECK_GE(new_num_incomplete_undelayed_tasks, 0);
   if (new_num_incomplete_undelayed_tasks == 0) {
-    AutoSchedulerLock auto_lock(flush_lock_);
-    flush_cv_->Signal();
+    {
+      AutoSchedulerLock auto_lock(flush_lock_);
+      flush_cv_->Signal();
+    }
+    CallFlushCallback();
   }
 }
 
@@ -682,6 +703,16 @@ void TaskTracker::RecordTaskLatencyHistogram(const Task& task) {
                                ? 1
                                : 0]
                               ->Add(task_latency.InMicroseconds());
+}
+
+void TaskTracker::CallFlushCallback() {
+  OnceClosure flush_callback;
+  {
+    AutoSchedulerLock auto_lock(flush_lock_);
+    flush_callback = std::move(flush_callback_);
+  }
+  if (flush_callback)
+    std::move(flush_callback).Run();
 }
 
 }  // namespace internal
