@@ -46,6 +46,30 @@
       "revId": "f6b2c55849697168023d2eef238f3adc26981e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31b7d93_bfbf4029",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5440,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-23T17:19:28Z",
+      "side": 1,
+      "message": "I don\u0027t know enough to answer this question.  Maybe sergeyu does?  The test is flaky on iOS, so it seemed like a race condition. Maybe sometimes we\u0027re waiting for a response that has already been read?\n\nThis test used to be part of the remote_test_server code, which wasn\u0027t compiled at all on iOS.  It started getting run on iOS last Friday, and it\u0027s been flaky ever since.  This is causing a large percentage of main waterfall runs to fail, so I have to do something in the short term to get the bots green again.",
+      "parentUuid": "8a6f486d_cac2451d",
+      "range": {
+        "startLine": 5440,
+        "startChar": 23,
+        "endLine": 5440,
+        "endChar": 48
+      },
+      "revId": "f6b2c55849697168023d2eef238f3adc26981e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
