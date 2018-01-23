@@ -34,6 +34,24 @@
       "revId": "cb3086811326fe1d76499278315a2af488f772f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcbc2c4_5d3ca1bc",
+        "filename": "third_party/WebKit/Source/core/dom/ElementRareData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-23T04:09:46Z",
+      "side": 1,
+      "message": "A temporary fix for this is to request the AXID from the cache whenever a property is needed.",
+      "parentUuid": "934df223_c328a60f",
+      "revId": "cb3086811326fe1d76499278315a2af488f772f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
