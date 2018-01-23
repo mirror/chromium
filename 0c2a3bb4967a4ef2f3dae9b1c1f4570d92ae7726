@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f4a53a7_07aca0f3",
+        "filename": "base/test/trace_to_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-23T21:42:32Z",
+      "side": 1,
+      "message": "Won\u0027t this crash in other tests that do have a MessageLoop already? What happens in cc_unittests for example?",
+      "revId": "0c2a3bb4967a4ef2f3dae9b1c1f4570d92ae7726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
