@@ -26,6 +26,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h"
+#include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -64,6 +66,7 @@ namespace save_thumbnail = wallpaper_private::SaveThumbnail;
 namespace get_offline_wallpaper_list =
     wallpaper_private::GetOfflineWallpaperList;
 namespace record_wallpaper_uma = wallpaper_private::RecordWallpaperUMA;
+namespace get_images_info = wallpaper_private::GetImagesInfo;
 
 namespace {
 
@@ -206,6 +209,8 @@ ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   dict->SetBoolean("useNewWallpaperPicker",
                    base::CommandLine::ForCurrentProcess()->HasSwitch(
                        chromeos::switches::kNewWallpaperPicker));
+  dict->SetBoolean("showBackdropWallpapers",
+                   wallpaper_manager_util::ShouldShowBackdropWallpapers());
 
   return RespondNow(OneArgument(std::move(dict)));
 }
@@ -808,4 +813,57 @@ WallpaperPrivateRecordWallpaperUMAFunction::Run() {
   UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Source", source,
                             wallpaper::WALLPAPER_TYPE_COUNT);
   return RespondNow(NoArguments());
+}
+
+WallpaperPrivateGetCollectionNamesFunction::
+    WallpaperPrivateGetCollectionNamesFunction() = default;
+
+WallpaperPrivateGetCollectionNamesFunction::
+    ~WallpaperPrivateGetCollectionNamesFunction() = default;
+
+ExtensionFunction::ResponseAction
+WallpaperPrivateGetCollectionNamesFunction::Run() {
+  collection_name_fetcher_ = std::make_unique<CollectionNameFetcher>();
+  collection_name_fetcher_->Start(base::BindOnce(
+      &WallpaperPrivateGetCollectionNamesFunction::OnCollectionNamesFetched,
+      this));
+  return RespondLater();
+}
+
+void WallpaperPrivateGetCollectionNamesFunction::OnCollectionNamesFetched(
+    const base::DictionaryValue& collection_names) {
+  if (collection_names.empty()) {
+    Respond(Error("Collection names are not available."));
+    return;
+  }
+
+  Respond(OneArgument(std::make_unique<base::Value>(collection_names.Clone())));
+}
+
+WallpaperPrivateGetImagesInfoFunction::WallpaperPrivateGetImagesInfoFunction() =
+    default;
+
+WallpaperPrivateGetImagesInfoFunction::
+    ~WallpaperPrivateGetImagesInfoFunction() = default;
+
+ExtensionFunction::ResponseAction WallpaperPrivateGetImagesInfoFunction::Run() {
+  std::unique_ptr<get_images_info::Params> params(
+      get_images_info::Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params);
+
+  image_info_fetcher_ =
+      std::make_unique<ImageInfoFetcher>(params->collection_id);
+  image_info_fetcher_->Start(base::BindOnce(
+      &WallpaperPrivateGetImagesInfoFunction::OnImagesInfoFetched, this));
+  return RespondLater();
+}
+
+void WallpaperPrivateGetImagesInfoFunction::OnImagesInfoFetched(
+    const base::ListValue& images_info) {
+  if (images_info.GetList().empty()) {
+    Respond(Error("Images info is not available."));
+    return;
+  }
+
+  Respond(OneArgument(std::make_unique<base::Value>(images_info.Clone())));
 }
