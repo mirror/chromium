@@ -21,7 +21,8 @@ class TestAndroidShim {
                           const base::android::JavaParamRef<jobject>& obj,
                           const base::android::JavaParamRef<jstring>& mode,
                           jboolean dynamically_start_profiling,
-                          jboolean pseudo_stacks);
+                          jboolean pseudo_stacks,
+                          jboolean include_thread_names);
 
  private:
   ~TestAndroidShim();

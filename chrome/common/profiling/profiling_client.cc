@@ -50,7 +50,8 @@ void ProfilingClient::BindToInterface(mojom::ProfilingClientRequest request) {
 }
 
 void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe,
-                                     mojom::StackMode stack_mode) {
+                                     mojom::StackMode stack_mode,
+                                     bool include_thread_names) {
   if (started_profiling_)
     return;
   started_profiling_ = true;
@@ -73,7 +74,8 @@ void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe,
   }
 
   base::trace_event::MallocDumpProvider::GetInstance()->DisableMetrics();
-  InitAllocatorShim(memlog_sender_pipe_.get(), stack_mode);
+  InitAllocatorShim(memlog_sender_pipe_.get(), stack_mode,
+                    include_thread_names);
 }
 
 void ProfilingClient::FlushMemlogPipe(uint32_t barrier_id) {
