@@ -1382,6 +1382,10 @@ bool HTMLMediaElement::IsMediaElementSuspendedForTesting() {
   return web_media_player_ ? web_media_player_->IsSuspendedForTesting() : false;
 }
 
+void HTMLMediaElement::ScheduleSuspendedEventForTesting() {
+  ScheduleEvent("suspended");
+}
+
 bool HTMLMediaElement::TextTracksAreReady() const {
   // 4.8.12.11.1 Text track model
   // ...

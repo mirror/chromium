@@ -431,6 +431,7 @@ class CORE_EXPORT HTMLMediaElement
     return remote_playback_client_;
   }
   gfx::ColorSpace TargetColorSpace() override;
+  void ScheduleSuspendedEventForTesting() override;
 
   void LoadTimerFired(TimerBase*);
   void ProgressEventTimerFired(TimerBase*);

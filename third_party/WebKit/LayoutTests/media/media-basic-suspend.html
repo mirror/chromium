@@ -20,14 +20,11 @@ async_test(function(t) {
     assert_true(!!window.internals,
                 'This test requires internals support for suspend/resume.');
 
-    var onSuspended = t.step_func(function() {
-      if (!window.internals.isMediaElementSuspended(video))
-        window.requestAnimationFrame(onSuspended);
-
+    video.addEventListener('suspended', t.step_func(function() {
+      assert_true(window.internals.isMediaElementSuspended(video));
       video.play();
-    });
+    }, false));
 
-    window.requestAnimationFrame(onSuspended);
     window.internals.forceStaleStateForMediaElement(video);
   });
 

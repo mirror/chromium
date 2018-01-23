@@ -1400,6 +1400,11 @@ void WebMediaPlayerImpl::OnPipelineSuspended() {
 
   ReportMemoryUsage();
 
+  if (stale_state_override_for_testing_.has_value() ||
+      visiblity_state_override_for_testing_.has_value()) {
+    client_->ScheduleSuspendedEventForTesting();
+  }
+
   if (pending_suspend_resume_cycle_) {
     pending_suspend_resume_cycle_ = false;
     UpdatePlayState();
