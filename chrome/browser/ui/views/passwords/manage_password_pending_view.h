@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PASSWORDS_MANAGE_PASSWORD_PENDING_VIEW_H_
 #define CHROME_BROWSER_UI_VIEWS_PASSWORDS_MANAGE_PASSWORD_PENDING_VIEW_H_
 
+#include "build/buildflag.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"
 
@@ -15,6 +17,7 @@ class Label;
 }  // namespace views
 
 class ManagePasswordsBubbleView;
+class ManagePasswordBubbleSyncPromoDelegate;
 
 // A view offering the user the ability to save credentials. Contains a
 // username and password field, along with a "Save Passwords" button and a
@@ -51,6 +54,11 @@ class ManagePasswordPendingView : public views::View,
   views::Label* password_label_;
 
   bool are_passwords_revealed_;
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  std::unique_ptr<ManagePasswordBubbleSyncPromoDelegate>
+      dice_signin_promo_delegate_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordPendingView);
 };

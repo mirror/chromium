@@ -224,6 +224,7 @@ ManagePasswordsBubbleView::ManagePasswordsBubbleView(
       initially_focused_view_(nullptr) {
   set_margins(
       ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG));
+  set_close_on_deactivate(false);
   chrome::RecordDialogCreation(chrome::DialogIdentifier::MANAGE_PASSWORDS);
 }
 
