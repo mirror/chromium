@@ -19,8 +19,8 @@
 #endif
 
 @interface PrimaryToolbarView ()
-// Container for the location bar.
-@property(nonatomic, strong) UIView* locationBarContainer;
+// Container for the location bar, redefined as readwrite.
+@property(nonatomic, strong, readwrite) UIView* locationBarContainer;
 
 // StackView containing the leading buttons (relative to the location bar). It
 // should only contain ToolbarButtons.
