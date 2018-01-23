@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87818040_734297cd",
+        "filename": "tools/gn/bootstrap/bootstrap.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-23T21:09:02Z",
+      "side": 1,
+      "message": "This change isn\u0027t needed, and in fact won\u0027t compile, because there is no is_android, and we don\u0027t support building GN on Android :).",
+      "revId": "2b31dbb2b212be2402e583d0ce53d30fb7892a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
