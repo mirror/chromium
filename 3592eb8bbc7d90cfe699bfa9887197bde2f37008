@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "29687877_0586e27d",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T00:56:45Z",
+      "side": 1,
+      "message": "Section 1.2.2 lists all the relevant dates. The individual sections just try to avoid \u0027backdating\u0027 after a transition date has happened, while Section 1.2.2 records all of the \u0027effective dates\u0027 of version changes over time.",
+      "parentUuid": "01eda45b_8b09c002",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec5b6dd_0f7ab1a9",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 1
