@@ -143,6 +143,9 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
 
   String DirectionForFormData() const;
 
+  // Set the value sent by the Autofill feature.
+  void SetAutofillValue(const String& value);
+
   virtual void SetSuggestedValue(const String& value);
   const String& SuggestedValue() const;
 
