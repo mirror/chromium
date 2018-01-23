@@ -2049,7 +2049,7 @@ WebInputEventResult WebViewImpl::HandleInputEventInternal(
         InteractiveDetector::From(main_frame_document));
     if (interactive_detector) {
       interactive_detector->OnInvalidatingInputEvent(
-          input_event.TimeStampSeconds());
+          TimeTicks::FromSeconds(input_event.TimeStampSeconds()));
     }
   }
 

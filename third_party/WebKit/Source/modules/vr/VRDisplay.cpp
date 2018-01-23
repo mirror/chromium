@@ -75,7 +75,8 @@ class VRDisplayFrameRequestCallback
       double reference_monotonic_time = vr_display_->GetDocument()
                                             ->Loader()
                                             ->GetTiming()
-                                            .ReferenceMonotonicTime();
+                                            .ReferenceMonotonicTime()
+                                            .InSecondsF();
       monotonic_time = (high_res_time_ms / 1000.0) + reference_monotonic_time;
     }
     vr_display_->OnMagicWindowVSync(monotonic_time);

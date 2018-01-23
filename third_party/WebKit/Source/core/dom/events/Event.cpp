@@ -359,8 +359,8 @@ double Event::timeStamp(ScriptState* script_state) const {
         DOMWindowPerformance::performance(*LocalDOMWindow::From(script_state));
     double timestamp_seconds =
         (platform_time_stamp_ - TimeTicks()).InSecondsF();
-    time_stamp =
-        performance->MonotonicTimeToDOMHighResTimeStamp(timestamp_seconds);
+    time_stamp = performance->MonotonicTimeToDOMHighResTimeStamp(
+        TimeTicks::FromSeconds(timestamp_seconds));
   }
 
   return time_stamp;

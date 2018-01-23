@@ -42,7 +42,8 @@ void LongTaskDetector::DidProcessTask(double start_time, double end_time) {
     return;
 
   for (auto& observer : observers_) {
-    observer->OnLongTaskDetected(start_time, end_time);
+    observer->OnLongTaskDetected(TimeTicks::FromSeconds(start_time),
+                                 TimeTicks::FromSeconds(end_time));
   }
 }
 

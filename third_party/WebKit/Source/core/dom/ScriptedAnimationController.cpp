@@ -135,13 +135,14 @@ void ScriptedAnimationController::ExecuteCallbacks(double monotonic_time_now) {
   if (!document_)
     return;
 
+  TimeTicks time = TimeTicks::FromSeconds(monotonic_time_now);
   double high_res_now_ms =
       1000.0 *
       document_->Loader()->GetTiming().MonotonicTimeToZeroBasedDocumentTime(
-          monotonic_time_now);
+          time);
   double legacy_high_res_now_ms =
-      1000.0 * document_->Loader()->GetTiming().MonotonicTimeToPseudoWallTime(
-                   monotonic_time_now);
+      1000.0 *
+      document_->Loader()->GetTiming().MonotonicTimeToPseudoWallTime(time);
   callback_collection_.ExecuteCallbacks(high_res_now_ms,
                                         legacy_high_res_now_ms);
 }

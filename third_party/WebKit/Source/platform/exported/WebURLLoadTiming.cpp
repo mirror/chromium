@@ -48,131 +48,131 @@ void WebURLLoadTiming::Assign(const WebURLLoadTiming& other) {
 }
 
 double WebURLLoadTiming::RequestTime() const {
-  return private_->RequestTime();
+  return private_->RequestTime().InSecondsF();
 }
 
 void WebURLLoadTiming::SetRequestTime(double time) {
-  private_->SetRequestTime(time);
+  private_->SetRequestTime(TimeTicks::FromSeconds(time));
 }
 
 double WebURLLoadTiming::ProxyStart() const {
-  return private_->ProxyStart();
+  return private_->ProxyStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetProxyStart(double start) {
-  private_->SetProxyStart(start);
+  private_->SetProxyStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::ProxyEnd() const {
-  return private_->ProxyEnd();
+  return private_->ProxyEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetProxyEnd(double end) {
-  private_->SetProxyEnd(end);
+  private_->SetProxyEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::DnsStart() const {
-  return private_->DnsStart();
+  return private_->DnsStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetDNSStart(double start) {
-  private_->SetDnsStart(start);
+  private_->SetDnsStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::DnsEnd() const {
-  return private_->DnsEnd();
+  return private_->DnsEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetDNSEnd(double end) {
-  private_->SetDnsEnd(end);
+  private_->SetDnsEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::ConnectStart() const {
-  return private_->ConnectStart();
+  return private_->ConnectStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetConnectStart(double start) {
-  private_->SetConnectStart(start);
+  private_->SetConnectStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::ConnectEnd() const {
-  return private_->ConnectEnd();
+  return private_->ConnectEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetConnectEnd(double end) {
-  private_->SetConnectEnd(end);
+  private_->SetConnectEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::WorkerStart() const {
-  return private_->WorkerStart();
+  return private_->WorkerStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetWorkerStart(double start) {
-  private_->SetWorkerStart(start);
+  private_->SetWorkerStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::WorkerReady() const {
-  return private_->WorkerReady();
+  return private_->WorkerReady().InSecondsF();
 }
 
 void WebURLLoadTiming::SetWorkerReady(double ready) {
-  private_->SetWorkerReady(ready);
+  private_->SetWorkerReady(TimeTicks::FromSeconds(ready));
 }
 
 double WebURLLoadTiming::SendStart() const {
-  return private_->SendStart();
+  return private_->SendStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetSendStart(double start) {
-  private_->SetSendStart(start);
+  private_->SetSendStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::SendEnd() const {
-  return private_->SendEnd();
+  return private_->SendEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetSendEnd(double end) {
-  private_->SetSendEnd(end);
+  private_->SetSendEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::ReceiveHeadersEnd() const {
-  return private_->ReceiveHeadersEnd();
+  return private_->ReceiveHeadersEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetReceiveHeadersEnd(double end) {
-  private_->SetReceiveHeadersEnd(end);
+  private_->SetReceiveHeadersEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::SslStart() const {
-  return private_->SslStart();
+  return private_->SslStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetSSLStart(double start) {
-  private_->SetSslStart(start);
+  private_->SetSslStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::SslEnd() const {
-  return private_->SslEnd();
+  return private_->SslEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetSSLEnd(double end) {
-  private_->SetSslEnd(end);
+  private_->SetSslEnd(TimeTicks::FromSeconds(end));
 }
 
 double WebURLLoadTiming::PushStart() const {
-  return private_->PushStart();
+  return private_->PushStart().InSecondsF();
 }
 
 void WebURLLoadTiming::SetPushStart(double start) {
-  private_->SetPushStart(start);
+  private_->SetPushStart(TimeTicks::FromSeconds(start));
 }
 
 double WebURLLoadTiming::PushEnd() const {
-  return private_->PushEnd();
+  return private_->PushEnd().InSecondsF();
 }
 
 void WebURLLoadTiming::SetPushEnd(double end) {
-  private_->SetPushEnd(end);
+  private_->SetPushEnd(TimeTicks::FromSeconds(end));
 }
 
 WebURLLoadTiming::WebURLLoadTiming(scoped_refptr<ResourceLoadTiming> value)
