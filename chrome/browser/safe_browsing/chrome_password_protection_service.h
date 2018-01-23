@@ -123,6 +123,12 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   bool UserClickedThroughSBInterstitial(
       content::WebContents* web_contents) override;
 
+  // For preference of |pref_name| is not managed by enterprise policy, this
+  // function should always return PHISHING_REUSE. Otherwise, returns the
+  // specified pref value.
+  PasswordProtectionTrigger GetPasswordProtectionTriggerPref(
+      const std::string& pref_name) override;
+
  protected:
   // PasswordProtectionService overrides.
   // Obtains referrer chain of |event_url| and |event_tab_id| and add this
