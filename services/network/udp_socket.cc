@@ -18,7 +18,6 @@
 #include "net/base/rand_callback.h"
 #include "net/log/net_log.h"
 #include "net/socket/udp_socket.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace network {
 
@@ -35,8 +34,10 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
   SocketWrapperImpl(net::DatagramSocket::BindType bind_type,
                     const net::RandIntCallback& rand_int_cb,
                     net::NetLog* net_log,
-                    const net::NetLogSource& source)
-      : socket_(bind_type, rand_int_cb, net_log, source) {}
+                    const net::NetLogSource& source,
+                    const net::NetworkTrafficAnnotationTag traffic_annotation)
+      : socket_(bind_type, rand_int_cb, net_log, source),
+        socket_traffic_annotation_(traffic_annotation) {}
   ~SocketWrapperImpl() override {}
 
   int Open(net::AddressFamily address_family) override {
@@ -63,8 +64,7 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
   int Write(net::IOBuffer* buf,
             int buf_len,
             const net::CompletionCallback& callback) override {
-    return socket_.Write(buf, buf_len, callback,
-                         NO_TRAFFIC_ANNOTATION_BUG_656607);
+    return socket_.Write(buf, buf_len, callback, socket_traffic_annotation_);
   }
   int RecvFrom(net::IOBuffer* buf,
                int buf_len,
@@ -78,6 +78,7 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
 
  private:
   net::UDPSocket socket_;
+  net::NetworkTrafficAnnotationTag socket_traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SocketWrapperImpl);
 };
@@ -89,7 +90,8 @@ UDPSocket::PendingSendRequest::PendingSendRequest() {}
 UDPSocket::PendingSendRequest::~PendingSendRequest() {}
 
 UDPSocket::UDPSocket(mojom::UDPSocketRequest request,
-                     mojom::UDPSocketReceiverPtr receiver)
+                     mojom::UDPSocketReceiverPtr receiver,
+                     const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : is_opened_(false),
       is_bound_(false),
       is_connected_(false),
@@ -98,7 +100,8 @@ UDPSocket::UDPSocket(mojom::UDPSocketRequest request,
           net::DatagramSocket::RANDOM_BIND,
           base::BindRepeating(&base::RandInt),
           nullptr,
-          net::NetLogSource())),
+          net::NetLogSource(),
+          traffic_annotation)),
       remaining_recv_slots_(0),
       binding_(this) {
   binding_.Bind(std::move(request));

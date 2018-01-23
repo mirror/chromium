@@ -19,6 +19,7 @@
 #include "net/base/ip_endpoint.h"
 #include "net/interfaces/address_family.mojom.h"
 #include "net/interfaces/ip_endpoint.mojom.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace net {
@@ -62,7 +63,8 @@ class UDPSocket : public mojom::UDPSocket {
   };
 
   UDPSocket(mojom::UDPSocketRequest request,
-            mojom::UDPSocketReceiverPtr receiver);
+            mojom::UDPSocketReceiverPtr receiver,
+            const net::NetworkTrafficAnnotationTag& traffic_annotation);
   ~UDPSocket() override;
 
   // Sets connection error handler.
