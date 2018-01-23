@@ -16,6 +16,24 @@
       "revId": "4b7bef688c885cac425a0f7197ab0fc5f4acdadb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0acd78_62f896b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T19:56:54Z",
+      "side": 1,
+      "message": "Which shortcut handler?",
+      "parentUuid": "2c6ef0cd_a090e80b",
+      "revId": "4b7bef688c885cac425a0f7197ab0fc5f4acdadb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
