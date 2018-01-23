@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 #define CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -190,8 +191,20 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
     // Mojo callback for Sensor::AddConfiguration().
     void OnSensorAddConfiguration(bool success) {
-      if (!success)
+      if (!success) {
+        if (default_config.frequency() > 1.0) {
+          // If sensor->AddConfiguration() fails, try half of the current
+          // requested frequency.
+          default_config.set_frequency(
+              std::max(default_config.frequency() / 2, 1.0));
+          sensor->AddConfiguration(
+              default_config,
+              base::BindOnce(&SensorEntry::OnSensorAddConfiguration,
+                             base::Unretained(this)));
+          return;
+        }
         HandleSensorError();
+      }
 
       if (sensor_state == SensorState::INITIALIZING) {
         sensor_state = SensorState::ACTIVE;
