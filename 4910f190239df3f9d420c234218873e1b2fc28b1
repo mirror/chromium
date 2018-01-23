@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb584e15_6f566e5f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-23T18:48:42Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "4910f190239df3f9d420c234218873e1b2fc28b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c29994_cb52de73",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-23T18:48:42Z",
+      "side": 1,
+      "message": "could also use an inline capacity size of 4, e.g.\n\nVector\u003cv8::Local\u003cv8::Value\u003e, 4\u003e argv;",
+      "range": {
+        "startLine": 104,
+        "startChar": 33,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "4910f190239df3f9d420c234218873e1b2fc28b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05324a3b_e3ed0b07",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
         "patchSetId": 1
@@ -13,6 +59,30 @@
       "writtenOn": "2018-01-23T18:41:48Z",
       "side": 1,
       "message": "does this size need to change? or is this the correct?",
+      "range": {
+        "startLine": 125,
+        "startChar": 41,
+        "endLine": 125,
+        "endChar": 52
+      },
+      "revId": "4910f190239df3f9d420c234218873e1b2fc28b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fc72f6_a735c28b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-23T18:48:42Z",
+      "side": 1,
+      "message": "Ok looks good, a similar thing occurs:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/ScheduledAction.cpp?type\u003dcs\u0026q\u003d%22Vector%3Cv8::Local%3Cv8::Value%3E%3E%22+file:webkit\u0026sq\u003dpackage:chromium\u0026l\u003d190",
+      "parentUuid": "05324a3b_e3ed0b07",
       "range": {
         "startLine": 125,
         "startChar": 41,
