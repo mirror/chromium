@@ -464,6 +464,9 @@ blink::WebMouseWheelEvent MakeWebMouseWheelEventFromUiEvent(
   webkit_event.delta_x = event.x_offset();
   webkit_event.delta_y = event.y_offset();
 
+  webkit_event.has_precise_scrolling_deltas =
+      event.has_precise_scrolling_deltas();
+
   webkit_event.wheel_ticks_x =
       webkit_event.delta_x / MouseWheelEvent::kWheelDelta;
   webkit_event.wheel_ticks_y =
