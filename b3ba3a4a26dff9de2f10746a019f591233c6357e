@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4c32fc_c10d7455",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T23:29:45Z",
+      "side": 1,
+      "message": "Can you just use LayoutProvider::DISTANCE_BUBBLE_PREFERRED_WIDTH? (here and in Update Pending).",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a6de82_dd2193a6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T23:29:45Z",
+      "side": 1,
+      "message": "Call GetHeightForWidth instead. It will call GetLayoutManager()-\u003eGetPreferredHeightForWidth if necessary. (here and in Update Pending)",
+      "range": {
+        "startLine": 307,
+        "startChar": 19,
+        "endLine": 307,
+        "endChar": 65
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a9be5b_d348bf83",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T23:29:45Z",
+      "side": 1,
+      "message": "Is this line necessary? Bubbles can\u0027t be resized.",
+      "range": {
+        "startLine": 359,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 26
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ca49af_98d08fa7",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T23:29:45Z",
+      "side": 1,
+      "message": "nit: \"Remove friend class when UpdatePendingView is merged into this class.\" and you don\u0027t need the second sentence.",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4409c573_0a0053b4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T23:29:45Z",
+      "side": 1,
+      "message": "Is this include actually used? (here and next file)",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 86
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
