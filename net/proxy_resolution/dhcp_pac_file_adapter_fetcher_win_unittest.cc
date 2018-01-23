@@ -7,7 +7,6 @@
 #include "base/run_loop.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/test_timeouts.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/timer/timer.h"
 #include "net/base/net_errors.h"
@@ -39,17 +38,14 @@ const char kPacUrl[] = "http://pacserver/script.pac";
 class MockDhcpProxyScriptAdapterFetcher
     : public DhcpProxyScriptAdapterFetcher {
  public:
-  explicit MockDhcpProxyScriptAdapterFetcher(
-      URLRequestContext* context,
-      scoped_refptr<base::TaskRunner> task_runner)
-      : DhcpProxyScriptAdapterFetcher(context, task_runner),
+  explicit MockDhcpProxyScriptAdapterFetcher(URLRequestContext* context)
+      : DhcpProxyScriptAdapterFetcher(context),
         dhcp_delay_(base::TimeDelta::FromMilliseconds(1)),
         timeout_(TestTimeouts::action_timeout()),
         configured_url_(kPacUrl),
         fetcher_delay_ms_(1),
         fetcher_result_(OK),
-        pac_script_("bingo") {
-  }
+        pac_script_("bingo") {}
 
   void Cancel() override {
     DhcpProxyScriptAdapterFetcher::Cancel();
@@ -142,17 +138,8 @@ class FetcherClient {
  public:
   FetcherClient()
       : url_request_context_(new TestURLRequestContext()),
-        worker_pool_(
-            new base::SequencedWorkerPool(4,
-                                          "DhcpAdapterFetcherTest",
-                                          base::TaskPriority::USER_VISIBLE)),
-        fetcher_(new MockDhcpProxyScriptAdapterFetcher(
-            url_request_context_.get(),
-            worker_pool_->GetTaskRunnerWithShutdownBehavior(
-                base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN))) {}
-
-  ~FetcherClient() {
-    worker_pool_->Shutdown();
+        fetcher_(
+            new MockDhcpProxyScriptAdapterFetcher(url_request_context_.get())) {
   }
 
   void WaitForResult(int expected_error) {
@@ -170,7 +157,6 @@ class FetcherClient {
 
   TestCompletionCallback callback_;
   std::unique_ptr<URLRequestContext> url_request_context_;
-  scoped_refptr<base::SequencedWorkerPool> worker_pool_;
   std::unique_ptr<MockDhcpProxyScriptAdapterFetcher> fetcher_;
   base::string16 pac_text_;
 };
@@ -273,11 +259,9 @@ class MockDhcpRealFetchProxyScriptAdapterFetcher
     : public MockDhcpProxyScriptAdapterFetcher {
  public:
   explicit MockDhcpRealFetchProxyScriptAdapterFetcher(
-      URLRequestContext* context,
-      scoped_refptr<base::TaskRunner> task_runner)
-      : MockDhcpProxyScriptAdapterFetcher(context, task_runner),
-        url_request_context_(context) {
-  }
+      URLRequestContext* context)
+      : MockDhcpProxyScriptAdapterFetcher(context),
+        url_request_context_(context) {}
 
   // Returns a real proxy script fetcher.
   ProxyScriptFetcher* ImplCreateScriptFetcher() override {
@@ -299,12 +283,8 @@ TEST(DhcpProxyScriptAdapterFetcher, MockDhcpRealFetch) {
 
   FetcherClient client;
   TestURLRequestContext url_request_context;
-  scoped_refptr<base::TaskRunner> runner =
-      client.worker_pool_->GetTaskRunnerWithShutdownBehavior(
-          base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
   client.fetcher_.reset(
-      new MockDhcpRealFetchProxyScriptAdapterFetcher(
-          &url_request_context, runner));
+      new MockDhcpRealFetchProxyScriptAdapterFetcher(&url_request_context));
   client.fetcher_->configured_url_ = configured_url.spec();
   client.RunTest();
   client.WaitForResult(OK);
