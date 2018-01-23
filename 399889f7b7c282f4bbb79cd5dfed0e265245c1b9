@@ -16,6 +16,24 @@
       "revId": "399889f7b7c282f4bbb79cd5dfed0e265245c1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af90efd3_3dd9fa95",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-01-23T20:54:48Z",
+      "side": 1,
+      "message": "Thanks for catching this! Fixed.",
+      "parentUuid": "d7be0c09_5c8790a6",
+      "revId": "399889f7b7c282f4bbb79cd5dfed0e265245c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
