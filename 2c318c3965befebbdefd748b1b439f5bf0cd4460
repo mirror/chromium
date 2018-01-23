@@ -70,6 +70,30 @@
       "revId": "2c318c3965befebbdefd748b1b439f5bf0cd4460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062770b0_98cd7ee9",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T02:49:05Z",
+      "side": 1,
+      "message": "(maybe update cl desc then)",
+      "parentUuid": "5d762dcf_44421534",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 79
+      },
+      "revId": "2c318c3965befebbdefd748b1b439f5bf0cd4460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
