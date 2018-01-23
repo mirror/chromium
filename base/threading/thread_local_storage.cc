@@ -259,11 +259,16 @@ void ThreadLocalStorage::StaticSlot::Initialize(TLSDestructorFunc destructor) {
     ConstructTlsVector();
   }
 
+  if (initialized())
+    return;
+
   // Grab a new slot.
+  base::AutoLock auto_lock(*GetTLSMetadataLock());
+  if (initialized())
+    return;
   slot_ = kInvalidSlotValue;
   version_ = 0;
   {
-    base::AutoLock auto_lock(*GetTLSMetadataLock());
     for (int i = 0; i < kThreadLocalStorageSize; ++i) {
       // Tracking the last assigned slot is an attempt to find the next
       // available slot within one iteration. Under normal usage, slots remain
