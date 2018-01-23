@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a31475_c2d06358",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T08:33:30Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 627,
+        "startChar": 4,
+        "endLine": 627,
+        "endChar": 48
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780a73dd_5d2f6037",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T08:33:30Z",
+      "side": 1,
+      "message": "Same drive-by comment : is this startup specific or does it also do periodic collection?",
+      "range": {
+        "startLine": 632,
+        "startChar": 60,
+        "endLine": 632,
+        "endChar": 67
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73843962_a4340fe1",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T08:33:30Z",
+      "side": 1,
+      "message": "Add a comment explaining why this must happen here (as ChromeBrowserMainParts::OnFoo() methods grow to include many things it becomes hard to figure out why some things need to be in a particular phase -- and we end up with the \"don\u0027t touch it, it works\" syndrome!)",
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df819a_1b84a4a5",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T08:33:30Z",
+      "side": 1,
+      "message": "nit: IIUC, this samples after startup too? i.e. https://uma.googleplex.com/p/chrome/callstacks/?sid\u003da143f66e8d015d58db6e8ea45441ab56",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa60b656_2e9abdbb",
+        "filename": "chrome/common/stack_sampling_configuration.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T08:33:30Z",
+      "side": 1,
+      "message": "I\u0027d recommend documenting how this should be called, now how it is called and why that\u0027s okay.\n\ne.g.:\n\nThis method must first be called from the main thread while the process is single-threaded. It is thereafter safe to call it concurrently from other threads.",
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
