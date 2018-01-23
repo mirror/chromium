@@ -16,6 +16,24 @@
       "revId": "cb247287629e21e1332c4267aaeafb39dcd64e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b63cc8_96eae940",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T10:07:52Z",
+      "side": 1,
+      "message": "Yes, I think we should take it into account.\nI will do it in a future CL.",
+      "parentUuid": "f1cc0472_c437dbe0",
+      "revId": "cb247287629e21e1332c4267aaeafb39dcd64e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
