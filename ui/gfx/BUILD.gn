@@ -603,6 +603,8 @@ static_library("test_support") {
     "image/image_unittest_util.h",
     "image/image_unittest_util_ios.mm",
     "image/image_unittest_util_mac.mm",
+    "render_text_test_api.cc",
+    "render_text_test_api.h",
     "test/fontconfig_util_linux.cc",
     "test/fontconfig_util_linux.h",
     "test/gfx_util.cc",
@@ -620,6 +622,7 @@ static_library("test_support") {
     "//base/test:test_support",
     "//skia",
     "//testing/gtest",
+    "//third_party:freetype_harfbuzz",
     "//ui/gfx/animation",
     "//ui/gfx/geometry",
   ]
