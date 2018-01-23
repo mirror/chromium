@@ -33,6 +33,24 @@
       "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e865b1_39abe2ab",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T02:02:43Z",
+      "side": 1,
+      "message": "Actually, can you just introduce IsVizHitTestingEnabled() function in there, and use that from here? The impl of IsVizHitTestingEnabled() can just check the cmd-line flag for now, with a TODO to also look at a feature-flag.",
+      "parentUuid": "7d158f19_3f532e04",
+      "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
