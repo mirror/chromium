@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "105d73cd_5cf7a6ab",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-23T00:24:47Z",
+      "side": 1,
+      "message": "Are you asking me to change the implementation, or just the vague comment?\n\nAt the moment, the hacky implementation is that they do return a blank string (\"\") (see https://crrev.com/c/848575/14/content/renderer/accessibility/aom_content_ax_tree.cc#41) if there is no node in the accessibility tree for an axID, or the node does not have the requested accessibile property. I have implemented the rest of the string property accessors and made them actually return null in the above cases in another CL but am blocked on this one landing first, and didn\u0027t want to bloat this CL anymore or have too many dependent ones in the queue.\n\nThere is a TODO in aom_content_ax_tree.h that indicates that null string returns is coming. Is that sufficient?",
+      "parentUuid": "fe8cef1a_89a3587c",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6862f_48780293",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 14
