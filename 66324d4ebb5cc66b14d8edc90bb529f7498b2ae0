@@ -22,6 +22,115 @@
       "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd6fcdb_4d0c73ac",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-23T15:48:18Z",
+      "side": 1,
+      "message": "kKey for consistency with kSize1 below?",
+      "range": {
+        "startLine": 2902,
+        "startChar": 13,
+        "endLine": 2902,
+        "endChar": 16
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba63769_970f685d",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-23T15:48:18Z",
+      "side": 1,
+      "message": "So, if mid-doom, we reset the entry, we\u0027ll be in an UNINITIALIZED state until the doom completes, at which point it\u0027ll be changed to FAILURE. Why not just mark it as FAILURE now?",
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3434370_3fc9c995",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-23T15:48:18Z",
+      "side": 1,
+      "message": "reverse order of dcheck arguments",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 21
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e33e71b_1e03006c",
+        "filename": "net/disk_cache/simple/simple_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-23T15:48:18Z",
+      "side": 1,
+      "message": "s/be dooming/doom/",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 15
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f593bc1_edde0001",
+        "filename": "net/disk_cache/simple/simple_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-23T15:48:18Z",
+      "side": 1,
+      "message": "so/to/it to/",
+      "range": {
+        "startLine": 203,
+        "startChar": 38,
+        "endLine": 203,
+        "endChar": 40
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
