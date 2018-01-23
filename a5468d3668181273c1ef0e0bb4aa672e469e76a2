@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "664e69a5_7eb30182",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T20:41:02Z",
+      "side": 1,
+      "message": "I\u0027ll draft up something to clarify that portion of the security guidelines.\n\nPavel, it\u0027s a reasonable point that if we were to logically apply this policy to everything, then yes, we should not be parsing things like GURLs in the browser process either—and yet we are. The JSON parser is fuzzed, but not wholly trusted nonetheless—and so we actually have explicit support for parsing it in the utility process. The general security review flowchart of whether or not parsing in the browser process is something like:\n\n1. Is the source a less privileged process? In the case of the browser process, that\u0027s almost always yes.\n2. Is it a format complex enough that we have dedicated OOP parsing support? XML, PNG, JPG, JSON all do, to name a few.\n\nIf the answer to both of these questions is yes, then we definitely do not want to parse it in process. If the answer to 2 is no but the answer to 1 is yes, then we may very well still want to avoid it (e.g. we don\u0027t parse HTML in the browser process even though there\u0027s no utility host helper for parsing it).\n\n(In the future, we may have more robust in-process parsing support… there\u0027s definitely interest on the security side to make it possible to parse JSON and maybe even images, XML, and URL in-process, since we know that going cross-process is a pain…)",
+      "parentUuid": "c84fef50_47981065",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfa66b2_dd28728b",
         "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
         "patchSetId": 11
