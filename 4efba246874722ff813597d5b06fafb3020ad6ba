@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "541a2938_5aed9a3f",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-23T22:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b244497_66f265c4",
+      "revId": "4efba246874722ff813597d5b06fafb3020ad6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83b83e38_ea3ac232",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 27
@@ -33,6 +51,24 @@
       "revId": "4efba246874722ff813597d5b06fafb3020ad6ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dcbb5e_e49ad2bd",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-23T22:44:59Z",
+      "side": 1,
+      "message": "Oh, good point. Added a local scoped refptr to |this| to guarantee it stays alive.",
+      "parentUuid": "83b83e38_ea3ac232",
+      "revId": "4efba246874722ff813597d5b06fafb3020ad6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

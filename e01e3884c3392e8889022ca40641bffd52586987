@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3d9e0d4_3dcf7bd9",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_data.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-23T22:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2af1c29_bea5ca2d",
+      "revId": "e01e3884c3392e8889022ca40641bffd52586987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddea4467_984548aa",
         "filename": "chrome/browser/extensions/extension_service.h",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T20:47:29Z",
       "side": 1,
       "message": "I\u0027m a little concerned about stuffing a \"GetConnector()\" here. Because how would someone know to use this connector instead of the normal browser process connector?\n\nCould you just override the Connector returned by the ServiceManagerConnection instead? And if not (i.e. if other browser code needs to work normally in a test), could we at least stick this override somewhere more specific?\n\nThere are quite a few places in extensions code where ServiceManagerConnection::GetForProcess()-\u003eGetConnector() is already used, and it seems odd to have an ostensibly extensions-wide Connector override that actually only affects a few features.",
+      "revId": "e01e3884c3392e8889022ca40641bffd52586987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d1d415_c8f596e3",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-23T22:44:59Z",
+      "side": 1,
+      "message": "Good point. As we discussed, I moved setting the connector to the CrxInstaller.",
+      "parentUuid": "ddea4467_984548aa",
       "revId": "e01e3884c3392e8889022ca40641bffd52586987",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
