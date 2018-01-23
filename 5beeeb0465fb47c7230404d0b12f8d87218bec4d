@@ -16,6 +16,24 @@
       "revId": "5beeeb0465fb47c7230404d0b12f8d87218bec4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f739b0dd_ba6b7bd4",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-01-23T20:07:09Z",
+      "side": 1,
+      "message": "Thanks. Yup, we can add an ASSERT_TRUE(drag_controller()) here to make sure drag_controller() will not be null. But then I will need to disable the test for current branch. Please take a look at line line380 of this file. Related cl https://chromium-review.googlesource.com/c/chromium/src/+/674527. Will only enable it for M61 and M62.\n\nOne more question, I found that after the change (use ClippingWindowDelegate), follow the steps,\n1.Open system tray bubble in tablet mode.\n2.Convert to clamshell.\n3.Press the search key we can open the launcher, but click the app in the launcher will not open the app.\n2.Open the chrome browser, seems that the title bar is disabled, we can not minimize or close the tab. Seems that the key event can not be dispatched correctly in this case.\n\nI am still thinking about why this happened. Or maybe we should destroy the clipping window when we close the bubble? What\u0027s your opinion Sadrul?",
+      "parentUuid": "a9a814a9_e21e1293",
+      "revId": "5beeeb0465fb47c7230404d0b12f8d87218bec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
