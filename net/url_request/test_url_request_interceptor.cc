@@ -6,6 +6,7 @@
 
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/task_runner.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "net/http/http_response_headers.h"
@@ -27,11 +28,11 @@ class TestURLRequestJob : public URLRequestFileJob {
   TestURLRequestJob(URLRequest* request,
                     NetworkDelegate* network_delegate,
                     const base::FilePath& file_path,
-                    const scoped_refptr<base::TaskRunner>& worker_task_runner)
+                    scoped_refptr<base::TaskRunner> worker_task_runner)
       : URLRequestFileJob(request,
                           network_delegate,
                           file_path,
-                          worker_task_runner) {}
+                          std::move(worker_task_runner)) {}
 
   void GetResponseInfo(HttpResponseInfo* info) override {
     info->headers = new net::HttpResponseHeaders("HTTP/1.1 200 OK");
@@ -52,12 +53,12 @@ class TestURLRequestInterceptor::Delegate : public URLRequestInterceptor {
  public:
   Delegate(const std::string& scheme,
            const std::string& hostname,
-           const scoped_refptr<base::TaskRunner>& network_task_runner,
-           const scoped_refptr<base::TaskRunner>& worker_task_runner)
+           scoped_refptr<base::TaskRunner> network_task_runner,
+           scoped_refptr<base::TaskRunner> worker_task_runner)
       : scheme_(scheme),
         hostname_(hostname),
-        network_task_runner_(network_task_runner),
-        worker_task_runner_(worker_task_runner),
+        network_task_runner_(std::move(network_task_runner)),
+        worker_task_runner_(std::move(worker_task_runner)),
         hit_count_(0) {}
   ~Delegate() override = default;
 
