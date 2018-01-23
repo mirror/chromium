@@ -33,6 +33,7 @@ Atomic32 g_deterministic;
 AtomicWord g_bytes_left;
 AtomicWord g_current_interval;
 AtomicWord g_sampling_interval = 128 * 1024;
+unsigned g_last_sample_ordinal = 0;
 
 static void* AllocFn(const AllocatorDispatch* self,
                      size_t size,
@@ -185,13 +186,14 @@ bool SamplingNativeHeapProfiler::InstallAllocatorHooks() {
   return true;
 }
 
-void SamplingNativeHeapProfiler::Start() {
+unsigned SamplingNativeHeapProfiler::Start() {
   InstallAllocatorHooksOnce();
   intptr_t next_interval =
       GetNextSampleInterval(base::subtle::Acquire_Load(&g_sampling_interval));
   base::subtle::Release_Store(&g_current_interval, next_interval);
   base::subtle::Release_Store(&g_bytes_left, next_interval);
   base::subtle::Release_Store(&g_running, true);
+  return g_last_sample_ordinal;
 }
 
 void SamplingNativeHeapProfiler::Stop() {
@@ -296,6 +298,7 @@ void* SamplingNativeHeapProfiler::RecordAlloc(Sample& sample,
   if (preserve_data)
     memmove(client_address, address, sample.size);
   RecordStackTrace(&sample, skip_frames);
+  sample.ordinal = ++g_last_sample_ordinal;
   samples_.insert(std::make_pair(client_address, sample));
   if (offset)
     reinterpret_cast<unsigned*>(client_address)[-1] = kMagicSignature;
@@ -327,13 +330,17 @@ void SamplingNativeHeapProfiler::SuppressRandomnessForTest() {
 }
 
 std::vector<SamplingNativeHeapProfiler::Sample>
-SamplingNativeHeapProfiler::GetSamples() {
+SamplingNativeHeapProfiler::GetSamples(unsigned profile_id) {
   base::AutoLock lock(mutex_);
   CHECK(!entered_.Get());
   entered_.Set(true);
   std::vector<Sample> samples;
-  for (auto it = samples_.begin(); it != samples_.end(); ++it)
-    samples.push_back(it->second);
+  for (auto it = samples_.begin(); it != samples_.end(); ++it) {
+    Sample& sample = it->second;
+    if (sample.ordinal <= profile_id)
+      continue;
+    samples.push_back(sample);
+  }
   entered_.Set(false);
   return samples;
 }
