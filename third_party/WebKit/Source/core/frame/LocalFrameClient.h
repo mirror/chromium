@@ -78,6 +78,7 @@ class HTMLFrameOwnerElement;
 class HTMLMediaElement;
 class HTMLPlugInElement;
 class HistoryItem;
+class IntRect;
 class KURL;
 class LocalFrame;
 class WebPluginContainerImpl;
@@ -380,6 +381,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void ScrollRectToVisibleInParentFrame(
       const WebRect&,
       const WebScrollIntoViewParams&) {}
+
+  virtual void ZoomIntoRect(const IntRect&, const WebScrollIntoViewParams&) {}
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}

@@ -2463,26 +2463,6 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
   if (!element || !IsElementEditable(element))
     return false;
 
-  if (frame->IsRemoteFrame()) {
-    // The rest of the logic here is not implemented for OOPIFs. For now instead
-    // of implementing the logic below (which involves finding the scale and
-    // scrolling point), editable elements inside OOPIFs are scrolled into view
-    // instead. However, a common logic should be implemented for both OOPIFs
-    // and in-process frames to assure a consistent behavior across all frame
-    // types (https://crbug.com/784982).
-    LayoutObject* layout_object = element->GetLayoutObject();
-    if (!layout_object)
-      return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox(),
-                                       WebScrollIntoViewParams());
-    return true;
-  }
-
-  if (!frame->View())
-    return false;
-
-  element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
   bool zoom_in_to_legible_scale =
       web_settings_->AutoZoomFocusedNodeToLegibleScale() &&
       !GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds();
@@ -2497,17 +2477,107 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
       zoom_in_to_legible_scale = false;
   }
 
-  float scale;
+  if (frame->IsRemoteFrame()) {
+    if (!element->GetLayoutObject())
+      return false;
+
+    LayoutRect rect_to_scroll;
+    WebScrollIntoViewParams scroll_params;
+    GetScrollParamsForFocusedEditableElement(*element, zoom_in_to_legible_scale,
+                                             &rect_to_scroll, &scroll_params);
+    element->GetLayoutObject()->ScrollRectToVisible(rect_to_scroll,
+                                                    scroll_params);
+    return true;
+  }
+
+  if (!frame->View())
+    return false;
+
+  element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  WebRect caret_in_viewport, unused_end;
+  SelectionBounds(caret_in_viewport, unused_end);
+  ZoomAndScrollToEditableElement(
+      element->GetDocument().View()->AbsoluteToRootFrame(
+          PixelSnappedIntRect(element->Node::BoundingBox())),
+      GetPage()->GetVisualViewport().ViewportToRootFrame(caret_in_viewport),
+      zoom_in_to_legible_scale);
+
+  return true;
+}
+
+void WebViewImpl::ZoomAndScrollToEditableElement(
+    const IntRect& element_bounds_in_root_frame,
+    const IntRect& caret_bounds_in_root_frame,
+    bool zoom_in_to_legible_scale) {
+  float scale = PageScaleFactor();
   IntPoint scroll;
-  bool need_animation;
-  ComputeScaleAndScrollForFocusedNode(element, zoom_in_to_legible_scale, scale,
-                                      scroll, need_animation);
+  bool need_animation = false;
+  ComputeScaleAndScrollForEditableElement(
+      element_bounds_in_root_frame, caret_bounds_in_root_frame,
+      zoom_in_to_legible_scale, scale, scroll, need_animation);
   if (need_animation) {
     StartPageScaleAnimation(scroll, false, scale,
                             scrollAndScaleAnimationDurationInSeconds);
   }
+}
 
-  return true;
+void WebViewImpl::GetScrollParamsForFocusedEditableElement(
+    const Element& element,
+    bool zoom_in_to_legible_scale,
+    LayoutRect* rect_to_scroll,
+    WebScrollIntoViewParams* params) {
+  LocalFrameView* frame_view = element.GetDocument().View();
+  IntRect element_bounds = frame_view->AbsoluteToRootFrame(
+      PixelSnappedIntRect(element.BoundingBox()));
+  WebRect caret_in_viewport, unused;
+  WebLocalFrameImpl::FromFrame(element.GetDocument().GetFrame())
+      ->FrameWidget()
+      ->SelectionBounds(caret_in_viewport, unused);
+  IntRect caret_in_root_frame = frame_view->ContentsToRootFrame(
+      frame_view->ViewportToContents(caret_in_viewport));
+
+  IntRect maximal_rect = UnionRect(element_bounds, caret_in_root_frame);
+  IntRect frame_rect = frame_view->FrameRect();
+  IntSize max_visible_size(
+      std::min<int>(maximal_rect.Width(), frame_rect.Width()),
+      std::min<int>(maximal_rect.Height(), frame_rect.Height()));
+  if (max_visible_size != maximal_rect.Size()) {
+    maximal_rect.SetLocation(IntPoint(
+        caret_in_root_frame.MaxXMaxYCorner().X() - max_visible_size.Width(),
+        caret_in_root_frame.MaxXMaxYCorner().Y() - max_visible_size.Height()));
+    maximal_rect.SetSize(max_visible_size);
+  }
+  rect_to_scroll->SetLocation(LayoutPoint(maximal_rect.Location()));
+  rect_to_scroll->SetSize(LayoutSize(maximal_rect.Size()));
+  params->zoom_into_final_rect = zoom_in_to_legible_scale;
+  // Send the caret position as a rect relative to |rect_to_scroll| so that the
+  // approximate position of the bounds can be reconstructed in the main frame's
+  // process.
+  params->relative_rect_of_interest = FloatRect(
+      (caret_in_root_frame.X() - maximal_rect.X()) /
+          static_cast<float>(maximal_rect.Width()),
+      (caret_in_root_frame.Y() - maximal_rect.Y()) /
+          static_cast<float>(maximal_rect.Height()),
+      caret_in_root_frame.Width() / static_cast<float>(maximal_rect.Width()),
+      caret_in_root_frame.Height() / static_cast<float>(maximal_rect.Height()));
+}
+
+void WebViewImpl::ZoomIntoRect(const IntRect& rect,
+                               const WebScrollIntoViewParams& params) {
+  IntRect approximate_caret_bounds_in_frame;
+  approximate_caret_bounds_in_frame.SetX(
+      rect.X() +
+      static_cast<int>(params.relative_rect_of_interest.x * rect.Width()));
+  approximate_caret_bounds_in_frame.SetY(
+      rect.Y() +
+      static_cast<int>(params.relative_rect_of_interest.y * rect.Height()));
+  approximate_caret_bounds_in_frame.SetWidth(
+      static_cast<int>(rect.Width() * params.relative_rect_of_interest.width));
+  approximate_caret_bounds_in_frame.SetHeight(static_cast<int>(
+      rect.Height() * params.relative_rect_of_interest.height));
+
+  ZoomAndScrollToEditableElement(rect, approximate_caret_bounds_in_frame, true);
 }
 
 void WebViewImpl::SmoothScroll(int target_x, int target_y, long duration_ms) {
@@ -2516,8 +2586,9 @@ void WebViewImpl::SmoothScroll(int target_x, int target_y, long duration_ms) {
                           (double)duration_ms / 1000);
 }
 
-void WebViewImpl::ComputeScaleAndScrollForFocusedNode(
-    Node* focused_node,
+void WebViewImpl::ComputeScaleAndScrollForEditableElement(
+    const IntRect& element_bounds_in_root_frame,
+    const IntRect& caret_bounds_in_root_frame,
     bool zoom_in_to_legible_scale,
     float& new_scale,
     IntPoint& new_scroll,
@@ -2525,18 +2596,13 @@ void WebViewImpl::ComputeScaleAndScrollForFocusedNode(
   VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
   LocalFrameView* main_frame_view = MainFrameImpl()->GetFrameView();
 
-  WebRect caret_in_viewport, unused_end;
-  SelectionBounds(caret_in_viewport, unused_end);
-
   // 'caretInDocument' is rect encompassing the blinking cursor relative to the
   // root document.
-  IntRect caret_in_document = main_frame_view->RootFrameToDocument(
-      visual_viewport.ViewportToRootFrame(caret_in_viewport));
+  IntRect caret_in_document =
+      main_frame_view->RootFrameToDocument(caret_bounds_in_root_frame);
 
-  LocalFrameView* textbox_view = focused_node->GetDocument().View();
   IntRect textbox_rect_in_document =
-      main_frame_view->RootFrameToDocument(textbox_view->AbsoluteToRootFrame(
-          PixelSnappedIntRect(focused_node->Node::BoundingBox())));
+      main_frame_view->RootFrameToDocument(element_bounds_in_root_frame);
 
   if (!zoom_in_to_legible_scale) {
     new_scale = PageScaleFactor();

@@ -259,6 +259,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void ScrollRectToVisibleInParentFrame(
       const WebRect&,
       const WebScrollIntoViewParams&) override;
+  void ZoomIntoRect(const IntRect&, const WebScrollIntoViewParams&) override;
 
   void SetVirtualTimePauser(WebScopedVirtualTimePauser) override;
 
