@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "95ef3e37_be59225e",
+        "filename": "content/common/cross_site_document_classifier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T07:59:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a79d236_5d21c859",
+      "range": {
+        "startLine": 89,
+        "startChar": 46,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc868fd4_414138c0",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cdd269c_5a9acb36",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T07:59:24Z",
+      "side": 1,
+      "message": "Sure, let\u0027s discuss further on the bug.  One question for here, though-- do you know whether that test\u0027s behavior is expected for the cross-site case as well, or just the cross-origin case?  (Wondering if we would have needed to disable it even without this CL if it had been written slightly differently.)",
+      "parentUuid": "bc868fd4_414138c0",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
