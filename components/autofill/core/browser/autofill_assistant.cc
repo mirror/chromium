@@ -26,21 +26,22 @@ void AutofillAssistant::Reset() {
 }
 
 bool AutofillAssistant::CanShowCreditCardAssist(
-    const std::vector<std::unique_ptr<FormStructure>>& form_structures) {
+    const std::map<FormSignature, std::unique_ptr<FormStructure>>&
+        form_structures) {
   if (form_structures.empty() || credit_card_form_data_ != nullptr ||
       !IsAutofillCreditCardAssistEnabled() ||
       // Context of the page is not secure or target URL is valid but not
       // secure.
       !(autofill_manager_->client()->IsContextSecure() &&
-        (!form_structures.front()->target_url().is_valid() ||
-         !form_structures.front()->target_url().SchemeIs("http")))) {
+        (!form_structures.begin()->second->target_url().is_valid() ||
+         !form_structures.begin()->second->target_url().SchemeIs("http")))) {
     return false;
   }
 
-  for (auto& cur_form : base::Reversed(form_structures)) {
-    if (cur_form->IsCompleteCreditCardForm()) {
+  for (auto& cur_form : form_structures) {
+    if (cur_form.second->IsCompleteCreditCardForm()) {
       credit_card_form_data_ =
-          std::make_unique<FormData>(cur_form->ToFormData());
+          std::make_unique<FormData>(cur_form.second->ToFormData());
       break;
     }
   }

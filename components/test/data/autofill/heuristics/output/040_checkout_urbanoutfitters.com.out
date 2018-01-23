@@ -12,6 +12,9 @@ PHONE_HOME_WHOLE_NUMBER | shippingPhone | Phone | Phone | shipto_1-default
 PHONE_HOME_WHOLE_NUMBER | altShippingPhone | Alternate Phone (optional) | Alternate Phone (optional) | shipto_1-default
 UNKNOWN_TYPE | billingIsShipping | My billing address is the same as my shipping address | true | shipto_1-default
 UNKNOWN_TYPE | defaultShipping | Make this my default shipping address | true | shipto_1-default
+UNKNOWN_TYPE | giftCardNumberFromBalance | Gift Card Number | Gift Card Number | giftCardNumberFromBalance_1-default
+UNKNOWN_TYPE | giftCardPIN | Gift Card PIN | Gift Card PIN | giftCardNumberFromBalance_1-default
+UNKNOWN_TYPE | giftMessageField |  |  | giftMessageField_1-default
 NAME_FIRST | billingFirstName | First Name | First Name | billingFirstName_1-default
 NAME_LAST | billingLastName | Last Name | Last Name | billingFirstName_1-default
 ADDRESS_HOME_LINE1 | billingAddress | Street Address | Street Address | billingFirstName_1-default
@@ -31,6 +34,3 @@ CREDIT_CARD_EXP_MONTH | expmonth |  |  | credit-card-cc
 CREDIT_CARD_EXP_4_DIGIT_YEAR | expyear |  |  | credit-card-cc
 CREDIT_CARD_VERIFICATION_CODE | payment_cidnew | CID / Security Code | CID / Security Code | credit-card-cc
 UNKNOWN_TYPE | makeDefaultCreditCard | Make this my default credit card | true | billingFirstName_1-default
-UNKNOWN_TYPE | giftMessageField |  |  | giftMessageField_1-default
-UNKNOWN_TYPE | giftCardNumberFromBalance | Gift Card Number | Gift Card Number | giftCardNumberFromBalance_1-default
-UNKNOWN_TYPE | giftCardPIN | Gift Card PIN | Gift Card PIN | giftCardNumberFromBalance_1-default
