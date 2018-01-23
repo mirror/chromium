@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c30b88dd_ab9ae571",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "put this in the finally {} block",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 31
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b2f5fb_57bc46b9",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a57589_51144420",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "This class\u0027s public interface now basically consists of a public constructor and a method with no arguments. This tells me that it could be refactored to one function, that takes the parameters currently injected into the constructor, and returns a DumpStream.\n\nSuggestions on how to do that below.",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84d29f8_1f3dc3dd",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer this be done by the client of DumpStreamBuilder (i.e. CastCrashUploader), and have it use the constructor that injects the logs.",
+      "range": {
+        "startLine": 91,
+        "startChar": 44,
+        "endLine": 91,
+        "endChar": 51
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2128969_12e4390a",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "We can make it easier to combine this method with the constructor by changing the return type of add*ToStream() from void to InputStream (or null). Then the add*ToStream() methods can be changed to get*Stream() and no longer need to reference a mStreamList instance property, which means they can be static methods.\n\n  addIfNotNull(streamList, getAppFeedbackStream(applicationFeedback));\n  addIfNotNull(streamList, getUuIdStream(uuid));\n  ... // etc\n  return new DumpStream(..., new SequenceInputStream(Collections.enumeration(streamList)));\n\nIf you write a simple addIfNotNull() private static method, it can help reduce the clutter of null-checking the result of everything :)",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14bccad_adb952e3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "Per the note in the constructor above, I would prefer moving this method to a private method in CastCrashUploader, and the result injected into DumpStreamBuilder\u0027s constructor.",
+      "range": {
+        "startLine": 109,
+        "startChar": 32,
+        "endLine": 109,
+        "endChar": 39
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4dc1d9_9b1ec401",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "nit: this line does nothing",
+      "range": {
+        "startLine": 110,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 28
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6c1c2c_d5b778ec",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "I don\u0027t really like this being part of DumpStream.DumpStreamBuilder (you can see how ugly the invocation is when it\u0027s used in CastCrashUploader). This method has nothing to do with building a DumpStream, and it\u0027s used by two different classes.\n\nThis method is general enough that it could be in its own class, e.g. StreamUtils (though there\u0027s already an org.chromium.base class by that name). Extracting this method better documents the function this serves as a general-purpose first-line-of-stream-getter.",
+      "range": {
+        "startLine": 234,
+        "startChar": 32,
+        "endLine": 234,
+        "endChar": 44
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf701b51_11d3e3dd",
+        "filename": "chromecast/browser/android/junit/src/org/chromium/chromecast/shell/DumpStreamBuilderUnitTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-23T17:47:22Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "331d0e3925e6aeef959bee7efd6ecdd4906444a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
