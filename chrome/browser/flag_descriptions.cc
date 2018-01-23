@@ -1200,6 +1200,11 @@ const char kSafeSearchUrlReportingName[] = "SafeSearch URLs reporting.";
 const char kSafeSearchUrlReportingDescription[] =
     "If enabled, inappropriate URLs can be reported back to SafeSearch.";
 
+const char kSamplingHeapProfilerName[] = "Sampling native memory profiler.";
+const char kSamplingHeapProfilerDescription[] =
+    "Enables sampling native memory profiling at startup. "
+    "Default sampling interval is set to 128 KiB.";
+
 const char kSaveasMenuLabelExperimentName[] =
     "Switch 'Save as' menu labels to 'Download'";
 const char kSaveasMenuLabelExperimentDescription[] =

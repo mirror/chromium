@@ -755,6 +755,9 @@ const char kReducedReferrerGranularity[] =
 // Handles frame scrolls via the root RenderLayer instead of the FrameView.
 const char kRootLayerScrolls[]              = "root-layer-scrolls";
 
+// Enables sampling native memory profiler.
+const char kSamplingHeapProfiler[] = "sampling-heap-profiler";
+
 // Causes the process to run as a sandbox IPC subprocess.
 const char kSandboxIPCProcess[]             = "sandbox-ipc";
 
