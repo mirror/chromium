@@ -199,8 +199,10 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplsWithDeadlines) {
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
   AppendQuadsData data;
   surface_layer_impl->AppendQuads(render_pass.get(), &data);
-  surface_layer_impl2->AppendQuads(render_pass.get(), &data);
+  EXPECT_EQ(1u, data.deadline_in_frames);
+  EXPECT_FALSE(data.use_default_lower_bound_deadline);
 
+  surface_layer_impl2->AppendQuads(render_pass.get(), &data);
   EXPECT_EQ(1u, data.deadline_in_frames);
   EXPECT_TRUE(data.use_default_lower_bound_deadline);
 }
