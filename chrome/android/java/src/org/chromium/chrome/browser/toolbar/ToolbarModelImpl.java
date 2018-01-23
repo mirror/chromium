@@ -41,6 +41,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     private boolean mIsIncognito;
     private int mPrimaryColor;
     private boolean mIsUsingBrandColor;
+    private boolean mUseModernDesign;
 
     /**
      * Default constructor for this class.
@@ -58,6 +59,16 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
      */
     public void initializeWithNative() {
         initialize(this);
+    }
+
+    /**
+     * @param useModernDesign Whether the modern design should be used for the toolbar represented
+     *                        by this model.
+     */
+    public void setUseModernDesign(boolean useModernDesign) {
+        mUseModernDesign = useModernDesign;
+        setPrimaryColor(ColorUtils.getDefaultThemeColor(
+                ContextUtils.getApplicationContext().getResources(), useModernDesign, false));
     }
 
     @Override
@@ -189,8 +200,8 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         Context context = ContextUtils.getApplicationContext();
         mIsUsingBrandColor = !isIncognito()
                 && mPrimaryColor
-                        != ApiCompatibilityUtils.getColor(
-                                   context.getResources(), R.color.default_primary_color)
+                        != ColorUtils.getDefaultThemeColor(
+                                   context.getResources(), mUseModernDesign, isIncognito())
                 && hasTab() && !mTab.isNativePage();
     }
 
