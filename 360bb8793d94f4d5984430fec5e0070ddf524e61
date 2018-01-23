@@ -22,6 +22,30 @@
       "revId": "360bb8793d94f4d5984430fec5e0070ddf524e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9253a204_2e9abd8d",
+        "filename": "content/shell/browser/shell_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-23T23:14:19Z",
+      "side": 1,
+      "message": "Not sure, but in production code, usages of views::CreateDesktopScreen() are guarded by !defined(USE_OZONE), so this just changes it to be consistent with the rest",
+      "parentUuid": "6a639cc7_6e3912c9",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "360bb8793d94f4d5984430fec5e0070ddf524e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
