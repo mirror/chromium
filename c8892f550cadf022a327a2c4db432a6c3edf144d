@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5504b297_37ce9b46",
+        "filename": "chrome/android/profiles/update_afdo_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-23T05:05:28Z",
+      "side": 1,
+      "message": "Are we guaranteed that the host will always have bzip2? I.e. is it part of the default build deps for linux?",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "c8892f550cadf022a327a2c4db432a6c3edf144d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
