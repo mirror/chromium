@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71cc7dba_d4fc773f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T05:39:26Z",
+      "side": 1,
+      "message": "\u003e It\u0027s defined in ContentViewCore. It is still the class providing the API for embedder who wants to add the observer.\n\ncs shows only content code is calling this, fix the last caller to use CVCImpl instead and remove it from the interface",
+      "parentUuid": "c4dc56ac_bc6cd858",
+      "revId": "330e1f3904ba2ca5fd4e42bbdfb05557d05a1856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be865b5_6a8bbd7a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
         "patchSetId": 1
