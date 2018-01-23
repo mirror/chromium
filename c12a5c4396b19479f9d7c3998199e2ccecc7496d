@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465a81f8_044a94c0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T22:20:11Z",
+      "side": 1,
+      "message": "nit, suggestion: Make these two constants?  (Up to you, given that they aren\u0027t used anywhere else.) \n\n(Same comment in other test.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 63,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2fcb9f_3fc4d666",
+        "filename": "content/network/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T22:20:11Z",
+      "side": 1,
+      "message": "Update comment to match conditional?  (Also below)",
+      "range": {
+        "startLine": 419,
+        "startChar": 14,
+        "endLine": 419,
+        "endChar": 44
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a039e8_b5c4f534",
+        "filename": "content/network/resource_scheduler_client.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T22:20:11Z",
+      "side": 1,
+      "message": "The granularity of creation of this class is (AIUI) really important.  Could you add some text here talking about that?  Specifically, maybe specify that this needs to be created for each client that should have \"scheduling\" done within it, and give examples of what that could mean (one per tab, one per frame, etc.) and examples of why that\u0027s needed?  I\u0027m trying to walk the line between \"Don\u0027t include implementation details in header comments\" and \"Given enough context in header comments so consumers know how to use it\"; I think giving examples of how it is used in other contexts does that?",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
