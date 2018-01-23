@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb885fed_6460c193",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T22:58:49Z",
+      "side": 1,
+      "message": "You only need to know the index in the if at line ~1368-1368?\n\nYou could split the if and only calculate it \"if(ignored_field)\"\nsize_t field_index \u003d \u0026field - \u0026fields_[0];\n!((field_index + 1) \u003c fields_.size() \u0026\u0026\n             seen_types.count(\n                 fields_[field_index + 1]-\u003eType().GetStorableType())\n\nWDYT? :)",
+      "parentUuid": "3eb8f063_49ddddf4",
+      "range": {
+        "startLine": 1333,
+        "startChar": 13,
+        "endLine": 1333,
+        "endChar": 24
+      },
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b9fa36_0e11b173",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 7
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "We don\u0027t need to have more than 2 **hidden** fields to start a new section now. If the first hidden field, and next visible field are already seen, we would also consider the case as a new section.\n\nWe need to add another check to have \u003e 2 hidden fields, and the only difference would be that the single hidden field would belong to the lower visible section rather than the upper one. I don\u0027t think this would make any difference.",
       "parentUuid": "b0b9fa36_0e11b173",
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba72d548_7d905536",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T22:58:49Z",
+      "side": 1,
+      "message": "See! One more reason to add a comment hahaha :P",
+      "parentUuid": "68354dab_21f37167",
       "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
