@@ -16,15 +16,16 @@
 
 namespace content {
 
-class WebRtcLocalEventLogManager {
+class WebRtcLocalEventLogManager final : private LogFileWriter {
  public:
   explicit WebRtcLocalEventLogManager(WebRtcLocalEventLogsObserver* observer);
-  ~WebRtcLocalEventLogManager();
+  ~WebRtcLocalEventLogManager() override;
 
   bool PeerConnectionAdded(int render_process_id, int lid);
   bool PeerConnectionRemoved(int render_process_id, int lid);
 
-  bool EnableLogging(base::FilePath base_path, size_t max_file_size_bytes);
+  bool EnableLogging(const base::FilePath& base_path,
+                     size_t max_file_size_bytes);
   bool DisableLogging();
 
   bool EventLogWrite(int render_process_id, int lid, const std::string& output);
@@ -35,24 +36,12 @@ class WebRtcLocalEventLogManager {
   void SetClockForTesting(base::Clock* clock);
 
  private:
-  using PeerConnectionKey = WebRtcEventLogPeerConnectionKey;
-
-  struct LogFile {
-    LogFile(base::File file, size_t max_file_size_bytes)
-        : file(std::move(file)),
-          max_file_size_bytes(max_file_size_bytes),
-          file_size_bytes(0) {}
-    base::File file;
-    const size_t max_file_size_bytes;
-    size_t file_size_bytes;
-  };
-
-  typedef std::map<PeerConnectionKey, LogFile> LogFilesMap;
-
   // File handling.
   void StartLogFile(int render_process_id, int lid);
   void StopLogFile(int render_process_id, int lid);
-  LogFilesMap::iterator CloseLogFile(LogFilesMap::iterator it);
+
+  // LogFileWriter implementation.
+  LogFilesMap::iterator CloseLogFile(LogFilesMap::iterator it) override;
 
   // Derives the name of a local log file. The format is:
   // [user_defined]_[date]_[time]_[pid]_[lid].log
