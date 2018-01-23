@@ -36,7 +36,7 @@
 namespace blink {
 
 FetchContext& FetchContext::NullInstance() {
-  DEFINE_STATIC_LOCAL(FetchContext, instance, (new FetchContext));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FetchContext, instance, (new FetchContext));
   return instance;
 }
 
