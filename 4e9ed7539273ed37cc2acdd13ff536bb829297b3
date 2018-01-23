@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c9f8141_2c808183",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "2018, no (c)",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5045484e_8158fc3b",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "Instead of calling this SitePerProcessBrowserTest, call this SitePerProcessHitTestBrowserTest instead, to match the file (so if a test fails, someone knows which file to look at from the failing test name). So towards the top of the file inside content namespace:\n\nusing SitePerProcessHitTestBrowserTest \u003d SitePerProcessBrowserTest;\n\n(and, make sure to update the viz filter-file)",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8537f1_026818e6",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "This code is already inside a !defined(OS_ANDROID) block, so this should not be needed here.",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5a5952_d50dc540",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "#endif  // !defined(OS_ANDROID)",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df58e14_e4f546a2",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t \u0027#endif  // defined(USE_AURA)\u0027 happen here, instead of below?",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d255ecdc_22649e7a",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "#endif  // !defined(OS_WIN)",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997c6ca3_dc5eb9fa",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "// ...",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60532c0_194c809e",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "This should not be here (see comment above).",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c652eae7_e60238ef",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2705,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "// defined(OS_LINUX)\n\nAnd #endif that is more than a few lines away from it\u0027s #if/#elif should have a comment.",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afced9e8_5e816987",
+        "filename": "content/browser/site_per_process_hit_test_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T20:34:52Z",
+      "side": 1,
+      "message": "//",
+      "revId": "4e9ed7539273ed37cc2acdd13ff536bb829297b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
