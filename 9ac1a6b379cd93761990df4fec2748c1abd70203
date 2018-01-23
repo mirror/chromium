@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3431d77_59d4d591",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:58:01Z",
+      "side": 1,
+      "message": "nit: you probably want ~TimeTracker() \u003d default; to ensure that it\u0027s trivially destructible, and possibly the same with the constructor",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae6c75b_7d8ba6d8",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:58:01Z",
+      "side": 1,
+      "message": "It\u0027s possible to be leaner and skip the frequent map lookups, which may or may not matter for your use case. V8/Blink RuntimeCallStats is more aggressive about being lean.",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6be23a7_98ef418e",
+        "filename": "extensions/test/logging_timer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:58:01Z",
+      "side": 1,
+      "message": "nit: base::TimeTicks::Now",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
