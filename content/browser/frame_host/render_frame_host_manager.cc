@@ -857,16 +857,22 @@ bool RenderFrameHostManager::ShouldSwapBrowsingInstancesForNavigation(
     bool current_is_view_source_mode,
     SiteInstance* new_site_instance,
     const GURL& new_effective_url,
-    bool new_is_view_source_mode) const {
+    bool new_is_view_source_mode,
+    ui::PageTransition transition) const {
   // A subframe must stay in the same BrowsingInstance as its parent.
   // TODO(nasko): Ensure that SiteInstance swap is still triggered for subframes
   // in the cases covered by the rest of the checks in this method.
   if (!frame_tree_node_->IsMainFrame())
     return false;
 
+  LOG(ERROR) << __func__;
+  LOG(ERROR) << "  transition="
+             << ui::PageTransitionGetCoreTransitionString(transition);
+
   // If new_entry already has a SiteInstance, assume it is correct.  We only
   // need to force a swap if it is in a different BrowsingInstance.
   if (new_site_instance) {
+    LOG(ERROR) << "  new_site_instance = " << new_site_instance->GetSiteURL();
     return !new_site_instance->IsRelatedSiteInstance(
         render_frame_host_->GetSiteInstance());
   }
@@ -942,6 +948,17 @@ bool RenderFrameHostManager::ShouldSwapBrowsingInstancesForNavigation(
   if (current_is_view_source_mode != new_is_view_source_mode)
     return true;
 
+  // TODO(alexmos): is this needed for KEYWORD and KEYWORD_GENERATED?
+  // TODO(alexmos): Move into a helper.
+  if (ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) ||
+      ui::PageTransitionCoreTypeIs(transition,
+                                   ui::PAGE_TRANSITION_AUTO_BOOKMARK) ||
+      ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_GENERATED)) {
+    LOG(ERROR) << "  Page transition is forcing BI swap";
+    return true;
+  }
+
+  LOG(ERROR) << "  returning false";
   return false;
 }
 
@@ -1001,11 +1018,9 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
       current_entry->IsViewSourceMode() : dest_is_view_source_mode;
 
   bool force_swap = ShouldSwapBrowsingInstancesForNavigation(
-      current_effective_url,
-      current_is_view_source_mode,
-      dest_instance,
+      current_effective_url, current_is_view_source_mode, dest_instance,
       SiteInstanceImpl::GetEffectiveURL(browser_context, dest_url),
-      dest_is_view_source_mode);
+      dest_is_view_source_mode, transition);
   SiteInstanceDescriptor new_instance_descriptor =
       SiteInstanceDescriptor(current_instance);
   if (ShouldTransitionCrossSite() || force_swap) {
@@ -1090,6 +1105,15 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     bool dest_is_view_source_mode,
     bool force_browsing_instance_swap,
     bool was_server_redirect) {
+  LOG(ERROR) << "DetermineSiteInstanceForURL";
+  LOG(ERROR) << "  dest_url=" << dest_url;
+  LOG(ERROR) << "  source_instance="
+             << (source_instance ? source_instance->GetSiteURL() : GURL());
+  LOG(ERROR) << "  current_instance=" << current_instance->GetSiteURL();
+  LOG(ERROR) << "  dest_instance="
+             << (dest_instance ? dest_instance->GetSiteURL() : GURL());
+  LOG(ERROR) << "  force_bi_swap=" << force_browsing_instance_swap;
+
   SiteInstanceImpl* current_instance_impl =
       static_cast<SiteInstanceImpl*>(current_instance);
   NavigationControllerImpl& controller =
