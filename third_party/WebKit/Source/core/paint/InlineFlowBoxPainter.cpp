@@ -362,31 +362,34 @@ void InlineFlowBoxPainter::PaintMask(const PaintInfo& paint_info,
 
   // Figure out if we need to push a transparency layer to render our mask.
   bool push_transparency_layer = false;
-  bool flatten_compositing_layers =
-      paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers;
-  bool mask_blending_applied_by_compositor =
-      !flatten_compositing_layers &&
-      inline_flow_box_.GetLineLayoutItem().HasLayer() &&
-      inline_flow_box_.BoxModelObject()
-          .Layer()
-          ->MaskBlendingAppliedByCompositor();
   SkBlendMode composite_op = SkBlendMode::kSrcOver;
-  if (!mask_blending_applied_by_compositor) {
-    if ((mask_box_image && inline_flow_box_.GetLineLayoutItem()
-                               .Style()
-                               ->MaskLayers()
-                               .HasImage()) ||
-        inline_flow_box_.GetLineLayoutItem().Style()->MaskLayers().Next()) {
-      push_transparency_layer = true;
-      paint_info.context.BeginLayer(1.0f, SkBlendMode::kDstIn);
-    } else {
-      // TODO(fmalita): passing a dst-in xfer mode down to
-      // paintFillLayers/paintNinePieceImage seems dangerous: it is only correct
-      // if applied atomically (single draw call). While the heuristic above
-      // presumably ensures that is the case, this approach seems super fragile.
-      // We should investigate dropping this optimization in favour of the more
-      // robust layer branch above.
-      composite_op = SkBlendMode::kDstIn;
+  // For SPv175 we issue proper composite op in PaintChunksToCcLayer for mask.
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    bool flatten_compositing_layers =
+        paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers;
+    bool mask_blending_applied_by_compositor =
+        !flatten_compositing_layers &&
+        inline_flow_box_.GetLineLayoutItem().HasLayer() &&
+        inline_flow_box_.BoxModelObject()
+            .Layer()
+            ->MaskBlendingAppliedByCompositor();
+    if (!mask_blending_applied_by_compositor) {
+      if ((mask_box_image && inline_flow_box_.GetLineLayoutItem()
+                                 .Style()
+                                 ->MaskLayers()
+                                 .HasImage()) ||
+          inline_flow_box_.GetLineLayoutItem().Style()->MaskLayers().Next()) {
+        push_transparency_layer = true;
+        paint_info.context.BeginLayer(1.0f, SkBlendMode::kDstIn);
+      } else {
+        // TODO(fmalita): passing a dst-in xfer mode down to
+        // paintFillLayers/paintNinePieceImage seems dangerous: it is only
+        // correct if applied atomically (single draw call). While the heuristic
+        // above presumably ensures that is the case, this approach seems super
+        // fragile. We should investigate dropping this optimization in favour
+        // of the more robust layer branch above.
+        composite_op = SkBlendMode::kDstIn;
+      }
     }
   }
 
