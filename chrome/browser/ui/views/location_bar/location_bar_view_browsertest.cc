@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_view.h"
+#include "chrome/browser/ui/views/translate/translate_icon_view.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/common/page_zoom.h"
@@ -71,4 +72,37 @@ IN_PROC_BROWSER_TEST_F(LocationBarViewBrowserTest, LocationBarDecoration) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(zoom_view->visible());
   EXPECT_FALSE(ZoomBubbleView::GetZoomBubble());
+}
+
+IN_PROC_BROWSER_TEST_F(LocationBarViewBrowserTest,
+                       ActivateFirstInactiveBubbleForAccessibility) {
+  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser());
+  LocationBarView* location_bar_view = browser_view->GetLocationBarView();
+  EXPECT_FALSE(
+      location_bar_view->ActivateFirstInactiveBubbleForAccessibility());
+
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  browser_view->ShowTranslateBubble(web_contents,
+                                    translate::TRANSLATE_STEP_AFTER_TRANSLATE,
+                                    translate::TranslateErrors::NONE, true);
+
+  BubbleIconView* icon_view = location_bar_view->translate_icon_view();
+  EXPECT_TRUE(icon_view);
+  EXPECT_TRUE(icon_view->visible());
+
+  // Ensure the bubble's widget is visible, but inactive. Active widgets are
+  // focused by accessibility, so not of concern.
+  views::Widget* widget = icon_view->GetBubble()->GetWidget();
+  widget->Deactivate();
+  widget->ShowInactive();
+  EXPECT_TRUE(widget->IsVisible());
+  EXPECT_FALSE(widget->IsActive());
+
+  EXPECT_TRUE(location_bar_view->ActivateFirstInactiveBubbleForAccessibility());
+
+  // Ensure the bubble's widget refreshed appropriately.
+  EXPECT_TRUE(icon_view->visible());
+  EXPECT_TRUE(widget->IsVisible());
+  EXPECT_TRUE(widget->IsActive());
 }

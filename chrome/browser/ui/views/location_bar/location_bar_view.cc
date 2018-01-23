@@ -40,6 +40,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
@@ -648,6 +649,28 @@ void LocationBarView::Update(const WebContents* contents) {
 
 void LocationBarView::ResetTabState(WebContents* contents) {
   omnibox_view_->ResetTabState(contents);
+}
+
+bool LocationBarView::ActivateFirstInactiveBubbleForAccessibility() {
+  for (int i = 0; i < child_count(); ++i) {
+    views::View* view = child_at(i);
+    if (!view || !view->visible() ||
+        view->GetClassName() != BubbleIconView::kViewClassName) {
+      continue;
+    }
+
+    BubbleIconView* icon = static_cast<BubbleIconView*>(view);
+    if (!icon->GetBubble())
+      continue;
+
+    views::Widget* widget = icon->GetBubble()->GetWidget();
+    if (widget && widget->IsVisible() && !widget->IsActive()) {
+      widget->Show();
+      return true;
+    }
+  }
+
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
