@@ -557,9 +557,13 @@ void LayoutBoxModelObject::AddOutlineRectsForDescendant(
   }
 
   if (descendant.IsBox()) {
-    descendant.AddOutlineRects(
-        rects, additional_offset + ToLayoutBox(descendant).LocationOffset(),
-        include_block_overflows);
+    auto child_additional_offset =
+        additional_offset + ToLayoutBox(descendant).LocationOffset();
+    // Exclude the duplicated offset in table row and table cell.
+    if (IsTableRow() && descendant.IsTableCell())
+      child_additional_offset -= ToLayoutBox(this)->LocationOffset();
+    descendant.AddOutlineRects(rects, child_additional_offset,
+                               include_block_overflows);
     return;
   }
 

@@ -905,7 +905,10 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
 void LayoutObject::CheckBlockPositionedObjectsNeedLayout() {
   DCHECK(!NeedsLayout());
 
-  if (IsLayoutBlock())
+  if (IsLayoutBlock() &&
+      // Table section and row update layout of positioned object after
+      // UpdateLayout().
+      !IsTableBoxComponent())
     ToLayoutBlock(this)->CheckPositionedObjectsNeedLayout();
 }
 #endif
@@ -1011,8 +1014,9 @@ LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
   if (IsColumnSpanAll()) {
     object = SpannerPlaceholder()->ContainingBlock();
   } else {
-    while (object && ((object->IsInline() && !object->IsAtomicInlineLevel()) ||
-                      !object->IsLayoutBlock())) {
+    while (object &&
+           ((object->IsInline() && !object->IsAtomicInlineLevel()) ||
+            !object->IsLayoutBlock() || object->IsTableBoxComponent())) {
       if (skip_info)
         skip_info->Update(*object);
       object = object->Parent();

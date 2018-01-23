@@ -205,11 +205,6 @@ void LayoutTableRow::UpdateLayout() {
       Section()->UpdateFragmentationInfoForChild(*cell);
   }
 
-  overflow_.reset();
-  AddVisualEffectOverflow();
-  // We do not call addOverflowFromCell here. The cell are laid out to be
-  // measured above and will be sized correctly in a follow-up phase.
-
   // We only ever need to issue paint invalidations if our cells didn't, which
   // means that they didn't need layout, so we know that our bounds didn't
   // change. This code is just making up for the fact that we did not invalidate
@@ -288,9 +283,7 @@ LayoutTableRow* LayoutTableRow::CreateAnonymousWithParent(
   return new_row;
 }
 
-void LayoutTableRow::ComputeOverflow() {
-  ClearAllOverflows();
-  AddVisualEffectOverflow();
+void LayoutTableRow::AddOverflowFromChildren() {
   for (LayoutTableCell* cell = FirstCell(); cell; cell = cell->NextCell())
     AddOverflowFromCell(cell);
 }
