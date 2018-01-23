@@ -311,6 +311,21 @@
     "label": "//chrome/test/chromedriver:chromedriver",
     "type": "additional_compile_target",
   },
+  "chromedriver_py_tests": {
+    "label": "//chrome/test/chromedriver:chromedriver_py_tests",
+    "type": "script",
+    "script": "//testing/xvfb.py",
+    "args": [
+      "../../chrome/test/chromedriver/test/run_py_tests.py",
+      "--chromedriver=chromedriver",
+      "--log-path=${ISOLATED_OUTDIR}/chromedriver.log",
+      # TODO(johnchen@chromium.org): As the initial step of adding ChromeDriver
+      # tests to commit queue, the following filter is used to enable a single
+      # test case as a smoke test. Many more test cases will be enabled in the
+      # future.
+      "--filter=__main__.ChromeDriverTest.testLoadUrl",
+    ],
+  },
   "chromedriver_unittests": {
     "label": "//chrome/test/chromedriver:chromedriver_unittests",
     "type": "windowed_test_launcher",
