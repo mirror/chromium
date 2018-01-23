@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b57b246_49f8f009",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T02:01:10Z",
+      "side": 1,
+      "message": "Is it possible to also add a browser test covering this scenario?  You can control the redirect using TestNavigationManager (e.g., https://chromium-review.googlesource.com/c/chromium/src/+/878330), and that will let us test the outcome of the redirect and which process it ends up in.\n\n(I\u0027m pretty sure that will end up being a nice test case for ending up in the wrong SiteInstance.  If so, we can file a bug and hopefully fix that while we\u0027re at it.)",
+      "revId": "48faebfc7c32e38fd053bd4de4453ddc0a3742eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e45f55_7f373351",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-23T02:01:10Z",
+      "side": 1,
+      "message": "Let\u0027s update the comment for this to mention the additional use case.",
+      "range": {
+        "startLine": 273,
+        "startChar": 12,
+        "endLine": 273,
+        "endChar": 33
+      },
+      "revId": "48faebfc7c32e38fd053bd4de4453ddc0a3742eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
