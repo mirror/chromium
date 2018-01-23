@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b02634e_3d7c6a37",
+        "filename": "base/android/java/src/org/chromium/base/CommandLine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T17:02:34Z",
+      "side": 1,
+      "message": "Couldn\u0027t figure out why an explicit limit is there, but Chrome will still crash if the file is too big :P",
+      "revId": "05973160e5accbb9d8e9b414f2ed15ebe16be76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
