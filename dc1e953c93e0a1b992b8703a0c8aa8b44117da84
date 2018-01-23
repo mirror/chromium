@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "d529d8bb_f315a09e",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T21:45:39Z",
+      "side": 1,
+      "message": "\u003e Ooh, good point about the iterator.  That definitely could happen.  I\u0027ve fixed this to just make a copy of the PortId here, and erase the iterator before calling CompleteRequest().  I\u0027ve also added some tests that try calling sendMessage from fun times (the listener callback and the reply callback).\n\nHmm, you\u0027ve gone that in DeliverReplyToOpener, but not here (DisconnectOpener).\n\n\u003e \u003e Further, if !IsContextValid, is it possible that OneTimeMessageContextData has also been destructed?\n\u003e\n\u003e It shouldn\u0027t be - IsContextValid() will return false starting from WillReleaseScriptContext() (which happens before gin data is deleted, I\u0027m pretty sure).\n\nAh, yes, you are correct. I flipped the sense of a condition in my head.",
+      "parentUuid": "0212d4a4_42dcce83",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c06b8c2_e0f26043",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "Yeah, this is explicitly designed to let different worlds interact with each other, so that an extension popup can synchronously access its background page, etc.  I\u0027m not keen on it, but it is something we have to continue allowing. :(",
       "parentUuid": "0c06b8c2_e0f26043",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbaffa5_3681801c",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T21:45:39Z",
+      "side": 1,
+      "message": "Extension popups are full web pages (i.e. main world), right? If this is only exposed in extension pages (not content scripts or workers), then maybe it\u0027s less bad than I thought (but still a little funny). A re-read of the docs suggest this was the case, but I\u0027m not sure.",
+      "parentUuid": "6cc6d0ba_f1a6a60e",
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
