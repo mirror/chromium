@@ -10,7 +10,7 @@ async_test(function(t) {
     var canvas = document.querySelector("canvas");
     navigator.webkitGetUserMedia({ video: true }, function(stream) {
         // start preview.
-        video.src = URL.createObjectURL(stream);
+        video.srcObject = stream;
     }, getStreamFailed);
 
     function getStreamFailed(error) {
