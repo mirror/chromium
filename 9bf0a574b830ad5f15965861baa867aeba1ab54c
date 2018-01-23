@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78002a3_cd109408",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-23T18:26:32Z",
+      "side": 1,
+      "message": "Is there a dynamic way to do this with a constraint without a constant?",
+      "revId": "9bf0a574b830ad5f15965861baa867aeba1ab54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d9fece_972cfb29",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-23T18:26:32Z",
+      "side": 1,
+      "message": "stk@ I\u0027m not sure why the previous constraint would die here.  I\u0027m not thrilled about this change.",
+      "revId": "9bf0a574b830ad5f15965861baa867aeba1ab54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

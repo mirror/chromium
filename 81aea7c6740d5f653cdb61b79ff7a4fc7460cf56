@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b27c6bc0_99bbd2e8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-23T18:26:32Z",
+      "side": 0,
+      "message": "This constraint is wrong when the toolbar has moved from it\u0027s resting position.",
+      "range": {
+        "startLine": 345,
+        "startChar": 48,
+        "endLine": 345,
+        "endChar": 49
+      },
+      "revId": "81aea7c6740d5f653cdb61b79ff7a4fc7460cf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
