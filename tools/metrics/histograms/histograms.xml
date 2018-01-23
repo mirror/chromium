@@ -79011,6 +79011,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SequencedWorkerPool.ShutdownDelayTime" units="ms">
+  <obsolete>
+    Deprecated 01/2018. SequencedWorkerPool has been removed.
+  </obsolete>
   <owner>gab@chromium.org</owner>
   <summary>
     How long it takes to wait for tasks that block shutdown to complete.
