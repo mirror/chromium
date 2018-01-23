@@ -273,7 +273,7 @@ void InfoBarView::PlatformSpecificShow(bool animate) {
   // that if we gain focus we'll know what the previously-focused element was.
   SetFocusManager(GetFocusManager());
 
-  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
 }
 
 void InfoBarView::PlatformSpecificHide(bool animate) {
@@ -308,8 +308,9 @@ void InfoBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       (delegate()->GetInfoBarType() == infobars::InfoBarDelegate::WARNING_TYPE)
           ? IDS_ACCNAME_INFOBAR_WARNING
           : IDS_ACCNAME_INFOBAR_PAGE_ACTION));
-  node_data->role = ui::AX_ROLE_ALERT;
-  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, "Alt+Shift+A");
+  node_data->role = ax::mojom::Role::kAlert;
+  node_data->AddStringAttribute(ax::mojom::StringAttribute::kKeyShortcuts,
+                                "Alt+Shift+A");
 }
 
 gfx::Size InfoBarView::CalculatePreferredSize() const {
@@ -335,7 +336,7 @@ void InfoBarView::OnWillChangeFocus(View* focused_before, View* focused_now) {
   // infobar.
   if (focused_before && focused_now && !Contains(focused_before) &&
       Contains(focused_now)) {
-    NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+    NotifyAccessibilityEvent(ax::mojom::Event::kAlert, true);
   }
 }
 
