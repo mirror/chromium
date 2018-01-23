@@ -118,6 +118,7 @@ void FrameSinkVideoCaptureDevice::AllocateAndStartWithReceiver(
   }
 
   capture_params_ = params;
+  WillStart();
   DCHECK(!receiver_);
   receiver_ = std::move(receiver);
 
@@ -185,6 +186,7 @@ void FrameSinkVideoCaptureDevice::StopAndDeAllocate() {
   capturer_.reset();
   if (receiver_) {
     receiver_.reset();
+    DidStop();
   }
 }
 
@@ -327,6 +329,10 @@ void FrameSinkVideoCaptureDevice::SetCapturerCreatorForTesting(
     CapturerCreatorCallback creator) {
   capturer_creator_ = std::move(creator);
 }
+
+void FrameSinkVideoCaptureDevice::WillStart() {}
+
+void FrameSinkVideoCaptureDevice::DidStop() {}
 
 void FrameSinkVideoCaptureDevice::OnCapturerCreated(
     viz::mojom::FrameSinkVideoCapturerPtrInfo info) {
