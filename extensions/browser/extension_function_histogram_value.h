@@ -1273,6 +1273,7 @@ enum HistogramValue {
   CRYPTOTOKENPRIVATE_CANAPPIDGETATTESTATION,
   SYSTEM_DISPLAY_SETMIRRORMODE,
   TTSENGINE_UPDATEVOICES,
+  AUTHPRIVATE_GETLOGINSTATUS,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

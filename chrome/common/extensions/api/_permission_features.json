@@ -44,6 +44,14 @@
     "extension_types": ["extension", "platform_app"],
     "location": "component"
   },
+  "authPrivate": {
+    "channel": "stable",
+    "extension_types": ["extension"],
+    "whitelist": [
+      // Autotest: http://crbug.com/654525
+      "0D209B5E4401BB8E7873B5AB5B1346A1CB067015"
+    ]
+  },
   "autotestPrivate": {
     "channel": "stable",
     "extension_types": ["extension"],

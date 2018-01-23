@@ -54,6 +54,8 @@ static_library("extensions") {
     "activity_log/fullstream_ui_policy.h",
     "api/activity_log_private/activity_log_private_api.cc",
     "api/activity_log_private/activity_log_private_api.h",
+    "api/auth_private/auth_private_api.cc",
+    "api/auth_private/auth_private_api.h",
     "api/autofill_private/autofill_private_api.cc",
     "api/autofill_private/autofill_private_api.h",
     "api/autofill_private/autofill_private_event_router.cc",
