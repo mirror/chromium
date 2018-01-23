@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15a965d0_c293c162",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-23T00:48:06Z",
+      "side": 1,
+      "message": "Not sure. Also OnStartedCallback is of type base::Callback\u003cvoid(DownloadItem*, DownloadInterruptReason)\u003e. Should we call it with (nullptr, NONE) in this case?",
+      "parentUuid": "34e78e4e_516c8520",
+      "range": {
+        "startLine": 481,
+        "startChar": 52,
+        "endLine": 481,
+        "endChar": 62
+      },
+      "revId": "6b702991e23ef5a2677bdb71157c1a2e2b740117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de649135_e080e034",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "6b702991e23ef5a2677bdb71157c1a2e2b740117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcf7e37_742725b0",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-23T00:48:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de649135_e080e034",
+      "revId": "6b702991e23ef5a2677bdb71157c1a2e2b740117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
