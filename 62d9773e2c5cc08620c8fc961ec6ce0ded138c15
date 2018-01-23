@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e656a72c_e810c262",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "nit: \"Tests the preferred size and layout when tabs are aligned horizontally and the child views are wider than the tab strip.\"",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32c3eae_ad7eaedd",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "nit: \"The child views should resize to fit in larger tabbed panes.\"",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecf1bf8_b831954d",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "optional nit: inline child1-\u003ebounds() to the expect statements for clarity. ditto below.",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fe874c_47a66684",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "nit: the next check is for equality with 500, so this \u003e0 check isn\u0027t needed; ditto below",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8f9693_fcf9acfb",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "nit: \"Tests the preferred size and layout when tabs are aligned horizontally and the tab strip is wider than the child views.\"",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4886ee8_6d66d2c1",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "So, the tab strip\u0027s preferred width isn\u0027t considered when determining the tabbed pane\u0027s preferred width, and the view will probably cut off the long tab titles somehow, right? I\u0027m not sure this is desirable behavior... We should verify how it looks (does it cut off text/tabs to the right, or does it make all tabs narrower than their text?), and consider alternate approaches before adding tests to verify this behavior.",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c92ff9_17a844c1",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure what value there is in repeating this part of the test, is this different than the above somehow?",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2ca32f_7b05cd4c",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T22:44:49Z",
+      "side": 1,
+      "message": "nit: the next check is for equality with 200, so this \u003e0 check isn\u0027t needed; ditto below",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
