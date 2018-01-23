@@ -237,7 +237,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableMarkingVisitor,
     current_parent_ = PersistentForWrappable(traceable);
 
     TracePrologue();
-    traceable->GetWrapperTypeInfo()->TraceWrappers(this, traceable);
+    traceable->TraceWrappers(this);
     AdvanceTracing(
         0,
         v8::EmbedderHeapTracer::AdvanceTracingActions(
@@ -495,7 +495,7 @@ class DOMWrapperTracer : public v8::PersistentHandleVisitor {
         v8::Persistent<v8::Object>::Cast(*value);
 
     if (ScriptWrappable* script_wrappable = ToScriptWrappable(wrapper))
-      ToWrapperTypeInfo(wrapper)->Trace(visitor_, script_wrappable);
+      script_wrappable->Trace(visitor_);
   }
 
  private:

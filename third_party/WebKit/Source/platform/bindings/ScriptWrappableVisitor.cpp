@@ -168,10 +168,9 @@ void ScriptWrappableMarkingVisitor::RegisterV8Reference(
          wrapper_type_info->wrapper_class_id ==
              WrapperTypeInfo::kObjectClassId);
 
-  ScriptWrappable* script_wrappable =
-      reinterpret_cast<ScriptWrappable*>(internal_fields.second);
-
-  wrapper_type_info->TraceWrappers(this, script_wrappable);
+  if (ScriptWrappable* script_wrappable =
+          reinterpret_cast<ScriptWrappable*>(internal_fields.second))
+    script_wrappable->TraceWrappers(this);
 }
 
 void ScriptWrappableMarkingVisitor::RegisterV8References(
