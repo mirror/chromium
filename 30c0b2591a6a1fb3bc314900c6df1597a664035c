@@ -22,6 +22,30 @@
       "revId": "30c0b2591a6a1fb3bc314900c6df1597a664035c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4e6faf_c184edae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T00:21:15Z",
+      "side": 1,
+      "message": "Done, FooterSection.\n\nUnfortunately we don\u0027t have tooltips for context menu items :\\  but we could consider SoftDropDown in the future",
+      "parentUuid": "620a8f44_425faddb",
+      "range": {
+        "startLine": 209,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 29
+      },
+      "revId": "30c0b2591a6a1fb3bc314900c6df1597a664035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
