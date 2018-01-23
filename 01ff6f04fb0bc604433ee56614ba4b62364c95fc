@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "781ed744_43bba66e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T19:25:13Z",
+      "side": 1,
+      "message": "Hey Jordy - doesn\u0027t look like you changed this.",
+      "parentUuid": "16a1c26c_cac23e80",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e63798c_727a3bbe",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1e63798c_727a3bbe",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1399accb_9f40cb52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T19:25:13Z",
+      "side": 1,
+      "message": "This one too.",
+      "parentUuid": "7d60f780_6c78e8a0",
       "range": {
         "startLine": 9,
         "startChar": 0,
