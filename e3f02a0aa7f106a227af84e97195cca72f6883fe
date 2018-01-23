@@ -22,6 +22,30 @@
       "revId": "e3f02a0aa7f106a227af84e97195cca72f6883fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab67cb3b_2c2269c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T17:42:16Z",
+      "side": 1,
+      "message": "I don\u0027t think that the default color for custom tabs, for example, is going to change, so adding a real method sgtm. Done.",
+      "parentUuid": "6f365649_fa14d9df",
+      "range": {
+        "startLine": 427,
+        "startChar": 48,
+        "endLine": 427,
+        "endChar": 97
+      },
+      "revId": "e3f02a0aa7f106a227af84e97195cca72f6883fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
