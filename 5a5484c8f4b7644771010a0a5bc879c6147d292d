@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "71b02c70_af7bbc78",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-23T23:29:20Z",
+      "side": 1,
+      "message": "Using WTF::TimeTicks because currently includes from base/ are prohibitted in Source/core.",
+      "parentUuid": "436cdc0e_7aeb7ff4",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 49
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d547686_63460656",
         "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
         "patchSetId": 4
@@ -168,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "893e1e3a_731a7bab",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-23T23:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f2db2f_d7e170bd",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bddfc5f_9fe666dc",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 4
@@ -203,6 +251,30 @@
       "side": 1,
       "message": "Yes, I believe this is a page-level metric but I don\u0027t know how to pass this on to scheduler at this level. How do I plumb this through the WebViewScheduler? I don\u0027t see any occurrence of this class on Source/core, except in tests and Source/core/exported.",
       "parentUuid": "7bddfc5f_9fe666dc",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 73
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e9b7a3_e536dc8f",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-23T23:29:20Z",
+      "side": 1,
+      "message": "Ping altimin@",
+      "parentUuid": "6149ac13_5bbc5e54",
       "range": {
         "startLine": 373,
         "startChar": 4,
