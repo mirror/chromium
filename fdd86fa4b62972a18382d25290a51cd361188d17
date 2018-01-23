@@ -22,6 +22,30 @@
       "revId": "fdd86fa4b62972a18382d25290a51cd361188d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69aeac38_88bf397f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:25:06Z",
+      "side": 1,
+      "message": "I expect we want white snackbars everywhere... I think we should get this landed and re-assign the bug to UX to confirm the behavior is what they\u0027re expecting.",
+      "parentUuid": "21332f5d_e2f6f207",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 66
+      },
+      "revId": "fdd86fa4b62972a18382d25290a51cd361188d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
