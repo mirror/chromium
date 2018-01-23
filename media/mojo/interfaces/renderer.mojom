@@ -11,6 +11,14 @@ import "mojo/common/unguessable_token.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "url/mojo/url.mojom";
 
+// Defines the types of renderers that can be hosted by a mojo Renderer.
+enum HostedRendererType {
+  // media::DefaultRenderer
+  kDefault,
+  // content::MediaPlayerRenderer
+  kMediaPlayer,
+};
+
 interface Renderer {
   // Initializes the Renderer with either one or more audio / video |streams|,
   // or a |media_url| executing the callback with whether the initialization

@@ -52,18 +52,19 @@ void MediaInterfaceFactory::CreateVideoDecoder(
 }
 
 void MediaInterfaceFactory::CreateRenderer(
+    media::mojom::HostedRendererType type,
     const std::string& audio_device_id,
     media::mojom::RendererRequest request) {
   if (!task_runner_->BelongsToCurrentThread()) {
     task_runner_->PostTask(
         FROM_HERE,
-        base::BindOnce(&MediaInterfaceFactory::CreateRenderer, weak_this_,
+        base::BindOnce(&MediaInterfaceFactory::CreateRenderer, weak_this_, type,
                        audio_device_id, std::move(request)));
     return;
   }
 
   DVLOG(1) << __func__;
-  GetMediaInterfaceFactory()->CreateRenderer(audio_device_id,
+  GetMediaInterfaceFactory()->CreateRenderer(type, audio_device_id,
                                              std::move(request));
 }
 

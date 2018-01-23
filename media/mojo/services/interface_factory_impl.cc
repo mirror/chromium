@@ -136,6 +136,7 @@ void InterfaceFactoryImpl::CreateVideoDecoder(
 }
 
 void InterfaceFactoryImpl::CreateRenderer(
+    media::mojom::HostedRendererType type,
     const std::string& audio_device_id,
     mojo::InterfaceRequest<mojom::Renderer> request) {
 #if BUILDFLAG(ENABLE_MOJO_RENDERER)
