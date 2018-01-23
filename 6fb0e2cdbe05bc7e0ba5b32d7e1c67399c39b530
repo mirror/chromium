@@ -88,6 +88,24 @@
       "revId": "6fb0e2cdbe05bc7e0ba5b32d7e1c67399c39b530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920ac9bb_6c859d15",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-23T19:50:15Z",
+      "side": 1,
+      "message": "\u003e We already use it for edit html.\n\nMaybe that is ok? Should we make it work in navigator only?",
+      "parentUuid": "c9c3865a_9fc09951",
+      "revId": "6fb0e2cdbe05bc7e0ba5b32d7e1c67399c39b530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
