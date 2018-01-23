@@ -24,6 +24,7 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_interrupt_reasons.h"
+#include "content/public/browser/download_request_utils.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -115,7 +116,11 @@ DownloadResourceHandler::DownloadResourceHandler(net::URLRequest* request,
                                                  DownloadSource download_source)
     : ResourceHandler(request),
       tab_info_(new DownloadTabInfo()),
-      core_(request, this, false, download_source) {
+      core_(request,
+            this,
+            false,
+            DownloadRequestUtils::GetRequestOriginFromRequest(request),
+            download_source) {
   // Do UI thread initialization for tab_info_ asap after
   // DownloadResourceHandler creation since the tab could be navigated
   // before StartOnUIThread gets called.  This is safe because deletion

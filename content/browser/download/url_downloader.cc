@@ -14,6 +14,7 @@
 #include "content/browser/download/download_request_handle.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_interrupt_reasons.h"
+#include "content/public/browser/download_request_utils.h"
 #include "content/public/browser/download_url_parameters.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
@@ -92,7 +93,11 @@ UrlDownloader::UrlDownloader(
     DownloadSource download_source)
     : request_(std::move(request)),
       delegate_(delegate),
-      core_(request_.get(), this, is_parallel_request, download_source),
+      core_(request_.get(),
+            this,
+            is_parallel_request,
+            DownloadRequestUtils::GetRequestOriginFromRequest(request.get()),
+            download_source),
       weak_ptr_factory_(this) {}
 
 UrlDownloader::~UrlDownloader() {
