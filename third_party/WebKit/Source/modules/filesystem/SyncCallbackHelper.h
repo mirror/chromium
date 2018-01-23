@@ -38,7 +38,6 @@
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/EntrySync.h"
 #include "modules/filesystem/FileEntry.h"
-#include "modules/filesystem/FileSystemCallback.h"
 #include "modules/filesystem/FileSystemCallbacks.h"
 #include "modules/filesystem/MetadataCallback.h"
 #include "platform/heap/Handle.h"
@@ -140,19 +139,15 @@ typedef SyncCallbackHelper<MetadataCallback, Metadata*, Metadata>
     MetadataSyncCallbackHelper;
 typedef SyncCallbackHelper<VoidCallback, EmptyType*, EmptyType>
     VoidSyncCallbackHelper;
-typedef SyncCallbackHelper<FileSystemCallback,
-                           DOMFileSystem*,
-                           DOMFileSystemSync>
-    FileSystemSyncCallbackHelper;
 
 // Helper class to support DOMFileSystemSync implementation.
 template <typename SuccessCallback, typename CallbackArg>
-class FileSystemCallbacksSyncHelper final
+class DOMFileSystemCallbacksSyncHelper final
     : public GarbageCollected<
-          FileSystemCallbacksSyncHelper<SuccessCallback, CallbackArg>> {
+          DOMFileSystemCallbacksSyncHelper<SuccessCallback, CallbackArg>> {
  public:
-  static FileSystemCallbacksSyncHelper* Create() {
-    return new FileSystemCallbacksSyncHelper();
+  static DOMFileSystemCallbacksSyncHelper* Create() {
+    return new DOMFileSystemCallbacksSyncHelper();
   }
 
   void Trace(blink::Visitor* visitor) { visitor->Trace(result_); }
@@ -182,11 +177,11 @@ class FileSystemCallbacksSyncHelper final
     void OnSuccess(CallbackArg* arg) override { helper_->result_ = arg; }
 
    private:
-    explicit SuccessCallbackImpl(FileSystemCallbacksSyncHelper* helper)
+    explicit SuccessCallbackImpl(DOMFileSystemCallbacksSyncHelper* helper)
         : helper_(helper) {}
-    Member<FileSystemCallbacksSyncHelper> helper_;
+    Member<DOMFileSystemCallbacksSyncHelper> helper_;
 
-    friend class FileSystemCallbacksSyncHelper;
+    friend class DOMFileSystemCallbacksSyncHelper;
   };
 
   class ErrorCallbackImpl final : public ErrorCallbackBase {
@@ -200,14 +195,14 @@ class FileSystemCallbacksSyncHelper final
     }
 
    private:
-    explicit ErrorCallbackImpl(FileSystemCallbacksSyncHelper* helper)
+    explicit ErrorCallbackImpl(DOMFileSystemCallbacksSyncHelper* helper)
         : helper_(helper) {}
-    Member<FileSystemCallbacksSyncHelper> helper_;
+    Member<DOMFileSystemCallbacksSyncHelper> helper_;
 
-    friend class FileSystemCallbacksSyncHelper;
+    friend class DOMFileSystemCallbacksSyncHelper;
   };
 
-  FileSystemCallbacksSyncHelper() = default;
+  DOMFileSystemCallbacksSyncHelper() = default;
 
   Member<CallbackArg> result_;
   FileError::ErrorCode error_code_ = FileError::ErrorCode::kOK;
@@ -217,7 +212,11 @@ class FileSystemCallbacksSyncHelper final
 };
 
 using EntryCallbacksSyncHelper =
-    FileSystemCallbacksSyncHelper<EntryCallbacks::OnDidGetEntryCallback, Entry>;
+    DOMFileSystemCallbacksSyncHelper<EntryCallbacks::OnDidGetEntryCallback,
+                                     Entry>;
+using FileSystemCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
+    FileSystemCallbacks::OnDidOpenFileSystemCallback,
+    DOMFileSystem>;
 
 }  // namespace blink
 
