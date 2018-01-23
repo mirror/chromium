@@ -34,6 +34,24 @@
       "revId": "de432102b73600e23ef0a93ac378db19cb13cab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562ad1f5_c8d28fd7",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T14:44:08Z",
+      "side": 1,
+      "message": "Oops, yeah forgot about needing to be in header (been playing with it in templates lately where everything is in headers)... better than nothing I guess.",
+      "parentUuid": "a013fb58_da30d789",
+      "revId": "de432102b73600e23ef0a93ac378db19cb13cab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
