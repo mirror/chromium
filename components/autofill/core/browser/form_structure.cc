@@ -1330,12 +1330,16 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
     std::set<ServerFieldType> seen_types;
     ServerFieldType previous_type = UNKNOWN_TYPE;
 
+    unsigned field_index = 0;
+    bool is_hidden_section = false;
+    base::string16 last_visible_section;
     for (const auto& field : fields_) {
       const ServerFieldType current_type = field->Type().GetStorableType();
       // All credit card fields belong to the same section that's different
       // from address sections.
       if (AutofillType(current_type).group() == CREDIT_CARD) {
         field->set_section("credit-card");
+        field_index++;
         continue;
       }
 
@@ -1347,13 +1351,23 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
       if (AutofillType(current_type).group() == PHONE_HOME)
         already_saw_current_type = false;
 
-      // Ignore non-focusable field and presentation role fields while inferring
-      // boundaries between sections.
       bool ignored_field =
           !field->is_focusable ||
           field->role == FormFieldData::ROLE_ATTRIBUTE_PRESENTATION;
-      if (ignored_field)
+
+      if (!ignored_field && is_hidden_section) {
+        current_section = last_visible_section;
+      }
+
+      // Start a new section by an ignored field, only if the next field is also
+      // already seen.
+      if (ignored_field &&
+          (is_hidden_section ||
+           !((field_index + 1) < fields_.size() &&
+             seen_types.count(
+                 fields_[field_index + 1]->Type().GetStorableType()) > 0))) {
         already_saw_current_type = false;
+      }
 
       // Some forms have adjacent fields of the same type.  Two common examples:
       //  * Forms with two email fields, where the second is meant to "confirm"
@@ -1368,8 +1382,13 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
         already_saw_current_type = false;
 
       if (current_type != UNKNOWN_TYPE && already_saw_current_type) {
+        if (ignored_field) {
+          is_hidden_section = true;
+          last_visible_section = current_section;
+        }
         // We reached the end of a section, so start a new section.
-        seen_types.clear();
+        if (!is_hidden_section)
+          seen_types.clear();
         current_section = field->unique_name();
       }
 
@@ -1383,9 +1402,11 @@ void FormStructure::IdentifySections(bool has_author_specified_sections) {
       if (!ignored_field) {
         seen_types.insert(current_type);
         previous_type = current_type;
+        is_hidden_section = false;
       }
 
       field->set_section(base::UTF16ToUTF8(current_section));
+      field_index++;
     }
   }
 
