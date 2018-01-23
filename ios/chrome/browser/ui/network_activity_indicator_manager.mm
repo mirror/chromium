@@ -39,6 +39,7 @@
 }
 
 - (void)startNetworkTaskForGroup:(NSString*)group {
+  NSLog(@"startNetworkTaskForGroup: %@", group);
   [self startNetworkTasks:1 forGroup:group];
 }
 
@@ -57,10 +58,14 @@
     DCHECK_GT(count, 0U);
   }
   count += numTasks;
+  NSLog(@"startNetworkTasks: new count: %lu", (unsigned long)count);
   [_groupCounts setObject:@(count) forKey:group];
   _totalCount += numTasks;
   if (_totalCount == numTasks) {
+    NSLog(@"call setNetworkActivityIndicatorVisible");
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    DCHECK(
+        [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible]);
   }
 }
 

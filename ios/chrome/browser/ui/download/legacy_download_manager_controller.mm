@@ -938,6 +938,7 @@ class DownloadContentDelegate : public URLFetcherDelegate {
 }
 
 - (void)startHeadFetch {
+  NSLog(@"startHeadFetch");
   _fetcher = URLFetcher::Create([self url], URLFetcher::HEAD,
                                 _headFetcherDelegate.get());
   _fetcher->SetRequestContext(
