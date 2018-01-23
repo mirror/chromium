@@ -199,6 +199,9 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info);
 
+  void OnIntrinsicSizingInfoOfChildChanged(
+      blink::WebIntrinsicSizingInfo sizing_info);
+
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
 
