@@ -129,3 +129,19 @@ component("gles2_utils") {
 
   all_dependent_configs = [ "//third_party/khronos:khronos_headers" ]
 }
+
+component("raster_utils") {
+  sources = [
+    "raster_cmd_utils.cc",
+    "raster_cmd_utils.h",
+    "raster_utils_export.h",
+  ]
+
+  defines = [ "RASTER_UTILS_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+  ]
+
+  all_dependent_configs = [ "//third_party/khronos:khronos_headers" ]
+}
