@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1dcb91a_0e6a182f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-23T08:44:56Z",
+      "side": 0,
+      "message": "These changes are made by the formatter.",
+      "range": {
+        "startLine": 1608,
+        "startChar": 4,
+        "endLine": 1608,
+        "endChar": 49
+      },
+      "revId": "2a49191b1a9604e0da6462a8d31c7aa4ced21dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
