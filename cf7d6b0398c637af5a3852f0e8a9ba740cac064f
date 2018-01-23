@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61e7929_876fc582",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-23T03:01:40Z",
+      "side": 1,
+      "message": "nit: can this be inlined?",
+      "revId": "cf7d6b0398c637af5a3852f0e8a9ba740cac064f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09706ce4_faebe6b1",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-23T03:01:40Z",
+      "side": 1,
+      "message": "nit: remove the #if !defined here I think",
+      "revId": "cf7d6b0398c637af5a3852f0e8a9ba740cac064f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
