@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6542aa57_c7f24459",
+        "filename": "ui/message_center/vector_icons/notification_inline_reply.icon",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-23T08:43:50Z",
+      "side": 1,
+      "message": "nit: 2018?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "85f3e8bc3bd3f7b3753c5ed1f0bf66a2be4d5b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052a28e6_82f710f2",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-23T08:43:50Z",
+      "side": 1,
+      "message": "Could you add \"const\" if these objects are instantiated in the ctor and are never re-instantiated?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 42
+      },
+      "revId": "85f3e8bc3bd3f7b3753c5ed1f0bf66a2be4d5b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
