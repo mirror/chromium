@@ -1085,6 +1085,12 @@ void AppListView::StartAnimationForState(AppListViewState target_state) {
     case AppListViewState::HALF:
       target_state_y = display_height - kHalfAppListHeight;
       break;
+
+    case AppListViewState::FULLSCREEN_ALL_APPS:
+    case AppListViewState::FULLSCREEN_SEARCH:
+      target_state_y = GetDisplayNearestView().work_area().y();
+      break;
+
     case AppListViewState::CLOSED:
       // The close animation is handled by the delegate.
       return;
