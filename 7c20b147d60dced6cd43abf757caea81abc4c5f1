@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1c4ebe8_28bcc8b5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T18:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86513ed_a1427c84",
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50aaed5_04946dea",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4a34105e_070fc8d5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T18:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50aaed5_04946dea",
+      "range": {
+        "startLine": 1055,
+        "startChar": 5,
+        "endLine": 1056,
+        "endChar": 58
+      },
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c6c3a1_8af3ccd8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-23T16:47:46Z",
       "side": 1,
       "message": "This doesn\u0027t apply the rect to anything, so I would go with CalculateOverflowClipRect, or DetermineOverflowClipRect.\n\nAnd is it genuinely public, or just needs to be protected?",
+      "range": {
+        "startLine": 1057,
+        "startChar": 14,
+        "endLine": 1057,
+        "endChar": 36
+      },
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c41b638_789cad72",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T18:04:42Z",
+      "side": 1,
+      "message": "Yes it\u0027s public, as it is called in PaintLayerClipper.",
+      "parentUuid": "19c6c3a1_8af3ccd8",
       "range": {
         "startLine": 1057,
         "startChar": 14,
