@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a887cbf5_d2d99db4",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "This return is useless. Remove it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3e1acf_67f3f6dc",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "No need for this local variable at this point. Just use:\nEXPECT_TRUE(DiceAccountsMenuTestProxy::GetDiceAccountsMenuWidget());",
+      "range": {
+        "startLine": 168,
+        "startChar": 9,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcce2145_1f5d1862",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "Ideally you should test here:\nEXPECT_FALSE(DiceAccountsMenuTestProxy::GetDiceAccountsMenuWidget());\n\nThis would also require you to remove DCHECK(DiceAccountsMenu::menu_bubble_); on line 22 of this file.",
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fff701_e498a0f1",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "Let\u0027s use foo@bar.com (I find that better to read for tests).",
+      "range": {
+        "startLine": 177,
+        "startChar": 19,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078577fa_bb51866a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "DCHECK(!dice_sync_promo_accounts_.empty());",
+      "range": {
+        "startLine": 655,
+        "startChar": 23,
+        "endLine": 655,
+        "endChar": 55
+      },
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908e54a4_32443fb9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T14:37:15Z",
+      "side": 1,
+      "message": "Let\u0027s extract dice_sync_promo_accounts_[0] to a local variable named dice_promo_default_account. You could also store this in an class variable if you want (named dice_promo_default_account_) and use it at line 656).",
+      "range": {
+        "startLine": 1077,
+        "startChar": 3,
+        "endLine": 1077,
+        "endChar": 0
+      },
+      "revId": "d766a3d22d1c7069eb3e1704deb70b37230403de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
