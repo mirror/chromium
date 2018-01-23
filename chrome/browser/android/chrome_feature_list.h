@@ -22,6 +22,7 @@ extern const base::Feature kCCTBackgroundTab;
 extern const base::Feature kCCTExternalLinkHandling;
 extern const base::Feature kCCTPostMessageAPI;
 extern const base::Feature kCCTRedirectPreconnect;
+extern const base::Feature kChromeDuplexFeature;
 extern const base::Feature kChromeHomeFeature;
 extern const base::Feature kChromeHomeBottomNavLabels;
 extern const base::Feature kChromeHomeClearUrlOnOpen;
