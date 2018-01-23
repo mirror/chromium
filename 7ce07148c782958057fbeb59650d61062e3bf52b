@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcfc7fb2_e50b085e",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T00:07:05Z",
+      "side": 1,
+      "message": "ChildProcessHost::kInvalidUniqueID",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "7ce07148c782958057fbeb59650d61062e3bf52b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc66840_ca8ca229",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T00:07:05Z",
+      "side": 1,
+      "message": "Can this be gone together with process?",
+      "revId": "7ce07148c782958057fbeb59650d61062e3bf52b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
