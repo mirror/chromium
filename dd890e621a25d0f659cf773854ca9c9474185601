@@ -121,6 +121,24 @@
       "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d76d15c_dd87be64",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T23:59:01Z",
+      "side": 1,
+      "message": "Ack - thanks for explaining.",
+      "parentUuid": "b402b8ca_62b1c30a",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
