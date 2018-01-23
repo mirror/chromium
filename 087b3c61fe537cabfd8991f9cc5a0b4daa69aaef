@@ -164,6 +164,24 @@
       "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50349f82_60529a02",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-23T19:30:55Z",
+      "side": 1,
+      "message": "Think this is fine then. (I was suspecting a similar UI flow where exportPasswords() on its own wouldn\u0027t be enough, wanted to make sure).\n\nOne small request:\n\nCan you add a quick comment above this function that hints about the two tab case? It would certainly improve readability and avoid any confusion.",
+      "parentUuid": "8baacd38_5a061e63",
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
