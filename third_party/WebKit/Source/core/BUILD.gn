@@ -1988,6 +1988,11 @@ jumbo_source_set("unit_tests") {
     "loader/resource/MockImageResourceObserver.cpp",
     "loader/resource/MockImageResourceObserver.h",
     "loader/resource/MultipartImageResourceParserTest.cpp",
+
+    # DO NOT SUBMIT until removing this file and replacing with a proper dep
+    "messaging/BlinkCloneableMessageStructTraits.cpp",
+    "messaging/BlinkTransferableMessageStructTraits.cpp",
+    "messaging/BlinkTransferableMessageStructTraitsTest.cpp",
     "origin_trials/OriginTrialContextTest.cpp",
     "page/AutoscrollControllerTest.cpp",
     "page/ChromeClientImplTest.cpp",
@@ -2113,6 +2118,9 @@ jumbo_source_set("unit_tests") {
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/Source/core/editing:unit_tests",
+  ]
+  public_deps = [
+    "//third_party/WebKit/common:mojo_bindings_blink",
   ]
 
   # FIXME: Enable mojo unittests on Android after fixing data dependency.
