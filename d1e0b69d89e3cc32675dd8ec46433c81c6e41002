@@ -16,6 +16,24 @@
       "revId": "d1e0b69d89e3cc32675dd8ec46433c81c6e41002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474fe137_b1709db3",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Window/window-closed-during-layout-dump.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-23T21:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0dc88ac_7ac2b4cf",
+      "revId": "d1e0b69d89e3cc32675dd8ec46433c81c6e41002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
