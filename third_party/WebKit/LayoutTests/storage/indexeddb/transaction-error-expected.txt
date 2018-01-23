@@ -1,4 +1,6 @@
-CONSOLE ERROR: line 82: Uncaught Error: This should *NOT* be caught!
+CONSOLE ERROR: line 1: ConstraintError: Key already exists in the object store.
+CONSOLE ERROR: line 84: Uncaught Error: This should *NOT* be caught!
+CONSOLE ERROR: line 1: ConstraintError: Key already exists in the object store.
 Test IDBTransaction.error cases.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".

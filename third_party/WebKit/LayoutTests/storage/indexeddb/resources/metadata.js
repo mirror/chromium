@@ -70,11 +70,13 @@ function thirdOpen()
         debug("Connection's properties should be reverted on abort");
         evalAndLog("trans.abort()");
     };
-    request.onerror = function() {
+    request.onerror = function(evt) {
+        evt.preventDefault();
+
         debug("Connection's properties should be snapshotted on close");
         evalAndLog("connection3.close()");
         fourthOpen();
-    }
+    };
 }
 
 function fourthOpen()

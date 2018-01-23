@@ -62,6 +62,7 @@ class ExceptionState;
 class IDBCursor;
 struct IDBDatabaseMetadata;
 class IDBValue;
+class SourceLocation;
 
 class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
                                   public ActiveScriptWrappable<IDBRequest>,
@@ -396,7 +397,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   IndexedDB::CursorType cursor_type_ = IndexedDB::kCursorKeyAndValue;
   WebIDBCursorDirection cursor_direction_ = kWebIDBCursorDirectionNext;
   // When a cursor is continued/advanced, |result_| is cleared and
-  // |pendingCursor_| holds it.
+  // |pending_cursor_| holds it.
   Member<IDBCursor> pending_cursor_;
   // New state is not applied to the cursor object until the event is
   // dispatched.
@@ -409,6 +410,8 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   bool did_fire_upgrade_needed_event_ = false;
   bool prevent_propagation_ = false;
   bool result_dirty_ = true;
+
+  std::unique_ptr<SourceLocation> creation_source_;
 
   // Transactions should be aborted after event dispatch if an exception was
   // not caught. This is cleared before dispatch, set by a call to

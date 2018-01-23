@@ -5,7 +5,7 @@ if (this.importScripts) {
 
 description("Test event propogation on IDBTransaction.");
 
-indexedDBTest(prepareDatabase, startTest);
+indexedDBTest(prepareDatabase, verifyAbort);
 function prepareDatabase()
 {
     db = event.target.result;
@@ -16,7 +16,7 @@ function prepareDatabase()
     request.onerror = unexpectedErrorCallback;
 }
 
-function startTest()
+function verifyAbort()
 {
     debug("Verifing abort");
     trans = evalAndLog("trans = db.transaction(['storeName'], 'readwrite')");
@@ -28,6 +28,7 @@ function startTest()
     evalAndLog("db.addEventListener('complete', unexpectedCompleteCallback, false)");
     store = evalAndLog("store = trans.objectStore('storeName')");
     evalAndLog("store.add({x: 'value', y: 'zzz'}, 'key')");
+    expectError();
     dbCaptureFired = false;
     abortFired = false;
     dbBubbleFired1 = false;
@@ -67,6 +68,7 @@ function dbAbortBubbleCallback()
     shouldBe("event.target", "trans");
     shouldBe("event.currentTarget", "db");
     dbBubbleFired1 = true;
+
     debug("");
     debug("Verifing success.");
     trans = evalAndLog("trans = db.transaction(['storeName'], 'readwrite')");

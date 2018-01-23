@@ -40,12 +40,17 @@
             assert_true(store.indexNames.contains("index"), "second indexNames contains index");
             assert_true(store.indexNames.contains("index2"), "second indexNames contains index2");
 
-            store.add({i: "Odin"}, 3);
-            store.put({i: "Sicking"}, 2);
+            // Prevent propagating to window.onerror.
+            var prevent = function(e) { e.preventDefault(); }
+
+            store.add({i: "Odin"}, 3).onerror = prevent;
+            store.put({i: "Sicking"}, 2).onerror = prevent;
 
             open_rq2.transaction.abort();
         });
         open_rq2.onerror = this.step_func(function(e) {
+            e.preventDefault();  // Prevent propagating to window.onerror.
+
             assert_equals(db2.version, 9, "db2.version after error");
             assert_true(db2.objectStoreNames.contains("store"), "objectStoreNames contains store after error");
             assert_false(db2.objectStoreNames.contains("store2"), "objectStoreNames not contains store2 after error");

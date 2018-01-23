@@ -102,6 +102,8 @@ function errorWhenTryingLowVersion(evt)
 {
     preamble(evt);
     debug("request.error.message = " + request.error.message);
+    evt.preventDefault();
+
     evalAndLog("request = indexedDB.open(dbname, 4)");
     request.onblocked = unexpectedBlockedCallback;
     request.onerror = unexpectedErrorCallback;

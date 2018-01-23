@@ -4,6 +4,7 @@
 <script src="/resources/testharnessreport.js"></script>
 <script src="support.js"></script>
 <script>
+setup({allow_uncaught_exception: true});
 
 function with_stores_test(store_names, open_func, description) {
     indexeddb_test(function(t, db, tx) {

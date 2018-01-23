@@ -34,6 +34,7 @@
 #include <memory>
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/SourceLocation.h"
+#include "core/CoreExport.h"
 #include "core/dom/events/Event.h"
 #include "core/events/ErrorEventInit.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -42,7 +43,7 @@
 
 namespace blink {
 
-class ErrorEvent final : public Event {
+class CORE_EXPORT ErrorEvent final : public Event {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

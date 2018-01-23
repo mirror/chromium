@@ -16,7 +16,7 @@ var isJsTest = true;
 
 var description, debug, successfullyParsed, getOrCreateTestElement;
 
-var expectingError; // set by shouldHaveError()
+var expectingError; // set by expectError()
 var expectedErrorMessage; // set by onerror when expectingError is true
 var unexpectedErrorMessage; // set by onerror when expectingError is not true
 
@@ -119,7 +119,8 @@ var unexpectedErrorMessage; // set by onerror when expectingError is not true
             if (self.expectingError) {
                 self.expectedErrorMessage = message;
                 self.expectingError = false;
-                return;
+                // In workers, consume expected error so window doesn't fail the test.
+                return isWorker();
             }
             self.unexpectedErrorMessage = message;
             if (self.jsTestIsAsync) {
@@ -715,7 +716,7 @@ function shouldBeNow(a, delta)
 function expectError()
 {
     if (expectingError) {
-        testFailed("shouldHaveError() called twice before an error occurred!");
+        testFailed("expectError() called twice before an error occurred!");
     }
     expectingError = true;
 }
@@ -739,6 +740,22 @@ function shouldHaveHadError(message)
     }
 
     testFailed("expectError() not called before shouldHaveHadError()");
+}
+
+// Waits for the global 'onerror' handler to fire, verifies the
+// message with a regex, then calls another function. e.g.
+// waitForError(/AbortError/, nextTestCase);
+function waitForError(regex, continuation)
+{
+    var original_onerror = self.onerror;
+    self.onerror = function(message) {
+        self.onerror = original_onerror;
+        if (regex.test(message))
+            testPassed("Got expected error: '" + message + "'");
+        else
+            testFailed("Unexpected error '" + message + "', expected: " + String(regex));
+        continuation();
+    };
 }
 
 // With Oilpan tests that rely on garbage collection need to go through
