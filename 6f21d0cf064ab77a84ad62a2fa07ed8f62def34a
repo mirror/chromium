@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16eb3731_e99e532a",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T02:55:57Z",
+      "side": 1,
+      "message": "true",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
