@@ -706,6 +706,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
 // Vertical offset for fullscreen toolbar.
 @property(nonatomic, strong) NSLayoutConstraint* primaryToolbarOffsetConstraint;
+// Bottom constraint for fullscreen toolbar.
+@property(nonatomic, strong) NSLayoutConstraint* primaryToolbarBottomConstraint;
 // Y-dimension offset for placement of the header.
 @property(nonatomic, readonly) CGFloat headerOffset;
 // Height of the header view for the tab model's current tab.
@@ -941,6 +943,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 @synthesize primaryToolbarCoordinator = _primaryToolbarCoordinator;
 @synthesize secondaryToolbarCoordinator = _secondaryToolbarCoordinator;
 @synthesize primaryToolbarOffsetConstraint = _primaryToolbarOffsetConstraint;
+@synthesize primaryToolbarBottomConstraint = _primaryToolbarBottomConstraint;
 @synthesize toolbarInterface = _toolbarInterface;
 @synthesize imageSaver = _imageSaver;
 // DialogPresenterDelegate property
@@ -1615,6 +1618,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (IsIPhoneX()) {
     [self setUpViewLayout:NO];
   }
+  self.primaryToolbarBottomConstraint.constant =
+      kToolbarHeight + self.topLayoutGuide.length;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -2020,11 +2025,17 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   [self.legacyToolbarCoordinator adjustToolbarHeight];
 
+  UIView* primaryView = self.primaryToolbarCoordinator.viewController.view;
   self.primaryToolbarOffsetConstraint =
-      [self.primaryToolbarCoordinator.viewController.view.topAnchor
-          constraintEqualToAnchor:topAnchor];
+      [primaryView.topAnchor constraintEqualToAnchor:topAnchor];
+  CGFloat primaryToolbarHeight = kToolbarHeight + self.topLayoutGuide.length;
+  self.primaryToolbarBottomConstraint =
+      [primaryView.bottomAnchor constraintEqualToAnchor:primaryView.topAnchor
+                                               constant:primaryToolbarHeight];
+
   [NSLayoutConstraint activateConstraints:@[
     self.primaryToolbarOffsetConstraint,
+    self.primaryToolbarBottomConstraint,
     [self.primaryToolbarCoordinator.viewController.view.leadingAnchor
         constraintEqualToAnchor:[self view].leadingAnchor],
     [self.primaryToolbarCoordinator.viewController.view.trailingAnchor

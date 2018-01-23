@@ -342,9 +342,6 @@
 // Sets the constraints for the different subviews.
 - (void)setConstraints {
   self.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.bottomAnchor constraintEqualToAnchor:self.topSafeAnchor
-                                    constant:kToolbarHeight]
-      .active = YES;
 
   // ProgressBar constraints.
   [NSLayoutConstraint activateConstraints:@[
