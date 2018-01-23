@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8598fc_68bd7e23",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T22:21:36Z",
+      "side": 1,
+      "message": "Instead of keeping track of this all along, you can use this to get the index when you need it:\n\nauto field_index \u003d \u0026field - \u0026fields_[0];",
+      "range": {
+        "startLine": 1333,
+        "startChar": 13,
+        "endLine": 1333,
+        "endChar": 24
+      },
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b9fa36_0e11b173",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T22:21:36Z",
+      "side": 1,
+      "message": "Can you add a comment along the lines of:\n\nThis is the first visible field after a hidden section (\u003e2 hidden fields). Associate it with the last visible \n\nif its type was not already present in the section.",
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9185044e_8da4dc3f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T22:21:36Z",
+      "side": 1,
+      "message": "Mention that we keep track of seen_types if the new section is hidden because the next visible field might be part of the visible section if the type has not already been seen.",
+      "range": {
+        "startLine": 1389,
+        "startChar": 67,
+        "endLine": 1389,
+        "endChar": 0
+      },
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
