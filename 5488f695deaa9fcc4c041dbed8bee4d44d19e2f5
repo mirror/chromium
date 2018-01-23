@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9392b1d8_c1083ba5",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T18:53:28Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think the helper functions that are part of this class are worth much. I think it would be easier to ready if you just make this a struct and keep the logic to manipulate it at the current call sites. ie.\n\nstruct EventTimes {\n  std::vector\u003cbase::TimeTicks\u003e motion_timestamps;\n  base::TimeTicks last_pointer_timestamp;\n  base::TimeTicks last_touch_timestamp;\n};",
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9211bd2a_5124e30d",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T18:53:28Z",
+      "side": 1,
+      "message": "Lower case names are reserved for getter/setters in chromium. This should be PushPointerTimestamp if kept but I don\u0027t think it\u0027s needed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4873af87_33da75c8",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T18:53:28Z",
+      "side": 1,
+      "message": "nit: maybe |motion_timestamps| as name based on what it contains instead of type is preferred?",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246700cc_f2cd9ce2",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T18:53:28Z",
+      "side": 1,
+      "message": "nit: DCHECK_NE, but I\u0027m not sure this check is worth much.. I\u0027d just remove this helper and do \"event_times-\u003emotion_timestamps.push_back(event_times-\u003elast_touch_timestamp)\" below..",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfb2609_009ee5d5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T18:53:28Z",
+      "side": 1,
+      "message": "virtual, to ensure that derived dtor is always used",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 23
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
