@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "ba1d6009_a060d8d3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T11:54:45Z",
+      "side": 1,
+      "message": "I would suggest ordering these checks so the origin check (which is more expensive, since it requires creating temporaries and such) happens last.",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "689d0247_bb073f50",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -102,6 +119,47 @@
       "side": 1,
       "message": "I agree, and that\u0027s why I wanted to use the `frame_tree_node_` URL when possible. For the sake of landing quickly and because it will most likely be fine in 99% of cases, can we stick with this and I will do the changes in a follow-up? I feel that the longer we wait, the harder it will be to merge and today middle click will never work as expected instead of not working in rare edge cases.",
       "parentUuid": "786765fa_054c15e6",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f92fc1_d7776843",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T11:54:45Z",
+      "side": 1,
+      "message": "Well, it\u0027s because this is going to M65 that I\u0027m nervous though. \u003d) I guess this is OK, but we should try to clean it up. It\u0027s a bit messy and hard to understand down the road.",
+      "parentUuid": "e4e0b15e_a5218fea",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4fa867_1fc4b62e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T11:54:45Z",
+      "side": 1,
+      "message": "Similarly, I\u0027d suggest checking (navigation_handle_-\u003eHasUserGesture() \u0026\u0026 navigation_handle_-\u003eIsRendererInitiated()) || handle_navigation_-\u003eWasStartedFromContextMenu() in the outer if, and then check the origin in the inner if.",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 821,
+        "endChar": 43
+      },
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
