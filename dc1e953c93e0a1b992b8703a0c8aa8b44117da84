@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63495a78_ea3c4eae",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done.  Thanks for all the thoughts!  I appreciate the extra alternatives, for future reference. :)",
+      "parentUuid": "434e130e_b927b155",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7c2782_c13440df",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b352ea8_8a483812",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Oooh, didn\u0027t know we had a strcat.  Done.",
+      "parentUuid": "0b7c2782_c13440df",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0e34db8_48e95d02",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7c0f50_e906be94",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab2edfd_5acd526d",
         "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7915191d_731c820b",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Good to know!  Done.",
+      "parentUuid": "eab2edfd_5acd526d",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a726ada0_05314b2a",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "I slightly prefer having a single return statement, when it\u0027s not a large LOC difference.  We also get RVO this way, not that it really matters with v8::Local...",
+      "parentUuid": "867b2e15_42015693",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820a616c_761c30d8",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e49614a_3785418a",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "It should be currently, and I\u0027ve added comments above the method declaration.",
+      "parentUuid": "820a616c_761c30d8",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c46d8bf4_d16dced7",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b247536e_6ad0a50f",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0128048c_0ef695f1",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0212d4a4_42dcce83",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Ooh, good point about the iterator.  That definitely could happen.  I\u0027ve fixed this to just make a copy of the PortId here, and erase the iterator before calling CompleteRequest().  I\u0027ve also added some tests that try calling sendMessage from fun times (the listener callback and the reply callback).\n\n\u003e Further, if !IsContextValid, is it possible that OneTimeMessageContextData has also been destructed?\n\nIt shouldn\u0027t be - IsContextValid() will return false starting from WillReleaseScriptContext() (which happens before gin data is deleted, I\u0027m pretty sure).",
+      "parentUuid": "0128048c_0ef695f1",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c06b8c2_e0f26043",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -149,6 +293,24 @@
       "writtenOn": "2018-01-23T16:27:35Z",
       "side": 1,
       "message": "This API is kinda unfortunate insofar as it seems to explicitly permit cross-world wrapper leakage, IIUC. If the Blink-side checking ever gets more aggressive, we\u0027ll have to add special cases to avoid this blowing up. :/\n\nBut we\u0027re stuck with it. :)",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc6d0ba_f1a6a60e",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Yeah, this is explicitly designed to let different worlds interact with each other, so that an extension popup can synchronously access its background page, etc.  I\u0027m not keen on it, but it is something we have to continue allowing. :(",
+      "parentUuid": "0c06b8c2_e0f26043",
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "2d3435e2_8f6128b2",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8dedb0_aba99b24",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a6ff38_f499dd55",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -186,6 +366,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea8dbf9_362d5bee",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "This is called synchronously from JS and we use the current context to get the ScriptContext, so this should be right.  I\u0027ve added a DCHECK here for documentation, though.",
+      "parentUuid": "b2a6ff38_f499dd55",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "3339b597_5bffc6e3",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Agreed :(  I\u0027ve added a lamenting comment.",
+      "parentUuid": "a755dbf2_c16c412e",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11dc8dfc_3162157a",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -220,6 +436,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73dcf26_4591efd0",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done.  One downside is that now we need multiple if-statements (one for the ToLocal() failing [thrown] and one for the \"not a function\").",
+      "parentUuid": "11dc8dfc_3162157a",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "7c0d5114_634ecd3e",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "I *think* only during the load. Adjusted.",
+      "parentUuid": "b956b5c2_ee994aa1",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "206c9b58_d817588c",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -254,6 +506,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8667c7_e1aaf4db",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T21:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206c9b58_d817588c",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
