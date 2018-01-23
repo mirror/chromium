@@ -46,6 +46,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c561e1c_0a195ffe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-23T18:39:49Z",
+      "side": 1,
+      "message": "sure that could mitigate my concerns. I think our startup flows would still be rather complex but we could clean it up in similar manner as you suggested in https://chromium-review.googlesource.com/c/chromium/src/+/804215/3",
+      "parentUuid": "fae82029_6a6b2cd3",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
