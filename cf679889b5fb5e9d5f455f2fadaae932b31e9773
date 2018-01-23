@@ -22,6 +22,30 @@
       "revId": "cf679889b5fb5e9d5f455f2fadaae932b31e9773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615d3740_800e1d7f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-23T05:13:42Z",
+      "side": 1,
+      "message": "In our use case it should refer to a filename that includes the extension, e.g., \"dummy_config.pbtxt\". But an application can also interpret this field in other ways.",
+      "parentUuid": "823e07f9_6108f37e",
+      "range": {
+        "startLine": 124,
+        "startChar": 15,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "cf679889b5fb5e9d5f455f2fadaae932b31e9773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
