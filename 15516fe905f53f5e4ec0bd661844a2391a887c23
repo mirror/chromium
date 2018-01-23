@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "9b844c4b_97b4f1a9",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T22:43:53Z",
+      "side": 1,
+      "message": "And in the stack trace posted in the other comment you can see that the content::WebContentsImpl::WasShown() event comes from TabStripModel::NotifyIfActiveTabChanged, which get called in TabStripModel::DetachWebContentsAt *after* calling TabDetachedAt on the observers. So it looks like a tab change its visibility while being destroyed and after the TabStripModel telling its observer that the tab has been detached. \n\nThis is maybe a bug in the TabStripModel::DetachWebContentsAt logic, I\u0027ll check with the owners. In the meantime it just means that I should just make sure that the observer for a WebContents get deleted as soon as we lost track of its tab ID (i.e. when we consider it removed). This mean that we\u0027ll miss this visibility event but it\u0027s not clear whether or not it matter so much...",
+      "parentUuid": "d5dc0f4d_fb55273f",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043c46d5_d72d877e",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 9
