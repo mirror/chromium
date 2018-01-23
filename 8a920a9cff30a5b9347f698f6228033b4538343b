@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1356cd0c_ccc71d00",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2018-01-23T02:15:11Z",
+      "side": 1,
+      "message": "Looks like the Create() API is used to create a new shared buffer.\nIn this case, we want to use the exist shared buffer allocated in chrome os and pass file descriptor here to recreate a mojo shared buffer handle.",
+      "parentUuid": "ba6173a0_cfef4b26",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffa47c81_dee3c589",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 22
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8d008f13_5cbd36a2",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2018-01-23T02:15:11Z",
+      "side": 1,
+      "message": "No, I don\u0027t plan to implement this.\nFor other platform, they use Decode() directly, this API only be used in chrome os because of mojo version compatibility.",
+      "parentUuid": "ffa47c81_dee3c589",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6e1c161_d4db104a",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 22
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-22T18:41:22Z",
       "side": 1,
       "message": "Will this work?\n\nDCHECK(iter !\u003d decode_cb_map_.end());",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b3c574_5412d633",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2018-01-23T02:15:11Z",
+      "side": 1,
+      "message": "Yes it works. thanks.",
+      "parentUuid": "b6e1c161_d4db104a",
       "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
