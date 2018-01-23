@@ -1266,16 +1266,12 @@
     },
     {
       name: "display",
-      property_methods: ["CSSValueFromComputedStyleInternal"],
-      field_template: 'keyword',
-      keywords: [
-        "inline", "block", "list-item", "inline-block", "table", "inline-table",
-        "table-row-group", "table-header-group", "table-footer-group",
-        "table-row", "table-column-group", "table-column", "table-cell",
-        "table-caption", "-webkit-box", "-webkit-inline-box", "flex",
-        "inline-flex", "grid", "inline-grid", "contents", "flow-root", "none"
-      ],
-      default_value: "inline",
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
+      field_size: 5,
+      field_template: "primitive",
+      default_value: "EDisplay::kInline",
+      type_name: "EDisplay",
+      custom_apply_functions_all: true,
     },
     {
       name: "dominant-baseline",
