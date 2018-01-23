@@ -957,9 +957,12 @@ source_set("unit_tests") {
 
   configs += [ "//build/config:precompiled_headers" ]
 
+  data_deps = [
+    "//net/tools/testserver:testserver_py",
+  ]
+
   data = [
     "//chrome/test/data/sync/",
-    "//net/tools/testserver/",
     "//third_party/pyftpdlib/",
     "//third_party/pywebsocket/",
     "//third_party/tlslite/",

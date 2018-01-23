@@ -949,8 +949,8 @@ test("content_browsertests") {
   }
 
   if (is_linux || is_mac || is_win) {
+    data_deps += [ "//net/tools/testserver:testserver_py" ]
     data += [
-      "//net/tools/testserver/",
       "//ppapi/tests/test_case.html",
       "//ppapi/tests/test_page.css",
       "//ppapi/tests/test_url_loader_data/",

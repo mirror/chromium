@@ -229,7 +229,6 @@ test("extensions_unittests") {
 test("extensions_browsertests") {
   data = [
     "//extensions/test/data/",
-    "//net/tools/testserver/",
     "//third_party/pyftpdlib/",
     "//third_party/pywebsocket/",
     "//third_party/tlslite/",
@@ -242,6 +241,7 @@ test("extensions_browsertests") {
   ]
 
   data_deps = [
+    "//net/tools/testserver:testserver_py",
     "//third_party/mesa:osmesa",
   ]
 }

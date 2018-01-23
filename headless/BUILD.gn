@@ -713,11 +713,14 @@ test("headless_browsertests") {
     "test/test_url_request_job.h",
   ]
 
+  data_deps = [
+    "//net/tools/testserver:testserver_py",
+  ]
+
   data = [
     "lib/dom_tree_extraction_expected_nodes.txt",
     "lib/dom_tree_extraction_expected_styles.txt",
     "$root_out_dir/headless_lib.pak",
-    "//net/tools/testserver/",
     "//third_party/pyftpdlib/",
     "//third_party/pywebsocket/",
     "//third_party/tlslite/",
@@ -725,9 +728,7 @@ test("headless_browsertests") {
   ]
 
   if (is_mac) {
-    data_deps = [
-      ":mac_helpers",
-    ]
+    data_deps += [ ":mac_helpers" ]
   }
 
   defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]

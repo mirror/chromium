@@ -961,6 +961,7 @@ test("browser_tests") {
 
     # Runtime dependencies
     data_deps += [
+      "//net/tools/testserver:testserver_py",
       "//ppapi:ppapi_tests",
       "//ppapi:power_saver_test_plugin",
       "//remoting/webapp:browser_test_resources",
@@ -981,7 +982,6 @@ test("browser_tests") {
       "//content/test/data/",
       "//google_apis/test/",
       "//media/test/data/",
-      "//net/tools/testserver/",
       "//ppapi/tests/test_case.html",
       "//ppapi/tests/test_case.html.mock-http-headers",
       "//ppapi/tests/test_page.css",
@@ -2602,9 +2602,10 @@ test("unit_tests") {
   configs += [ "//build/config:precompiled_headers" ]
 
   data_deps = [
-    "//testing/buildbot/filters:unit_tests_filters",
     "//chrome/test/data/media/engagement/preload:generate_preload_list",
     "//chrome/test/data/media/engagement/preload:test_data",
+    "//net/tools/testserver:testserver_py",
+    "//testing/buildbot/filters:unit_tests_filters",
   ]
 
   data = [
@@ -2614,7 +2615,6 @@ test("unit_tests") {
     "//components/test/data/",
     "//extensions/test/data/",
     "//google_apis/test/data/",
-    "//net/tools/testserver/",
     "//third_party/accessibility-audit/axs_testing.js",
     "//third_party/chaijs/chai.js",
     "//third_party/pyftpdlib/",
@@ -4518,6 +4518,7 @@ if (is_android) {
     configs += [ "//build/config:precompiled_headers" ]
 
     data_deps = [
+      "//net/tools/testserver:testserver_py",
       "//testing/buildbot/filters:interactive_ui_tests_filters",
     ]
 
@@ -4525,7 +4526,6 @@ if (is_android) {
       "data/",
       "//chrome/third_party/mock4js/",
       "//content/test/data/",
-      "//net/tools/testserver/",
       "//ppapi/tests/test_case.html",
       "//ppapi/tests/test_case.html.mock-http-headers",
       "//ppapi/tests/test_page.css",
@@ -5169,7 +5169,6 @@ if (!is_android && !is_fuchsia) {
 
     data = [
       "//chrome/test/data/sync/",
-      "//net/tools/testserver/",
       "//components/sync/tools/testserver/",
       "//third_party/pyftpdlib/",
       "//third_party/pywebsocket/",
@@ -5212,6 +5211,7 @@ if (!is_android && !is_fuchsia) {
     ]
 
     data_deps = [
+      "//net/tools/testserver:testserver_py",
       "//third_party/mesa:osmesa",
     ]
 
