@@ -30,7 +30,7 @@ class InterfacePtrInfo {
     other.version_ = 0u;
   }
 
-  ~InterfacePtrInfo() {}
+  ~InterfacePtrInfo() = default;
 
   InterfacePtrInfo& operator=(InterfacePtrInfo&& other) {
     if (this != &other) {

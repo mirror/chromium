@@ -49,7 +49,7 @@ class MOJO_CPP_SYSTEM_EXPORT SharedBufferHandle : public Handle {
     READ_ONLY,
   };
 
-  SharedBufferHandle() {}
+  SharedBufferHandle() = default;
   explicit SharedBufferHandle(MojoHandle value) : Handle(value) {}
 
   // Copying and assignment allowed.

@@ -45,7 +45,7 @@ class TestInterfaceImpl : public TestInterface {
  public:
   explicit TestInterfaceImpl(TestInterfaceRequest request)
       : binding_(this, std::move(request)) {}
-  ~TestInterfaceImpl() override {}
+  ~TestInterfaceImpl() override = default;
 
   // TestInterface implementation:
   void Echo(int32_t value, const EchoCallback& callback) override {

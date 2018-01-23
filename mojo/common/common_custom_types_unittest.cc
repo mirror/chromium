@@ -173,8 +173,8 @@ class TestTextDirectionImpl : public TestTextDirection {
 
 class CommonCustomTypesTest : public testing::Test {
  protected:
-  CommonCustomTypesTest() {}
-  ~CommonCustomTypesTest() override {}
+  CommonCustomTypesTest() = default;
+  ~CommonCustomTypesTest() override = default;
 
  private:
   base::MessageLoop message_loop_;

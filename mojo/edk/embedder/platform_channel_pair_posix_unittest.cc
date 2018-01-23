@@ -42,8 +42,8 @@ void WaitReadable(PlatformHandle h) {
 
 class PlatformChannelPairPosixTest : public testing::Test {
  public:
-  PlatformChannelPairPosixTest() {}
-  ~PlatformChannelPairPosixTest() override {}
+  PlatformChannelPairPosixTest() = default;
+  ~PlatformChannelPairPosixTest() override = default;
 
   void SetUp() override {
     // Make sure |SIGPIPE| isn't being ignored.

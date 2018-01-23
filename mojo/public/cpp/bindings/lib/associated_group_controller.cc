@@ -8,7 +8,7 @@
 
 namespace mojo {
 
-AssociatedGroupController::~AssociatedGroupController() {}
+AssociatedGroupController::~AssociatedGroupController() = default;
 
 ScopedInterfaceEndpointHandle
 AssociatedGroupController::CreateScopedInterfaceEndpointHandle(InterfaceId id) {

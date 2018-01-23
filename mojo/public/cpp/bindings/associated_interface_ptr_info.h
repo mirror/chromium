@@ -31,7 +31,7 @@ class AssociatedInterfacePtrInfo {
                              uint32_t version)
       : handle_(std::move(handle)), version_(version) {}
 
-  ~AssociatedInterfacePtrInfo() {}
+  ~AssociatedInterfacePtrInfo() = default;
 
   AssociatedInterfacePtrInfo& operator=(AssociatedInterfacePtrInfo&& other) {
     if (this != &other) {

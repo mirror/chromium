@@ -35,7 +35,7 @@ class AssociatedInterfacePtr {
   using Proxy = typename Interface::Proxy_;
 
   // Constructs an unbound AssociatedInterfacePtr.
-  AssociatedInterfacePtr() {}
+  AssociatedInterfacePtr() = default;
   AssociatedInterfacePtr(decltype(nullptr)) {}
 
   AssociatedInterfacePtr(AssociatedInterfacePtr&& other) {
@@ -55,7 +55,7 @@ class AssociatedInterfacePtr {
     return *this;
   }
 
-  ~AssociatedInterfacePtr() {}
+  ~AssociatedInterfacePtr() = default;
 
   // Sets up this object as the client side of an associated interface.
   // Calling with an invalid |info| has the same effect as reset(). In this

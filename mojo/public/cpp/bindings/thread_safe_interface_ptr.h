@@ -343,7 +343,7 @@ class ThreadSafeInterfacePtrBase
    private:
     friend struct PtrWrapperDeleter;
 
-    ~PtrWrapper() {}
+    ~PtrWrapper() = default;
 
     void Bind(PtrInfoType ptr_info) {
       DCHECK(task_runner_->RunsTasksInCurrentSequence());
@@ -385,7 +385,7 @@ class ThreadSafeInterfacePtrBase
     }
   };
 
-  ~ThreadSafeInterfacePtrBase() {}
+  ~ThreadSafeInterfacePtrBase() = default;
 
   const std::unique_ptr<ThreadSafeForwarder<InterfaceType>> forwarder_;
 

@@ -128,7 +128,7 @@ class InlinedStructPtr {
   InlinedStructPtr() : state_(NIL) {}
   InlinedStructPtr(decltype(nullptr)) : state_(NIL) {}
 
-  ~InlinedStructPtr() {}
+  ~InlinedStructPtr() = default;
 
   InlinedStructPtr& operator=(decltype(nullptr)) {
     reset();

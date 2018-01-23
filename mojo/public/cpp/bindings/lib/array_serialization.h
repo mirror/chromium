@@ -38,7 +38,7 @@ class ArrayIterator<Traits, MaybeConstUserType, true> {
 
   explicit ArrayIterator(MaybeConstUserType& input)
       : input_(input), iter_(CallGetBeginIfExists<Traits>(input)) {}
-  ~ArrayIterator() {}
+  ~ArrayIterator() = default;
 
   size_t GetSize() const { return Traits::GetSize(input_); }
 
@@ -66,7 +66,7 @@ template <typename Traits, typename MaybeConstUserType>
 class ArrayIterator<Traits, MaybeConstUserType, false> {
  public:
   explicit ArrayIterator(MaybeConstUserType& input) : input_(input), iter_(0) {}
-  ~ArrayIterator() {}
+  ~ArrayIterator() = default;
 
   size_t GetSize() const { return Traits::GetSize(input_); }
 

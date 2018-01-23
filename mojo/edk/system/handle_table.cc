@@ -38,11 +38,9 @@ const char* GetNameForDispatcherType(Dispatcher::Type type) {
 
 }  // namespace
 
-HandleTable::HandleTable() {
-}
+HandleTable::HandleTable() = default;
 
-HandleTable::~HandleTable() {
-}
+HandleTable::~HandleTable() = default;
 
 base::Lock& HandleTable::GetLock() {
   return lock_;
@@ -190,14 +188,14 @@ bool HandleTable::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
   return true;
 }
 
-HandleTable::Entry::Entry() {}
+HandleTable::Entry::Entry() = default;
 
 HandleTable::Entry::Entry(scoped_refptr<Dispatcher> dispatcher)
     : dispatcher(std::move(dispatcher)) {}
 
 HandleTable::Entry::Entry(const Entry& other) = default;
 
-HandleTable::Entry::~Entry() {}
+HandleTable::Entry::~Entry() = default;
 
 }  // namespace edk
 }  // namespace mojo

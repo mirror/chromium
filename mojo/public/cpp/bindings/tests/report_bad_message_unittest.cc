@@ -21,7 +21,7 @@ namespace {
 class TestBadMessagesImpl : public TestBadMessages {
  public:
   TestBadMessagesImpl() : binding_(this) {}
-  ~TestBadMessagesImpl() override {}
+  ~TestBadMessagesImpl() override = default;
 
   void BindImpl(TestBadMessagesRequest request) {
     binding_.Bind(std::move(request));
@@ -60,7 +60,7 @@ class TestBadMessagesImpl : public TestBadMessages {
 
 class ReportBadMessageTest : public BindingsTestBase {
  public:
-  ReportBadMessageTest() {}
+  ReportBadMessageTest() = default;
 
   void SetUp() override {
     mojo::edk::SetDefaultProcessErrorCallback(

@@ -75,7 +75,7 @@ class ScopedHandleBase {
  public:
   using RawHandleType = HandleType;
 
-  ScopedHandleBase() {}
+  ScopedHandleBase() = default;
   explicit ScopedHandleBase(HandleType handle) : handle_(handle) {}
   ~ScopedHandleBase() { CloseIfNecessary(); }
 
@@ -152,7 +152,7 @@ class Handle {
  public:
   Handle() : value_(kInvalidHandleValue) {}
   explicit Handle(MojoHandle value) : value_(value) {}
-  ~Handle() {}
+  ~Handle() = default;
 
   void swap(Handle& other) {
     MojoHandle temp = value_;

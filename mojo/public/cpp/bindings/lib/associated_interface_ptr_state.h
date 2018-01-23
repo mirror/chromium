@@ -99,7 +99,7 @@ class AssociatedInterfacePtrState : public AssociatedInterfacePtrStateBase {
  public:
   using Proxy = typename Interface::Proxy_;
 
-  AssociatedInterfacePtrState() {}
+  AssociatedInterfacePtrState() = default;
   ~AssociatedInterfacePtrState() = default;
 
   Proxy* instance() {

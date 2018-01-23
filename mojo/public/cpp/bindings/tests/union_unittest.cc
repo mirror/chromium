@@ -1127,7 +1127,7 @@ class SmallCacheImpl : public SmallCache {
  public:
   explicit SmallCacheImpl(const base::Closure& closure)
       : int_value_(0), closure_(closure) {}
-  ~SmallCacheImpl() override {}
+  ~SmallCacheImpl() override = default;
   int64_t int_value() const { return int_value_; }
 
  private:
@@ -1201,8 +1201,8 @@ TEST(UnionTest, InterfaceInUnionSerialization) {
 
 class UnionInterfaceImpl : public UnionInterface {
  public:
-  UnionInterfaceImpl() {}
-  ~UnionInterfaceImpl() override {}
+  UnionInterfaceImpl() = default;
+  ~UnionInterfaceImpl() override = default;
 
  private:
   void Echo(PodUnionPtr in, const EchoCallback& callback) override {

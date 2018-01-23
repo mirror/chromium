@@ -161,8 +161,7 @@ ValidationTestInputParser::ValidationTestInputParser(const std::string& input,
   error_message_->clear();
 }
 
-ValidationTestInputParser::~ValidationTestInputParser() {
-}
+ValidationTestInputParser::~ValidationTestInputParser() = default;
 
 bool ValidationTestInputParser::Run() {
   Range range;

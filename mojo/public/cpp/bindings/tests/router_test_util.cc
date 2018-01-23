@@ -38,7 +38,7 @@ MessageAccumulator::MessageAccumulator(MessageQueue* queue,
                                        const base::Closure& closure)
     : queue_(queue), closure_(closure) {}
 
-MessageAccumulator::~MessageAccumulator() {}
+MessageAccumulator::~MessageAccumulator() = default;
 
 bool MessageAccumulator::Accept(Message* message) {
   queue_->Push(message);
@@ -49,7 +49,7 @@ bool MessageAccumulator::Accept(Message* message) {
   return true;
 }
 
-ResponseGenerator::ResponseGenerator() {}
+ResponseGenerator::ResponseGenerator() = default;
 
 bool ResponseGenerator::Accept(Message* message) {
   return false;

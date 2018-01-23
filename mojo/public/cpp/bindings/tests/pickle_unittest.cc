@@ -83,7 +83,7 @@ base::Callback<void(Arg)> BindSimpleLambda(Func func) {
 // This implements the generated Chromium variant of PicklePasser.
 class ChromiumPicklePasserImpl : public PicklePasser {
  public:
-  ChromiumPicklePasserImpl() {}
+  ChromiumPicklePasserImpl() = default;
 
   // mojo::test::PicklePasser:
   void PassPickledStruct(PickledStructChromium pickle,
@@ -117,7 +117,7 @@ class ChromiumPicklePasserImpl : public PicklePasser {
 // This implements the generated Blink variant of PicklePasser.
 class BlinkPicklePasserImpl : public blink::PicklePasser {
  public:
-  BlinkPicklePasserImpl() {}
+  BlinkPicklePasserImpl() = default;
 
   // mojo::test::blink::PicklePasser:
   void PassPickledStruct(PickledStructBlink pickle,
@@ -152,7 +152,7 @@ class BlinkPicklePasserImpl : public blink::PicklePasser {
 // PicklePasser service.
 class PickleTest : public testing::Test {
  public:
-  PickleTest() {}
+  PickleTest() = default;
 
   template <typename ProxyType = PicklePasser>
   InterfacePtr<ProxyType> ConnectToChromiumService() {

@@ -59,7 +59,7 @@ int ImportedInterfaceImpl::do_something_count_ = 0;
 
 class SampleNamedObjectImpl : public sample::NamedObject {
  public:
-  SampleNamedObjectImpl() {}
+  SampleNamedObjectImpl() = default;
 
   void SetName(const std::string& name) override { name_ = name; }
 
@@ -152,7 +152,7 @@ class SampleFactoryImpl : public sample::Factory {
 
 class HandlePassingTest : public BindingsTestBase {
  public:
-  HandlePassingTest() {}
+  HandlePassingTest() = default;
 
   void TearDown() override { PumpMessages(); }
 

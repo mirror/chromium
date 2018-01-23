@@ -63,7 +63,7 @@ int RunClientFunction(Func handler, bool pass_pipe_ownership_to_main) {
 
 }  // namespace
 
-MultiprocessTestHelper::MultiprocessTestHelper() {}
+MultiprocessTestHelper::MultiprocessTestHelper() = default;
 
 MultiprocessTestHelper::~MultiprocessTestHelper() {
   CHECK(!test_child_.IsValid());

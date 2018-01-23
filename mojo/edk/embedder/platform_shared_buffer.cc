@@ -253,7 +253,7 @@ PlatformSharedBuffer* PlatformSharedBuffer::CreateReadOnlyDuplicate() {
 PlatformSharedBuffer::PlatformSharedBuffer(size_t num_bytes, bool read_only)
     : num_bytes_(num_bytes), read_only_(read_only) {}
 
-PlatformSharedBuffer::~PlatformSharedBuffer() {}
+PlatformSharedBuffer::~PlatformSharedBuffer() = default;
 
 bool PlatformSharedBuffer::Init() {
   DCHECK(!shared_memory_);

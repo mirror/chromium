@@ -34,8 +34,8 @@ class WatchHelper {
   using ContextCallback =
       base::Callback<void(MojoResult, MojoHandleSignalsState)>;
 
-  WatchHelper() {}
-  ~WatchHelper() {}
+  WatchHelper() = default;
+  ~WatchHelper() = default;
 
   MojoResult CreateWatcher(MojoHandle* handle) {
     return MojoCreateWatcher(&Notify, handle);
@@ -65,7 +65,7 @@ class WatchHelper {
     explicit NotificationContext(const ContextCallback& callback)
         : callback_(callback) {}
 
-    ~NotificationContext() {}
+    ~NotificationContext() = default;
 
     void SetCancelCallback(const base::Closure& cancel_callback) {
       cancel_callback_ = cancel_callback;
@@ -99,7 +99,7 @@ class ThreadedRunner : public base::SimpleThread {
  public:
   explicit ThreadedRunner(const base::Closure& callback)
       : SimpleThread("ThreadedRunner"), callback_(callback) {}
-  ~ThreadedRunner() override {}
+  ~ThreadedRunner() override = default;
 
   void Run() override { callback_.Run(); }
 

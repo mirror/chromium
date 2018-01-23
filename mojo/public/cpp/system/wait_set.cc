@@ -252,7 +252,7 @@ class WaitSet::State : public base::RefCountedThreadSafe<State> {
    private:
     friend class base::RefCountedThreadSafe<Context>;
 
-    ~Context() {}
+    ~Context() = default;
 
     void Notify(MojoResult result, MojoHandleSignalsState signals_state) {
       state_->Notify(handle_, result, signals_state, this);
@@ -264,7 +264,7 @@ class WaitSet::State : public base::RefCountedThreadSafe<State> {
     DISALLOW_COPY_AND_ASSIGN(Context);
   };
 
-  ~State() {}
+  ~State() = default;
 
   void Notify(Handle handle,
               MojoResult result,

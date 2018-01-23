@@ -30,8 +30,8 @@ double MojoTicksToSeconds(MojoTimeTicks ticks) {
 
 class PingServiceImpl : public test::PingService {
  public:
-  PingServiceImpl() {}
-  ~PingServiceImpl() override {}
+  PingServiceImpl() = default;
+  ~PingServiceImpl() override = default;
 
   // |PingService| methods:
   void Ping(const PingCallback& callback) override;
@@ -95,7 +95,7 @@ struct BoundPingService {
 
 class MojoBindingsPerftest : public testing::Test {
  public:
-  MojoBindingsPerftest() {}
+  MojoBindingsPerftest() = default;
 
  protected:
   base::MessageLoop loop_;

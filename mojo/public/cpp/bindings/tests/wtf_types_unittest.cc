@@ -56,7 +56,7 @@ class TestWTFImpl : public TestWTF {
 
 class WTFTypesTest : public testing::Test {
  public:
-  WTFTypesTest() {}
+  WTFTypesTest() = default;
 
  private:
   base::MessageLoop loop_;

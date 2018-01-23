@@ -219,7 +219,7 @@ class DummyMessageReceiver : public MessageReceiver {
 
 class ValidationTest : public testing::Test {
  public:
-  ValidationTest() {}
+  ValidationTest() = default;
 
  protected:
   base::MessageLoop loop_;
@@ -229,7 +229,7 @@ class ValidationIntegrationTest : public ValidationTest {
  public:
   ValidationIntegrationTest() : test_message_receiver_(nullptr) {}
 
-  ~ValidationIntegrationTest() override {}
+  ~ValidationIntegrationTest() override = default;
 
   void SetUp() override {
     ScopedMessagePipeHandle tester_endpoint;
@@ -265,7 +265,7 @@ class ValidationIntegrationTest : public ValidationTest {
                      base::ThreadTaskRunnerHandle::Get()) {
       connector_.set_enforce_errors_from_incoming_receiver(false);
     }
-    ~TestMessageReceiver() override {}
+    ~TestMessageReceiver() override = default;
 
     bool Accept(Message* message) override {
       return connector_.Accept(message);
@@ -284,7 +284,7 @@ class ValidationIntegrationTest : public ValidationTest {
 
 class IntegrationTestInterfaceImpl : public IntegrationTestInterface {
  public:
-  ~IntegrationTestInterfaceImpl() override {}
+  ~IntegrationTestInterfaceImpl() override = default;
 
   void Method0(BasicStructPtr param0,
                const Method0Callback& callback) override {

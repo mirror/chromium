@@ -112,7 +112,7 @@ class AssociatedBinding : public AssociatedBindingBase {
     Bind(std::move(request), std::move(runner));
   }
 
-  ~AssociatedBinding() {}
+  ~AssociatedBinding() = default;
 
   // Sets up this object as the implementation side of an associated interface.
   void Bind(AssociatedInterfaceRequest<Interface> request,

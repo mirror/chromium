@@ -44,7 +44,7 @@ MojoTestBase::MojoTestBase() {
 #endif
 }
 
-MojoTestBase::~MojoTestBase() {}
+MojoTestBase::~MojoTestBase() = default;
 
 MojoTestBase::ClientController& MojoTestBase::StartClient(
     const std::string& client_name) {

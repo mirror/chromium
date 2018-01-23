@@ -617,8 +617,7 @@ Channel::Channel(Delegate* delegate)
     : delegate_(delegate), read_buffer_(new ReadBuffer) {
 }
 
-Channel::~Channel() {
-}
+Channel::~Channel() = default;
 
 void Channel::ShutDown() {
   delegate_ = nullptr;

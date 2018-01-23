@@ -44,7 +44,7 @@ class InterfacePtr {
   using Proxy = typename Interface::Proxy_;
 
   // Constructs an unbound InterfacePtr.
-  InterfacePtr() {}
+  InterfacePtr() = default;
   InterfacePtr(decltype(nullptr)) {}
 
   // Takes over the binding of another InterfacePtr.
@@ -70,7 +70,7 @@ class InterfacePtr {
   }
 
   // Closes the bound message pipe (if any) on destruction.
-  ~InterfacePtr() {}
+  ~InterfacePtr() = default;
 
   // Binds the InterfacePtr to a remote implementation of Interface.
   //

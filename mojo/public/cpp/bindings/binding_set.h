@@ -236,7 +236,7 @@ class BindingSetBase {
     class DispatchFilter : public MessageReceiver {
      public:
       explicit DispatchFilter(Entry* entry) : entry_(entry) {}
-      ~DispatchFilter() override {}
+      ~DispatchFilter() override = default;
 
      private:
       // MessageReceiver:

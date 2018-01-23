@@ -53,8 +53,7 @@ char** MojoTestSupportEnumerateSourceRootRelativeDirectory(
 namespace mojo {
 namespace test {
 
-TestSupport::~TestSupport() {
-}
+TestSupport::~TestSupport() = default;
 
 // static
 void TestSupport::Init(TestSupport* test_support) {

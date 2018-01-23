@@ -105,7 +105,7 @@ class TestTaskRunner : public base::SingleThreadTaskRunner {
   }
 
  private:
-  ~TestTaskRunner() override {}
+  ~TestTaskRunner() override = default;
 
   const base::PlatformThreadRef thread_id_;
   bool quit_called_;
@@ -125,7 +125,7 @@ class IntegerSenderImpl : public IntegerSender {
                     scoped_refptr<base::SingleThreadTaskRunner> runner)
       : binding_(this, std::move(request), std::move(runner)) {}
 
-  ~IntegerSenderImpl() override {}
+  ~IntegerSenderImpl() override = default;
 
   using EchoHandler = base::Callback<void(int32_t, const EchoCallback&)>;
 
@@ -158,7 +158,7 @@ class IntegerSenderConnectionImpl : public IntegerSenderConnection {
       : binding_(this, std::move(request), std::move(runner)),
         sender_runner_(std::move(sender_runner)) {}
 
-  ~IntegerSenderConnectionImpl() override {}
+  ~IntegerSenderConnectionImpl() override = default;
 
   void set_get_sender_notification(const base::Closure& notification) {
     get_sender_notification_ = notification;

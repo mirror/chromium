@@ -129,8 +129,8 @@ class MOJO_CPP_BINDINGS_EXPORT SyncCallRestrictions {
 
 class ScopedAllowSyncCallForTesting {
  public:
-  ScopedAllowSyncCallForTesting() {}
-  ~ScopedAllowSyncCallForTesting() {}
+  ScopedAllowSyncCallForTesting() = default;
+  ~ScopedAllowSyncCallForTesting() = default;
 
  private:
   SyncCallRestrictions::ScopedAllowSyncCall scoped_allow_sync_call_;

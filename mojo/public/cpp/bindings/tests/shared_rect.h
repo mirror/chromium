@@ -14,7 +14,7 @@ namespace test {
 // both Chromium and Blink.
 class SharedRect {
  public:
-  SharedRect() {}
+  SharedRect() = default;
   SharedRect(int x, int y, int width, int height)
       : x_(x), y_(y), width_(width), height_(height) {}
 

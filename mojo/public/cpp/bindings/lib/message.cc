@@ -453,9 +453,9 @@ bool MessageReceiver::PrefersSerializedMessages() {
   return false;
 }
 
-PassThroughFilter::PassThroughFilter() {}
+PassThroughFilter::PassThroughFilter() = default;
 
-PassThroughFilter::~PassThroughFilter() {}
+PassThroughFilter::~PassThroughFilter() = default;
 
 bool PassThroughFilter::Accept(Message* message) {
   return true;

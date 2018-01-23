@@ -37,7 +37,7 @@ class MathCalculatorImpl : public math::Calculator {
  public:
   explicit MathCalculatorImpl(InterfaceRequest<math::Calculator> request)
       : total_(0.0), binding_(this, std::move(request)) {}
-  ~MathCalculatorImpl() override {}
+  ~MathCalculatorImpl() override = default;
 
   void Clear(const CalcCallback& callback) override {
     total_ = 0.0;
@@ -143,7 +143,7 @@ int SelfDestructingMathCalculatorUI::num_instances_ = 0;
 
 class ReentrantServiceImpl : public sample::Service {
  public:
-  ~ReentrantServiceImpl() override {}
+  ~ReentrantServiceImpl() override = default;
 
   explicit ReentrantServiceImpl(InterfaceRequest<sample::Service> request)
       : call_depth_(0),
@@ -175,7 +175,7 @@ class ReentrantServiceImpl : public sample::Service {
 class IntegerAccessorImpl : public sample::IntegerAccessor {
  public:
   IntegerAccessorImpl() : integer_(0) {}
-  ~IntegerAccessorImpl() override {}
+  ~IntegerAccessorImpl() override = default;
 
   int64_t integer() const { return integer_; }
 
@@ -200,7 +200,7 @@ class IntegerAccessorImpl : public sample::IntegerAccessor {
 
 class InterfacePtrTest : public BindingsTestBase {
  public:
-  InterfacePtrTest() {}
+  InterfacePtrTest() = default;
   ~InterfacePtrTest() override { base::RunLoop().RunUntilIdle(); }
 
   void PumpMessages() { base::RunLoop().RunUntilIdle(); }
@@ -631,7 +631,7 @@ class CImpl : public C {
  public:
   CImpl(bool* d_called, const base::Closure& closure)
       : d_called_(d_called), closure_(closure) {}
-  ~CImpl() override {}
+  ~CImpl() override = default;
 
  private:
   void D() override {
@@ -647,7 +647,7 @@ class BImpl : public B {
  public:
   BImpl(bool* d_called, const base::Closure& closure)
       : d_called_(d_called), closure_(closure) {}
-  ~BImpl() override {}
+  ~BImpl() override = default;
 
  private:
   void GetC(InterfaceRequest<C> c) override {
@@ -664,7 +664,7 @@ class AImpl : public A {
   AImpl(InterfaceRequest<A> request, const base::Closure& closure)
       : d_called_(false), binding_(this, std::move(request)),
         closure_(closure) {}
-  ~AImpl() override {}
+  ~AImpl() override = default;
 
   bool d_called() const { return d_called_; }
 
@@ -705,7 +705,7 @@ class PingTestImpl : public sample::PingTest {
  public:
   explicit PingTestImpl(InterfaceRequest<sample::PingTest> request)
       : binding_(this, std::move(request)) {}
-  ~PingTestImpl() override {}
+  ~PingTestImpl() override = default;
 
  private:
   // sample::PingTest:

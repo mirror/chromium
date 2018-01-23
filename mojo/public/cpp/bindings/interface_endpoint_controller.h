@@ -13,7 +13,7 @@ class Message;
 // endpoints.
 class InterfaceEndpointController {
  public:
-  virtual ~InterfaceEndpointController() {}
+  virtual ~InterfaceEndpointController() = default;
 
   virtual bool SendMessage(Message* message) = 0;
 

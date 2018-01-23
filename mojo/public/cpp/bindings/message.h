@@ -234,7 +234,7 @@ class MOJO_CPP_BINDINGS_EXPORT Message {
 
 class MOJO_CPP_BINDINGS_EXPORT MessageReceiver {
  public:
-  virtual ~MessageReceiver() {}
+  virtual ~MessageReceiver() = default;
 
   // Indicates whether the receiver prefers to receive serialized messages.
   virtual bool PrefersSerializedMessages();
@@ -247,7 +247,7 @@ class MOJO_CPP_BINDINGS_EXPORT MessageReceiver {
 
 class MessageReceiverWithResponder : public MessageReceiver {
  public:
-  ~MessageReceiverWithResponder() override {}
+  ~MessageReceiverWithResponder() override = default;
 
   // A variant on Accept that registers a MessageReceiver (known as the
   // responder) to handle the response message generated from the given
@@ -263,7 +263,7 @@ class MessageReceiverWithResponder : public MessageReceiver {
 // received via the |Accept()| call.
 class MessageReceiverWithStatus : public MessageReceiver {
  public:
-  ~MessageReceiverWithStatus() override {}
+  ~MessageReceiverWithStatus() override = default;
 
   // Returns |true| if this MessageReceiver is currently bound to a MessagePipe,
   // the pipe has not been closed, and the pipe has not encountered an error.
@@ -281,7 +281,7 @@ class MessageReceiverWithStatus : public MessageReceiver {
 // of the MessagePipe which will carry the responses.
 class MessageReceiverWithResponderStatus : public MessageReceiver {
  public:
-  ~MessageReceiverWithResponderStatus() override {}
+  ~MessageReceiverWithResponderStatus() override = default;
 
   // A variant on Accept that registers a MessageReceiverWithStatus (known as
   // the responder) to handle the response message generated from the given

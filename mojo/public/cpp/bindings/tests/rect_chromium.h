@@ -14,26 +14,16 @@ namespace test {
 // in Chromium.
 class RectChromium {
  public:
-  RectChromium() {}
-  RectChromium(const RectChromium& other)
-      : x_(other.x_),
-        y_(other.y_),
-        width_(other.width_),
-        height_(other.height_) {}
+  RectChromium() = default;
+  RectChromium(const RectChromium& other) = default;
   RectChromium(int x, int y, int width, int height) :
       x_(x), y_(y), width_(width), height_(height) {
     DCHECK_GE(width_, 0);
     DCHECK_GE(height_, 0);
   }
-  ~RectChromium() {}
+  ~RectChromium() = default;
 
-  RectChromium& operator=(const RectChromium& other) {
-    x_ = other.x_;
-    y_ = other.y_;
-    width_ = other.width_;
-    height_ = other.height_;
-    return *this;
-  }
+  RectChromium& operator=(const RectChromium& other) = default;
 
   int x() const { return x_; }
   void set_x(int x) { x_ = x; }

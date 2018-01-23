@@ -24,8 +24,7 @@ FilterChain& FilterChain::operator=(FilterChain&& other) {
   return *this;
 }
 
-FilterChain::~FilterChain() {
-}
+FilterChain::~FilterChain() = default;
 
 void FilterChain::SetSink(MessageReceiver* sink) {
   DCHECK(!sink_);

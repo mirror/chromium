@@ -79,7 +79,7 @@ struct ArrayDataTraits<bool> {
    private:
     friend struct ArrayDataTraits<bool>;
     BitRef(uint8_t* storage, uint8_t mask);
-    BitRef();
+    BitRef() = delete;
     uint8_t* storage_;
     uint8_t mask_;
   };

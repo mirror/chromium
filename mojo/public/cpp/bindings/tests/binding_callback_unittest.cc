@@ -122,8 +122,8 @@ class InterfaceImpl : public sample::Provider {
 
 class BindingCallbackTest : public testing::Test {
  public:
-  BindingCallbackTest() {}
-  ~BindingCallbackTest() override {}
+  BindingCallbackTest() = default;
+  ~BindingCallbackTest() override = default;
 
  protected:
   int32_t last_client_callback_value_seen_;

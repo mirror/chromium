@@ -19,7 +19,7 @@ PipeControlMessageHandler::PipeControlMessageHandler(
     PipeControlMessageHandlerDelegate* delegate)
     : delegate_(delegate) {}
 
-PipeControlMessageHandler::~PipeControlMessageHandler() {}
+PipeControlMessageHandler::~PipeControlMessageHandler() = default;
 
 void PipeControlMessageHandler::SetDescription(const std::string& description) {
   description_ = description;

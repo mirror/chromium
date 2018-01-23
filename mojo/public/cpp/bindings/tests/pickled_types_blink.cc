@@ -10,7 +10,7 @@
 namespace mojo {
 namespace test {
 
-PickledStructBlink::PickledStructBlink() {}
+PickledStructBlink::PickledStructBlink() = default;
 
 PickledStructBlink::PickledStructBlink(int foo, int bar)
     : foo_(foo), bar_(bar) {
@@ -18,7 +18,7 @@ PickledStructBlink::PickledStructBlink(int foo, int bar)
   DCHECK_GE(bar_, 0);
 }
 
-PickledStructBlink::~PickledStructBlink() {}
+PickledStructBlink::~PickledStructBlink() = default;
 
 }  // namespace test
 }  // namespace mojo

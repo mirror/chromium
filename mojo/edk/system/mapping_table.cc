@@ -11,8 +11,7 @@
 namespace mojo {
 namespace edk {
 
-MappingTable::MappingTable() {
-}
+MappingTable::MappingTable() = default;
 
 MappingTable::~MappingTable() {
   // This should usually not be reached (the only instance should be owned by

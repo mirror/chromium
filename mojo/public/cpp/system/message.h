@@ -23,7 +23,7 @@ class MessageHandle {
  public:
   MessageHandle() : value_(kInvalidMessageHandleValue) {}
   explicit MessageHandle(MojoMessageHandle value) : value_(value) {}
-  ~MessageHandle() {}
+  ~MessageHandle() = default;
 
   void swap(MessageHandle& other) {
     MojoMessageHandle temp = value_;

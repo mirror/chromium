@@ -25,7 +25,7 @@ DataPipeDrainer::DataPipeDrainer(Client* client,
       base::Bind(&DataPipeDrainer::WaitComplete, weak_factory_.GetWeakPtr()));
 }
 
-DataPipeDrainer::~DataPipeDrainer() {}
+DataPipeDrainer::~DataPipeDrainer() = default;
 
 void DataPipeDrainer::ReadData() {
   const void* buffer = nullptr;

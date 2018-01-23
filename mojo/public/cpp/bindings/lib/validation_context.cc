@@ -43,8 +43,7 @@ ValidationContext::ValidationContext(const void* data,
   }
 }
 
-ValidationContext::~ValidationContext() {
-}
+ValidationContext::~ValidationContext() = default;
 
 }  // namespace internal
 }  // namespace mojo

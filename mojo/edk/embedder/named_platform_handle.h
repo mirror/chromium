@@ -18,7 +18,7 @@ namespace edk {
 
 #if defined(OS_POSIX)
 struct MOJO_SYSTEM_IMPL_EXPORT NamedPlatformHandle {
-  NamedPlatformHandle() {}
+  NamedPlatformHandle() = default;
   explicit NamedPlatformHandle(const base::StringPiece& name)
       : name(name.as_string()) {}
 

@@ -21,7 +21,7 @@ struct UTF8AdaptorInfo {
 #endif
   }
 
-  ~UTF8AdaptorInfo() {}
+  ~UTF8AdaptorInfo() = default;
 
   WTF::StringUTF8Adaptor utf8_adaptor;
 

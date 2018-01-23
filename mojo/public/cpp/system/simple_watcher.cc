@@ -78,7 +78,7 @@ class SimpleWatcher::Context : public base::RefCountedThreadSafe<Context> {
       : weak_watcher_(weak_watcher),
         task_runner_(task_runner),
         watch_id_(watch_id) {}
-  ~Context() {}
+  ~Context() = default;
 
   void Notify(MojoResult result,
               MojoHandleSignalsState signals_state,

@@ -91,7 +91,7 @@ class Binding {
 
   // Tears down the binding, closing the message pipe and leaving the interface
   // implementation unbound.
-  ~Binding() {}
+  ~Binding() = default;
 
   // Completes a binding that was constructed with only an interface
   // implementation by removing the message pipe endpoint from |request| and

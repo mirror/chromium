@@ -36,7 +36,7 @@ class MOJO_CPP_SYSTEM_EXPORT FileDataPipeProducer {
   // observed.
   class Observer {
    public:
-    virtual ~Observer() {}
+    virtual ~Observer() = default;
 
     // Called once per read attempt. |data| contains the read data (if any).
     // |num_bytes_read| is the number of read bytes, 0 indicates EOF. Both

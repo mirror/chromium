@@ -108,7 +108,7 @@ class StrongBinding {
         base::Bind(&StrongBinding::OnConnectionError, base::Unretained(this)));
   }
 
-  ~StrongBinding() {}
+  ~StrongBinding() = default;
 
   void OnConnectionError(uint32_t custom_reason,
                          const std::string& description) {
