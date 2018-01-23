@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d4d628a_64100cc9",
+        "filename": "chromeos/components/tether/proto/tether.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2018-01-23T01:18:43Z",
+      "side": 1,
+      "message": "Looks like you changed the wrong one here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
