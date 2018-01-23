@@ -16,6 +16,24 @@
       "revId": "442a8abe48718d3c1e729b8c249b4c5355f02619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81e9071_707fea1b",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autocomplete-maxlength-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2018-01-23T17:53:57Z",
+      "side": 1,
+      "message": "Ah that makes sense. Thanks for pointing it out. I added these tests and removed all the reference tests for fills. \n\nHowever I still see an usefulness in keeping them for suggestions, because those cannot be tested directly in JS. I still test by checking the internals.suggestedValue() but it does not test what the user actually sees.\n\nLet me know what you think. If you think the new test is sufficient, I will remove the remaining Reference tests.\n\nThanks!",
+      "parentUuid": "740f7438_6534def9",
+      "revId": "442a8abe48718d3c1e729b8c249b4c5355f02619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
