@@ -16,6 +16,24 @@
       "revId": "39ba899a52f69d3fadc1da9342c460919a55643d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e1dcdd_e24b820e",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-23T01:59:53Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c9798dbc_df3c203c",
+      "revId": "39ba899a52f69d3fadc1da9342c460919a55643d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
