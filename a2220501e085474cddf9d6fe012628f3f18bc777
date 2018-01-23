@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be4a8656_a696dc07",
+        "filename": "net/quic/platform/api/quic_url_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T18:31:42Z",
+      "side": 1,
+      "message": "Yeah. I think this would be better if someone who knew how the QUIC side works to take over the driving. I put it in the impl test since that\u0027s where the other tests were, and I assumed it was For Reasons :)\n\nI think the internal implementation is fairly substantially different, due to the different APIs.\n\nI also debated whether this should construct a QuicUrl rather than an std::string(), which would avoid some canonicalization round-tripping as well - and I think that may also apply to line 25 as well - but that\u0027s also a bigger change.\n\nMy own (external, peanut gallery) suggestion would be to align urls on QuicUrls when possible. It\u0027s what we\u0027ve tried to do more broadly in the Chrome base, especially at trust/untrusted boundaries, to make sure we\u0027re getting good inputs (which std::string does not)",
+      "parentUuid": "7ec69d9b_00d234f0",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "a2220501e085474cddf9d6fe012628f3f18bc777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "977d13f1_ae78d8a3",
         "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T18:07:06Z",
       "side": 1,
       "message": "Your call, but since this is not shared code, I\u0027d probably nuke this and just use std::string everywhere.",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "a2220501e085474cddf9d6fe012628f3f18bc777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50c34c4_42c05610",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T18:31:42Z",
+      "side": 1,
+      "message": "yeah, leftover :)",
+      "parentUuid": "977d13f1_ae78d8a3",
       "range": {
         "startLine": 11,
         "startChar": 18,
