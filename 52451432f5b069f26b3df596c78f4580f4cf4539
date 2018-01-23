@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e380b7_d887c6c1",
+        "filename": "pdf/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2018-01-23T14:30:11Z",
+      "side": 1,
+      "message": "Should this include range_set since it has exported methods? Or is it that range_set is pulled into pdf.h?",
+      "revId": "52451432f5b069f26b3df596c78f4580f4cf4539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
