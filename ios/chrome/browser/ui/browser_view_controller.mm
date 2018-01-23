@@ -5083,10 +5083,26 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)infoBarContainerStateDidChangeAnimated:(BOOL)animated {
   InfoBarContainerView* infoBarContainerView = _infoBarContainer->view();
   DCHECK(infoBarContainerView);
+  // Calculates the location and size of the InfoBar container.
+  //   +-----
+  //   |
+  //   | _contentArea
+  //   |
+  //   + +-----
+  //   | | _infoBarContainer
+  //   + +---------
+  //   | | secondaryToolbarCoordinator (if exists)
+  //   +-+--------------
+  // |containerFrame| is the frame for _infoBarContainer. Total height for
+  // content area after subtracting out the secondary toolbar (if one exists)
+  // and the height of the InfoBar.
   CGRect containerFrame = infoBarContainerView.frame;
-  CGFloat height = [infoBarContainerView topmostVisibleInfoBarHeight];
-  containerFrame.origin.y = CGRectGetMaxY(_contentArea.frame) - height;
-  containerFrame.size.height = height;
+  CGFloat infoBarHeight = [infoBarContainerView topmostVisibleInfoBarHeight];
+  CGFloat secondaryToolbarHeight = CGRectGetHeight(
+      self.secondaryToolbarCoordinator.viewController.view.bounds);
+  containerFrame.origin.y = CGRectGetMaxY(_contentArea.frame) - infoBarHeight -
+                            secondaryToolbarHeight;
+  containerFrame.size.height = infoBarHeight;
   BOOL isViewVisible = self.visible;
   [UIView animateWithDuration:0.1
       animations:^{
