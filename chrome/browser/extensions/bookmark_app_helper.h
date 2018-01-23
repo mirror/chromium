@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/installable/installable_metrics.h"
@@ -19,6 +20,7 @@
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/common/manifest.h"
 
+class Browser;
 class ExtensionService;
 class FaviconDownloader;
 struct InstallableData;
@@ -127,6 +129,9 @@ class BookmarkAppHelper : public content::NotificationObserver {
   std::unique_ptr<FaviconDownloader> favicon_downloader_;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(BookmarkAppHelperTest,
+                           CreateWindowedPWAIntoAppWindow);
+
   enum Installable {
     INSTALLABLE_YES,
     INSTALLABLE_NO,
@@ -141,6 +146,9 @@ class BookmarkAppHelper : public content::NotificationObserver {
   // Called when the installation of the app is complete to perform the final
   // installation steps.
   void FinishInstallation(const Extension* extension);
+
+  // Reparents the current tab into its own app window.
+  void ReparentTabToAppWindow(Browser* browser, const Extension* extension);
 
   // Overridden from content::NotificationObserver:
   void Observe(int type,
