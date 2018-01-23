@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f6ac6b2_3adb408c",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-23T22:25:04Z",
+      "side": 1,
+      "message": "nit:Typo",
+      "range": {
+        "startLine": 368,
+        "startChar": 10,
+        "endLine": 368,
+        "endChar": 24
+      },
+      "revId": "1f3d8a915f5c235183788787c8e3dfb13cdaebc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
