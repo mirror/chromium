@@ -304,6 +304,7 @@ using GetUrlFromHeaderBlock = QuicTest;
 
 TEST_F(GetUrlFromHeaderBlock, Basic) {
   SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
   EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
   headers[":scheme"] = "https";
   EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
@@ -318,10 +319,107 @@ TEST_F(GetUrlFromHeaderBlock, Basic) {
             "https://www.google.com/index.html");
 }
 
+TEST_F(GetUrlFromHeaderBlock, Connect) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "CONNECT";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+  headers[":authority"] = "www.google.com";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+  headers[":scheme"] = "https";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+  headers[":path"] = "https";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, UnsupportedFileScheme) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "file";
+  headers[":authority"] = "localhost";
+  headers[":path"] = "/etc/password";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+  headers[":authority"] = "";
+  headers[":path"] = "/C:/Windows/System32/Config/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, EmptySchemeAndInvalidAuthority) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "";
+  headers[":authority"] = "https://www.google.com";
+  headers[":path"] = "/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, SchemeWithAuthority) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https://www.google.com";
+  headers[":authority"] = "www.google.com";
+  headers[":path"] = "/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, InvalidScheme) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https://";
+  headers[":authority"] = "www.google.com";
+  headers[":path"] = "/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, EmptyAuthority) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https";
+  headers[":authority"] = "";
+  headers[":path"] = "/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, EmptyAuthorityAndInvalidPath) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https";
+  headers[":authority"] = "";
+  headers[":path"] = "www.google.com/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, AuthorityWithPath) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https";
+  headers[":authority"] = "www.google.com/";
+  headers[":path"] = "/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, EmptyPath) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https";
+  headers[":authority"] = "www.google.com";
+  headers[":path"] = "";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
+TEST_F(GetUrlFromHeaderBlock, InvalidPath) {
+  SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
+  headers[":scheme"] = "https";
+  headers[":authority"] = "www.google";
+  headers[":path"] = ".com/";
+  EXPECT_EQ(SpdyUtils::GetUrlFromHeaderBlock(headers), "");
+}
+
 using GetHostNameFromHeaderBlock = QuicTest;
 
 TEST_F(GetHostNameFromHeaderBlock, NormalUsage) {
   SpdyHeaderBlock headers;
+  headers[":method"] = "GET";
   EXPECT_EQ(SpdyUtils::GetHostNameFromHeaderBlock(headers), "");
   headers[":scheme"] = "https";
   EXPECT_EQ(SpdyUtils::GetHostNameFromHeaderBlock(headers), "");
