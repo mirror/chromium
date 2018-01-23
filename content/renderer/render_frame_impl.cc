@@ -4342,6 +4342,11 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
+
+  if (render_widget_ && !render_widget_->has_size()) {
+    is_waiting_for_initial_size_ = true;
+    frame_->GetDocumentLoader()->BlockParser();
+  }
 }
 
 void RenderFrameImpl::DidCreateNewDocument() {
@@ -4779,6 +4784,10 @@ void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {
     Send(new FrameHostMsg_SaveImageFromDataURL(render_view_->GetRoutingID(),
                                                routing_id_, data_url.Utf8()));
   }
+}
+
+void RenderFrameImpl::FrameRectsChanged(const blink::WebRect& frame_rect) {
+  GetFrameHost()->FrameRectsChanged(frame_rect);
 }
 
 void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
@@ -7337,6 +7346,13 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));
+}
+
+void RenderFrameImpl::DidReceiveInitialSize() {
+  if (is_waiting_for_initial_size_) {
+    is_waiting_for_initial_size_ = false;
+    frame_->GetDocumentLoader()->ResumeParser();
+  }
 }
 
 }  // namespace content

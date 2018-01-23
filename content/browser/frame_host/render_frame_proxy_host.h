@@ -94,6 +94,8 @@ class RenderFrameProxyHost
   FrameTreeNode* frame_tree_node() const { return frame_tree_node_; };
 
   void SetChildRWHView(RenderWidgetHostView* view);
+  void SetChildRWHView(RenderWidgetHostView* view,
+                       const gfx::Rect& initial_frame_rect);
 
   RenderViewHostImpl* GetRenderViewHost();
   RenderWidgetHostView* GetRenderWidgetHostView();
