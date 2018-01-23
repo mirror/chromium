@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385ed9f8_b67f76cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "style: 8, 8, 8, 8",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d770a539_1c62400b",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "style: enumerators should use either kConstantStyle or CONSTANT_STYLE (https://google.github.io/styleguide/cppguide.html#Enumerator_Names).\n\nEnumeration also put their enumerator name in their parent namespace, so they should start with the enumeration name or be declared as enum class (thus preventing using the NS_OPTIONS macro). I would recommend using the enum class syntax:\n\n  enum class LayoutSides {\n    kTop \u003d 1 \u003c\u003c 0,\n    kLeading \u003d 1 \u003c\u003c 1,\n    kBottom \u003d 1 \u003c\u003c 2,\n    kTrailing \u003d 1 \u003c\u003c 3,\n  };\n\nSo your example would be rewritten as:\n\n  AddSameConstraintsToSidesWithInsets(view1, view2,\n      LayoutSides::kLeading|LayoutSides::kTrailing|LayoutSides::kTop,\n      ChromeDirectionalEdgeInsetsMake(8, 8, 8, 8));",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaf0223_5862c49a",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "No need for \"typedef struct Foo {} Foo;\". In C++, struct/class are visible in the namespace they are defined (i.e. \"struct Foo foo;\" can always be abbreviated to \"Foo foo;\" in C++).\n\nSo, this should just be:\n\n  struct ChromeDirectionalEdgeInsets {\n    CGFloat top, leading, bottom, trailing;\n  };",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbbcb90_f17b3b43",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "This is not necessary as aggregate initialisation (http://en.cppreference.com/w/cpp/language/aggregate_initialization) is allowed in chromium code (https://chromium-cpp.appspot.com/#core-whitelist-14).\n\nSo your example code can be rewritten as:\n\n  AddSameConstraintsToSidesWithInsets(view1, view2,\n    Leading|Trailing|Top,\n    ChromeDirectionalEdgeInsets{ 8, 8, 8, 8 });",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c32ae6_20a53062",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "style: all public method need to be documented.",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771ac95f_436484ff",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "-\u003e int side_flags",
+      "range": {
+        "startLine": 158,
+        "startChar": 31,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed231e14_5bcc55af",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T14:42:55Z",
+      "side": 1,
+      "message": "style: all public methods need to be documented.",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
