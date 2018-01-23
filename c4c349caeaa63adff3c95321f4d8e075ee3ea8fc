@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "914918d4_995cf2e0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-23T17:31:45Z",
+      "side": 1,
+      "message": "Oh, sorry :|\nDone.",
+      "parentUuid": "2ed93ef1_d28bdeca",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197a302c_f0ff29df",
         "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "62a75efe_d413d201",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-23T17:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "197a302c_f0ff29df",
+      "range": {
+        "startLine": 218,
+        "startChar": 67,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81056ac_517a63c2",
         "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c407fd_d6a34bbe",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-23T17:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e81056ac_517a63c2",
+      "range": {
+        "startLine": 223,
+        "startChar": 35,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
