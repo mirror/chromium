@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "55706879_4f768252",
+        "filename": "third_party/WebKit/Source/core/css/CSSLayoutFunctionValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-23T02:45:24Z",
+      "side": 1,
+      "message": "nit: You might be able to forward declare this?",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1443f002_1baf01ed",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueIDMappings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-23T02:45:24Z",
+      "side": 1,
+      "message": "If you can generate this (see other comment), then you won\u0027t need this I think.",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b0bbc4_d306c42f",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-23T02:45:24Z",
+      "side": 1,
+      "message": "Dunno if we should store an AtomicString directly on ComputedStyle. Do you think this value is rare enough to go into rare-inherited-data?",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "697fd175_ab14c0ae",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
         "patchSetId": 2
@@ -19,6 +70,47 @@
         "endLine": 1700,
         "endChar": 21
       },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ddfa02_89805b45",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-23T02:45:24Z",
+      "side": 1,
+      "message": "Hmmm good point. I think your situation is similar to text-emphasis-style and IsKeywordPropertyID is false for text-emphasis-style. That being said, it would be nice to still use the fast path for the other display keywords since display is such a common property.\n\nIf you want to keep the fast path, then there needs to be 3 different code paths:\n1. Property is not keyword, skip straight to parsing.\n2. Property is fully keyword, use fast path parsing.\n3. Property is partially keyword, use fast path parsing, with normal parsing as fallback.\n\nI think there are heaps of ways to implement this, but I don\u0027t really have any preferences. For example:\nA. Keep what you have and just move the if statement to a function on CSSParserFastPaths\nB. Make it so that a property can be \"not keyword\", \"partial keyword\" and \"only keyword\" (with better names of course) and change IsKeywordPropertyID to return that.\n\nIMO I think as long as it\u0027s clear that there\u0027s these 3 possibilities, then it\u0027s fine.",
+      "parentUuid": "697fd175_ab14c0ae",
+      "range": {
+        "startLine": 1700,
+        "startChar": 3,
+        "endLine": 1700,
+        "endChar": 21
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a7a9ee_1c6836e1",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-23T02:45:24Z",
+      "side": 1,
+      "message": "I believe you can still generate this if you move the \"display\" property from CSSProperties.json5 to ExtraFields (it needs to be in ExtraFields because \u0027custom\u0027 is not a legit keyword). I think it would be similar to TextEmphasisMark, which also can have a \u0027custom\u0027 value [1]\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5?q\u003dComputedStyleExtraFields.json5\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d432",
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
