@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3eb8f063_49ddddf4",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-23T22:46:48Z",
+      "side": 1,
+      "message": "Unfortunately it doesn\u0027t work that way, since it\u0027s a vector. I can\u0027t loop on an iterator neither, since it\u0027s a unique_ptr. WDYT?",
+      "parentUuid": "ee8598fc_68bd7e23",
+      "range": {
+        "startLine": 1333,
+        "startChar": 13,
+        "endLine": 1333,
+        "endChar": 24
+      },
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0b9fa36_0e11b173",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68354dab_21f37167",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-23T22:46:48Z",
+      "side": 1,
+      "message": "We don\u0027t need to have more than 2 **hidden** fields to start a new section now. If the first hidden field, and next visible field are already seen, we would also consider the case as a new section.\n\nWe need to add another check to have \u003e 2 hidden fields, and the only difference would be that the single hidden field would belong to the lower visible section rather than the upper one. I don\u0027t think this would make any difference.",
+      "parentUuid": "b0b9fa36_0e11b173",
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583fb104_91155f95",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-23T22:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9185044e_8da4dc3f",
+      "range": {
+        "startLine": 1389,
+        "startChar": 67,
+        "endLine": 1389,
+        "endChar": 0
+      },
+      "revId": "5aab92b6cdae5638227f39bc726d805cbeab7f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
