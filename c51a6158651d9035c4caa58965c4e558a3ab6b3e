@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bf2e3b5_f1255c9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc243a6_ab8efd61",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecf6cb39_c0ba967f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490eccd9_6b182ef5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Good idea, I needed to remind myself about the difference between when it should be empty and when null.",
+      "parentUuid": "ecf6cb39_c0ba967f",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "44c1d764_0bd7ab3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b12c0e6_972734f0",
+      "range": {
+        "startLine": 113,
+        "startChar": 11,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e7dde9_0c31cca4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e3b843_90fe87bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Yes, the empty one indicates an error while saving the passwords to the cache file, while null means that there is no cache file with passwords needed. I tried to explain this in the updated comment above mExportFileUri.\n\nIn this case, if mExportFileUri were null in the previous life of the activity, then the saved state should not contain the SAVED_STATE_EXPORT_FILE_URI-keyed entry, so setting the variable to EMPTY on this line seems like the right thing to do.",
+      "parentUuid": "07e7dde9_0c31cca4",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "fcc6a85c_b2ea10ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "You are correct, thanks for spotting this.",
+      "parentUuid": "a0d21c05_3f98c7ad",
+      "range": {
+        "startLine": 122,
+        "startChar": 27,
+        "endLine": 122,
+        "endChar": 44
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d3adcab_b7e81c4a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -116,6 +224,30 @@
       "writtenOn": "2018-01-19T17:43:57Z",
       "side": 1,
       "message": "Wait, what nulls out the member?",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 70
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2963a0_ac4541ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Here I\u0027m actually looking for advice. I was trying to prepare for the following situation:\n\n(1) The Java code requests the serialised passwords and passes this callback to the native code.\n(2) The native code takes its time to produce that, meanwhile, the user dismisses the settings UI in Chrome and SavePasswordsPreferences dies.\n(3) The native code runs the callback which will attempt to use the mExportFileUri variable from the already dead SavePasswordsPreferences.\n\nThis was actually brought up by Ted Choc in https://chromium-review.googlesource.com/c/chromium/src/+/809127/8/chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java#129\n\nI was hoping the |this| would get nulled by some Java magic on destruction of SavePasswordsPreferences. If it is not, do you know of any WeakPtr-style things I could do manually? Or is the callback only run if the enclosing object is still alive?",
+      "parentUuid": "7d3adcab_b7e81c4a",
       "range": {
         "startLine": 160,
         "startChar": 31,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "728eb4e4_0fb0b73d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fdd5bab_f2369676",
+      "range": {
+        "startLine": 233,
+        "startChar": 82,
+        "endLine": 233,
+        "endChar": 94
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0125c459_b6b41eba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -165,6 +321,24 @@
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc8ca25_8948cf08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Thanks for pointing this out.\n\nThe try-with seems to work locally. Its presence in, e.g., PathUtils, suggests it should work across supported toolchains, too. I needed to pull |tempFile| initialisation out of the try block, but IIUC, creating a File does not throw, so that should be OK.",
+      "parentUuid": "0125c459_b6b41eba",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +362,30 @@
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1206e51_fdd29f82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T09:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f80e4f01_25952985",
+      "range": {
+        "startLine": 260,
+        "startChar": 43,
+        "endLine": 260,
+        "endChar": 44
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
