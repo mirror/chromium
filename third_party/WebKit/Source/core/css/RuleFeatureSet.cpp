@@ -595,7 +595,7 @@ RuleFeatureSet::ExtractInvalidationSetFeaturesFromSelectorList(
 
   DCHECK(SupportsInvalidationWithSelectorList(simple_selector.GetPseudoType()));
 
-  const CSSSelector* sub_selector = selector_list->First();
+  const CSSSelector* sub_selector = selector_list->FirstInMatchesTransform();
 
   bool all_sub_selectors_have_features = true;
   InvalidationSetFeatures any_features;
@@ -738,7 +738,7 @@ void RuleFeatureSet::AddFeaturesToInvalidationSetsForSelectorList(
       simple_selector.GetPseudoType() == CSSSelector::kPseudoHostContext;
 
   for (const CSSSelector* sub_selector =
-           simple_selector.SelectorList()->First();
+           simple_selector.SelectorList()->FirstInMatchesTransform();
        sub_selector; sub_selector = CSSSelectorList::Next(*sub_selector)) {
     descendant_features.has_features_for_rule_set_invalidation = false;
 
@@ -884,7 +884,8 @@ RuleFeatureSet::SelectorPreMatch RuleFeatureSet::CollectFeaturesFromSelector(
       // fall through.
       default:
         if (const CSSSelectorList* selector_list = current->SelectorList()) {
-          for (const CSSSelector* sub_selector = selector_list->First();
+          for (const CSSSelector* sub_selector =
+                   selector_list->FirstInMatchesTransform();
                sub_selector;
                sub_selector = CSSSelectorList::Next(*sub_selector))
             CollectFeaturesFromSelector(*sub_selector, metadata);
