@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86001aa4_ac55f17a",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-23T04:02:05Z",
+      "side": 1,
+      "message": "Done. Good catch~ Also done for service_worker_context_client_unittest.cc.",
+      "parentUuid": "13605f2e_96df41bf",
+      "range": {
+        "startLine": 68,
+        "startChar": 19,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac5a6676_52a09b2d",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cb702981_6891436d",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-23T04:02:05Z",
+      "side": 1,
+      "message": "Done. \nLater I\u0027ll try to use null ServiceWorkerClientInfoPtr to indicate an invalid client info, rather than a non-null ServiceWorkerClientInfoPtr with an empty |client_uuid|, and after that, if we can make sure line76 could also just be\n  DCHECK(!source_info-\u003eclient_uuid.empty());\n  return true;\nwe can remove both of these IsValidSourceInfo() functions. \nFor this question, the only one place could possibly make this client info be an invalid one is at https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_client_utils.cc?rcl\u003d43b02f309ef49538984dbb2febeaa00206765e82\u0026l\u003d118, for now I\u0027m not sure it could happen or not for our case here:  getting a PostMessage request originated from a service worker object within a Window Client context in the renderer process, then in the browser process we found the Window\u0027s renderer frame host has already gone away?",
+      "parentUuid": "ac5a6676_52a09b2d",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09febca8_134ae4f6",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55652e5_43033f69",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-23T04:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09febca8_134ae4f6",
+      "range": {
+        "startLine": 301,
+        "startChar": 9,
+        "endLine": 304,
+        "endChar": 59
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
