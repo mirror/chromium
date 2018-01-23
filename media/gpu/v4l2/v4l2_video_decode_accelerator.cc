@@ -538,7 +538,7 @@ void V4L2VideoDecodeAccelerator::ImportBufferForPicture(
   }
 
   if (pixel_format !=
-      V4L2Device::V4L2PixFmtToVideoPixelFormat(output_format_fourcc_)) {
+      V4L2Device::V4L2PixFmtToVideoPixelFormat(egl_image_format_fourcc_)) {
     VLOGF(1) << "Unsupported import format: " << pixel_format;
     NOTIFY_ERROR(INVALID_ARGUMENT);
     return;
