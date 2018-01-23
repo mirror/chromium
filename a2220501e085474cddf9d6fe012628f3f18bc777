@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec69d9b_00d234f0",
+        "filename": "net/quic/platform/api/quic_url_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-23T18:07:06Z",
+      "side": 1,
+      "message": "Can we add quic_url_utils_tests.cc to explore the various corner cases you\u0027ve laid out in the impl?",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "a2220501e085474cddf9d6fe012628f3f18bc777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977d13f1_ae78d8a3",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-23T18:07:06Z",
+      "side": 1,
+      "message": "Your call, but since this is not shared code, I\u0027d probably nuke this and just use std::string everywhere.",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "a2220501e085474cddf9d6fe012628f3f18bc777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2c8d6d_8f30ba65",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-23T18:07:06Z",
+      "side": 1,
+      "message": "Holy cow this method is long! f\u0027ng urls!",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "a2220501e085474cddf9d6fe012628f3f18bc777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
