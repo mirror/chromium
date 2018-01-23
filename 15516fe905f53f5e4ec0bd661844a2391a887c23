@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "743752da_d1a9881b",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T18:20:23Z",
+      "side": 1,
+      "message": "Sure, but you define the contract between the tracker and the data store. It would make more sense for the data store to have very clean lifetime management, and for the tracker to encompass the logic required for this.",
+      "parentUuid": "418176e1_117932af",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043c46d5_d72d877e",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 9
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The problem will be the same, the issue is that another observer might cause the tab to be active (or audible) after our WebContentObserver::WebContentsDestroyed has been called, so I need to modify how the Tab -\u003e TabID mapping is done (i.e. stop using the existing_tabs_ structure). Having 2 separate functions will mean that in some case the TabID will be removed from |tab_ids_|, and in some case not. Whether it gets removed or not from this map doesn\u0027t matter so much, the only thing we need to be careful with is to not reuse a previous TabID when the memory for a WebContents get reused.",
       "parentUuid": "043c46d5_d72d877e",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 46
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d224805_82fdc8de",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-23T18:20:23Z",
+      "side": 1,
+      "message": "How? Once a WebContents is destroyed, it can no longer be audible, or visible, or anything. It would make more sense for those events to be silently dropped. You should be able to build logic such that you know exactly which tabs are alive at a given moment. There shouldn\u0027t be any issue with out of order events as all of these things live on and are managed on a single thread (the UX thread).",
+      "parentUuid": "e8b41fcf_e95e7941",
       "range": {
         "startLine": 101,
         "startChar": 22,
