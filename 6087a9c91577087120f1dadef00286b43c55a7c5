@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dccb42dd_3ad840e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:22:48Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "6087a9c91577087120f1dadef00286b43c55a7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a74437_dd466953",
+        "filename": "third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:22:48Z",
+      "side": 1,
+      "message": "nit: s/Position/static Position/",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 8
+      },
+      "revId": "6087a9c91577087120f1dadef00286b43c55a7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828053d3_e0d39159",
+        "filename": "third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:22:48Z",
+      "side": 1,
+      "message": "nit: s/VisiblePosition/const VisiblePosition/",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 17
+      },
+      "revId": "6087a9c91577087120f1dadef00286b43c55a7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ecabee_84c351f5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:22:48Z",
+      "side": 1,
+      "message": "nit: s/UChar/const UChar/",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 7
+      },
+      "revId": "6087a9c91577087120f1dadef00286b43c55a7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17016605_bbb91896",
+        "filename": "third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T02:22:48Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 6
+      },
+      "revId": "6087a9c91577087120f1dadef00286b43c55a7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
