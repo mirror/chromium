@@ -10,6 +10,7 @@
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/arc/voice_interaction/internal/lib/assistant_service.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/chrome_service_name.h"
 #include "chrome/browser/chromeos/login/session/chrome_session_manager.h"
@@ -186,6 +187,17 @@ void BrowserProcessPlatformPart::RegisterInProcessServices(
     info.task_runner = base::ThreadTaskRunnerHandle::Get();
     services->insert(
         std::make_pair(ash::mojom::kPrefConnectorServiceName, info));
+  }
+
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::Bind([] {
+      return std::unique_ptr<service_manager::Service>(
+          base::MakeUnique<assistant::AssistantService>());
+    });
+    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    services->insert(
+        std::make_pair(ash::mojom::kAssistantConnectorServiceName, info));
   }
 
   if (!ash_util::IsRunningInMash()) {

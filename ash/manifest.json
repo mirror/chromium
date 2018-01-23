@@ -48,6 +48,7 @@
       "requires": {
         "*": [ "accessibility", "app" ],
         "ash_pref_connector": [ "pref_connector" ],
+        "assistant_connector": [ "assistant_connector" ],
         "catalog": [ "directory" ],
         "local_state": [ "pref_client" ],
         "ui": [ "display_dev", "window_manager", "video_detector" ],

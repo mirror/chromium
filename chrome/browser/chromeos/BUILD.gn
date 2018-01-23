@@ -31,6 +31,7 @@ source_set("chromeos") {
     "//components/policy/proto",
     "//components/wallpaper",
     "//content/app/resources",
+    "//libassistant/contrib/internal/chromeos:cros_opa_static",
     "//ui/chromeos/resources",
     "//ui/chromeos/strings",
     "//ui/resources",
@@ -61,6 +62,9 @@ source_set("chromeos") {
     "//chrome/common/safe_browsing:proto",
     "//chrome/services/file_util/public/cpp",
     "//chromeos",
+
+    # "//chrome/browser/chromeos/arc/voice_interaction/internal:assistant_service",
+    # "//chrome/browser/chromeos/arc/voice_interaction/internal:lib",
     "//chromeos:attestation_proto",
     "//chromeos:authpolicy_proto",
     "//chromeos:biod_proto",
@@ -437,6 +441,8 @@ source_set("chromeos") {
     "arc/voice_interaction/arc_voice_interaction_framework_service.h",
     "arc/voice_interaction/highlighter_controller_client.cc",
     "arc/voice_interaction/highlighter_controller_client.h",
+    "arc/voice_interaction/internal/lib/assistant_service.cc",
+    "arc/voice_interaction/internal/lib/assistant_service.h",
     "arc/voice_interaction/voice_interaction_controller_client.cc",
     "arc/voice_interaction/voice_interaction_controller_client.h",
     "arc/wallpaper/arc_wallpaper_service.cc",
@@ -2089,6 +2095,11 @@ proto_library("user_activity_event_proto") {
 service_manifest("ash_pref_connector_manifest") {
   name = "ash_pref_connector"
   source = "prefs/ash_pref_connector_manifest.json"
+}
+
+service_manifest("assistant_connector") {
+  name = "assistant_connector"
+  source = "arc/voice_interaction/internal/manifest.json"
 }
 
 device_policy_remover_path = "$target_gen_dir/device_policy_remover.cc"

@@ -1,0 +1,7 @@
+module ash.mojom;
+
+const string kAssistantConnectorServiceName = "assistant_connector";
+
+interface AssistantConnector {
+  StartAssistant();
+};

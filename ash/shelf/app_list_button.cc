@@ -129,7 +129,10 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
       if (UseVoiceInteractionStyle()) {
         base::RecordAction(base::UserMetricsAction(
             "VoiceInteraction.Started.AppListButtonLongPress"));
-        Shell::Get()->app_list()->StartVoiceInteractionSession();
+        // Shell::Get()->app_list()->StartVoiceInteractionSession();
+        Shell::Get()
+            ->voice_interaction_controller()
+            ->StartAssistant();  // app_list()->StartVoiceInteractionSession();
         assistant_overlay_->BurstAnimation();
         event->SetHandled();
       } else {

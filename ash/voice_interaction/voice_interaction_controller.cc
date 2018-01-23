@@ -4,11 +4,18 @@
 
 #include "ash/voice_interaction/voice_interaction_controller.h"
 
+#include "services/service_manager/public/cpp/connector.h"
+
 #include <utility>
 
 namespace ash {
 
-VoiceInteractionController::VoiceInteractionController() : binding_(this) {}
+VoiceInteractionController::VoiceInteractionController(
+    service_manager::Connector* connector)
+    : binding_(this) {
+  connector->BindInterface(mojom::kAssistantConnectorServiceName,
+                           &assistant_connector_);
+}
 
 VoiceInteractionController::~VoiceInteractionController() = default;
 
