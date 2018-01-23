@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38fef2ba_f150449f",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "I think we should continue have a constructor in DiceTurnSyncOnHelper that takes in a browser and creates the default delegate. That would allow the clients of the DiceTurnSyncOnHelper to avoid knowing about DiceTurnSyncOnHelperDelegateImpl.",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 26
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78345b25_bac24c0f",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "This function is used exactly once and is also poorly named, so let\u0027s inline it.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4a1db5_cc9ca388",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "I find \"this profile\" confusing as there is no profile here. How about\ns/this profile/the same profile",
+      "range": {
+        "startLine": 62,
+        "startChar": 25,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bac28c_c054d4ff",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "This does not more than just delete the profile, right?",
+      "range": {
+        "startLine": 154,
+        "startChar": 5,
+        "endLine": 154,
+        "endChar": 24
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82e5af3_3bcb8797",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "What is \"on the given desktop\"?",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 77
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefa2c05_2101acae",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "/the given profile/|profile|",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547a9f0e_f8dac0d6",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "Nit: s/{}/ \u003d default;",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 54
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64749b6e_c3cfb3fd",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "This is just a test class, you may inline the implementation in here if you want.",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50f0051_d8c83c11",
+        "filename": "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-23T11:57:33Z",
+      "side": 1,
+      "message": "For all these tests, also check:\nEXPECT_FALSE(signin_manager-\u003eIsAuthenticated());",
+      "range": {
+        "startLine": 403,
+        "startChar": 31,
+        "endLine": 403,
+        "endChar": 54
+      },
+      "revId": "df1a66cf11a57a1853c50cc50605b512f46348fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
