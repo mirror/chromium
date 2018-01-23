@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcee86f7_3885e9c9",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:43:44Z",
+      "side": 1,
+      "message": "drive-by since I was added (thanks Daniel for picking it up anyways before I noticed :)):\n\nThese could now be made constexpr (C++14 constexpr supports constexpr for methods with if/loops on parameters known at compile-time).\n\nI\u0027m not sure this matters yet but in general I\u0027m in favor of making as many things as possible constexpr (it never hurts and it might help).\n\nIf you do you can confirm that it works by turning most EXPECTs into static_asserts in unittests :).",
+      "revId": "de432102b73600e23ef0a93ac378db19cb13cab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
