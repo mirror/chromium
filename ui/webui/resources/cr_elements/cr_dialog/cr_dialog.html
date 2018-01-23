@@ -114,8 +114,20 @@
 
         -webkit-margin-end: 4px;
         align-self: flex-start;
+        background-image: var(--cr-dialog-close-image,
+            url(chrome://resources/images/icon_clear.svg));
         margin-top: 4px;
         padding: 10px;  /* Makes the actual icon 16x16. */
+      }
+
+      #close:hover {
+        background-image: var(--cr-dialog-close-image-hover,
+            url(chrome://resources/images/icon_clear.svg));
+      }
+
+      #close:active {
+        background-image: var(--cr-dialog-close-image-active,
+            url(chrome://resources/images/icon_clear.svg));
       }
     </style>
     <!-- This wrapper is necessary, such that the "pulse" animation is not

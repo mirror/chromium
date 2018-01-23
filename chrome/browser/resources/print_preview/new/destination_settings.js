@@ -9,19 +9,65 @@ Polymer({
     /** @type {!print_preview.Destination} */
     destination: Object,
 
+    /** @type {!print_preview.DestinationStore} */
+    destinationStore: {
+      type: Object,
+      observer: 'onDestinationStoreSet_',
+    },
+
+    /** @private {Array<!print_preview.Destination>} */
+    destinations_: {
+      type: Array,
+      notify: true,
+      value: [],
+    },
+
+    /** @type {!print_preview.UserInfo} */
+    userInfo: Object,
+
     /** @private {boolean} */
-    loadingDestination_: Boolean,
+    loadingDestination_: {
+      type: Boolean,
+      value: true,
+    },
   },
 
-  /** @override */
-  ready: function() {
-    this.loadingDestination_ = true;
-    // Simulate transition from spinner to destination.
-    setTimeout(this.doneLoading_.bind(this), 5000);
+  observers: ['onDestinationSet_(destination, destination.id)'],
+
+  tracker_: new EventTracker(),
+
+  updateDestinations_: function() {
+    this.destinations_ = (this.userInfo && this.destinationStore) ?
+        this.destinationStore.destinations(this.userInfo.activeUser) :
+        [];
+  },
+
+  onDestinationStoreSet_: function() {
+    if (this.destinationStore) {
+      this.tracker_.add(
+          this.destinationStore,
+          print_preview.DestinationStore.EventType.DESTINATIONS_INSERTED,
+          this.updateDestinations_.bind(this));
+      this.tracker_.add(
+          this.destinationStore,
+          print_preview.DestinationStore.EventType.DESTINATION_SEARCH_DONE,
+          this.updateDestinations_.bind(this));
+    }
   },
 
   /** @private */
-  doneLoading_: function() {
-    this.loadingDestination_ = false;
+  onDestinationSet_: function() {
+    if (this.destination && this.destination.id)
+      this.loadingDestination_ = false;
+  },
+
+  onChangeButtonTap_: function() {
+    if (!this.destinationStore)
+      return;
+    this.destinationStore.startLoadAllDestinations();
+    const dialog = this.$.destinationDialog.get();
+    this.async(() => {
+      dialog.show();
+    }, 1);
   },
 });

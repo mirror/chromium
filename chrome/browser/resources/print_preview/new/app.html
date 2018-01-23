@@ -27,7 +27,7 @@
 <dom-module id="print-preview-app">
   <template>
     <style>
-      :host {
+      :host #wrapper {
         display: flex;
         height: 100%;
       }
@@ -60,53 +60,56 @@
         recent-destinations="{{recentDestinations_}}"
         on-save-sticky-settings="onSaveStickySettings_">
     </print-preview-model>
-    <div id="sidebar">
-      <print-preview-header destination="[[destination_]]" state="{{state_}}"
-          settings="[[settings]]"></print-preview-header>
-      <div id="settings-sections">
-        <print-preview-destination-settings destination="[[destination_]]">
-        </print-preview-destination-settings>
-        <print-preview-pages-settings settings="{{settings}}"
-            document-info="[[documentInfo_]]"
-            hidden$="[[!settings.pages.available]]">
-        </print-preview-pages-settings>
-        <print-preview-copies-settings settings="{{settings}}"
-            hidden$="[[!settings.copies.available]]">
-        </print-preview-copies-settings>
-        <print-preview-layout-settings settings="{{settings}}"
-            hidden$="[[!settings.layout.available]]">
-        </print-preview-layout-settings>
-        <print-preview-color-settings settings="{{settings}}"
-            hidden$="[[!settings.color.available]]">
-        </print-preview-color-settings>
-        <print-preview-media-size-settings settings="{{settings}}"
-            capability="[[destination_.capabilities.printer.media_size]]"
-            hidden$="[[!settings.mediaSize.available]]">
-        </print-preview-media-size-settings>
-        <print-preview-margins-settings settings="{{settings}}"
-            hidden$="[[!settings.margins.available]]">
-        </print-preview-margins-settings>
-        <print-preview-dpi-settings settings="{{settings}}"
-            capability="[[destination_.capabilities.printer.dpi]]"
-            hidden$="[[!settings.dpi.available]]">
-        </print-preview-dpi-settings>
-        <print-preview-scaling-settings settings="{{settings}}"
-            document-info="[[documentInfo_]]"
-            hidden$="[[!settings.scaling.available]]">
-        </print-preview-scaling-settings>
-        <print-preview-other-options-settings settings="{{settings}}"
-            hidden$="[[!settings.otherOptions.available]]">
-        </print-preview-other-options-settings>
-        <print-preview-advanced-options-settings settings="{{settings}}"
-            hidden$="[[!settings.vendorItems.available]]">
-        </print-preview-advanced-options-settings>
+    <div id="wrapper">
+      <div id="sidebar">
+        <print-preview-header destination="[[destination_]]" state="{{state_}}"
+            settings="[[settings]]"></print-preview-header>
+        <div id="settings-sections">
+          <print-preview-destination-settings destination="[[destination_]]"
+            destination-store="[[destinationStore_]]" user-info="[[userInfo_]]">
+          </print-preview-destination-settings>
+          <print-preview-pages-settings settings="{{settings}}"
+              document-info="[[documentInfo_]]"
+              hidden$="[[!settings.pages.available]]">
+          </print-preview-pages-settings>
+          <print-preview-copies-settings settings="{{settings}}"
+              hidden$="[[!settings.copies.available]]">
+          </print-preview-copies-settings>
+          <print-preview-layout-settings settings="{{settings}}"
+              hidden$="[[!settings.layout.available]]">
+          </print-preview-layout-settings>
+          <print-preview-color-settings settings="{{settings}}"
+              hidden$="[[!settings.color.available]]">
+          </print-preview-color-settings>
+          <print-preview-media-size-settings settings="{{settings}}"
+              capability="[[destination_.capabilities.printer.media_size]]"
+              hidden$="[[!settings.mediaSize.available]]">
+          </print-preview-media-size-settings>
+          <print-preview-margins-settings settings="{{settings}}"
+              hidden$="[[!settings.margins.available]]">
+          </print-preview-margins-settings>
+          <print-preview-dpi-settings settings="{{settings}}"
+              capability="[[destination_.capabilities.printer.dpi]]"
+              hidden$="[[!settings.dpi.available]]">
+          </print-preview-dpi-settings>
+          <print-preview-scaling-settings settings="{{settings}}"
+              document-info="[[documentInfo_]]"
+              hidden$="[[!settings.scaling.available]]">
+          </print-preview-scaling-settings>
+          <print-preview-other-options-settings settings="{{settings}}"
+              hidden$="[[!settings.otherOptions.available]]">
+          </print-preview-other-options-settings>
+          <print-preview-advanced-options-settings settings="{{settings}}"
+              hidden$="[[!settings.vendorItems.available]]">
+          </print-preview-advanced-options-settings>
+        </div>
       </div>
-    </div>
-    <div id="preview-area">
-      <print-preview-preview-area settings="{{settings}}"
-          destination="[[destination_]]" document-info="{{documentInfo_}}"
-          state="{{state_}}">
-      </print-preview-preview-area>
+      <div id="preview-area">
+        <print-preview-preview-area settings="{{settings}}"
+            destination="[[destination_]]" document-info="{{documentInfo_}}"
+            state="{{state_}}">
+        </print-preview-preview-area>
+      </div>
     </div>
   </template>
   <script src="app.js"></script>

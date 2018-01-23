@@ -35,6 +35,20 @@ Polymer({
       notify: true,
     },
 
+    /** @private {?print_preview.DestinationStore} */
+    destinationStore_: {
+      type: Object,
+      notify: true,
+      value: null,
+    },
+
+    /** @private {?print_preview.UserInfo} */
+    userInfo_: {
+      type: Object,
+      notify: true,
+      value: null,
+    },
+
     /** @private {!print_preview_new.State} */
     state_: {
       type: Object,
@@ -54,14 +68,8 @@ Polymer({
   /** @private {?print_preview.NativeLayer} */
   nativeLayer_: null,
 
-  /** @private {?print_preview.UserInfo} */
-  userInfo_: null,
-
   /** @private {?WebUIListenerTracker} */
   listenerTracker_: null,
-
-  /** @private {?print_preview.DestinationStore} */
-  destinationStore_: null,
 
   /** @private {!EventTracker} */
   tracker_: new EventTracker(),
@@ -148,5 +156,9 @@ Polymer({
    */
   onSaveStickySettings_: function(e) {
     this.nativeLayer_.saveAppState(/** @type {string} */ (e.detail));
+  },
+
+  notifyDestinations_: function() {
+    this.notifyPath('destinationStore_');
   },
 });

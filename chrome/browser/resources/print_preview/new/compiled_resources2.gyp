@@ -47,6 +47,10 @@
       'target_name': 'destination_settings',
       'dependencies': [
         '../data/compiled_resources2.gyp:destination',
+        '../data/compiled_resources2.gyp:destination_store',
+        '../data/compiled_resources2.gyp:user_info',
+        'destination_dialog',
+        '<(DEPTH)/ui/webui/resources/cr_elements/cr_lazy_render/compiled_resources2.gyp:cr_lazy_render',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -168,6 +172,22 @@
         '../data/compiled_resources2.gyp:printable_area',
         'settings_behavior',
         'state',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'destination_dialog',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/cr_elements/cr_dialog/compiled_resources2.gyp:cr_dialog',
+	'destination_list',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'destination_list',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/cr_elements/cr_dialog/compiled_resources2.gyp:cr_dialog',
+	'../data/compiled_resources2.gyp:destination',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
