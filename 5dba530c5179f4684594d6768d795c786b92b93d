@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "46f8a55a_194189a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabObserver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-23T12:55:37Z",
+      "side": 1,
+      "message": "IIRC, mCurentState can be one of STATE_RESET, STATE_WAITING_LOAD_START of STATE_WAITING_LOAD_FINISHED, with RESET being the initial state, and the state after onload() has fired.\n\nThis check will not generate any screenshot if the state is not STATE_RESET, that is the page is currently loading, provided that we are in the STATE_WAITING_LOAD_*.\nThis is set in trackNextPageLoadFromTimestamp(), from CustomTabActivity#loadUrlInTab().",
+      "parentUuid": "b5c085c6_73cf8543",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 10
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51a06322_a0d5c061",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 4

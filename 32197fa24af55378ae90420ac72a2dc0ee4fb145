@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "26f31df8_30ee0d63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-23T12:55:37Z",
+      "side": 1,
+      "message": "nit: this implicitly assumes that the current thread is the UI thread, though it is not enforced anywhere.\nI think the risk is low here, but can you either:\n- Use new Handler(ThreadUtils.getUiThreadLooper()), or\n- Add ThreadUtils.removeUiThreadCallbacks() and not have any member here.\n\nI would tend to prefer the second solution as it reduces the amount of member variables there are here, but up to you.",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a2f585_3492d109",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 6
