@@ -34,6 +34,24 @@
       "revId": "23c5f8b8115b93ca12a40bab9d6076b651a2e68f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0414593b_39c006e4",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-23T06:52:39Z",
+      "side": 1,
+      "message": "Thanks. Did you try printing with patch set 27? If that works, then I would be worried because this would have turned one of the scale values to 0.",
+      "parentUuid": "3f71cfc6_40a7efcb",
+      "revId": "23c5f8b8115b93ca12a40bab9d6076b651a2e68f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
