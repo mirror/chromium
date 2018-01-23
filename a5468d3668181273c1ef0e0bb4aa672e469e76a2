@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "1dec94e0_4adcac29",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:28:02Z",
+      "side": 1,
+      "message": "Well, those places probably shouldn\u0027t be doing it either. \u003d)\n\nThe simplest solution for now is probably to make the devtools Value type passable over mojom, parsing it in the renderer, and sending it over in std::unique_ptr\u003cValue\u003e form. Would that work for you?",
+      "parentUuid": "8dd42424_63b4d102",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfa66b2_dd28728b",
         "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
         "patchSetId": 11
