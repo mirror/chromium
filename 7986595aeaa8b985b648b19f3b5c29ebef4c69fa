@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "652c8fbc_d070b24f",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-23T16:38:39Z",
+      "side": 1,
+      "message": "nit: include signatures_util.h?",
+      "range": {
+        "startLine": 24,
+        "startChar": 53,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "7986595aeaa8b985b648b19f3b5c29ebef4c69fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
