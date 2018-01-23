@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4475f504_d1a73407",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T14:46:16Z",
+      "side": 1,
+      "message": "Some questions mostly for my own knowledge, to make sure I understand this code well: Previously we stored the mWebContents and did equality comparisons on it, whereas now we\u0027re querying the tab to get the active web contents. I suppose that could result in different behavior if the WC changes over the lifetime of the PageLoadMetricsObserver. Can the observer outlive a WebContents, and if so, was behavior incorrect previously where we kept the mWebContents around/",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2e27bf_c1e0a0e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T14:46:16Z",
+      "side": 1,
+      "message": "one thing you should know about page load metric observer callbacks is that the events sent from the render process to browser process are buffered and can be delayed by a few seconds. So this callback won\u0027t fire immediately after FMP is reached in the render process. If you want a more immediate signal for this we\u0027d want to look at plumbing a separate callback from render to browser.\n\nother thing to know is that paint-based callbacks only fire when a tab is in the foreground. so a backgrounded tab would never fire FMP for example, even if the page is logically in a state where it can do a meaningful paint. at least, i think that\u0027s the case - FMP in particular is implemented largely based on layout changes, which can happen in the background in some cases.\n\nand finally if i understand correctly this would plumb FMP signal out to all custom tabs. It\u0027s unclear if we intend to continue to support FMP in the long term. What\u0027s the expectation about these APIs going forward? By exposing this data are we making a commitment to supporting first meaningful paint? If we decide to deprecate FMP in the future can we just remove this? Tim, can you comment on whether your team is ready to make a long term commitment to providing FMP?\n\nI\u0027ll add Tim Dresser to the review who can comment in more detail on these.",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26f31df8_30ee0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 6
