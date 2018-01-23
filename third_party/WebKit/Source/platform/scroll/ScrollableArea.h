@@ -311,6 +311,9 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
 
   virtual ~ScrollableArea();
 
+  // Called when the scrollable area has been detached.
+  virtual void Dispose();
+
   // Called when any of horizontal scrollbar, vertical scrollbar and scroll
   // corner is setNeedsPaintInvalidation.
   virtual void ScrollControlWasSetNeedsPaintInvalidation() = 0;
@@ -471,6 +474,9 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   // vertical-rl / ltr            YES                     NO
   // vertical-rl / rtl            YES                     YES
   IntPoint scroll_origin_;
+
+  // Tracks whether the scrollable area has been disposed.
+  bool has_been_disposed_;
 };
 
 }  // namespace blink
