@@ -16,6 +16,24 @@
       "revId": "ee99a88130c5202848a38cf474653d7e0f36bd1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c599db_e6879d9b",
+        "filename": "android_webview/browser/tracing/aw_trace_event_args_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T21:09:50Z",
+      "side": 1,
+      "message": "Sure, can this refactoring happen in a follow-up patch though?\n\nAs it would involve factoring out chrome/ code into base/.. and also need to keep in mind that we might actually want to change the filtering predicate implementation for webview in the future. (I\u0027ve filed crbug.com/805045 and added a TODO for this.)",
+      "parentUuid": "be9ab590_239672f2",
+      "revId": "ee99a88130c5202848a38cf474653d7e0f36bd1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
