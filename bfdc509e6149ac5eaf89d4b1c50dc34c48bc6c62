@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "958b65e8_fb5ce8b4",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a14c5cb_9c998fa5",
+      "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4295d5_6018d721",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T22:00:24Z",
       "side": 1,
       "message": "why isn\u0027t this needed in the old path?\n\ni\u0027m a bit worried about this, since it\u0027s entirely async with respect to when a video frame is used by the VFC that needs it.",
+      "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae2eb3f_c30abffa",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Truthfully this was just a guess. I was not sure what situation triggers this code, I wrote it up hoping a question would be raised about it. Could you explain further what situation this code applies to?",
+      "parentUuid": "4c4295d5_6018d721",
       "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "661fc6c1_fce2a52f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2435ef_2caca94b",
+      "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459dbdb0_aba90049",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0b4454_43921923",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459dbdb0_aba90049",
+      "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2866b2cd_04b09280",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Updated the CL description. Please let me know if I need to add more clarification.",
+      "parentUuid": "e07e0b25_c41fdd82",
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6932c590_f1dd5646",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c395c39f_3e057472",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6932c590_f1dd5646",
+      "range": {
+        "startLine": 105,
+        "startChar": 46,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5c1cfb_a78af094",
         "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e783ef3d_c7e05064",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-23T00:13:42Z",
+      "side": 1,
+      "message": "Added a bit more, please let me know if more is needed. (I\u0027ve been working on this for a while, so I forget what is not immediately apparent.)",
+      "parentUuid": "3d5c1cfb_a78af094",
+      "revId": "37187860cd692dad673ac3c2f07e9356136b542e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
