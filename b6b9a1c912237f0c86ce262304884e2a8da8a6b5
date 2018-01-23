@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbe8009_fb295cdf",
+        "filename": "chrome/browser/extensions/extension_service_test_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T16:03:03Z",
+      "side": 1,
+      "message": "nit: no need for vertical space here",
+      "revId": "b6b9a1c912237f0c86ce262304884e2a8da8a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2aedfb_ddfd504b",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T16:03:03Z",
+      "side": 1,
+      "message": "storage_partition_callback here and everywhere",
+      "revId": "b6b9a1c912237f0c86ce262304884e2a8da8a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1483d6b0_7d81518a",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T16:03:03Z",
+      "side": 1,
+      "message": "nit: You could have DeletionHelperDone bind and invoke the user\u0027s callback instead, then you wouldn\u0027t need to modify DataDeletionHelper at all.",
+      "revId": "b6b9a1c912237f0c86ce262304884e2a8da8a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96144a21_b060e09d",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T16:03:03Z",
+      "side": 1,
+      "message": "maybe it doesn\u0027t much matter for test code, but i think a better version would be to have WaitForDeletionTasksForTesting() just:\n\n RunLoop loop;\n on_deletion_helpers_done_callback_ \u003d loop.QuitClosure();\n loop.Run();\n\nand then have DeletionHelperDone invoke the retained closure when count hits zero.\n\nThey\u0027re effectively equivalent in probably all normal test scenarios, but if anything goes wrong, the version in the CL will chew up CPU while timing out, whereas this one will just idle while timing out.",
+      "revId": "b6b9a1c912237f0c86ce262304884e2a8da8a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
