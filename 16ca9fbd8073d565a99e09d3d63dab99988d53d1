@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2806f2cf_73231a7b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-23T19:50:38Z",
+      "side": 0,
+      "message": "This is only *forwarding* (dispatching) the event, after we do \"hit-test\" (targeting), so kept it here, wdyt?",
+      "range": {
+        "startLine": 1309,
+        "startChar": 13,
+        "endLine": 1309,
+        "endChar": 32
+      },
+      "revId": "16ca9fbd8073d565a99e09d3d63dab99988d53d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab32362_0b8163ff",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-23T19:50:38Z",
+      "side": 0,
+      "message": "Same comment as above, more about testing scrolling.",
+      "range": {
+        "startLine": 1573,
+        "startChar": 15,
+        "endLine": 1573,
+        "endChar": 37
+      },
+      "revId": "16ca9fbd8073d565a99e09d3d63dab99988d53d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d6a4e3_07f21390",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-23T19:50:38Z",
+      "side": 0,
+      "message": "Same comment as above, more about testing scrolling.",
+      "range": {
+        "startLine": 1936,
+        "startChar": 17,
+        "endLine": 1936,
+        "endChar": 39
+      },
+      "revId": "16ca9fbd8073d565a99e09d3d63dab99988d53d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
