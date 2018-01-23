@@ -50,11 +50,6 @@ bool QueryContainsComponentHelper(const base::StringPiece query,
     return false;
   }
 
-  // Verify that the provided query string does not include the query or
-  // fragment start character, as the logic below depends on this character not
-  // being included.
-  DCHECK(query[0] != '?' && query[0] != '#');
-
   // We shouldn't try to find matches beyond the point where there aren't enough
   // characters left in query to fully match the component.
   const size_t last_search_start = query.length() - component.length();
