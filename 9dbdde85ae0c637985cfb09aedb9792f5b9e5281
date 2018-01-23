@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec50c672_aab33f58",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-23T00:00:37Z",
+      "side": 1,
+      "message": "OK, your explanation is good.  I was a bit confused by the word Download here, meaning as in to download a file, not as in to download a page for offlining.  I was also confused by the call flow.  Adding some of what you said above into comments would be wonderful!",
+      "parentUuid": "21ce820e_062b566b",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de1378e_2d414189",
         "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
         "patchSetId": 6

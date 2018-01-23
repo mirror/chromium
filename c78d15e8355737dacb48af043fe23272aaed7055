@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41075179_276cf39d",
+        "filename": "components/offline_pages/content/background_loader/background_loader_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-23T00:00:37Z",
+      "side": 1,
+      "message": "Maybe say \"File downloads\" so we don\u0027t confuse it with \"web page offline downloads\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "c78d15e8355737dacb48af043fe23272aaed7055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
