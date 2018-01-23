@@ -12,9 +12,13 @@
 #include "third_party/WebKit/common/common_export.h"
 #include "third_party/WebKit/common/message_port/cloneable_message.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace blink {
 
+namespace mojom {
+class SerializedArrayBufferContents;
+}  // namespace mojom
 // This struct represents messages as they are posted over a message port. This
 // type can be serialized as a blink::mojom::TransferableMessage struct.
 struct BLINK_COMMON_EXPORT TransferableMessage : public CloneableMessage {
@@ -25,6 +29,9 @@ struct BLINK_COMMON_EXPORT TransferableMessage : public CloneableMessage {
 
   // Any ports being transfered as part of this message.
   std::vector<MessagePortChannel> ports;
+  std::vector<mojo::StructPtr<mojom::SerializedArrayBufferContents>>
+      arrayBufferContentsArray;
+  std::vector<SkBitmap> imageBitmapContentsArray;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TransferableMessage);

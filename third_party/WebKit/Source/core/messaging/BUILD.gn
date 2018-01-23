@@ -21,6 +21,7 @@ blink_core_sources("messaging") {
   ]
 
   public_deps = [
+    "//skia/public/interfaces",
     "//third_party/WebKit/common:mojo_bindings_blink",
   ]
 }
