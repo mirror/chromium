@@ -1,0 +1,15 @@
+Name: QEMU
+URL: https://www.qemu.org
+Version: 2.10.1
+License: GPL v2
+License File: NOT_SHIPPED
+Security Critical: no
+Description: QEMU is a generic and open source machine emulator and virtualizer.
+Local Modifications: None
+
+Upgrading:
+
+To upgrade the version of qemu that's located here, download the binaries at
+the desired version. Place them under bin/ and run the cipd command described
+in cipd.yaml. After they've been uploaded, update the tag pin at
+https://chromium.googlesource.com/chromium/src/+/master/build/cipd/chromeos/chromeos.ensure
