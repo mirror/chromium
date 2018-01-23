@@ -361,6 +361,27 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
   scroll_sequencer->RunQueuedAnimations();
 }
 
+void WebRemoteFrameImpl::IntrinsicSizingInfoChanged(
+    const WebFloatSize& size,
+    const WebFloatSize& aspect_ratio,
+    bool has_width,
+    bool has_height) {
+  FrameOwner* owner = GetFrame()->Owner();
+  if (!owner)
+    return;
+
+  IntrinsicSizingInfo sizing_info;
+  sizing_info.size.SetWidth(size.width);
+  sizing_info.size.SetHeight(size.height);
+  sizing_info.aspect_ratio.SetWidth(aspect_ratio.width);
+  sizing_info.aspect_ratio.SetHeight(aspect_ratio.height);
+  sizing_info.has_width = has_width;
+  sizing_info.has_height = has_height;
+  frame_->View()->SetIntrinsicSizeInfo(sizing_info);
+
+  owner->IntrinsicSizingInfoChanged();
+}
+
 void WebRemoteFrameImpl::SetHasReceivedUserGestureBeforeNavigation(bool value) {
   GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(value);
 }

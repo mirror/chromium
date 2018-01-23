@@ -58,6 +58,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/PluginDocument.h"
@@ -454,6 +455,21 @@ void LocalFrame::SetPagePopupOwner(Element& owner) {
 
 LayoutView* LocalFrame::ContentLayoutObject() const {
   return GetDocument() ? GetDocument()->GetLayoutView() : nullptr;
+}
+
+void LocalFrame::IntrinsicSizingInfoChanged(
+    const IntrinsicSizingInfo& sizing_info) {
+  if (!Owner())
+    return;
+  // Notofiy the owner. For remote frame owners, notify via
+  // an IPC to the parent renderer; otherwise notify directly.
+  if (Owner()->IsRemote()) {
+    WebLocalFrameImpl::FromFrame(this)
+        ->FrameWidget()
+        ->IntrinsicSizingInfoChanged(sizing_info);
+  } else {
+    Owner()->IntrinsicSizingInfoChanged();
+  }
 }
 
 void LocalFrame::DidChangeVisibilityState() {
