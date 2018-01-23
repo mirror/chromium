@@ -117,20 +117,23 @@ class AttributeList(NodeListBase):
 class Const(Definition):
   """Represents a const definition."""
 
-  def __init__(self, mojom_name, typename, value, **kwargs):
+  def __init__(self, mojom_name, attribute_list, typename, value, **kwargs):
     # The typename is currently passed through as a string.
     assert isinstance(typename, str)
+    assert attribute_list is None or isinstance(attribute_list, AttributeList)
     # The value is either a literal (currently passed through as a string) or a
     # "wrapped identifier".
     assert isinstance(value, str) or isinstance(value, tuple)
     super(Const, self).__init__(mojom_name, **kwargs)
     self.typename = typename
     self.value = value
+    self.attribute_list = attribute_list
 
   def __eq__(self, other):
     return super(Const, self).__eq__(other) and \
            self.typename == other.typename and \
-           self.value == other.value
+           self.value == other.value and \
+           self.attribute_list == other.attribute_list
 
 
 class Enum(Definition):
@@ -165,7 +168,6 @@ class EnumValue(Definition):
     return super(EnumValue, self).__eq__(other) and \
            self.attribute_list == other.attribute_list and \
            self.value == other.value
-
 
 class EnumValueList(NodeListBase):
   """Represents a list of enum value definitions (i.e., the "body" of an enum
