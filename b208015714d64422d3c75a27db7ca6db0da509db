@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a71eb0c3_f4d4a702",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4232,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "Not sure if it changes anything, but the delegate was called at the beginning of the Toolbar\u0027s callback. So I guess the toolbar notification should be called at the end of this method.\n\nThere is an early return you might want to account for.",
+      "range": {
+        "startLine": 4232,
+        "startChar": 0,
+        "endLine": 4232,
+        "endChar": 75
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67793652_cfe279a1",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4255,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "Same comment.",
+      "range": {
+        "startLine": 4255,
+        "startChar": 0,
+        "endLine": 4255,
+        "endChar": 74
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0674301_9add4787",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "Add bug number for this todo?",
+      "range": {
+        "startLine": 300,
+        "startChar": 7,
+        "endLine": 300,
+        "endChar": 11
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7849069_4fc0c9ca",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "You can remove this method I think.",
+      "range": {
+        "startLine": 524,
+        "startChar": 18,
+        "endLine": 524,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66d4c24_39ead56e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "You can remove the comment in implementation file.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 75
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a1f70e_9a739a13",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "This is not private.",
+      "range": {
+        "startLine": 1945,
+        "startChar": 15,
+        "endLine": 1945,
+        "endChar": 22
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a23512_6fde94e0",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T15:27:19Z",
+      "side": 1,
+      "message": "As you did not change the location bar delegate, are you sure there won\u0027t be a problem where:\n1. The location bar signals its delegate (WebToolbarController) that it is focused.\n2. The WebToolbarController signals its delegate (BVC) that the omnibox is focused.\n3. BVC signals LegacyToolbarCoordinator\n4. LegacyToolbarCoordinator calls -transitionToLocationBarFocusedState: on the WebToolbarController.\n5. Toolbar start expanding.\n6. The execution resumes at 1. and triggers another toolbar expansion.\n\nDoes it make sense to have this to be no-op instead?",
+      "range": {
+        "startLine": 1948,
+        "startChar": 8,
+        "endLine": 1948,
+        "endChar": 30
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
