@@ -75,31 +75,66 @@ TEST_F(TabbedPaneTest, VerticalOrientation) {
 }
 
 // Tests TabbedPane::GetPreferredSize() and TabbedPane::Layout() when tabs
-// aligned in horizontal orientation.
-TEST_F(TabbedPaneTest, SizeAndLayout) {
-  View* child1 = new StaticSizedView(gfx::Size(20, 10));
+// aligned in horizontal orientation and the children is wider than tab strip.
+TEST_F(TabbedPaneTest, SizeAndLayoutWithWiderChildren) {
+  View* child1 = new StaticSizedView(gfx::Size(200, 100));
   tabbed_pane_->AddTab(ASCIIToUTF16("tab1"), child1);
-  View* child2 = new StaticSizedView(gfx::Size(5, 5));
+  View* child2 = new StaticSizedView(gfx::Size(50, 50));
   tabbed_pane_->AddTab(ASCIIToUTF16("tab2"), child2);
   tabbed_pane_->SelectTabAt(0);
 
-  // The |tabbed_pane_| implementation of Views has no border by default.
-  // Therefore it should be as wide as the widest tab. The native Windows
-  // tabbed pane has a border that used up extra space. Therefore the preferred
-  // width is larger than the largest child.
   gfx::Size pref(tabbed_pane_->GetPreferredSize());
-  EXPECT_GE(pref.width(), 20);
+  // |tabbed_pane_| width should match the largest child in horizontal mode.
+  EXPECT_EQ(pref.width(), 200);
+  // |tabbed_pane_| reserves extra height for the tab strip in horizontal mode.
+  EXPECT_GT(pref.height(), 100);
+
+  // The bounds of our children should be smaller than the |tabbed_pane_|'s
+  // bounds.
+  tabbed_pane_->SetBounds(0, 0, 500, 200);
+  RunPendingMessages();
+  gfx::Rect bounds(child1->bounds());
+  EXPECT_GT(bounds.width(), 0);
+  // |tabbed_pane_| has no border. Therefore the children should be as wide as
+  // the |tabbed_pane_|.
+  EXPECT_EQ(bounds.width(), 500);
+  EXPECT_GT(bounds.height(), 0);
+  // |tabbed_pane_| reserves extra height for the tab strip. Therefore the
+  // children's height should be smaller than the |tabbed_pane_|'s height.
+  EXPECT_LT(bounds.height(), 200);
+
+  // If we switch to the other tab, it should get assigned the same bounds.
+  tabbed_pane_->SelectTabAt(1);
+  EXPECT_EQ(bounds, child2->bounds());
+}
+
+// Tests TabbedPane::GetPreferredSize() and TabbedPane::Layout() when tabs
+// aligned in horizontal orientation and the tab strip is wider than children.
+TEST_F(TabbedPaneTest, SizeAndLayoutWithWiderTapStrip) {
+  View* child1 = new StaticSizedView(gfx::Size(20, 10));
+  tabbed_pane_->AddTab(ASCIIToUTF16("tab1 with very long text"), child1);
+  View* child2 = new StaticSizedView(gfx::Size(5, 5));
+  tabbed_pane_->AddTab(ASCIIToUTF16("tab2 with very long text"), child2);
+  tabbed_pane_->SelectTabAt(0);
+
+  gfx::Size pref(tabbed_pane_->GetPreferredSize());
+  // |tabbed_pane_| width should match the largest child in horizontal mode.
+  EXPECT_EQ(pref.width(), 20);
+  // |tabbed_pane_| reserves extra height for the tab strip in horizontal mode.
   EXPECT_GT(pref.height(), 10);
 
-  // The bounds of our children should be smaller than the tabbed pane's bounds.
+  // The bounds of our children should be smaller than the |tabbed_pane_|'s
+  // bounds.
   tabbed_pane_->SetBounds(0, 0, 100, 200);
   RunPendingMessages();
   gfx::Rect bounds(child1->bounds());
   EXPECT_GT(bounds.width(), 0);
-  // The |tabbed_pane_| has no border. Therefore the children should be as wide
-  // as the |tabbed_pane_|.
-  EXPECT_LE(bounds.width(), 100);
+  // |tabbed_pane_| has no border. Therefore the children should be as wide as
+  // the |tabbed_pane_|.
+  EXPECT_EQ(bounds.width(), 100);
   EXPECT_GT(bounds.height(), 0);
+  // |tabbed_pane_| reserves extra height for the tab strip. Therefore the
+  // children's height should be smaller than the |tabbed_pane_|'s height.
   EXPECT_LT(bounds.height(), 200);
 
   // If we switch to the other tab, it should get assigned the same bounds.
@@ -117,24 +152,25 @@ TEST_F(TabbedPaneTest, SizeAndLayoutInVerticalOrientation) {
   tabbed_pane_->AddTab(ASCIIToUTF16("tab2"), child2);
   tabbed_pane_->SelectTabAt(0);
 
-  // The |tabbed_pane_| implementation of Views has no border by default.
-  // Therefore it should be as high as the highest tab. The native Windows
-  // tabbed pane has a border that used up extra space. Therefore the preferred
-  // height is larger than the largest child.
   gfx::Size pref(tabbed_pane_->GetPreferredSize());
+  // |tabbed_pane_| reserves extra width for the tab strip in vertical mode.
   EXPECT_GT(pref.width(), 20);
-  EXPECT_GE(pref.height(), 10);
+  // |tabbed_pane_| height should match the largest child in vertical mode.
+  EXPECT_EQ(pref.height(), 10);
 
-  // The bounds of our children should be smaller than the tabbed pane's bounds.
+  // The bounds of our children should be smaller than the |tabbed_pane_|'s
+  // bounds.
   tabbed_pane_->SetBounds(0, 0, 100, 200);
   RunPendingMessages();
   gfx::Rect bounds(child1->bounds());
   EXPECT_GT(bounds.width(), 0);
+  // |tabbed_pane_| reserves extra width for the tab strip. Therefore the
+  // children's width should be smaller than the |tabbed_pane_|'s width.
   EXPECT_LT(bounds.width(), 100);
   EXPECT_GT(bounds.height(), 0);
-  // The |tabbed_pane_| has no border. Therefore the children should be as high
-  // as the |tabbed_pane_|.
-  EXPECT_LE(bounds.height(), 200);
+  // |tabbed_pane_| has no border. Therefore the children should be as high as
+  // the |tabbed_pane_|.
+  EXPECT_EQ(bounds.height(), 200);
 
   // If we switch to the other tab, it should get assigned the same bounds.
   tabbed_pane_->SelectTabAt(1);
