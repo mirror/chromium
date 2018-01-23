@@ -18,6 +18,8 @@
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/fullscreen_window_animation_observer.h"
+#include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/overview_window_drag_controller.h"
 #include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/window_grid.h"
@@ -332,12 +334,62 @@ void WindowSelector::Shutdown() {
   // Stop observing split view state changes before restoring window focus.
   // Otherwise the activation of the window triggers OnSplitViewStateChanged()
   // that will call into this function again.
-  Shell::Get()->split_view_controller()->RemoveObserver(this);
+  SplitViewController* split_view_controller =
+      Shell::Get()->split_view_controller();
+  split_view_controller->RemoveObserver(this);
 
   size_t remaining_items = 0;
   for (std::unique_ptr<WindowGrid>& window_grid : grid_list_) {
-    for (const auto& window_selector_item : window_grid->window_list())
-      window_selector_item->RestoreWindow();
+    // Each grid has one FullScreenWindowAnimationObserver when there is a
+    // fullscreen window and will be deleted when animation of the fullscreen
+    // window finishes.
+    FullScreenWindowAnimationObserver* full_screen_window_observer = nullptr;
+
+    bool has_fullscreen_window = false;
+    bool after_first_fullscreen = false;
+    for (const auto& window_selector_item : window_grid->window_list()) {
+      aura::Window* window = window_selector_item->GetWindow();
+
+      // If we selected a window in the overview mode and it is fullscreen
+      // window, all the other windows will defer animation upon the
+      // |selected_window_| finishes its animation. If |selected_window_| is
+      // nullptr or not fullscreen window, we will animate up to (inclusive) to
+      // the first fullscreen window in the grid list. All the other windows
+      // behind the fullscreen window will defer animation, except the
+      // |selected_window_|, which will animate too.
+      if (IsNewOverviewAnimations() && selected_window_ &&
+          IsFullOrMaximizedWindow(selected_window_, split_view_controller)) {
+        if (!full_screen_window_observer)
+          full_screen_window_observer = new FullScreenWindowAnimationObserver();
+        window_selector_item->RestoreWindow(
+            full_screen_window_observer,
+            /*deferred_transform=*/window != selected_window_);
+      } else {
+        if (IsNewOverviewAnimations() && !has_fullscreen_window &&
+            IsFullOrMaximizedWindow(window_selector_item->GetWindow(),
+                                    split_view_controller)) {
+          has_fullscreen_window = true;
+        }
+
+        if (!has_fullscreen_window || window == selected_window_) {
+          window_selector_item->RestoreWindow();
+        } else {
+          // If current window is the first fullscreen window, we add the
+          // observer to the ScopedAnimationSettings. Otherwise, defer
+          // animations.
+          if (!full_screen_window_observer)
+            full_screen_window_observer =
+                new FullScreenWindowAnimationObserver();
+          window_selector_item->RestoreWindow(
+              full_screen_window_observer,
+              /*deferred_transform=*/after_first_fullscreen);
+        }
+
+        if (IsNewOverviewAnimations() && has_fullscreen_window &&
+            !after_first_fullscreen)
+          after_first_fullscreen = true;
+      }
+    }
     remaining_items += window_grid->size();
   }
 
@@ -429,6 +481,8 @@ bool WindowSelector::AcceptSelection() {
 
 void WindowSelector::SelectWindow(WindowSelectorItem* item) {
   aura::Window* window = item->GetWindow();
+  selected_window_ = window;
+
   aura::Window::Windows window_list =
       Shell::Get()->mru_window_tracker()->BuildMruWindowList();
   if (!window_list.empty()) {

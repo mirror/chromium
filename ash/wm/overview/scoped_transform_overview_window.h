@@ -35,6 +35,7 @@ enum class ShadowElevation;
 
 namespace ash {
 
+class FullScreenWindowAnimationObserver;
 class ScopedOverviewAnimationSettings;
 class WindowSelectorItem;
 
@@ -88,8 +89,10 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   //  // until scoped_settings is destroyed.
   //  overview_window.SetTransform(root_window, new_transform);
   //  overview_window.SetOpacity(1);
-  void BeginScopedAnimation(OverviewAnimationType animation_type,
-                            ScopedAnimationSettings* animation_settings);
+  void BeginScopedAnimation(
+      OverviewAnimationType animation_type,
+      ScopedAnimationSettings* animation_settings,
+      FullScreenWindowAnimationObserver* observer = nullptr);
 
   // Returns true if this window selector window contains the |target|.
   bool Contains(const aura::Window* target) const;
@@ -113,7 +116,12 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   int GetTopInset() const;
 
   // Restores and animates the managed window to its non overview mode state.
-  void RestoreWindow();
+  // If |window_| is a fullscreen window, the |observer| will be added to the
+  // ScopedAnimationSettings to observe the Exit animation of the fullscreen
+  // window. If |deferred_transform| is true, the window position will be
+  // deferred to set after the fullscreen window animation finishes.
+  void RestoreWindow(FullScreenWindowAnimationObserver* observer = nullptr,
+                     bool deferred_transform = false);
 
   // Informs the ScopedTransformOverviewWindow that the window being watched was
   // destroyed. This resets the internal window pointer.
@@ -124,7 +132,10 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // Applies the |transform| to the overview window and all of its transient
   // children.
-  void SetTransform(aura::Window* root_window, const gfx::Transform& transform);
+  void SetTransform(aura::Window* root_window,
+                    const gfx::Transform& transform,
+                    FullScreenWindowAnimationObserver* observer = nullptr,
+                    bool deferred_transform = false);
 
   // Sets the opacity of the managed windows.
   void SetOpacity(float opacity);

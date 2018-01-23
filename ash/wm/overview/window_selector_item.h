@@ -28,6 +28,7 @@ class ImageButton;
 
 namespace ash {
 
+class FullScreenWindowAnimationObserver;
 class WindowSelector;
 class WindowGrid;
 
@@ -71,7 +72,12 @@ class ASH_EXPORT WindowSelectorItem : public views::ButtonListener,
   bool Contains(const aura::Window* target) const;
 
   // Restores and animates the managed window to its non overview mode state.
-  void RestoreWindow();
+  // If the contained Window is a fullscreen window, the |observer| will be
+  // added to the ScopedAnimationSettings to observe the Exit animation of the
+  // fullscreen window. If |deferred_transform| is true, the window position
+  // will be deferred to set after the fullscreen window animation finishes.
+  void RestoreWindow(FullScreenWindowAnimationObserver* observer = nullptr,
+                     bool deferred_transform = false);
 
   // Ensures that a possibly minimized window becomes visible after restore.
   void EnsureVisible();

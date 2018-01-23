@@ -26,6 +26,7 @@
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/i18n/string_search.h"
 #include "base/strings/string_number_conversions.h"
@@ -262,6 +263,12 @@ WindowGrid::WindowGrid(aura::Window* root_window,
   }
 
   for (auto* window : windows_in_root) {
+    // Stop ongoing animations before entering overview mode. Because we are
+    // deferring SetTransform of the windows beneath the fullscreen window, we
+    // need to set the correct transforms of these windows before entering
+    // overview mode again in the OnImplicitAnimationsCompleted() of the
+    // observer of the fullscreen window animation.
+    window->layer()->GetAnimator()->StopAnimating();
     window_observer_.Add(window);
     window_state_observer_.Add(wm::GetWindowState(window));
     window_list_.push_back(
@@ -439,6 +446,9 @@ void WindowGrid::PositionWindows(bool animate,
   // position |ignored_item| if it is not nullptr and matches a item in
   // |window_list_|.
   gfx::Vector2d offset(0, (total_bounds.bottom() - max_bottom) / 2);
+  SplitViewController* split_view_controller =
+      Shell::Get()->split_view_controller();
+  bool has_fullscreen_window = false;
   for (size_t i = 0, j = 0; i < window_list_.size(); ++i, ++j) {
     if (ignored_item != nullptr && window_list_[i].get() == ignored_item) {
       // Decrement the |rects| index so that after repositioning there will not
@@ -448,9 +458,14 @@ void WindowGrid::PositionWindows(bool animate,
     }
     window_list_[i]->SetBounds(
         rects[j] + offset,
-        animate
+        animate && !has_fullscreen_window
             ? OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS
             : OverviewAnimationType::OVERVIEW_ANIMATION_NONE);
+    if (IsNewOverviewAnimations() && !has_fullscreen_window &&
+        IsFullOrMaximizedWindow(window_list_[i]->GetWindow(),
+                                split_view_controller)) {
+      has_fullscreen_window = true;
+    }
   }
 
   // If the selection widget is active, reposition it without any animation.

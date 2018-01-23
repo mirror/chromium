@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/wm/overview/fullscreen_window_animation_observer.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/splitview/split_view_controller.h"
@@ -207,7 +208,9 @@ ScopedTransformOverviewWindow::ScopedTransformOverviewWindow(
 
 ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() = default;
 
-void ScopedTransformOverviewWindow::RestoreWindow() {
+void ScopedTransformOverviewWindow::RestoreWindow(
+    FullScreenWindowAnimationObserver* observer,
+    bool deferred_transform) {
   ::wm::SetShadowElevation(window_, original_shadow_elevation_);
 
   wm::GetWindowState(window_)->set_ignored_by_shelf(ignored_by_shelf_);
@@ -217,10 +220,13 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
     minimized_widget_.reset();
     return;
   }
+
   ScopedAnimationSettings animation_settings_list;
-  BeginScopedAnimation(OverviewAnimationType::OVERVIEW_ANIMATION_RESTORE_WINDOW,
-                       &animation_settings_list);
-  SetTransform(window()->GetRootWindow(), original_transform_);
+  if (!deferred_transform) {
+    BeginScopedAnimation(
+        OverviewAnimationType::OVERVIEW_ANIMATION_RESTORE_WINDOW,
+        &animation_settings_list, observer);
+  }
   // Add requests to cache render surface and perform trilinear filtering for
   // the exit animation of overview mode. The requests will be removed when the
   // exit animation finishes.
@@ -229,19 +235,28 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
     settings->TrilinearFiltering();
   }
 
+  SetTransform(window()->GetRootWindow(), original_transform_, observer,
+               deferred_transform);
+
   ScopedOverviewAnimationSettings animation_settings(
-      OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS,
+      deferred_transform
+          ? OverviewAnimationType::OVERVIEW_ANIMATION_NONE
+          : OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS,
       window_);
   SetOpacity(original_opacity_);
 }
 
 void ScopedTransformOverviewWindow::BeginScopedAnimation(
     OverviewAnimationType animation_type,
-    ScopedAnimationSettings* animation_settings) {
+    ScopedAnimationSettings* animation_settings,
+    FullScreenWindowAnimationObserver* observer) {
   for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
     auto settings = std::make_unique<ScopedOverviewAnimationSettings>(
         animation_type, window);
     settings->DeferPaint();
+    if (observer && window == GetOverviewWindow()) {
+      settings->AddObserver(observer);
+    }
     animation_settings->push_back(std::move(settings));
   }
 }
@@ -381,7 +396,9 @@ gfx::Transform ScopedTransformOverviewWindow::GetTransformForRect(
 
 void ScopedTransformOverviewWindow::SetTransform(
     aura::Window* root_window,
-    const gfx::Transform& transform) {
+    const gfx::Transform& transform,
+    FullScreenWindowAnimationObserver* observer,
+    bool deferred_transform) {
   DCHECK(overview_started_);
 
   gfx::Point target_origin(GetTargetBoundsInScreen().origin());
@@ -393,7 +410,12 @@ void ScopedTransformOverviewWindow::SetTransform(
         TransformAboutPivot(gfx::Point(target_origin.x() - original_bounds.x(),
                                        target_origin.y() - original_bounds.y()),
                             transform);
-    window->SetTransform(new_transform);
+    if (deferred_transform) {
+      observer->add_animator_transform_pair(window->layer()->GetAnimator(),
+                                            new_transform);
+    } else {
+      window->SetTransform(new_transform);
+    }
   }
 }
 
@@ -440,7 +462,7 @@ void ScopedTransformOverviewWindow::PrepareForOverview() {
     CreateMirrorWindowForMinimizedState();
   }
   // Add requests to cache render surface and perform trilinear filtering. The
-  // requests will be removed in dctor. So the requests will be valid during the
+  // requests will be removed in dtor. So the requests will be valid during the
   // enter animation and the whole time during overview mode. For the exit
   // animation of overview mode, we need to add those requests again.
   for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {

@@ -12,6 +12,7 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wm/overview/cleanup_animation_observer.h"
+#include "ash/wm/overview/fullscreen_window_animation_observer.h"
 #include "ash/wm/overview/overview_animation_type.h"
 #include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/overview_window_drag_controller.h"
@@ -393,13 +394,6 @@ class WindowSelectorItem::RoundedContainerView
   // gfx::AnimationDelegate:
   void AnimationEnded(const gfx::Animation* animation) override {
     initial_color_ = target_color_;
-    // Tabbed browser windows show the overview mode header behind the window
-    // during the initial animation. Once the initial fade-in completes and the
-    // overview header is fully exposed update stacking to keep the label above
-    // the item which prevents input events from reaching the window.
-    aura::Window* widget_window = GetWidget()->GetNativeWindow();
-    if (widget_window && item_window_)
-      widget_window->parent()->StackChildAbove(widget_window, item_window_);
     item_window_ = nullptr;
   }
 
@@ -598,17 +592,21 @@ aura::Window* WindowSelectorItem::GetWindow() {
   return transform_window_.window();
 }
 
-void WindowSelectorItem::RestoreWindow() {
+void WindowSelectorItem::RestoreWindow(
+    FullScreenWindowAnimationObserver* observer,
+    bool deferred_transform) {
   caption_container_view_->listener_button()->ResetListener();
   close_button_->ResetListener();
-  transform_window_.RestoreWindow();
+  transform_window_.RestoreWindow(observer, deferred_transform);
   if (background_view_) {
     background_view_->OnItemRestored();
     background_view_ = nullptr;
   }
   UpdateHeaderLayout(
       HeaderFadeInMode::EXIT,
-      OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS);
+      deferred_transform
+          ? OverviewAnimationType::OVERVIEW_ANIMATION_NONE
+          : OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS);
 }
 
 void WindowSelectorItem::EnsureVisible() {
@@ -924,11 +922,24 @@ void WindowSelectorItem::UpdateHeaderLayout(
         layer_animation_settings.AddObserver(background_view_);
         if (!IsNewOverviewUi())
           background_view_->set_color(kLabelBackgroundColor);
+
+        // Stacking the |transform_window_| on the top to get the input events
+        // during the enter animation.
+        aura::Window* widget_window =
+            background_view_->GetWidget()->GetNativeWindow();
+        if (widget_window && transform_window_.window())
+          widget_window->parent()->StackChildAbove(widget_window,
+                                                   transform_window_.window());
+
       } else if (mode == HeaderFadeInMode::EXIT) {
         // Make the header visible above the window. It will be faded out when
         // the Shutdown() is called.
-        background_view_->AnimateColor(gfx::Tween::EASE_OUT,
-                                       kExitFadeInMilliseconds);
+        background_view_->AnimateColor(
+            gfx::Tween::EASE_OUT,
+
+            animation_type == OverviewAnimationType::OVERVIEW_ANIMATION_NONE
+                ? 0
+                : kExitFadeInMilliseconds);
         if (!IsNewOverviewUi())
           background_view_->set_color(kLabelExitColor);
       }
