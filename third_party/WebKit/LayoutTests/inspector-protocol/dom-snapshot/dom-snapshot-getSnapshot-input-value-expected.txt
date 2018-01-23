@@ -41,7 +41,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "childNodeIndexes": [
         4,
         5,
-        32
+        34
       ],
       "attributes": [
         {
@@ -67,10 +67,8 @@ Tests DOMSnapshot.getSnapshot method returning input values.
         7,
         12,
         13,
-        16,
-        17,
+        18,
         19,
-        20,
         21,
         22,
         23,
@@ -79,7 +77,9 @@ Tests DOMSnapshot.getSnapshot method returning input values.
         26,
         27,
         28,
-        31
+        29,
+        30,
+        33
       ],
       "attributes": [
         {
@@ -187,7 +187,43 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "childNodeIndexes": [
         15
       ],
-      "layoutNodeIndex": 7,
+      "attributes": [
+        {
+          "name": "id",
+          "value": "text-field-container"
+        },
+        {
+          "name": "pseudo",
+          "value": "-webkit-textfield-decoration-container"
+        }
+      ],
+      "layoutNodeIndex": 7
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "DIV",
+      "nodeValue": "",
+      "backendNodeId": "<number>",
+      "childNodeIndexes": [
+        16
+      ],
+      "attributes": [
+        {
+          "name": "id",
+          "value": "editing-view-port"
+        }
+      ],
+      "layoutNodeIndex": 8
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "DIV",
+      "nodeValue": "",
+      "backendNodeId": "<number>",
+      "childNodeIndexes": [
+        17
+      ],
+      "layoutNodeIndex": 9,
       "isClickable": true
     },
     {
@@ -195,7 +231,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "InputValue",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 8,
+      "layoutNodeIndex": 10,
       "isClickable": true
     },
     {
@@ -203,7 +239,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 9
+      "layoutNodeIndex": 11
     },
     {
       "nodeType": 1,
@@ -212,7 +248,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "inputValue": "ButtonValue",
       "backendNodeId": "<number>",
       "childNodeIndexes": [
-        18
+        20
       ],
       "attributes": [
         {
@@ -228,7 +264,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": "ButtonValue"
         }
       ],
-      "layoutNodeIndex": 10,
+      "layoutNodeIndex": 12,
       "isClickable": true
     },
     {
@@ -236,14 +272,14 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "ButtonValue",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 11
+      "layoutNodeIndex": 13
     },
     {
       "nodeType": 3,
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 12
+      "layoutNodeIndex": 14
     },
     {
       "nodeType": 1,
@@ -270,7 +306,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": ""
         }
       ],
-      "layoutNodeIndex": 13,
+      "layoutNodeIndex": 15,
       "isClickable": true
     },
     {
@@ -278,7 +314,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 14
+      "layoutNodeIndex": 16
     },
     {
       "nodeType": 1,
@@ -297,7 +333,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": "radio"
         }
       ],
-      "layoutNodeIndex": 15,
+      "layoutNodeIndex": 17,
       "isClickable": true
     },
     {
@@ -305,7 +341,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 16
+      "layoutNodeIndex": 18
     },
     {
       "nodeType": 1,
@@ -332,7 +368,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": ""
         }
       ],
-      "layoutNodeIndex": 17,
+      "layoutNodeIndex": 19,
       "isClickable": true
     },
     {
@@ -340,7 +376,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 18
+      "layoutNodeIndex": 20
     },
     {
       "nodeType": 1,
@@ -363,7 +399,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": ""
         }
       ],
-      "layoutNodeIndex": 19,
+      "layoutNodeIndex": 21,
       "isClickable": true
     },
     {
@@ -371,7 +407,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n  ",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 20
+      "layoutNodeIndex": 22
     },
     {
       "nodeType": 1,
@@ -380,7 +416,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "textValue": "TextAreaValue",
       "backendNodeId": "<number>",
       "childNodeIndexes": [
-        29
+        31
       ],
       "attributes": [
         {
@@ -388,7 +424,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
           "value": "TextArea"
         }
       ],
-      "layoutNodeIndex": 21
+      "layoutNodeIndex": 23
     },
     {
       "nodeType": 1,
@@ -396,9 +432,9 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeValue": "",
       "backendNodeId": "<number>",
       "childNodeIndexes": [
-        30
+        32
       ],
-      "layoutNodeIndex": 22,
+      "layoutNodeIndex": 24,
       "isClickable": true
     },
     {
@@ -406,7 +442,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "TextAreaValue",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 23,
+      "layoutNodeIndex": 25,
       "isClickable": true
     },
     {
@@ -414,7 +450,7 @@ Tests DOMSnapshot.getSnapshot method returning input values.
       "nodeName": "#text",
       "nodeValue": "\n",
       "backendNodeId": "<number>",
-      "layoutNodeIndex": 24
+      "layoutNodeIndex": 26
     },
     {
       "nodeType": 3,

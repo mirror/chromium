@@ -28,6 +28,16 @@
           "reason": "subtree"
         },
         {
+          "object": "LayoutBlockFlow DIV id='editing-view-port'",
+          "rect": [3, 4, 60, 16],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutFlexibleBox DIV id='text-field-container'",
+          "rect": [3, 4, 60, 16],
+          "reason": "subtree"
+        },
+        {
           "object": "LayoutText #text",
           "rect": [3, 4, 60, 16],
           "reason": "subtree"
@@ -38,6 +48,14 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutTextControl INPUT id='root'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutFlexibleBox DIV id='text-field-container'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV id='editing-view-port'",
       "reason": "subtree"
     },
     {

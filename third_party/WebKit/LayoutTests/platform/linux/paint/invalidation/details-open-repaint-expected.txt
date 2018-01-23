@@ -22,6 +22,16 @@
           "reason": "appeared"
         },
         {
+          "object": "LayoutBlockFlow DIV id='editing-view-port'",
+          "rect": [10, 75, 150, 16],
+          "reason": "appeared"
+        },
+        {
+          "object": "LayoutFlexibleBox DIV id='text-field-container'",
+          "rect": [10, 75, 150, 16],
+          "reason": "appeared"
+        },
+        {
           "object": "LayoutDetailsMarker DIV id='details-marker'",
           "rect": [8, 56, 11, 11],
           "reason": "full"
@@ -44,6 +54,14 @@
     },
     {
       "object": "LayoutTextControl INPUT",
+      "reason": "appeared"
+    },
+    {
+      "object": "LayoutFlexibleBox DIV id='text-field-container'",
+      "reason": "appeared"
+    },
+    {
+      "object": "LayoutBlockFlow DIV id='editing-view-port'",
       "reason": "appeared"
     },
     {

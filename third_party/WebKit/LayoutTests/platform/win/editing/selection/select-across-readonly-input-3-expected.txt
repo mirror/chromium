@@ -17,9 +17,11 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (28,3) size 4x19
           text run at (28,3) width 4: " "
         LayoutTextControl {INPUT} at (32,0) size 56x25 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 52x19
+            LayoutBlockFlow {DIV} at (0,0) size 52x19
         LayoutText {#text} at (0,0) size 0x0
 layer at (42,103) size 52x19
-  LayoutBlockFlow {DIV} at (2,3) size 52x19
+  LayoutBlockFlow {DIV} at (0,0) size 52x19
     LayoutText {#text} at (0,0) size 37x18
       text run at (0,0) width 37: "world"
 selection start: position 2 of child 0 {#text} of child 1 {SPAN} of child 5 {DIV} of body

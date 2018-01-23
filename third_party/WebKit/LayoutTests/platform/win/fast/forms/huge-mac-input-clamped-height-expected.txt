@@ -8,7 +8,9 @@ layer at (0,0) size 785x10067 backgroundClip at (0,0) size 785x600 clip at (0,0)
           text run at (0,0) width 449: "Test passes if the input element is truncated beyond 10000px high on Mac."
       LayoutBlockFlow {FORM} at (0,36) size 769x10007
         LayoutTextControl {INPUT} at (0,0) size 173x10007 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,4995.50) size 169x16
+            LayoutBlockFlow {DIV} at (0,0) size 169x16
         LayoutText {#text} at (0,0) size 0x0
 layer at (10,5048) size 169x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
-  LayoutBlockFlow {DIV} at (2,4995.50) size 169x16
+  LayoutBlockFlow {DIV} at (0,0) size 169x16
 scrolled to 0,9467

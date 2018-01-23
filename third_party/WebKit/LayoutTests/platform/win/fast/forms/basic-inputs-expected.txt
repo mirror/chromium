@@ -35,16 +35,24 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (1,2) size 7x19
           text run at (1,2) width 7: "a"
         LayoutTextControl {INPUT} at (8,1) size 173x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 169x16
+            LayoutBlockFlow {DIV} at (0,0) size 169x16
         LayoutText {#text} at (181,2) size 26x19
           text run at (181,2) width 26: "text "
         LayoutTextControl {INPUT} at (207,1) size 173x22 [color=#545454] [bgcolor=#EBEBE4] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 169x16
+            LayoutBlockFlow {DIV} at (0,0) size 169x16
         LayoutText {#text} at (380,2) size 19x19
           text run at (380,2) width 12: "b "
           text run at (392,2) width 7: "a"
         LayoutTextControl {INPUT} at (1,23) size 173x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 169x16
+            LayoutBlockFlow {DIV} at (0,0) size 169x16
         LayoutText {#text} at (174,24) size 63x19
           text run at (174,24) width 63: "password "
         LayoutTextControl {INPUT} at (237,23) size 173x22 [color=#545454] [bgcolor=#EBEBE4] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,3) size 169x16
+            LayoutBlockFlow {DIV} at (0,0) size 169x16
         LayoutText {#text} at (410,24) size 8x19
           text run at (410,24) width 8: "b"
       LayoutBlockFlow {DIV} at (10,386) size 450x23 [border: (1px solid #FF0000)]
@@ -66,18 +74,18 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (85,2) size 8x19
           text run at (85,2) width 8: "b"
 layer at (28,342) size 169x16
-  LayoutBlockFlow {DIV} at (2,3) size 169x16
+  LayoutBlockFlow {DIV} at (0,0) size 169x16
     LayoutText {#text} at (0,0) size 168x16
       text run at (0,0) width 168: "foobarbazfoobarbazfoobarbaz"
 layer at (227,342) size 169x16
-  LayoutBlockFlow {DIV} at (2,3) size 169x16
+  LayoutBlockFlow {DIV} at (0,0) size 169x16
     LayoutText {#text} at (0,0) size 17x16
       text run at (0,0) width 17: "foo"
 layer at (21,364) size 169x16
-  LayoutBlockFlow {DIV} at (2,3) size 169x16
+  LayoutBlockFlow {DIV} at (0,0) size 169x16
     LayoutText {#text} at (0,0) size 15x16
       text run at (0,0) width 15: "\x{2022}\x{2022}\x{2022}"
 layer at (257,364) size 169x16
-  LayoutBlockFlow {DIV} at (2,3) size 169x16
+  LayoutBlockFlow {DIV} at (0,0) size 169x16
     LayoutText {#text} at (0,0) size 15x16
       text run at (0,0) width 15: "\x{2022}\x{2022}\x{2022}"

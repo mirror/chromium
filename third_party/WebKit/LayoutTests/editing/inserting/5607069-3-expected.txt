@@ -6,6 +6,12 @@ This tests for a bug in InsertParagraph where it would split and clone a <form> 
 |     this.value=""
 |     <shadow:root>
 |       <div>
+|         id="text-field-container"
+|         pseudo="-webkit-textfield-decoration-container"
+|         shadow:pseudoId="-webkit-textfield-decoration-container"
+|         <div>
+|           id="editing-view-port"
+|           <div>
 |   "x"
 |   <br>
 |   "<#selection-caret>x"
@@ -14,3 +20,9 @@ This tests for a bug in InsertParagraph where it would split and clone a <form> 
 |     this.value=""
 |     <shadow:root>
 |       <div>
+|         id="text-field-container"
+|         pseudo="-webkit-textfield-decoration-container"
+|         shadow:pseudoId="-webkit-textfield-decoration-container"
+|         <div>
+|           id="editing-view-port"
+|           <div>

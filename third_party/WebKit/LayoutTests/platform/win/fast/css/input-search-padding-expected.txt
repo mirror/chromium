@@ -8,6 +8,8 @@ layer at (0,0) size 800x600
           LayoutBlockFlow {DIV} at (0,0) size 424x46
       LayoutBR {BR} at (455,39) size 0x0
       LayoutTextControl {INPUT} at (0,81) size 453x81 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutFlexibleBox {DIV} at (2,3) size 449x46
+          LayoutBlockFlow {DIV} at (0,0) size 449x46
       LayoutBR {BR} at (453,120) size 0x0
       LayoutTextControl {INPUT} at (0,162) size 236x25 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
         LayoutFlexibleBox {DIV} at (6,0.50) size 224x24
@@ -17,7 +19,7 @@ layer at (11,11) size 424x46
     LayoutText {#text} at (0,0) size 357x45
       text run at (0,0) width 357: "value jgq not clipped"
 layer at (10,92) size 449x46
-  LayoutBlockFlow {DIV} at (2,3) size 449x46
+  LayoutBlockFlow {DIV} at (0,0) size 449x46
     LayoutText {#text} at (0,0) size 357x45
       text run at (0,0) width 357: "value jgq not clipped"
 layer at (14,171) size 206x24 backgroundClip at (14,172) size 206x21 clip at (14,172) size 206x21

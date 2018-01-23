@@ -36,16 +36,24 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (1,1) size 8x18
           text run at (1,1) width 8: "a"
         LayoutTextControl {INPUT} at (8.09,1) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (139,1) size 29x18
           text run at (139,1) width 29: "text "
         LayoutTextControl {INPUT} at (167.08,1) size 131x19 [color=#545454] [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (298,1) size 20x18
           text run at (298,1) width 13: "b "
           text run at (310,1) width 8: "a"
         LayoutTextControl {INPUT} at (317.17,1) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (1,20) size 65x18
           text run at (1,20) width 65: "password "
         LayoutTextControl {INPUT} at (65.44,20) size 131x19 [color=#545454] [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (196,20) size 9x18
           text run at (196,20) width 9: "b"
       LayoutBlockFlow {DIV} at (10,366) size 450x21 [border: (1px solid #FF0000)]
@@ -67,18 +75,18 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (80,1) size 9x18
           text run at (80,1) width 9: "b"
 layer at (29,328) size 125x13 scrollWidth 159
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
     LayoutText {#text} at (0,0) size 158x13
       text run at (0,0) width 158: "foobarbazfoobarbazfoobarbaz"
 layer at (188,328) size 125x13
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
     LayoutText {#text} at (0,0) size 17x13
       text run at (0,0) width 17: "foo"
 layer at (338,328) size 125x13
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
     LayoutText {#text} at (0,0) size 17x13
       text run at (0,0) width 17: "\x{2022}\x{2022}\x{2022}"
 layer at (86,347) size 125x13
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
     LayoutText {#text} at (0,0) size 17x13
       text run at (0,0) width 17: "\x{2022}\x{2022}\x{2022}"

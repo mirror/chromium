@@ -10,6 +10,6 @@ PASS successfullyParsed is true
 TEST COMPLETE
 iframe's scroll top is 400
 PASS All correct nodes found for rect
-PASS All correct nodes found for rect
+FAIL NodesFromRect should be [DIV#content, IFRAME#iframe, DIV, INPUT#text-input, BODY#body] was [DIV#content, IFRAME#iframe, DIV, DIV#editing-view-port, DIV#text-field-container, INPUT#text-input, BODY#body]
 PASS All correct nodes found for rect
 
