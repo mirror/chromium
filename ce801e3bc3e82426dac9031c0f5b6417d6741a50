@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8483a706_4bebffaf",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T08:53:06Z",
+      "side": 1,
+      "message": "Hmm. Verifiers would need to define their own ObjectDescriptor that holds VerifierCallback, wouldn\u0027t they?\n\nIf the verifiers call TraceCallback, how can they call Verify()?",
+      "parentUuid": "058c57ca_221eb570",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14db2c75_8aed2d63",
         "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
         "patchSetId": 4
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "TraceTrait\u003cT\u003e::Mark -\u003e AdjustAndMarkTrait::Mark -(static case)-\u003e Visitor::Mark\n\nI think it may be possible to refactor it away. I would like to keep the change focused on the virtual Visit call though so I can isolate performance costs. Followup ok?",
       "parentUuid": "7799406c_f88a4bc1",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3355dce9_93cf615d",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T08:53:06Z",
+      "side": 1,
+      "message": "A follow-up sounds nice.",
+      "parentUuid": "65a5aea3_73964932",
       "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
