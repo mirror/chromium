@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/third_party/nspr/prtime.h"
+#include "base/time/time_override.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -298,6 +299,8 @@ std::ostream& operator<<(std::ostream& os, Time time) {
                             exploded.millisecond);
 }
 
+// TimeTicks ------------------------------------------------------------------
+
 // Local helper class to hold the conversion from Time to TickTime at the
 // time of the Unix epoch.
 class UnixEpochSingleton {
@@ -344,6 +347,8 @@ std::ostream& operator<<(std::ostream& os, TimeTicks time_ticks) {
   return os << as_time_delta.InMicroseconds() << " bogo-microseconds";
 }
 
+// ThreadTicks ----------------------------------------------------------------
+
 std::ostream& operator<<(std::ostream& os, ThreadTicks thread_ticks) {
   const TimeDelta as_time_delta = thread_ticks - ThreadTicks();
   return os << as_time_delta.InMicroseconds() << " bogo-thread-microseconds";
@@ -363,6 +368,31 @@ bool Time::Exploded::HasValidValues() const {
          is_in_range(minute, 0, 59) &&
          is_in_range(second, 0, 60) &&
          is_in_range(millisecond, 0, 999);
+}
+
+// ScopedTimeClockOverrides ---------------------------------------------------
+
+ScopedTimeClockOverrides::ScopedTimeClockOverrides(
+    TimeNowFunction time_override,
+    TimeTicksNowFunction time_ticks_override,
+    ThreadTicksNowFunction thread_ticks_override) {
+  if (time_override)
+    default_time_now_ = SetTimeClockOverride(time_override);
+  if (time_ticks_override)
+    default_time_ticks_now_ = SetTimeTicksClockOverride(time_ticks_override);
+  if (thread_ticks_override) {
+    default_thread_ticks_now_ =
+        SetThreadTicksClockOverride(thread_ticks_override);
+  }
+}
+
+ScopedTimeClockOverrides::~ScopedTimeClockOverrides() {
+  if (default_time_now_)
+    SetTimeClockOverride(default_time_now_);
+  if (default_time_ticks_now_)
+    SetTimeTicksClockOverride(default_time_ticks_now_);
+  if (default_thread_ticks_now_)
+    SetThreadTicksClockOverride(default_thread_ticks_now_);
 }
 
 }  // namespace base
