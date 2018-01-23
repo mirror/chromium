@@ -84,6 +84,8 @@
 
 namespace base {
 
+typedef std::string (*EscapeDataFunc)(base::StringPiece path, bool use_plus);
+
 class FieldTrialList;
 
 class BASE_EXPORT FieldTrial : public RefCounted<FieldTrial> {
@@ -510,6 +512,17 @@ class BASE_EXPORT FieldTrialList {
   // by |CreateTrialsFromString()|.
   static void AllStatesToString(std::string* output, bool include_expired);
 
+  // Creates a persistent representation of all FieldTrial params for
+  // resurrection in another process. The resulting string contains the trial
+  // name and group name pairs of all registered FieldTrials including disabled
+  // based on |include_expired| separated by '.'. The pair is followed by ':'
+  // separator and list of param name and values separated by '/'. It also takes
+  // |encode_data_func| function pointer for encodeing special charactors.
+  // This string is parsed by |AssociateParamsFromString()|.
+  static void AllParamsToString(std::string* output,
+                                bool include_expired,
+                                EscapeDataFunc encode_data_func);
+
   // Fills in the supplied vector |active_groups| (which must be empty when
   // called) with a snapshot of all registered FieldTrials for which the group
   // has been chosen and externally observed (via |group()|) and which have
@@ -721,6 +734,9 @@ class BASE_EXPORT FieldTrialList {
   // This method also AddRef's the indicated trial.
   // This should always be called after creating a new FieldTrial instance.
   static void Register(FieldTrial* trial);
+
+  // Returns all the registered trials.
+  static RegistrationMap GetRegisteredTrials();
 
   static FieldTrialList* global_;  // The singleton of this class.
 
