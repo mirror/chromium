@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4537d1fc_0bd48e06",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2018-01-23T18:22:27Z",
+      "side": 1,
+      "message": "OK, I will remove the static.",
+      "parentUuid": "8747fcb2_ba5e1c85",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "064a8ae509248f6f6f7b7ef86b2c4e10a20668ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1418c1dd_aaafef3f",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_favicon_view.mm",
         "patchSetId": 14
