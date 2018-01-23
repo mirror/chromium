@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8103b9f_7e5e04c8",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilitiesTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T17:33:23Z",
+      "side": 1,
+      "message": "nit: Please use a more specific name, like \"IsTabHTMLSpanElementOnDisplayNone\"",
+      "range": {
+        "startLine": 804,
+        "startChar": 29,
+        "endLine": 804,
+        "endChar": 49
+      },
+      "revId": "d89670122205f2bd832b2a9fb4f26269ba8ae08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
