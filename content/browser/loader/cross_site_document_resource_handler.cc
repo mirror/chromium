@@ -531,11 +531,12 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
     initiator = request()->initiator().value();
 
   // Don't block same-origin documents.
-  if (initiator.IsSameOriginWith(url::Origin::Create(url)))
+  url::Origin target_origin = url::Origin::Create(url);
+  if (initiator.IsSameOriginWith(target_origin))
     return false;
 
   // Only block documents from HTTP(S) schemes.
-  if (!CrossSiteDocumentClassifier::IsBlockableScheme(url))
+  if (!CrossSiteDocumentClassifier::IsBlockableScheme(target_origin.GetURL()))
     return false;
 
   // Allow requests from file:// URLs for now.
