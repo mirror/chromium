@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740f7438_6534def9",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autocomplete-maxlength-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-23T02:17:55Z",
+      "side": 1,
+      "message": "Reference tests are expensive.  We should switch these tests to testharness.js verifying input.value length.",
+      "revId": "442a8abe48718d3c1e729b8c249b4c5355f02619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
