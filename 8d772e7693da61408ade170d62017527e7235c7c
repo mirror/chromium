@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9762c0f_b5c36fc2",
+        "filename": "third_party/WebKit/Source/core/fileapi/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T20:39:26Z",
+      "side": 1,
+      "message": "super-nit: you can just say \"core\", the \":core\" is implied since it matches the last directory component",
+      "revId": "8d772e7693da61408ade170d62017527e7235c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
