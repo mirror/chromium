@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d2de2b1d_b01a8b4c",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-23T16:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd6fcdb_4d0c73ac",
+      "range": {
+        "startLine": 2902,
+        "startChar": 13,
+        "endLine": 2902,
+        "endChar": 16
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba63769_970f685d",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 6
@@ -59,6 +83,24 @@
       "writtenOn": "2018-01-23T15:48:18Z",
       "side": 1,
       "message": "So, if mid-doom, we reset the entry, we\u0027ll be in an UNINITIALIZED state until the doom completes, at which point it\u0027ll be changed to FAILURE. Why not just mark it as FAILURE now?",
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800366a4_6c094f0b",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-23T16:09:50Z",
+      "side": 1,
+      "message": "First of all: see the change to TEST_F(DiskCacheEntryTest, SimpleCacheQueuedOpenOnDoomedEntry);\nthis is what it\u0027s about.\n\nWith DOOM_QUEUED we are not really \"mid-doom\"; somebody called Doom so we\u0027re unlinked, but it\u0027s just sitting someplace in the entry\u0027s queue, and the ops in the queue before it can actually succeed, and probably should succeed since they were invoked on the I/O thread before Doom was called, so they\u0027re supposed to be talking about the pre-doom Entry. \n\nWe don\u0027t actually have to worry about \"mid-doom\" as such since on the I/O thread everything is sequenced (except the magic unlink behavior of Doom() API, but that only happens once), so we \ndon\u0027t actually do anything in between DoomEntryInternal and DoomOperationComplete that\u0027s not \nappending things to the queue... and that appending can\u0027t actually happen, nor is there anything after the doom in the queue, since the doom from API unlinks the entry immediately. It\u0027s dooms from disk errors where the weirdness come in, and those are always DOOM_COMPLETED, never DOOM_QUEUED.\n\nAlso, we don\u0027t actually set FAILURE once the doom does complete, but it doesn\u0027t matter for the\nabove reasons...",
+      "parentUuid": "7ba63769_970f685d",
       "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +127,30 @@
       "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74e7125_c9bd7f2a",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-23T16:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3434370_3fc9c995",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 21
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +197,54 @@
       "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c0dd8a_8faf95f2",
+        "filename": "net/disk_cache/simple/simple_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-23T16:09:50Z",
+      "side": 1,
+      "message": "This is deliberate, to emphasize that it\u0027s an async task. Maybe s/be/start/ ?",
+      "parentUuid": "2e33e71b_1e03006c",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 15
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af47699_d9d7596b",
+        "filename": "net/disk_cache/simple/simple_entry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-23T16:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f593bc1_edde0001",
+      "range": {
+        "startLine": 203,
+        "startChar": 38,
+        "endLine": 203,
+        "endChar": 40
+      },
+      "revId": "66324d4ebb5cc66b14d8edc90bb529f7498b2ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
