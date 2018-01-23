@@ -282,7 +282,7 @@ TEST_F(NativeViewAccessibilityWinTest, GetAllOwnedWidgetsCrash) {
 
 TEST_F(NativeViewAccessibilityWinTest, WindowHasRoleApplication) {
   // We expect that our internal window object does not expose
-  // ROLE_SYSTEM_WINDOW, but ROLE_SYSTEM_APPLICATION instead.
+  // ROLE_SYSTEM_WINDOW, but ROLE_SYSTEM_PANE instead.
   Widget widget;
   Widget::InitParams init_params =
       CreateParams(Widget::InitParams::TYPE_WINDOW);
@@ -295,7 +295,7 @@ TEST_F(NativeViewAccessibilityWinTest, WindowHasRoleApplication) {
   ScopedVariant role;
   EXPECT_EQ(S_OK, accessible->get_accRole(childid_self, role.Receive()));
   EXPECT_EQ(role.type(), VT_I4);
-  EXPECT_EQ(V_I4(role.ptr()), ROLE_SYSTEM_APPLICATION);
+  EXPECT_EQ(V_I4(role.ptr()), ROLE_SYSTEM_PANE);
 }
 }  // namespace test
 }  // namespace views
