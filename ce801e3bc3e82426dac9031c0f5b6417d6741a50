@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6cac7c79_530b6d23",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-23T09:13:41Z",
+      "side": 1,
+      "message": "- The verifier does not need to create a new HeapObjectDescriptor. See below.\n- The TraceCallback is strictly speaking not needed because we also add the Mark callback to the general descriptor. This is leaking abstractions and I should refactor the marker to just use Trace in a separate CL (requires a bit refactoring). \n\nThe verifier can be implemented like this:\n\nclass Verifier : public Visitor {\n protected:\n  void Visit(void* object, const HeapObjectDescriptor\u0026 descriptor) final {\n    CHECK(MarkBitIsBlack(object));\n  }\n}\n\nFor each page:\n  Verifier verifier;\n  for (HeapObjectHeader* header : page) {\n    GCInfo info ... \n    info.trace(\u0026verifier, ObjectFromHeader(header));\n  }",
+      "parentUuid": "8483a706_4bebffaf",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14db2c75_8aed2d63",
         "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
         "patchSetId": 4
