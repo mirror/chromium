@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "987f3010_b6d2a577",
+        "filename": "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-23T22:54:25Z",
+      "side": 1,
+      "message": "This URL isn\u0027t working yet. I assume you know about that.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 58
+      },
+      "revId": "d65a278a6e71e3b3839f9366fc7e5d042e798f9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
