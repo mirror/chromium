@@ -22,6 +22,30 @@
       "revId": "bfc25053b023cd18874e719afccd7246616e51e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9596c4_6e38a013",
+        "filename": "android_webview/lib/aw_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T21:39:47Z",
+      "side": 1,
+      "message": "I think this is fine as the \"enableArgumentFilter\" option needs to be enabled in tracing config for this to work. This is also set in chrome [1]\n\n[1] https://cs.chromium.org/chromium/src/chrome/app/chrome_main_delegate.cc?type\u003dcs\u0026q\u003dSetArgumentFilterPredicate\u0026sq\u003dpackage:chromium\u0026l\u003d546",
+      "parentUuid": "19bfdcd2_5ca7e21d",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 48
+      },
+      "revId": "bfc25053b023cd18874e719afccd7246616e51e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
