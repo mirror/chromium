@@ -46,6 +46,30 @@
       "revId": "bc084a8b5afa3744a74927344e304c02ae54189f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ca3895_04f76942",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-23T15:11:17Z",
+      "side": 0,
+      "message": "I wouldn\u0027t be surprised if we have other systems that persist things elsewhere. For example, I think Siggi\u0027s WatcherProcess stuff used to put stuff in the registry. Let\u0027s file a bug about this (to check call sites) and we can follow up on it.",
+      "parentUuid": "ff6df99a_d2b803ae",
+      "range": {
+        "startLine": 603,
+        "startChar": 36,
+        "endLine": 603,
+        "endChar": 69
+      },
+      "revId": "bc084a8b5afa3744a74927344e304c02ae54189f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
