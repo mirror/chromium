@@ -121,6 +121,24 @@
       "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1f3ff1_53d29bdb",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2018-01-23T02:39:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e717f469_31e5be63",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
