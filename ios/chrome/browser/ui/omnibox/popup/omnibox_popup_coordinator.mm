@@ -28,6 +28,7 @@
 @implementation OmniboxPopupCoordinator
 
 @synthesize browserState = _browserState;
+@synthesize canShowPopup = _canShowPopup;
 @synthesize mediator = _mediator;
 @synthesize popupViewController = _popupViewController;
 @synthesize positioner = _positioner;
@@ -44,6 +45,7 @@
 }
 
 - (void)start {
+  _canShowPopup = YES;
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> imageFetcher =
       std::make_unique<image_fetcher::IOSImageDataFetcherWrapper>(
           self.browserState->GetRequestContext());
@@ -68,6 +70,13 @@
 
 - (void)stop {
   _popupView.reset();
+}
+
+#pragma mark - Property accessor
+
+- (void)setCanShowPopup:(BOOL)canShowPopup {
+  _canShowPopup = canShowPopup;
+  self.mediator.presenter.canShowPopup = canShowPopup;
 }
 
 @end

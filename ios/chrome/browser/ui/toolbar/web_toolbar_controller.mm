@@ -998,6 +998,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
     // there's no need to indicate interaction was initiated from the fakebox.
     model->OnSetFocus(false);
     model->SetCaretVisibility(false);
+    [self focusOmnibox];
   } else {
     // Set the omnibox background's frame to full bleed.
     CGRect mobFrame = CGRectInset([_clippingView bounds], -2, -2);
@@ -1019,6 +1020,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 - (void)onFakeboxAnimationComplete {
   DCHECK(!IsIPadIdiom());
   [self.view setHidden:NO];
+  [self focusOmnibox];
 }
 
 #pragma mark -
@@ -1026,6 +1028,10 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 
 - (UIView*)popupAnchorView {
   return self.view;
+}
+
+- (UIView*)popupParentView {
+  return self.view.superview;
 }
 
 #pragma mark -

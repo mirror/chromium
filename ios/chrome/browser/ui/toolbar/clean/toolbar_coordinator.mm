@@ -288,6 +288,10 @@
   return self.toolbarViewController.view;
 }
 
+- (UIView*)popupParentView {
+  return self.toolbarViewController.view.superview;
+}
+
 #pragma mark - LocationBarDelegate
 
 - (void)locationBarHasBecomeFirstResponder {
@@ -347,8 +351,8 @@
     model->SetCaretVisibility(false);
   } else {
     [self expandOmniboxAnimated:NO];
+    self.omniboxPopupCoordinator.canShowPopup = NO;
   }
-
   [self focusOmnibox];
 }
 
@@ -363,7 +367,9 @@
 
 - (void)onFakeboxAnimationComplete {
   DCHECK(!IsIPadIdiom());
+  self.omniboxPopupCoordinator.canShowPopup = YES;
   self.viewController.view.hidden = NO;
+  [self focusOmnibox];
 }
 
 #pragma mark - VoiceSearchControllerDelegate
