@@ -14,6 +14,7 @@
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "services/video_capture/device_factory_provider_impl.h"
 #include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
+#include "services/video_capture/public/interfaces/plugin.mojom.h"
 #include "services/video_capture/public/interfaces/testing_controls.mojom.h"
 
 #if defined(OS_WIN)
@@ -46,6 +47,8 @@ class ServiceImpl : public service_manager::Service {
   void MaybeRequestQuit();
   void LazyInitializeDeviceFactoryProvider();
   void OnProviderClientDisconnected();
+  void TryToConnectToPluginConnectionDispatcher();
+  void OnPluginDisconnected();
 
 #if defined(OS_WIN)
   // COM must be initialized in order to access the video capture devices.
@@ -60,6 +63,10 @@ class ServiceImpl : public service_manager::Service {
   // for testing.
   base::RepeatingClosure factory_provider_client_disconnected_cb_;
   base::ThreadChecker thread_checker_;
+
+  mojom::PluginConnectionDispatcherPtr dispatcher_;
+  mojom::DeviceFactoryProviderPtr device_factory_provider_for_plugin_;
+
   base::WeakPtrFactory<ServiceImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceImpl);

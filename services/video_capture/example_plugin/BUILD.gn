@@ -1,0 +1,21 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+executable("example_plugin") {
+  sources = [
+    "connection_dispatcher.cc",
+    "connection_dispatcher.h",
+    "connection_handler.cc",
+    "connection_handler.h",
+    "main.cc",
+    "video_frame_forwarder.cc",
+    "video_frame_forwarder.h",
+  ]
+
+  deps = [
+    "//media/capture",
+    "//mojo/edk/system",
+    "//services/video_capture/public/interfaces",
+  ]
+}

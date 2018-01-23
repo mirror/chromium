@@ -155,6 +155,7 @@ void ServiceVideoCaptureDeviceLauncher::OnCreateDeviceCallback(
           params, std::move(device), std::move(receiver),
           std::move(connection_lost_cb), callbacks, std::move(done_cb_));
       return;
+    case video_capture::mojom::DeviceAccessResultCode::ERROR_DEVICE_IS_BUSY:
     case video_capture::mojom::DeviceAccessResultCode::ERROR_DEVICE_NOT_FOUND:
     case video_capture::mojom::DeviceAccessResultCode::NOT_INITIALIZED:
       ConcludeLaunchDeviceWithFailure(abort_requested,
