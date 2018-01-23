@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d4697b3_3ef71539",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-23T19:44:24Z",
+      "side": 1,
+      "message": "libc++ is already disabled for nacl builds on Linux because is_linux evaluates to false when targeting nacl.\n\nhttps://cs.chromium.org/chromium/src/build/config/BUILDCONFIG.gn?type\u003dcs\u0026q\u003dbuildconfig.gn\u0026sq\u003dpackage:chromium\u0026l\u003d338\n\nIn fact, without this change the build is broken right now on Linux with use_custom_libcxx explicitly set to true in args.gn.",
+      "parentUuid": "811c6feb_9877d1b9",
+      "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d3e054e_aea0f828",
         "filename": "build/config/win/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T13:57:30Z",
       "side": 1,
       "message": "can we add a LIBCPP_DONT_BABYSIT define to libc++ to disable the embeddd linkerflags?",
+      "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e1597c_a5b69a7c",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-23T19:44:24Z",
+      "side": 1,
+      "message": "Makes sense. https://reviews.llvm.org/D42436",
+      "parentUuid": "9d3e054e_aea0f828",
       "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
