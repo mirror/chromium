@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4243425_84f3712d",
+        "filename": "chrome/browser/ui/views/confirm_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T15:33:05Z",
+      "side": 1,
+      "message": "The MacOS version is still using a link at this time. This API can/should change once the Mac version is changed or moved to this \"views\" based version.",
+      "parentUuid": "0c0086d6_80c4ac8d",
+      "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f41ab0_eb29f8a5",
         "filename": "chrome/browser/ui/views/confirm_bubble_views.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74eff47_87c38124",
+        "filename": "chrome/browser/ui/views/confirm_bubble_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T15:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0f41ab0_eb29f8a5",
+      "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
