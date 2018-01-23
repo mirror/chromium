@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e9b1e18_2ff1db53",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T09:35:02Z",
+      "side": 1,
+      "message": "It needs properties set after init.",
+      "parentUuid": "06b1bfa5_d4b6abf3",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6213117c_cbe34c7e",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0eabc0_c0af7b87",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T09:35:02Z",
+      "side": 1,
+      "message": "I have added a comment. I will investigate in a future CL a way to not use constraints.",
+      "parentUuid": "6213117c_cbe34c7e",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d067802b_cae30922",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T09:35:02Z",
+      "side": 1,
+      "message": "It is used 3 times. Why not using an helper?",
+      "parentUuid": "8ad53a65_5b23d3be",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "542b1a3b_7efc4fb3",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf68d9c_2a002ece",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T09:35:02Z",
+      "side": 1,
+      "message": "I agree. I will explore this in a future CL as this is currently used and outside the scope of this CL.",
+      "parentUuid": "542b1a3b_7efc4fb3",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
