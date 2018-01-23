@@ -134,6 +134,12 @@ const char kVideoUnderflowThresholdMs[] = "video-underflow-threshold-ms";
 const char kDisableRTCSmoothnessAlgorithm[] =
     "disable-rtc-smoothness-algorithm";
 
+// Enable new cpu load estimator, for testing.
+// TODO(nisse): Delete once we have switched over to always using the
+// new estimator.
+const char kEnableNewEncodeCpuLoadEstimator[] =
+    "enable-new-encode-cpu-load-estimator";
+
 // Force media player using SurfaceView instead of SurfaceTexture on Android.
 const char kForceVideoOverlays[] = "force-video-overlays";
 
@@ -254,6 +260,11 @@ const base::Feature kMseFlacInIsobmff{"MseFlacInIsobmff",
 // Use the new Remote Playback / media flinging pipeline.
 const base::Feature kNewRemotePlaybackPipeline{
     "NewRemotePlaybackPipeline", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// TODO(nisse): Should this be connected to
+// switches::kEnableNewEncodeCpuLoadEstimator in some way?
+const base::Feature kNewEncodeCpuLoadEstimator{
+    "NewEncodeCpuLoadEstimator", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // CanPlayThrough issued according to standard.
 const base::Feature kSpecCompliantCanPlayThrough{
