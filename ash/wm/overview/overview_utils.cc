@@ -10,6 +10,7 @@
 namespace ash {
 
 bool IsNewOverviewUi() {
+  return true;
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       ash::switches::kAshEnableNewOverviewUi);
 }
