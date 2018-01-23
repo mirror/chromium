@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7acb2a98_af1266b3",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-23T09:05:52Z",
+      "side": 1,
+      "message": "The UX decided not to add paste-into-folder here. Paste menu is considered the only special case that needs this hack to enable file copy operation by touchscreen.",
+      "parentUuid": "294f3801_a295c1f5",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29672a9_740dc341",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "If one folder is selected and we open the gear menu, only a separator will be shown, which doesn\u0027t look nice.\n\nI have an additional question: are we going to copy other menu items from context menu to gear menu? If so, I think we should be careful to put disabled item on the gear menu. The gear menu will be longer and bottom of the menu will be less accessible.",
       "parentUuid": "6329d72a_db232127",
+      "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1e3feef_cd345258",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-23T09:05:52Z",
+      "side": 1,
+      "message": "As noted above comment, UX decided not to add other items.",
+      "parentUuid": "6de735ae_2a274f96",
       "revId": "8232452ee434563ed19f44ece3afd03e1e17dded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
