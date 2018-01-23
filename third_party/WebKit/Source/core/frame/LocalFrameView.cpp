@@ -2950,6 +2950,7 @@ void LocalFrameView::UpdateGeometriesIfNeeded() {
 void LocalFrameView::UpdateAllLifecyclePhases() {
   GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kPaintClean);
+  //  showFrameTree(&GetFrame());
 }
 
 void LocalFrameView::UpdateLifecycleToPrePaintClean() {

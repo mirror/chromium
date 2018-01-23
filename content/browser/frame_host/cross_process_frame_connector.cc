@@ -110,6 +110,17 @@ void CrossProcessFrameConnector::SetChildFrameSurface(
       frame_proxy_in_parent_renderer_->GetRoutingID(), surface_info));
 }
 
+void CrossProcessFrameConnector::SendIntrinsicSizingInfoToParent(
+    const gfx::SizeF& size,
+    const gfx::SizeF& aspect_ratio,
+    bool has_width,
+    bool has_height) {
+  frame_proxy_in_parent_renderer_->Send(
+      new FrameMsg_IntrinsicSizingInfoOfChildChanged(
+          frame_proxy_in_parent_renderer_->GetRoutingID(), size, aspect_ratio,
+          has_width, has_height));
+}
+
 void CrossProcessFrameConnector::UpdateCursor(const WebCursor& cursor) {
   RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
   // UpdateCursor messages are ignored if the root view does not support
