@@ -153,6 +153,7 @@
 #include "services/metrics/public/cpp/mojo_ukm_recorder.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/ui/common/switches.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "services/ui/public/cpp/gpu/gpu.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -1994,6 +1995,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
+  params.use_viz_hit_test = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      ui::switches::kUseVizHitTest);
 
   // The renderer runs animations and layout for animate_only BeginFrames.
   params.wants_animate_only_begin_frames = true;
