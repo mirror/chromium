@@ -16,6 +16,24 @@
       "revId": "84ee77c75571a3443641c1088e74e1625174d69a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc606c5d_74fdf12c",
+        "filename": "base/component_export.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T00:30:37Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s one good reason. More generally I like the idea of conditions related to \"am I in this component?\" using the same naming token as any corresponding COMPONENT_EXPORT() invocations.",
+      "parentUuid": "b2b5ee40_59533053",
+      "revId": "84ee77c75571a3443641c1088e74e1625174d69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
