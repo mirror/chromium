@@ -56,7 +56,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ToolbarCoordinator ()<LocationBarDelegate, OmniboxPopupPositioner> {
+@interface ToolbarCoordinator ()<OmniboxPopupPositioner> {
   std::unique_ptr<LocationBarControllerImpl> _locationBar;
   // Observer that updates |toolbarViewController| for fullscreen events.
   std::unique_ptr<FullscreenControllerObserver> _fullscreenObserver;
@@ -131,13 +131,14 @@
   self.locationBarCoordinator.dispatcher = self.dispatcher;
   self.locationBarCoordinator.URLLoader = self.URLLoader;
   self.locationBarCoordinator.delegate = self.delegate;
+  self.locationBarCoordinator.webStateList = self.webStateList;
   [self.locationBarCoordinator start];
 
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
   // created.
   _locationBar = std::make_unique<LocationBarControllerImpl>(
-      self.locationBarCoordinator.locationBarView, self.browserState, self,
-      self.dispatcher);
+      self.locationBarCoordinator.locationBarView, self.browserState,
+      self.locationBarCoordinator, self.dispatcher);
   self.locationBarCoordinator.locationBarController = _locationBar.get();
   _locationBar->SetURLLoader(self.locationBarCoordinator);
   self.omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
@@ -294,36 +295,26 @@
 
 #pragma mark - LocationBarDelegate
 
-- (void)locationBarHasBecomeFirstResponder {
-  [self.delegate locationBarDidBecomeFirstResponder];
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
   if (IsIPadIdiom()) {
-    [self.toolbarViewController locationBarIsFirstResonderOnIPad:YES];
-  } else if (!self.toolbarViewController.expanded) {
-    [self expandOmniboxAnimated:YES];
+    // TODO: rename this method.
+    [self.toolbarViewController locationBarIsFirstResonderOnIPad:focused];
+    return;
   }
-}
 
-- (void)locationBarHasResignedFirstResponder {
-  [self.delegate locationBarDidResignFirstResponder];
-  if (IsIPadIdiom()) {
-    [self.toolbarViewController locationBarIsFirstResonderOnIPad:NO];
-  } else if (self.toolbarViewController.expanded) {
+  DCHECK(!IsIPadIdiom());
+  if (focused == self.toolbarViewController.expanded) {
+    // The view controller is already in the correct state.
+    return;
+  }
+
+  if (focused) {
+    [self expandOmniboxAnimated:YES];
+  } else {
     [self contractOmnibox];
   }
 }
 
-- (void)locationBarBeganEdit {
-  [self.delegate locationBarBeganEdit];
-}
-
-- (web::WebState*)getWebState {
-  return self.webStateList->GetActiveWebState();
-}
-
-- (ToolbarModel*)toolbarModel {
-  ToolbarModelIOS* toolbarModelIOS = [self.delegate toolbarModelIOS];
-  return toolbarModelIOS ? toolbarModelIOS->GetToolbarModel() : nullptr;
-}
 
 #pragma mark - FakeboxFocuser
 
@@ -528,6 +519,10 @@
       addContractOmniboxAnimations:animator];
   [self.toolbarViewController addToolbarContractionAnimations:animator];
   [animator startAnimation];
+}
+
+- (web::WebState*)getWebState {
+  return self.webStateList->GetActiveWebState();
 }
 
 @end

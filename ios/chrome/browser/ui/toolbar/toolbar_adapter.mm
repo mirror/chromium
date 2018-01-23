@@ -134,6 +134,12 @@
   [self.toolbarCoordinator stop];
 }
 
+// Coordinates the location bar focusing/defocusing. For example, initiates
+// transition to the expanded location bar state of the view controller.
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  [self.toolbarCoordinator transitionToLocationBarFocusedState:focused];
+}
+
 #pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
