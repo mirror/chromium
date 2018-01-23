@@ -234,6 +234,30 @@
       "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12fa09b_67b39bb6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-23T15:00:54Z",
+      "side": 1,
+      "message": "The other option Scott suggested was a class property (View is a PropertyHandler). That seems suitable.",
+      "parentUuid": "d9c7999a_1d5462c6",
+      "range": {
+        "startLine": 658,
+        "startChar": 8,
+        "endLine": 658,
+        "endChar": 62
+      },
+      "revId": "b8dfda2b0fa29b9d990d095d8a1566ea20f80949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
