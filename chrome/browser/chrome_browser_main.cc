@@ -673,6 +673,9 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       std::make_unique<metrics::ExpiredHistogramsChecker>(
           chrome_metrics::kExpiredHistogramsHashes,
           chrome_metrics::kNumExpiredHistograms));
+#if !defined(OS_MACOSX)
+  InitializeResourceBundle();
+#endif  // !defined(!OS_MACOSX)
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
@@ -928,6 +931,23 @@ int ChromeBrowserMainParts::PreCreateThreads() {
   return result_code_;
 }
 
+int ChromeBrowserMainParts::InitializeResourceBundle() {
+  {
+    TRACE_EVENT0("startup",
+                 "ChromeBrowserMainParts::PreCreateThreadsImpl:AddDataPack");
+    base::FilePath resources_pack_path;
+    PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
+    ui::ResourceBundle::InitSharedInstance(nullptr);
+#if defined(OS_ANDROID)
+    ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
+#else
+    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+        resources_pack_path, ui::SCALE_FACTOR_NONE);
+#endif  // defined(OS_ANDROID)
+  }
+  return content::RESULT_CODE_NORMAL_EXIT;
+}
+
 int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreCreateThreadsImpl")
   run_message_loop_ = false;
@@ -1051,18 +1071,18 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   CHECK(!loaded_locale.empty()) << "Locale could not be found for " << locale;
   browser_process_->SetApplicationLocale(loaded_locale);
 
-  {
-    TRACE_EVENT0("startup",
-        "ChromeBrowserMainParts::PreCreateThreadsImpl:AddDataPack");
-    base::FilePath resources_pack_path;
-    PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
-#if defined(OS_ANDROID)
-    ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
-#else
-    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
-        resources_pack_path, ui::SCALE_FACTOR_NONE);
-#endif  // defined(OS_ANDROID)
-  }
+//  {
+//    TRACE_EVENT0("startup",
+//        "ChromeBrowserMainParts::PreCreateThreadsImpl:AddDataPack");
+//    base::FilePath resources_pack_path;
+//    PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
+//#if defined(OS_ANDROID)
+//    ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
+//#else
+//    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+//        resources_pack_path, ui::SCALE_FACTOR_NONE);
+//#endif  // defined(OS_ANDROID)
+//  }
 #endif  // defined(OS_MACOSX)
 
   browser_process_->browser_policy_connector()->OnResourceBundleCreated();

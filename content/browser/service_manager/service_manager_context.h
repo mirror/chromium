@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
+#include "base/threading/thread.h"
 #include "content/common/content_export.h"
 
 namespace service_manager {
@@ -29,6 +31,8 @@ class CONTENT_EXPORT ServiceManagerContext {
   ServiceManagerContext();
   ~ServiceManagerContext();
 
+  void InitForBrowserProcess();
+
   // Returns a service_manager::Connector that can be used on the IO thread.
   static service_manager::Connector* GetConnectorForIOThread();
 
@@ -38,6 +42,8 @@ class CONTENT_EXPORT ServiceManagerContext {
  private:
   class InProcessServiceManagerContext;
 
+  std::unique_ptr<base::Thread> thread_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   scoped_refptr<InProcessServiceManagerContext> in_process_context_;
   std::unique_ptr<ServiceManagerConnection> packaged_services_connection_;
 

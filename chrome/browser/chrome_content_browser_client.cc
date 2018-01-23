@@ -3145,7 +3145,8 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     info.factory = base::Bind(&ChromeService::Create);
     services->insert(std::make_pair(chrome::mojom::kServiceName, info));
   }
-  if (g_browser_process->pref_service_factory()) {
+
+  if (g_browser_process && g_browser_process->pref_service_factory()) {
     service_manager::EmbeddedServiceInfo info;
     info.factory =
         g_browser_process->pref_service_factory()->CreatePrefServiceFactory();
@@ -3171,7 +3172,8 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
         std::make_pair(proxy_resolver::mojom::kProxyResolverServiceName, info));
   }
 #endif
-  g_browser_process->platform_part()->RegisterInProcessServices(services);
+  if (g_browser_process)
+    g_browser_process->platform_part()->RegisterInProcessServices(services);
 }
 
 void ChromeContentBrowserClient::RegisterOutOfProcessServices(

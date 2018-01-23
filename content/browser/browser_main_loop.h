@@ -146,6 +146,8 @@ class CONTENT_EXPORT BrowserMainLoop {
   // successful or not.
   bool InitializeToolkit();
 
+  void InitializeServiceManager();
+
   void PreMainMessageLoopStart();
   void MainMessageLoopStart();
   void PostMainMessageLoopStart();

@@ -74,6 +74,9 @@ class CONTENT_EXPORT ServiceManagerConnection {
   // below.
   virtual void Start() = 0;
 
+  virtual void SetTaskRunner(
+      scoped_refptr<base::SequencedTaskRunner> task_runner) = 0;
+
   // Returns the service_manager::Connector received via this connection's
   // Service
   // implementation. Use this to initiate connections as this object's Identity.

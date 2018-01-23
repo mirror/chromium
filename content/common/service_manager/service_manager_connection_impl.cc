@@ -63,6 +63,14 @@ class ServiceManagerConnectionImpl::IOThreadContext
     io_thread_checker_.DetachFromThread();
   }
 
+  void SetTaskRunner(scoped_refptr<base::SequencedTaskRunner> io_task_runner,
+                     std::unique_ptr<service_manager::Connector> connector) {
+    io_task_runner_ = io_task_runner;
+    io_thread_checker_.DetachFromThread();
+    io_thread_connector_ = std::move(connector);
+    callback_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  }
+
   // Safe to call from any thread.
   void Start(const base::Closure& stop_callback) {
     DCHECK(!started_);
@@ -418,6 +426,13 @@ void ServiceManagerConnectionImpl::Start() {
   context_->Start(
       base::Bind(&ServiceManagerConnectionImpl::OnConnectionLost,
                  weak_factory_.GetWeakPtr()));
+}
+
+void ServiceManagerConnectionImpl::SetTaskRunner(
+    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+  service_manager::mojom::ConnectorRequest connector_request;
+  connector_ = service_manager::Connector::Create(&connector_request);
+  context_->SetTaskRunner(task_runner, connector_->Clone());
 }
 
 service_manager::Connector* ServiceManagerConnectionImpl::GetConnector() {
