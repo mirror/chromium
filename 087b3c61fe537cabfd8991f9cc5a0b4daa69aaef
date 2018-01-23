@@ -146,6 +146,24 @@
       "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8baacd38_5a061e63",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 39
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-23T19:11:21Z",
+      "side": 1,
+      "message": "Our currently intended UX is that we won\u0027t offer the export button at all.\nThere are two steps to initiating the export. The first opens a modal dialog and on the dialog there\u0027s a button, which can actually trigger exportPasswords(). Rather than offering the button for the second step, we\u0027ll jump straight to in-progress. In this case, we can\u0027t use exportPasswords() to probe the status.\n\nIf you feel this is too minor to justify a separate function, I\u0027ll check with UX if it is also acceptable to jump to the in-progress view after the actual export request.",
+      "parentUuid": "61a6d917_3db610b9",
+      "revId": "087b3c61fe537cabfd8991f9cc5a0b4daa69aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
