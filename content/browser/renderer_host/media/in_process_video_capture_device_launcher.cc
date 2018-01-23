@@ -46,9 +46,7 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateGpuJpegDecoder(
 
 // The maximum number of video frame buffers in-flight at any one time. This
 // value should be based on the logical capacity of the capture pipeline, and
-// not on hardware performance.  For example, tab capture requires more buffers
-// than webcam capture because the pipeline is longer (it includes read-backs
-// pending in the GPU pipeline).
+// not on hardware performance.
 const int kMaxNumberOfBuffers = 3;
 
 }  // anonymous namespace
@@ -114,26 +112,51 @@ void InProcessVideoCaptureDeviceLauncher::LaunchDeviceAsync(
     }
 
 #if defined(ENABLE_SCREEN_CAPTURE)
-    case MEDIA_TAB_VIDEO_CAPTURE: {
-      constexpr int kMaxNumberOfBuffersForTabCapture = 10;
+#if !defined(OS_ANDROID)
+    case MEDIA_TAB_VIDEO_CAPTURE:
       start_capture_closure = base::BindOnce(
           &InProcessVideoCaptureDeviceLauncher::DoStartTabCaptureOnDeviceThread,
-          base::Unretained(this), device_id, params,
-          base::Passed(CreateDeviceClient(kMaxNumberOfBuffersForTabCapture,
-                                          std::move(receiver))),
+          base::Unretained(this), device_id, params, std::move(receiver),
           std::move(after_start_capture_callback));
       break;
-    }
+#endif  // !defined(OS_ANDROID)
 
-    case MEDIA_DESKTOP_VIDEO_CAPTURE:
+    case MEDIA_DESKTOP_VIDEO_CAPTURE: {
+      const DesktopMediaID desktop_id = DesktopMediaID::Parse(device_id);
+#if !defined(OS_ANDROID)
+      if (desktop_id.type == DesktopMediaID::TYPE_WEB_CONTENTS) {
+        after_start_capture_callback = base::BindOnce(
+            [](bool with_audio, ReceiveDeviceCallback callback,
+               std::unique_ptr<media::VideoCaptureDevice> device) {
+              // Special case: Only call IncrementDesktopCaptureCounter()
+              // for WebContents capture if it was started from a desktop
+              // capture API.
+              if (device) {
+                IncrementDesktopCaptureCounter(TAB_VIDEO_CAPTURER_CREATED);
+                IncrementDesktopCaptureCounter(
+                    with_audio ? TAB_VIDEO_CAPTURER_CREATED_WITH_AUDIO
+                               : TAB_VIDEO_CAPTURER_CREATED_WITHOUT_AUDIO);
+              }
+              std::move(callback).Run(std::move(device));
+            },
+            desktop_id.audio_share, std::move(after_start_capture_callback));
+        start_capture_closure = base::BindOnce(
+            &InProcessVideoCaptureDeviceLauncher::
+                DoStartTabCaptureOnDeviceThread,
+            base::Unretained(this), device_id, params, std::move(receiver),
+            std::move(after_start_capture_callback));
+        break;
+      }
+#endif  // !defined(OS_ANDROID)
       start_capture_closure =
           base::BindOnce(&InProcessVideoCaptureDeviceLauncher::
                              DoStartDesktopCaptureOnDeviceThread,
-                         base::Unretained(this), device_id, params,
+                         base::Unretained(this), desktop_id, params,
                          base::Passed(CreateDeviceClient(kMaxNumberOfBuffers,
                                                          std::move(receiver))),
                          std::move(after_start_capture_callback));
       break;
+    }
 #endif  // defined(ENABLE_SCREEN_CAPTURE)
 
     default: {
@@ -235,63 +258,53 @@ void InProcessVideoCaptureDeviceLauncher::DoStartDeviceCaptureOnDeviceThread(
 
 #if defined(ENABLE_SCREEN_CAPTURE)
 
+#if !defined(OS_ANDROID)
 void InProcessVideoCaptureDeviceLauncher::DoStartTabCaptureOnDeviceThread(
     const std::string& device_id,
     const media::VideoCaptureParams& params,
-    std::unique_ptr<media::VideoCaptureDeviceClient> device_client,
+    base::WeakPtr<media::VideoFrameReceiver> receiver,
     ReceiveDeviceCallback result_callback) {
   SCOPED_UMA_HISTOGRAM_TIMER("Media.VideoCaptureManager.StartDeviceTime");
   DCHECK(device_task_runner_->BelongsToCurrentThread());
 
-  std::unique_ptr<media::VideoCaptureDevice> video_capture_device;
-#if !defined(OS_ANDROID)
-  video_capture_device = WebContentsVideoCaptureDevice::Create(device_id);
-#endif
-
-  if (video_capture_device)
-    video_capture_device->AllocateAndStart(params, std::move(device_client));
+  std::unique_ptr<WebContentsVideoCaptureDevice> video_capture_device =
+      WebContentsVideoCaptureDevice::Create(device_id);
+  if (video_capture_device) {
+    video_capture_device->AllocateAndStartWithReceiver(
+        params, std::make_unique<media::VideoFrameReceiverOnTaskRunner>(
+                    receiver,
+                    BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
+  }
   std::move(result_callback).Run(std::move(video_capture_device));
 }
+#endif  // !defined(OS_ANDROID)
 
 void InProcessVideoCaptureDeviceLauncher::DoStartDesktopCaptureOnDeviceThread(
-    const std::string& device_id,
+    const DesktopMediaID& desktop_id,
     const media::VideoCaptureParams& params,
     std::unique_ptr<media::VideoCaptureDeviceClient> device_client,
     ReceiveDeviceCallback result_callback) {
   SCOPED_UMA_HISTOGRAM_TIMER("Media.VideoCaptureManager.StartDeviceTime");
   DCHECK(device_task_runner_->BelongsToCurrentThread());
 
-  std::unique_ptr<media::VideoCaptureDevice> video_capture_device;
-  const DesktopMediaID desktop_id = DesktopMediaID::Parse(device_id);
   if (desktop_id.is_null()) {
     DLOG(ERROR) << "Desktop media ID is null";
     std::move(result_callback).Run(nullptr);
     return;
   }
 
-  if (desktop_id.type == DesktopMediaID::TYPE_WEB_CONTENTS) {
-#if !defined(OS_ANDROID)
-    video_capture_device = WebContentsVideoCaptureDevice::Create(device_id);
-    IncrementDesktopCaptureCounter(TAB_VIDEO_CAPTURER_CREATED);
-    if (desktop_id.audio_share) {
-      IncrementDesktopCaptureCounter(TAB_VIDEO_CAPTURER_CREATED_WITH_AUDIO);
-    } else {
-      IncrementDesktopCaptureCounter(TAB_VIDEO_CAPTURER_CREATED_WITHOUT_AUDIO);
-    }
-#endif
-  } else {
+  std::unique_ptr<media::VideoCaptureDevice> video_capture_device;
 #if defined(OS_ANDROID)
-    video_capture_device = std::make_unique<ScreenCaptureDeviceAndroid>();
+  video_capture_device = std::make_unique<ScreenCaptureDeviceAndroid>();
 #else
 #if defined(USE_AURA)
-    video_capture_device = DesktopCaptureDeviceAura::Create(desktop_id);
+  video_capture_device = DesktopCaptureDeviceAura::Create(desktop_id);
 #endif  // defined(USE_AURA)
 #if BUILDFLAG(ENABLE_WEBRTC)
-    if (!video_capture_device)
-      video_capture_device = DesktopCaptureDevice::Create(desktop_id);
+  if (!video_capture_device)
+    video_capture_device = DesktopCaptureDevice::Create(desktop_id);
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 #endif  // defined (OS_ANDROID)
-  }
 
   if (video_capture_device)
     video_capture_device->AllocateAndStart(params, std::move(device_client));
