@@ -93,6 +93,30 @@
       "revId": "73fda53121e3814988f6882b662e8d0f9a7774cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb4a823_2f7994f2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-23T23:45:25Z",
+      "side": 1,
+      "message": "This specific change doesn\u0027t make it worse, I think. What I meant to say is that the future patches that make filtered LayoutInlines be containers would call this function, but the inline would not be necessarily in-flow positioned, it would just be a container for out-of-flow positioned elements. Maybe simply OffsetForInline or something along those lines, but then it makes it awkward to DCHECK that it\u0027s positioned or can contain out-of-flow positioned elements in there.",
+      "parentUuid": "dbba6c5d_f9c2abd7",
+      "range": {
+        "startLine": 1591,
+        "startChar": 41,
+        "endLine": 1591,
+        "endChar": 72
+      },
+      "revId": "73fda53121e3814988f6882b662e8d0f9a7774cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
