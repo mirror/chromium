@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0191dd73_fb2f4a2d",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:31:31Z",
+      "side": 1,
+      "message": "Why not sequenced task runner? I don\u0027t have preference but I wonder what your thinking was about it.",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04e8557_909271ba",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:31:31Z",
+      "side": 1,
+      "message": "I believe this is back on IO thread? A validation DCHECK_CURRENTLY_ON would be nice here.",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3f79fb_69f05b43",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:31:31Z",
+      "side": 1,
+      "message": "If this is on IO thread, shoudl it go to file_task_runner_ to open and read the file?",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
