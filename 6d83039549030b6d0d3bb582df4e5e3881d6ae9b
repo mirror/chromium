@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "edeeeeb0_fa1e8a0b",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "Done.  I don\u0027t know about filesystem scheme.  I\u0027ll ask Enamel for some guidance on that.",
+      "parentUuid": "e0a09467_bc32045c",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceecf81c_af63e60c",
         "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
         "patchSetId": 7
@@ -87,6 +105,24 @@
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aaa4457_dcb058cf",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "867a8d3d_8270b2d1",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "3107fab2_1eaed439",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf229ef_7671f1b7",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18652817_ddb2ddd4",
         "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
         "patchSetId": 7
@@ -228,6 +282,24 @@
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b104fce_77c2db67",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "I\u0027ll post a CL for that split.",
+      "parentUuid": "5d1f2f23_9b5bf72e",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "bd250ea9_d4db1d61",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "ScopedCanvas is a gfx-ism, but this call needs nothing above Skia.  If I pass in a gfx canvas, I don\u0027t see a way to extract the SkCanvas - only a PaintCanvas (I could be missing it).  Creating a wrapper locally just for this seems clunky.  If I\u0027m missing something, let me know.",
+      "parentUuid": "b460f16d_639ad1d6",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a3c225e_59bc6dda",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 7
@@ -332,6 +422,24 @@
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a34011_ba362cfd",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "It\u0027s either this, or I reverse the order of the points for the second fade.  This seems more intuitive to me.",
+      "parentUuid": "7a3c225e_59bc6dda",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +475,24 @@
       "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df399de_4b3c1c9a",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T04:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb77df0a_a4470ced",
+      "revId": "6d83039549030b6d0d3bb582df4e5e3881d6ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
