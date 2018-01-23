@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f365649_fa14d9df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-23T17:26:27Z",
+      "side": 1,
+      "message": "I considered adding supportsModernDesign to ChromeActivity so each child can specify what it wants. Not sure if that\u0027s overkill though considering we ideally launch this to everyone.",
+      "range": {
+        "startLine": 427,
+        "startChar": 48,
+        "endLine": 427,
+        "endChar": 97
+      },
+      "revId": "e3f02a0aa7f106a227af84e97195cca72f6883fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
