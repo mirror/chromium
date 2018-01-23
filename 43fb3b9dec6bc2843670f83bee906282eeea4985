@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8205ed6d_efb8e719",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-23T16:23:28Z",
+      "side": 1,
+      "message": "CRWWebController\u0027s |loadHTML| checks that HTML is not empty. Changed to calling WKWebView\u0027s |loadHTMLString:baseURL| directly. The former does a bit more state handling, but it doesn\u0027t really matter because the latter will be handled as renderer-initiated load.",
+      "parentUuid": "c249135f_e3d2700c",
+      "range": {
+        "startLine": 1824,
+        "startChar": 39,
+        "endLine": 1824,
+        "endChar": 45
+      },
+      "revId": "43fb3b9dec6bc2843670f83bee906282eeea4985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93206ceb_e68864a4",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "43fb3b9dec6bc2843670f83bee906282eeea4985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfd864d_1b595765",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4702,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-23T16:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93206ceb_e68864a4",
+      "range": {
+        "startLine": 4702,
+        "startChar": 6,
+        "endLine": 4702,
+        "endChar": 13
+      },
+      "revId": "43fb3b9dec6bc2843670f83bee906282eeea4985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
