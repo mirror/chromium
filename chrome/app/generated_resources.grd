@@ -10882,7 +10882,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_BLOCKED_ADS_INFOBAR_MESSAGE" desc="The mini infobar message shown to users on Android when Chrome has blocked ads on the site because the site tends to show intrusive ads. Will be presented as a sentence, next to a Details link to expand the infobar.">
       Ads blocked.
     </message>
-    <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users in the omnibox or infobar when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period." formatter_data="android_java">
+    <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users in a few places when Chrome has blocked ads on the site because the site tends to show intrusive ads. On desktop, the title appears in the omnibox next to an icon, or as the title to the expanded bubble UI when clicking on the icon. On Android, the string is the standalone title in the expanded mini-infobar." formatter_data="android_java">
       Ads blocked
     </message>
     <message name="IDS_BLOCKED_ADS_PROMPT_EXPLANATION" desc="Longer explanation that Chrome has blocked ads on the site. To be shown in an expanded infobar / bubble">
