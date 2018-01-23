@@ -92,6 +92,30 @@
       "revId": "4910f190239df3f9d420c234218873e1b2fc28b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd93a00_d0d6d559",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-23T18:49:43Z",
+      "side": 1,
+      "message": "I asked jbroman@, the size here should be 4 with paint_arguments and 3 without it. I used a github sample and do a printf on the size, and it is 4 with --enable-experimental-web-platform-features, and 3 without. So this should be correct.",
+      "parentUuid": "05324a3b_e3ed0b07",
+      "range": {
+        "startLine": 125,
+        "startChar": 41,
+        "endLine": 125,
+        "endChar": 52
+      },
+      "revId": "4910f190239df3f9d420c234218873e1b2fc28b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
