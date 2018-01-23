@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cce0dfcd_ee519c63",
+        "filename": "ui/platform_window/x11/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-23T09:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ccd2da_f4659e91",
+      "revId": "1bba430897cfbbb3585eeb42d825b965daac352f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f799d7_ac0f64c4",
         "filename": "ui/platform_window/x11/x11_window_ozone.cc",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "1bba430897cfbbb3585eeb42d825b965daac352f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8f5c6c_a55ee48a",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-23T09:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12f799d7_ac0f64c4",
+      "revId": "1bba430897cfbbb3585eeb42d825b965daac352f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
