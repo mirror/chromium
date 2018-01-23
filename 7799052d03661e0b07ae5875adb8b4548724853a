@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a845a1_a0c6de8f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "FrameOwner{Added,Removed}Frame",
+      "range": {
+        "startLine": 2027,
+        "startChar": 24,
+        "endLine": 2027,
+        "endChar": 48
+      },
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2f79fa_d16a36f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "check childTarget for null.",
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7ef5f2_514b6ee4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "@return {boolean}",
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d515f_edcca4ea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "Not true anymore!",
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b917bdc6_69a755cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "Should we move this to _setDocument or duplicate there?",
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e7a317_38ab3dec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-23T21:42:23Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "7799052d03661e0b07ae5875adb8b4548724853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
