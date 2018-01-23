@@ -22,6 +22,30 @@
       "revId": "2343abfe61750dc87c56de336a4089bfb53e1e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8e3b81_4b3eceb6",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-23T16:45:19Z",
+      "side": 1,
+      "message": "makeHtmlPageWithSimpleLinkTo returns just a HTML page, not a URL (e.g. the returned string is \"\u003chtml\u003e\u003chead\u003e...\u003c/html\u003e\"), and is used in places other than data URIs.\n\nArguably here I should actually call .replace(\u0027#\u0027, \u0027%23\u0027) on the return value from makeHtmlPageWithSimpleLinkTo, but I\u0027m being lazy and using my insider knowledge that there are no other \u0027#\u0027 characters.",
+      "parentUuid": "08687eb0_f6c89d3e",
+      "range": {
+        "startLine": 307,
+        "startChar": 67,
+        "endLine": 307,
+        "endChar": 75
+      },
+      "revId": "2343abfe61750dc87c56de336a4089bfb53e1e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
