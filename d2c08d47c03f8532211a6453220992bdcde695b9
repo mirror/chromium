@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ace9a942_dc97c2a0",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-23T20:16:05Z",
+      "side": 1,
+      "message": "We shouldn\u0027t DCHECK either. :)\n\nThe rationale is that there\u0027s no benefit to crashing here rather than below, so the DCHECK is just adding noise to the code. See this post (and the following one) in a prior discussion of NULL pointer checks on chromium-dev: https://groups.google.com/a/chromium.org/d/msg/chromium-dev/KJdw-QiKdxY/-SSr8T1PjN8J",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 25
+      },
+      "revId": "d2c08d47c03f8532211a6453220992bdcde695b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
