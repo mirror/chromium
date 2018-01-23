@@ -487,6 +487,30 @@
     },
     {
       "key": {
+        "uuid": "811cb3f3_434349c4",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:58:00Z",
+      "side": 1,
+      "message": "Added tests for the first two bullets. Not sure I fully understand the next two.",
+      "parentUuid": "1c391d0b_7fe6e3f0",
+      "range": {
+        "startLine": 1109,
+        "startChar": 0,
+        "endLine": 1109,
+        "endChar": 6
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c64c8384_364c1a2d",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
