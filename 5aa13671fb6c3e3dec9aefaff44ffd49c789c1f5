@@ -22,6 +22,30 @@
       "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063bc98b_d81835f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T11:38:00Z",
+      "side": 1,
+      "message": "Looking further, AsyncTask seems promising. The docs say it\u0027s good for tasks up to few seconds and it\u0027s used in Chromium, e.g., in BackgroundSyncLauncher.\nDo you think wrapping exportPasswordsIntoFile into an AsyncTask is a good idea?",
+      "parentUuid": "1de8f181_4af50def",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
