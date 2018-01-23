@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17bf0e8f_dc1ae461",
+        "filename": "content/browser/cache_storage/cache_storage_blob_to_disk_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-23T00:42:48Z",
+      "side": 1,
+      "message": "nit: need {}",
+      "revId": "50d0f2095bead1470f4b83eec3e703232498ebad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
