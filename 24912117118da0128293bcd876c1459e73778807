@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ac0872_8cbbc3cb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T07:51:59Z",
+      "side": 1,
+      "message": "Given the usage should this just DCHECK(network_service_connection_error_handler_holder_) ?",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8646c59_c853c78c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3663,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T07:51:59Z",
+      "side": 1,
+      "message": "Should this also check if features::kNetworkServiceInProcess is not enabled?",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2086e2cd_55aa11ed",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4137,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T07:51:59Z",
+      "side": 1,
+      "message": "Wonder if this should always (check kNetworkService flag and then) call ObserveAndReconnectNetworkServiceFactoryWhenNecessary() as a part of this method. It looks we always need to call the latter when we create the network URLLoaderFactory?",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e482c72c_8d62dd65",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T07:51:59Z",
+      "side": 1,
+      "message": "Not sure if we need these two separately, at least for the current test FlushNetworkAndNavigationInterfacesForTesting() or something seems to make sense too.",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
