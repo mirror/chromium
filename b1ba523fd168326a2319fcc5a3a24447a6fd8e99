@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e423fe3_e99d2c18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-23T00:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7aeb88_86ccb81e",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0778e86_47b3ebdc",
         "filename": "components/previews/core/previews_experiments.cc",
         "patchSetId": 1
@@ -78,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "9e8b9608_9a8e2244",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-23T00:36:00Z",
+      "side": 1,
+      "message": "Now updated to comprehensive flag",
+      "parentUuid": "c77977e8_655c1e44",
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb38026_f7f5397f",
         "filename": "components/previews/core/previews_experiments.cc",
         "patchSetId": 1
@@ -122,6 +164,30 @@
       "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdc116f_cd4e5bd7",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-23T00:36:00Z",
+      "side": 1,
+      "message": "Done - now checked higher up the call stack (single check for server previews and single check for client previews instead of per-type check).",
+      "parentUuid": "301ab661_9aee76fe",
+      "range": {
+        "startLine": 175,
+        "startChar": 5,
+        "endLine": 175,
+        "endChar": 30
+      },
+      "revId": "b1ba523fd168326a2319fcc5a3a24447a6fd8e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
