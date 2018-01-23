@@ -128,6 +128,24 @@
       "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3edd0b_ba39076f",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T01:07:23Z",
+      "side": 1,
+      "message": "SG, thanks for the explanation.",
+      "parentUuid": "917a5dca_fdc86471",
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
