@@ -22,6 +22,30 @@
       "revId": "bc084a8b5afa3744a74927344e304c02ae54189f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6df99a_d2b803ae",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2018-01-23T14:01:22Z",
+      "side": 0,
+      "message": "In most cases it doesn\u0027t matter so long as nothing is uploaded and nothing gets persisted on disk.\n\nPerhaps http://crbug.com/362192 and/or http://crbug.com/532084 should ensure a single entry point for querying this.",
+      "parentUuid": "08f9aaa5_09ad0a89",
+      "range": {
+        "startLine": 603,
+        "startChar": 36,
+        "endLine": 603,
+        "endChar": 69
+      },
+      "revId": "bc084a8b5afa3744a74927344e304c02ae54189f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
