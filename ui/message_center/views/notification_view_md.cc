@@ -68,6 +68,7 @@ constexpr gfx::Insets kNotificationInputPadding(0, 16, 0, 16);
 constexpr gfx::Insets kSettingsRowPadding(8, 0, 0, 0);
 constexpr gfx::Insets kSettingsRadioButtonPadding(14, 18, 14, 18);
 constexpr gfx::Insets kSettingsButtonRowPadding(8);
+constexpr gfx::Insets kControlButtonsPadding(2, 0, 6, 0);
 
 // Background of inline actions area.
 const SkColor kActionsRowBackgroundColor = SkColorSetRGB(0xee, 0xee, 0xee);
@@ -468,6 +469,8 @@ NotificationViewMD::NotificationViewMD(const Notification& notification)
       std::make_unique<NotificationControlButtonsView>(this);
   control_buttons_view_->set_owned_by_client();
   control_buttons_view_->SetBackgroundColor(SK_ColorTRANSPARENT);
+  control_buttons_view_->SetBorder(
+      views::CreateEmptyBorder(kControlButtonsPadding));
 
   // |header_row_| contains app_icon, app_name, control buttons, etc...
   header_row_ = new NotificationHeaderView(control_buttons_view_.get(), this);
@@ -550,7 +553,7 @@ void NotificationViewMD::Layout() {
   if (actions_row_->visible()) {
     constexpr SkScalar kCornerRadius = SkIntToScalar(kNotificationCornerRadius);
 
-    // Use vertically larger clip path, so that actions row's top coners will
+    // Use vertically larger clip path, so that actions row's top corners will
     // not be rounded.
     gfx::Path path;
     gfx::Rect bounds = actions_row_->GetLocalBounds();

@@ -31,6 +31,9 @@ constexpr auto kBackgroundColorChangeDuration =
 constexpr SkColor kInitialBackgroundColor =
     message_center::kControlButtonBackgroundColor;
 
+// The size of the buttons (including borders) as determined by mocks.
+constexpr int kButtonSize = 24;
+
 }  // anonymous namespace
 
 namespace message_center {
@@ -69,6 +72,9 @@ void NotificationControlButtonsView::ShowCloseButton(bool show) {
         IDS_MESSAGE_CENTER_CLOSE_NOTIFICATION_BUTTON_TOOLTIP));
     close_button_->SetBackground(
         views::CreateSolidBackground(SK_ColorTRANSPARENT));
+    // Image is 12x12 px, but view should be 24x24 px to match mocks.
+    DCHECK_EQ(kButtonSize, close_button_->GetPreferredSize().height());
+    DCHECK_EQ(kButtonSize, close_button_->GetPreferredSize().width());
 
     // Add the button at the last.
     DCHECK_LE(child_count(), 1);
@@ -93,6 +99,9 @@ void NotificationControlButtonsView::ShowSettingsButton(bool show) {
         IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME));
     settings_button_->SetBackground(
         views::CreateSolidBackground(SK_ColorTRANSPARENT));
+    // Image is 12x12 px, but view should be 24x24 px to match mocks.
+    DCHECK_EQ(kButtonSize, settings_button_->GetPreferredSize().height());
+    DCHECK_EQ(kButtonSize, settings_button_->GetPreferredSize().width());
 
     // Add the button at the first.
     DCHECK_LE(child_count(), 1);

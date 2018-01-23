@@ -34,12 +34,15 @@ constexpr int kHeaderHeight = 32;
 constexpr int kHeaderHorizontalSpacing = 2;
 
 // The padding outer the header and the control buttons.
-constexpr gfx::Insets kHeaderOuterPadding(2, 2, 0, 2);
+constexpr gfx::Insets kHeaderOuterPadding(0, 2, 0, 2);
 
 // Paddings of the views of texts.
-// Top: 9px = 11px (from the mock) - 2px (outer padding)
-// Buttom: 6px from the mock
-constexpr gfx::Insets kTextViewPadding(9, 0, 6, 0);
+// Top: 10px = 11px (from the mock) - 1px (adjustment).
+// Buttom: 6px from the mock.
+// Note: The reason for the 1px vertical adjustment is because mocks expect the
+// text height to be 15px, but in reality it is 16px. Viewed on screen, this
+// will look exactly like the mocks intended (11 px above and 6 pixels below).
+constexpr gfx::Insets kTextViewPadding(10, 0, 6, 0);
 
 // Paddings of the entire header.
 // Left: 14px = 16px (from the mock) - 2px (outer padding)
@@ -47,17 +50,17 @@ constexpr gfx::Insets kTextViewPadding(9, 0, 6, 0);
 constexpr gfx::Insets kHeaderPadding(0, 14, 0, 2);
 
 // Paddings of the app icon (small image).
-// Top: 8px = 10px (from the mock) - 2px (outer padding)
-// Bottom: 4px from the mock
-// Right: 4px = 6px (from the mock) - kHeaderHorizontalSpacing
-constexpr gfx::Insets kAppIconPadding(8, 0, 4, 4);
+// Top: 10px from the mock.
+// Bottom: 4px from the mock.
+// Right: 4px = 6px (from the mock) - kHeaderHorizontalSpacing.
+constexpr gfx::Insets kAppIconPadding(10, 0, 4, 4);
 
 // Size of the expand icon. 8px = 32px - 15px - 9px (values from the mock).
 constexpr int kExpandIconSize = 8;
 // Paddings of the expand buttons.
-// Top: 13px = 15px (from the mock) - 2px (outer padding)
-// Bottom: 9px from the mock
-constexpr gfx::Insets kExpandIconViewPadding(13, 2, 9, 0);
+// Top: 15px from the mock.
+// Bottom: 9px from the mock.
+constexpr gfx::Insets kExpandIconViewPadding(15, 2, 9, 0);
 
 // Bullet character. The divider symbol between different parts of the header.
 constexpr wchar_t kNotificationHeaderDivider[] = L" \u2022 ";
@@ -188,9 +191,9 @@ NotificationHeaderView::NotificationHeaderView(
   DCHECK_EQ(kInnerHeaderHeight, app_icon_view_->GetPreferredSize().height());
   app_info_container->AddChildView(app_icon_view_);
 
-  // Font list for text views. The height must be 15px to match with the mock.
+  // Font list for text views. The height must be 16px to match with the mock.
   gfx::FontList font_list = GetHeaderTextFontList();
-  DCHECK_EQ(15, font_list.GetHeight());
+  DCHECK_EQ(16, font_list.GetHeight());
 
   const int font_list_height = font_list.GetHeight();
 
