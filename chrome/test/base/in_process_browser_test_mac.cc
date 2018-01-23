@@ -51,16 +51,21 @@ Browser* InProcessBrowserTest::CreateBrowser(Profile* profile) {
   return browser;
 }
 
-Browser* InProcessBrowserTest::CreateIncognitoBrowser() {
+Browser* InProcessBrowserTest::CreateIncognitoBrowser(Profile* profile) {
   // Making a browser window can cause AppKit to throw objects into the
   // autorelease pool. Flush the pool when this function returns.
   base::mac::ScopedNSAutoreleasePool pool;
 
   // Create a new browser with using the incognito profile.
-  Browser* incognito = new Browser(Browser::CreateParams(
-      browser()->profile()->GetOffTheRecordProfile(), true));
+  Browser* incognito = new Browser(
+      Browser::CreateParams(profile->GetOffTheRecordProfile(), true));
   AddBlankTabAndShow(incognito);
   return incognito;
+}
+
+Browser* InProcessBrowserTest::CreateIncognitoBrowser() {
+  // Create a new browser using the existing profile.
+  return CreateIncognitoBrowser(browser()->profile());
 }
 
 Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
