@@ -25,27 +25,25 @@
         margin-top: var(--settings-page-vertical-margin);
       }
 
-      #card {
-        @apply(--shadow-elevation-2dp);
-        background-color: white;
-        border-radius: 2px;
+      #cards {
         flex: 1;
       }
 
-      :host(.expanded) #card {
+      :host(.expanded) #cards {
         border-radius: 0;
       }
 
-      :host(.expanding) #card,
-      :host(.collapsing) #card,
-      :host(.expanded) #card {
+      :host(.expanding) #cards,
+      :host(.collapsing) #cards,
+      :host(.expanded) #cards {
         @apply(--shadow-elevation-4dp);
+        background-color: white;
         overflow: hidden;
         /* A stacking context constrains sliding sub-pages to the card. */
         z-index: 0;
       }
 
-      :host(:not(.expanding):not(.expanded)) #card {
+      :host(:not(.expanding):not(.expanded)) #cards {
         /* Keep the fading-out neon-animatable inside the card. */
         position: relative;
       }
@@ -57,13 +55,32 @@
       :host([hidden-by-search]) {
         display: none;
       }
+
+      ::slotted([slot=card]) {
+        @apply(--shadow-elevation-2dp);
+        background-color: white;
+        border-radius: 2px;
+        display: block;
+      }
+
+      ::slotted([slot=card]):not(:first-child) {
+        margin-top: 16px;
+      }
+
+      :host(:-webkit-any(
+        .expanded,
+        .expanding,
+        .collapsing
+      )) ::slotted([slot=card]) {
+        box-shadow: none;  /* Prevents inteference with the subpage styling. */
+      }
     </style>
     <div id="header">
       <h2 class="title"
           aria-hidden$="[[getTitleHiddenStatus_(pageTitle)]]">[[pageTitle]]</h2>
     </div>
-    <div id="card">
-      <slot></slot>
+    <div id="cards">
+      <slot name="card"></slot>
     </div>
   </template>
   <script src="settings_section.js"></script>
