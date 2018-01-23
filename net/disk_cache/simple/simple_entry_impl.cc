@@ -1636,6 +1636,9 @@ void SimpleEntryImpl::AdvanceCrc(net::IOBuffer* buffer,
                                  int offset,
                                  int length,
                                  int stream_index) {
+  crc32s_end_offset_[stream_index] = 0;
+
+#if 0
   // It is easy to incrementally compute the CRC from [0 .. |offset + buf_len|)
   // if |offset == 0| or we have already computed the CRC for [0 .. offset).
   // We rely on most write operations being sequential, start to end to compute
@@ -1654,6 +1657,7 @@ void SimpleEntryImpl::AdvanceCrc(net::IOBuffer* buffer,
     // computation of the crc32 need to start from 0 again.
     crc32s_end_offset_[stream_index] = 0;
   }
+#endif
 }
 
 }  // namespace disk_cache
