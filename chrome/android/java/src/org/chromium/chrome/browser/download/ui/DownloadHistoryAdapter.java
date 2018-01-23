@@ -208,7 +208,8 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         downloadManager.getAllDownloads(false);
         if (mShowOffTheRecord) downloadManager.getAllDownloads(true);
 
-        getOfflineContentProvider().addObserver(this);
+        // Get all Offline Items (Pages, Background Fetches etc)
+        getAllOfflineItems();
 
         sDeletedFileTracker.incrementInstanceCount();
         mShouldShowStorageInfoHeader = ContextUtils.getAppSharedPreferences().getBoolean(
@@ -736,18 +737,23 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         return mSpaceDisplay;
     }
 
-    @Override
-    public void onItemsAvailable() {
+    private void getAllOfflineItems() {
         getOfflineContentProvider().getAllItems(offlineItems -> {
             for (OfflineItem item : offlineItems) {
                 if (item.isTransient) continue;
                 DownloadHistoryItemWrapper wrapper = createDownloadHistoryItemWrapper(item);
                 addDownloadHistoryItemWrapper(wrapper);
             }
+            getOfflineContentProvider().addObserver(this);
 
             recordOfflineItemCountHistograms();
             onItemsRetrieved(LoadingStateDelegate.OFFLINE_ITEMS);
         });
+    }
+
+    @Override
+    public void onItemsAvailable() {
+        // TODO(dimich): This signal is not used, remove from interface.
     }
 
     private void recordOfflineItemCountHistograms() {
