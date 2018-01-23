@@ -11,11 +11,8 @@ import android.util.Log;
 import org.chromium.base.annotations.MainDex;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -137,7 +134,7 @@ public abstract class CommandLine {
      */
     public static void initFromFile(String file) {
         // Just field trials can take up to 10K of command line.
-        char[] buffer = readUtf8FileFullyCrashIfTooBig(file, 64 * 1024);
+        char[] buffer = readUtf8FileFully(file);
         init(buffer == null ? null : tokenizeQuotedArguments(buffer));
     }
 
@@ -225,42 +222,17 @@ public abstract class CommandLine {
 
     /**
      * @param fileName the file to read in.
-     * @param sizeLimit cap on the file size.
      * @return Array of chars read from the file, or null if the file cannot be read.
-     * @throws RuntimeException if the file size exceeds |sizeLimit|.
      */
-    private static char[] readUtf8FileFullyCrashIfTooBig(String fileName, int sizeLimit) {
-        Reader reader = null;
+    private static char[] readUtf8FileFully(String fileName) {
         File f = new File(fileName);
-        long fileLength = f.length();
-
-        if (fileLength == 0) {
-            return null;
-        }
-
-        if (fileLength > sizeLimit) {
-            throw new RuntimeException(
-                    "File " + fileName + " length " + fileLength + " exceeds limit " + sizeLimit);
-        }
-
-        try {
-            char[] buffer = new char[(int) fileLength];
-            reader = new InputStreamReader(new FileInputStream(f), "UTF-8");
+        try (FileReader reader = new FileReader(f)) {
+            char[] buffer = new char[(int) f.length()];
             int charsRead = reader.read(buffer);
-            // Debug check that we've exhausted the input stream (will fail e.g. if the
-            // file grew after we inspected its length).
-            assert !reader.ready();
-            return charsRead < buffer.length ? Arrays.copyOfRange(buffer, 0, charsRead) : buffer;
-        } catch (FileNotFoundException e) {
-            return null;
+            // charsRead < f.length() in the case of multibyte characters.
+            return Arrays.copyOfRange(buffer, 0, charsRead);
         } catch (IOException e) {
-            return null;
-        } finally {
-            try {
-                if (reader != null) reader.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Unable to close file reader.", e);
-            }
+            return null; // Most likely file not found.
         }
     }
 
