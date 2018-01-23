@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee3f7bdd_f20be632",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "Is this change intended?",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674c31b9_2d24f62c",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "Ctrl-V should be bound only to paste command.",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364b038c_9e5bb891",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "If the #paste-into-current is invisible in modes other than full-page, \u003chr\u003e should also be invisible.",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb42a8a_cd8c8194",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "#paste-into-current",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 13
+      },
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62a4fd6_cb097ea5",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right, since we should see \"Paste\" even when a regular file is selected.",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 76
+      },
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35a5820_d0cdf23e",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-23T09:39:05Z",
+      "side": 1,
+      "message": "What do you test (and what\u0027s the expected behavior) after this line?",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
