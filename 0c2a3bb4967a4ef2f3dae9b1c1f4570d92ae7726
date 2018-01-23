@@ -16,6 +16,24 @@
       "revId": "0c2a3bb4967a4ef2f3dae9b1c1f4570d92ae7726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb34943f_fb7fc386",
+        "filename": "base/test/trace_to_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-23T23:03:00Z",
+      "side": 1,
+      "message": "CCTestSuite and other subclasses of TestSuit that have a message loop, take down the message loop in Shutdown(). This is called from dtor, after Shutdown(). So, I think this won\u0027t crash.\n\nI agree that it looks weird that BeginTracing is called from Initialize(), but EndTracingIfNeeded() is not called from Shutdown() and is called from dtor, instead. But, that\u0027s a different problem that should be resolved in a different CL perhaps?",
+      "parentUuid": "5f4a53a7_07aca0f3",
+      "revId": "0c2a3bb4967a4ef2f3dae9b1c1f4570d92ae7726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
