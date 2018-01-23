@@ -48,7 +48,7 @@ class ClickEvent : public ui::Event {
 
 void PerformMouseClickOnView(views::View* view) {
   ui::AXActionData data;
-  data.action = ui::AX_ACTION_DO_DEFAULT;
+  data.action = ax::mojom::Action::DO_DEFAULT;
   view->HandleAccessibleAction(data);
 }
 
