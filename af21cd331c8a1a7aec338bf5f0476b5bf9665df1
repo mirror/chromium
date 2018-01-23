@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46571aa_89b31868",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "I don\u0027t see how this is always guaranteed (we call FetchSuggestions() in many places).\nAlso, it\u0027s probably not even required to be NONE.\ndrop?",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278bb6c5_b04a7da8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "call this state \u0027IN_PROGRESS_DROP\u0027? or \u0027IN_PROGRESS_CANCEL\u0027?",
+      "range": {
+        "startLine": 732,
+        "startChar": 41,
+        "endLine": 732,
+        "endChar": 60
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc7c036_9049ea29",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "feels weird that you need to reset it here (we don\u0027t do it in any other place calling FetchSuggestions(), and I don\u0027t think it should matter).",
+      "range": {
+        "startLine": 919,
+        "startChar": 19,
+        "endLine": 919,
+        "endChar": 20
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eccdfc4e_1bdfebff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "this should be done before doing the refetch.\nI wonder if it would be cleaner to have:\n\nDCHECK_NE(FetchRequestStatus::NONE, current_fetch_);\ndebug_logger_-\u003eLog(FROM_HERE, /*message\u003d*/std::string());\n\nFetchRequestStatus request_status \u003d current_fetch_;\ncurrent_fetch_ \u003d  FetchRequestStatus::NONE;\nif (!ready()) {\n  ...\n}\nif (request_status \u003d\u003d ...) {\n  ...\n}",
+      "range": {
+        "startLine": 929,
+        "startChar": 13,
+        "endLine": 929,
+        "endChar": 14
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ce18cd_0fa4212e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "please document the single states and their semantics.",
+      "range": {
+        "startLine": 212,
+        "startChar": 9,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a067369_75e7e0b5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "this is a bit confusing.\nIt\u0027s the status of the request. Maybe:\n// Keeps track of the status of the ongoing request and what action should be taken on completion.\n\nrename to \u0027request_status_\u0027?",
+      "range": {
+        "startLine": 464,
+        "startChar": 36,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eba110_3455bad2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "given how much extra state we maintain, there seem more cases to verify.\nE.g. clearing history while fetching. Can you add a test for that, too?",
+      "range": {
+        "startLine": 2467,
+        "startChar": 41,
+        "endLine": 2467,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b951d3d_f3209958",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "i believe this method hurts readability. It hides setting an expectation on the fetcher which is crucial to understand the test (especially the last step of the test).",
+      "range": {
+        "startLine": 2477,
+        "startChar": 6,
+        "endLine": 2477,
+        "endChar": 44
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59727dbb_68a7e9d7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "nit: get notified",
+      "range": {
+        "startLine": 2480,
+        "startChar": 26,
+        "endLine": 2480,
+        "endChar": 34
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44aedaaf_47d0e6ab",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2486,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-23T12:35:42Z",
+      "side": 1,
+      "message": "maybe we can make the comment easier to follow.\n// Once we signal the first fetch to be finished (calling snippets_callback below), a new fetch should get triggered.",
+      "range": {
+        "startLine": 2486,
+        "startChar": 15,
+        "endLine": 2486,
+        "endChar": 39
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
