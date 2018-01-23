@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd14fe8_2c49017c",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-23T21:33:31Z",
+      "side": 1,
+      "message": "Quick question: It seems Blink should never see stationary points now.  Could you please double-check if we still need the \"stale\" tracking in TEM?\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/TouchEventManager.h?rcl\u003d0eb06307382a59b1d66afa66703cdc95a2b7ca2e\u0026l\u003d68",
+      "revId": "93515ceab917febbf90402ecce7e52f633583989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
