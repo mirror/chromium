@@ -29,6 +29,7 @@
 
 namespace blink {
 
+class Document;
 class IntRect;
 class LayoutObject;
 class NGPhysicalTextFragment;
@@ -89,7 +90,8 @@ class SelectionPaintRange {
   WTF::Optional<unsigned> end_offset_ = WTF::nullopt;
 };
 
-class LayoutSelection final : public GarbageCollected<LayoutSelection> {
+class CORE_EXPORT LayoutSelection final
+    : public GarbageCollected<LayoutSelection> {
  public:
   static LayoutSelection* Create(FrameSelection& frame_selection) {
     return new LayoutSelection(frame_selection);
@@ -113,6 +115,10 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
       const NGPhysicalTextFragment&);
 
   void OnDocumentShutdown();
+
+  // This returns selection through LayoutSelection-base canonicalization.
+  static SelectionInDOMTree ComputeLayoutSelection(const SelectionInDOMTree&,
+                                                   const Document&);
 
   void Trace(blink::Visitor*);
 

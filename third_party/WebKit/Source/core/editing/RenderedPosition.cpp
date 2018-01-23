@@ -34,6 +34,8 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InlineBoxPosition.h"
 #include "core/editing/InlineBoxTraversal.h"
+#include "core/editing/LayoutSelection.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
@@ -404,8 +406,16 @@ bool LayoutObjectContainsPosition(LayoutObject* target,
 
 CompositedSelection RenderedPosition::ComputeCompositedSelection(
     const FrameSelection& frame_selection) {
-  const VisibleSelection& visible_selection =
-      frame_selection.ComputeVisibleSelectionInDOMTree();
+  const SelectionInDOMTree& selection_in_dom =
+      LayoutSelection::ComputeLayoutSelection(
+          frame_selection.GetSelectionInDOMTree(),
+          frame_selection.GetDocument());
+  const VisibleSelection visible_selection =
+      selection_in_dom.IsNone()
+          ? VisibleSelection()
+          : VisibleSelection::CreateWithoutValidationDeprecated(
+                selection_in_dom.Base(), selection_in_dom.Extent(),
+                selection_in_dom.Affinity());
   if (!frame_selection.IsHandleVisible() || frame_selection.IsHidden())
     return {};
 
