@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "842a893d_f04b811f",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51d68e9d_2de562b9",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efd5e649_7445472b",
         "filename": "base/lazy_instance.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfbd38b_8763be74",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd5e649_7445472b",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "ccf89b7c_dc69a59d",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done. I would usually stick with ASSERT, but it has weird interactions with ctors/dtors",
+      "parentUuid": "b59eea15_9b9a6485",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b66931a_c4d35db2",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 13
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "d7388fcf_7eb60039",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b66931a_c4d35db2",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2de1b65_d04b6fae",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 13
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "74ad9b37_b042ed10",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2de1b65_d04b6fae",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3dad4c_721fd85a",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 13
@@ -130,6 +232,24 @@
       "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb42fbe_a8a175ac",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3dad4c_721fd85a",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
