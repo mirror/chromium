@@ -282,14 +282,6 @@ void TextFieldInputType::CreateShadowSubtree() {
   Document& document = GetElement().GetDocument();
   bool should_have_spin_button = ShouldHaveSpinButton();
   bool should_have_data_list_indicator = GetElement().HasValidDataListOptions();
-  bool creates_container = should_have_spin_button ||
-                           should_have_data_list_indicator || NeedsContainer();
-
-  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
-  if (!creates_container) {
-    shadow_root->AppendChild(inner_editor);
-    return;
-  }
 
   TextControlInnerContainer* container =
       TextControlInnerContainer::Create(document);
@@ -297,6 +289,7 @@ void TextFieldInputType::CreateShadowSubtree() {
       AtomicString("-webkit-textfield-decoration-container"));
   shadow_root->AppendChild(container);
 
+  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
   EditingViewPortElement* editing_view_port =
       EditingViewPortElement::Create(document);
   editing_view_port->AppendChild(inner_editor);
@@ -336,25 +329,9 @@ void TextFieldInputType::ListAttributeTargetChanged() {
   EventDispatchForbiddenScope::AllowUserAgentEvents allow_events;
   if (will_have_picker_indicator) {
     Document& document = GetElement().GetDocument();
-    if (Element* container = ContainerElement()) {
-      container->InsertBefore(DataListIndicatorElement::Create(document),
-                              GetSpinButtonElement());
-    } else {
-      // FIXME: The following code is similar to createShadowSubtree(),
-      // but they are different. We should simplify the code by making
-      // containerElement mandatory.
-      Element* rp_container = TextControlInnerContainer::Create(document);
-      rp_container->SetShadowPseudoId(
-          AtomicString("-webkit-textfield-decoration-container"));
-      Element* inner_editor = GetElement().InnerEditorElement();
-      inner_editor->parentNode()->ReplaceChild(rp_container, inner_editor);
-      Element* editing_view_port = EditingViewPortElement::Create(document);
-      editing_view_port->AppendChild(inner_editor);
-      rp_container->AppendChild(editing_view_port);
-      rp_container->AppendChild(DataListIndicatorElement::Create(document));
-      if (GetElement().GetDocument().FocusedElement() == GetElement())
-        GetElement().UpdateFocusAppearance(SelectionBehaviorOnFocus::kRestore);
-    }
+    Element* container = ContainerElement();
+    container->InsertBefore(DataListIndicatorElement::Create(document),
+                            GetSpinButtonElement());
   } else {
     picker->remove(ASSERT_NO_EXCEPTION);
   }
@@ -475,10 +452,14 @@ void TextFieldInputType::UpdatePlaceholderText() {
         GetElement().IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone,
         true);
     placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
-    Element* container = ContainerElement();
-    Node* previous = container ? container : GetElement().InnerEditorElement();
-    previous->parentNode()->InsertBefore(placeholder, previous);
-    SECURITY_DCHECK(placeholder->parentNode() == previous->parentNode());
+
+    ShadowRoot* shadow_root = GetElement().UserAgentShadowRoot();
+    shadow_root->InsertBefore(placeholder, shadow_root->firstChild());
+
+    // TODO(reviewer): Or should we go with this?
+    // Node* previous = ContainerElement();
+    // previous->parentNode()->InsertBefore(placeholder, previous);
+    // SECURITY_DCHECK(placeholder->parentNode() == previous->parentNode());
   }
   placeholder->setTextContent(placeholder_text);
 }
