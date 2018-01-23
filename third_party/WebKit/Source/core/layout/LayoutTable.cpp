@@ -559,9 +559,7 @@ void LayoutTable::SimplifiedNormalFlowLayout() {
        section = SectionBelow(section)) {
     section->LayoutIfNeeded();
     section->LayoutRows();
-    section->ComputeOverflowFromDescendants();
     section->UpdateAfterLayout();
-    section->AddVisualEffectOverflow();
   }
 }
 
@@ -593,8 +591,7 @@ void LayoutTable::UpdateLayout() {
     return;
 
   // Note: LayoutTable is handled differently than other LayoutBlocks and the
-  // LayoutScope
-  //       must be created before the table begins laying out.
+  // LayoutScope must be created before the table begins laying out.
   TextAutosizer::LayoutScope text_autosizer_layout_scope(this);
 
   RecalcSectionsIfNeeded();

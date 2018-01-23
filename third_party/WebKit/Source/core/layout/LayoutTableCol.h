@@ -82,6 +82,8 @@ class LayoutTableCol final : public LayoutTableBoxComponent {
   const char* GetName() const override { return "LayoutTableCol"; }
 
  private:
+  void UpdateLayout() override { LayoutBox::UpdateLayout(); }
+
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectLayoutTableCol || LayoutBox::IsOfType(type);
   }

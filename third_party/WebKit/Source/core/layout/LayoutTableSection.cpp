@@ -976,6 +976,8 @@ void LayoutTableSection::UpdateLayout() {
   grid_.ShrinkToFit();
 
   LayoutState state(*this);
+  LayoutUnit old_logical_width = LogicalWidth();
+  LayoutUnit old_logical_height = LogicalHeight();
 
   const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
   LayoutUnit row_logical_top(VBorderSpacingBeforeFirstRow());
@@ -1025,6 +1027,12 @@ void LayoutTableSection::UpdateLayout() {
       }
     }
   }
+
+  // Table section with transform can be containing block of positioned
+  // elements.
+  bool dimension_changed = old_logical_width != LogicalWidth() ||
+                           old_logical_height != LogicalHeight();
+  LayoutPositionedObjects(dimension_changed);
 
   if (!Table()->HasSameDirectionAs(this)) {
     UseCounter::Count(GetDocument(),
@@ -1267,14 +1275,14 @@ void LayoutTableSection::LayoutRows() {
       }
     }
     if (row)
-      row->ComputeOverflow();
+      row->ComputeOverflow(LayoutUnit());
   }
 
   DCHECK(!NeedsLayout());
 
   SetLogicalHeight(LayoutUnit(row_pos_[total_rows]));
 
-  ComputeOverflowFromDescendants();
+  ComputeOverflow(LayoutUnit());
 }
 
 void LayoutTableSection::UpdateLogicalWidthForCollapsedCells(
@@ -1352,7 +1360,7 @@ int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
   return pagination_strut.Ceil();
 }
 
-void LayoutTableSection::ComputeOverflowFromDescendants() {
+void LayoutTableSection::AddOverflowFromChildren() {
   // These 2 variables are used to balance the memory consumption vs the paint
   // time on big sections with overflowing cells:
   // 1. For small sections, don't track overflowing cells because for them the
@@ -1419,6 +1427,7 @@ void LayoutTableSection::ComputeOverflowFromDescendants() {
 #endif
 }
 
+/*
 bool LayoutTableSection::RecalcOverflowAfterStyleChange() {
   if (!ChildNeedsOverflowRecalcAfterStyleChange())
     return false;
@@ -1447,6 +1456,7 @@ bool LayoutTableSection::RecalcOverflowAfterStyleChange() {
     ComputeOverflowFromDescendants();
   return children_overflow_changed;
 }
+*/
 
 void LayoutTableSection::MarkAllCellsWidthsDirtyAndOrNeedsLayout(
     LayoutTable::WhatToMarkAllCells what_to_mark) {

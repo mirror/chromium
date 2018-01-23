@@ -120,8 +120,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   int VBorderSpacingBeforeFirstRow() const;
   int CalcRowLogicalHeight();
   void LayoutRows();
-  void ComputeOverflowFromDescendants();
-  bool RecalcOverflowAfterStyleChange() override;
+  // bool RecalcOverflowAfterStyleChange() override;
 
   void MarkAllCellsWidthsDirtyAndOrNeedsLayout(LayoutTable::WhatToMarkAllCells);
 
@@ -299,6 +298,8 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
                    HitTestAction) override;
 
  private:
+  void AddOverflowFromChildren() override;
+
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectTableSection || LayoutBox::IsOfType(type);
   }
