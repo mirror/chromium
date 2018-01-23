@@ -2536,6 +2536,24 @@ void Internals::setPersistent(HTMLVideoElement* video_element,
   video_element->OnBecamePersistentVideo(persistent);
 }
 
+void Internals::setPageVisibilityForMediaElement(
+    HTMLMediaElement* media_element,
+    bool is_visible) {
+  DCHECK(media_element);
+  media_element->SetPageVisibilityForMediaElementForTesting(is_visible);
+}
+
+void Internals::forceStaleStateForMediaElement(
+    HTMLMediaElement* media_element) {
+  DCHECK(media_element);
+  media_element->ForceStaleStateForMediaElementForTesting();
+}
+
+bool Internals::isMediaElementSuspended(HTMLMediaElement* media_element) {
+  DCHECK(media_element);
+  return media_element->IsMediaElementSuspendedForTesting();
+}
+
 void Internals::registerURLSchemeAsBypassingContentSecurityPolicy(
     const String& scheme) {
   SchemeRegistry::RegisterURLSchemeAsBypassingContentSecurityPolicy(scheme);

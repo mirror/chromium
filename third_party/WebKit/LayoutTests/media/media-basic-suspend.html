@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<title>Verify that a media element can be resumed after idle suspend.</title>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="media-file.js"></script>
+<video></video>
+<script>
+async_test(function(t) {
+  var video = document.querySelector('video');
+  var mediaFile = findMediaFile('video', 'content/test');
+
+  video.ontimeupdate = video.onended = t.step_func(function() {
+    if (video.currentTime > 0) {
+      assert_false(window.internals.isMediaElementSuspended(video));
+      t.done();
+    }
+  });
+
+  video.oncanplaythrough = t.step_func(function() {
+    assert_true(!!window.internals,
+                'This test requires internals support for suspend/resume.');
+
+    var onSuspended = t.step_func(function() {
+      if (!window.internals.isMediaElementSuspended(video))
+        window.requestAnimationFrame(onSuspended);
+
+      video.play();
+    });
+
+    window.requestAnimationFrame(onSuspended);
+    window.internals.forceStaleStateForMediaElement(video);
+  });
+
+  video.src = mediaFile;
+});
+</script>

@@ -262,6 +262,11 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void ActivateViewportIntersectionMonitoring(bool activate) override;
   void UpdateRemotePlaybackCompatibility(bool is_compatible) override;
 
+  // Test helper methods for exercising media suspension.
+  void SetPageVisibilityForTesting(bool is_visible) override;
+  void ForceStaleStateForTesting() override;
+  bool IsSuspendedForTesting() override;
+
   // Called from WebMediaPlayerCast.
   // TODO(hubbe): WMPI_CAST make private.
   void OnPipelineSeeked(bool time_updated);
@@ -867,6 +872,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  base::Optional<bool> visiblity_state_override_for_testing_;
+  base::Optional<bool> stale_state_override_for_testing_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };

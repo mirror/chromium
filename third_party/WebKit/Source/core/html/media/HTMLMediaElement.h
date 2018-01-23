@@ -329,6 +329,11 @@ class CORE_EXPORT HTMLMediaElement
 
   bool HasMediaSource() const { return media_source_; }
 
+  // Test helper methods for exercising media suspension.
+  void SetPageVisibilityForMediaElementForTesting(bool is_visible);
+  void ForceStaleStateForMediaElementForTesting();
+  bool IsMediaElementSuspendedForTesting();
+
  protected:
   HTMLMediaElement(const QualifiedName&, Document&);
   ~HTMLMediaElement() override;
