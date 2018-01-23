@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32cb0b9d_744cb60c",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T00:48:23Z",
+      "side": 1,
+      "message": "No longer accurate.",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 110,
+        "endChar": 70
+      },
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bf89e8_509fc67f",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T00:48:23Z",
+      "side": 1,
+      "message": "Nit: This can be compaced as follows:\n\nreturn new Set(this.origins_.map(origin \u003d\u003e originToType(origin)));",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 28
+      },
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f81d31e_5f6b24b4",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-23T00:48:23Z",
+      "side": 1,
+      "message": "Each call to startLoadDestinations() will trigger a \"start\" and \"end\" event, but those events do not seem to be parameterized by the type of destination, see [1] and [2]. Is there a race condition possible where the 1st printer triggers an \"end\" event, but other printers are still being fetched? I am not familiar with how these events are processed.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d1124\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d836",
+      "revId": "acb9e689639f80c1a9508aa8c3d6dd51147a07c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
