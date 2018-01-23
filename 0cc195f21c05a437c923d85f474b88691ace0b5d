@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6830316e_1b7ce91c",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-23T03:38:47Z",
+      "side": 1,
+      "message": "Thanks, I didn\u0027t realize it either.",
+      "parentUuid": "8e752a8a_271d36cd",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "182fc241_fa82c071",
         "filename": "components/assist_ranker/example_preprocessing.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d85aebfe_fe83859b",
+        "filename": "components/assist_ranker/example_preprocessing.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-23T03:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182fc241_fa82c071",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "983a4892_28c3b065",
         "filename": "components/assist_ranker/example_preprocessing_unittest.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd67fd0_6d2db906",
+        "filename": "components/assist_ranker/example_preprocessing_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-23T03:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "983a4892_28c3b065",
+      "range": {
+        "startLine": 239,
+        "startChar": 25,
+        "endLine": 239,
+        "endChar": 32
+      },
+      "revId": "0cc195f21c05a437c923d85f474b88691ace0b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
