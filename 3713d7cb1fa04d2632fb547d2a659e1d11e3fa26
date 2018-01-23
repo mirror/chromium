@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c89bc7_2bda0764",
+        "filename": "ios/chrome/browser/ui/fullscreen/animated_scoped_fullscreen_disabler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-23T01:47:01Z",
+      "side": 1,
+      "message": "I\u0027m fairly sure the namespace would prevent accessing this variable from another file that includes this header, so it really belongs in the implementation. Can you create a .mm file for this and move the implementation details in there?",
+      "revId": "3713d7cb1fa04d2632fb547d2a659e1d11e3fa26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
