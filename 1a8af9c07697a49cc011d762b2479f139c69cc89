@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289e2aed_fc68dfb4",
+        "filename": "base/time/time.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "I like these. Thanks! :)",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f3e912_23d19ceb",
+        "filename": "base/time/time.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t mention this here (and in the other places below). This may only confuse other developers. We really don\u0027t want people to have to think about where their clock or time values is coming from unless they had a reason to #include \"time_override.h\". :)",
+      "range": {
+        "startLine": 517,
+        "startChar": 72,
+        "endLine": 518,
+        "endChar": 64
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6717cf2b_43eeb609",
+        "filename": "base/time/time.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "Are the BASE_EXPORT\u0027s needed in these friend declarations (here and the other places below)?",
+      "range": {
+        "startLine": 667,
+        "startChar": 9,
+        "endLine": 667,
+        "endChar": 20
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c055791b_4c2bc342",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "Is this why the friend declarations are needed in time.h? It might be easier to just remove them and write the code like this:\n\n  return Time() + base::TimeDelta::FromMicroseconds(\n      ZxTimeToMicroseconds(nanos_since_unix_epoch) +\n      Time::kTimeTToMicrosecondsOffset));\n\nThe compiler will optimize this down, making it effectively the same as calling the private ctor. Also, we already do this in several places; for example: https://cs.chromium.org/chromium/src/base/time/time_win.cc?rcl\u003dccf0e69193dfdc97463bc2d652eaa143a9742c95\u0026l\u003d577",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbc526b_00ee52b1",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "Could you add something, maybe even with lots of captial letters, to the effect of: \"This is for headless and base_unittests use only. DO NOT call these for other use cases without first discussing with OWNERS.\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe814f3_2d449d52",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "s/original/platform default/\n\n(and in comments below)",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ca3d67_d9875722",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "Is there a use case for returning the original function pointers? Meaning, can all of these methods just return void?\n\nIf the purpose is to restore the originals after the \"time override\" unit tests run, you should be able to just call these with the nullptr argument (as the comments explain).\n\n-or-\n\nWere you intending use cases where unit tests for various browser features related to headless need the overrides set, and then later restored before some other gtest suite runs in the same process? If this is the case, perhaps we should be using a \"Scoped\" code structure to guarantee the overrides revert when some object goes out-of-scope. Meaning, the simple SetTimeXYZClockOverride() functions would be replaced with an object that has a lifetime, like:\n\nclass ScopedTimeClockOverrides {\n public:\n  // After ctor returns, TimeXYZ::Now() uses overrides.\n  ScopedTimeClockOverrides(TimeNowFunction override, TimeTicksNowFunction override, ...);\n\n  // Upon destruction, restore platform default TimeXYZ::Now() clocks.\n  ~ScopedTimeClockOverrides();\n\n  DISALLOW_IMPLICIT_CONSTRUCTORS();\n};",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f6a07f_90e235ba",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-23T08:12:02Z",
+      "side": 1,
+      "message": "Should this be:\n\n  if (g_time_ticks_now_function \u003d\u003d \u0026InitialNowFunction)\n    g_time_ticks_now_function \u003d now_function;\n\n...since this call sequence would result in undoing an override:\n\n  SetTimeTicksClockOverride(...your override...);\n  TimeTicksNowIgnoringOverride();  // Calls InitialNowFunction(), which re-assigns g_time_ticks_now_function.",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 43
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
