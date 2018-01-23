@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e92c72_66e5464c",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:59:36Z",
+      "side": 1,
+      "message": "If you need the instance of ScopedTransformOverviewWindow to access its member variable, maybe it should not be a static member function.",
+      "revId": "7f4bbb236b5277e868dfb38eaf3ffe7eb10e3f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1a5a27_d27cfcc2",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:59:36Z",
+      "side": 1,
+      "message": "Seems it\u0027s the only place to call this function (excluding the unittests). It should be able to extract the calculation of |window_selector_bounds_| here or to a member function of ScopedTransformOverviewWindow to avoid adding the new parameter. It does seem like the calculation of |window_selector_bounds_| only relies on |target_bounds| and |title_height|. Or if it\u0027s really necessary to calculate it there, maybe you should turn this function to a non-static member function.",
+      "revId": "7f4bbb236b5277e868dfb38eaf3ffe7eb10e3f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
