@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0b7fa0c2_651b2cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T06:49:31Z",
+      "side": 1,
+      "message": "They are still independent and valid tests. We don\u0027t have a reason to reduce test coverage here.",
+      "parentUuid": "76f79af7_b13df511",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e57966f_fa5b7b21",
         "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
         "patchSetId": 6
