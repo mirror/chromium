@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "build/build_config.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -14,6 +15,8 @@
 #include "gpu/command_buffer/service/service_utils.h"
 #include "gpu/config/gpu_switches.h"
 #include "media/media_features.h"
+#include "ui/gfx/switches.h"
+#include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
 
 namespace {
@@ -137,6 +140,17 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
       command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds);
   gpu_preferences.ignore_gpu_blacklist =
       command_line->HasSwitch(switches::kIgnoreGpuBlacklist);
+#if !defined(OS_MACOSX)
+  // MacOSX bots always uses real GPU.
+  const char* software_gl_impl_name =
+      gl::GetGLImplementationName(gl::GetSoftwareGLImplementation());
+  if ((command_line->GetSwitchValueASCII(switches::kUseGL) ==
+       software_gl_impl_name) ||
+      command_line->HasSwitch(switches::kOverrideUseSoftwareGLForTests) ||
+      command_line->HasSwitch(switches::kHeadless)) {
+    gpu_preferences.ignore_gpu_blacklist = true;
+  }
+#endif  // !OS_MACOSX
   // Some of these preferences are set or adjusted in
   // GpuDataManagerImplPrivate::AppendGpuCommandLine.
   return gpu_preferences;
