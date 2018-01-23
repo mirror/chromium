@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54940647_85769ffc",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "871faa9f_a917def6",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3228b62_ca3bd9ea",
         "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4289439b_7f6cbb56",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3228b62_ca3bd9ea",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e18933_8794f450",
         "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd80564_b4051e3d",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e18933_8794f450",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a10500_5bc0f63a",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Based on offline discussion we are going to use pixels for bounds and then update code elswhere that may be using DIP.",
+      "parentUuid": "905d4e4a_bc0cbe75",
+      "revId": "4b028f0abecc030eede8db71c6cef65d464aa0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

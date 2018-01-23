@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24a2acbc_fd37785c",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2700bc19_5d45d3a4",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "decc95ab_523610ce",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df243868_6fdfe42b",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-01-23T19:11:33Z",
+      "side": 1,
+      "message": "Thank you and good call.  This has been updated to use the --use-viz-hit-testing flag.",
+      "parentUuid": "decc95ab_523610ce",
+      "revId": "98324b09490248f4c6fd430ddf7b0ac841e167bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
