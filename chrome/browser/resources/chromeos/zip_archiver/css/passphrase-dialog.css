@@ -19,7 +19,7 @@ paper-checkbox {
 #bar {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 #buttons {
