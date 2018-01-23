@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3eb64482_884d240d",
+        "filename": "tools/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-23T16:45:08Z",
+      "side": 0,
+      "message": "+anantha and +dmazzoni (who recently touched bisect-builds.py) can you suggest owners for this?",
+      "parentUuid": "1cd0c8b3_02343369",
+      "revId": "92ed957055e66fa78e44c1a317a47e1c1e42225d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ca9c095_1ec6031f",
         "filename": "tools/OWNERS",
         "patchSetId": 1
