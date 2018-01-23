@@ -196,6 +196,11 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       mojom::URLLoaderFactory* url_loader_factory,
       DownloadToFileCompleteCallback download_to_file_complete_callback,
       int64_t max_body_size) override;
+  void DownloadAsStream(const ResourceRequest& resource_request,
+                        mojom::URLLoaderFactory* url_loader_factory,
+                        const net::NetworkTrafficAnnotationTag& annotation_tag,
+                        SimpleURLLoaderStreamHandler* stream_handler,
+                        int64_t max_body_size) override;
   void SetOnRedirectCallback(
       const OnRedirectCallback& on_redirect_callback) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
@@ -944,6 +949,17 @@ void SimpleURLLoaderImpl::DownloadToTempFile(
       this, std::move(download_to_file_complete_callback), base::FilePath(),
       true /* create_temp_file */, max_body_size, GetTaskPriority());
   Start(url_loader_factory);
+}
+
+void SimpleURLLoader::DownloadAsStream(
+    const ResourceRequest& resource_request,
+    mojom::URLLoaderFactory* url_loader_factory,
+    const net::NetworkTrafficAnnotationTag& annotation_tag,
+    SimpleURLLoaderStreamHandler* stream_handler,
+    int64_t max_body_size) {
+  body_handler_ = std::make_unique<DownloadAsStreamBodyHandler>(
+      this, stream_handler, max_body_size, resource_request.priority);
+  Start(resource_request, url_loader_factory, annotation_tag);
 }
 
 void SimpleURLLoaderImpl::SetOnRedirectCallback(

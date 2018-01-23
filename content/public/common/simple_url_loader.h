@@ -31,6 +31,8 @@ struct ResourceResponseHead;
 
 namespace content {
 
+class SimpleURLLoaderStreamHandler;
+
 namespace mojom {
 class URLLoaderFactory;
 }
@@ -144,6 +146,18 @@ class CONTENT_EXPORT SimpleURLLoader {
       mojom::URLLoaderFactory* url_loader_factory,
       DownloadToFileCompleteCallback download_to_file_complete_callback,
       const base::FilePath& file_path,
+      int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
+
+  // SimpleURLLoader will stream the response body to
+  // SimpleURLLoaderStreamHandler on the current thread. Destroying the
+  // SimpleURLLoader will cancel the requests, and prevent any subsequent
+  // methods from being invoked on the Handler. The SimpleURLLoader may be
+  // destroyed in any of the Handler's callbacks.
+  virtual void DownloadAsStream(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      SimpleURLLoaderStreamHandler* stream_handler,
       int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
 
   // Same as DownloadToFile, but creates a temporary file instead of taking a
