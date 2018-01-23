@@ -45,7 +45,9 @@ void StackFrameDepth::EnableStackLimit() {
     return;
   }
 
-  static const int kStackRoomSize = 1024;
+  // __msan_memcpy (part of msan_interceptors.cc) needs additional 2KiB stack
+  // space for temporary constructed objects on the stack.
+  static const int kStackRoomSize = 1024 * 3;
 
   Address stack_base = reinterpret_cast<Address>(WTF::GetStackStart());
   CHECK_GT(stack_size, static_cast<const size_t>(kStackRoomSize));
