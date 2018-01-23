@@ -168,6 +168,11 @@ HRESULT DirectManipulationHandler::OnViewportStatusChanged(
     last_scale_ = 1.0f;
     last_x_offset_ = 0.0f;
     last_y_offset_ = 0.0f;
+
+    if (gesture_ == PINCH) {
+      event_target_->DManipPinchEnd();
+    }
+    gesture_ = NONE;
   }
 
   return S_OK;
@@ -220,8 +225,21 @@ HRESULT DirectManipulationHandler::OnContentUpdated(
   DCHECK_NE(scale, 0.0f);
   DCHECK_NE(last_scale_, 0.0f);
 
-  // Consider this is a Scroll when scale factor equals 1.0.
-  if (FloatEquals(scale, 1.0f)) {
+  if (gesture_ == NONE) {
+    // Consider this is a Scroll when scale factor equals 1.0.
+    if (FloatEquals(scale, 1.0f)) {
+      gesture_ = SCROLL;
+    } else {
+      gesture_ = PINCH;
+      event_target_->DManipPinchBegin();
+    }
+  } else if (gesture_ == SCROLL && !FloatEquals(scale, 1.0f)) {
+    // Pinch gesture may begin with some scroll events.
+    gesture_ = PINCH;
+    event_target_->DManipPinchBegin();
+  }
+
+  if (gesture_ == SCROLL) {
     event_target_->ApplyDManipScroll(x_offset - last_x_offset_,
                                      y_offset - last_y_offset_);
   } else {

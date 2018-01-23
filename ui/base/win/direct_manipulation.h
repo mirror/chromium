@@ -51,6 +51,9 @@ class DirectManipulationHandler
   int last_x_offset_ = 0;
   int last_y_offset_ = 0;
   bool first_ready_ = false;
+
+  enum Gesture { NONE, SCROLL, PINCH };
+  Gesture gesture_ = NONE;
 };
 
 // Windows 10 provides a new API called Direct Manipulation which generates
