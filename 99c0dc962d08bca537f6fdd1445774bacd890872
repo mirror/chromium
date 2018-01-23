@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5344083_118fa383",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-23T15:12:31Z",
+      "side": 1,
+      "message": "nit: there\u0027s a lot going on in this expression, perhaps move the ternary piece to a temp var?",
+      "range": {
+        "startLine": 821,
+        "startChar": 10,
+        "endLine": 821,
+        "endChar": 28
+      },
+      "revId": "99c0dc962d08bca537f6fdd1445774bacd890872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3bd4b9_42c557bc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-23T15:12:31Z",
+      "side": 1,
+      "message": "You should update this line with the new highest id",
+      "revId": "99c0dc962d08bca537f6fdd1445774bacd890872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
