@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc96d71_3518ce5c",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T16:29:16Z",
+      "side": 1,
+      "message": "Can we pass these are arguments instead?",
+      "range": {
+        "startLine": 422,
+        "startChar": 18,
+        "endLine": 422,
+        "endChar": 35
+      },
+      "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49bc186_31687958",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T16:29:16Z",
+      "side": 1,
+      "message": "nit:  nullptr",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16257537_6fe3c128",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T16:29:16Z",
+      "side": 1,
+      "message": "Add proxy-connection: Keep-alive, and just use one socket on this test?  Or if you\u0027re deliberately using two sockets, mention it, and add Proxy-Connection: close.",
+      "range": {
+        "startLine": 436,
+        "startChar": 27,
+        "endLine": 436,
+        "endChar": 39
+      },
+      "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
