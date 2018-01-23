@@ -64,9 +64,9 @@ import java.util.List;
  * Implementation of the interface {@ContentViewCore}.
  */
 @JNINamespace("content")
-public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObserver,
-                                            SystemCaptioningBridge.SystemCaptioningBridgeListener,
-                                            WindowAndroidProvider, ImeEventObserver {
+public class ContentViewCoreImpl
+        implements ContentViewCore, DisplayAndroidObserver,
+                   SystemCaptioningBridge.SystemCaptioningBridgeListener, ImeEventObserver {
     private static final String TAG = "cr_ContentViewCore";
 
     /**
@@ -278,12 +278,18 @@ public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObser
         mTextSuggestionHost = textSuggestionHost;
     }
 
-    @Override
+    /**
+     * Add {@link WindowAndroidChangeObserver} object.
+     * @param observer Observer instance to add.
+     */
     public void addWindowAndroidChangedObserver(WindowAndroidChangedObserver observer) {
         mWindowAndroidChangedObservers.addObserver(observer);
     }
 
-    @Override
+    /**
+     * Remove {@link WindowAndroidChangeObserver} object.
+     * @param observer Observer instance to remove.
+     */
     public void removeWindowAndroidChangedObserver(WindowAndroidChangedObserver observer) {
         mWindowAndroidChangedObservers.removeObserver(observer);
     }
@@ -323,7 +329,9 @@ public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObser
         ImeAdapterImpl imeAdapter = ImeAdapterImpl.create(
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         imeAdapter.addEventObserver(this);
-        mTextSuggestionHost = new TextSuggestionHost(this);
+        mTextSuggestionHost =
+                new TextSuggestionHost(mContext, mWebContents, windowAndroid, mContainerView);
+        addWindowAndroidChangedObserver(mTextSuggestionHost);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
@@ -391,6 +399,7 @@ public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObser
             mContainerView = containerView;
             mContainerView.setClickable(true);
             getSelectionPopupController().setContainerView(containerView);
+            mTextSuggestionHost.setContainerView(containerView);
         } finally {
             TraceEvent.end("ContentViewCore.setContainerView");
         }
@@ -434,6 +443,7 @@ public class ContentViewCoreImpl implements ContentViewCore, DisplayAndroidObser
         mWebContentsObserver.destroy();
         mWebContentsObserver = null;
         getImeAdapter().resetAndHideKeyboard();
+        removeWindowAndroidChangedObserver(mTextSuggestionHost);
         mWindowEventObservers.clear();
         hidePopupsAndPreserveSelection();
         mWebContents = null;
