@@ -22,6 +22,30 @@
       "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f79af7_b13df511",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-23T01:46:14Z",
+      "side": 1,
+      "message": "IsVisited() is used to compute ComputeSelectionBound.hidden and\nits value is tested individually. See:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/testing/data/composited_selection_bounds_input.html?dr",
+      "parentUuid": "9119622a_31c08625",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "05d74c1db8c253dfd7a5ee8e5316ec62e7540151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
