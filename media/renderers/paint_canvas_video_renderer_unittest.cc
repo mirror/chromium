@@ -140,6 +140,11 @@ PaintCanvasVideoRendererTest::PaintCanvasVideoRendererTest()
   larger_frame_->set_timestamp(base::TimeDelta::FromMilliseconds(2));
   smaller_frame_->set_timestamp(base::TimeDelta::FromMilliseconds(3));
 
+  natural_frame_->set_color_space(gfx::ColorSpace::CreateREC601());
+  larger_frame_->set_color_space(gfx::ColorSpace::CreateREC601());
+  smaller_frame_->set_color_space(gfx::ColorSpace::CreateREC601());
+  cropped_frame_->set_color_space(gfx::ColorSpace::CreateREC601());
+
   // Make sure the cropped video frame's aspect ratio matches the output device.
   // Update cropped_frame_'s crop dimensions if this is not the case.
   EXPECT_EQ(cropped_frame()->visible_rect().width() * kHeight,
@@ -508,6 +513,7 @@ TEST_F(PaintCanvasVideoRendererTest, HighBitDepth) {
         param.format, cropped_frame()->coded_size(),
         cropped_frame()->visible_rect(), cropped_frame()->natural_size(),
         cropped_frame()->timestamp()));
+    frame->set_color_space(gfx::ColorSpace::CreateREC601());
     for (int plane = VideoFrame::kYPlane; plane <= VideoFrame::kVPlane;
          ++plane) {
       int width = cropped_frame()->row_bytes(plane);
