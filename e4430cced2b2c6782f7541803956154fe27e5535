@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1c226ae_3fed45b8",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-23T08:46:26Z",
+      "side": 1,
+      "message": "As stated in the other reply, I moved some features but they still have the same name, which is why I don\u0027t need to change the feature name (::features::kNetworkService in this case), whereas I need to include network_features.h as I moved the declaration place.",
+      "parentUuid": "307f05d9_2e034f28",
+      "range": {
+        "startLine": 100,
+        "startChar": 38,
+        "endLine": 100,
+        "endChar": 54
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6ca37d3_bcbb003e",
         "filename": "services/network/public/cpp/network_features.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T18:01:41Z",
       "side": 1,
       "message": "Shouldn\u0027t this be in the network namespace like the rest of the code in this directory? Maybe both, network::features::?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1427ace3_e218139f",
+        "filename": "services/network/public/cpp/network_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-23T08:46:26Z",
+      "side": 1,
+      "message": "Many features (features in content_features.h, audio_features.h, chrome_features.h for example) are defined in ::feature namespace instead of ::|component|::feature namespace such as ::content::features. I\u0027m following the policy.",
+      "parentUuid": "b6ca37d3_bcbb003e",
       "range": {
         "startLine": 10,
         "startChar": 10,
