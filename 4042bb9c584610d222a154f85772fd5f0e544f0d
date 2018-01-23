@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c04445c_f8a558eb",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T03:35:57Z",
+      "side": 1,
+      "message": "Might be worth using shlex.split() here and pipes.quote() below (or just leave as a string)",
+      "revId": "4042bb9c584610d222a154f85772fd5f0e544f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
