@@ -102,6 +102,9 @@ interface FrameNavigationControl {
       int32 error_code,
       string? error_page_content,
       URLLoaderFactoryBundle? subresource_loader_factories);
+
+  // Asks the renderer to handle a renderer-debug URL.
+  HandleRendererDebugURL(url.mojom.Url url);
 };
 
 // Implemented by the frame (e.g. renderer processes).
