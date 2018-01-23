@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b542b24e_e6877a8c",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "I\u0027m not necessarily worried about performance, more that it\u0027s an extra two steps to convert from raw* to base64 and then back again.  I could also imagine some embedders accidentally casting their raw pointers to strings.  I don\u0027t feel too strongly but I like to keep things simple.",
+      "parentUuid": "c7a4cc81_c5cfb41a",
+      "range": {
+        "startLine": 280,
+        "startChar": 27,
+        "endLine": 280,
+        "endChar": 53
+      },
+      "revId": "dec655a36aa0368c61e71d29f33e36407fbcb308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d13e52a5_0f59d761",
         "filename": "components/cronet/native/cronet.idl",
         "patchSetId": 5

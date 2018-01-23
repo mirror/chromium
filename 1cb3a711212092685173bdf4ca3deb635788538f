@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23aaa49_cddd48c9",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "I think this has to be called on the init thread?  Can we update the comment to reflect that.",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db6a56e_dc2160b9",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "if this has to be called on the init thread, can we just call it from EnsureInitialized()?",
+      "range": {
+        "startLine": 25,
+        "startChar": 30,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65628c56_f6c7012a",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "return [NSThread isMainThread]",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecb0dc0_5fde0b6f",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "any reason this needs to be cached in the global state?  could we just recalculate when a CronetEngine is created?  This would simplify things.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec04603_e4f294b3",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "Can we make this a class and add a couple accessors:\nMarkStoragePathInUse(std::string) which also CHECKs it\u0027s not already used.\nUnmarkStoragePathInUse(std::string)\nThen locking can be done in the abstraction of the accessors.",
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b866fb_ff44b963",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "Can we make this a CHECK()?  This is a runtime exception in Java and I think this is best.  I\u0027m not a fan of semi-silent errors that automatically fall back.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e19d98_ef098748",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "this line looks like it could be problematic, say for example someone does:\nStartNetLog()\nStopNetLog()\nand then on another thread:\nStartNetLog()\nStopNetLog()\nthere are dereferences of stop_netlog_complete_ in StopNetLog() and OnStopNetLog() that could crash if stop_netlog_complete_ is nullptr.",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ccf95a_7dc9ebe9",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c783ab7_f657c9d3",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED()?",
+      "range": {
+        "startLine": 259,
+        "startChar": 62,
+        "endLine": 259,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5521c97_ce82f87f",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 264,
+        "startChar": 42,
+        "endLine": 264,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46130c31_8aad459c",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 269,
+        "startChar": 51,
+        "endLine": 269,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c91901_07266e3f",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 274,
+        "startChar": 51,
+        "endLine": 274,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9410383c_bb9889f9",
+        "filename": "components/cronet/native/engine.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-23T15:46:59Z",
+      "side": 1,
+      "message": "are you also using this to lock is_logging_?",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
