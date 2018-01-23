@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d067c375_aeeb7f05",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-23T15:57:43Z",
+      "side": 1,
+      "message": "FYI: this logic is moved up so _pendingNavigationInfo is updated for placeholder navigation so that the NavigationContext associated with the placeholder navigation can get the correct WKNavigationType. The navigation type is used in |webView:didFinishNavigation| to assert the invariance that any item encountered with state kDisplayingErrorForFailedNavigation must be a result of back/forward navigation.",
+      "range": {
+        "startLine": 4188,
+        "startChar": 64,
+        "endLine": 4188,
+        "endChar": 0
+      },
+      "revId": "0ffb9b78f7246680db1991aa7090a3eaf6e5fb0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
