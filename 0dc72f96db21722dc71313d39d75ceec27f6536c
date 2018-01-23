@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c2b4c6a_0a68d878",
+        "filename": "content/network/cors/cors_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-23T04:27:18Z",
+      "side": 0,
+      "message": "this is gone because the binding is gone?",
+      "revId": "0dc72f96db21722dc71313d39d75ceec27f6536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

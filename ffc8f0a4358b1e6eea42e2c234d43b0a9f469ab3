@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48f377a_f82d12fb",
+        "filename": "content/network/cors/cors_url_loader_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-23T04:27:18Z",
+      "side": 1,
+      "message": "stopped -\u003e stop",
+      "revId": "ffc8f0a4358b1e6eea42e2c234d43b0a9f469ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
