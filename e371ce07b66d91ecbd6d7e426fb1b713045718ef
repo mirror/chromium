@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "137eaca7_9cf515b7",
+        "filename": "components/viz/common/switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-23T16:16:23Z",
+      "side": 1,
+      "message": "Yep, done",
+      "parentUuid": "9e3b4482_c3c08146",
+      "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d158f19_3f532e04",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb39703_f8dd6708",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-23T16:16:23Z",
+      "side": 1,
+      "message": "Good point, added IsVizHitTestingEnabled and filed 804888",
+      "parentUuid": "72e865b1_39abe2ab",
+      "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
