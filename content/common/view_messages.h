@@ -732,6 +732,14 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_LockMouse,
                     bool /* user_gesture */,
                     bool /* privileged */)
 
+// Requests to tell the renderer for the contianing frame of the current
+// renderer of a change in intrinsic sizing info parameters.
+IPC_MESSAGE_ROUTED4(ViewHostMsg_IntrinsicSizingInfoChanged,
+                    gfx::SizeF, /* size */
+                    gfx::SizeF, /* aspect_ratio */
+                    bool,       /* has_width */
+                    bool /* has_height */);
+
 // Requests to unlock the mouse. A ViewMsg_MouseLockLost message will be sent
 // whenever the mouse is unlocked (which may or may not be caused by
 // ViewHostMsg_UnlockMouse).
