@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "815b126c_81801795",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003205
+      },
+      "writtenOn": "2018-01-23T04:20:50Z",
+      "side": 1,
+      "message": "The implication is that the base::NoDestructor that replaces it should be moved into a function-local static. I guess I could see how that could be ambiguous though, since I didn\u0027t explicitly state that in the CL description. Sorry!",
+      "parentUuid": "6b29c6a0_9bc212d5",
+      "revId": "73999fe67ffcb00aebfb6c8d0d342b03b079cde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e65e6c4f_ba407006",
         "filename": "base/no_destructor.h",
         "patchSetId": 16
