@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a8ccf6_66b9d905",
+        "filename": "tools/gn/action_target_generator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T09:58:43Z",
+      "side": 1,
+      "message": "I wonder whether it would be simpler to have a test fixture with a base::test::ScopedTaskEnvironment member variable used by all those tests instead of using a local variable everywhere.\n\nSomething like tools/gn/test_with_task_environment.h with the following:\n\n  class TestWithTaskEnvironment : public testing::Test {\n   public:\n    ...\n\n   private:\n    base::test::ScopedTaskEnvironment scoped_task_environment_;\n  };\n\nand then change tests to:\n\n  using ActionTargetGenerator \u003d TestWithTaskEnvironment;\n\n  TEST_F(ActionTargetGenerator, ActionOutputSubstitutions) {\n    ...\n\nAnd the same for all tests in all files.",
+      "revId": "f48a96bbf6d140d4986f55713deb2a3d1e792add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3569c7e3_1a4915b7",
+        "filename": "tools/gn/command_format_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T09:58:43Z",
+      "side": 1,
+      "message": "nit: blank line between toos/gn/command_format.h and the other includes",
+      "revId": "f48a96bbf6d140d4986f55713deb2a3d1e792add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472d851a_aac2025b",
+        "filename": "tools/gn/gn_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T09:58:43Z",
+      "side": 1,
+      "message": "I think this may cause problems if a negative number is passed on the command-line as the number is used to call std::vector::reserve, so this may end up allocating a huge number of threads if negative.\n\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_worker_pool_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dSs\u0026l\u003d225\n\nMaybe check that result \u003e\u003d 1?",
+      "revId": "f48a96bbf6d140d4986f55713deb2a3d1e792add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd28c98_8143f46a",
+        "filename": "tools/gn/gn_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T09:58:43Z",
+      "side": 1,
+      "message": "\"TimeDelta\" -\u003e \"base::TimeDelta\" to fix compilation\n\n../../tools/gn/gn_main.cc:73:13: error: unknown type name \u0027TimeDelta\u0027; did you mean \u0027base::TimeDelta\u0027?\n  constexpr TimeDelta kSuggestedReclaimTime \u003d base::TimeDelta::FromSeconds(30);\n            ^~~~~~~~~",
+      "revId": "f48a96bbf6d140d4986f55713deb2a3d1e792add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
