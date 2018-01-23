@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55cd807_1f9920cc",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-23T22:48:33Z",
+      "side": 1,
+      "message": "I think it is cleaner to just change PaintLayerPainter::MaskBlendingAppliedByCompositor() to return true for SPv175: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/PaintLayer.cpp?rcl\u003d862205e268c77eefa884c9677b6b74a8f58cb06e\u0026l\u003d2682\n\nThis also simplifies BoxPainter::PaintMaskImages(): https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/BoxPainter.cpp?rcl\u003d4a3727889f3047263f061f16f03c97b745fa0e90\u0026l\u003d254",
+      "revId": "af4b8135ecf042a7e126cab7306b4d3354a84e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
