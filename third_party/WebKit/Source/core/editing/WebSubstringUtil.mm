@@ -167,7 +167,7 @@ NSAttributedString* WebSubstringUtil::AttributedWordAtPoint(
     return nil;
   LocalFrame* frame = result.InnerNode()->GetDocument().GetFrame();
   EphemeralRange range =
-      frame->RangeForPoint(result.RoundedPointInInnerNodeFrame());
+      frame->GetEditor().RangeForPoint(result.RoundedPointInInnerNodeFrame());
   if (range.IsNull())
     return nil;
 
