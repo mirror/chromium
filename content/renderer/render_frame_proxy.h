@@ -184,6 +184,9 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
                     blink::WebLocalFrame* source) override;
   void FrameFocused() override;
   blink::WebString GetDevToolsFrameToken() override;
+  void Print(const blink::WebRect& rect,
+             int document_cookie,
+             int page_number) override;
 
   // IPC handlers
   void OnDidStartLoading();

@@ -45,6 +45,10 @@ class RemoteFrameClient : public FrameClient {
 
   virtual void UpdateRenderThrottlingStatus(bool isThrottled,
                                             bool subtreeThrottled) = 0;
+
+  virtual void Print(const IntRect&,
+                     int document_cookie,
+                     int page_number) const = 0;
 };
 
 }  // namespace blink
