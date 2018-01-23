@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29838994_484bf3f8",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-23T11:04:20Z",
+      "side": 1,
+      "message": "Hmm, this is `has_user_gesture` (markdown format, so `foo` instead of |foo|). Do you want me to remove the marker?",
+      "parentUuid": "41ac87e9_8d753481",
+      "range": {
+        "startLine": 783,
+        "startChar": 37,
+        "endLine": 783,
+        "endChar": 38
+      },
+      "revId": "79646b42c09da38cec5d14308d3ef4bcdf8423fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e017f737_e13694bf",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-23T10:44:47Z",
       "side": 1,
       "message": "What sort of confusion does it create? Does it cause tests that assume no user gesture due to a test to break? Maybe this should be a TODO to clean this up in the long-term (i.e. fix the navigation utils that most browser tests use?).",
+      "revId": "79646b42c09da38cec5d14308d3ef4bcdf8423fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4327339f_25ceecd2",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-23T11:04:20Z",
+      "side": 1,
+      "message": "clamy@, you told me this is something your team was looking into. Can I assign a TODO on your name or is there a bug I can link to?",
+      "parentUuid": "e017f737_e13694bf",
       "revId": "79646b42c09da38cec5d14308d3ef4bcdf8423fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
