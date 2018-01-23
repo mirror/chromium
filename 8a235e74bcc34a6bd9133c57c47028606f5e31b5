@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f46ea5bc_15508e29",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7a77d0_944f414c",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3c00c3_e06e7ed6",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ec76f8_2bbebea6",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a3c00c3_e06e7ed6",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 35
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "ff02f5a7_c0d87410",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:33:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "025ef0eb_bd4a66da",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 0
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266c47f0_cec853c3",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 1
@@ -232,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "9cd7d18c_0cd555df",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:33:27Z",
+      "side": 1,
+      "message": "Thank you!\nBut, I removed this to fix broken layout in Patchset 2.",
+      "parentUuid": "493a0069_ada4b752",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed8b85cf_51fbb3c2",
         "filename": "ui/views/BUILD.gn",
         "patchSetId": 1
@@ -243,6 +333,24 @@
       "writtenOn": "2018-01-22T09:23:33Z",
       "side": 1,
       "message": "just an FYI that you\u0027ll need an OWNER for ui/views/ such as sky@\n\nhttps://cs.chromium.org/chromium/src/ui/views/OWNERS",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa795ab_dd7c7376",
+        "filename": "ui/views/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8b85cf_51fbb3c2",
       "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
