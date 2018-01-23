@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "a3c8bf71_c26b9f80",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-23T21:06:53Z",
+      "side": 1,
+      "message": "Thanks for the link, it seems like this specific use case is documented as \"JSON: use mojo.common.mojom.Value, not string.\". If it is documented, we should conform!",
+      "parentUuid": "664e69a5_7eb30182",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfa66b2_dd28728b",
         "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
         "patchSetId": 11
