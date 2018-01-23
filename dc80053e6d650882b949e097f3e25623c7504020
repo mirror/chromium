@@ -22,6 +22,30 @@
       "revId": "dc80053e6d650882b949e097f3e25623c7504020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a697ce2_4b122bc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-23T16:12:28Z",
+      "side": 1,
+      "message": "Perhaps the solution is: we read command line, we read shared prefs and just accept those small IOs for startup? I want to believe there was a reason we did sharedpref warmup :)",
+      "parentUuid": "fa99ae98_f31ac057",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "dc80053e6d650882b949e097f3e25623c7504020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
