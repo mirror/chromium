@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f98da1_1adf8561",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-23T23:37:08Z",
+      "side": 1,
+      "message": "We\u0027ve generally preferred to avoid using command line switches directly in Viz. Maybe plumb this through whatever appropriate settings via RootCompositorFrameSinkParams?",
+      "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
