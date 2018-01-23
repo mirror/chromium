@@ -1691,11 +1691,15 @@ const CSSValue* ParseLonghand(CSSPropertyID unresolved_property,
   CSSPropertyID property_id = resolveCSSPropertyID(unresolved_property);
   DCHECK(!CSSProperty::Get(property_id).IsShorthand());
   if (CSSParserFastPaths::IsKeywordPropertyID(property_id)) {
-    if (!CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-            property_id, range.Peek().Id(), context.Mode()))
+    if (CSSParserFastPaths::IsValidKeywordPropertyAndValue(
+            property_id, range.Peek().Id(), context.Mode())) {
+      CountKeywordOnlyPropertyUsage(property_id, context, range.Peek().Id());
+      return ConsumeIdent(range);
+    }
+
+    // DO NOT SUBMIT.
+    if (property_id != CSSPropertyDisplay)
       return nullptr;
-    CountKeywordOnlyPropertyUsage(property_id, context, range.Peek().Id());
-    return ConsumeIdent(range);
   }
 
   const CSSValue* result =

@@ -139,6 +139,36 @@ enum class EFillSizeType : unsigned {
   kSizeNone
 };
 
+static const size_t kDisplayBits = 5;
+
+enum class EDisplay : unsigned {
+  kNone,
+  kInline,
+  kBlock,
+  kFlowRoot,
+  kListItem,
+  kInlineBlock,
+  kTable,
+  kInlineTable,
+  kTableRowGroup,
+  kTableHeaderGroup,
+  kTableFooterGroup,
+  kTableRow,
+  kTableColumnGroup,
+  kTableColumn,
+  kTableCell,
+  kTableCaption,
+  kWebkitBox,
+  kWebkitInlineBox,
+  kFlex,
+  kInlineFlex,
+  kGrid,
+  kInlineGrid,
+  kContents,
+  kLayoutCustom,
+  kInlineLayoutCustom,
+};
+
 // CSS3 Background Position
 enum class BackgroundEdgeOrigin : unsigned { kTop, kRight, kBottom, kLeft };
 
