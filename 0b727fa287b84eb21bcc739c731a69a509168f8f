@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9501980b_4d2540c3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d769bcec_0dda1f59",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b039f85_dcf44800",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-22T19:16:23Z",
       "side": 1,
       "message": "This class may benefit from the Builder pattern. e.g. it would be nice to call:\n\n  DumpStreamBuilder builder \u003d new DumpStreamBuilder(uuid);\n  \n  if (logcat !\u003d null) {\n      builder.addLogcat(logcat);\n  };\n  \n  if (minidump !\u003d null) {\n      builder.addMinidump(minidump);\n  }\n  \n  // ... etc.\n  \n  return builder.getDumpStream();\n\nTo help with this, we can create DumpStream class that has an InputStream, a MIME boundary string, and a close() method that deletes the minidump file if it exists. Then CastCrashUploader.uploadCrashDump() can take an instance of DumpStream instead of DumpStreamConstructor, to better indicate that uploadCrashDump() is consuming, not constructing, a DumpStream.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9cdc611_bf2d615e",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done on returning a DumpStream object. I am hesitant to make the builder mutable as using the same builder instance across different tasks in CastCrashUploader may be weird.",
+      "parentUuid": "9b039f85_dcf44800",
       "range": {
         "startLine": 37,
         "startChar": 19,
@@ -68,6 +116,30 @@
       "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67383e90_d0cdbd07",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9aa39c_e352a499",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "0ff7de9c_6df3ce6d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c75e8cc_3fc92ab5",
+      "range": {
+        "startLine": 194,
+        "startChar": 42,
+        "endLine": 194,
+        "endChar": 46
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d5673c_1c740717",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
         "patchSetId": 1
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "822b2189_a60839df",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46d5673c_1c740717",
+      "range": {
+        "startLine": 199,
+        "startChar": 33,
+        "endLine": 199,
+        "endChar": 38
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c416568a_39da4821",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e870193_e235f3c2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamConstructor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-23T01:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c416568a_39da4821",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "0b727fa287b84eb21bcc739c731a69a509168f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
