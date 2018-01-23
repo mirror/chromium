@@ -93,6 +93,30 @@
       "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffb57cc_17d1a3d5",
+        "filename": "services/network/public/cpp/network_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-23T19:25:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure the lack of a namespace in other places is justification to continue that. I also think with servicification we are using stricter namespaces. +rockot for his thoughts.",
+      "parentUuid": "1427ace3_e218139f",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
