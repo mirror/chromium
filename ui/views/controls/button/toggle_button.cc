@@ -197,9 +197,9 @@ void ToggleButton::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 void ToggleButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   Button::GetAccessibleNodeData(node_data);
 
-  node_data->role = ui::AX_ROLE_SWITCH;
-  node_data->SetCheckedState(is_on_ ? ui::AX_CHECKED_STATE_TRUE
-                                    : ui::AX_CHECKED_STATE_FALSE);
+  node_data->role = ax::mojom::Role::SWITCH;
+  node_data->SetCheckedState(is_on_ ? ax::mojom::CheckedState::TRUE_VALUE
+                                    : ax::mojom::CheckedState::FALSE_VALUE);
 }
 
 void ToggleButton::OnFocus() {
