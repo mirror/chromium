@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa62e001_78f8775a",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T22:36:53Z",
+      "side": 1,
+      "message": "Both done.",
+      "parentUuid": "b3431d77_59d4d591",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae6c75b_7d8ba6d8",
         "filename": "extensions/test/logging_timer.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7715664c_e2643590",
+        "filename": "extensions/test/logging_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T22:36:53Z",
+      "side": 1,
+      "message": "That would make it *slightly* heavier weight, because it would mean we need to define all the different callers in a common place, and thus need two modifications for every new entry (one to add the enum, and one at the callsite).  Also, in order to have human-readable names, we\u0027d need some kind of struct (or separate array).  I think that, for the uses here, this is probably fine, but I\u0027ve added a note that we could potentially optimize.",
+      "parentUuid": "7ae6c75b_7d8ba6d8",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6be23a7_98ef418e",
         "filename": "extensions/test/logging_timer.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b0dc70_694d7f69",
+        "filename": "extensions/test/logging_timer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T22:36:53Z",
+      "side": 1,
+      "message": "Good catch!  Done.",
+      "parentUuid": "c6be23a7_98ef418e",
+      "revId": "9ac1a6b379cd93761990df4fec2748c1abd70203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
