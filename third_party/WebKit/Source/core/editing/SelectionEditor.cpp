@@ -56,6 +56,7 @@ void SelectionEditor::ClearVisibleSelection() {
   cached_visible_selection_in_flat_tree_ = VisibleSelectionInFlatTree();
   cached_visible_selection_in_dom_tree_is_dirty_ = false;
   cached_visible_selection_in_flat_tree_is_dirty_ = false;
+  StopObserving();
   if (!ShouldAlwaysUseDirectionalSelection())
     return;
   selection_.is_directional_ = true;
@@ -67,8 +68,8 @@ void SelectionEditor::Dispose() {
 }
 
 Document& SelectionEditor::GetDocument() const {
-  DCHECK(GetSynchronousMutationNotifier());
-  return static_cast<Document&>(*GetSynchronousMutationNotifier());
+  DCHECK(document_);
+  return *document_;
 }
 
 VisibleSelection SelectionEditor::ComputeVisibleSelectionInDOMTree() const {
@@ -116,6 +117,7 @@ void SelectionEditor::SetSelection(const SelectionInDOMTree& new_selection) {
   ClearDocumentCachedRange();
   MarkCacheDirty();
   selection_ = new_selection;
+  UpdateObservedDocumentForSelectionChange();
 }
 
 void SelectionEditor::DidChangeChildren(const ContainerNode&) {
@@ -133,6 +135,7 @@ void SelectionEditor::DidFinishTextChange(const Position& new_base,
   selection_.base_ = new_base;
   selection_.extent_ = new_extent;
   selection_.ResetDirectionCache();
+  UpdateObservedDocumentForSelectionChange();
   MarkCacheDirty();
   DidFinishDOMMutation();
 }
@@ -143,7 +146,7 @@ void SelectionEditor::DidFinishDOMMutation() {
 
 void SelectionEditor::DocumentAttached(Document* document) {
   DCHECK(document);
-  DCHECK(!GetSynchronousMutationNotifier()) << GetSynchronousMutationNotifier();
+  DCHECK(!document_) << document_;
   style_version_for_dom_tree_ = static_cast<uint64_t>(-1);
   style_version_for_flat_tree_ = static_cast<uint64_t>(-1);
   ClearVisibleSelection();
@@ -159,6 +162,7 @@ void SelectionEditor::ContextDestroyed(Document*) {
   cached_visible_selection_in_flat_tree_ = VisibleSelectionInFlatTree();
   cached_visible_selection_in_dom_tree_is_dirty_ = false;
   cached_visible_selection_in_flat_tree_is_dirty_ = false;
+  document_ = nullptr;
 }
 
 static Position ComputePositionForChildrenRemoval(const Position& position,
@@ -423,8 +427,13 @@ void SelectionEditor::ClearDocumentCachedRange() {
   cached_range_ = nullptr;
 }
 
+void SelectionEditor::UpdateObservedDocumentForSelectionChange() {
+  SetContext(selection_.GetDocument());
+}
+
 DEFINE_TRACE(SelectionEditor) {
   visitor->Trace(frame_);
+  visitor->Trace(document_);
   visitor->Trace(selection_);
   visitor->Trace(cached_visible_selection_in_dom_tree_);
   visitor->Trace(cached_visible_selection_in_flat_tree_);

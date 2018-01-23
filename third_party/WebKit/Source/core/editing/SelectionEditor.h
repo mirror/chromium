@@ -100,7 +100,10 @@ class SelectionEditor final
   void DidFinishTextChange(const Position& base, const Position& extent);
   void DidFinishDOMMutation();
 
+  void UpdateObservedDocumentForSelectionChange();
+
   Member<LocalFrame> frame_;
+  Member<Document> document_;
 
   SelectionInDOMTree selection_;
 
