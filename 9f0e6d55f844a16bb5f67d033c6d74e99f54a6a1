@@ -52,6 +52,24 @@
       "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba236d52_a880a5dd",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T12:44:17Z",
+      "side": 0,
+      "message": "Local build of chrome or clang?\n\nIf \"of chrome\", then:\n* the revision is also visible in the download url (\" https://commondatastorage.googleapis.com/chromium-browser-clang/Linux_x64/clang-321529-2.tgz\")\n* and even if it wasn\u0027t, 99% of devs don\u0027t care, and those who do can pass --print-revision or look at third_party/llvm-build/Release+Asserts/cr_revision\n\nI always tell people to not add more logging than needed (...or any logging...), with links to https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#logging and http://homepage.cs.uri.edu/~thenry/resources/unix_art/ch01s06.html \"Rule of Silence\". So I\u0027d like to have a somewhat more concrete motivation if possible if we keep this line. (Alternatively we could keep this and remove the download output, but the progress bar is useful on slow internet days imho).",
+      "parentUuid": "75464111_e959c279",
+      "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
