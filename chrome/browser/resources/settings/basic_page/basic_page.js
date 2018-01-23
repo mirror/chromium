@@ -18,6 +18,10 @@ Polymer({
       notify: true,
     },
 
+    // <if expr="not chromeos">
+    diceEnabled: Boolean,
+    // </if>
+
     // <if expr="chromeos">
     showAndroidApps: Boolean,
 

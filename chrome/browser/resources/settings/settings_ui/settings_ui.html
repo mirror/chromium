@@ -79,6 +79,9 @@
     </dialog>
     <div id="container" class="no-outline">
       <settings-main id="main" prefs="{{prefs}}"
+<if expr="not chromeos">
+          dice-enabled="[[diceEnabled_]]"
+</if>
           toolbar-spinner-active="{{toolbarSpinnerActive_}}"
           page-visibility="[[pageVisibility_]]"
           show-android-apps="[[showAndroidApps_]]"
