@@ -164,6 +164,16 @@ void ResourceProvider::PopulateSkBitmapWithResource(
   sk_bitmap->installPixels(info, resource->pixels, info.minRowBytes());
 }
 
+void ResourceProvider::WaitSyncToken(const gpu::SyncToken& token) {
+  GLES2Interface* gl = ContextGL();
+  DCHECK(gl);
+  // In the case of context lost, this sync token may be empty (see comment in
+  // the UpdateSyncToken() function). The WaitSyncTokenCHROMIUM() function
+  // handles empty sync tokens properly so just wait anyways and update the
+  // state the synchronized.
+  gl->WaitSyncTokenCHROMIUM(token.GetConstData());
+}
+
 void ResourceProvider::WaitSyncTokenInternal(
     viz::internal::Resource* resource) {
   DCHECK(resource);

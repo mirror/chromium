@@ -84,6 +84,8 @@ class CC_EXPORT ResourceProvider
 
   int tracing_id() const { return tracing_id_; }
 
+  void WaitSyncToken(const gpu::SyncToken& token);
+
  protected:
   using ResourceMap =
       std::unordered_map<viz::ResourceId, viz::internal::Resource>;
