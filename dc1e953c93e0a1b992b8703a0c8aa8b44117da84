@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "5586b161_6eeedcf2",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T23:51:18Z",
+      "side": 1,
+      "message": "Whoops!  Added to DisconnectOpener() as well.",
+      "parentUuid": "d529d8bb_f315a09e",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c06b8c2_e0f26043",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 6
@@ -350,6 +368,24 @@
       "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c9a43d_7b6f40c0",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T23:51:18Z",
+      "side": 1,
+      "message": "Correct, extension popups are full web pages, and this is only exposed in \"blessed extensions contexts\" - i.e., extension pages with the same origin that run in the same extension process.  This is not available to content scripts, etc.  It\u0027s still not great, but slightly less insane.",
+      "parentUuid": "3dbaffa5_3681801c",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
