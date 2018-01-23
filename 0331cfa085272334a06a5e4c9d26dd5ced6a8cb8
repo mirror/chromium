@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e90754b_ff434fdd",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T03:32:33Z",
+      "side": 1,
+      "message": "Good catch!",
+      "revId": "0331cfa085272334a06a5e4c9d26dd5ced6a8cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
