@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b737c6f_e71d1d94",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T23:12:38Z",
+      "side": 1,
+      "message": "Need to use a weak pointer here.  Otherwise, if the request is cancelled, we\u0027ll get a crash.",
+      "range": {
+        "startLine": 511,
+        "startChar": 44,
+        "endLine": 511,
+        "endChar": 48
+      },
+      "revId": "e67b8ed2866d50a3474a64a4464c7b2553c7042f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
