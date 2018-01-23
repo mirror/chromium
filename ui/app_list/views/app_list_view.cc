@@ -1182,6 +1182,12 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   if (app_list_state_ == AppListViewState::CLOSED)
     return;
 
+  if (fullscreen_widget_->GetLayer()->GetAnimator()->IsAnimatingProperty(
+          ui::LayerAnimationElement::TRANSFORM)) {
+    fullscreen_widget_->GetLayer()->GetAnimator()->StopAnimatingProperty(
+        ui::LayerAnimationElement::TRANSFORM);
+  }
+
   SetIsInDrag(true);
   background_opacity_ = background_opacity;
   gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
