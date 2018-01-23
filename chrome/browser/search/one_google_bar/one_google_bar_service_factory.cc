@@ -16,6 +16,8 @@
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/common/chrome_features.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/signin_pref_names.h"
 #include "content/public/browser/browser_context.h"
 
 // static
@@ -57,9 +59,15 @@ KeyedService* OneGoogleBarServiceFactory::BuildServiceInstanceFor(
   if (!override_api_url_str.empty()) {
     override_api_url = override_api_url_str;
   }
+  bool account_consistency_mirror_required = false;
+#if defined(OS_CHROMEOS)
+  account_consistency_mirror_required =
+      profile->GetPrefs()->GetBoolean(prefs::kAccountConsistencyMirrorRequired);
+#endif
   return new OneGoogleBarService(
       cookie_service,
       base::MakeUnique<OneGoogleBarFetcherImpl>(
           profile->GetRequestContext(), google_url_tracker,
-          g_browser_process->GetApplicationLocale(), override_api_url));
+          g_browser_process->GetApplicationLocale(), override_api_url,
+          account_consistency_mirror_required));
 }
