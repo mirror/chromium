@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "540aa94c_a33b20f5",
+        "filename": "chrome/browser/resources/settings/settings_page_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-23T21:57:47Z",
+      "side": 1,
+      "message": "see: https://imgur.com/a/WXTrv",
+      "revId": "1f0bb12f5957d75c454efc28abb6dfa3662b0d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
