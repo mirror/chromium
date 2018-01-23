@@ -1,0 +1,430 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4facec_fbe5e818",
+        "filename": "content/browser/renderer_host/input/input_router_impl_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "This should have a comment explaining why this cancels the touch timeout.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3a82b9_c5fce831",
+        "filename": "content/browser/renderer_host/input/input_router_impl_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Could this be the default test setup where we can override it when we need a non-auto or whitelisted touch action? Or this could be called SetupForGestureTest with a short comment explaining why we need touch action auto?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1196ef45_b79cbd4d",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Do we need to disable the touch ack timeout for a whitelisted touch action none as well since it seems that we\u0027re starting the timer before we know the true touch action where before we didn\u0027t?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c897dc85_7741abfd",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "nit: for simplicity, maybe box-sizing: border-box then you can set the size to be 100x100.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e440e551_cbd4011a",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Why is this one not will-change: transform:?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60fdd23_785deba4",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Rather than needing to read the HTML to figure out which touch action goes with which position, can we make the position part of the .ta-* classes?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6115af_93dece93",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Does this return immediately or wait for the script to finish running? Add a comment describing what this does / means.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c570b051_aeeb1a42",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "nit: instead of just documenting this in a comment, you could ASSERT_TRUE(load_url_called_) or similar to warn anybody who may accidentally call this function without having read the comment.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82925c99_3e6acd95",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Is there a reference for this? Is this a bug? Is it possibly uninitialized? This seems very unintuitive.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f43dc9e_82e997b0",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "nit: Call these expected_scroll_*_after_scroll to document that they are verified after the scroll is complete.\n\nAlso, to make it easier to read how about we pass this as a Vector2d or Point?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5f351d_a4d6c4ff",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "nit: This is not whether it is janky but whether it should be made to be - call it jank_main_thread / should_jank_main_thread?\n\nYou should add a comment to the function comments about what this means since the term jank is a bit unusual.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b03d9d_236f4457",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "It seems like this runs after the main thread jank, but if so, how do we know that the scroll didn\u0027t wait for the jank to finish?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52d143a_ec04df6d",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "This comment and the if condition seem to disagree. Is the main thread busy in both cases?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2ce060_f245f5be",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Why 45 / 2?",
+      "range": {
+        "startLine": 327,
+        "startChar": 72,
+        "endLine": 327,
+        "endChar": 78
+      },
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfb2027_e1f8ef8d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "This requires an explanation and perhaps a bug. Since if I remember correctly, we should filter this if the real touch action turned out to suppress it but because we can\u0027t retroactively filter it and we are downstream of the gesture event generator we always allow the scroll begin event.\n\nI think ideally we would re-architect touch action to be able to later inject a scroll begin event in the event that it is allowed and filter it otherwise.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f34004_bdeb7576",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "This should only be for the main thread touch action right? The whitelisted touch action may not allow double tap but the main later could.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc992914_0063b4a0",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Is this not implied if suppress_manipulation_events_ has a value and !suppress_manipulation_events_from_touch_action_from_main_?",
+      "range": {
+        "startLine": 265,
+        "startChar": 6,
+        "endLine": 265,
+        "endChar": 44
+      },
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8465a9cc_754dd8a9",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 62
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Could we call a different method for the condition version which conditionally calls the unconditional method?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628ee402_fed98f8b",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 62
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Seems these are set when we replace them - perhaps they should be called last_*_for_testing to indicate that they are old values?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149bdd33_7e43885f",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "This looks confusing, do these two methods do something different?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c691cd_25e60acf",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Might it not make more sense to have a failing test, which shows what the expectation is?",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74663b7d_1d770099",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "isn\u0027t this a vertical hint which - i.e. not matching the white listed touch action?",
+      "range": {
+        "startLine": 881,
+        "startChar": 56,
+        "endLine": 881,
+        "endChar": 60
+      },
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59ffbe9_44bb6715",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "Is the TODO to change the expected disposition? To make the TODO clear I would start with that and then follow with the description, i.e.\n\nTODO(xidachen): Change the expected disposition to DID_HANDLE_NON_BLOCKING when |kCompositorTouchAction| is enabled. \u003cexplanation of why\u003e",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6bfdca_4dc89bda",
+        "filename": "ui/events/event_switches.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-23T04:53:32Z",
+      "side": 1,
+      "message": "I don\u0027t feel like this description explains the feature. I.e. can\u0027t we already ack touch events from the compositor if they don\u0027t hit a main thread region today? This should reference the bug and explain the implication - i.e. that we can allow certain known okay touch actions on the compositor.",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
