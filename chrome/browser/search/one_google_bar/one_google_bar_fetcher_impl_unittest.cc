@@ -71,7 +71,8 @@ class OneGoogleBarFetcherImplTest : public testing::Test {
         one_google_bar_fetcher_(request_context_getter_.get(),
                                 &google_url_tracker_,
                                 kApplicationLocale,
-                                api_url_override) {}
+                                api_url_override,
+                                false) {}
 
   net::TestURLFetcher* GetRunningURLFetcher() {
     // All created URLFetchers have ID 0 by default.

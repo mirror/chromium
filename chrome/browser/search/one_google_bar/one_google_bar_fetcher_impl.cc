@@ -135,6 +135,7 @@ class OneGoogleBarFetcherImpl::AuthenticatedURLFetcher
                           const GURL& google_base_url,
                           const std::string& application_locale,
                           const base::Optional<std::string>& api_url_override,
+                          bool account_consistency_mirror_required,
                           FetchDoneCallback callback);
   ~AuthenticatedURLFetcher() override = default;
 
@@ -151,6 +152,7 @@ class OneGoogleBarFetcherImpl::AuthenticatedURLFetcher
   const GURL google_base_url_;
   const std::string application_locale_;
   const base::Optional<std::string> api_url_override_;
+  const bool account_consistency_mirror_required_;
 
   FetchDoneCallback callback_;
 
@@ -163,11 +165,13 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::AuthenticatedURLFetcher(
     const GURL& google_base_url,
     const std::string& application_locale,
     const base::Optional<std::string>& api_url_override,
+    bool account_consistency_mirror_required,
     FetchDoneCallback callback)
     : request_context_(request_context),
       google_base_url_(google_base_url),
       application_locale_(application_locale),
       api_url_override_(api_url_override),
+      account_consistency_mirror_required_(account_consistency_mirror_required),
       callback_(std::move(callback)) {}
 
 GURL OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetApiUrl() const {
@@ -193,6 +197,9 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetExtraRequestHeaders(
   // transmission of experiments coming from the variations server.
   variations::AppendVariationHeaders(url, variations::InIncognito::kNo,
                                      variations::SignedIn::kNo, &headers);
+  if (account_consistency_mirror_required_) {
+    headers.SetHeader("X-Chrome-Connected", "enable_account_consistency=true");
+  }
   return headers.ToString();
 }
 
@@ -241,11 +248,13 @@ OneGoogleBarFetcherImpl::OneGoogleBarFetcherImpl(
     net::URLRequestContextGetter* request_context,
     GoogleURLTracker* google_url_tracker,
     const std::string& application_locale,
-    const base::Optional<std::string>& api_url_override)
+    const base::Optional<std::string>& api_url_override,
+    bool account_consistency_mirror_required)
     : request_context_(request_context),
       google_url_tracker_(google_url_tracker),
       application_locale_(application_locale),
       api_url_override_(api_url_override),
+      account_consistency_mirror_required_(account_consistency_mirror_required),
       weak_ptr_factory_(this) {}
 
 OneGoogleBarFetcherImpl::~OneGoogleBarFetcherImpl() = default;
@@ -263,6 +272,7 @@ void OneGoogleBarFetcherImpl::Fetch(OneGoogleCallback callback) {
   // the result obsolete.
   pending_request_ = base::MakeUnique<AuthenticatedURLFetcher>(
       request_context_, google_base_url, application_locale_, api_url_override_,
+      account_consistency_mirror_required_,
       base::BindOnce(&OneGoogleBarFetcherImpl::FetchDone,
                      base::Unretained(this)));
   pending_request_->Start();
