@@ -11,6 +11,9 @@ struct CALayerParams {
   // TODO(676224): Use preprocessor to restrict platform-specific members to
   // desired platform.
   bool is_empty;
+  // The specified frame is to contain either a CAContextID or an IOSurface mach
+  // port. The |io_surface_mach_port| field is examined only if the
+  // |ca_context_id| field is zero.
   uint32 ca_context_id;
   handle? io_surface_mach_port;
   gfx.mojom.Size pixel_size;
