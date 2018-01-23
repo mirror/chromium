@@ -34,6 +34,24 @@
       "revId": "5a4c179a7cdeaaf813e6bb2bfb1c8322cd43fea4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74723d87_92bcd241",
+        "filename": "ui/ozone/platform/drm/gpu/drm_overlay_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T17:07:21Z",
+      "side": 1,
+      "message": "Tnx for checking that.\nNot sure I\u0027d spend time avoiding a kernel roundtrip at this point, when we are reallocating buffers for testing and that takes milliseconds.",
+      "parentUuid": "264c0c5f_0d987d61",
+      "revId": "5a4c179a7cdeaaf813e6bb2bfb1c8322cd43fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
