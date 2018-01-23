@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6302b30_057e1a04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-23T02:29:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00719810_8a92fe0e",
+      "revId": "a93dd8469d3edae109692e25c1f89211b9ceb15c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82a25947_cca93b3e",
         "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "a93dd8469d3edae109692e25c1f89211b9ceb15c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5234c35_10429793",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-23T02:29:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a25947_cca93b3e",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 38
+      },
+      "revId": "a93dd8469d3edae109692e25c1f89211b9ceb15c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
