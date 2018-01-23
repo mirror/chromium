@@ -932,6 +932,22 @@ void RenderWidgetHostViewAura::OnLegacyWindowDestroyed() {
   legacy_render_widget_host_HWND_ = nullptr;
   legacy_window_destroyed_ = true;
 }
+
+void RenderWidgetHostViewAura::AddCompositorAnimationObserver(
+    ui::CompositorAnimationObserver* observer) {
+  if (observer == nullptr)
+    return;
+  DCHECK(window_->GetHost()->compositor());
+  window_->GetHost()->compositor()->AddAnimationObserver(observer);
+}
+
+void RenderWidgetHostViewAura::RemoveCompositorAnimationObserver(
+    ui::CompositorAnimationObserver* observer) {
+  if (observer == nullptr)
+    return;
+  DCHECK(window_->GetHost()->compositor());
+  window_->GetHost()->compositor()->RemoveAnimationObserver(observer);
+}
 #endif
 
 void RenderWidgetHostViewAura::DidCreateNewRendererCompositorFrameSink(
