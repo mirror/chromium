@@ -96,7 +96,8 @@ def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
       if in_package_path == app_name:
         in_package_path = 'bin/app'
         app_found = True
-      output.write('%s=%s\n' % (in_package_path, next_file))
+      output_rel_path = os.path.relpath(next_file, out_dir)
+      output.write('%s=%s\n' % (in_package_path, output_rel_path))
     assert app_found
     output.write('meta/sandbox=%s%s' % (root_dir, SANDBOX_POLICY_PATH))
 
