@@ -636,6 +636,18 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
     case ui::AX_ROLE_LABEL_TEXT:
       // No role description.
       break;
+    case ui::AX_ROLE_LAYOUT_TABLE:
+      // No role description.
+      break;
+    case ui::AX_ROLE_LAYOUT_TABLE_CELL:
+      // No role description.
+      break;
+    case ui::AX_ROLE_LAYOUT_TABLE_COLUMN:
+      // No role description.
+      break;
+    case ui::AX_ROLE_LAYOUT_TABLE_ROW:
+      // No role description.
+      break;
     case ui::AX_ROLE_LEGEND:
       // No role description.
       break;
