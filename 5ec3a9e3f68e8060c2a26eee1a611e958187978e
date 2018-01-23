@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec8416b_1de4f561",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-23T23:36:25Z",
+      "side": 1,
+      "message": "Looking at how this method (and StopAnimator()) is used, I think you mean \"data member of this object\" rather than \"ivar\". I was concerned that these functions would be nil-ing ivars on ObjC objects.",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "5ec3a9e3f68e8060c2a26eee1a611e958187978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
