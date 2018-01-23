@@ -43,6 +43,7 @@ class ManagePasswordsBubbleView : public ManagePasswordsBubbleDelegateViewBase,
   friend class ManagePasswordPendingView;
   friend class ManagePasswordSignInPromoView;
   friend class ManagePasswordUpdatePendingView;
+  friend class ManagePasswordBubbleSyncPromoDelegate;
 
   // TODO(pbos): Define column sets within subdialogs or move to a common
   // helper class (maybe ManagePasswordsBubbleDelegateViewBase when all dialogs
