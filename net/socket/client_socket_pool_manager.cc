@@ -416,8 +416,10 @@ int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   const CompletionCallback& callback) {
   DCHECK(socket_handle);
   HttpRequestHeaders request_extra_headers;
-  int request_load_flags = 0;
-  RequestPriority request_priority = MEDIUM;
+  // Note that this method current has one consumer. In the future, load flags
+  // and request priority might be need to made customizable.
+  int request_load_flags = LOAD_IGNORE_LIMITS;
+  RequestPriority request_priority = MAXIMUM_PRIORITY;
   return InitSocketPoolHelper(
       ClientSocketPoolManager::NORMAL_GROUP, host_port_pair,
       request_extra_headers, request_load_flags, request_priority, session,
