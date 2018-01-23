@@ -66,6 +66,8 @@ class RulesetManager {
   // Sets the TestObserver. Client maintains ownership of |observer|.
   void SetObserverForTest(TestObserver* observer);
 
+  void PrintRulesetEvalTime() const;
+
  private:
   struct ExtensionRulesetData {
     ExtensionRulesetData(const ExtensionId&,
@@ -95,6 +97,8 @@ class RulesetManager {
 
   // Non-owning pointer to TestObserver.
   TestObserver* test_observer_ = nullptr;
+
+  mutable base::TimeDelta ruleset_eval_time_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
