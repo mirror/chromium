@@ -113,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "025ef0eb_bd4a66da",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-23T05:31:45Z",
+      "side": 1,
+      "message": "clarified with tetsui@ offline, the original intention was that the functions CreateOrUpdateViews and UpdateControlButtonsVisibilityWithNotification make some changes dynamically based on state. Originally the constructor was less bloated. However now maybe it makes sense to factor things out into separate logical units based on what the comments are currently saying.\n\nAnyway tl;dr I think you can just leave a TODO here :)",
+      "parentUuid": "359a7af6_18c7353b",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 0
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266c47f0_cec853c3",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 1
@@ -172,6 +196,30 @@
       "side": 1,
       "message": "thanks for the clarification :)\n\nDo we have a standard for which one we tend to use? I have seen both.",
       "parentUuid": "0f1014c5_e4755a36",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493a0069_ada4b752",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-23T05:31:45Z",
+      "side": 1,
+      "message": "per offline discussion with tetsui@, maybe we should just comment here who the owner of this view is.",
+      "parentUuid": "4b238f3b_da289b7a",
       "range": {
         "startLine": 166,
         "startChar": 0,
