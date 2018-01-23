@@ -26,6 +26,8 @@
 
 struct PrintMsg_Print_Params;
 struct PrintMsg_PrintPages_Params;
+struct PrintMsg_PrintFrame_Params;
+struct PrintHostMsg_DidPrintContent_Params;
 struct PrintHostMsg_SetOptionsFromDocument_Params;
 
 // RenderViewTest-based tests crash on Android
@@ -187,6 +189,7 @@ class PrintRenderFrameHelper
   void OnPrintPreview(const base::DictionaryValue& settings);
   void OnClosePrintPreviewDialog();
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  void OnPrintFrameContent(const PrintMsg_PrintFrame_Params& params);
   void OnPrintingDone(bool success);
 
   // Get |page_size| and |content_area| information from
@@ -305,7 +308,7 @@ class PrintRenderFrameHelper
 
   bool CopyMetafileDataToReadOnlySharedMem(
       const PdfMetafileSkia& metafile,
-      base::SharedMemoryHandle* read_only_shared_mem_handle);
+      PrintHostMsg_DidPrintContent_Params* params);
 
   // Helper method to get page layout in points and fit to page if needed.
   static void ComputePageLayoutInPointsForCss(
