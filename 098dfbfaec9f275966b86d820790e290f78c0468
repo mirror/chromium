@@ -16,6 +16,24 @@
       "revId": "098dfbfaec9f275966b86d820790e290f78c0468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743a7637_8ab1648a",
+        "filename": "chrome/browser/extensions/content_capabilities_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-23T20:59:55Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the ultimate goal.  We will run a field trial with V2 before that but I don\u0027t think \"subframe invisibility\" part of the model would change.",
+      "parentUuid": "a4c127d6_8fd6030e",
+      "revId": "098dfbfaec9f275966b86d820790e290f78c0468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
