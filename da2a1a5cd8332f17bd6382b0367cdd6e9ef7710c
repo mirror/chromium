@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "272e19f7_9e1af567",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:26:12Z",
+      "side": 1,
+      "message": "You can get a frame by localDOMWindow-\u003eGetFrame(). Then get a corresponding RenderFrame. Then get AOMContentAXTree from the RenderFrame.",
+      "parentUuid": "fcdae3c6_b2779a24",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe8cef1a_89a3587c",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 14
