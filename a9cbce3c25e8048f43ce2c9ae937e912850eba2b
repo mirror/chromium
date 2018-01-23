@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5dc178bd_d613d53c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-23T01:17:22Z",
+      "side": 1,
+      "message": "You are right, however, as I\u0027m sure you know fixing *all flakes* everywhere is somewhere between a monumental task and flat out implausible. You need to be mindful of which battles you choose to fight and get the best bang for your buck.\n\nIn particular, there\u0027s some class of bugs that simply don\u0027t manifest themselves when you only run one chrome instance at a time, and when people use real Chrome, they don\u0027t run multiple chrome instances, so the bugs don\u0027t manifest in the wild, and chasing after them can end up being much lower priority.\n\nIf we were running a single content_shell per swarming bot, then we\u0027re also likely to only run on a 1-core or 2-core GCE instance, and simply run more swarming shards (rather than running N qemu\u0027s). Again, the overhead is greater, but it may be more stable as a result.\n\nAt any rate, I\u0027m not going to stop you from running things this way, just wanted to make sure you were duly warned.",
+      "parentUuid": "55a4eaaa_69c198bb",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2638913_3b035c31",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "ea37449d_a7f9fd26",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-23T01:17:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d8e2c71_cd2289c8",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57ba098a_e69dc9d2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/server_process.py",
         "patchSetId": 2
@@ -140,6 +176,24 @@
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4004b04_4f4bb327",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/server_process.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-23T01:17:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a68c8c12_4ab93684",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
