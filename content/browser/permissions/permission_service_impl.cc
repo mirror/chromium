@@ -116,11 +116,6 @@ PermissionServiceImpl::~PermissionServiceImpl() {
   if (!permission_manager)
     return;
 
-  // Cancel pending requests.
-  for (RequestsMap::Iterator<PendingRequest> it(&pending_requests_);
-       !it.IsAtEnd(); it.Advance()) {
-    permission_manager->CancelPermissionRequest(it.GetCurrentValue()->id());
-  }
   pending_requests_.Clear();
 }
 
