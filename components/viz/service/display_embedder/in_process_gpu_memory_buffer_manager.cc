@@ -48,4 +48,8 @@ void InProcessGpuMemoryBufferManager::DestroyGpuMemoryBuffer(
   channel_manager_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
 }
 
+int InProcessGpuMemoryBufferManager::InProcessClientId() const {
+  return client_id_;
+}
+
 }  // namespace viz

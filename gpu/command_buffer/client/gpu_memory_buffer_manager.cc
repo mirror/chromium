@@ -10,4 +10,8 @@ GpuMemoryBufferManager::GpuMemoryBufferManager() = default;
 
 GpuMemoryBufferManager::~GpuMemoryBufferManager() = default;
 
+int GpuMemoryBufferManager::InProcessClientId() const {
+  return 0;
+}
+
 }  // namespace gpu

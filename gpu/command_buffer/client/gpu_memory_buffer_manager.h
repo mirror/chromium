@@ -33,6 +33,9 @@ class GPU_EXPORT GpuMemoryBufferManager {
   // thread.
   virtual void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,
                                        const gpu::SyncToken& sync_token) = 0;
+
+  // Returns the client id for this manager. Only valid for in-process managers.
+  virtual int InProcessClientId() const;
 };
 
 }  // namespace gpu
