@@ -460,11 +460,24 @@ TestDownloadResponseHandler::HandleTestDownloadRequest(
   return TestDownloadHttpResponse::Create(request, callback);
 }
 
-TestDownloadResponseHandler::TestDownloadResponseHandler() = default;
-TestDownloadResponseHandler::~TestDownloadResponseHandler() = default;
+TestDownloadResponseHandler::TestDownloadResponseHandler()
+    : observer_(nullptr) {}
+
+TestDownloadResponseHandler::~TestDownloadResponseHandler() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
+
+void TestDownloadResponseHandler::SetObserver(Observer* observer) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!observer_) << "Already has an observer.";
+  DCHECK(observer) << "Please don't pass in nullptr.";
+  observer_ = observer;
+}
 
 void TestDownloadResponseHandler::RegisterToTestServer(
     net::test_server::EmbeddedTestServer* server) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   DCHECK(!server->Started())
       << "Register request handler before starting the server";
   server->RegisterRequestHandler(base::Bind(
@@ -475,7 +488,42 @@ void TestDownloadResponseHandler::RegisterToTestServer(
 
 void TestDownloadResponseHandler::OnRequestCompleted(
     std::unique_ptr<TestDownloadHttpResponse::CompletedRequest> request) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   completed_requests_.push_back(std::move(request));
+
+  if (observer_) {
+    observer_->OnRequestComplete(completed_requests_.back().get());
+  }
+}
+
+DownloadResponseObserver::DownloadResponseObserver(
+    TestDownloadResponseHandler* handler)
+    : handler_(handler), request_count_(0u) {
+  handler->SetObserver(this);
+}
+
+DownloadResponseObserver::~DownloadResponseObserver() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
+
+void DownloadResponseObserver::WaitUntilCompletion(size_t request_count) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  request_count_ = request_count;
+
+  if (run_loop_.running() ||
+      handler_->completed_requests().size() >= request_count_) {
+    return;
+  }
+
+  run_loop_.Run();
+}
+
+void DownloadResponseObserver::OnRequestComplete(
+    TestDownloadHttpResponse::CompletedRequest* completed_request) {
+  if (run_loop_.running() &&
+      handler_->completed_requests().size() >= request_count_) {
+    run_loop_.Quit();
+  }
 }
 
 }  // namespace content
