@@ -50,6 +50,7 @@ using GLImageTestTypes = testing::Types<
     GLImageSharedMemoryTestDelegate<gfx::BufferFormat::RGBX_8888>,
     GLImageSharedMemoryTestDelegate<gfx::BufferFormat::RGBA_8888>,
     GLImageSharedMemoryTestDelegate<gfx::BufferFormat::BGRX_8888>,
+    GLImageSharedMemoryTestDelegate<gfx::BufferFormat::BGRX_1010102>,
     GLImageSharedMemoryTestDelegate<gfx::BufferFormat::BGRA_8888>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageSharedMemory,
