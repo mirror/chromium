@@ -31,7 +31,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/WTFString.h"
-#include "third_party/WebKit/common/blob/blob_url_store.mojom-blink.h"
+#include "public/common/blob/blob_url_store.mojom-blink.h"
 
 namespace blink {
 

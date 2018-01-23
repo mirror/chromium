@@ -27,7 +27,7 @@
 
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
