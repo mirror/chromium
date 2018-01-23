@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0f9d423b_0521b04e",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-23T22:36:22Z",
+      "side": 1,
+      "message": "I actually tried using |device_scale_factor_2| and the test failed in the next EXPECT_CALL step.",
+      "parentUuid": "e77f7a60_85b7ccfe",
+      "range": {
+        "startLine": 699,
+        "startChar": 57,
+        "endLine": 699,
+        "endChar": 78
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2abd9ff_53cb331a",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "writtenOn": "2018-01-23T20:20:12Z",
       "side": 1,
       "message": "Not sure if this DCHECK is necessary. We\u0027ll just crash on the next line.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2694b542_ceaf2fd6",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-23T22:36:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure about that. I think null pointer dereference is an undefined behavior and it\u0027s safer to have the DCHECK.",
+      "parentUuid": "b2abd9ff_53cb331a",
       "range": {
         "startLine": 180,
         "startChar": 2,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "99873fc9_eeb4c94e",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-23T22:36:22Z",
+      "side": 1,
+      "message": "Right. Removed.",
+      "parentUuid": "cc236d17_d4e38133",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b4ea62_8d16a65a",
         "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
         "patchSetId": 6
@@ -130,6 +202,30 @@
       "writtenOn": "2018-01-23T20:20:12Z",
       "side": 1,
       "message": "Should we just use the Submit that DCHECKs?",
+      "range": {
+        "startLine": 1989,
+        "startChar": 0,
+        "endLine": 1993,
+        "endChar": 23
+      },
+      "revId": "6127f820820abbfdee49158645db29537b8350bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bd56f2_5bdfb968",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-23T22:36:22Z",
+      "side": 1,
+      "message": "It depends on what the intended behavior is. If it doesn\u0027t make sense for the test to continue when SubmitCompositorFrame() fails, then yes, we can just use the one that DCHECKs. WDYT?",
+      "parentUuid": "50b4ea62_8d16a65a",
       "range": {
         "startLine": 1989,
         "startChar": 0,
