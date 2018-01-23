@@ -128,6 +128,30 @@
       "revId": "20aa99dc319078db1e9ed5504c2e0b1d0a6c9e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70bebcc_fa5ed234",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/webcontents/AccessibilitySnapshotTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T04:26:06Z",
+      "side": 1,
+      "message": "\u003e I cannot understand what you mean by \"the other one\" and \"all the things\".\n\u003e Do you mean tests in this file or places calling APIs like AXLayoutObject::FontSize()?\n\u003e In terms of other tests in this file, I think we do not need to think of it now.\n\u003e The font size is calculated a bit different from other values\n\u003e (i.e., it has both specified font size that is in CSS pixel scale and computed font size that is in physical pixel scale while other values like the length DIV must be only one value in CSS pixel scale or physical pixel scale depending on enabling/disabling --use-zoom-for-dsf).\n\u003e \n\u003e Could you explain your question in detail?\n\nI mean this looks like a change to behavior in production. Does anything in production actually depend on this behavior that should be fixed instead of updating the test?",
+      "parentUuid": "750fde6e_33ca961e",
+      "range": {
+        "startLine": 139,
+        "startChar": 38,
+        "endLine": 139,
+        "endChar": 52
+      },
+      "revId": "20aa99dc319078db1e9ed5504c2e0b1d0a6c9e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
