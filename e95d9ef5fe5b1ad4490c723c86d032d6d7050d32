@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1501a30_73897ac9",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T16:39:53Z",
+      "side": 1,
+      "message": "This seems like a good time to factor out common code into a helper.\n\nauto run_rtl_test \u003d [](const char* name, const char* expected) {\n  SCOPED_TRACE(\n      base::StringPrintf(\"Name: %s, Expected: %s\", name, expected));\n  DictionaryBuilder manifest;\n  manifest1.Set(\"name\", name)\n      .Set(\"manifest_version\", 2)\n      .Set(\"description\", \"some description\")\n      .Set(\"version\", \"0.1\");  // \u003cNOTE\u003e Moved this here to avoid the MergeManifest call.\n  scoped_refptr\u003cconst Extension\u003e extension \u003d\n      ExtensionBuilder()\n          .SetManifest(manifest.Build())\n          .Build();\n  ASSERT_TRUE(extension);\n  const int kResourceId \u003d IDS_EXTENSION_PERMISSIONS_PROMPT_TITLE;\n  base::string16 expected_utf16 \u003d base::ASCIIToUTF16(expected);\n  EXPECT_EQ(\n      l10n_util::GetStringFUTF16(kResourceId, expected),\n      l10n_util::GetStringFUTF16(kResourceId, base::UTF8ToUTF16(extension-\u003ename())));\n  EXPECT_EQ(expected, extension-\u003ename());\n};\n\nrun_rtl_test(\"\\u202emoc.elgoog\", \"\\u202emoc.elgoog\\u202c\");\nrun_rtl_test(...)\n...\n}",
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
