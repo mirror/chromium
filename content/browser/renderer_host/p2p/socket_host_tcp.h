@@ -20,6 +20,10 @@
 #include "net/base/ip_endpoint.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
+namespace network {
+class ProxyResolvingClientSocketFactory;
+}  // namespace network
+
 namespace net {
 class DrainableIOBuffer;
 class GrowableIOBuffer;
@@ -105,6 +109,11 @@ class CONTENT_EXPORT P2PSocketHostTcpBase : public P2PSocketHost {
   bool DoSendSocketCreateMsg();
 
   P2PHostAndIPEndPoint remote_address_;
+
+  // TODO(xunjieli): Note that this factory class creates a network session,
+  // which can be expensive. This should not be created on a per-socket basis.
+  std::unique_ptr<network::ProxyResolvingClientSocketFactory>
+      proxy_resolving_socket_factory_;
 
   std::unique_ptr<net::StreamSocket> socket_;
   scoped_refptr<net::GrowableIOBuffer> read_buffer_;
