@@ -34,6 +34,24 @@
       "revId": "0ad11d849849768c745d20649e64957d39b8052b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ca9c5b_c27805d0",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-23T15:16:26Z",
+      "side": 1,
+      "message": "Yes lets remove it then. If we see too many oom/timeout (on fuzzer stats https://clusterfuzz.com/v2/fuzzer-stats), then you can put it back.",
+      "parentUuid": "07b7912f_e21a8878",
+      "revId": "0ad11d849849768c745d20649e64957d39b8052b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
