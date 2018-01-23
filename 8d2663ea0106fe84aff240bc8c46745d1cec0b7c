@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e66b279_d3a0f10e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-23T18:04:04Z",
+      "side": 1,
+      "message": "missing newline?\n\nalso please verify that the entire message has proper line lengths.  it\u0027s wrapping oddly in my gerrit window, and i don\u0027t know if it\u0027s my gerrit config or the commit message that\u0027s broken.",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "8d2663ea0106fe84aff240bc8c46745d1cec0b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
