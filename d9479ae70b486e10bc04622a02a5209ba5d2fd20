@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6707ca66_15f38784",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-23T12:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12190998_367b7be3",
+      "range": {
+        "startLine": 1562,
+        "startChar": 7,
+        "endLine": 1562,
+        "endChar": 19
+      },
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6842d6a0_31a8ead2",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 54
@@ -39,6 +63,24 @@
       "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578dfa03_776413a8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-23T12:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6842d6a0_31a8ead2",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7ac2ace9_ff92ead9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 4532,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-23T12:36:01Z",
+      "side": 1,
+      "message": "UpdateStateForCommit would require having a content_initiated and a global_reuse_policy that do not really make sense for the other case. This would also reintroduce all the if cases that we tried to avoid. One thing I could do would also be to pass the state around to avoid repeating the getter succession, but not sure this would improve anything. I could add a function DidCommitNavigationInternal that does the update + the navigation call, to avoid the last duplication there.",
+      "parentUuid": "fd508684_4dc3c876",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb4b64c_f5b80e01",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 54
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "02323baf_16830123",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-23T12:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb4b64c_f5b80e01",
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c1422b2_c4901d2c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 54
@@ -87,6 +165,30 @@
       "writtenOn": "2018-01-18T14:11:08Z",
       "side": 1,
       "message": "Thanks!",
+      "range": {
+        "startLine": 2895,
+        "startChar": 26,
+        "endLine": 2895,
+        "endChar": 69
+      },
+      "revId": "d9479ae70b486e10bc04622a02a5209ba5d2fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da46bf5d_389ae5b3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 54
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-23T12:36:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c1422b2_c4901d2c",
       "range": {
         "startLine": 2895,
         "startChar": 26,
