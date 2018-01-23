@@ -816,6 +816,10 @@
       name: "PictureInPicture",
     },
     {
+      name: "PictureInPictureAPI",
+      status: "test",
+    },
+    {
       name: "PreciseMemoryInfo",
     },
     {
