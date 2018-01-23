@@ -314,7 +314,7 @@ void URLLoaderClientImpl::OnStartLoadingResponseBody(
     return;
   }
 
-  body_consumer_->OnReadable(MOJO_RESULT_OK);
+  body_consumer_->OnReadable();
 }
 
 void URLLoaderClientImpl::OnComplete(

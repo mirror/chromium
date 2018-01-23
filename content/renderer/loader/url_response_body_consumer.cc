@@ -54,7 +54,8 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
       has_seen_end_of_data_(!handle_.is_valid()) {
   handle_watcher_.Watch(
       handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
-      base::Bind(&URLResponseBodyConsumer::OnReadable, base::Unretained(this)));
+      base::BindRepeating(&URLResponseBodyConsumer::OnReadableInternal,
+                          base::Unretained(this)));
 }
 
 URLResponseBodyConsumer::~URLResponseBodyConsumer() {}
@@ -79,13 +80,7 @@ void URLResponseBodyConsumer::SetDefersLoading() {
 
 void URLResponseBodyConsumer::UnsetDefersLoading() {
   is_deferred_ = false;
-  OnReadable(MOJO_RESULT_OK);
-}
-
-void URLResponseBodyConsumer::ArmOrNotify() {
-  if (has_been_cancelled_)
-    return;
-  handle_watcher_.ArmOrNotify();
+  OnReadable();
 }
 
 void URLResponseBodyConsumer::Reclaim(uint32_t size) {
@@ -95,10 +90,18 @@ void URLResponseBodyConsumer::Reclaim(uint32_t size) {
   if (is_in_on_readable_)
     return;
 
-  handle_watcher_.ArmOrNotify();
+  ArmOrNotify();
 }
 
-void URLResponseBodyConsumer::OnReadable(MojoResult unused) {
+void URLResponseBodyConsumer::OnReadable() {
+  ++num_pending_calls_;
+  OnReadableInternal(MOJO_RESULT_OK);
+}
+
+void URLResponseBodyConsumer::OnReadableInternal(MojoResult unused) {
+  DCHECK_GT(num_pending_calls_, 0);
+  --num_pending_calls_;
+
   if (has_been_cancelled_ || has_seen_end_of_data_ || is_deferred_)
     return;
 
@@ -115,7 +118,7 @@ void URLResponseBodyConsumer::OnReadable(MojoResult unused) {
     MojoResult result =
         handle_->BeginReadData(&buffer, &available, MOJO_READ_DATA_FLAG_NONE);
     if (result == MOJO_RESULT_SHOULD_WAIT) {
-      handle_watcher_.ArmOrNotify();
+      ArmOrNotify();
       return;
     }
     if (result == MOJO_RESULT_BUSY)
@@ -133,6 +136,17 @@ void URLResponseBodyConsumer::OnReadable(MojoResult unused) {
       return;
     }
     DCHECK_LE(num_bytes_consumed, kMaxNumConsumedBytesInTask);
+    if (num_pending_calls_ == 0) {
+      int repeat =
+          available == 0 ? 0 : (available - 1) / kMaxNumConsumedBytesInTask;
+      for (int i = 0; i < repeat; ++i) {
+        ++num_pending_calls_;
+        task_runner_->PostTask(
+            FROM_HERE,
+            base::BindOnce(&URLResponseBodyConsumer::OnReadableInternal,
+                           AsWeakPtr(), MOJO_RESULT_OK));
+      }
+    }
     available =
         std::min(available, kMaxNumConsumedBytesInTask - num_bytes_consumed);
     if (available == 0) {
@@ -140,7 +154,7 @@ void URLResponseBodyConsumer::OnReadable(MojoResult unused) {
       // to the next task.
       result = handle_->EndReadData(0);
       DCHECK_EQ(result, MOJO_RESULT_OK);
-      handle_watcher_.ArmOrNotify();
+      ArmOrNotify();
       return;
     }
     num_bytes_consumed += available;
@@ -159,6 +173,15 @@ void URLResponseBodyConsumer::OnReadable(MojoResult unused) {
 
     request_info->peer->OnReceivedData(std::make_unique<ReceivedData>(
         static_cast<const char*>(buffer), available, this));
+  }
+}
+
+void URLResponseBodyConsumer::ArmOrNotify() {
+  if (has_been_cancelled_)
+    return;
+  if (num_pending_calls_ == 0) {
+    ++num_pending_calls_;
+    handle_watcher_.ArmOrNotify();
   }
 }
 
