@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ac5d58_ab0de3f0",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationAbsoluteController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T01:47:17Z",
+      "side": 1,
+      "message": "Maybe would it be tidier to merge LogToConsolePolicyFeaturesDisabled into CheckPolicyFeatures?\n\ni.e., you can write the code like this:\n\nif (!CheckFeaturePolicies(frame, ...))  // This adds a console message if necessary.\n  return;",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
