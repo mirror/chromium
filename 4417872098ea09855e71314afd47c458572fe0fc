@@ -16,6 +16,24 @@
       "revId": "4417872098ea09855e71314afd47c458572fe0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3de73df_e8476b80",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-23T23:50:24Z",
+      "side": 1,
+      "message": "Oh yeah... I looked for that opportunity, but somehow I missed it. \n\nThanks !\n\nRe: alphabeticizing in terms of the destination letters: I thought about that, too, when making a cl for crbug.com/793628 . I didn\u0027t do that because I was scanning the Unicode code chart for source characters that look like ASCII Latin. Now that I\u0027m done with that (I hope), it may be time to do that. \n\nArgh, I grouped 4-5 destination letters in the current order when making test domains and unit test entries. If I change the order here, I\u0027d better change the order in unit test as well. That I can do.  Then, I realized that the source code order makes it easy to separate Latin from non-Latin.  Well, it\u0027s not a big deal, but I\u0027ll just leave it alone....",
+      "parentUuid": "77a28feb_8aa0df22",
+      "revId": "4417872098ea09855e71314afd47c458572fe0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
