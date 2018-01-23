@@ -814,12 +814,10 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
         return;
       }
 
-      // Note: this assumes that client ID is always 0.
-      const int kClientId = 0;
-
       scoped_refptr<gl::GLImage> image =
           image_factory_->CreateImageForGpuMemoryBuffer(
-              handle, size, format, internalformat, kClientId,
+              handle, size, format, internalformat,
+              gpu_memory_buffer_manager_->InProcessClientId(),
               kNullSurfaceHandle);
       if (!image.get()) {
         LOG(ERROR) << "Failed to create image for buffer.";

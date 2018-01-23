@@ -29,6 +29,7 @@ class InProcessGpuMemoryBufferManager : public gpu::GpuMemoryBufferManager {
       gpu::SurfaceHandle surface_handle) override;
   void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,
                                const gpu::SyncToken& sync_token) override;
+  int InProcessClientId() const override;
 
  private:
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
