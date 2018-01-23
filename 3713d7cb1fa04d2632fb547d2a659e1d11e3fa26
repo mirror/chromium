@@ -16,6 +16,24 @@
       "revId": "3713d7cb1fa04d2632fb547d2a659e1d11e3fa26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e61c749_398f3815",
+        "filename": "ios/chrome/browser/ui/fullscreen/animated_scoped_fullscreen_disabler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-23T02:31:20Z",
+      "side": 1,
+      "message": "Also, instead of an arbitrary constant, can we use one of the values in material_timing.h?  ios::material::kDuration1 is probably the best option here (that\u0027s the value used in the scroll end adjustment animation).",
+      "parentUuid": "03c89bc7_2bda0764",
+      "revId": "3713d7cb1fa04d2632fb547d2a659e1d11e3fa26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
