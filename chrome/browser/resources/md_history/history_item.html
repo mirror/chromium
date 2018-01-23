@@ -228,14 +228,15 @@
         <div id="star-container">
           <template is="dom-if" if="[[item.starred]]" notify-dom-change>
             <button is="paper-icon-button-light" id="bookmark-star"
-                title="$i18n{removeBookmark}" on-click="onRemoveBookmarkTap_">
+                title="$i18n{removeBookmark}" on-click="onRemoveBookmarkTap_"
+                aria-label="$i18n{removeBookmark}">
               <iron-icon icon="cr:star"></iron-icon>
             </button>
           </template>
         </div>
         <button is="paper-icon-button-light" id="menu-button"
             class="more-vert-button" title="$i18n{moreActionsButton}"
-            on-click="onMenuButtonTap_">
+            aria-label="$i18n{moreActionsButton}" on-click="onMenuButtonTap_">
           <div></div>
           <div></div>
           <div></div>
