@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae6bcce2_0c2c60c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-23T22:53:02Z",
+      "side": 1,
+      "message": "Why not do it from UpdateLayout(), like we do for normal LayoutBlock objects? It seems bad to leave them \"unlayouted\" after containing block layout, if that\u0027s something we can avoid.",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb6ed44_2a13999c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 5617,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-23T22:53:02Z",
+      "side": 1,
+      "message": "Would it be possible for TableBoxComponent to just establish a layout state instead? I think that should cause this code to become unreachable.",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159c74a6_9dc45979",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-23T22:53:02Z",
+      "side": 1,
+      "message": "Why skip table parts here?",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c67f66_3f6ccd3f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-23T22:53:02Z",
+      "side": 1,
+      "message": "Looks like you can remove this override altogether. The implementation in LayoutBlock already seems capable enough.",
+      "revId": "448ba7f987457b6211e234ab66f372f443a7ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
