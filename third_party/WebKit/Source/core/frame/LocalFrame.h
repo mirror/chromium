@@ -67,7 +67,6 @@ class InspectorTraceEvents;
 class CoreProbeSink;
 class IdlenessDetector;
 class InterfaceRegistry;
-class IntPoint;
 class IntSize;
 class LayoutView;
 class LocalDOMWindow;
@@ -208,10 +207,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
   String SelectedTextForClipboard() const;
 
   PositionWithAffinityTemplate<EditingAlgorithm<NodeTraversal>>
-  PositionForPoint(const LayoutPoint& frame_point);
+  PositionForPoint(const LayoutPoint& frame_point) const;
   Document* DocumentAtPoint(const LayoutPoint&);
-  EphemeralRangeTemplate<EditingAlgorithm<NodeTraversal>> RangeForPoint(
-      const IntPoint& frame_point);
 
   bool ShouldReuseDefaultView(const KURL&) const;
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
