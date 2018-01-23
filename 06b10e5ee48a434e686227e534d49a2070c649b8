@@ -117,6 +117,30 @@
       "revId": "06b10e5ee48a434e686227e534d49a2070c649b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cbf986_d963ba49",
+        "filename": "ash/public/cpp/app_list/app_list_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-23T23:22:00Z",
+      "side": 1,
+      "message": "Got it. No problem I\u0027ll change this now.",
+      "parentUuid": "90202416_5e93db0c",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "06b10e5ee48a434e686227e534d49a2070c649b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
