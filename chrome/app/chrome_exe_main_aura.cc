@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "build/build_config.h"
+#include "base/logging.h"
 
 // The entry point for all invocations of Chromium, browser and renderer. On
 // windows, this does nothing but load chrome.dll and invoke its entry point in
@@ -14,5 +15,6 @@ int ChromeMain(int argc, const char** argv);
 }
 
 int main(int argc, const char** argv) {
+  LOG(ERROR) << "Hello chrome_exe_main_erua!!!";
   return ChromeMain(argc, argv);
 }
