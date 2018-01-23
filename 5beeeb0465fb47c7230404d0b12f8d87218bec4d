@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a814a9_e21e1293",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T19:53:18Z",
+      "side": 1,
+      "message": "Early-returns in a test makes things a little tricky because it\u0027s not clear whether the rest of the test is ever run at all. Can you update the test so drag_controller() is never null, and ASSERT_TRUE() here on that?",
+      "revId": "5beeeb0465fb47c7230404d0b12f8d87218bec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
