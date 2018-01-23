@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70806df2_8e1a5d34",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-01-23T04:55:22Z",
+      "side": 1,
+      "message": "These are intentional for inserting newlines there without breaking the paragraph.",
+      "parentUuid": "186c0089_b08d4fc6",
+      "range": {
+        "startLine": 241,
+        "startChar": 77,
+        "endLine": 241,
+        "endChar": 79
+      },
+      "revId": "6d91ee5582069cc3482de5b083f2b7fe806749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10fc6b9a_09a696cc",
         "filename": "third_party/WebKit/Source/core/animation/README.md",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "6d91ee5582069cc3482de5b083f2b7fe806749a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0eaaf65_5431ce16",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-01-23T04:55:22Z",
+      "side": 1,
+      "message": "Added words to state that there are 5 interpolations in total.",
+      "parentUuid": "10fc6b9a_09a696cc",
+      "revId": "6d91ee5582069cc3482de5b083f2b7fe806749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "6d91ee5582069cc3482de5b083f2b7fe806749a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f93601_2be5f454",
+        "filename": "third_party/WebKit/Source/core/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-01-23T04:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2496c7_ec5f605c",
+      "range": {
+        "startLine": 309,
+        "startChar": 38,
+        "endLine": 309,
+        "endChar": 58
+      },
+      "revId": "6d91ee5582069cc3482de5b083f2b7fe806749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
