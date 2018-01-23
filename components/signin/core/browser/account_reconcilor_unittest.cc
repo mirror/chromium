@@ -25,6 +25,7 @@
 #include "components/signin/core/browser/mirror_account_reconcilor_delegate.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/reconcilor_delegate_helper.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_features.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -151,7 +152,8 @@ class DummyAccountReconcilorWithDelegate : public AccountReconcilor {
     switch (account_consistency) {
       case signin::AccountConsistencyMethod::kMirror:
         return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
-            signin_manager);
+            signin_manager, std::make_unique<ReconcilorDelegateHelper>(),
+            false /* is_child_account */);
       case signin::AccountConsistencyMethod::kDisabled:
       case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
         return std::make_unique<signin::AccountReconcilorDelegate>();
