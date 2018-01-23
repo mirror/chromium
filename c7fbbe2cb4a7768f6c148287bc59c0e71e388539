@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e7351c16_1828bd95",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-23T10:12:52Z",
+      "side": 1,
+      "message": "In this case, could you please do one of the two:\n1. pass everything necessary as parameters to init, \nOR (if 1 is impossible or infeasible)\n2. add relevant DCHECKs in setUp implementations and update setUp comment to say what is supposed to be done before setUp is called?",
+      "parentUuid": "9e9b1e18_2ff1db53",
+      "revId": "c7fbbe2cb4a7768f6c148287bc59c0e71e388539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6213117c_cbe34c7e",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
         "patchSetId": 3
