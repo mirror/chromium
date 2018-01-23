@@ -1349,6 +1349,16 @@ hooks = [
     ],
   },
 
+  {
+    'name': 'ChromeOS CIPD Ensure',
+    'pattern': '.',
+    'condition': 'checkout_chromeos',
+    'action': ['src/build/cipd/cipd_wrapper.py',
+               '--chromium-root', 'src',
+               '--ensure-file', 'src/build/cipd/chromeos/chromeos.ensure',
+    ],
+  },
+
   # Download and initialize "vpython" VirtualEnv environment packages.
   {
     'name': 'vpython_common',
