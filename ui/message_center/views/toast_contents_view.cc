@@ -94,7 +94,7 @@ void ToastContentsView::SetContents(MessageView* view,
   // The notification type should be ALERT, otherwise the accessibility message
   // won't be read for this view which returns ROLE_WINDOW.
   if (already_has_contents && a11y_feedback_for_updates)
-    NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
+    NotifyAccessibilityEvent(ax::mojom::Event::ALERT, false);
 }
 
 void ToastContentsView::UpdateContents(const Notification& notification,
@@ -104,7 +104,7 @@ void ToastContentsView::UpdateContents(const Notification& notification,
   message_view->UpdateWithNotification(notification);
   UpdatePreferredSize();
   if (a11y_feedback_for_updates)
-    NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
+    NotifyAccessibilityEvent(ax::mojom::Event::ALERT, false);
 }
 
 void ToastContentsView::RevealWithAnimation(gfx::Point origin) {
@@ -332,7 +332,7 @@ void ToastContentsView::UpdatePreferredSize() {
 void ToastContentsView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (child_count() > 0)
     child_at(0)->GetAccessibleNodeData(node_data);
-  node_data->role = ui::AX_ROLE_WINDOW;
+  node_data->role = ax::mojom::Role::WINDOW;
 }
 
 const char* ToastContentsView::GetClassName() const {
