@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04760764_486a41ac",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "nit: Something like the following would probably be more exact:\n\"If a profile guid is specified, get a copy of the profile identified by the guid.\"",
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0c7e84_3764a2cd",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "OPTIONAL: wdyt about something like (I think it\u0027s slightly easier to follow, but up to you):\n\nconst bool use_existing_profile \u003d !guid.empty();\nconst autofill::AutofillProfile* existing_profile \u003d nullptr;\nif (use_existing_profile) {\n  existing_profile \u003d personal_data-\u003eGetProfileByGUID(guid);\n  if (!existing_profile)\n    return RespondNow(Error(kErrorDataUnavailable));\n}\n\nautofill::AutofillProfile profile \u003d existing_profile ?\n          *existing_profile :\n          profile::AutofillProfile(base::GenerateGUID(), kSettingsOrigin);",
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebbf3ce_50bc3b63",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "How about this (similar for other tests):\n\n    function filterAddressProperties(addresses) {\n      return addresses.map(address \u003d\u003e {\n        var filteredAddress \u003d {};\n        [\u0027fullNames\u0027,\n         \u0027addressLevel1\u0027,\n         \u0027addressLevel2\u0027,\n         \u0027postalCode\u0027,\n         \u0027sortingCode\u0027,\n         \u0027phoneNumbers\u0027,\n         \u0027emailAddresses\u0027].forEach(property \u003d\u003e {\n          filteredAddress[property] \u003d address[property];\n        });\n        return filteredAddress;\n      });\n    }\n\n\nchrome.test.listenOnce(\n    chrome.autofillPrivate.onAddressListChanged,\n    chrome.test.callbackPass(function(addressList) {\n      chrome.test.assertEq([{\n        fullNames: [NAME],\n        addressLevel1: ADDRESS_LEVEL1,\n        addressLevel2: ADDRESS_LEVEL2,\n        postalCode: POSTAL_CODE,\n        sortingCode: SORTING_CODE,\n        phoneNumbers: [PHONE],\n        emailAddresses: [EMAIL]\n      }], filterAddressproperties(addressList));\n    });\n\n\nchrome.autofillPrivate.getAddressList(\n     chrome.test.callbackPass(function(addressList) {\n       chrome.test.assertEq([], addressList);\n       chrome.autofillPrivate.saveAddress({....});\n}));",
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89222553_756e0421",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "similar to before, can you inline the functions here, it makes the tests easier to follow.",
+      "range": {
+        "startLine": 153,
+        "startChar": 42,
+        "endLine": 153,
+        "endChar": 49
+      },
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b28d9ac_8e4817fe",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "you could probably just run addNewAddress test before this to set up appropriate state - though that would require some refactoring here (primarily, the tests as written allow only a single test function per test; see my comments bellow).",
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7ceb5d_2fe4828d",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "single quotes in JS\n\n(can you run git cl format --js)",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 39
+      },
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2db38e_442d2f20",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T01:38:08Z",
+      "side": 1,
+      "message": "I\u0027d consider grouping add and update tests together. For example for addresses, let the test runner pass \u0027setAddresses\u0027.\n\nyou could have something like this here:\n\n/** @const */\nvar TESTS_FOR_CONFIG \u003d {\n  \u0027setAddresses\u0027: [\u0027addNewAddress\u0027, \u0027updateExistingAddress\u0027],\n  \u0027setCreditCard\u0027: [\u0027addNewCreditCard\u0027, \u0027updateExistingCreditCard\u0027]\n};\n\nvar testConfig \u003d window.location.search.substring(1);\nvar testsToRun \u003d TESTS_FOR_CONFIG[testConfig] || [testConfig];\nchrome.test.runTests(availableTests.filter(function (op) {\n  return testToRun.includes(op.name);\n}));",
+      "revId": "9bc9c5e776677f398327316395a53dcd65ec12b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
