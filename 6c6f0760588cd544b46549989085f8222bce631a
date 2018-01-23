@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d9243a4_d5a9bdc2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webmessaging/MessageEvent.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-23T05:29:18Z",
+      "side": 1,
+      "message": "Can you give this test a title? Maybe \"initMessageEvent with no arguments\"?",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "6c6f0760588cd544b46549989085f8222bce631a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
