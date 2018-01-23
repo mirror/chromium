@@ -46,6 +46,30 @@
       "revId": "dc80053e6d650882b949e097f3e25623c7504020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9e9258_cb682903",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 1,
+      "message": "Thanks for the heads up! Left a comment on the other one that we should probably just accept the hit, but only when a command-line flag file exists in the first place.\n\nWe should also try and warm up shared prefs earlier.",
+      "parentUuid": "3a697ce2_4b122bc6",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "dc80053e6d650882b949e097f3e25623c7504020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

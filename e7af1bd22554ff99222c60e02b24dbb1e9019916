@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2de65e2_c4a430bb",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 1,
+      "message": "Looks like no: http://errorprone.info/bugpatterns\n\nAdded a note about ReflectiveOperationException",
+      "parentUuid": "3ede6b32_fe88d60c",
+      "range": {
+        "startLine": 163,
+        "startChar": 17,
+        "endLine": 163,
+        "endChar": 26
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "645e27fe_2fd9d66d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "93428198_458e00b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 1,
+      "message": "All child processes have their command-lines passed via IPC:\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/process_launcher/ChildProcessServiceImpl.java?rcl\u003dcf003ede2455374930c094b425ba81d5bfe0763e\u0026l\u003d181\n\nThat will make this init redundant for GPU process... hmm...\n\nA quick audit of all processes:\n\nandroid:process\u003d\":sandboxed_process##\"\nandroid:process\u003d\":privileged_process#\"\nandroid:process\u003d\":decoder_service\" (isolated)\nandroid:process\u003d\":browser_restart_process\"\nandroid:process\u003d\":variations_service\" (webview-related, no flags)\nandroid:process\u003d\":crash_receiver_service\" (webview-related, flags)\n\nOf these, the first two get command-lines IPC\u0027ed to them.\nThe next 3 don\u0027t initialize the command-line (looks like they don\u0027t need them).\nThe last one manually initializes command-line.\n\nSo... based on all of this, I\u0027m thinking it\u0027s better to initialize in the content provider (with comments), or add a \"isBrowserProcess()\" here (via checking for : in name)",
+      "parentUuid": "645e27fe_2fd9d66d",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ea30795_690f4573",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-01T22:31:42Z",
       "side": 1,
       "message": "separate change: move all of this to attachBaseContext?",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "e7af1bd22554ff99222c60e02b24dbb1e9019916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfec6df_efb3d095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 1,
+      "message": "Added a TODO",
+      "parentUuid": "3ea30795_690f4573",
       "range": {
         "startLine": 70,
         "startChar": 17,

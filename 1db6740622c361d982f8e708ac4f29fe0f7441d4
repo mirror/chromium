@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a1747e6_c54e7922",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 0,
+      "message": "Thought it was strange since it logs it even when the file doesn\u0027t exit, yet doesn\u0027t log the /data/local/tmp one when it doesn\u0027t exist but would have been used.\n\nPut back a log.",
+      "parentUuid": "10959922_b3ecb846",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 67
+      },
+      "revId": "1db6740622c361d982f8e708ac4f29fe0f7441d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b6966a0_83aaca30",
         "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T22:31:42Z",
       "side": 0,
       "message": "waht\u0027s the origin of the \"catch\"? can it safely be removed?",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "1db6740622c361d982f8e708ac4f29fe0f7441d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e945232_7e88f515",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T16:56:16Z",
+      "side": 0,
+      "message": "I realized after I left that I should have explained what happened here.\n\nIt looks like this try/catch was here before because using a ContentResolver from a renderer throws a SecurityException. The bug I introduced with my previous change, is that context.getApplicationContext() returns null until after attachBaseContext(), so this was throwing (and catching) a NullPointerException.\n\nI\u0027ve added a note about this to attachBaseContext, and that\u0027s also why I\u0027ve added the if isIsolatedProcess() check. I don\u0027t think we should be even bothering to call this from renderers, since they get their flags given to them via IPC, so I\u0027ve removed the try/catch so that we\u0027ll notice if a renderer tries to call this.",
+      "parentUuid": "7b6966a0_83aaca30",
       "range": {
         "startLine": 84,
         "startChar": 17,
