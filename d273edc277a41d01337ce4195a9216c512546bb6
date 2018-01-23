@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1e7d8c1_2441f631",
+        "filename": "chrome/browser/vr/elements/omnibox_formatting_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T16:19:55Z",
+      "side": 1,
+      "message": "Mike, note that I\u0027m intentionally keeping the reference strings here, rather than using a length - this is purely for visual convenience.",
+      "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b444707_312ba394",
+        "filename": "ui/gfx/render_text_test_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-23T16:19:55Z",
+      "side": 1,
+      "message": "A comment on the fade elision CL requested a NOTREACHED in a base class to cover the non-harfbuzz case.  There\u0027s a preexisting method without this protection that we should also fix.  However, there\u0027s no base class, unless we further split this class into a RenderTextTestApi and RenderTextApiHarfbuzz, which creates pain for clients.  I don\u0027t see a way to ask a RenderText instance whether it\u0027s a harfbuzz instance...  that feels like the ideal solution here.  Thoughts?",
+      "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
