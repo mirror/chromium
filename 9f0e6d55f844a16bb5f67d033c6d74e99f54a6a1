@@ -34,6 +34,24 @@
       "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75464111_e959c279",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2018-01-23T07:20:45Z",
+      "side": 0,
+      "message": "I suppose it\u0027s redundant strictly speaking. I just think it\u0027s a very clear message about what\u0027s happening. And for the local build case, this message is the easiest way to see what revision we\u0027re getting.\n\nSorry for the fuzzy motivation :-/",
+      "parentUuid": "e33ef5b7_0622a5b2",
+      "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
