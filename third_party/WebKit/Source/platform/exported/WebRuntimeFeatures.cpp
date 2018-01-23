@@ -498,4 +498,8 @@ void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
   RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableUnifiedTouchAdjustment(bool enable) {
+  RuntimeEnabledFeatures::SetUnifiedTouchAdjustmentEnabled(enable);
+}
+
 }  // namespace blink
