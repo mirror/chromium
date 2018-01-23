@@ -25,7 +25,7 @@ class ImageResourceObserver;
 // Represents a javascript class registered on the PaintWorkletGlobalScope by
 // the author. It will store the properties for invalidation and input argument
 // types as well.
-class CSSPaintDefinition final
+class MODULES_EXPORT CSSPaintDefinition final
     : public GarbageCollectedFinalized<CSSPaintDefinition>,
       public TraceWrapperBase {
  public:
