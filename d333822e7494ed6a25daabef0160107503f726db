@@ -16,6 +16,24 @@
       "revId": "d333822e7494ed6a25daabef0160107503f726db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eff2f07_2b73fd55",
+        "filename": "third_party/WebKit/Source/platform/bindings/ActiveScriptWrappableBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-23T12:40:47Z",
+      "side": 1,
+      "message": "Ideally, we would call visitor-\u003eTraceWrappers(script_wrappable) here, but that method requires \nTraceWrapperMember\u003cT\u003e:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h?rcl\u003dcf48309c13aa0e5f6dc67fab55e5745377348556\u0026l\u003d70\n\nSince we don\u0027t have a TraceWrapperMember, but getting the script-wrappable from ActiveScriptWrappables, we have to use the other method.",
+      "parentUuid": "604b3972_52dd7750",
+      "revId": "d333822e7494ed6a25daabef0160107503f726db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
