@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604b3972_52dd7750",
+        "filename": "third_party/WebKit/Source/platform/bindings/ActiveScriptWrappableBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T12:35:39Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t fully understand this comment. What happens if we use TraceWrappers?",
+      "revId": "d333822e7494ed6a25daabef0160107503f726db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
