@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca3b1680_d61547cf",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "Sorry for not noticing this in earlier CLs, but the weak ptr factory is unneeded here. Mojo guarantees that method callbacks will not be invoked after the InterfacePtr goes out of scope--and since this class owns the InterfacePtrs it uses to make the call, base::Unretained() is sufficient (with a brief comment // base::Unretained is safe because InterfacePtr is owned by |this|)",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb20b46_f713a4e0",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "Maybe create a constant for this, since we use it in two places (that way, the header file can also note that there\u0027s a special sentinel value for documents)",
+      "range": {
+        "startLine": 108,
+        "startChar": 44,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3e6185_4eec28af",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "I guess we return if nothing is erased, because that means this frame\u0027s content wasn\u0027t needed and should be discarded? If that\u0027s the case, then is it desirable to insert into frame_info_map_? A small comment here might help.",
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20442302_071fa690",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "Since it seems we only use the flat_set in here, would it be possible for this function to just create the local instead? That way, it doesn\u0027t require making sure the set is clear.",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3df79c_5c679775",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "We could consider inlining request_\u0027s members in a followup, since each service instance only has one request now.",
+      "revId": "26c2217752998600ba88feb05c1dc197184db90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

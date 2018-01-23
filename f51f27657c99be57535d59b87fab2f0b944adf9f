@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ea7a42e6_7325c760",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "unordered_map does support move, but I\u0027m pretty sure that since subframe_content_map just maps uint32 to uint64, the generated signature for mojom::PdfCompositor::CompositePageToPdf takes a const reference to the map (so there is no move happening).\n\nAlso, for many types, writing the data to the wire doesn\u0027t actually require copying, so consistently passing by const reference results in slightly better codegen.",
+      "parentUuid": "e914d600_0c74e890",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e667e6_ab542ffb",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 46
@@ -242,6 +266,24 @@
       "side": 1,
       "message": "The problem is that browser side may be changed ahead of renderer side, which may cause the status no longer in sync. The renderer side carries cookie to let us know which request this rendered result corresponds to. Even if the cookie value is tampered, it either points to nothing or the content in the same page or doc they already have access to.",
       "parentUuid": "1c9eaee4_bd3cf7c5",
+      "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63e6e0af_0e39781b",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T12:02:40Z",
+      "side": 1,
+      "message": "I would kind of like this to be an UnguessableToken for consistency, but as used, this also seems fine, so I guess we can just leave it for now. Thanks for the explanation.",
+      "parentUuid": "935fd94b_63145317",
       "revId": "f51f27657c99be57535d59b87fab2f0b944adf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
