@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "436cdc0e_7aeb7ff4",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-23T20:08:31Z",
+      "side": 1,
+      "message": "platform/wtf/Time.h provides aliases for actual base::TimeTicks and base::TimeDeltas, so they can be used interchangeably. It\u0027s my understanding that this is due to historical reasons and everything will be replaced with base primitives eventually.\n\nSo I think for now we could use {base::}TimeTicks in the new code and add temporary conversions around it and convert InteractiveDetector in a follow-up patch.",
+      "parentUuid": "b0bf2c0e_88d9e27e",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 49
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d547686_63460656",
         "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
         "patchSetId": 4
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "FWIW, base::TimeTicks offers an is_null() method.",
       "parentUuid": "2ca634f5_22e57a51",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "5a5484c8f4b7644771010a0a5bc879c6147d292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f2db2f_d7e170bd",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-23T20:08:31Z",
+      "side": 1,
+      "message": "It\u0027s more about readability. I\u0027d say that we\u0027re not making the code more, we\u0027re being clear about complexity instead of hiding it and failing silently (which is good thing).\n\nbase::Optional\u003c\u003e clearly signals that there is a special case and this case should be considered. Simple base::TimeTicks may or may not contain a special value and it may or may not be the problem (I\u0027ve encountered this problem quite a number of times in scheduler code and I now encourage others to avoid potential bugs.",
+      "parentUuid": "87de7a4d_f6cd934d",
       "range": {
         "startLine": 83,
         "startChar": 2,
