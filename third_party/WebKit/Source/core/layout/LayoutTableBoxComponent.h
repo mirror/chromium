@@ -6,7 +6,7 @@
 #define LayoutTableBoxComponent_h
 
 #include "core/CoreExport.h"
-#include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutTable.h"
 #include "core/paint/PaintResult.h"
 #include "platform/graphics/paint/CullRect.h"
@@ -15,7 +15,7 @@ namespace blink {
 
 // Common super class for LayoutTableCol, LayoutTableSection and LayoutTableRow.
 // Also provides utility functions for all table parts.
-class CORE_EXPORT LayoutTableBoxComponent : public LayoutBox {
+class CORE_EXPORT LayoutTableBoxComponent : public LayoutBlock {
  public:
   static void InvalidateCollapsedBordersOnStyleChange(
       const LayoutObject& table_part,
@@ -59,39 +59,18 @@ class CORE_EXPORT LayoutTableBoxComponent : public LayoutBox {
 
  protected:
   explicit LayoutTableBoxComponent(Element* element)
-      : LayoutBox(element), last_paint_result_(kFullyPainted) {}
-
-  const LayoutObjectChildList* Children() const { return &children_; }
-  LayoutObjectChildList* Children() { return &children_; }
-
-  LayoutObject* FirstChild() const {
-    DCHECK_EQ(Children(), VirtualChildren());
-    return Children()->FirstChild();
-  }
-  LayoutObject* LastChild() const {
-    DCHECK_EQ(Children(), VirtualChildren());
-    return Children()->LastChild();
-  }
+      : LayoutBlock(element), last_paint_result_(kFullyPainted) {}
 
  private:
+  void UpdateLayout() override { LayoutBox::UpdateLayout(); }
+
   // Column, section and row's visibility has rules different from other
   // elements. For example, column's visibility:hidden doesn't apply; row's
   // visibility:hidden shouldn't hide row's background painted behind visible
   // cells, etc.
   bool VisualRectRespectsVisibility() const final { return false; }
 
-  // If you have a LayoutTableBoxComponent, use firstChild or lastChild instead.
-  void SlowFirstChild() const = delete;
-  void SlowLastChild() const = delete;
-
-  LayoutObjectChildList* VirtualChildren() override { return Children(); }
-  const LayoutObjectChildList* VirtualChildren() const override {
-    return Children();
-  }
-
   virtual LayoutTable* Table() const = 0;
-
-  LayoutObjectChildList children_;
 
   friend class MutableForPainting;
   PaintResult last_paint_result_;

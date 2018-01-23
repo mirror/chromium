@@ -106,7 +106,7 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
 
   PaginationBreakability GetPaginationBreakability() const final;
 
-  void ComputeOverflow();
+  void ComputeOverflow(LayoutUnit = LayoutUnit(), bool = false) override;
 
   const char* GetName() const override { return "LayoutTableRow"; }
 

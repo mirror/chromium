@@ -288,7 +288,7 @@ LayoutTableRow* LayoutTableRow::CreateAnonymousWithParent(
   return new_row;
 }
 
-void LayoutTableRow::ComputeOverflow() {
+void LayoutTableRow::ComputeOverflow(LayoutUnit, bool) {
   ClearAllOverflows();
   AddVisualEffectOverflow();
   for (LayoutTableCell* cell = FirstCell(); cell; cell = cell->NextCell())
