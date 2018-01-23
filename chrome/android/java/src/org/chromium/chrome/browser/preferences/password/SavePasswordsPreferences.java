@@ -19,9 +19,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
@@ -37,6 +41,7 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
+//import org.chromium.chrome.browser.widget.MaterialProgressBar;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
 
@@ -112,6 +117,9 @@ public class SavePasswordsPreferences
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
     private TextMessagePreference mEmptyView;
 
+    // Progress indicator to be used while waiting for passwords to get serialised.
+    private FrameLayout mProgressBar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +145,15 @@ public class SavePasswordsPreferences
                 mExportFileUri = Uri.parse(uriString);
             }
         }
+    }
+
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Replace default preferences view with custom XML that contains a progress bar.
+        View view = inflater.inflate(R.layout.passwords_tab_content, container, false);
+        mProgressBar = view.findViewById(R.id.passwords_progress_bar_holder);
+        return view;
     }
 
     @Override
@@ -253,10 +270,24 @@ public class SavePasswordsPreferences
      * confirmation flow.
      */
     private void tryExporting() {
-        // TODO(crbug.com/788701): Display a progress indicator if user
-        // confirmed but serialising is not done yet and dismiss it once called
-        // again with serialising done.
-        if (mExportConfirmed && mExportFileUri != null) sendExportIntent();
+//        if (mExportConfirmed && mExportFileUri == null) {
+            // The user finished the confirmation flow, but the passwords are still being
+            // serialized. Display an progress indicator to signal the need to wait.
+            assert(mProgressBar != null);
+            // It has to be indeterminate, because there is currently no reasonable way to tell the
+            // progress of the serialization.
+            //mProgressBar.setIndeterminate(true);
+            mProgressBar.setVisibility(View.VISIBLE);
+//        }
+/*
+        if (mExportConfirmed && mExportFileUri != null) {
+            if (mProgressBar) {
+                mProgressBar.setVisibility(View.GONE);
+                mProgressBar = null;
+            }
+            sendExportIntent();
+        }
+*/
     }
 
     /**
