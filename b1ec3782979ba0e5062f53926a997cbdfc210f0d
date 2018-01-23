@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "34af06db_166d19eb",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T16:27:31Z",
+      "side": 1,
+      "message": "if the first queued event is processed in an iframe on the page, do we want to use its timestamp here? we do this cross-frame merging for paint events. Perhaps we want a main-document-only version and also a page-wide version across all docs, mostly to see if they end up reporting very different values? I\u0027m fine with landing just this part for now - just want to understand what\u0027s useful / correct here in the longer term. We might call this one OnFirstEventQueueingTimeInMainFrameDocument just to be more precise (and consistent with FMP callback naming)",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fd0adc_334afc96",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T16:27:31Z",
+      "side": 1,
+      "message": "we also have a struct InteractiveTiming {} which contains the TTI-related timings. Do you think this belongs in that struct? The other timings in DocumentTiming are more related to events that are fired by the document, so this one feels a little bit out of place (first_layout is maybe the exception, but the intent is generally things associated with document life cycle, which FEQT isn\u0027t quite).",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95afc30_c7710c76",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T16:27:31Z",
+      "side": 1,
+      "message": "nit: since this is a duration, could we be more precise and call it FirstEventQueuingDuration, or FirstEventQueuingDelay, everywhere? \"time\" is less clear - could be a timestamp for instance.",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55196f97_9075e6e4",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 1
@@ -19,6 +70,47 @@
         "endLine": 1138,
         "endChar": 66
       },
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fc72a8_a21da679",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T16:27:31Z",
+      "side": 1,
+      "message": "You\u0027re suggesting that instead of the caller doing:\ndocument().SetFirstEventQueueingTime(...) they\u0027d do document().GetMutableTiming()-\u003eSetFirstEventQueueingTime(...) or something similar? The latter seems better to me since we don\u0027t need to keep adding methods to document, but I\u0027m not a blink style/convention expert so I\u0027d defer to blink owners for guidance on the preferred approach here.",
+      "parentUuid": "55196f97_9075e6e4",
+      "range": {
+        "startLine": 1138,
+        "startChar": 62,
+        "endLine": 1138,
+        "endChar": 66
+      },
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1420081f_f9cd81b6",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T16:27:31Z",
+      "side": 1,
+      "message": "re: taking the current timestamp, does this ReportFirstEventQueueingTime callback run before or after the application\u0027s JS code that handles the input event runs? in other words will we include the time the application spends in JS handling the input event in our first event queuing time calculation?\n\nIIUC event.TimeStampSeconds() is the timestamp that the event was generated ~at the hardware level (time user touched the glass, for instance), is that right?",
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
