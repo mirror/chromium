@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94ae87a7_7e7ea176",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-23T18:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36bc539_8c8a2064",
+      "revId": "ed33307ed5bbabbfb0c6841ed360ad5a12453327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e2486a_c4772c13",
         "filename": "content/common/url_loader_factory_bundle_struct_traits.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ed33307ed5bbabbfb0c6841ed360ad5a12453327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40e930b_5fe03714",
+        "filename": "content/common/url_loader_factory_bundle_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-23T18:15:15Z",
+      "side": 1,
+      "message": "Yeah, I know. I just tried to avoid writing \"(*out_bundle)-\u003e\".  :)\n\nDone.",
+      "parentUuid": "b4e2486a_c4772c13",
+      "revId": "ed33307ed5bbabbfb0c6841ed360ad5a12453327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
