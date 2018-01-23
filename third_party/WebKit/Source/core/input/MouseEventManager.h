@@ -34,7 +34,7 @@ enum class DragInitiator;
 // positions and states of mouse.
 class CORE_EXPORT MouseEventManager final
     : public GarbageCollectedFinalized<MouseEventManager>,
-      public SynchronousMutationObserver {
+      public SynchronousMutationObserver<MouseEventManager> {
   WTF_MAKE_NONCOPYABLE(MouseEventManager);
   USING_GARBAGE_COLLECTED_MIXIN(MouseEventManager);
 
@@ -152,6 +152,10 @@ class CORE_EXPORT MouseEventManager final
 
   bool FakeMouseMovePending() const;
 
+  // Implementations of |SynchronousMutationObserver|
+  void NodeChildrenWillBeRemoved(ContainerNode&) final;
+  void NodeWillBeRemoved(Node& node_to_be_removed) final;
+
  private:
   class MouseEventBoundaryEventDispatcher : public BoundaryEventDispatcher {
     WTF_MAKE_NONCOPYABLE(MouseEventBoundaryEventDispatcher);
@@ -199,10 +203,6 @@ class CORE_EXPORT MouseEventManager final
   DataTransfer* CreateDraggingDataTransfer() const;
 
   void ResetDragState();
-
-  // Implementations of |SynchronousMutationObserver|
-  void NodeChildrenWillBeRemoved(ContainerNode&) final;
-  void NodeWillBeRemoved(Node& node_to_be_removed) final;
 
   // NOTE: If adding a new field to this class please ensure that it is
   // cleared in |MouseEventManager::clear()|.

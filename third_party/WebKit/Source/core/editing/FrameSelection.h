@@ -63,7 +63,7 @@ enum class HandleVisibility { kNotVisible, kVisible };
 
 class CORE_EXPORT FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
-      public SynchronousMutationObserver {
+      public SynchronousMutationObserver<FrameSelection> {
   WTF_MAKE_NONCOPYABLE(FrameSelection);
   USING_GARBAGE_COLLECTED_MIXIN(FrameSelection);
 
@@ -73,7 +73,7 @@ class CORE_EXPORT FrameSelection final
   }
   ~FrameSelection();
 
-  bool IsAvailable() const { return LifecycleContext(); }
+  bool IsAvailable() const { return GetSynchronousMutationNotifier(); }
   // You should not call |document()| when |!isAvailable()|.
   Document& GetDocument() const;
   LocalFrame* GetFrame() const { return frame_; }
@@ -228,6 +228,11 @@ class CORE_EXPORT FrameSelection final
 
   DECLARE_TRACE();
 
+  // Implementation of |SynchronousMutationObserver| member functions.
+  void ContextDestroyed(Document*) final;
+  void NodeChildrenWillBeRemoved(ContainerNode&) final;
+  void NodeWillBeRemoved(Node&) final;
+
  private:
   friend class CaretDisplayItemClientTest;
   friend class FrameSelectionTest;
@@ -258,11 +263,6 @@ class CORE_EXPORT FrameSelection final
   GranularityStrategy* GetGranularityStrategy();
 
   IntRect ComputeRectToScroll(RevealExtentOption);
-
-  // Implementation of |SynchronousMutationObserver| member functions.
-  void ContextDestroyed(Document*) final;
-  void NodeChildrenWillBeRemoved(ContainerNode&) final;
-  void NodeWillBeRemoved(Node&) final;
 
   Member<LocalFrame> frame_;
   const Member<LayoutSelection> layout_selection_;

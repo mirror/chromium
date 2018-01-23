@@ -49,7 +49,7 @@ class SuggestionMarkerProperties;
 
 class CORE_EXPORT DocumentMarkerController final
     : public GarbageCollected<DocumentMarkerController>,
-      public SynchronousMutationObserver {
+      public SynchronousMutationObserver<DocumentMarkerController> {
   WTF_MAKE_NONCOPYABLE(DocumentMarkerController);
   USING_GARBAGE_COLLECTED_MIXIN(DocumentMarkerController);
 
