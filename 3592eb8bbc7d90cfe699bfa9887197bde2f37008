@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e7101a30_6948777f",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T01:39:54Z",
+      "side": 1,
+      "message": "The added comment is an improvement, but I still find the overall function\u0027s description to be lacking.\n\nFor instance, where does the (month_diff \u003e 120 || expiry \u003e time_2019_07_01) policy come from? \n\nWe don\u0027t need to resolve this as part of this CL, but I wanted to point out the readability trouble experienced by a first time reader of this code, in the hopes we can clarify it.\n\nCheers.",
+      "parentUuid": "29687877_0586e27d",
+      "revId": "3592eb8bbc7d90cfe699bfa9887197bde2f37008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec5b6dd_0f7ab1a9",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 1
