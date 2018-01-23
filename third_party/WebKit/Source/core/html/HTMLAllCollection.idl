@@ -27,12 +27,10 @@
 // https://html.spec.whatwg.org/#the-htmlallcollection-interface
 
 [
-    Custom=LegacyCallAsFunction,
     LegacyUnenumerableNamedProperties
 ] interface HTMLAllCollection {
     readonly attribute unsigned long length;
-    [ImplementedAs=item] getter Element (unsigned long index);
-    [Custom] (HTMLCollection or Element)? item(optional DOMString nameOrIndex);
-    // FIXME: namedItem() should be a legacycaller.
-    [ImplementedAs=namedGetter] getter (HTMLCollection or Element)? namedItem(DOMString name);
+    getter Element? (unsigned long index);
+    [ImplementedAs=NamedGetter] getter (HTMLCollection or Element)? namedItem(DOMString name);
+    (HTMLCollection or Element)? item(optional DOMString nameOrIndex);
 };
