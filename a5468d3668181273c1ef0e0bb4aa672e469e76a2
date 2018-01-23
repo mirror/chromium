@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "c84fef50_47981065",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-23T19:47:05Z",
+      "side": 1,
+      "message": "The policy is documented here:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-trust-less-privileged-processes\n\nThis is not a new policy; indeed it\u0027s the entire point of privilege separation and privilege reduction (sandboxing). :) (Historical version: https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc)\n\nIt\u0027s true that conforming to the policy requires work and code, but if we do it right it should *reduce*, not create, vulnerabilities. Not conforming to it definitely creates vulnerabilities.",
+      "parentUuid": "823dd77c_74cf8478",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfa66b2_dd28728b",
         "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
         "patchSetId": 11
