@@ -3619,16 +3619,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 // node1 is the root.
 // Initially, both node1.proxy_hosts_ and node3.proxy_hosts_ contain C.
 // After we kill B, make sure proxies for C are cleared.
-// Flaky on Windows: crbug.com/798476
-#if defined(OS_WIN)
-#define MAYBE_KillingRendererClearsDescendantProxies \
-  DISABLED_KillingRendererClearsDescendantProxies
-#else
-#define MAYBE_KillingRendererClearsDescendantProxies \
-  KillingRendererClearsDescendantProxies
-#endif
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       MAYBE_KillingRendererClearsDescendantProxies) {
+                       KillingRendererClearsDescendantProxies) {
   GURL main_url(embedded_test_server()->GetURL(
       "a.com", "/frame_tree/page_with_two_frames_nested.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
