@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7e10736_c665c772",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-23T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "525ffe7a_2538b3f8",
+      "range": {
+        "startLine": 664,
+        "startChar": 42,
+        "endLine": 664,
+        "endChar": 0
+      },
+      "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ce5225e_fd6a8ca4",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3493fa_bc2675e9",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-23T02:02:15Z",
+      "side": 1,
+      "message": "This just makes the new SDPY-over-QUIC-tunnel tests a bit simpler. Without doing this, the SPDY connection would send this extra initial header prefix:\n\nhttps://cs.chromium.org/chromium/src/net/spdy/core/spdy_protocol.h?rcl\u003d8dc058cb83a65482774f838e7ad872a1ae6424f0\u0026l\u003d84",
+      "parentUuid": "6ce5225e_fd6a8ca4",
+      "range": {
+        "startLine": 615,
+        "startChar": 53,
+        "endLine": 615,
+        "endChar": 1
+      },
+      "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3d9876f_e4c8b94f",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6057,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-23T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f536734_d07460f5",
+      "range": {
+        "startLine": 6057,
+        "startChar": 13,
+        "endLine": 6057,
+        "endChar": 16
+      },
+      "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82e9a398_66ef7e56",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7b400376_18a22d87",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6063,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-23T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e9a398_66ef7e56",
+      "range": {
+        "startLine": 6063,
+        "startChar": 42,
+        "endLine": 6063,
+        "endChar": 0
+      },
+      "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc503df_5563ea3f",
         "filename": "net/quic/chromium/quic_test_packet_maker.h",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68836e58_6fed7011",
+        "filename": "net/quic/chromium/quic_test_packet_maker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2018-01-23T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc503df_5563ea3f",
+      "range": {
+        "startLine": 261,
+        "startChar": 66,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "2651677a0394f4381895b88f6c792dc6261d63fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
