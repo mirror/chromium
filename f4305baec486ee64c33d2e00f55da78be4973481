@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "497d9430_3defdef4",
+        "filename": "components/toolbar/toolbar_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-23T21:58:10Z",
+      "side": 1,
+      "message": "I\u0027d suggest doing this as one feature with multiple variations, chosen via a parameter. That way we won\u0027t be able to get into the confusing state of having multiple mutually exclusive features enabled at once. https://cs.chromium.org/chromium/src/components/security_state/core/features.h?sq\u003dpackage:chromium is an example.",
+      "revId": "f4305baec486ee64c33d2e00f55da78be4973481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc2ab68_aa7d2056",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-23T21:58:10Z",
+      "side": 1,
+      "message": "nit: you\u0027re a few years behind :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f4305baec486ee64c33d2e00f55da78be4973481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4d9b26_4d025f20",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-23T21:58:10Z",
+      "side": 1,
+      "message": "nit: #incldue \"base/feature_list.h\"",
+      "revId": "f4305baec486ee64c33d2e00f55da78be4973481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea52ca6_6379b021",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-23T21:58:10Z",
+      "side": 1,
+      "message": "nit: add a comment describing what each variation does",
+      "revId": "f4305baec486ee64c33d2e00f55da78be4973481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
