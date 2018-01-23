@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b7d73b_cca5dd1b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-23T04:50:04Z",
+      "side": 1,
+      "message": "I believe this DCHECK is there because OnRequestFailedInternal would show an error page only relevant to canceled requests with net::ERR_ABORTED. So I think checking if there is an error page provided would make sense. But I need to double check this. The DCHECK came from nick@ in a patch[1] that introduced different types of net errors but there are no comments about the DCHECK. Do you happen to know its purpose?\n\n[1] https://codereview.chromium.org/2867833002/",
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
