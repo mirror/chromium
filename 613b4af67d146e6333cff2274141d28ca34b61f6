@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf0ec01_a9331c80",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T19:54:15Z",
+      "side": 1,
+      "message": "ah, the last sentence of this comment is outdated. could we remove just that last sentence?",
+      "revId": "613b4af67d146e6333cff2274141d28ca34b61f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
