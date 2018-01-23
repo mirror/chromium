@@ -88,6 +88,24 @@
       "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56beaed0_aaf2e8ed",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T13:48:10Z",
+      "side": 0,
+      "message": "How about I move this to line 496 then, so it only runs when doing a local build of clang?",
+      "parentUuid": "bccc7b8d_0f0a53ee",
+      "revId": "9f0e6d55f844a16bb5f67d033c6d74e99f54a6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
