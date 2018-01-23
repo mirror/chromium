@@ -82,6 +82,41 @@
     },
     {
       "key": {
+        "uuid": "1ba6b2ae_d2028feb",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:42:09Z",
+      "side": 1,
+      "message": "Not in Chrome. It\u0027s used in some Cronet projects. This was I think rtenneti@\u0027s last project, and some non-Chrome consumers asked for this code in order to optimize their application startup times on Android when evicted due to low-memory conditions.",
+      "parentUuid": "0fdc8da1_08d8efb1",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e79235c_569e3976",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:42:09Z",
+      "side": 1,
+      "message": "Sadly, Cronet has been serializing the flags. This is why I wasn\u0027t terribly keen on Cronet doing this - because it was going to affect the API decisions (and it wasn\u0027t something that would be safe for general use, thus shouldn\u0027t be part of //net)",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88de6d6_22e6468a",
         "filename": "components/cronet/android/cert/proto/cert_verification.proto",
         "patchSetId": 5
@@ -93,6 +128,30 @@
       "writtenOn": "2018-01-23T02:18:35Z",
       "side": 1,
       "message": "Instead of the \"deprecated\" comment, can you use the [deprecated\u003dtrue] field option.\n\n(https://developers.google.com/protocol-buffers/docs/proto)",
+      "range": {
+        "startLine": 45,
+        "startChar": 41,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509b029e_fee8b25e",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:42:09Z",
+      "side": 1,
+      "message": "Thanks! I had looked at the wrong set of docs when trying to find out how to deprecate in protobuf :)",
+      "parentUuid": "d88de6d6_22e6468a",
       "range": {
         "startLine": 45,
         "startChar": 41,
@@ -122,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "767f56ef_4a18c190",
+        "filename": "net/cert/cert_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:42:09Z",
+      "side": 1,
+      "message": "\"we\" don\u0027t, but //components/cronet does, as I highlighted for you.\n\nI went and marked it explicitly reserved for now. It\u0027s something I think work touching base with Cronet folk again to see whether or not the performance gain is worth it given the Android fixes.",
+      "parentUuid": "5335a025_c17f87ca",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d5f164_ca40ad43",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 5
@@ -133,6 +210,30 @@
       "writtenOn": "2018-01-23T02:18:35Z",
       "side": 1,
       "message": "This seems like a misnomer, as the error relates to matching against subject alt names...",
+      "range": {
+        "startLine": 523,
+        "startChar": 34,
+        "endLine": 523,
+        "endChar": 65
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aad988c_f9d69294",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T02:42:09Z",
+      "side": 1,
+      "message": "Yeah, I have a thread open with Enamel discussing renaming it, which I saw as separable (since it\u0027d also need UI-leads sign off). This maintains the status quo of today.",
+      "parentUuid": "d5d5f164_ca40ad43",
       "range": {
         "startLine": 523,
         "startChar": 34,
