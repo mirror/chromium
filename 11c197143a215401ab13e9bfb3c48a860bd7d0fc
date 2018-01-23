@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "786765fa_054c15e6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "IIRC, we have an initiator origin on BeginNavigationParams, which is set if it\u0027s a renderer-initiated navigation (which ought to cover middle-click and ctrl+click). I think it\u0027s not on navigation handle atm, but I don\u0027t think it would be unreasonable to add it if clamy@ is OK with it. Then we\u0027d only need to fall back to referrer for the context menu, or find some other way of plumbing it.\n\nI feel a bit uncomfortable with the current approach, because it seems like referrer is something that\u0027s easy for the page to inadvertently affect.",
+      "parentUuid": "176ea08f_b8140aba",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb32de07_1ba8f1df",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 4
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f05b1687_039bc9b7",
+        "filename": "content/common/navigation_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this (and I\u0027m not an OWNER of this particular code), but I think it\u0027s OK to have internal inconsistency as we incrementally migrate over \u003d)",
+      "parentUuid": "76df2cb6_454d127d",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85ae28c9_954b92ef",
         "filename": "content/common/navigation_params.h",
         "patchSetId": 4
@@ -159,6 +195,30 @@
       "side": 1,
       "message": "I think the distinction here isn\u0027t activation vs gesture but whether there was an activation prior to the navigation or to start the navigation. `was_activated` will answer the former question. `user_gesture` will answer the latter. At the moment, `was_activated` is used by autoplay and vibration API I believe.",
       "parentUuid": "85ae28c9_954b92ef",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 21
+      },
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25659ada_fe771a58",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "Can you update this comment to include the explanation you just gave me? \u003d)\n\nI\u0027m still a bit confused about when one might want to use one vs the other, but it still helps.",
+      "parentUuid": "9906d5e3_76c9d7dc",
       "range": {
         "startLine": 291,
         "startChar": 0,
@@ -234,6 +294,24 @@
       "side": 1,
       "message": "I don\u0027t think we don\u0027t want to implement stickyness on subframes. Either way, I\u0027m not sure we should implement this as part of this CL as I would like to attempt a merge :(",
       "parentUuid": "c6568dbe_8f2c4cb4",
+      "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3961008_f3a819a8",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "Fair enough—to be clear, I wasn\u0027t asking for changes in this CL, just trying to get an overall feeling of where these patches will go.",
+      "parentUuid": "e901688b_686f6536",
       "revId": "11c197143a215401ab13e9bfb3c48a860bd7d0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

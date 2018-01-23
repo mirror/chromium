@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ac87e9_8d753481",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "Nit: delete",
+      "range": {
+        "startLine": 783,
+        "startChar": 37,
+        "endLine": 783,
+        "endChar": 38
+      },
+      "revId": "79646b42c09da38cec5d14308d3ef4bcdf8423fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e017f737_e13694bf",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:44:47Z",
+      "side": 1,
+      "message": "What sort of confusion does it create? Does it cause tests that assume no user gesture due to a test to break? Maybe this should be a TODO to clean this up in the long-term (i.e. fix the navigation utils that most browser tests use?).",
+      "revId": "79646b42c09da38cec5d14308d3ef4bcdf8423fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
