@@ -184,9 +184,15 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplsWithDeadlines) {
       2, base::UnguessableToken::Create());
   viz::SurfaceId surface_id2(kArbitraryFrameSinkId, kArbitraryLocalSurfaceId2);
 
+  gfx::Size layer_size(400, 100);
+
+  surface_layer_impl->SetBounds(layer_size);
+  surface_layer_impl->SetDrawsContent(true);
   surface_layer_impl->SetPrimarySurfaceId(surface_id1, 1u);
   surface_layer_impl->SetFallbackSurfaceId(surface_id2);
 
+  surface_layer_impl2->SetBounds(layer_size);
+  surface_layer_impl2->SetDrawsContent(true);
   surface_layer_impl2->SetPrimarySurfaceId(surface_id1, base::nullopt);
   surface_layer_impl2->SetFallbackSurfaceId(surface_id2);
 
