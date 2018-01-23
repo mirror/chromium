@@ -49,13 +49,13 @@ CompositorFrame MakeCompositorFrame(
     std::vector<SurfaceId> activation_dependencies,
     std::vector<SurfaceId> referenced_surfaces,
     std::vector<TransferableResource> resource_list,
-    base::Optional<uint32_t> deadline_in_frames = base::nullopt) {
+    base::Optional<FrameDeadline> deadline = base::nullopt) {
   return CompositorFrameBuilder()
       .AddDefaultRenderPass()
       .SetActivationDependencies(std::move(activation_dependencies))
       .SetReferencedSurfaces(std::move(referenced_surfaces))
       .SetTransferableResources(std::move(resource_list))
-      .SetDeadlineInFrames(deadline_in_frames)
+      .SetDeadline(deadline)
       .Build();
 }
 
@@ -1569,7 +1569,8 @@ TEST_F(SurfaceSynchronizationTest, IndependentDeadlines) {
   child_support1().SubmitCompositorFrame(
       child_id1.local_surface_id(),
       MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
-                          std::vector<TransferableResource>(), 3));
+                          std::vector<TransferableResource>(),
+                          FrameDeadline(3, false)));
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->has_deadline());
