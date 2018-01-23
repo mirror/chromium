@@ -557,7 +557,8 @@ class CONTENT_EXPORT RenderFrameHostManager
       bool current_is_view_source_mode,
       SiteInstance* new_site_instance,
       const GURL& new_effective_url,
-      bool new_is_view_source_mode) const;
+      bool new_is_view_source_mode,
+      ui::PageTransition transition) const;
 
   // Returns the SiteInstance to use for the navigation.
   scoped_refptr<SiteInstance> GetSiteInstanceForNavigation(
