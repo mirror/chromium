@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f6b1a29_b1875c69",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49a1a6f_29e6d5fd",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2f6e3bc_912243c2",
         "filename": "content/browser/renderer_host/delegated_frame_host.cc",
         "patchSetId": 40
@@ -33,6 +51,24 @@
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfbe906_5134fd7d",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f6e3bc_912243c2",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c4cd907_96ad4b48",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836a8282_c172fee7",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb283d4c_c2d71dae",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 40
@@ -67,6 +121,24 @@
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa0bdb9_b07d760c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb283d4c_c2d71dae",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0ea660b4_14f2e43d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac9ed5fe_e61b2b51",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36388604_6790948c",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 40
@@ -101,6 +191,24 @@
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218cd4c3_1141c9e1",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Screen orientation tests fail without this method. The reason is that the fake ResizeParams that they send to the renderer will be replaced by the real ResizeParams that RenderWidgetHostImpl sends after navigation. That\u0027s why RenderWidgetHostImpl also needs to know about the fake values.",
+      "parentUuid": "36388604_6790948c",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "830ff317_3376fdea",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Added a test",
+      "parentUuid": "12035d6a_5c2c00de",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4446119_b437f4a9",
         "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
         "patchSetId": 40
@@ -135,6 +261,24 @@
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed09943_725bdd14",
+        "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "These tests fail without these changes. The fake screen orientation that they used to send is replaced with the real one after navigation commits.",
+      "parentUuid": "c4446119_b437f4a9",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9d45c0ba_d28c82f0",
+        "filename": "content/common/resize_params.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283f649d_01789dc7",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c4832af_2ee5a6ee",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 40
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c2621b53_720b8f4f",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Yes, this is related. Similar to my answer to your other comment, it is possible for the browser to override the fake device scale factor set in some tests. I personally rather keep this in the same CL, because it\u0027s necessary due to changes that were made in this CL.",
+      "parentUuid": "2c4832af_2ee5a6ee",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d733c2_39b25805",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 40
@@ -186,6 +366,24 @@
       "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c947b6_a9c0e653",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-23T19:15:52Z",
+      "side": 1,
+      "message": "Yes. Seems to be working.",
+      "parentUuid": "e1d733c2_39b25805",
+      "revId": "e392b08776d4928d3b76d72cbb1322d64a08f3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
