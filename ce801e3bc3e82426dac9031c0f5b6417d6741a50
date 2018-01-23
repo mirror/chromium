@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a671a970_51425d11",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "HeapObjectDescriptor?",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3322334_7b4d1ce0",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "Why do we need to put TraceCallback in ObjectDescriptor?",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14db2c75_8aed2d63",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "Is there any reason you don\u0027t want to put the object pointer itself to ObjectDescriptor?",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da835e76_acdf8e38",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "WeakHeapObjectDescriptor?",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58aa7940_57e49e27",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "Why do we need to put TraceCallback in ObjectDescriptor?",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6c2ddf_9835ef56",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7799406c_f88a4bc1",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "Do we still need this method?\n\nTraceTrait\u003cT\u003e::Mark is already calculated when ObjectDescriptor is set.",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a16752_04972623",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "descriptor\n\nBlink prefers a fully qualified name.",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8544419_463ad105",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:37:53Z",
+      "side": 1,
+      "message": "descriptor",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
