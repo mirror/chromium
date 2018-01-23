@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e618163_4d50ef7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "Done.\n\nNote it is actually accidentally safe to addObserver right after calling getAllItems, not waiting for the callback as I initially did in this CL. This is because until callback is executed, the potential updates would be lost. Ideally, we\u0027d have getAllItemsAndAddObserver call... But the way it is written now is equivalent.",
+      "parentUuid": "92d7d18c_ae0819ae",
+      "range": {
+        "startLine": 740,
+        "startChar": 17,
+        "endLine": 740,
+        "endChar": 37
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4212ae57_1e056b77",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f5b007_44b9ca6d",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "Ack. Added comment. \nI\u0027d rather delete this method soon, since this Adapter can not currently simply hit the DB - it merges 2 DBs which have items shared/transitioning between them in non-transactional way.\nIt has to emulate a single view, so it does need a memory list in order to do that. We might remove this complexity at some point, but not right now...",
+      "parentUuid": "4212ae57_1e056b77",
+      "range": {
+        "startLine": 256,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 56
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "c1cd2149_a45746bb",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7485c64_925fff74",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 11
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6c5e745_320e7f3f",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "Done.\n\nWhile this only is called from UI after initialization, I agree it should still be correct even id initialization is not yet done.",
+      "parentUuid": "c7485c64_925fff74",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 11
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269b7c71_a5e4d2fe",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 4
@@ -94,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "beb004bc_2e8c2d65",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "269b7c71_a5e4d2fe",
+      "range": {
+        "startLine": 376,
+        "startChar": 24,
+        "endLine": 376,
+        "endChar": 36
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "071bad2a_27f69b48",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 4
@@ -114,6 +234,30 @@
       "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c846c294_8d8c7ecf",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-23T23:00:29Z",
+      "side": 1,
+      "message": "The check in OnOfflinePagesLoaded is to add a bit to OfflineItem - since we keep items in the cache even if they are hidden. At the same time, the consumer of DownloadUIAdapter actually does not see the items that are hidden, and once the satus changes, this class simulates ItemAdded/Deleted. \nSo the check here is to not include hidden items into reply to GetAllItems, while the check in previous methods is to populate the hidden bit in the local cahce...\n\nBTW, this is another reason why this adapter keeps its own \u0027cache\u0027:  it is not really only a cache, but in fact it keeps some state here.",
+      "parentUuid": "071bad2a_27f69b48",
+      "range": {
+        "startLine": 519,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 15
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
