@@ -1016,13 +1016,13 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   DidInitiatePaint();
 }
 
-void RenderWidget::DidCommitCompositorFrame() {}
+void RenderWidget::DidCommitCompositorFrame() {
+  DidResizeOrRepaintAck();
+}
 
 void RenderWidget::DidCompletePageScaleAnimation() {}
 
 void RenderWidget::DidReceiveCompositorFrameAck() {
-  TRACE_EVENT0("renderer", "RenderWidget::DidReceiveCompositorFrameAck");
-  DidResizeOrRepaintAck();
 }
 
 bool RenderWidget::IsClosing() const {
