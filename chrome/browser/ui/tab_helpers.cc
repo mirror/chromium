@@ -99,6 +99,7 @@
 #include "chrome/browser/banners/app_banner_manager_android.h"
 #include "chrome/browser/ui/android/context_menu_helper.h"
 #include "chrome/browser/ui/android/view_android_helper.h"
+#include "media/base/media_switches.h"
 #else
 #include "chrome/browser/banners/app_banner_manager_desktop.h"
 #include "chrome/browser/plugins/plugin_observer.h"
@@ -277,7 +278,11 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   SearchGeolocationDisclosureTabHelper::CreateForWebContents(web_contents);
   SingleTabModeTabHelper::CreateForWebContents(web_contents);
   ViewAndroidHelper::CreateForWebContents(web_contents);
-  VoiceSearchTabHelper::CreateForWebContents(web_contents);
+
+  // TODO(thildebr): Remove the tab helper entirely once the new autoplay
+  //                 policy is launched. (https://crbug.com/779087)
+  if (!base::FeatureList::IsEnabled(media::kUnifiedAutoplay))
+    VoiceSearchTabHelper::CreateForWebContents(web_contents);
 #else
   BookmarkTabHelper::CreateForWebContents(web_contents);
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
