@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a16a98_43de381b",
+        "filename": "cc/raster/playback_image_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-23T23:14:46Z",
+      "side": 1,
+      "message": "Remove this too?",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "9e44480a61144fe78766870c45a7ce1a79ff74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8c2644_a797a4bb",
+        "filename": "cc/tiles/image_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-23T23:14:46Z",
+      "side": 1,
+      "message": "nit: I don\u0027t know how much I love the bool return in cases where it doesn\u0027t really represent success/failure. Maybe pass out a \"bool* has_at_raster_images\"?",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9e44480a61144fe78766870c45a7ce1a79ff74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
