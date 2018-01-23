@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "057ee451_bf5f2b47",
+        "filename": "components/ssl_config/ssl_config_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:53:27Z",
+      "side": 0,
+      "message": "Ack. No action necessary.",
+      "parentUuid": "44acf6d4_29c725f2",
+      "revId": "1f65ad79494a05653e7478202e221ec229d9ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a54135b4_45614049",
         "filename": "net/cert/x509_certificate.cc",
         "patchSetId": 5

@@ -117,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "e18955ff_9dc79c1d",
+        "filename": "components/cronet/android/cert/proto/cert_verification.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:53:27Z",
+      "side": 1,
+      "message": "oh rats, right...\n(not sure how i missed that, i was just skimming this file!)",
+      "parentUuid": "1e79235c_569e3976",
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88de6d6_22e6468a",
         "filename": "components/cronet/android/cert/proto/cert_verification.proto",
         "patchSetId": 5
@@ -252,6 +270,30 @@
       "side": 1,
       "message": "Yeah, I have a thread open with Enamel discussing renaming it, which I saw as separable (since it\u0027d also need UI-leads sign off). This maintains the status quo of today.",
       "parentUuid": "d5d5f164_ca40ad43",
+      "range": {
+        "startLine": 523,
+        "startChar": 34,
+        "endLine": 523,
+        "endChar": 65
+      },
+      "revId": "4df9bb28a443699f2e4574e29c4d5902c134576f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bbfc9b_2e4cdeee",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-23T02:53:27Z",
+      "side": 1,
+      "message": "sgtm.\n\nI didn\u0027t do a comprehensive search of CERT_STATUS_COMMON_NAME_INVALID or the corresponding ERR_XXX, but I wouldn\u0027t be too surprised if in renaming that we discover some other code that can be simplified/removed.",
+      "parentUuid": "0aad988c_f9d69294",
       "range": {
         "startLine": 523,
         "startChar": 34,
