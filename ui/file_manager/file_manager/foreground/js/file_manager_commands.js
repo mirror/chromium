@@ -870,8 +870,35 @@ CommandHandler.COMMANDS_['paste'] = /** @type {Command} */ ({
             fileManager.directoryModel.getCurrentDirEntry());
 
     // Hide this command if only one folder is selected.
-    event.command.setHidden(!!CommandUtil.getOnlyOneSelectedDirectory(
-        fileManager.getSelection()));
+    const shouldHide =
+        !!CommandUtil.getOnlyOneSelectedDirectory(fileManager.getSelection());
+    event.command.setHidden(shouldHide);
+  }
+});
+
+/**
+ * Pastes files from clipboard. This is basically same as 'paste'.
+ * This command is used for always showing the Paste command to gear menu.
+ * @type {Command}
+ */
+CommandHandler.COMMANDS_['paste-into-current'] = /** @type {Command} */ ({
+  /**
+   * @param {!Event} event Command event.
+   * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
+   */
+  execute: function(event, fileManager) {
+    fileManager.document.execCommand('paste');
+  },
+  /**
+   * @param {!Event} event Command event.
+   * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
+   */
+  canExecute: function(event, fileManager) {
+    var fileTransferController = fileManager.fileTransferController;
+
+    event.canExecute = !!fileTransferController &&
+        fileTransferController.queryPasteCommandEnabled(
+            fileManager.directoryModel.getCurrentDirEntry());
   }
 });
 
