@@ -152,6 +152,30 @@
       "revId": "20aa99dc319078db1e9ed5504c2e0b1d0a6c9e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af3f600_563b841c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/webcontents/AccessibilitySnapshotTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-23T13:41:16Z",
+      "side": 1,
+      "message": "Production means chrome in real world, right?\nSorry, but I am not versed on the real world usage of this API.\n\ndmazzoni@, could you please let me know the real world usage of this API and how I can test it?\nAnd please give us your opinion on it.\nDo you think scaling child.textSize by DSF when --use-zoom-for-dsf is enabled is expected result?",
+      "parentUuid": "e70bebcc_fa5ed234",
+      "range": {
+        "startLine": 139,
+        "startChar": 38,
+        "endLine": 139,
+        "endChar": 52
+      },
+      "revId": "20aa99dc319078db1e9ed5504c2e0b1d0a6c9e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
