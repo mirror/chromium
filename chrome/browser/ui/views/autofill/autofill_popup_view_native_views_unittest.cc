@@ -39,6 +39,11 @@ const struct TypeClicks kClickTestCase[] = {
     {autofill::POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY, 1},
 };
 
+// An empty string is needed for the mock implementation of GetElidedLabelAt.
+// The constref return type means it can't be local, since it needs to outlast
+// the call.
+const base::string16 kDummyElidedLabel;
+
 class MockAutofillPopupController : public autofill::AutofillPopupController {
  public:
   MockAutofillPopupController() {
@@ -78,12 +83,17 @@ class MockAutofillPopupController : public autofill::AutofillPopupController {
   const base::string16& GetElidedValueAt(int i) const override {
     return suggestions_[i].value;
   }
-  MOCK_CONST_METHOD1(GetElidedLabelAt, const base::string16&(int row));
+
+  const base::string16& GetElidedLabelAt(int row) const override {
+    return kDummyElidedLabel;
+  }
+
   MOCK_METHOD3(GetRemovalConfirmationText,
                bool(int index, base::string16* title, base::string16* body));
   MOCK_METHOD1(RemoveSuggestion, bool(int index));
   MOCK_CONST_METHOD1(GetBackgroundColorIDForRow,
                      ui::NativeTheme::ColorId(int index));
+  MOCK_METHOD1(SetSelectedLine, void(base::Optional<int> selected_line));
   MOCK_CONST_METHOD0(selected_line, base::Optional<int>());
   const autofill::AutofillPopupLayoutModel& layout_model() const override {
     return *layout_model_;
