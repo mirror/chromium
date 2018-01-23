@@ -144,13 +144,12 @@ UI.SuggestBox = class {
   }
 
   /**
-   * @suppressGlobalPropertiesCheck
+   * @param {!Window} window
    */
-  _show() {
+  _show(window) {
     if (this.visible())
       return;
-    // TODO(dgozman): take document as a parameter.
-    this._glassPane.show(document);
+    this._glassPane.show(window.document);
     this._rowHeight =
         UI.measurePreferredSize(this.createElementForItem({text: '1', subtitle: '12'}), this._element).height;
   }
@@ -314,7 +313,7 @@ UI.SuggestBox = class {
     if (this._canShowBox(completions, canShowForSingleItem, userEnteredText)) {
       this._userEnteredText = userEnteredText;
 
-      this._show();
+      this._show(anchorBox.window);
       this._updateMaxSize(completions);
       this._glassPane.setContentAnchorBox(anchorBox);
       this._list.invalidateItemHeight();

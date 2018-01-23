@@ -422,7 +422,8 @@ TextEditor.TextEditorAutocompleteController = class {
     var line = this._queryRange.startLine;
     var column = this._queryRange.startColumn;
     var metrics = this._textEditor.cursorPositionToCoordinates(line, column);
-    this._anchorBox = metrics ? new AnchorBox(metrics.x, metrics.y, 0, metrics.height) : null;
+    this._anchorBox =
+        metrics ? new AnchorBox(this._textEditor.element.window(), metrics.x, metrics.y, 0, metrics.height) : null;
   }
 };
 

@@ -406,7 +406,9 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
 
       var leftCorner = this.textEditor.cursorPositionToCoordinates(textSelection.startLine, textSelection.startColumn);
       var rightCorner = this.textEditor.cursorPositionToCoordinates(textSelection.endLine, textSelection.endColumn);
-      anchorBox = new AnchorBox(leftCorner.x, leftCorner.y, rightCorner.x - leftCorner.x, leftCorner.height);
+      anchorBox = new AnchorBox(
+          this.textEditor.element.window(), leftCorner.x, leftCorner.y, rightCorner.x - leftCorner.x,
+          leftCorner.height);
       lineNumber = textSelection.startLine;
       startHighlight = textSelection.startColumn;
       endHighlight = textSelection.endColumn - 1;
@@ -424,7 +426,9 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
 
       var leftCorner = this.textEditor.cursorPositionToCoordinates(lineNumber, token.startColumn);
       var rightCorner = this.textEditor.cursorPositionToCoordinates(lineNumber, token.endColumn - 1);
-      anchorBox = new AnchorBox(leftCorner.x, leftCorner.y, rightCorner.x - leftCorner.x, leftCorner.height);
+      anchorBox = new AnchorBox(
+          this.textEditor.element.window(), leftCorner.x, leftCorner.y, rightCorner.x - leftCorner.x,
+          leftCorner.height);
 
       startHighlight = token.startColumn;
       endHighlight = token.endColumn - 1;

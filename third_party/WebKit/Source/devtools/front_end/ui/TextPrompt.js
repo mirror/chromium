@@ -428,6 +428,7 @@ UI.TextPrompt = class extends Common.Object {
   /**
    * @param {!Selection} selection
    * @param {!Range} textRange
+   * @return {!AnchorBox}
    */
   _boxForAnchorAtStart(selection, textRange) {
     var rangeCopy = selection.getRangeAt(0).cloneRange();

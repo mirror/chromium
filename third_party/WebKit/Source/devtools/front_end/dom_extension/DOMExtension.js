@@ -442,16 +442,19 @@ Element.prototype.createSVGChild = function(childType, className) {
  */
 var AnchorBox = class {
   /**
+   * @param {!Window} window
    * @param {number=} x
    * @param {number=} y
    * @param {number=} width
    * @param {number=} height
    */
-  constructor(x, y, width, height) {
+  constructor(window, x, y, width, height) {
     this.x = x || 0;
     this.y = y || 0;
     this.width = width || 0;
     this.height = height || 0;
+    /** @type {!Window} */
+    this.window = window;
   }
 
   /**
@@ -469,7 +472,7 @@ var AnchorBox = class {
  * @return {!AnchorBox}
  */
 AnchorBox.prototype.relativeTo = function(box) {
-  return new AnchorBox(this.x - box.x, this.y - box.y, this.width, this.height);
+  return new AnchorBox(box.window, this.x - box.x, this.y - box.y, this.width, this.height);
 };
 
 /**
@@ -495,8 +498,7 @@ AnchorBox.prototype.equals = function(anchorBox) {
  */
 Element.prototype.boxInWindow = function(targetWindow) {
   targetWindow = targetWindow || this.ownerDocument.defaultView;
-
-  var anchorBox = new AnchorBox();
+  var anchorBox = new AnchorBox(this.window());
   var curElement = this;
   var curWindow = this.ownerDocument.defaultView;
   while (curWindow && curElement) {
@@ -510,6 +512,7 @@ Element.prototype.boxInWindow = function(targetWindow) {
 
   anchorBox.width = Math.min(this.offsetWidth, targetWindow.innerWidth - anchorBox.x);
   anchorBox.height = Math.min(this.offsetHeight, targetWindow.innerHeight - anchorBox.y);
+  anchorBox.window = targetWindow;
   return anchorBox;
 };
 

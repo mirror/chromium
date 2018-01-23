@@ -440,7 +440,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
       return null;
     var anchor = element.enclosingNodeOrSelfWithClass('text-editor-line-decoration-icon') ?
         element.boxInWindow() :
-        new AnchorBox(event.clientX, event.clientY, 1, 1);
+        new AnchorBox(element.window(), event.clientX, event.clientY, 1, 1);
     return {
       box: anchor,
       show: popover => {
