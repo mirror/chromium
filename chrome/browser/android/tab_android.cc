@@ -307,6 +307,7 @@ void TabAndroid::SwapTabContents(content::WebContents* old_contents,
                                  content::WebContents* new_contents,
                                  bool did_start_load,
                                  bool did_finish_load) {
+  LOG(WARNING) << "thildebr -- swapping tab contents tab_android";
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_Tab_swapWebContents(env, weak_java_tab_.get(env),
                            new_contents->GetJavaWebContents(), did_start_load,
@@ -379,6 +380,7 @@ void TabAndroid::InitWebContents(
     const JavaParamRef<jobject>& jweb_contents,
     const JavaParamRef<jobject>& jweb_contents_delegate,
     const JavaParamRef<jobject>& jcontext_menu_populator) {
+  LOG(WARNING) << "thildebr -- init web contents tab_android";
   web_contents_.reset(content::WebContents::FromJavaWebContents(jweb_contents));
   DCHECK(web_contents_.get());
 

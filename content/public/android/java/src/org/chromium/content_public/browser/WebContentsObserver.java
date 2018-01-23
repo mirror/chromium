@@ -164,6 +164,7 @@ public abstract class WebContentsObserver {
         final WebContents webContents = mWebContents.get();
         mWebContents = null;
         if (webContents == null) return;
+        android.util.Log.w("thildebr", "actually removing the observer");
         webContents.removeObserver(this);
     }
 
