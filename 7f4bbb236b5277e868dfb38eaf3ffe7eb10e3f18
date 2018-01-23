@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "129ec83c_a84389a0",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-23T20:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e92c72_66e5464c",
+      "revId": "7f4bbb236b5277e868dfb38eaf3ffe7eb10e3f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b1a5a27_d27cfcc2",
         "filename": "ash/wm/overview/window_selector_item.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T17:59:36Z",
       "side": 1,
       "message": "Seems it\u0027s the only place to call this function (excluding the unittests). It should be able to extract the calculation of |window_selector_bounds_| here or to a member function of ScopedTransformOverviewWindow to avoid adding the new parameter. It does seem like the calculation of |window_selector_bounds_| only relies on |target_bounds| and |title_height|. Or if it\u0027s really necessary to calculate it there, maybe you should turn this function to a non-static member function.",
+      "revId": "7f4bbb236b5277e868dfb38eaf3ffe7eb10e3f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed96e60b_3cc786aa",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-23T20:27:11Z",
+      "side": 1,
+      "message": "It also relies on |screen_rect| and |top_view_inset|, and i think it makes more sense to put it in that function, so i converted to non-static.",
+      "parentUuid": "7b1a5a27_d27cfcc2",
       "revId": "7f4bbb236b5277e868dfb38eaf3ffe7eb10e3f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
