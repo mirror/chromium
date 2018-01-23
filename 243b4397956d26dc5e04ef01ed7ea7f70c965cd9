@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a4c29524_40d6f81e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T06:43:17Z",
+      "side": 1,
+      "message": "OK. Will do the move in a follow-up patch.",
+      "parentUuid": "12dc3e86_0551c7fb",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657cc32c_a439332a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 38
