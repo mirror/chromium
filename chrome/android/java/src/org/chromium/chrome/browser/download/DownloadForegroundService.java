@@ -4,9 +4,11 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadNotificationService2.getNextNotificationId;
 import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ServiceCompat;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.AppHooks;
 
@@ -38,15 +41,30 @@ public class DownloadForegroundService extends Service {
     }
 
     /**
-     * Update the foreground service to be pinned to a different notification.
-     * @param notificationId The id of the new notification to be pinned to.
-     * @param notification The new notification to be pinned to.
+     * Start the foreground service or update it to be pinned to a different notification.
+     *
+     * @param newNotificationId The ID of the new notification to pin the service to.
+     * @param newNotification   The new notification to be pinned to the service.
+     * @param oldNotificationId The ID of the original notification that was pinned to the service,
+     *                          can be INVALID_NOTIFICATION_ID if the service is just starting.
+     * @param oldNotification   The original notification the service was pinned to, in case an
+     *                          adjustment needs to be made (in the case it could not be detached).
      */
-    public void startOrUpdateForegroundService(int notificationId, Notification notification) {
-        // If possible, detach notification so it doesn't get cancelled by accident.
-        if (isSdkAtLeast24()) stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_DETACH);
-
-        startForegroundInternal(notificationId, notification);
+    public void startOrUpdateForegroundService(int newNotificationId, Notification newNotification,
+            int oldNotificationId, Notification oldNotification) {
+        Log.e("joy", "startOrUpdateForegroundService");
+        // Handle notifications and start foreground.
+        if (Build.VERSION.SDK_INT >= 24) {
+            Log.e("joy", "SDK_INT >= 24");
+            // If possible, detach notification so it doesn't get cancelled by accident.
+            stopForegroundInternal(STOP_FOREGROUND_DETACH);
+            startForegroundInternal(newNotificationId, newNotification);
+        } else {
+            Log.e("joy", "SDK_INT < 24");
+            // Otherwise start the foreground and relaunch the originally pinned notification.
+            startForegroundInternal(newNotificationId, newNotification);
+            relaunchOldNotification(oldNotificationId, oldNotification);
+        }
 
         // Record when starting foreground and when updating pinned notification.
         int pinnedNotificationId = getPinnedNotificationId();
@@ -54,48 +72,97 @@ public class DownloadForegroundService extends Service {
             DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
                     DownloadNotificationUmaHelper.ForegroundLifecycle.START);
         } else {
-            if (pinnedNotificationId != notificationId) {
+            if (pinnedNotificationId != newNotificationId) {
                 DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
                         DownloadNotificationUmaHelper.ForegroundLifecycle.UPDATE);
             }
         }
-        updatePinnedNotificationId(notificationId);
+        updatePinnedNotificationId(newNotificationId);
     }
 
     /**
      * Stop the foreground service that is running.
      *
-     * @param detachNotification Whether to try to detach the notification from the service (only
-     *                           works for API >= 24).
+     * @param detachNotification Whether to try to detach the notification from the service.
      * @param killNotification   Whether to kill the notification with the service.
      * @return                   Whether the notification was handled properly (ie. it was detached
      *                           or killed as intended). If this returns false, the notification id
      *                           will be persisted in shared preferences to be handled later.
      */
-    public boolean stopDownloadForegroundService(
-            boolean detachNotification, boolean killNotification) {
+    public boolean stopDownloadForegroundService(boolean detachNotification,
+            boolean killNotification, int pinnedNotificationId, Notification pinnedNotification) {
+        Log.e("joy", "stopDownloadForegroundService");
         // Record when stopping foreground.
         DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
                 DownloadNotificationUmaHelper.ForegroundLifecycle.STOP);
         DownloadNotificationUmaHelper.recordServiceStoppedHistogram(
                 DownloadNotificationUmaHelper.ServiceStopped.STOPPED, true /* withForeground */);
 
-        boolean notificationDetached = detachNotification && isSdkAtLeast24();
-        boolean notificationDetachedOrKilled = notificationDetached || killNotification;
+        // Handle notifications and stop foreground.
+        boolean notificationHandledProperly;
+        if (Build.VERSION.SDK_INT >= 24) {
+            Log.e("joy", "SDK_INT >= 24");
+            // Android N+ has the option to detach notifications from the service, so detach or kill
+            // the notification as needed when stopping service.
+            int flag = (detachNotification) ? STOP_FOREGROUND_DETACH : STOP_FOREGROUND_REMOVE;
+            stopForegroundInternal(flag);
+            notificationHandledProperly = true;
 
-        // Reset pinned notification if notification is properly detached or killed.
-        if (notificationDetachedOrKilled) clearPinnedNotificationId();
+        } else if (Build.VERSION.SDK_INT >= 23) {
+            Log.e("joy", "SDK_INT >= 23");
+            // Android M+ can't detach the notification but doesn't have other caveats. Kill the
+            // notification and relaunch if detach was desired.
+            stopForegroundInternal(killNotification);
+            if (detachNotification && killNotification) {
+                relaunchOldNotification(pinnedNotificationId, pinnedNotification);
+            }
 
-        // Detach notification from foreground if possible.
-        if (notificationDetached) {
-            stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_DETACH);
-            return true;
+            // Notification is handled properly if killed or relaunched.
+            notificationHandledProperly = !detachNotification || killNotification;
+
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            Log.e("joy", "SDK_INT >= 21");
+            // In phones that are Lollipop and older (API < 23), the service gets killed with the
+            // task, which might result in the notification being unable to be relaunched where it
+            // needs to be. Relaunch the old notification before stopping the service.
+            if (detachNotification && killNotification) {
+                relaunchOldNotification(getNextNotificationId(), pinnedNotification);
+            }
+            stopForegroundInternal(killNotification);
+
+            // Notification is handled properly if killed or relaunched.
+            notificationHandledProperly = !detachNotification || killNotification;
+
+        } else {
+            Log.e("joy", "SDK_INT < 21");
+            // For pre-Lollipop phones (API < 21), we need to kill all notification because
+            // otherwise the notification gets stuck in the ongoing state.
+            relaunchOldNotification(getNextNotificationId(), pinnedNotification);
+            stopForegroundInternal(true);
+            notificationHandledProperly = true;
         }
 
-        // Otherwise, just stop the foreground, kill notification and/or correct it elsewhere.
-        stopForegroundInternal(killNotification);
+        // If the notification was handled properly (ie. killed or detached), clear observer and
+        // stored pinned ID. Otherwise, continue persisting this information in case it is needed.
+        if (notificationHandledProperly) {
+            DownloadForegroundServiceObservers.removeObserver(
+                    DownloadNotificationServiceObserver.class);
+            clearPinnedNotificationId();
+        }
+        Log.e("joy", "notificationHandledProperly: " + notificationHandledProperly);
 
-        return notificationDetachedOrKilled;
+        return notificationHandledProperly;
+    }
+
+    private void relaunchOldNotification(int notificationId, Notification notification) {
+        Log.e("joy", "relaunchOldNotification notificationId: " + 99999);
+        if (notificationId != INVALID_NOTIFICATION_ID && notification != null) {
+            NotificationManager notificationManager =
+                    (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
+                            Context.NOTIFICATION_SERVICE);
+            Log.e("joy", "notifying");
+            notificationManager.notify(99999, notification);
+        }
     }
 
     @Override
@@ -192,16 +259,19 @@ public class DownloadForegroundService extends Service {
 
     @VisibleForTesting
     void startForegroundInternal(int notificationId, Notification notification) {
+        Log.e("joy", "startForegroundInternal notificationId: " + notificationId);
         startForeground(notificationId, notification);
     }
 
     @VisibleForTesting
     void stopForegroundInternal(int flags) {
+        Log.e("joy", "stopForegroundInternal flags: " + flags);
         ServiceCompat.stopForeground(this, flags);
     }
 
     @VisibleForTesting
     void stopForegroundInternal(boolean removeNotification) {
+        Log.e("joy", "stopForegroundInternal removeNotification: " + removeNotification);
         stopForeground(removeNotification);
     }
 

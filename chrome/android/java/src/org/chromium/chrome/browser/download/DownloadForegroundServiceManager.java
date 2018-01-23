@@ -4,11 +4,9 @@
 
 package org.chromium.chrome.browser.download;
 
-import static org.chromium.chrome.browser.download.DownloadNotificationService2.getNextNotificationId;
 import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +66,7 @@ public class DownloadForegroundServiceManager {
 
     public void updateDownloadStatus(Context context, DownloadStatus downloadStatus,
             int notificationId, Notification notification) {
+        Log.e("joy", "updateDownloadStatus downloadStatus: " + downloadStatus);
         mDownloadUpdateQueue.put(notificationId,
                 new DownloadUpdate(notificationId, notification, downloadStatus, context));
         processDownloadUpdateQueue(false /* not isProcessingPending */);
@@ -206,52 +205,14 @@ public class DownloadForegroundServiceManager {
 
     @VisibleForTesting
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
+        Log.e("joy", "startOrUpdateForegroundService");
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
-            mBoundService.startOrUpdateForegroundService(notificationId, notification);
-
-            // In the case that there was another notification pinned to the foreground, re-launch
-            // that notification because it gets cancelled in the switching process.
-            // This does not happen for API >= 24.
-            if (mPinnedNotificationId != notificationId && Build.VERSION.SDK_INT < 24) {
-                relaunchPinnedNotification();
-            }
-
-            mPinnedNotificationId = notificationId;
-        }
-    }
-
-    /**
-     * General use case for the method that just relaunches the pinned notification using the
-     * original, stored id of the pinned notification.
-     */
-    private void relaunchPinnedNotification() {
-        relaunchPinnedNotification(mPinnedNotificationId);
-    }
-
-    /**
-     * Relaunches the pinned notification based on a specified id.
-     * Used mainly for cases where a notification id needs to be specified (ie. when a new
-     * notification id needs to be retrieved so this notification does not get destroyed when the
-     * service gets destroyed in the complete/faile cases in pre-Marshmallow devices).
-     *
-     * @param notificationId Specific notification id to use for relaunching the notification.
-     */
-    private void relaunchPinnedNotification(int notificationId) {
-        if (mPinnedNotificationId != INVALID_NOTIFICATION_ID
-                && notificationId != INVALID_NOTIFICATION_ID
-                && mDownloadUpdateQueue.containsKey(mPinnedNotificationId)
-                && mDownloadUpdateQueue.get(mPinnedNotificationId).mDownloadStatus
-                        != DownloadStatus.CANCEL) {
-            NotificationManager notificationManager =
-                    (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
-                            Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(
-                    notificationId, mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
-
-            // Record the need to relaunch the notification.
-            DownloadNotificationUmaHelper.recordNotificationFlickerCountHistogram(
-                    DownloadNotificationUmaHelper.LaunchType.RELAUNCH);
+            DownloadUpdate downloadUpdate = mDownloadUpdateQueue.get(mPinnedNotificationId);
+            Notification oldNotification =
+                    (downloadUpdate == null) ? null : downloadUpdate.mNotification;
+            mBoundService.startOrUpdateForegroundService(
+                    notificationId, notification, mPinnedNotificationId, oldNotification);
         }
     }
 
@@ -259,67 +220,43 @@ public class DownloadForegroundServiceManager {
 
     @VisibleForTesting
     void stopAndUnbindService(DownloadStatus downloadStatus) {
+        Log.e("joy", "stopAndUnbindService downloadStatus: " + downloadStatus);
         Preconditions.checkNotNull(mBoundService);
         mIsServiceBound = false;
-
-        // In phones that are Lollipop and older, the service gets killed with the task, which might
-        // result in the notification being unable to be relaunched in the COMPLETE and FAIL cases.
-        // Pre-emptively launch a replacement notification before the service is stopped/killed.
-        boolean needAdjustCompleteAndFailPreMarshmallow =
-                isPreMarshmallow() && downloadStatus != DownloadStatus.PAUSE;
-        if (needAdjustCompleteAndFailPreMarshmallow) {
-            relaunchPinnedNotification(getNextNotificationId());
-        }
-
-        // For pre-Lollipop phones (API < 21), we need to kill the notification in the pause case
-        // because otherwise the notification gets stuck in the ongoing state.
-        boolean needAdjustPauseNotificationPreLollipop =
-                isPreLollipop() && downloadStatus == DownloadStatus.PAUSE;
 
         // Pause: only try to detach, do not kill notification.
         // Complete/failed: try to detach, if that doesn't work, kill,
         //                  In (pre-Marshmallow), only kill the notification.
         // Cancel: don't even try to detach, just kill.
-
-        boolean detachNotification =
-                (downloadStatus == DownloadStatus.PAUSE || downloadStatus == DownloadStatus.COMPLETE
-                        || downloadStatus == DownloadStatus.FAIL)
-                && !needAdjustCompleteAndFailPreMarshmallow;
+        boolean detachNotification = downloadStatus == DownloadStatus.PAUSE
+                || downloadStatus == DownloadStatus.COMPLETE
+                || downloadStatus == DownloadStatus.FAIL;
         boolean killNotification = downloadStatus == DownloadStatus.CANCEL
                 || downloadStatus == DownloadStatus.COMPLETE
-                || downloadStatus == DownloadStatus.FAIL || needAdjustPauseNotificationPreLollipop
-                || needAdjustCompleteAndFailPreMarshmallow;
+                || downloadStatus == DownloadStatus.FAIL;
 
-        boolean notificationHandledProperly =
-                stopAndUnbindServiceInternal(detachNotification, killNotification);
+        DownloadUpdate downloadUpdate = mDownloadUpdateQueue.get(mPinnedNotificationId);
+        Notification oldNotification =
+                (downloadUpdate == null) ? null : downloadUpdate.mNotification;
+        boolean notificationHandledProperly = stopAndUnbindServiceInternal(
+                detachNotification, killNotification, mPinnedNotificationId, oldNotification);
+        Log.e("joy", "notificationHandledProperly: " + notificationHandledProperly);
+
         mBoundService = null;
 
-        // Relaunch notification so it is no longer pinned to the foreground service when the
-        // download is completed/failed or if a pre-Lollipop adjustment is needed.
-        // Make sure not to relaunch if it had been pre-emptively launched if pre-Marshmallow.
-        boolean needRelaunchCompleteAndFailPreNougat =
-                downloadStatus != DownloadStatus.PAUSE && Build.VERSION.SDK_INT < 24;
-        if ((needRelaunchCompleteAndFailPreNougat || needAdjustPauseNotificationPreLollipop)
-                && !needAdjustCompleteAndFailPreMarshmallow) {
-            relaunchPinnedNotification();
-        }
-
-        // Only reset the pinned notification if it was killed or detached.
+        // Only if the notification was handled properly (ie. detached or killed), reset stored ID.
         if (notificationHandledProperly) mPinnedNotificationId = INVALID_NOTIFICATION_ID;
     }
 
     @VisibleForTesting
-    boolean stopAndUnbindServiceInternal(boolean detachNotification, boolean killNotification) {
-        boolean notificationHandledProperly =
-                mBoundService.stopDownloadForegroundService(detachNotification, killNotification);
+    boolean stopAndUnbindServiceInternal(boolean detachNotification, boolean killNotification,
+            int pinnedNotificationId, Notification pinnedNotification) {
+        Log.e("joy", "stopAndUnbindServiceInternal");
+        boolean notificationHandledProperly = mBoundService.stopDownloadForegroundService(
+                detachNotification, killNotification, pinnedNotificationId, pinnedNotification);
+
+        Log.e("joy", "unbinding service");
         ContextUtils.getApplicationContext().unbindService(mConnection);
-
-        // Only remove the observer if the notification has been detached or killed.
-        if (notificationHandledProperly) {
-            DownloadForegroundServiceObservers.removeObserver(
-                    DownloadNotificationServiceObserver.class);
-        }
-
         return notificationHandledProperly;
     }
 
