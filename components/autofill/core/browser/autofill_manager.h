@@ -244,9 +244,6 @@ class AutofillManager : public AutofillHandler,
                                 const FormFieldData& field,
                                 const gfx::RectF& bounding_box,
                                 const base::TimeTicks timestamp) override;
-  void OnTextFieldDidScrollImpl(const FormData& form,
-                                const FormFieldData& field,
-                                const gfx::RectF& bounding_box) override {}
   void OnQueryFormFieldAutofillImpl(int query_id,
                                     const FormData& form,
                                     const FormFieldData& field,

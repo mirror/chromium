@@ -36,10 +36,6 @@ class AutofillProviderAndroid : public AutofillProvider {
                             const FormFieldData& field,
                             const gfx::RectF& bounding_box,
                             const base::TimeTicks timestamp) override;
-  void OnTextFieldDidScroll(AutofillHandlerProxy* handler,
-                            const FormData& form,
-                            const FormFieldData& field,
-                            const gfx::RectF& bounding_box) override;
   bool OnWillSubmitForm(AutofillHandlerProxy* handler,
                         const FormData& form,
                         const base::TimeTicks timestamp) override;
