@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd2bab7f_8159ab67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Is this still being used in some test files? Maybe a // TODO to remove completely?",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902aeabc_3635d774",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Should we excise this in this patch as well? Okay to leave for a follow up too.",
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a534d1d_7280d2ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "I was thinking about this more, and if we add the @Deprecated annotation then we\u0027ll generate some compiler warnings.. perhaps we should just update the comment to say THIS IS DEPRECATED. DO NOT USE! or something like that.",
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb724cb_9ddb4172",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Let\u0027s add a message or comment here about why it\u0027s disabled.",
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623e3ea6_98805e19",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetUiCaptureTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Same here and for other tests.",
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab042174_f4f1d07c",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be disabled entirely.  There are only a handful of tests with Chrome Home enabled.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6e22b0_ef8645ab",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Some of these tests disable ChromeHome",
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2b39b8_58da3732",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-23T22:31:58Z",
+      "side": 1,
+      "message": "Should we take this away now? Probably about time to send an FYI to the test team.",
+      "range": {
+        "startLine": 1848,
+        "startChar": 4,
+        "endLine": 1850,
+        "endChar": 0
+      },
+      "revId": "31240d0fea82cc10a6f814f25ca60366fe727113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
