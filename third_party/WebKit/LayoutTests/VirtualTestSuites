@@ -637,5 +637,10 @@
     "prefix": "unified-autoplay",
     "base": "external/wpt/feature-policy",
     "args": ["--autoplay-policy=document-user-activation-required"]
+  },
+   {
+    "prefix": "site-per-process",
+    "base": "http/tests/svg/as-object",
+    "args": ["--site-per-process"]
   }
 ]
