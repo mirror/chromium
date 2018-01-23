@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ab0aba19_5b9bc66f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T15:12:30Z",
+      "side": 1,
+      "message": "Ack. I had a conversation with foolip a while back about this. I think \"expect\" instead of \"assert\" would be a great addition to WPT. To be discussed elsewhere.",
+      "parentUuid": "83a8303d_7c248146",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab28b8ac_0ddf083a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
         "patchSetId": 1
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "44c9f50f_312f6451",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T15:12:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91a96de2_e4b4d64f",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d44b1a5_6096b961",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
         "patchSetId": 1
@@ -153,6 +189,24 @@
       "side": 1,
       "message": "Oops. I commented out a number of tests while trying to verify that I\u0027d caught all the erroneous ones, and I missed this one. Will remove the commenting-out.\n\nAgreed that the use of assert_ not expect_ is an issue. But not going to solve in this CL.",
       "parentUuid": "4d44b1a5_6096b961",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "021a97ba_0c6ee3b1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-23T15:12:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99e88bb9_fc5a8efe",
       "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
