@@ -12,7 +12,6 @@
 async_test(function(t) {
 
     var storage = window.sessionStorage;
-    storage.clear();
 
     storage.setItem("FOO", "BAR");
     var win = window.open("resources/storage_session_window_open_second.html");

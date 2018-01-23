@@ -341,8 +341,10 @@ int64_t DOMStorageContextImpl::AllocateSessionId() {
 }
 
 std::string DOMStorageContextImpl::AllocatePersistentSessionId() {
+  constexpr const static size_t kPersistentSessionIdLength = 36;
   std::string guid = base::GenerateGUID();
   std::replace(guid.begin(), guid.end(), '-', '_');
+  DCHECK_EQ(guid.size(), kPersistentSessionIdLength);
   return guid;
 }
 
@@ -442,6 +444,7 @@ void DOMStorageContextImpl::ClearSessionOnlyOrigins() {
       sql::Connection::Delete(database_file_path);
     }
   }
+  // xxx: move to new impl
   if (session_storage_database_.get()) {
     std::vector<SessionStorageUsageInfo> infos;
     GetSessionStorageUsage(&infos);

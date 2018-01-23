@@ -80,16 +80,20 @@ class CONTENT_EXPORT LocalStorageCachedArea
 
   size_t memory_used() const { return map_ ? map_->memory_used() : 0; }
 
+  bool IsSessionStorage() const {
+    return namespace_id_ != kLocalStorageNamespaceId;
+  }
+
  private:
   friend class base::RefCounted<LocalStorageCachedArea>;
   ~LocalStorageCachedArea() override;
 
   friend class LocalStorageCachedAreaTest;
 
-  static base::string16 Uint8VectorToString16(
-      const std::vector<uint8_t>& input);
-  static std::vector<uint8_t> String16ToUint8Vector(
-      const base::string16& input);
+  static base::string16 Uint8VectorToString16(const std::vector<uint8_t>& input,
+                                              bool force_plain_utf_16);
+  static std::vector<uint8_t> String16ToUint8Vector(const base::string16& input,
+                                                    bool force_plain_utf_16);
 
   // LevelDBObserver:
   void KeyAdded(const std::vector<uint8_t>& key,
