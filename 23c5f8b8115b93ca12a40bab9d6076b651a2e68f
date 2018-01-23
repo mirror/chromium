@@ -52,6 +52,24 @@
       "revId": "23c5f8b8115b93ca12a40bab9d6076b651a2e68f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f0aafec_1914e638",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-23T20:16:57Z",
+      "side": 1,
+      "message": "Thanks for the question. I thought I had tried with PS 27 and checked again with this fix reverted and it worked. I was confused until I realized that after the changes to local printing at the end of last year, this code is never actually called when printing from Print Preview. I tested with system dialog printing, and it does indeed break with PS27. However, it was good to check as it turns out this was no longer doing the right thing even with the fix applied, and I had not noticed due to testing from Print Preview. We shouldn\u0027t actually scale at all here, but instead let this function generate a PDF just like it does for Print Preview, and do the scaling in pdfium_engine before sending to the printer.",
+      "parentUuid": "0414593b_39c006e4",
+      "revId": "23c5f8b8115b93ca12a40bab9d6076b651a2e68f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
