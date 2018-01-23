@@ -295,6 +295,14 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // Notification that the LegacyRenderWidgetHostHWND was destroyed.
   void OnLegacyWindowDestroyed();
+
+  // The added CompositorAnimationObserver will be called on each begin frame
+  // until it removes.
+  void AddCompositorAnimationObserver(
+      ui::CompositorAnimationObserver* observer);
+  void RemoveCompositorAnimationObserver(
+      ui::CompositorAnimationObserver* observer);
+
 #endif
 
   // Method to indicate if this instance is shutting down or closing.
