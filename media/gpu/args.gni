@@ -14,3 +14,9 @@ declare_args() {
   # is typically the case on x86-based ChromeOS devices.
   use_vaapi = false
 }
+
+if (current_toolchain != default_toolchain) {
+  use_v4lplugin = false
+  use_v4l2_codec = false
+  use_vaapi = false
+}
