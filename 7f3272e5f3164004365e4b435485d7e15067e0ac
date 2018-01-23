@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae89a10b_14e1e761",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-23T11:28:21Z",
+      "side": 0,
+      "message": "Please keep this with a comment like \"// Obsolete.\".",
+      "revId": "7f3272e5f3164004365e4b435485d7e15067e0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30332e0f_47b643a2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 17546,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-23T11:28:21Z",
+      "side": 0,
+      "message": "Please keep this with \"(obsolete)\" \n\u003cint value\u003d\"2231\"\n      label\u003d\"RespondToSameOriginRequestWithCrossOriginResponse (obsolete)\"/\u003e",
+      "revId": "7f3272e5f3164004365e4b435485d7e15067e0ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
