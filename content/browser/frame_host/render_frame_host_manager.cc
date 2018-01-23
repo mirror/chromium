@@ -49,6 +49,7 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
+#include "ui/base/ui_base_switches_util.h"
 
 namespace content {
 
@@ -1775,8 +1776,13 @@ void RenderFrameHostManager::CreateOuterDelegateProxy(
 
 void RenderFrameHostManager::SetRWHViewForInnerContents(
     RenderWidgetHostView* child_rwhv) {
-  DCHECK(ForInnerDelegate() && frame_tree_node_->IsMainFrame());
-  GetProxyToOuterDelegate()->SetChildRWHView(child_rwhv);
+  // TODO(rjkroege): This code should not be used in --mash mode. Rationalize
+  // the distribution of FSIDs when running in --mash mode.
+  // https://crbug.com/804508
+  if (!switches::IsMusHostingViz()) {
+    DCHECK(ForInnerDelegate() && frame_tree_node_->IsMainFrame());
+    GetProxyToOuterDelegate()->SetChildRWHView(child_rwhv);
+  }
 }
 
 bool RenderFrameHostManager::InitRenderView(
