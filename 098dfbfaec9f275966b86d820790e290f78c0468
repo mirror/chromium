@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c127d6_8fd6030e",
+        "filename": "chrome/browser/extensions/content_capabilities_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T20:42:37Z",
+      "side": 1,
+      "message": "I assume kUserActivationV2 will be the eventual default and completely replace the old model? i.e. subframes will never get activation just because an ancestor frame did?",
+      "revId": "098dfbfaec9f275966b86d820790e290f78c0468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
