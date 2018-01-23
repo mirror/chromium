@@ -88,6 +88,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d36d1d_5cea6344",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T17:59:12Z",
+      "side": 1,
+      "message": "This seems acceptable to me for now, but I think my preferred \"real\" solution here would be to decompose public/cpp into two targets: cpp_base, which does not depend on interfaces/bindings, and cpp which depends on both cpp_base and interfaces/bindings. And then I would agree that we make the bindings target a mojom_component. Am I missing any reason why this wouldn\u0027t work?",
+      "parentUuid": "ee7db574_d6c13c38",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
