@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9913191b_1bb03f37",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T17:00:02Z",
+      "side": 1,
+      "message": "nit: target_cpu -\u003e current_cpu",
+      "revId": "f1a9b6792ce86bda6c8944e1db6ce725a04854a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
