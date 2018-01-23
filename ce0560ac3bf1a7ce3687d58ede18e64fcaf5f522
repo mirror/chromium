@@ -22,6 +22,30 @@
       "revId": "ce0560ac3bf1a7ce3687d58ede18e64fcaf5f522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa50f59_2462fc34",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-23T23:35:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2d8e02d3_0418e15d",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 52
+      },
+      "revId": "ce0560ac3bf1a7ce3687d58ede18e64fcaf5f522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
