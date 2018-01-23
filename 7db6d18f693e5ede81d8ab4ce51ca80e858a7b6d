@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad23e7d_61f252b6",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "This needs to be localized (e.g. the % may be placed before the value, see IDS_ONC_TETHER_BATTERY_PERCENTAGE_VALUE).",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbddd5c_562e75cb",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "In the mocks I saw lined in the issue there is only one slider but this adds a second slider, are there mocks with that? Since this is behind a flag we don\u0027t need to block this on that but since two sliders may be confusing we should definitely have a UX mock for this before we ship it.",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63dbefc_24fb8260",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "const ZOOM_FACTOR_DELTAS",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d301a942_66701f46",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "Are these enforced in the C++ code? If not they should be, and if so we should pass the same values to the UI in loadTimeData (similar to enableDisplayZoomSetting).",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a26af6_d0ac2386",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "NUM_ZOOM_TICKS",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fdcfec_382dc81c",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "For low res screens is it possible for delta to be \u003c 10? In that case do we need to change the effective number of zoom ticks (in which case NUM_ZOOM_TICKS would become MAX_ZOOM_TICKS)? If that shouldn\u0027t be possible, maybe assert(delta \u003e\u003d ZoomFactorDeltas[0]) ?",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd2ac7f_96ec2c88",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "The above logic is a bit confusing and does duplicate work.\n\nCan it be changed to calculate idx first then use that, e.g.\n\nlet idx \u003d 0;\nwhile (idx \u003c ZoomFactorDeltas.length - 1 \u0026\u0026 delta \u003e\u003d ZoomFactorDeltas[idx])\n  idx++;\nlet delta \u003d ZoomFactorDeltas[idx];\n// calc minZoom and maxZoom once",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3658cee2_5ec5e8ef",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "Also needs to be localized (can use the same IDS)",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969917b8_4a5d2ac4",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-23T16:53:29Z",
+      "side": 1,
+      "message": "nit: outer () shouldn\u0027t be needed",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
