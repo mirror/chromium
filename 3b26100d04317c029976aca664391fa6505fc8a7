@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9338c7c4_a835321a",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-23T20:59:04Z",
+      "side": 1,
+      "message": "I imagine there\u0027s some equivalent for Android. Is this simply because contextual zero suggest isn\u0027t enabled on Android? If so, a comment to that effect might be helpful.",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104866a3_54df7161",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-23T20:59:04Z",
+      "side": 1,
+      "message": "I think the \"last visit\" terminology is potentially confusing. It sounds to my ear like that means the time of the previous visit (\"the last time I visited this page\"). How about GetCurrentVisitTimestamp instead?",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c09190_47fa67d2",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-23T20:59:04Z",
+      "side": 1,
+      "message": "Why subtract base::Time()? Based on a cursory reading of that class, it seems like that would have no effect (Time() is defined as 0). If it\u0027s necessary for whatever reason, can you add a comment explaining?",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
