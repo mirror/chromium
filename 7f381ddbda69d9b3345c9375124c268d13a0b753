@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c8a9f5_78de17f3",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-23T18:10:58Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just call this \"safe_seed_content\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 62,
+        "endLine": 46,
+        "endChar": 65
+      },
+      "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df070f24_d2889d63",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-23T18:10:58Z",
+      "side": 1,
+      "message": "Should we have a DCHECK or something that we don\u0027t set new safe seed data while real seed has value kIdenticalToSafeSeedSentinel?\n\nAlso that we never store kIdenticalToSafeSeedSentinel value for the compressed seed?",
+      "range": {
+        "startLine": 251,
+        "startChar": 44,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
