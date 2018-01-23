@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "027e60d0_d3583207",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T14:14:30Z",
+      "side": 1,
+      "message": "So, um, I wrote the stuff below first, until I actually looked at the native code in detail, and it won\u0027t call the callback after PasswordUIViewAndroid::Destroy() has been called, so pretty much all of it is moot here. You could add a |mDestroyed| flag, set it in destroy() and `assert !mDestroyed` here, but that\u0027s just additional verification in Debug builds. I\u0027ll still keep the rest of my comment for the explanatory value (so pretend that the callback actually might get called):\n\nI\u0027ll start with the latter points: There isn\u0027t really a concept of an object being \"alive\" or \"dead\" in Java -- as long as an object is reachable, it is by definition alive. If it stops being reachable, the garbage collection mechanism will _eventually_ deallocate the actual memory taken up by the object, but because the object is not reachable, that would not be observable by other objects (I\u0027m leaving finalizers / reference queues aside here). Because there is no destruction of an object, there also isn\u0027t any Java magic that will null out members on destruction.\n\nLet\u0027s quickly go through what exactly happens in this particular case: The Java code passes the callback to the native code, which wraps it in a ScopedJavaGlobalRef (https://cs.chromium.org/chromium/src/chrome/browser/android/password_ui_view_android.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d173). ScopedJavaGlobalRef registers the Java object with the JVM, so that garbage collection knows about it and considers it reachable. Because the callback contains an implicit reference to the outer object (the `SavePasswordsPreferences.this`), the outer object in turn is also considered reachable, so it will not be garbage collected, even after destroy() has been called (which if you remember is not a language feature, just a method that happens to have that name -- it could just as well be named moveToANiceFarmUpstate() 😉). That can be harmless in many cases, but at the latest if we would now start interacting with other parts of the application (like firing off an intent), things could go wrong. (Also, in general, if for example the callback would live for a very long time, it would lead to a memory leak, which will get you yelled at by our friends in System Health.)\n\nSo, what can we do in this case? You mention WeakPtr, and in fact there is a WeakReference class in Java (https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html). The documentation says that it will null out its referent if it is determined by the GC to only be reachable via weak references, but the operative term here is the GC -- when and if the GC runs is not guaranteed, so if no GC runs between the time the UI is destroyed and the callback runs, the referent won\u0027t actually be nulled out. That doesn\u0027t mean that WeakReference is useless, because it can still be used to avoid memory leaks, but it doesn\u0027t help for this case.\n\nThe best thing to do in this case is actually surprisingly un-fancy: just add a flag |mDestroyed| and set it to true in the destroy() method, then return early if the flag is set. I don\u0027t think we really need to care about memory leaks in this case if the callback is not kept around indefinitely by the native side, but if we would, I would make the callback a static inner class so it doesn\u0027t have the implicit reference to the outer object, and use a WeakReference to refer to it instead.",
+      "parentUuid": "0d2963a0_ac4541ce",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 70
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fdd5bab_f2369676",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -336,6 +360,24 @@
       "side": 1,
       "message": "Thanks for pointing this out.\n\nThe try-with seems to work locally. Its presence in, e.g., PathUtils, suggests it should work across supported toolchains, too. I needed to pull |tempFile| initialisation out of the try block, but IIUC, creating a File does not throw, so that should be OK.",
       "parentUuid": "0125c459_b6b41eba",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9cbb51f_33c45805",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T14:14:30Z",
+      "side": 1,
+      "message": "Yeah, try-with is definitely supported, I just wasn\u0027t sure whether all the classes in here support AutoClosable which try-with relies on. But it looks like we\u0027re good :)",
+      "parentUuid": "dcc8ca25_8948cf08",
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
