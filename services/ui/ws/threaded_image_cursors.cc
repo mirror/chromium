@@ -91,6 +91,8 @@ void SetCustomCursorOnResourceThread(
     scoped_refptr<base::SingleThreadTaskRunner> ui_service_task_runner_,
     base::WeakPtr<ThreadedImageCursors> threaded_image_cursors_weak_ptr) {
   if (image_cursors_weak_ptr) {
+    static int count = 0;
+    LOG(ERROR) << " %%%%% CREATING ANIMATED CURSOR ON RESOURCE THREAD (" << count++ << ")";
     ui::PlatformCursor platform_cursor = cursor_factory->CreateAnimatedCursor(
         cursor_data->cursor_frames(), cursor_data->hotspot_in_pixels(),
         cursor_data->frame_delay().InMilliseconds(),
@@ -98,9 +100,10 @@ void SetCustomCursorOnResourceThread(
     // |platform_window| is owned by the UI Service thread, so setting the
     // cursor on it also needs to happen on that thread.
     ui_service_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&ThreadedImageCursors::SetCursorOnPlatformWindow,
-                              threaded_image_cursors_weak_ptr, platform_cursor,
-                              platform_window));
+        FROM_HERE, base::Bind(
+            &ThreadedImageCursors::SetCursorOnPlatformWindowProxy,
+            threaded_image_cursors_weak_ptr, platform_cursor,
+            platform_window));
   }
 }
 #endif  // defined(USE_OZONE)
@@ -205,6 +208,22 @@ void ThreadedImageCursors::SetCursorOnPlatformWindow(
     ui::PlatformCursor platform_cursor,
     ui::PlatformWindow* platform_window) {
   platform_window->SetCursor(platform_cursor);
+}
+
+void ThreadedImageCursors::SetCursorOnPlatformWindowProxy(
+    ui::PlatformCursor platform_cursor,
+    ui::PlatformWindow* platform_window) {
+    static int count = 0;
+  LOG(ERROR) << " %%%%% SETTING CURSOR ON UI THREAD (" << count++ << ")";
+  SetCursorOnPlatformWindow(platform_cursor, platform_window);
+
+  // More than half of the implementations of PlatformWindow::SetCursor() are
+  // empty and the rest make sure to add a refcount before using. We now need
+  // to free the refcount on the
+#if defined(USE_OZONE)
+  if (platform_cursor)
+    ui::CursorFactoryOzone::GetInstance()->UnrefImageCursor(platform_cursor);
+#endif
 }
 
 }  // namespace ws

@@ -61,7 +61,7 @@
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 30
+          "shards": 10
         },
         "test": "browser_tests"
       },
@@ -938,8 +938,11 @@
       },
       {
         "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/browser_tests_cros_asan.filter"
+          "--mus",
+          "--ozone-platform=headless",
+          "--override-use-software-gl-for-tests"
         ],
+        "name": "mus_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 10
@@ -1953,6 +1956,13 @@
       },
       {
         "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 10
+        },
+        "test": "browser_tests"
+      },
+      {
+        "swarming": {
           "can_use_on_swarming_builders": true
         },
         "test": "cacheinvalidation_unittests"
@@ -2237,7 +2247,7 @@
       {
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "shards": 20
+          "shards": 10
         },
         "test": "browser_tests"
       },

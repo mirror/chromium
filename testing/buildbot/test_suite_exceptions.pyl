@@ -2537,12 +2537,13 @@
       },
     },
   },
-  'mus_browser_tests': {
+  #  todo(erg): xxx do not make a real commit with this.
+  'browser_tests': {
     'remove_from': [
       # chromium.memory
       'Linux Chromium OS ASan LSan Tests (1)',
     ]
-  },
+  },  
   'nacl_helper_nonsfi_unittests': {
     'remove_from': [
       # chromium.clang
