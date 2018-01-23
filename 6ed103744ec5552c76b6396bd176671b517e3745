@@ -281,6 +281,23 @@
     },
     {
       "key": {
+        "uuid": "0a10f69c_f58a66cf",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you make this async?\n(i.e. make it take a callback, which will be enqueued if collection_names are not ready)?",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3460a3fa_49ee2d72",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
         "patchSetId": 7
@@ -479,6 +496,333 @@
         "startChar": 7,
         "endLine": 66,
         "endChar": 29
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d7358c_cfb32fa0",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you return an error instead, so the app can distinguish between error case and empty collection names.",
+      "range": {
+        "startLine": 832,
+        "startChar": 9,
+        "endLine": 832,
+        "endChar": 19
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3058297_89d60ad5",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "same, return an error here.",
+      "range": {
+        "startLine": 852,
+        "startChar": 9,
+        "endLine": 852,
+        "endChar": 19
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af22e6be_d8ab78d3",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you add DISALLOW_COPY_AND_ASSIGN",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26178798_cca3d743",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you document what \"collection\" is",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c879f0de_81ca3eb6",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "js constants should be like:\nRETRY_GET_WALLPAPER_INFO_DELAY_MS \u003d 50;",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e07744d_55d3e98e",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "this can be part of the cosnt documentation:\n/**\n  * The maximum ...\n  *\n  * @const\n  */\nvar MAX_FAILED_ATTEMPTS \u003d 3;",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22516cf_972cdeba",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "if (chrome.runtime.lastError)\n\nWhy is empty collectionNames an error?",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 28
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db124ad9_7122e160",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "you can avoid using \u0027self\u0027:\nchrome.wp.getCollectionNames(collections \u003d\u003e {\n  // handle error\n  this.onGetCollectionNamesSucceeded_(collections);\n});\n\n(or alternatively, bind the callback to this)",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f673f7f_d8f00b2f",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "would it make sense to incorporate the retry logic in the API?\nAnd maybe add a UI to retry a request to the app",
+      "range": {
+        "startLine": 214,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 27
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fceb169a_9b5e04ae",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you rename this to something like showCollection_",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 31
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc03141_58f670e9",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can wallpaper_private.json be migrated to IDL (in a separate cl)?\nIt would make the API documentation easier to read",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40eb8b76_a58d2bbb",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you explain what collections are?",
+      "range": {
+        "startLine": 273,
+        "startChar": 41,
+        "endLine": 273,
+        "endChar": 57
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c75ce9e_eac602e9",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "I\u0027d avoid naming the service here - it\u0027s the API\u0027s implementation detail :)",
+      "range": {
+        "startLine": 293,
+        "startChar": 113,
+        "endLine": 293,
+        "endChar": 139
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6176773_87acd770",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "nit: collectionName",
+      "range": {
+        "startLine": 298,
+        "startChar": 21,
+        "endLine": 298,
+        "endChar": 36
+      },
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b31870_6f2113a5",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T00:28:21Z",
+      "side": 1,
+      "message": "can you specify the actual expected type here?",
+      "range": {
+        "startLine": 309,
+        "startChar": 50,
+        "endLine": 309,
+        "endChar": 53
       },
       "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
