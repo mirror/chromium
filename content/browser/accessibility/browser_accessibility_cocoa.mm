@@ -760,6 +760,8 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSArray*)children {
   if (![self instanceActive])
     return nil;
+  if ([self internalRole] == ui::AX_ROLE_LAYOUT_COLUMN)
+    return nil;
   if (!children_) {
     uint32_t childCount = browserAccessibility_->PlatformChildCount();
     children_.reset([[NSMutableArray alloc] initWithCapacity:childCount]);

@@ -176,6 +176,14 @@ ui::AXRole AXRoleFromBlink(blink::WebAXRole role) {
       return ui::AX_ROLE_INPUT_TIME;
     case blink::kWebAXRoleLabel:
       return ui::AX_ROLE_LABEL_TEXT;
+    case blink::kWebAXRoleLayoutTable:
+      return ui::AX_ROLE_LAYOUT_TABLE;
+    case blink::kWebAXRoleLayoutTableCell:
+      return ui::AX_ROLE_LAYOUT_TABLE_CELL;
+    case blink::kWebAXRoleLayoutTableColumn:
+      return ui::AX_ROLE_LAYOUT_TABLE_COLUMN;
+    case blink::kWebAXRoleLayoutTableRow:
+      return ui::AX_ROLE_LAYOUT_TABLE_ROW;
     case blink::kWebAXRoleLegend:
       return ui::AX_ROLE_LEGEND;
     case blink::kWebAXRoleLink:

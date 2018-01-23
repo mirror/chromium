@@ -60,6 +60,7 @@ AXTable::~AXTable() = default;
 void AXTable::Init() {
   AXLayoutObject::Init();
   is_ax_table_ = IsTableExposableThroughAccessibility();
+  is_data_table_ = is_ax_table_ && ComputeIsDataTable();
 }
 
 AXTable* AXTable::Create(LayoutObject* layout_object,
@@ -94,6 +95,15 @@ static bool ElementHasAriaRole(const Element* element) {
 }
 
 bool AXTable::IsDataTable() const {
+  if (!layout_object_)
+    return false;
+
+  return is_data_table_;
+}
+
+// The following is a heuristic used to determine if a
+// <table> should be with kTableRole or kLayoutTableRole.
+bool AXTable::ComputeIsDataTable() const {
   if (!layout_object_ || !GetNode())
     return false;
 
@@ -202,9 +212,7 @@ bool AXTable::IsDataTable() const {
   Color alternating_row_colors[5];
   int alternating_row_color_count = 0;
 
-  int headers_in_first_column_count = 0;
   for (int row = 0; row < num_rows; ++row) {
-    int headers_in_first_row_count = 0;
     int n_cols = first_body->NumCols(row);
     for (int col = 0; col < n_cols; ++col) {
       LayoutTableCell* cell = first_body->PrimaryCellAt(row, col);
@@ -219,16 +227,9 @@ bool AXTable::IsDataTable() const {
 
       valid_cell_count++;
 
-      bool is_th_cell = cell_node->HasTagName(thTag);
-      // If the first row is comprised of all <th> tags, assume it is a data
-      // table.
-      if (!row && is_th_cell)
-        headers_in_first_row_count++;
-
-      // If the first column is comprised of all <th> tags, assume it is a data
-      // table.
-      if (!col && is_th_cell)
-        headers_in_first_column_count++;
+      // Any <th> tag -> treat as data table.
+      if (cell_node->HasTagName(thTag))
+        return true;
 
       // In this case, the developer explicitly assigned a "data" table
       // attribute.
@@ -293,14 +294,7 @@ bool AXTable::IsDataTable() const {
         alternating_row_color_count++;
       }
     }
-
-    if (!row && headers_in_first_row_count == num_cols_in_first_body &&
-        num_cols_in_first_body > 1)
-      return true;
   }
-
-  if (headers_in_first_column_count == num_rows && num_rows > 1)
-    return true;
 
   // if there is less than two valid cells, it's not a data table
   if (valid_cell_count <= 1)
@@ -338,10 +332,6 @@ bool AXTable::IsDataTable() const {
 }
 
 bool AXTable::IsTableExposableThroughAccessibility() const {
-  // The following is a heuristic used to determine if a
-  // <table> should be exposed as an AXTable. The goal
-  // is to only show "data" tables.
-
   if (!layout_object_)
     return false;
 
@@ -351,7 +341,7 @@ bool AXTable::IsTableExposableThroughAccessibility() const {
   if (HasARIARole())
     return false;
 
-  return IsDataTable();
+  return true;
 }
 
 void AXTable::ClearChildren() {
@@ -588,7 +578,7 @@ AccessibilityRole AXTable::RoleValue() const {
   if (!IsAXTable())
     return AXLayoutObject::RoleValue();
 
-  return kTableRole;
+  return IsDataTable() ? kTableRole : kLayoutTableRole;
 }
 
 bool AXTable::ComputeAccessibilityIsIgnored(
