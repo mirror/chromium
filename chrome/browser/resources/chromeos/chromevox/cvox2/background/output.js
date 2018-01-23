@@ -293,7 +293,7 @@ Output.RULES = {
       // author (via posInSet), do we include them in the output.
       enter: `$nameFromNode $role $state $restriction $description
           $if($posInSet, @describe_index($posInSet, $setSize))`,
-      speak: `$state $name= $role
+      speak: `$state $nameOrTextContent= $role
           $if($posInSet, @describe_index($posInSet, $setSize))
           $description $restriction`
     },
