@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "491bdf21_ec92ad6c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-23T20:43:42Z",
+      "side": 1,
+      "message": "I think source isn\u0027t generic in \u0027commit\u0027 context, but changed as you wished.",
+      "parentUuid": "90b09f94_0b3f01d8",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e414f858_07cda645",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc867229_23ac72b1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-23T20:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e414f858_07cda645",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4db91d6a_f3e47836",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-23T20:43:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "802c4fc4_09ba1315",
+      "range": {
+        "startLine": 830,
+        "startChar": 12,
+        "endLine": 830,
+        "endChar": 31
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cac0919_d06497ee",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
         "patchSetId": 1
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a13723a1_f32a0d91",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-23T20:43:42Z",
+      "side": 1,
+      "message": "added testNoSubmissionWithoutFillingForm",
+      "parentUuid": "7cac0919_d06497ee",
+      "range": {
+        "startLine": 1032,
+        "startChar": 47,
+        "endLine": 1032,
+        "endChar": 67
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a66241_512c3447",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
         "patchSetId": 1
@@ -128,6 +224,30 @@
       "writtenOn": "2018-01-23T19:35:03Z",
       "side": 1,
       "message": "Hmm... This still allows for a chance that AUTOFILL_CANCEL occurs after AUTOFILL_COMMIT in production.\nWould it help here to load another URL and check for types?",
+      "range": {
+        "startLine": 1033,
+        "startChar": 12,
+        "endLine": 1033,
+        "endChar": 41
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073c8593_d7b3d42a",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-01-23T20:43:42Z",
+      "side": 1,
+      "message": "AUTOFILL_CANCEL is not necessarily following AUTOFILL_COMMIT, actually there is no real issue if AUTOFILL_CANCEL follows AUTOFILL_COMMIT immediately, I added testNoSubmissionWithoutFillingForm which is more general case to check \u0027cancel\u0027 event.",
+      "parentUuid": "b8a66241_512c3447",
       "range": {
         "startLine": 1033,
         "startChar": 12,
