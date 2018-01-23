@@ -34,6 +34,24 @@
       "revId": "06c01f2c949143637301b2930eb473e3477445cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bffa53_b7ccb788",
+        "filename": "base/strings/pattern.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T15:28:49Z",
+      "side": 1,
+      "message": "Errr... my bad read to fast.",
+      "parentUuid": "a3ae1c94_e0150f10",
+      "revId": "06c01f2c949143637301b2930eb473e3477445cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
