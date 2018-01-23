@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/wm/overview/overview_utils.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/splitview/split_view_controller.h"
@@ -43,6 +44,23 @@ aura::Window* GetTransientRoot(aura::Window* window) {
   while (window && ::wm::GetTransientParent(window))
     window = ::wm::GetTransientParent(window);
   return window;
+}
+
+ScopedTransformOverviewWindow::WindowDimensionsType GetWindowDimensionsType(
+    aura::Window* window) {
+  if (window->bounds().width() >
+      window->bounds().height() *
+          ScopedTransformOverviewWindow::kExtremeWindowRatioThreshold) {
+    return ScopedTransformOverviewWindow::WindowDimensionsType::kTooWide;
+  }
+
+  if (window->bounds().height() >
+      window->bounds().width() *
+          ScopedTransformOverviewWindow::kExtremeWindowRatioThreshold) {
+    return ScopedTransformOverviewWindow::WindowDimensionsType::kTooTall;
+  }
+
+  return ScopedTransformOverviewWindow::WindowDimensionsType::kNormal;
 }
 
 // An iterator class that traverses an aura::Window and all of its transient
@@ -203,7 +221,11 @@ ScopedTransformOverviewWindow::ScopedTransformOverviewWindow(
       overview_started_(false),
       original_transform_(window->layer()->GetTargetTransform()),
       original_opacity_(window->layer()->GetTargetOpacity()),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (IsNewOverviewUi()) {
+    type_ = GetWindowDimensionsType(window);
+  }
+}
 
 ScopedTransformOverviewWindow::~ScopedTransformOverviewWindow() = default;
 
@@ -348,26 +370,6 @@ float ScopedTransformOverviewWindow::GetItemScale(const gfx::Size& source,
                             (source.height() - top_view_inset));
 }
 
-gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
-    const gfx::Rect& rect,
-    const gfx::Rect& bounds,
-    int top_view_inset,
-    int title_height) {
-  DCHECK(!rect.IsEmpty());
-  DCHECK_LE(top_view_inset, rect.height());
-  const float scale =
-      GetItemScale(rect.size(), bounds.size(), top_view_inset, title_height);
-  const int horizontal_offset = gfx::ToFlooredInt(
-      0.5 * (bounds.width() - gfx::ToFlooredInt(scale * rect.width())));
-  const int width = bounds.width() - 2 * horizontal_offset;
-  const int vertical_offset =
-      title_height - gfx::ToCeiledInt(scale * top_view_inset);
-  const int height = std::min(gfx::ToCeiledInt(scale * rect.height()),
-                              bounds.height() - vertical_offset);
-  return gfx::Rect(bounds.x() + horizontal_offset, bounds.y() + vertical_offset,
-                   width, height);
-}
-
 gfx::Transform ScopedTransformOverviewWindow::GetTransformForRect(
     const gfx::Rect& src_rect,
     const gfx::Rect& dst_rect) {
@@ -415,6 +417,76 @@ void ScopedTransformOverviewWindow::UpdateMirrorWindowForMinimizedState() {
     minimized_widget_->CloseNow();
     minimized_widget_.reset();
   }
+}
+
+gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
+    const gfx::Rect& rect,
+    const gfx::Rect& bounds,
+    int top_view_inset,
+    int title_height) {
+  DCHECK(!rect.IsEmpty());
+  DCHECK_LE(top_view_inset, rect.height());
+  const float scale =
+      GetItemScale(rect.size(), bounds.size(), top_view_inset, title_height);
+  const int horizontal_offset = gfx::ToFlooredInt(
+      0.5 * (bounds.width() - gfx::ToFlooredInt(scale * rect.width())));
+  const int width = bounds.width() - 2 * horizontal_offset;
+  const int vertical_offset =
+      title_height - gfx::ToCeiledInt(scale * top_view_inset);
+  const int height = std::min(gfx::ToCeiledInt(scale * rect.height()),
+                              bounds.height() - vertical_offset);
+  gfx::Rect new_bounds(bounds.x() + horizontal_offset,
+                       bounds.y() + vertical_offset, width, height);
+
+  if (!IsNewOverviewUi()) {
+    DCHECK_EQ(ScopedTransformOverviewWindow::WindowDimensionsType::kNormal,
+              type());
+  }
+  switch (type()) {
+    case ScopedTransformOverviewWindow::WindowDimensionsType::kTooWide: {
+      // Wide windows are scaled to match the width of |bounds|. Then they are
+      // centered vertically within |bounds|, excluding |title_height|.
+      const float wide_scale =
+          static_cast<float>(bounds.width()) / static_cast<float>(rect.width());
+      const int wide_height = (rect.height() - top_view_inset) * wide_scale;
+      const int wide_height_offset = wide_scale * top_view_inset;
+      const int wide_vertical_offset =
+          title_height + 0.5 * (bounds.height() - title_height - wide_height) -
+          (wide_scale * top_view_inset);
+
+      new_bounds = gfx::Rect(bounds.x(), bounds.y() + wide_vertical_offset,
+                             bounds.width(), wide_height + wide_height_offset);
+      gfx::Rect window_selector_bounds = bounds;
+      window_selector_bounds.set_y(bounds.y() + title_height);
+      window_selector_bounds.set_height(bounds.height() - title_height);
+      window_selector_bounds_ = window_selector_bounds;
+      break;
+    }
+    case ScopedTransformOverviewWindow::WindowDimensionsType::kTooTall: {
+      // Tall windows are scaled to match the height of |bounds|, excluding
+      // |title_height|. Then they are centered horizontally within |bounds|.
+      const int tall_height = bounds.height() - title_height;
+      const float tall_scale =
+          static_cast<float>(tall_height) /
+          static_cast<float>(rect.height() - top_view_inset);
+      const int tall_height_offset = (tall_scale * top_view_inset);
+      const int tall_width = rect.width() * tall_scale;
+      const int tall_vertical_offset =
+          title_height - (tall_scale * top_view_inset);
+      new_bounds = gfx::Rect(bounds.x() + 0.5 * (bounds.width() - tall_width),
+                             bounds.y() + tall_vertical_offset, tall_width,
+                             tall_height + tall_height_offset);
+      gfx::Rect window_selector_bounds = bounds;
+      window_selector_bounds.set_y(bounds.y() + title_height);
+      window_selector_bounds.set_height(bounds.height() - title_height);
+      window_selector_bounds_ = window_selector_bounds;
+      break;
+    }
+    default:
+      break;
+  }
+
+  return new_bounds;
 }
 
 void ScopedTransformOverviewWindow::Close() {
@@ -531,6 +603,14 @@ void ScopedTransformOverviewWindow::OnMouseEvent(ui::MouseEvent* event) {
 aura::Window*
 ScopedTransformOverviewWindow::GetOverviewWindowForMinimizedState() const {
   return minimized_widget_ ? minimized_widget_->GetNativeWindow() : nullptr;
+}
+
+void ScopedTransformOverviewWindow::UpdateWindowDimensionsType() {
+  if (!IsNewOverviewUi())
+    return;
+
+  type_ = GetWindowDimensionsType(window_);
+  window_selector_bounds_.reset();
 }
 
 void ScopedTransformOverviewWindow::CreateMirrorWindowForMinimizedState() {
