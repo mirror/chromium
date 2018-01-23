@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43c2b68e_78e036a3",
+        "filename": "extensions/browser/content_verify_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-23T20:04:06Z",
+      "side": 1,
+      "message": "Good point, in non-test code, DoneReading can only fail if it was called after OnHashesReady succeeded as it has an \"if (hashes_ready_)\" test. |hashes_ready_| is set in line 192 below if these failure cases are not hit. I\u0027ve added a DCHECK below to somewhat document that.\n\nHowever, in test code it can happen because of g_test_delegate-\u003eDoneReading() has a return value. That\u0027s less of a concern, I\u0027m more concerned about the test APIs we have here, and we should definitely improve these.",
+      "parentUuid": "706caa90_dac9a4cd",
+      "revId": "8acaa4df012ddd26b35eac4f3654e2a076eafe82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baf2b601_5becb286",
         "filename": "extensions/browser/content_verify_job_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8acaa4df012ddd26b35eac4f3654e2a076eafe82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662f4476_a99c5a77",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-23T20:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf2b601_5becb286",
+      "revId": "8acaa4df012ddd26b35eac4f3654e2a076eafe82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "8acaa4df012ddd26b35eac4f3654e2a076eafe82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecf7569_3bded3a4",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-23T20:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcd2954c_f9e4ee16",
+      "range": {
+        "startLine": 132,
+        "startChar": 36,
+        "endLine": 132,
+        "endChar": 41
+      },
+      "revId": "8acaa4df012ddd26b35eac4f3654e2a076eafe82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
