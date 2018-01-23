@@ -34,6 +34,24 @@
       "revId": "d333822e7494ed6a25daabef0160107503f726db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9800da_d88f0fff",
+        "filename": "third_party/WebKit/Source/platform/bindings/ActiveScriptWrappableBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T12:48:02Z",
+      "side": 1,
+      "message": "Makes sense. I\u0027d prefer rewording the comment that way.\n\nWhether it\u0027s a root or not is controlled by the caller of TraceActiveScriptWrappables and not really related here.\n\nAnother option is to use TraceWrappersFromGeneratedCode. The generated code is using TraceWrappersFromGeneratedCode instead of TraceWrappers for the same reason. (Maybe we should rename TraceWrappersFromGeneratedCode though.)",
+      "parentUuid": "2eff2f07_2b73fd55",
+      "revId": "d333822e7494ed6a25daabef0160107503f726db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
