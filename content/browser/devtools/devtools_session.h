@@ -36,11 +36,9 @@ class DevToolsSession : public protocol::FrontendChannel,
 
   void AddHandler(std::unique_ptr<protocol::DevToolsDomainHandler> handler);
 
-  // TODO(dgozman): maybe combine this with AttachToAgent?
   void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host);
-
-  void AttachToAgent(const blink::mojom::DevToolsAgentAssociatedPtr& agent);
+                   RenderFrameHostImpl* frame_host,
+                   const blink::mojom::DevToolsAgentAssociatedPtr& agent_ptr);
   void DispatchProtocolMessage(const std::string& message);
   void InspectElement(const gfx::Point& point);
   void SuspendSendingMessagesToAgent();
@@ -89,8 +87,8 @@ class DevToolsSession : public protocol::FrontendChannel,
   bool browser_only_ = false;
   base::flat_map<std::string, std::unique_ptr<protocol::DevToolsDomainHandler>>
       handlers_;
-  RenderProcessHost* process_;
-  RenderFrameHostImpl* host_;
+  RenderProcessHost* process_host_;
+  RenderFrameHostImpl* frame_host_;
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
 
   // These messages were queued after suspending, not sent to the agent,

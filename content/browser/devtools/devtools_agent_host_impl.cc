@@ -177,11 +177,12 @@ DevToolsSession* DevToolsAgentHostImpl::SessionByClient(
 
 void DevToolsAgentHostImpl::InnerAttachClient(DevToolsAgentHostClient* client) {
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
+  bool is_first = sessions_.empty();
   DevToolsSession* session = new DevToolsSession(this, client);
   sessions_.insert(session);
   session_by_client_[client].reset(session);
-  AttachSession(session);
-  if (sessions_.size() == 1)
+  AttachSession(session, is_first);
+  if (is_first)
     NotifyAttached();
   DevToolsManager* manager = DevToolsManager::GetInstance();
   if (manager->delegate())
@@ -228,11 +229,12 @@ void DevToolsAgentHostImpl::InnerDetachClient(DevToolsAgentHostClient* client) {
       std::move(session_by_client_[client]);
   sessions_.erase(session.get());
   session_by_client_.erase(client);
-  DetachSession(session.get());
+  bool is_last = sessions_.empty();
+  DetachSession(session.get(), is_last);
   DevToolsManager* manager = DevToolsManager::GetInstance();
   if (manager->delegate())
     manager->delegate()->ClientDetached(this, client);
-  if (sessions_.empty()) {
+  if (is_last) {
     io_context_.DiscardAllStreams();
     NotifyDetached();
   }
