@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b48b84_9ab58c22",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-23T20:07:54Z",
+      "side": 1,
+      "message": "Please make a separate function for this e.g. CancelKeyRepeat().",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0f83bf_efe1770b",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-23T20:07:54Z",
+      "side": 1,
+      "message": "Can we remove the dependency on evdev and move the shared code out of that directory? Maybe ui/events/ozone/keyboard.",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4802988_54294738",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-23T20:07:54Z",
+      "side": 1,
+      "message": "I am not really comfortable with this since it leaves the tests idle waiting for real time to pass and still leaves open the possibility of flakes under high load.\n\nI wonder if we can use TestMockTimeTaskRunner.",
+      "range": {
+        "startLine": 376,
+        "startChar": 2,
+        "endLine": 376,
+        "endChar": 15
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
