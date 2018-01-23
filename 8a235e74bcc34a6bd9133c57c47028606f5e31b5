@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e7a77d0_944f414c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T03:52:16Z",
+      "side": 1,
+      "message": "As discussed offline yesterday, the layout is still broken.\nThere are two options:\n* Override Layout() of NotificaitonInputMD\n* Use SetLayoutManager() in NotificationInputMD (preferred as the code is more readable)\n\nAlso, we have to know beforehand that what kind of child views views::Textfield has other than |inline_reply_icon_|. Maybe it is better to make another container view on top of NotificationInputMD and put ImageView as a sibling of NotificationInputMD?",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a3c00c3_e06e7ed6",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 1
@@ -36,6 +53,30 @@
       "writtenOn": "2018-01-22T09:21:21Z",
       "side": 1,
       "message": "Could we add a TODO (maybe @ line 476) to put everything that is preceded by a comment into a separate function? Feel free to attach this bug which I\u0027ve just filed: crbug.com/804238\n\nI don\u0027t want you to have to clean this up in this CL, but at least I think we should track such a cleanup change. I think with well-named subfunctions the comments become unnecessary.\n\nThanks!",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 0
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d906fb2f_8b7717da",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T03:52:16Z",
+      "side": 1,
+      "message": "As this is a class initialization, rather than putting them in a function, we should put them (SetLayoutManager and set_main_axis_alignment calls) in the constructor.\n\nFo |action_buttons_row_|, I\u0027ll write comment on the bug.",
+      "parentUuid": "8290e392_ac606098",
       "range": {
         "startLine": 529,
         "startChar": 0,
@@ -85,6 +126,23 @@
       "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "854beb4e_b6536fb2",
+        "filename": "ui/views/vector_icons/notification_inline_reply.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-23T03:52:16Z",
+      "side": 1,
+      "message": "Could you move the icon to ui/message_center/vector_icons/, which is a dedicated directory for notification related icons?\n\nAlso, estade@ would be the appropriate reviewer for vector icon related changes.",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
