@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "net/base/net_errors.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -51,8 +52,9 @@ TEST_F(UDPSocketFactoryTest, ConnectionError) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
 
-  factory.CreateUDPSocket(mojo::MakeRequest(&socket_ptr),
-                          std::move(receiver_interface_ptr));
+  factory.CreateUDPSocket(
+      mojo::MakeRequest(&socket_ptr), std::move(receiver_interface_ptr),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   // Close client side of the pipe.
   socket_ptr.reset();

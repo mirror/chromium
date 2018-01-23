@@ -17,10 +17,13 @@ UDPSocketFactory::UDPSocketFactory() {}
 
 UDPSocketFactory::~UDPSocketFactory() {}
 
-void UDPSocketFactory::CreateUDPSocket(mojom::UDPSocketRequest request,
-                                       mojom::UDPSocketReceiverPtr receiver) {
-  auto socket =
-      std::make_unique<UDPSocket>(std::move(request), std::move(receiver));
+void UDPSocketFactory::CreateUDPSocket(
+    mojom::UDPSocketRequest request,
+    mojom::UDPSocketReceiverPtr receiver,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  auto socket = std::make_unique<UDPSocket>(
+      std::move(request), std::move(receiver),
+      static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
   // base::Unretained is safe as the destruction of |this| will also destroy
   // |udp_sockets_| which owns this socket.
   socket->set_connection_error_handler(

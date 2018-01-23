@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace network {
@@ -22,8 +23,10 @@ class UDPSocketFactory {
   UDPSocketFactory();
   virtual ~UDPSocketFactory();
 
-  void CreateUDPSocket(mojom::UDPSocketRequest request,
-                       mojom::UDPSocketReceiverPtr receiver);
+  void CreateUDPSocket(
+      mojom::UDPSocketRequest request,
+      mojom::UDPSocketReceiverPtr receiver,
+      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation);
 
  protected:
   // Handles connection errors. This is virtual for testing.

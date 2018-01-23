@@ -18,6 +18,7 @@
 #include "content/public/network/url_request_context_owner.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/cookie_manager.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
@@ -105,7 +106,9 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
       const std::string& profile_id,
       network::mojom::NetworkConditionsPtr conditions) override;
   void CreateUDPSocket(network::mojom::UDPSocketRequest request,
-                       network::mojom::UDPSocketReceiverPtr receiver) override;
+                       network::mojom::UDPSocketReceiverPtr receiver,
+                       const net::MutableNetworkTrafficAnnotationTag&
+                           traffic_annotation) override;
   void AddHSTSForTesting(const std::string& host,
                          base::Time expiry,
                          bool include_subdomains,

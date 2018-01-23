@@ -18,6 +18,7 @@
 #include "net/base/net_errors.h"
 #include "net/socket/udp_socket.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 #include "services/network/udp_socket_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -195,7 +196,8 @@ TEST_F(UDPSocketTest, Settings) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
   net::IPEndPoint server_addr;
   net::IPEndPoint any_port(GetLocalHostWithAnyPort());
 
@@ -217,7 +219,8 @@ TEST_F(UDPSocketTest, TestSendWithBind) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
 
@@ -244,7 +247,8 @@ TEST_F(UDPSocketTest, TestSendToWithConnect) {
 
   mojom::UDPSocketPtr server_socket;
   UDPSocket impl(mojo::MakeRequest(&server_socket),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
@@ -256,7 +260,8 @@ TEST_F(UDPSocketTest, TestSendToWithConnect) {
   mojom::UDPSocketReceiverPtr client_receiver_ptr;
   mojom::UDPSocketPtr client_socket;
   UDPSocket client_impl(mojo::MakeRequest(&client_socket),
-                        std::move(client_receiver_ptr));
+                        std::move(client_receiver_ptr),
+                        TRAFFIC_ANNOTATION_FOR_TESTS);
   net::IPEndPoint client_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
                          &client_socket, client_addr.GetFamily()));
@@ -275,7 +280,8 @@ TEST_F(UDPSocketTest, TestUnexpectedSequences) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
   net::IPEndPoint server_addr;
   net::IPEndPoint any_port(GetLocalHostWithAnyPort());
 
@@ -325,7 +331,8 @@ TEST_F(UDPSocketTest, TestBufferValid) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   HangingUDPSocket* socket_raw_ptr = new HangingUDPSocket();
   SetWrappedSocket(&impl, base::WrapUnique(socket_raw_ptr));
@@ -365,7 +372,8 @@ TEST_F(UDPSocketTest, TestInsufficientResources) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   HangingUDPSocket* socket_raw_ptr = new HangingUDPSocket();
   SetWrappedSocket(&impl, base::WrapUnique(socket_raw_ptr));
@@ -414,7 +422,8 @@ TEST_F(UDPSocketTest, TestReceiveMoreOverflow) {
 
   mojom::UDPSocketPtr server_socket;
   UDPSocket impl(mojo::MakeRequest(&server_socket),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
@@ -439,7 +448,8 @@ TEST_F(UDPSocketTest, TestReadSend) {
 
   mojom::UDPSocketPtr server_socket;
   UDPSocket impl(mojo::MakeRequest(&server_socket),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
@@ -451,7 +461,8 @@ TEST_F(UDPSocketTest, TestReadSend) {
   mojom::UDPSocketReceiverPtr client_receiver_ptr;
   mojom::UDPSocketPtr client_socket;
   UDPSocket client_impl(mojo::MakeRequest(&client_socket),
-                        std::move(client_receiver_ptr));
+                        std::move(client_receiver_ptr),
+                        TRAFFIC_ANNOTATION_FOR_TESTS);
   net::IPEndPoint client_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
                          &client_socket, client_addr.GetFamily()));
@@ -491,7 +502,8 @@ TEST_F(UDPSocketTest, TestReadSendTo) {
   // Create a server socket to send data.
   mojom::UDPSocketPtr server_socket;
   mojom::UDPSocketReceiverPtr receiver_ptr;
-  UDPSocket impl(mojo::MakeRequest(&server_socket), std::move(receiver_ptr));
+  UDPSocket impl(mojo::MakeRequest(&server_socket), std::move(receiver_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
@@ -507,7 +519,8 @@ TEST_F(UDPSocketTest, TestReadSendTo) {
 
   mojom::UDPSocketPtr client_socket;
   UDPSocket client_impl(mojo::MakeRequest(&client_socket),
-                        std::move(client_receiver_ptr));
+                        std::move(client_receiver_ptr),
+                        TRAFFIC_ANNOTATION_FOR_TESTS);
   net::IPEndPoint client_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
                          &client_socket, client_addr.GetFamily()));
@@ -551,7 +564,8 @@ TEST_F(UDPSocketTest, TestSendToInvalidAddress) {
   mojom::UDPSocketReceiverPtr receiver_interface_ptr;
   mojom::UDPSocketPtr server_socket;
   UDPSocket impl(mojo::MakeRequest(&server_socket),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, test::UDPSocketTestHelper::OpenSync(
@@ -584,7 +598,8 @@ TEST_F(UDPSocketTest, TestReadZeroByte) {
 
   mojom::UDPSocketPtr socket_ptr;
   UDPSocket impl(mojo::MakeRequest(&socket_ptr),
-                 std::move(receiver_interface_ptr));
+                 std::move(receiver_interface_ptr),
+                 TRAFFIC_ANNOTATION_FOR_TESTS);
 
   SetWrappedSocket(&impl, std::make_unique<ZeroByteReadUDPSocket>());
 
