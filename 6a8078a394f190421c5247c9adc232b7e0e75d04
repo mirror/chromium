@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7527b8bb_ea3db170",
+        "filename": "chrome/browser/ui/views/confirm_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-23T19:05:53Z",
+      "side": 1,
+      "message": "I mean, maybe talking about \"link\" or \"button\" at all is needlessly mechanistic, and we should do something more like OpenHelpPage() that would apply to all consumers.",
+      "parentUuid": "f4243425_84f3712d",
+      "revId": "6a8078a394f190421c5247c9adc232b7e0e75d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f41ab0_eb29f8a5",
         "filename": "chrome/browser/ui/views/confirm_bubble_views.h",
         "patchSetId": 3
