@@ -7,7 +7,6 @@ package org.chromium.base;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Process;
-import android.os.StrictMode;
 import android.os.SystemClock;
 
 import org.chromium.base.annotations.JNINamespace;
@@ -38,9 +37,6 @@ import java.util.Map;
 @JNINamespace("base::android")
 @MainDex
 public class EarlyTraceEvent {
-    // Must be kept in sync with the native kAndroidTraceConfigFile.
-    private static final String TRACE_CONFIG_FILENAME = "/data/local/chrome-trace-config.json";
-
     /** Single trace event. */
     @VisibleForTesting
     static final class Event {
@@ -97,24 +93,7 @@ public class EarlyTraceEvent {
      */
     static void maybeEnable() {
         ThreadUtils.assertOnUiThread();
-        boolean shouldEnable = false;
-        // Checking for the trace config filename touches the disk.
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-        try {
-            if (CommandLine.isInitialized()
-                    && CommandLine.getInstance().hasSwitch("trace-startup")) {
-                shouldEnable = true;
-            } else {
-                try {
-                    shouldEnable = (new File(TRACE_CONFIG_FILENAME)).exists();
-                } catch (SecurityException e) {
-                    // Access denied, not enabled.
-                }
-            }
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
-        if (shouldEnable) enable();
+        if (CommandLine.getInstance().hasSwitch("trace-startup")) enable();
     }
 
     @VisibleForTesting
