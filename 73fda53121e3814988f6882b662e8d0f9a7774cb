@@ -141,6 +141,30 @@
       "revId": "73fda53121e3814988f6882b662e8d0f9a7774cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4bf2c9_7e637ef2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-23T23:51:17Z",
+      "side": 1,
+      "message": "Sounds good. Thanks!",
+      "parentUuid": "8ea80662_85f43758",
+      "range": {
+        "startLine": 1591,
+        "startChar": 41,
+        "endLine": 1591,
+        "endChar": 72
+      },
+      "revId": "73fda53121e3814988f6882b662e8d0f9a7774cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
