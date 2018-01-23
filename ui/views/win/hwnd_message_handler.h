@@ -266,6 +266,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
 
   void HandleParentChanged() override;
 
+  void DManipPinchBegin() override;
+  void DManipPinchEnd() override;
+
   void ApplyDManipScale(float scale) override;
 
   void ApplyDManipScroll(int scroll_x, int scroll_y) override;
