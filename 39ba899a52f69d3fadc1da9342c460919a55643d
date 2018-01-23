@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9798dbc_df3c203c",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-23T01:17:00Z",
+      "side": 1,
+      "message": "Nice test. Well documented.",
+      "revId": "39ba899a52f69d3fadc1da9342c460919a55643d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
