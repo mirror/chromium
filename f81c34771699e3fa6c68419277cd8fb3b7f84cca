@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a31b33_25ce3562",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5167,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-23T17:49:10Z",
+      "side": 1,
+      "message": "Could you add a TODO here, indicating calling GetBoundBufferHelper with TRANSFORM_FEEDBACK_BUFFER will need a round trip and therefore not efficient.",
+      "range": {
+        "startLine": 5167,
+        "startChar": 7,
+        "endLine": 5167,
+        "endChar": 35
+      },
+      "revId": "f81c34771699e3fa6c68419277cd8fb3b7f84cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27d483c_9aeff0fa",
+        "filename": "gpu/command_buffer/client/gles2_implementation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-23T17:49:10Z",
+      "side": 1,
+      "message": "nit: state -\u003e states",
+      "range": {
+        "startLine": 770,
+        "startChar": 4,
+        "endLine": 770,
+        "endChar": 5
+      },
+      "revId": "f81c34771699e3fa6c68419277cd8fb3b7f84cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
