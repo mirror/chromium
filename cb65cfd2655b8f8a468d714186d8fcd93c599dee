@@ -16,6 +16,24 @@
       "revId": "cb65cfd2655b8f8a468d714186d8fcd93c599dee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428e1699_25eacdaf",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableMarkingVisitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-23T09:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f88f5f2_73245da3",
+      "revId": "cb65cfd2655b8f8a468d714186d8fcd93c599dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
