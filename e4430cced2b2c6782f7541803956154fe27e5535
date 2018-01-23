@@ -117,6 +117,30 @@
       "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7326038_e918bbeb",
+        "filename": "services/network/public/cpp/network_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T22:59:48Z",
+      "side": 1,
+      "message": "I too would prefer network::features, but I\u0027ve posed a question to chromium-dev in case there are strong opinions or style recommendations that I\u0027ve missed elsewhere.",
+      "parentUuid": "7ffb57cc_17d1a3d5",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "e4430cced2b2c6782f7541803956154fe27e5535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
