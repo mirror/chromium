@@ -300,7 +300,10 @@ bool NGBlockNode::CanUseNewLayout(const LayoutBox& box) {
 
   // When the style has |ForceLegacyLayout|, it's usually not LayoutNGMixin,
   // but anonymous block can be.
-  return box.IsLayoutNGMixin() && !box.StyleRef().ForceLegacyLayout();
+  return box.IsLayoutNGMixin() && !box.StyleRef().ForceLegacyLayout() &&
+         // "The html element fills the viewport quirk" is not implemented yet.
+         // https://quirks.spec.whatwg.org/#the-html-element-fills-the-viewport-quirk
+         !box.StretchesToViewport();
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
