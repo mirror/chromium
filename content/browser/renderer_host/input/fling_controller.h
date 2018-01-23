@@ -21,13 +21,17 @@ namespace content {
 
 class GestureEventQueue;
 
-// Interface with which the FlingController can forward generated wheel events.
+// Interface with which the FlingController can forward generated fling progress
+// events.
 class CONTENT_EXPORT FlingControllerClient {
  public:
   virtual ~FlingControllerClient() {}
 
   virtual void SendGeneratedWheelEvent(
       const MouseWheelEventWithLatencyInfo& wheel_event) = 0;
+
+  virtual void SendGeneratedGestureScrollEvents(
+      const GestureEventWithLatencyInfo& gesture_event) = 0;
 
   virtual void SetNeedsBeginFrameForFlingProgress() = 0;
 };
@@ -81,6 +85,8 @@ class CONTENT_EXPORT FlingController {
 
   bool fling_in_progress() const { return fling_in_progress_; }
 
+  bool FlingCancellationIsDeferred() const;
+
   // Returns the |TouchpadTapSuppressionController| instance.
   TouchpadTapSuppressionController* GetTouchpadTapSuppressionController();
 
@@ -104,8 +110,21 @@ class CONTENT_EXPORT FlingController {
   void ScheduleFlingProgress();
 
   // Used to generate synthetic wheel events from touchpad fling and send them.
-  void GenerateAndSendWheelEvents(gfx::Vector2dF delta,
+  void GenerateAndSendWheelEvents(const gfx::Vector2dF& delta,
                                   blink::WebMouseWheelEvent::Phase phase);
+
+  // Used to generate synthetic gesture scroll events from touchscreen fling and
+  // send them.
+  void GenerateAndSendGestureScrollEvents(
+      blink::WebInputEvent::Type type,
+      const gfx::Vector2dF& delta = gfx::Vector2dF());
+
+  // Calls one of the GenerateAndSendWheelEvents or
+  // GenerateAndSendGestureScrollEvents functions depending on the source
+  // device.
+  void GenerateAndSendFlingProgressEvents(const gfx::Vector2dF& delta);
+
+  void GenerateAndSendFlingEndEvents();
 
   void CancelCurrentFling();
 
