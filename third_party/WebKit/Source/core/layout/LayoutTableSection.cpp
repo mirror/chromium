@@ -1266,15 +1266,25 @@ void LayoutTableSection::LayoutRows() {
           cell->SetMayNeedPaintInvalidation();
       }
     }
-    if (row)
-      row->ComputeOverflow();
+
+    if (row) {
+      row->ComputeOverflow(LayoutUnit());
+      // Table row with transform can be containing block of positioned
+      // elements. The case is very rare so just force full layout of them.
+      row->LayoutPositionedObjects(true,
+                                   kForcedLayoutAfterContainingBlockMoved);
+    }
   }
 
   DCHECK(!NeedsLayout());
 
   SetLogicalHeight(LayoutUnit(row_pos_[total_rows]));
 
-  ComputeOverflowFromDescendants();
+  // Table section with transform can be containing block of positioned
+  // elements. The case is very rare so just force full layout of them.
+  LayoutPositionedObjects(true, kForcedLayoutAfterContainingBlockMoved);
+
+  ComputeOverflow(LayoutUnit());
 }
 
 void LayoutTableSection::UpdateLogicalWidthForCollapsedCells(
@@ -1352,7 +1362,7 @@ int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
   return pagination_strut.Ceil();
 }
 
-void LayoutTableSection::ComputeOverflowFromDescendants() {
+void LayoutTableSection::AddOverflowFromChildren() {
   // These 2 variables are used to balance the memory consumption vs the paint
   // time on big sections with overflowing cells:
   // 1. For small sections, don't track overflowing cells because for them the
@@ -1417,35 +1427,6 @@ void LayoutTableSection::ComputeOverflowFromDescendants() {
 #if DCHECK_IS_ON()
   DCHECK_EQ(has_overflowing_cell, HasOverflowingCell());
 #endif
-}
-
-bool LayoutTableSection::RecalcOverflowAfterStyleChange() {
-  if (!ChildNeedsOverflowRecalcAfterStyleChange())
-    return false;
-  ClearChildNeedsOverflowRecalcAfterStyleChange();
-  unsigned total_rows = grid_.size();
-  bool children_overflow_changed = false;
-  for (unsigned r = 0; r < total_rows; r++) {
-    LayoutTableRow* row_layouter = RowLayoutObjectAt(r);
-    if (!row_layouter ||
-        !row_layouter->ChildNeedsOverflowRecalcAfterStyleChange())
-      continue;
-    row_layouter->ClearChildNeedsOverflowRecalcAfterStyleChange();
-    bool row_children_overflow_changed = false;
-    unsigned n_cols = NumCols(r);
-    for (unsigned c = 0; c < n_cols; c++) {
-      auto* cell = OriginatingCellAt(r, c);
-      if (!cell)
-        continue;
-      row_children_overflow_changed |= cell->RecalcOverflowAfterStyleChange();
-    }
-    if (row_children_overflow_changed)
-      row_layouter->ComputeOverflow();
-    children_overflow_changed |= row_children_overflow_changed;
-  }
-  if (children_overflow_changed)
-    ComputeOverflowFromDescendants();
-  return children_overflow_changed;
 }
 
 void LayoutTableSection::MarkAllCellsWidthsDirtyAndOrNeedsLayout(

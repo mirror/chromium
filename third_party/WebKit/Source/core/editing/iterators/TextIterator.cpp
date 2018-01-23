@@ -611,15 +611,15 @@ static bool ShouldEmitNewlinesBeforeAndAfterNode(const Node& node) {
   if (IsTableCell(&node))
     return false;
 
-  // Need to make an exception for table row elements, because they are neither
-  // "inline" or "LayoutBlock", but we want newlines for them.
+  // Need to make an exception for table row elements, because we want newlines
+  // for them if the table is not inline.
   if (r->IsTableRow()) {
     LayoutTable* t = ToLayoutTableRow(r)->Table();
     if (t && !t->IsInline())
       return true;
   }
 
-  return !r->IsInline() && r->IsLayoutBlock() &&
+  return !r->IsInline() && r->IsLayoutBlock() && !r->IsTableBoxComponent() &&
          !r->IsFloatingOrOutOfFlowPositioned() && !r->IsBody() &&
          !r->IsRubyText();
 }

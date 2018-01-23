@@ -583,8 +583,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   bool IsHR() const;
 
   bool IsTablePart() const {
-    return IsTableCell() || IsLayoutTableCol() || IsTableCaption() ||
-           IsTableRow() || IsTableSection();
+    return IsTableCell() || IsTableCaption() || IsTableBoxComponent();
+  }
+  bool IsTableBoxComponent() const {
+    return IsLayoutTableCol() || IsTableRow() || IsTableSection();
   }
 
   inline bool IsBeforeContent() const;
