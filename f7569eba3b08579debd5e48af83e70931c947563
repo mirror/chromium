@@ -139,6 +139,24 @@
       "revId": "f7569eba3b08579debd5e48af83e70931c947563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87abafb7_c95bf96b",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-23T21:30:29Z",
+      "side": 1,
+      "message": "Why can\u0027t this code create a WebPointerEvent instead? \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebPointerEvent.h?type\u003dcs\u0026q\u003dWebPointerEvent\u0026l\u003d28\n\nis essentially the same ctor that is being used on 2288.",
+      "parentUuid": "01de75ca_ffb53e0a",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
