@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c459d370_043d2015",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-23T10:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c4407d0_b9ec4c3e",
+      "range": {
+        "startLine": 268,
+        "startChar": 43,
+        "endLine": 268,
+        "endChar": 72
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02dea640_a77b8518",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 4
@@ -599,6 +623,30 @@
       "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eacdb9_99a225b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-23T10:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a8d7fe_b142d8f7",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5dba530c5179f4684594d6768d795c786b92b93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
