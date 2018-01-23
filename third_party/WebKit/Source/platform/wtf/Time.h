@@ -58,7 +58,9 @@ class TimeTicks {
   // Only use this conversion when interfacing with legacy code that represents
   // time in double. Converting to double can lead to losing information for
   // large time values.
-  double InSeconds() const { return (value_ - base::TimeTicks()).InSecondsF(); }
+  double InSecondsF() const {
+    return (value_ - base::TimeTicks()).InSecondsF();
+  }
 
   static TimeTicks FromSeconds(double seconds) {
     return TimeTicks() + TimeDelta::FromSecondsD(seconds);

@@ -122,7 +122,7 @@ DOMHighResTimeStamp Sensor::timestamp(ScriptState* script_state,
   }
 
   return performance->MonotonicTimeToDOMHighResTimeStamp(
-      sensor_proxy_->reading().timestamp());
+      TimeTicks::FromSeconds(sensor_proxy_->reading().timestamp()));
 }
 
 void Sensor::Trace(blink::Visitor* visitor) {

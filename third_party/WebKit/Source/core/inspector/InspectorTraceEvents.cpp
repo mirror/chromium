@@ -705,7 +705,7 @@ std::unique_ptr<TracedValue> InspectorSendRequestEvent::Data(
 
 namespace {
 void RecordTiming(const ResourceLoadTiming& timing, TracedValue* value) {
-  value->SetDouble("requestTime", timing.RequestTime());
+  value->SetDouble("requestTime", timing.RequestTime().InSecondsF());
   value->SetDouble("proxyStart",
                    timing.CalculateMillisecondDelta(timing.ProxyStart()));
   value->SetDouble("proxyEnd",
@@ -730,8 +730,8 @@ void RecordTiming(const ResourceLoadTiming& timing, TracedValue* value) {
                    timing.CalculateMillisecondDelta(timing.SendEnd()));
   value->SetDouble("receiveHeadersEnd", timing.CalculateMillisecondDelta(
                                             timing.ReceiveHeadersEnd()));
-  value->SetDouble("pushStart", timing.PushStart());
-  value->SetDouble("pushEnd", timing.PushEnd());
+  value->SetDouble("pushStart", timing.PushStart().InSecondsF());
+  value->SetDouble("pushEnd", timing.PushEnd().InSecondsF());
 }
 }  // namespace
 

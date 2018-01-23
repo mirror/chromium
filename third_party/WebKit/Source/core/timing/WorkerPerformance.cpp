@@ -42,7 +42,7 @@
 namespace blink {
 
 WorkerPerformance::WorkerPerformance(WorkerGlobalScope* context)
-    : PerformanceBase(context->TimeOrigin(),
+    : PerformanceBase(TimeTicks::FromSeconds(context->TimeOrigin()),
                       context->GetTaskRunner(TaskType::kPerformanceTimeline)),
       execution_context_(context) {}
 

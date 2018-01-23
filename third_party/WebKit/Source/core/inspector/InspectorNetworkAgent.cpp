@@ -342,7 +342,7 @@ void InspectorNetworkAgent::Restore() {
 static std::unique_ptr<protocol::Network::ResourceTiming> BuildObjectForTiming(
     const ResourceLoadTiming& timing) {
   return protocol::Network::ResourceTiming::create()
-      .setRequestTime(timing.RequestTime())
+      .setRequestTime(timing.RequestTime().InSecondsF())
       .setProxyStart(timing.CalculateMillisecondDelta(timing.ProxyStart()))
       .setProxyEnd(timing.CalculateMillisecondDelta(timing.ProxyEnd()))
       .setDnsStart(timing.CalculateMillisecondDelta(timing.DnsStart()))
@@ -357,8 +357,8 @@ static std::unique_ptr<protocol::Network::ResourceTiming> BuildObjectForTiming(
       .setSendEnd(timing.CalculateMillisecondDelta(timing.SendEnd()))
       .setReceiveHeadersEnd(
           timing.CalculateMillisecondDelta(timing.ReceiveHeadersEnd()))
-      .setPushStart(timing.PushStart())
-      .setPushEnd(timing.PushEnd())
+      .setPushStart(timing.PushStart().InSecondsF())
+      .setPushEnd(timing.PushEnd().InSecondsF())
       .build();
 }
 
