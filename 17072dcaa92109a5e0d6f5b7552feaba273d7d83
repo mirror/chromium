@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d1bd80_a067c07e",
+        "filename": "chrome/browser/resources/media_router/extension/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-23T20:04:01Z",
+      "side": 1,
+      "message": "only chromium committers can be owners, sorry",
+      "revId": "17072dcaa92109a5e0d6f5b7552feaba273d7d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
