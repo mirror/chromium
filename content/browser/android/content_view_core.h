@@ -233,7 +233,7 @@ class ContentViewCore : public WebContentsObserver {
   int GetMouseWheelMinimumGranularity() const;
 
   void UpdateCursor(const content::CursorInfo& info);
-  void OnTouchDown(const base::android::ScopedJavaLocalRef<jobject>& event);
+  void OnTouchDown(const base::android::ScopedJavaGlobalRef<jobject>& event);
 
   ui::ViewAndroid* GetViewAndroid() const;
 

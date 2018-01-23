@@ -120,7 +120,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   float GetTickMultiplier() const;
   bool for_touch_handle() const { return for_touch_handle_; }
 
-  base::android::ScopedJavaLocalRef<jobject> GetJavaObject() const;
+  base::android::ScopedJavaGlobalRef<jobject> GetJavaObject() const;
 
   float GetXPix(size_t pointer_index) const;
   float GetYPix(size_t pointer_index) const;

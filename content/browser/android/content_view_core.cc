@@ -745,7 +745,7 @@ void ContentViewCore::SetMultiTouchZoomSupportEnabled(
 }
 
 void ContentViewCore::OnTouchDown(
-    const base::android::ScopedJavaLocalRef<jobject>& event) {
+    const base::android::ScopedJavaGlobalRef<jobject>& event) {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())

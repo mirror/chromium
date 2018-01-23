@@ -15,7 +15,7 @@
 #include "ui/events/event_utils.h"
 
 using base::android::AttachCurrentThread;
-using base::android::ScopedJavaLocalRef;
+using base::android::ScopedJavaGlobalRef;
 
 namespace ui {
 namespace {
@@ -300,8 +300,8 @@ float MotionEventAndroid::GetTickMultiplier() const {
   return ToDips(tick_multiplier_);
 }
 
-ScopedJavaLocalRef<jobject> MotionEventAndroid::GetJavaObject() const {
-  return ScopedJavaLocalRef<jobject>(event_);
+ScopedJavaGlobalRef<jobject> MotionEventAndroid::GetJavaObject() const {
+  return event_;
 }
 
 int MotionEventAndroid::GetActionIndex() const {
