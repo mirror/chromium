@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70c14fc_61f08c0b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T07:29:24Z",
+      "side": 1,
+      "message": "nit: an -\u003e a",
+      "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
