@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b42a09f9_eb9f9aed",
+        "filename": "android_webview/browser/aw_browser_manifest_overlay.json",
+        "patchSetId": 40
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T00:13:44Z",
+      "side": 1,
+      "message": "Is the hack acceptable in this patch?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 45
+      },
+      "revId": "8bb1fb815c49062c75f5aa209511fc8daf8a7f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8548b730_735023d9",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T00:13:44Z",
+      "side": 1,
+      "message": "Who should this be triaged to?",
+      "range": {
+        "startLine": 354,
+        "startChar": 10,
+        "endLine": 354,
+        "endChar": 17
+      },
+      "revId": "8bb1fb815c49062c75f5aa209511fc8daf8a7f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc80a495_e1b7cc48",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-23T00:13:44Z",
+      "side": 1,
+      "message": "Is the hack acceptable in this patch?",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 49
+      },
+      "revId": "8bb1fb815c49062c75f5aa209511fc8daf8a7f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
