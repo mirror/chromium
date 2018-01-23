@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c7c0d6_e9418122",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T18:02:33Z",
+      "side": 1,
+      "message": "should this only be set when isAccelerated is true?",
+      "range": {
+        "startLine": 45,
+        "startChar": 58,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "4d6f84a5ea08249ad7f1bcc94ec1d2bd0a3f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fb4983_e80cca55",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T18:02:33Z",
+      "side": 1,
+      "message": "nit: remove \", but only\"",
+      "range": {
+        "startLine": 116,
+        "startChar": 33,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "4d6f84a5ea08249ad7f1bcc94ec1d2bd0a3f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f8ecb8_4bd7f022",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T18:02:33Z",
+      "side": 1,
+      "message": "nit: \"Invoke the dialog and record...\"",
+      "range": {
+        "startLine": 801,
+        "startChar": 11,
+        "endLine": 801,
+        "endChar": 12
+      },
+      "revId": "4d6f84a5ea08249ad7f1bcc94ec1d2bd0a3f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb61b63_e02a7e15",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-23T18:02:33Z",
+      "side": 1,
+      "message": "i don\u0027t really care for this style. wdyt of:\n  bool succeeded \u003d SUCCEEDED(browser_button-\u003eGetCachedPatternAs(\n                       UIA_InvokePatternId, IID_PPV_ARGS(\u0026invoke_pattern))) \u0026\u0026\n                   invoke_pattern \u0026\u0026 SUCCEEDED(invoke_pattern-\u003eInvoke());\n\nwith whatever cl format does?",
+      "revId": "4d6f84a5ea08249ad7f1bcc94ec1d2bd0a3f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
