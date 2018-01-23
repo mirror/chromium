@@ -33,6 +33,24 @@
       "revId": "25f47b3f5385e98805709dd64eb0662057d7a5ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa77c745_4b55fcf5",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-23T22:57:38Z",
+      "side": 1,
+      "message": "It didn\u0027t fix tests, they still complete raster and go into TileManager which tries to PrepareToExport().",
+      "parentUuid": "1eca480f_26207153",
+      "revId": "25f47b3f5385e98805709dd64eb0662057d7a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
