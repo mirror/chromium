@@ -69,6 +69,24 @@
       "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cddb51_92919288",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T17:18:40Z",
+      "side": 1,
+      "message": "Nope, that comment\u0027s perfect.",
+      "parentUuid": "2d52cc4e_7f686d09",
+      "revId": "5bac800950c8fcb17c4aa1aee88b3d84ab0ea167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
