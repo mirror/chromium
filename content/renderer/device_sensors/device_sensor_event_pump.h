@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 #define CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -36,7 +37,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
     : public PlatformEventObserver<ListenerType> {
  public:
   // Default rate for firing events.
-  static constexpr int kDefaultPumpFrequencyHz = 60;
+  static constexpr double kDefaultPumpFrequencyHz = 60;
   static constexpr int kDefaultPumpDelayMicroseconds =
       base::Time::kMicrosecondsPerSecond / kDefaultPumpFrequencyHz;
 
@@ -178,7 +179,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
       shared_buffer_reader.reset(
           new device::SensorReadingSharedBufferReader(buffer));
 
-      default_config.set_frequency(kDefaultPumpFrequencyHz);
+      default_config.set_frequency(
+          std::min(kDefaultPumpFrequencyHz, params->maximum_frequency));
 
       sensor.set_connection_error_handler(base::BindOnce(
           &SensorEntry::HandleSensorError, base::Unretained(this)));
