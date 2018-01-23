@@ -16,6 +16,24 @@
       "revId": "5a4c179a7cdeaaf813e6bb2bfb1c8322cd43fea4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264c0c5f_0d987d61",
+        "filename": "ui/ozone/platform/drm/gpu/drm_overlay_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-23T16:49:24Z",
+      "side": 1,
+      "message": "Yes that happens here:\n\nhttps://cs.chromium.org/chromium/src/ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc?type\u003dcs\u0026l\u003d145\n\nWe don\u0027t test anything until we\u0027ve picked the right framebuffer and thus the right format. That is then all tested by the kernel. To avoid the kernel roundtrip in some cases, we could add a new format check at AssignOverlayPlanes time that checks against the assigned hw plane.",
+      "parentUuid": "63c911d7_fdea738b",
+      "revId": "5a4c179a7cdeaaf813e6bb2bfb1c8322cd43fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
