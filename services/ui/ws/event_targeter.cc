@@ -9,6 +9,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/viz/common/switches.h"
 #include "components/viz/host/hit_test/hit_test_query.h"
 #include "services/ui/common/switches.h"
 #include "services/ui/ws/event_location.h"
@@ -48,7 +49,7 @@ void EventTargeter::FindTargetForLocationNow(
       event_location.display_id);
   DeepestWindow deepest_window;
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kUseVizHitTest)) {
+          ::switches::kUseVizHitTest)) {
     if (root) {
       deepest_window = ui::ws::FindDeepestVisibleWindowForLocation(
           root, event_source, gfx::ToFlooredPoint(event_location.raw_location));
