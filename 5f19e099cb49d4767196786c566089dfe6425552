@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2233e1e0_08d4b97f",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-23T02:04:10Z",
+      "side": 1,
+      "message": "You can construct the file with the same arguments as open() and it saves two lines.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "5f19e099cb49d4767196786c566089dfe6425552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653d03d1_6d3d516d",
+        "filename": "third_party/zlib/contrib/bench/zlib_bench.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-23T02:04:10Z",
+      "side": 1,
+      "message": "I don\u0027t see how data.data can be null?\n\nSeems like you can write: \n\nif (!data.size) {\n  ..error..\n}\n\nif (!file || !file.read(..)) {\n  ..error..\n}\n\nreturn data;",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 24
+      },
+      "revId": "5f19e099cb49d4767196786c566089dfe6425552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
