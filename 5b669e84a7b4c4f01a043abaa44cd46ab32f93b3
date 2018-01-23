@@ -16,6 +16,24 @@
       "revId": "5b669e84a7b4c4f01a043abaa44cd46ab32f93b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f3b969_1c7b31c4",
+        "filename": "services/viz/public/cpp/compositing/paint_filter_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-23T00:19:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0fb5af_9dd12adb",
+      "revId": "5b669e84a7b4c4f01a043abaa44cd46ab32f93b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
