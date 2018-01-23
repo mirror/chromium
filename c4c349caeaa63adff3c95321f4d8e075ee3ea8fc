@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed93ef1_d28bdeca",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-23T16:08:49Z",
+      "side": 1,
+      "message": "I think this line should be removed now?",
+      "range": {
+        "startLine": 209,
+        "startChar": 36,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197a302c_f0ff29df",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-23T16:08:49Z",
+      "side": 1,
+      "message": ":)\nI believe this is outdated/fixed by now? If you anyway do another PS, you could maybe remove this.",
+      "range": {
+        "startLine": 218,
+        "startChar": 67,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81056ac_517a63c2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-23T16:08:49Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 35,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "c4c349caeaa63adff3c95321f4d8e075ee3ea8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
