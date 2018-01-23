@@ -217,6 +217,7 @@ class NodeIDWrapper : public base::RefCountedThreadSafe<NodeIDWrapper> {
 
 typedef void (*NodeIDPlusAttributeFunction)(v8::Isolate* isolate,
                                             v8::ReturnValue<v8::Value> result,
+                                            ui::AXTree* tree,
                                             ui::AXNode* node,
                                             const std::string& attribute);
 
@@ -248,7 +249,8 @@ class NodeIDPlusAttributeWrapper
     if (!node)
       return;
 
-    function_(isolate, args.GetReturnValue(), node, attribute);
+    function_(isolate, args.GetReturnValue(), tree_wrapper->tree(), node,
+              attribute);
   }
 
  private:
@@ -623,7 +625,8 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
   RouteNodeIDPlusAttributeFunction(
       "GetStringAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         ui::AXStringAttribute attribute =
             ui::ParseAXStringAttribute(attribute_name);
         std::string attr_value;
@@ -635,7 +638,8 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
   RouteNodeIDPlusAttributeFunction(
       "GetBoolAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         ui::AXBoolAttribute attribute =
             ui::ParseAXBoolAttribute(attribute_name);
         bool attr_value;
@@ -647,7 +651,8 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
   RouteNodeIDPlusAttributeFunction(
       "GetIntAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         ui::AXIntAttribute attribute = ui::ParseAXIntAttribute(attribute_name);
         int attr_value;
         if (!node->data().GetIntAttribute(attribute, &attr_value))
@@ -656,9 +661,26 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
         result.Set(v8::Integer::New(isolate, attr_value));
       });
   RouteNodeIDPlusAttributeFunction(
+      "GetIntAttributeReverseRelations",
+      [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
+        ui::AXIntAttribute attribute = ui::ParseAXIntAttribute(attribute_name);
+        std::set<int32_t> ids =
+            tree->GetReverseRelations(attribute, node->id());
+        v8::Local<v8::Array> array_result(v8::Array::New(isolate, ids.size()));
+        size_t count = 0;
+        for (int32_t id : ids) {
+          array_result->Set(static_cast<uint32_t>(count++),
+                            v8::Integer::New(isolate, id));
+        }
+        result.Set(array_result);
+      });
+  RouteNodeIDPlusAttributeFunction(
       "GetFloatAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         ui::AXFloatAttribute attribute =
             ui::ParseAXFloatAttribute(attribute_name);
         float attr_value;
@@ -671,7 +693,8 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
   RouteNodeIDPlusAttributeFunction(
       "GetIntListAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         ui::AXIntListAttribute attribute =
             ui::ParseAXIntListAttribute(attribute_name);
         if (!node->data().HasIntListAttribute(attribute))
@@ -687,9 +710,27 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
         result.Set(array_result);
       });
   RouteNodeIDPlusAttributeFunction(
+      "GetIntListAttributeReverseRelations",
+      [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
+        ui::AXIntListAttribute attribute =
+            ui::ParseAXIntListAttribute(attribute_name);
+        std::set<int32_t> ids =
+            tree->GetReverseRelations(attribute, node->id());
+        v8::Local<v8::Array> array_result(v8::Array::New(isolate, ids.size()));
+        size_t count = 0;
+        for (int32_t id : ids) {
+          array_result->Set(static_cast<uint32_t>(count++),
+                            v8::Integer::New(isolate, id));
+        }
+        result.Set(array_result);
+      });
+  RouteNodeIDPlusAttributeFunction(
       "GetHtmlAttribute",
       [](v8::Isolate* isolate, v8::ReturnValue<v8::Value> result,
-         ui::AXNode* node, const std::string& attribute_name) {
+         ui::AXTree* tree, ui::AXNode* node,
+         const std::string& attribute_name) {
         std::string attr_value;
         if (!node->data().GetHtmlAttribute(attribute_name.c_str(), &attr_value))
           return;
