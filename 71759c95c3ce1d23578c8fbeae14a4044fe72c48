@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64009849_948bde46",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-23T16:13:04Z",
+      "side": 1,
+      "message": "I think it\u0027s better to be called SetMockRendererCompositorFrameSink instead. Based on the style guide, only getters and setters should be lower case. https://google.github.io/styleguide/cppguide.html#Function_Names sorry for the wrong suggestion before.",
+      "revId": "71759c95c3ce1d23578c8fbeae14a4044fe72c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2787ca79_82f09977",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-23T16:13:04Z",
+      "side": 1,
+      "message": "Unfortunately, there is still some memory leakage. This unique ptr is created inside the function call you make, so it will be destroyed after this line. I think you need to make a local variable and then pass to the function.",
+      "revId": "71759c95c3ce1d23578c8fbeae14a4044fe72c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
