@@ -2831,6 +2831,27 @@ crbug.com/688486 virtual/service-worker-script-streaming/external/wpt/service-wo
 crbug.com/688486 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 
+# UserActivationV2 related failures
+crbug.com/802371 external/wpt/fullscreen/api/element-request-fullscreen-and-exit-iframe-manual.html [ Failure ]
+crbug.com/802371 external/wpt/fullscreen/model/move-to-fullscreen-iframe-manual.html [ Failure ]
+
+crbug.com/805015 fast/dom/Window/window-postmessage-user-gesture.html [ Failure ]
+crbug.com/805015 fast/events/open-window-from-another-frame.html [ Failure ]
+crbug.com/805015 virtual/mouseevent_fractional/fast/events/open-window-from-another-frame.html [ Failure ]
+
+crbug.com/802291 fast/events/popup-blocking-timers4.html [ Failure ]
+crbug.com/802291 fast/events/popup-blocking-timers6.html [ Failure ]
+crbug.com/802291 virtual/mouseevent_fractional/fast/events/popup-blocking-timers4.html [ Failure ]
+crbug.com/802291 virtual/mouseevent_fractional/fast/events/popup-blocking-timers6.html [ Failure ]
+
+crbug.com/805015 fullscreen/api/element-request-fullscreen-two-iframes.html [ Failure ]
+crbug.com/805015 virtual/android/fullscreen/api/element-request-fullscreen-two-iframes.html [ Failure ]
+
+crbug.com/802286 http/tests/media/autoplay/document-user-activation-navigation-click.html [ Failure ]
+crbug.com/802286 http/tests/media/autoplay/document-user-activation-navigation-keypress.html [ Failure ]
+crbug.com/802286 http/tests/media/autoplay/document-user-activation-navigation-tap.html [ Failure ]
+
+
 # Sheriff failures 2017-02-21
 crbug.com/73609 http/tests/media/video-play-stall.html [ Pass Timeout ]
 
