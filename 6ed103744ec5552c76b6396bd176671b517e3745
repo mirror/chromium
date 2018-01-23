@@ -441,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "2390a15b_11b26bd8",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "I see. This variable isn\u0027t needed anymore.",
+      "parentUuid": "0bbe463f_f219fe23",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f11ca066_b9650e01",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
         "patchSetId": 7
@@ -541,6 +559,24 @@
     },
     {
       "key": {
+        "uuid": "15ce666a_626390b6",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e2691b7_b6f52d7e",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c925fa98_a9613274",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
         "patchSetId": 7
@@ -623,6 +659,24 @@
       "side": 1,
       "message": "Usually we only send the minimum needed by the server endpoint. For requests on system context, we don\u0027t send and save cookies since system context is shared and should be stateless. Same goes for the auth data.\n\nCache depends on whether you want to stored the response in http cache and re-used it later. Disable cache would by pass the cache and always hit server to get latest data. This is optional.",
       "parentUuid": "016604f3_dded832b",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0583c68b_215b5150",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "I see. I think it should bypass/disable cache. Thanks for the explanation.",
+      "parentUuid": "dc229cba_243a8268",
       "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
