@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aa01db0_837d1837",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Agreed, I\u0027m not fond of it. Removed.",
+      "parentUuid": "e905d541_d50b1e7f",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be71eff_9ca19c3d",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302d4b9b_aa40ef98",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be71eff_9ca19c3d",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6a7b6ed1_9d8884a0",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "edc23df8_906e7590",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3da931_abe54b2d",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc23e58_eaf79ee1",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "I just removed this line for now. It\u0027s especially dubious because some of the enum values are deprecated and thus not used. PromptTypeToString (below) will hit a NOTREACHED if those are used though, so we\u0027re not losing DCHECK coverage except in the case where we get a wildly negative value, which would be very strange. Anyway, I think this whole flow is due for some refactoring.",
+      "parentUuid": "2e3da931_abe54b2d",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "73b41de7_84423ea7",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Done. Looks okay all inlined.",
+      "parentUuid": "a171c3a6_36dee80b",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90d201e_25b42645",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa358ac5_2f6faefe",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90d201e_25b42645",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "731a78ca_9a9fec50",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Oops, I meant to pull that into a layout provider metric.",
+      "parentUuid": "b97f3e29_88c6a4d4",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a622679c_96f9df26",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266a24e7_1ff92c6a",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "We create the title in AddedToWidget. To make it a \"proper\" title we call SetTitleView on the NonClientFrameView, which is a child of the Widget, which doesn\u0027t exist before AddedToWidget is called. The content (in this case, the scroll view) doesn\u0027t have any such dependency, so we can just create it immediately in the ctor.",
+      "parentUuid": "a622679c_96f9df26",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f785cc28_95857aea",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Yeah, I wrestled with this for a bit. The mock has 8 here, but that doesn\u0027t correspond to any metric, and 16 doesn\u0027t look good. But I guess now that I\u0027ve changed DISTANCE_RELATED_LABEL_HORIZONTAL to 12 I think it\u0027s okay. Done.",
+      "parentUuid": "a8cbb314_3f308f2a",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e82b3b9d_f3b9f031",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -169,6 +331,24 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76e8b4c_eaec69d2",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82b3b9d_f3b9f031",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +372,30 @@
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa2f199_a4b94c85",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-23T20:20:58Z",
+      "side": 1,
+      "message": "I went through and edited all the comments in this section, so they\u0027re all specific and use the same language.",
+      "parentUuid": "b14b27ec_79f54ae8",
+      "range": {
+        "startLine": 124,
+        "startChar": 49,
+        "endLine": 124,
+        "endChar": 69
+      },
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
