@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1dde5a5_aa699ce2",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T06:02:40Z",
+      "side": 1,
+      "message": "nit: maybe\n\n... with these tests in the renderer-side code.\n\n(Maybe also note that we have layout tests that cover the path)",
+      "revId": "69d0e6e679fc2657637a0ba196c69e609bbf53f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
