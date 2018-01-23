@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0040875b_7b516aed",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T01:25:12Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "c27896cb_fbea7289",
+      "revId": "84abb2de36c99732a9698643d113c135dbaf8179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8de109c_93823e19",
         "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
         "patchSetId": 2
