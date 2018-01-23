@@ -70,6 +70,24 @@
       "revId": "6fb0e2cdbe05bc7e0ba5b32d7e1c67399c39b530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700eda58_90908ece",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T18:56:47Z",
+      "side": 1,
+      "message": "Good point. I used the action system now.",
+      "parentUuid": "c9c3865a_9fc09951",
+      "revId": "6fb0e2cdbe05bc7e0ba5b32d7e1c67399c39b530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
