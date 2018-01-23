@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621b9a70_f045ad46",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-01-23T17:54:36Z",
+      "side": 1,
+      "message": "Nit: public -\u003e private, since this variable is only used in this class.",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 14
+      },
+      "revId": "c336ed84a10d132006bd11fb358c7d3901b27884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb84f343_47b56532",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-01-23T17:54:36Z",
+      "side": 1,
+      "message": "Nit: please make this as a static variable too:)",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "c336ed84a10d132006bd11fb358c7d3901b27884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
