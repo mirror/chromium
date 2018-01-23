@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acfba0c_bf074cbc",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/fast/forms/text/input-baseline-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:25:04Z",
+      "side": 0,
+      "message": "Any idea why this file was deleted by the rebaseline?",
+      "revId": "876979d121995a713dd2c8ce17b300e2fcc85a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
