@@ -48,16 +48,8 @@
 @synthesize bookmarkButton = _bookmarkButton;
 @synthesize tabGridButton = _tabGridButton;
 
-#pragma mark - UIView
-
-- (void)willMoveToSuperview:(UIView*)newSuperview {
-  [self setUp];
-  [super willMoveToSuperview:newSuperview];
-}
-
 #pragma mark - Setup
 
-// Sets all the subviews and constraints of this view.
 - (void)setUp {
   if (self.subviews.count > 0) {
     // Make sure the view is instantiated only once.

@@ -50,6 +50,9 @@
 // (relatively to the omnibox) | ← [omnibox] → |.
 @property(nonatomic, strong, readonly) ToolbarButton* forwardTrailingButton;
 
+// Sets all the subviews and constraints of the view.
+- (void)setUp;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_ADAPTIVE_TOOLBAR_VIEW_H_

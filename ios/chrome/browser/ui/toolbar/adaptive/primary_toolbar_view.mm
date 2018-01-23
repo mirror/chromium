@@ -82,16 +82,8 @@
 @synthesize bookmarkButton = _bookmarkButton;
 @synthesize toolsMenuButton = _toolsMenuButton;
 
-#pragma mark - UIView
-
-- (void)willMoveToSuperview:(UIView*)newSuperview {
-  [self setUp];
-  [super willMoveToSuperview:newSuperview];
-}
-
 #pragma mark - Setup
 
-// Sets all the subviews and constraints of this view.
 - (void)setUp {
   if (self.subviews.count > 0) {
     // Setup the view only once.
