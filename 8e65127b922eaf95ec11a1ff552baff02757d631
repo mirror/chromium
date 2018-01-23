@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8989d8a4_993488f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T22:02:52Z",
+      "side": 1,
+      "message": "nits:\n\n(1) Now that you\u0027ve added \"Bug: \" below, you don\u0027t need to include the bug link in the description.\n(2) The Chromium code review tool shows the first commit message line at the top of the page, and it also uses that line as the subject for e-mail notifications about the CL. Usually, it\u0027s preferred to have a simple title, then follow up with more detailed information on the following lines. Remember, your CL description should be easily understood by someone who has no knowledge of what your code does. For example, I might choose the following CL description:\n\n\n[CrOS Tether] Add handling for two new connection failure types.\n\nThis CL adds handling for the ENABLING_HOTSPOT_FAILED and\nENABLING_HOTSPOT_TIMEOUT response codes, which are returned in\nConnectTetheringResponse messages from Android hosts. Previously, these\nlogs were not explicitly handled, so CrOS clients receiveing these\nresponse codes would simply log an \"Unknown error\" metric.",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 35
+      },
+      "revId": "8e65127b922eaf95ec11a1ff552baff02757d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68c2d20_bfa6717a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 23105,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T22:02:52Z",
+      "side": 1,
+      "message": "nit: Change to \"timed out\" to be consistent with \"Tethering timed out\" above.",
+      "range": {
+        "startLine": 23105,
+        "startChar": 41,
+        "endLine": 23105,
+        "endChar": 48
+      },
+      "revId": "8e65127b922eaf95ec11a1ff552baff02757d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
