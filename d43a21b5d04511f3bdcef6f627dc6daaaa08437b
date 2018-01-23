@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "6c2bb2c5_341142cc",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-23T19:00:38Z",
+      "side": 1,
+      "message": "Sounds good. Thanks!",
+      "parentUuid": "65e98ae4_0ac59438",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30be3221_82cabadb",
         "filename": "chrome/browser/profiles/profile_info_cache_unittest.cc",
         "patchSetId": 7
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "30be3221_82cabadb",
+      "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3963d46b_23b7ffab",
+        "filename": "chrome/browser/profiles/profile_info_cache_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2018-01-23T19:00:38Z",
+      "side": 1,
+      "message": "Marked that it was done, but didn\u0027t save the buffer in VS Code. :-(\n\nFinally it\u0027s really done anyway.",
+      "parentUuid": "6b64d7c2_fa238e4e",
       "revId": "d43a21b5d04511f3bdcef6f627dc6daaaa08437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
