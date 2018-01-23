@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import <Cronet/Cronet.h>
+#include <Cronet/cronet_c.h>
 #import <Foundation/Foundation.h>
 
 #include "components/cronet/ios/test/start_cronet.h"
