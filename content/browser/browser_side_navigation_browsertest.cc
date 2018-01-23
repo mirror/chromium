@@ -799,4 +799,47 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
   EXPECT_EQ("#foo", reference_fragment);
 }
 
+// Regression test for https://crbug.com/796561
+// 1) Start on a document with history.length == 1
+// 2) Create an iframe and call history.pushState at the same time.
+// 3) history.back() must work.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       IframeAndPushStateSimultaneously) {
+  // 1) Start on a new document.
+  //    history.length = 1  (index = 0).
+  {
+    GURL url = embedded_test_server()->GetURL("/simple_page.html");
+    EXPECT_TRUE(NavigateToURL(shell(), url));
+
+    int history_length;
+    EXPECT_TRUE(ExecuteScriptAndExtractInt(
+        shell(), "window.domAutomationController.send(history.length)",
+        &history_length));
+    EXPECT_EQ(1, history_length);
+  }
+
+  // 2) Create an iframe and call history.pushState at the same time.
+  //    history.length = 2  (index = 1)
+  {
+    int history_length;
+    EXPECT_TRUE(ExecuteScriptAndExtractInt(
+        shell(),
+        "let iframe = document.createElement('iframe');"
+        "iframe.src = '/simple_page.html';"
+        "document.body.appendChild(iframe);"
+        "window.history.pushState({}, null);"
+        "window.domAutomationController.send(history.length);",
+        &history_length));
+    EXPECT_EQ(2, history_length);
+    EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  }
+
+  // 3) history.back() must work.
+  {
+    TestNavigationObserver navigation_observer(shell()->web_contents());
+    EXPECT_TRUE(ExecuteScript(shell()->web_contents(), "history.back();"));
+    navigation_observer.Wait();
+  }
+}
+
 }  // namespace content
