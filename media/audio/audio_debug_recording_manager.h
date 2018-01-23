@@ -65,7 +65,8 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   virtual ~AudioDebugRecordingManager();
 
   // Enables and disables debug recording.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name);
+  virtual void EnableDebugRecording(
+      AudioDebugRecordingHelper::CreateFileCallback create_file_callback);
   virtual void DisableDebugRecording();
 
   // Registers a source and returns a wrapped recorder. |file_name_extension| is
@@ -107,9 +108,9 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // Recorders, one per source.
   DebugRecordingHelperMap debug_recording_helpers_;
 
-  // The base file name for debug recording files. If this is non-empty, debug
-  // recording is enabled.
-  base::FilePath debug_recording_base_file_name_;
+  // The callback for creating debug recording files. If this is
+  // non-nullptr, debug recording is enabled.
+  AudioDebugRecordingHelper::CreateFileCallback create_file_callback_;
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);

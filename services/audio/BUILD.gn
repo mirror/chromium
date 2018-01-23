@@ -36,6 +36,8 @@ source_set("tests") {
 
   sources = [
     "test/audio_system_to_service_adapter_test.cc",
+    "test/debug_recording_file_provider_unittest.cc",
+    "test/debug_recording_unittest.cc",
     "test/in_process_service_test.cc",
   ]
 
