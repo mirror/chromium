@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57291b17_b5474528",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-23T10:24:11Z",
+      "side": 1,
+      "message": "If this caused an error in ASAN for out-of-range access,\ncould you come up with a test case to cover that,\nwhich can fail without ASAN?",
+      "revId": "979ec1a6dc96d2788fc1946c6b2585cef8e41e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
