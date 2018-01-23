@@ -674,8 +674,18 @@ class EVENTS_EXPORT MouseWheelEvent : public MouseEvent {
   int y_offset() const { return offset_.y(); }
   const gfx::Vector2d& offset() const { return offset_; }
 
+  // The mouse wheel event from touchpad will comes with a high precision delta.
+  bool has_precise_scrolling_deltas() const {
+    return has_precise_scrolling_deltas_;
+  }
+
+  void set_precise_scrolling_deltas(bool has_precise_scrolling_deltas) {
+    has_precise_scrolling_deltas_ = has_precise_scrolling_deltas;
+  }
+
  private:
   gfx::Vector2d offset_;
+  bool has_precise_scrolling_deltas_ = false;
 };
 
 // NOTE: Pen (stylus) events use TouchEvent with POINTER_TYPE_PEN. They were
