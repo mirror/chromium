@@ -45,6 +45,30 @@
       "revId": "17be4ed8631e2fd66940ecf6248d772dc6e74dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb36699_9beaa1d7",
+        "filename": "services/network/public/interfaces/tcp_socket.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T22:45:20Z",
+      "side": 1,
+      "message": "Each listening socket has an accept queue internally (There\u0027s a setsockopt call to set it, I believe), so we don\u0027t start dropping sockets on the floor until we reach that limit, anyways.  No idea what the default value is, though.",
+      "parentUuid": "44963283_e031d458",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "17be4ed8631e2fd66940ecf6248d772dc6e74dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
