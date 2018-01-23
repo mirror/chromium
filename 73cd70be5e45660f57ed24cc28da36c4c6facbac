@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f131627f_99f021da",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/NfcHost.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T14:53:57Z",
+      "side": 1,
+      "message": "make ContentViewCoreImpl return the Impl type",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "73cd70be5e45660f57ed24cc28da36c4c6facbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
