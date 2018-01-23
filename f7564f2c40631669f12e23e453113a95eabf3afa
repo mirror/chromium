@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "594321ea_2481d7be",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-23T12:13:30Z",
+      "side": 1,
+      "message": "Hm, last_fetch_authenticated_ is set when the request is started, but the other last_* members are updated only when it completes. So while a request is pending (or if a request failed), they\u0027ll be inconsistent. That seems dangerous. Maybe introduce a \"pending_fetch_authenticated_\" and update last_fetch_authenticated_ only when the request completes?",
+      "range": {
+        "startLine": 208,
+        "startChar": 36,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "f7564f2c40631669f12e23e453113a95eabf3afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
