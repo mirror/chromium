@@ -49,10 +49,6 @@ const char kAndroidWallpapersAppPackage[] = "com.google.android.apps.wallpaper";
 const char kAndroidWallpapersAppActivity[] =
     "com.google.android.apps.wallpaper.picker.CategoryPickerActivity";
 
-// Only if the current profile is the primary profile && ARC service is enabled
-// && the Android Wallpapers App has been installed && the finch experiment or
-// chrome flag is enabled, launch the Android Wallpapers App. Otherwise launch
-// the old Chrome OS Wallpaper Picker App.
 bool ShouldUseAndroidWallpapersApp(Profile* profile) {
   if (!chromeos::ProfileHelper::IsPrimaryProfile(profile))
     return false;
@@ -75,6 +71,14 @@ bool ShouldUseAndroidWallpapersApp(Profile* profile) {
   }
 
   return true;
+}
+
+bool ShouldShowBackdropWallpapers() {
+#if defined(GOOGLE_CHROME_BUILD)
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kNewWallpaperPicker);
+#endif
+  return false;
 }
 
 void OpenWallpaperManager() {
@@ -102,6 +106,7 @@ void OpenWallpaperManager() {
     UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Apps",
                               WALLPAPERS_PICKER_APP_CHROMEOS,
                               WALLPAPERS_APPS_NUM);
+
     OpenApplication(AppLaunchParams(
         profile, extension, extensions::LAUNCH_CONTAINER_WINDOW,
         WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_CHROME_INTERNAL));

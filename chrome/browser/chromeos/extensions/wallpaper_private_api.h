@@ -14,6 +14,9 @@
 #include "components/wallpaper/wallpaper_files_id.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
+class CollectionNameFetcher;
+class ImageInfoFetcher;
+
 namespace base {
 class RefCountedBytes;
 }
@@ -299,6 +302,49 @@ class WallpaperPrivateRecordWallpaperUMAFunction
 
   // ExtensionFunction:
   ResponseAction Run() override;
+};
+
+class WallpaperPrivateGetCollectionNamesFunction
+    : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("wallpaperPrivate.getCollectionNames",
+                             WALLPAPERPRIVATE_GETCOLLECTIONNAMES)
+  WallpaperPrivateGetCollectionNamesFunction();
+
+ protected:
+  ~WallpaperPrivateGetCollectionNamesFunction() override;
+
+  // ExtensionFunction:
+  ResponseAction Run() override;
+
+ private:
+  // Callback upon completion of fetching the collection names.
+  void OnCollectionNamesFetched(const base::DictionaryValue& collection_names);
+
+  std::unique_ptr<CollectionNameFetcher> collection_name_fetcher_;
+
+  DISALLOW_COPY_AND_ASSIGN(WallpaperPrivateGetCollectionNamesFunction);
+};
+
+class WallpaperPrivateGetImagesInfoFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("wallpaperPrivate.getImagesInfo",
+                             WALLPAPERPRIVATE_GETIMAGESINFO)
+  WallpaperPrivateGetImagesInfoFunction();
+
+ protected:
+  ~WallpaperPrivateGetImagesInfoFunction() override;
+
+  // ExtensionFunction:
+  ResponseAction Run() override;
+
+ private:
+  // Callback upon completion of fetching the images info.
+  void OnImagesInfoFetched(const base::ListValue& images_info);
+
+  std::unique_ptr<ImageInfoFetcher> image_info_fetcher_;
+
+  DISALLOW_COPY_AND_ASSIGN(WallpaperPrivateGetImagesInfoFunction);
 };
 
 #endif  // CHROME_BROWSER_CHROMEOS_EXTENSIONS_WALLPAPER_PRIVATE_API_H_
