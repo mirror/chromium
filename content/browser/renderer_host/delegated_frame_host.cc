@@ -155,7 +155,7 @@ void DelegatedFrameHost::CopyFromCompositingSurface(
                          preferred_color_type, callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
-  RequestCopyOfOutput(std::move(request));
+  support_->RequestCopyOfSurface(std::move(request));
 }
 
 void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
