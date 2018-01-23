@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71e480ba_da2792ad",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:38:50Z",
+      "side": 1,
+      "message": "I did not get to this but will do it tomorrow.",
+      "parentUuid": "3b8fd77d_ad2181bb",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7855ae_0a9b14fd",
         "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "989b838d_013eb5c7",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7855ae_0a9b14fd",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a4e59f_52fc6e87",
         "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.h",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-23T03:19:59Z",
       "side": 1,
       "message": "These fields should be moved to TextFieldInputType.",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c424408_ba43c7f0",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:38:50Z",
+      "side": 1,
+      "message": "Can you clarify this?\n\nThe ThemePainter needs to know the content of these attributes but only looks at HTMLInputElements. I could\n1) Introduce virtual getter and setter methods for the fields to InputTypeView and expose the input_type_view_ publicly.\n2) Leave the setters and getters here and delegate their calls to the input_type_view_.\n3/4) Do the same as above but use the input_type_ instead of the input_type_view_.",
+      "parentUuid": "26a4e59f_52fc6e87",
       "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4b14798f_80c21380",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0eeb54_59d7a4fe",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b979cd3_1c40a598",
         "filename": "third_party/WebKit/public/web/WebInputElement.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4638795_80670152",
+        "filename": "third_party/WebKit/public/web/WebInputElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-23T16:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b979cd3_1c40a598",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
