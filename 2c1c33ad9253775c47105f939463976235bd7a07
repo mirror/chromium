@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d4c6ae5_e804e62f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4728eee8_1abde321",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40f5d10b_23cb8364",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f6563d_1001b3e7",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f5d10b_23cb8364",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5387ed5_f422d979",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475b7380_6b8bdc98",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b35b83e_6956e856",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8056d7d9_7a07c3b1",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b35b83e_6956e856",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ad15fa79_9aabbd79",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37f3610_05853d12",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbd279ad_3bce544d",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3303bfe_e061cdc5",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd279ad_3bce544d",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b6021dae_89971dc8",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49fdfdf8_6a22042d",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2a58d3_eeda4a9d",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e675843_5519b49e",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f2a58d3_eeda4a9d",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9a792d9a_75a99b0b",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839a46cd_42f25f5c",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f00f819_e0830a0f",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e29d47_55cf3874",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "The very first time Layout() is called the view is not added to the parent yet and the contents() size is (0, 0). If I don\u0027t call ClipHeightTo() after constructing then the size of this view is never properly updated (even with subsequent Layout calls).",
+      "parentUuid": "4f00f819_e0830a0f",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "453d0cd4_f8f316ac",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d168c81a_aafc6c1c",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca3ea92_9a903464",
         "filename": "ash/login/ui/scrollable_users_list_view.h",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2252dc87_8fb511ff",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-23T01:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca3ea92_9a903464",
+      "revId": "2c1c33ad9253775c47105f939463976235bd7a07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
