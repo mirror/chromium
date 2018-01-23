@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5156705_d1af5c1e",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T18:12:30Z",
+      "side": 1,
+      "message": "Let\u0027s clean up the listing on line 52 which is no longer needed (thus solving the mystery). Same for the other manifest files.",
+      "revId": "15b348860482ab6108cb4aaa313719fb7362be0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
