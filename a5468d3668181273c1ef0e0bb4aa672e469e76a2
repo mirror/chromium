@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "823dd77c_74cf8478",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-23T19:12:00Z",
+      "side": 1,
+      "message": "If we have reasons to believe base::Value parser is compromised, should not we invest into fixing it rather than introducing workarounds? I can see our Preferences containing the URLs for example. Does this mean this is also against the policy?\n\nIs the policy itself captured anywhere? Something along the lines with \"no data that comes from the user (preferences, manifests, etc.) should be parsed in the browser\". Conforming to it requires work, code, complexity and likely security vulnerabilities scattered across the code base instead of being concentrated around this component where we already expect them?",
+      "parentUuid": "1dec94e0_4adcac29",
+      "range": {
+        "startLine": 1132,
+        "startChar": 41,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "a5468d3668181273c1ef0e0bb4aa672e469e76a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfa66b2_dd28728b",
         "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
         "patchSetId": 11
