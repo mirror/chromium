@@ -22,6 +22,30 @@
       "revId": "c8892f550cadf022a327a2c4db432a6c3edf144d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c0f10b_747f42d6",
+        "filename": "chrome/android/profiles/update_afdo_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2018-01-23T19:12:46Z",
+      "side": 1,
+      "message": "Good call.\n\nAssuming build/install-build-deps{,-android}.sh is the source of truth for our build deps, bzip2 isn\u0027t explicitly listed, but we pull it in already (on the Debian box I\u0027m on right now, at least) as a dependency for dpkg-dev.\n\nIs there some process/announcement for adding an explicit dependency on it, or can I just add a line to install-build-deps-android.sh and declare victory?",
+      "parentUuid": "5504b297_37ce9b46",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "c8892f550cadf022a327a2c4db432a6c3edf144d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
