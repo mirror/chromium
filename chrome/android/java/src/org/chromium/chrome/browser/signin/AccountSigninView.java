@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ import org.chromium.ui.widget.ButtonCompat;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -111,6 +113,8 @@ public class AccountSigninView extends FrameLayout {
     private static final String ARGUMENT_IS_DEFAULT_ACCOUNT = "AccountSigninView.IsDefaultAccount";
     private static final String ARGUMENT_IS_CHILD_ACCOUNT = "AccountSigninView.IsChildAccount";
     private static final String ARGUMENT_UNDO_BEHAVIOR = "AccountSigninView.UndoBehavior";
+
+    private static final String CONSENT_AUDITOR_KEY = "signin-sync";
 
     @IntDef({SIGNIN_FLOW_DEFAULT, SIGNIN_FLOW_CONFIRMATION_ONLY, SIGNIN_FLOW_ADD_NEW_ACCOUNT})
     @Retention(RetentionPolicy.SOURCE)
@@ -574,15 +578,23 @@ public class AccountSigninView extends FrameLayout {
             public void onClick(View widget) {
                 mListener.onAccountSelected(mSelectedAccountName, mIsDefaultAccountSelected, true);
                 RecordUserAction.record("Signin_Signin_WithAdvancedSyncSettings");
+
+                // Record the fact that the user consented to the consent text by clicking
+                // on |mSigninSettingsControl|.
+                PrefServiceBridge.getInstance().recordConsent(CONSENT_AUDITOR_KEY,
+                        getConsentDescriptionResources(), getConsentStringResource(widget));
             }
         };
         if (mIsChildAccount) {
             mSigninPersonalizeServiceDescription.setText(
                     R.string.sync_confirmation_personalize_services_body_child_account);
+            mSigninPersonalizeServiceDescription.setTag(
+                    R.string.sync_confirmation_personalize_services_body_child_account, null);
         }
         mSigninSettingsControl.setText(
                 SpanApplier.applySpans(getSettingsControlDescription(mIsChildAccount),
                         new SpanInfo(SETTINGS_LINK_OPEN, SETTINGS_LINK_CLOSE, settingsSpan)));
+        mSigninSettingsControl.setTag(getSettingsControlResourceName(mIsChildAccount));
     }
 
     private void showConfirmSigninPageAccountTrackerServiceCheck() {
@@ -663,10 +675,12 @@ public class AccountSigninView extends FrameLayout {
     private void setUpSigninButton(boolean hasAccounts) {
         if (hasAccounts) {
             mPositiveButton.setText(R.string.continue_sign_in);
+            mPositiveButton.setTag(R.string.continue_sign_in);
             mPositiveButton.setOnClickListener(
                     view -> showConfirmSigninPageAccountTrackerServiceCheck());
         } else {
             mPositiveButton.setText(R.string.choose_account_sign_in);
+            mPositiveButton.setTag(R.string.choose_account_sign_in);
             mPositiveButton.setOnClickListener(view -> {
                 if (hasGmsError()) return;
 
@@ -704,6 +718,11 @@ public class AccountSigninView extends FrameLayout {
         mPositiveButton.setOnClickListener(view -> {
             mListener.onAccountSelected(mSelectedAccountName, mIsDefaultAccountSelected, false);
             RecordUserAction.record("Signin_Signin_WithDefaultSyncSettings");
+
+            // Record the fact that the user consented to the consent text by clicking
+            // on |mPositiveButton|.
+            PrefServiceBridge.getInstance().recordConsent(CONSENT_AUDITOR_KEY,
+                    getConsentDescriptionResources(), getConsentStringResource(view));
         });
         setUpMoreButtonVisible(true);
     }
@@ -738,12 +757,57 @@ public class AccountSigninView extends FrameLayout {
         }
     }
 
-    private String getSettingsControlDescription(boolean childAccount) {
+    private String getSettingsControlResourceName(boolean childAccount) {
         if (childAccount) {
-            return getResources().getString(
-                    R.string.signin_signed_in_settings_description_child_account);
+            return "signin_signed_in_settings_description_child_account";
         } else {
-            return getResources().getString(R.string.signin_signed_in_settings_description);
+            return "R.string.signin_signed_in_settings_description";
         }
+    }
+
+    private String getSettingsControlDescription(boolean childAccount) {
+        return getResources().getString(
+                getResources().getIdentifier(getSettingsControlResourceName(childAccount), "string",
+                        mDelegate.getActivity().getPackageName()));
+    }
+
+    private ArrayList<View> getViewsWithTag(ViewGroup viewGroup) {
+        ArrayList<View> result = new ArrayList<>();
+        for (int i = 0; i < getChildCount(); ++i) {
+            View view = getChildAt(i);
+            if (view.getTag() != null) result.add(view);
+            if (view instanceof ViewGroup) result.addAll(getViewsWithTag(viewGroup));
+        }
+        return result;
+    }
+
+    private String getViewText(View view) {
+        if (view instanceof TextView) return ((TextView) view).getText().toString();
+        if (view instanceof Button) return ((Button) view).getText().toString();
+        return null;
+    }
+
+    private int getConsentStringResource(View view) {
+        return getResources().getIdentifier(
+                (String) view.getTag(), "string", mDelegate.getActivity().getPackageName());
+    }
+
+    private ArrayList<Integer> getConsentDescriptionResources() {
+        // We store resource IDs of the consent text in tags.
+        ArrayList<View> views = getViewsWithTag(this);
+        ArrayList<Integer> resourceIds = new ArrayList<>();
+
+        // We have access to the inflated XML which contains the strings forming the consent text.
+        // However, we need to record their resource ID. To avoid doing a linear scan on string
+        // resources to find the ID which resolves to a particular string, we have cached those
+        // strings in the resources' tags. Now we must confirm that the tags were kept up to date
+        // with the strings, however, this can be done in constant time.
+        for (View view : views) {
+            int resourceId = getConsentStringResource(view);
+            assert getResources().getString(resourceId) == getViewText(view);
+            resourceIds.add(resourceId);
+        }
+
+        return resourceIds;
     }
 }

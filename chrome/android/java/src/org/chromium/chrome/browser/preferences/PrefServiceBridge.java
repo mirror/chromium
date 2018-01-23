@@ -1054,6 +1054,22 @@ public final class PrefServiceBridge {
         nativeSetDownloadDefaultDirectory(directory);
     }
 
+    /**
+     * Records that a signed-in user consented to a feature.
+     * @param featureName Feature for which to record the consent.
+     * @param consentDescription The resource IDs of the text the user read before consenting.
+     * @param consentConfirmation The resource ID of the text the user clicked when consenting.
+     */
+    public void recordConsent(
+            String featureName, ArrayList<Integer> consentDescription, int consentConfirmation) {
+        int[] consentText = new int[consentDescription.size() + 1];
+        for (int i = 0; i < consentDescription.size(); ++i) {
+            consentText[i] = consentDescription.get(i).intValue();
+        }
+        consentText[consentDescription.size()] = consentConfirmation;
+        nativeRecordConsent(featureName, consentText);
+    }
+
     private native boolean nativeGetBoolean(int preference);
     private native void nativeSetBoolean(int preference, boolean value);
     private native boolean nativeGetAcceptCookiesEnabled();
@@ -1168,4 +1184,5 @@ public final class PrefServiceBridge {
     private native void nativeSetLanguageBlockedState(String language, boolean blocked);
     private native String nativeGetDownloadDefaultDirectory();
     private native void nativeSetDownloadDefaultDirectory(String directory);
+    private native void nativeRecordConsent(String featureName, int[] consentText);
 }

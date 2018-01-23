@@ -27,6 +27,7 @@
 #include "base/values.h"
 #include "chrome/browser/android/preferences/prefs.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/consent_auditor/consent_auditor_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
@@ -37,6 +38,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
 #include "components/browsing_data/core/pref_names.h"
+#include "components/consent_auditor/consent_auditor.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
@@ -1274,6 +1276,20 @@ static void JNI_PrefServiceBridge_SetDownloadDefaultDirectory(
   std::string path(ConvertJavaStringToUTF8(env, directory));
   GetPrefService()->SetFilePath(prefs::kDownloadDefaultDirectory,
                                 base::FilePath(FILE_PATH_LITERAL(path)));
+}
+
+static void JNI_PrefServiceBridge_RecordConsent(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jstring>& j_feature_name,
+    const JavaParamRef<jintArray>& j_consent_text) {
+  std::string feature_name(ConvertJavaStringToUTF8(env, j_feature_name));
+  std::vector<int> consent_text;
+  base::android::JavaIntArrayToIntVector(env, j_consent_text, &consent_text);
+  ConsentAuditorFactory::GetForProfile(GetOriginalProfile())
+      ->RecordGaiaConsent(feature_name, consent_text,
+                          std::vector<std::string>(),
+                          consent_auditor::ConsentStatus::GIVEN);
 }
 
 const char* PrefServiceBridge::GetPrefNameExposedToJava(int pref_index) {
