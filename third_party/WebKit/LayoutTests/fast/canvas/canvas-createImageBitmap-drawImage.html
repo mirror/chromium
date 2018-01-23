@@ -174,9 +174,7 @@ function nextCheck(elementIndex) {
     var p5 = createImageBitmap(element, -10, -10, 60, 60).then(function (image) { imageBitmaps.overCrop = image });
     var p6 = createImageBitmap(element, 10, 10, 50, 50).then(function (image) { imageBitmaps.overCropRight = image });
     var p7 = createImageBitmap(element, 10, 10, -10, -10).then(function (image) { imageBitmaps.negativeCrop = image });
-    var p8 = createImageBitmap(element, -30, -30, 30, 30).then(function (image) { imageBitmaps.empty = image });
-    var p9 = createImageBitmap(element, 40, 30, 30, 30).then(function (image) { imageBitmaps.emptyTwo = image });
-    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]).then(function() {
+    Promise.all([p1, p2, p3, p4, p5, p6, p7]).then(function() {
         checkNoCrop(imageBitmaps.noCrop);
         checkCrop(imageBitmaps.crop);
         checkCropCenter(imageBitmaps.cropCenter);
@@ -184,14 +182,12 @@ function nextCheck(elementIndex) {
         checkOverCrop(imageBitmaps.overCrop);
         checkOverCropRight(imageBitmaps.overCropRight);
         checkCrop(imageBitmaps.negativeCrop);
-        checkEmpty(imageBitmaps.empty);
-        checkEmpty(imageBitmaps.emptyTwo);
         createImageBitmap(element, 0, 0, 0x8000, 0x8000).then(function() {
-            testFailed('Creating a huge ImageBitmap is resolved unexpectedly.');
-            finishJSTest();
-        }, function() {
-            testPassed('Creating a huge ImageBitmap is rejected as expected.');
+            testPassed('Creating a huge ImageBitmap is resolved as expected.');
             nextCheck(elementIndex + 1);
+        }, function() {
+            testFailed('Creating a huge ImageBitmap is rejected unexpectedly.');
+            finishJSTest();
         });
     }, shouldNotBeCalled);
 }
