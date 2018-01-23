@@ -52,6 +52,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343ba733_313f97ac",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-23T05:10:08Z",
+      "side": 1,
+      "message": "Oops yeah you\u0027re right, sorry I misunderstood what your initial comment meant!\n\nI have tried making //mojo/public/interfaces/bindings:bindings it\u0027s own mojom_component. However, I came across a few problems when trying this approach.\n\n//mojo/public/interfaces/bindings:bindings seems very closely entwined with //src/mojo/public/cpp/bindings:bindings (for brevity, I\u0027ll call them interfaces/bindings and cpp/bindings respectively).\n\nOn the one hand, interfaces/bindings needs to depend on cpp/bindings (as defined in the mojom template - //src/mojo/public/tools/bindings/mojom.gni) because the generated files depend on portions of the bindings library.\n\nOn the other hand, cpp/bindings also depends on portions of interfaces/bindings. For example, it takes the generated CPP mojom files as part of its sources and depends on the intermediate targets interfaces/bindings:bindings__generator and interfaces/bindings:bindings_shared__generator.\n\nFor that reason, I\u0027m not sure that it\u0027s possible to break out interfaces/bindings into its own mojom component without introducing a dependency cycle where interfaces/bindings -\u003e cpp/bindings -\u003e interfaces/bindings...\n\nRemoving either dependency - removing the dependency on cpp/bindings from interfaces/bindings e.g. via a flag to the mojom template OR removing the generated files/intermediate targets created by interfaces/bindings from cpp/bindings - leads to undefined symbols and an angry linker :(\n\nI know that it\u0027s undesirable but I think that overridden_deps might be the right solution in this case.\n\nSorry for the long reply, I hope this all makes sense! I\u0027m happy to clarify anything via message or on this review :) Thanks so much for your time in looking at this!",
+      "parentUuid": "d928083d_e7244fcc",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
