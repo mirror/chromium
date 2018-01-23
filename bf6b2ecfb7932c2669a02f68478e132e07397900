@@ -511,6 +511,30 @@
     },
     {
       "key": {
+        "uuid": "61128ca9_cc6175b1",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T23:11:24Z",
+      "side": 1,
+      "message": "I want to test the case where OnReadCompleted() calls request_-\u003eRead().  We\u0027re testing the 4 cases (sync/async success/failure) when OnResponseStarted() calls request_-\u003eRead(), but we\u0027re only testing the 0 bytes case (Not sure if it\u0027s sync or async, or both) for the request_-\u003eRead() call in OnReadCompleted().\n\nThese are interesting for a couple reasons:\n* They make sure we append data from two different reads correctly.\n* They make sure we correctly fail when we have a partial response (And to make the failure cases more intesting, the \"partial\" response should perhaps be a valid DNS response, but the content-length could indicate it was 1 byte larger than it was, or we could get an ERR_CONNECTION_RESET instead of a close, with no content-length, or something).\n* I don\u0027t think we currently exercise the base::BindOnce(\u0026DnsHTTPAttempt::OnReadCompleted...) post task code.\n* The make sure the second read path works.  This case isn\u0027t hugely interesting in this CL, but in some cases, including your original CL, the interaction between the two read paths (After reading headers, and after just having read data) fairly interesting.",
+      "parentUuid": "811cb3f3_434349c4",
+      "range": {
+        "startLine": 1109,
+        "startChar": 0,
+        "endLine": 1109,
+        "endChar": 6
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c64c8384_364c1a2d",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
