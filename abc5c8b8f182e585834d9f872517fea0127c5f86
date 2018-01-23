@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7335e3a_198f8b14",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/module.h.tmpl",
+        "patchSetId": 19
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T15:15:56Z",
+      "side": 1,
+      "message": "I do not think we should add this alias. InterfacePtr and WeakInterfacePtr are fine.",
+      "revId": "abc5c8b8f182e585834d9f872517fea0127c5f86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
