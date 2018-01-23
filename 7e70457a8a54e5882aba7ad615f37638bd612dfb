@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ead6359b_3058754a",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-23T22:43:11Z",
+      "side": 1,
+      "message": "Diff looks big here but its mostly due to indentation.\n\nAll I did was:\n1) append everything within the second settings-section to the first one\n2) remove the second settings-section\n3) removed the wrapping \u003cdiv\u003e that was around both settings-section",
+      "revId": "7e70457a8a54e5882aba7ad615f37638bd612dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
