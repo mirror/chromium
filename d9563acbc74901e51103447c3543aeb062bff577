@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1436bbd_21a1ee6b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "I think RadioButton (and Checkbox) should do this automatically for multi-line text buttons, to be consistent throughout our UI.",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e33c42_ec01e476",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "It\u0027s possibly worth commenting that this tries to center the image on the top line of text, but ensures the image won\u0027t be cut off at the top.",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686db202_94a91668",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "Is this centering on the bottom line of text? Is there a use case for that, or is this just done to parallel the behavior for top-alignment?",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3cded1_bc3431eb",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "nit: s/centering/alignment/",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2a826c_de6ed86c",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "Can we insert a newline in the string instead?",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe5b2b2_fed25269",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-23T19:16:16Z",
+      "side": 1,
+      "message": "Is the preferred_size.height wrong? (Odd that it would request a height that\u0027s different from the GetHeightForWidth for the same exact width... maybe related to the test below, I\u0027ve forgotten a lot here). I also wonder if this can simply use View::SizeToPreferredSize().",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
