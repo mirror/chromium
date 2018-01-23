@@ -19,6 +19,13 @@
 #endif
 
 @interface PrimaryToolbarView ()
+// Factory used to create the buttons.
+@property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
+
+// Top anchor at the bottom of the safeAreaLayoutGuide. Used so views don't
+// overlap with the Status Bar.
+@property(nonatomic, strong) NSLayoutYAxisAnchor* topSafeAnchor;
+
 // Container for the location bar.
 @property(nonatomic, strong) UIView* locationBarContainer;
 
@@ -82,16 +89,27 @@
 @synthesize bookmarkButton = _bookmarkButton;
 @synthesize toolsMenuButton = _toolsMenuButton;
 
-#pragma mark - UIView
+#pragma mark - Public
 
-- (void)willMoveToSuperview:(UIView*)newSuperview {
-  [self setUp];
-  [super willMoveToSuperview:newSuperview];
+- (instancetype)initWithButtonFactory:(ToolbarButtonFactory*)factory
+                        topSafeAnchor:(NSLayoutYAxisAnchor*)topSafeAnchor {
+  self = [super initWithFrame:CGRectZero];
+  if (self) {
+    _topSafeAnchor = topSafeAnchor;
+    _buttonFactory = factory;
+    [self setUp];
+  }
+  return self;
+}
+
+- (instancetype)initWithButtonFactory:(ToolbarButtonFactory*)factory {
+  return [self initWithButtonFactory:factory
+                       topSafeAnchor:self.safeAreaLayoutGuide.topAnchor];
 }
 
 #pragma mark - Setup
 
-// Sets all the subviews and constraints of this view.
+// Sets all the subviews and constraints of the view.
 - (void)setUp {
   if (self.subviews.count > 0) {
     // Setup the view only once.
