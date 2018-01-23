@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f88f5f2_73245da3",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableMarkingVisitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T09:11:43Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "cb65cfd2655b8f8a468d714186d8fcd93c599dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
