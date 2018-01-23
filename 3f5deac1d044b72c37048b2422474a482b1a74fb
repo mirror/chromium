@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3c3c06_612d768a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "Remove HasClipPath from the various LayerTypeRequired implementations also:\n\nhttps://cs.chromium.org/search/?q\u003dcreatesgroup\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa778374_b3f74073",
+        "filename": "third_party/WebKit/Source/core/paint/CSSMaskPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "Please add unittests for these cases.",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a7f061_d093b20b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "Do you mean !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323bbdce_0afd4f54",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "Does this mean that we will start drawing composited SVG masks correctly? Or that we will\ndraw them twice?",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e02a1c_88ce59ed",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "How about:\n\nLayoutRect local_raw_compositing_bounds \u003d CompositedBounds();local_raw_compositing_bounds.Move(subpixel_accumulation);\n\nif (mask_bounding_box)\n  local_bounds.Intersect(*mask_bounding_box);\n\nif (clip_path_bounding_box)\n  local_bounds.Intersect(EnclosingIntRect(*clip_path_bounding_box)\n\n?",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a2d243_73aa2cd1",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-23T23:16:51Z",
+      "side": 1,
+      "message": "I think this is not necessary since you modified CreatesGroup() also.",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
