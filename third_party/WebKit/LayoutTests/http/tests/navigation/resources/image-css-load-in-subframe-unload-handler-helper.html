@@ -1,0 +1,12 @@
+<html>
+<body>
+<script>
+window.onunload = function() {
+  var img = new Image(1, 1);
+  img.src = "this-shouldnt-crash.jpg";
+  document.body.style = "background-image: url('this-shouldnt-crash.jpg')";
+  document.body.offsetLeft;
+}
+</script>
+</body>
+</html>
