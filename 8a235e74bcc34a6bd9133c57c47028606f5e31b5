@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "0f1014c5_e4755a36",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-23T04:57:28Z",
+      "side": 1,
+      "message": "As for #1, you don\u0027t need to use unique_ptr here. As long as this ImageView is added as a child of this NotificationViewMD, the ImageView is managed by the views hierarchy automatically (See the ui/views/view.cc for detail if you interested). So just having a pointer is good.\n\nIf you SURELY want to use unique_ptr (it means the pointer is owned and managed by unique_ptr), you have to call \"inline_reply_icon_-\u003eset_owned_by_client()\" to make it managed by the client.",
+      "parentUuid": "266c47f0_cec853c3",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed8b85cf_51fbb3c2",
         "filename": "ui/views/BUILD.gn",
         "patchSetId": 1
