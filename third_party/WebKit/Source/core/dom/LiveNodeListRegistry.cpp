@@ -31,8 +31,9 @@ void LiveNodeListRegistry::Remove(const LiveNodeListBase* list,
 }
 
 void LiveNodeListRegistry::Trace(blink::Visitor* visitor) {
-  visitor->RegisterWeakMembers<LiveNodeListRegistry,
-                               &LiveNodeListRegistry::ClearWeakMembers>(this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->RegisterWeakMembers<LiveNodeListRegistry,
+                            &LiveNodeListRegistry::ClearWeakMembers>(this);
 }
 
 void LiveNodeListRegistry::RecomputeMask() {

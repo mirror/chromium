@@ -84,66 +84,8 @@ struct WeakHeapObjectDescriptor {
   HandleWeakCellCallback handle_weak_cell;
 };
 
-// TODO(mlippautz): Rename ObjectVisitor->Visitor and Visitor->MarkingVisitor.
-// This way there is no need to adjust signatures of Trace calls.
-class PLATFORM_EXPORT ObjectVisitor {
+class PLATFORM_EXPORT Visitor {
  public:
-  // TODO(mlippautz): Move Trace methods here.
-
- protected:
-  // Object visitation interface.
-  virtual void Visit(void*, const HeapObjectDescriptor&) = 0;
-  virtual void Visit(void*, const WeakHeapObjectDescriptor&) = 0;
-
-  // Helper method to invoke virtual Visit method with object descriptor.
-  // TODO(mlippautz): Should stay private once Trace methods move to this class.
-  template <typename T>
-  void VisitHelper(const T* object) {
-    static_assert(sizeof(T), "T must be fully defined");
-    static_assert(IsGarbageCollectedType<T>::value,
-                  "T needs to be a garbage collected object");
-    if (!object)
-      return;
-    HeapObjectDescriptor descriptor{TraceTrait<T>::Trace, TraceTrait<T>::Mark};
-    Visit(const_cast<void*>(reinterpret_cast<const void*>(object)), descriptor);
-  }
-};
-
-// Visitor is used to traverse the Blink object graph. Used for the
-// marking phase of the mark-sweep garbage collector.
-//
-// Pointers are marked and pushed on the marking stack by calling the
-// |mark| method with the pointer as an argument.
-//
-// Pointers within objects are traced by calling the |trace| methods
-// with the object as an argument. Tracing objects will mark all of the
-// contained pointers and push them on the marking stack.
-class PLATFORM_EXPORT Visitor : public ObjectVisitor {
- public:
-  enum MarkingMode {
-    // This is a default visitor. This is used for GCType=GCWithSweep
-    // and GCType=GCWithoutSweep.
-    kGlobalMarking,
-    // This visitor just marks objects and ignores weak processing.
-    // This is used for GCType=TakeSnapshot.
-    kSnapshotMarking,
-    // This visitor is used to trace objects during weak processing.
-    // This visitor is allowed to trace only already marked objects.
-    kWeakProcessing,
-    // Perform global marking along with preparing for additional sweep
-    // compaction of heap arenas afterwards. Compared to the GlobalMarking
-    // visitor, this visitor will also register references to objects
-    // that might be moved during arena compaction -- the compaction
-    // pass will then fix up those references when the object move goes
-    // ahead.
-    kGlobalMarkingWithCompaction,
-  };
-
-  static std::unique_ptr<Visitor> Create(ThreadState*, MarkingMode);
-
-  Visitor(ThreadState*, MarkingMode);
-  virtual ~Visitor();
-
   // Member version of the one-argument templated trace method.
   template <typename T>
   void Trace(const Member<T>& t) {
@@ -217,6 +159,63 @@ class PLATFORM_EXPORT Visitor : public ObjectVisitor {
     }
     TraceTrait<T>::Trace(this, reinterpret_cast<void*>(&const_cast<T&>(t)));
   }
+
+ protected:
+  // Object visitation interface.
+  virtual void Visit(void*, const HeapObjectDescriptor&) = 0;
+  virtual void Visit(void*, const WeakHeapObjectDescriptor&) = 0;
+
+ private:
+  template <typename T>
+  static void HandleWeakCell(Visitor*, void*);
+
+  // Helper method to invoke virtual Visit method with object descriptor.
+  template <typename T>
+  void VisitHelper(const T* object) {
+    static_assert(sizeof(T), "T must be fully defined");
+    static_assert(IsGarbageCollectedType<T>::value,
+                  "T needs to be a garbage collected object");
+    if (!object)
+      return;
+    HeapObjectDescriptor descriptor{TraceTrait<T>::Trace, TraceTrait<T>::Mark};
+    Visit(const_cast<void*>(reinterpret_cast<const void*>(object)), descriptor);
+  }
+};
+
+// Visitor is used to traverse the Blink object graph. Used for the
+// marking phase of the mark-sweep garbage collector.
+//
+// Pointers are marked and pushed on the marking stack by calling the
+// |mark| method with the pointer as an argument.
+//
+// Pointers within objects are traced by calling the |trace| methods
+// with the object as an argument. Tracing objects will mark all of the
+// contained pointers and push them on the marking stack.
+class PLATFORM_EXPORT MarkingVisitor : public Visitor {
+ public:
+  enum MarkingMode {
+    // This is a default visitor. This is used for GCType=GCWithSweep
+    // and GCType=GCWithoutSweep.
+    kGlobalMarking,
+    // This visitor just marks objects and ignores weak processing.
+    // This is used for GCType=TakeSnapshot.
+    kSnapshotMarking,
+    // This visitor is used to trace objects during weak processing.
+    // This visitor is allowed to trace only already marked objects.
+    kWeakProcessing,
+    // Perform global marking along with preparing for additional sweep
+    // compaction of heap arenas afterwards. Compared to the GlobalMarking
+    // visitor, this visitor will also register references to objects
+    // that might be moved during arena compaction -- the compaction
+    // pass will then fix up those references when the object move goes
+    // ahead.
+    kGlobalMarkingWithCompaction,
+  };
+
+  static std::unique_ptr<MarkingVisitor> Create(ThreadState*, MarkingMode);
+
+  MarkingVisitor(ThreadState*, MarkingMode);
+  virtual ~MarkingVisitor();
 
   // One-argument templated mark method. This uses the static type of
   // the argument to get the TraceTrait. By default, the mark method
@@ -331,9 +330,6 @@ class PLATFORM_EXPORT Visitor : public ObjectVisitor {
   }
 
  private:
-  template <typename T>
-  static void HandleWeakCell(Visitor*, void*);
-
   static void MarkNoTracingCallback(Visitor*, void*);
 
   ThreadState* const state_;

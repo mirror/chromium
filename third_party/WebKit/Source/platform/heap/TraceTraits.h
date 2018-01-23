@@ -67,6 +67,9 @@ class AdjustAndMarkTrait<T, false> {
  public:
   template <typename VisitorDispatcher>
   static NOINLINE_GXX_ONLY void Mark(VisitorDispatcher visitor, const T* t) {
+    // Mark is only called from MarkingVisitor.
+    MarkingVisitor* marking_visitor =
+        reinterpret_cast<MarkingVisitor*>(visitor);
 #if DCHECK_IS_ON()
     AssertObjectHasGCInfo(const_cast<T*>(t), GCInfoTrait<T>::Index());
 #endif
@@ -90,15 +93,17 @@ class AdjustAndMarkTrait<T, false> {
       // overflow. To break the recursions, you need to add
       // WILL_NOT_BE_EAGERLY_TRACED_CLASS() to classes that hold pointers
       // that lead to many recursions.
-      DCHECK(visitor->Heap().GetStackFrameDepth().IsAcceptableStackUse());
-      if (LIKELY(visitor->Heap().GetStackFrameDepth().IsSafeToRecurse())) {
-        if (visitor->EnsureMarked(t)) {
-          TraceTrait<T>::Trace(visitor, const_cast<T*>(t));
+      DCHECK(
+          marking_visitor->Heap().GetStackFrameDepth().IsAcceptableStackUse());
+      if (LIKELY(
+              marking_visitor->Heap().GetStackFrameDepth().IsSafeToRecurse())) {
+        if (marking_visitor->EnsureMarked(t)) {
+          TraceTrait<T>::Trace(marking_visitor, const_cast<T*>(t));
         }
         return;
       }
     }
-    visitor->Mark(const_cast<T*>(t), &TraceTrait<T>::Trace);
+    marking_visitor->Mark(const_cast<T*>(t), &TraceTrait<T>::Trace);
   }
 
   static HeapObjectHeader* GetHeapObjectHeader(const T* self) {
@@ -649,7 +654,8 @@ struct TraceInCollectionTrait<
         // the contents, and there is no need to trace the next and
         // prev fields since iterating over the hash table backing will
         // find the whole chain.
-        visitor->MarkNoTracing(array[i]);
+        reinterpret_cast<blink::MarkingVisitor*>(visitor)->MarkNoTracing(
+            array[i]);
       }
     }
     return false;
@@ -808,7 +814,7 @@ struct TraceInCollectionTrait<
     // contents, and there is no need to trace the next and prev fields
     // since iterating over the hash table backing will find the whole
     // chain.
-    visitor->MarkNoTracing(node);
+    reinterpret_cast<blink::MarkingVisitor*>(visitor)->MarkNoTracing(node);
     return false;
   }
 };

@@ -82,6 +82,8 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
 #define DEFINE_GARBAGE_COLLECTED_MIXIN_METHODS(VISITOR, TYPE)                 \
  public:                                                                      \
   void AdjustAndMark(VISITOR visitor) const override {                        \
+    MarkingVisitor* marking_visitor =                                         \
+        reinterpret_cast<MarkingVisitor*>(visitor);                           \
     typedef WTF::IsSubclassOfTemplate<typename std::remove_const<TYPE>::type, \
                                       blink::GarbageCollected>                \
         IsSubclassOfGarbageCollected;                                         \
@@ -89,12 +91,12 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
         IsSubclassOfGarbageCollected::value,                                  \
         "only garbage collected objects can have garbage collected mixins");  \
     if (TraceEagerlyTrait<TYPE>::value) {                                     \
-      if (visitor->EnsureMarked(static_cast<const TYPE*>(this)))              \
-        TraceTrait<TYPE>::Trace(visitor, const_cast<TYPE*>(this));            \
+      if (marking_visitor->EnsureMarked(static_cast<const TYPE*>(this)))      \
+        TraceTrait<TYPE>::Trace(marking_visitor, const_cast<TYPE*>(this));    \
       return;                                                                 \
     }                                                                         \
-    visitor->Mark(static_cast<const TYPE*>(this),                             \
-                  &blink::TraceTrait<TYPE>::Trace);                           \
+    marking_visitor->Mark(static_cast<const TYPE*>(this),                     \
+                          &blink::TraceTrait<TYPE>::Trace);                   \
   }                                                                           \
                                                                               \
   void AdjustAndTraceMarkedWrapper(const ScriptWrappableVisitor* visitor)     \

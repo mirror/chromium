@@ -26,6 +26,8 @@
 
 namespace blink {
 
+class MarkingVisitor;
+
 template <typename T, typename Traits = WTF::VectorTraits<T>>
 class HeapVectorBacking {
   DISALLOW_NEW();
@@ -166,7 +168,7 @@ class PLATFORM_EXPORT HeapAllocator {
 
   template <typename VisitorDispatcher>
   static void MarkNoTracing(VisitorDispatcher visitor, const void* t) {
-    visitor->MarkNoTracing(t);
+    GetMarkingVisitor(visitor)->MarkNoTracing(t);
   }
 
   template <typename VisitorDispatcher, typename T, typename Traits>
@@ -180,14 +182,15 @@ class PLATFORM_EXPORT HeapAllocator {
   template <typename VisitorDispatcher>
   static void RegisterDelayedMarkNoTracing(VisitorDispatcher visitor,
                                            const void* object) {
-    visitor->RegisterDelayedMarkNoTracing(object);
+    GetMarkingVisitor(visitor)->RegisterDelayedMarkNoTracing(object);
   }
 
   template <typename VisitorDispatcher>
   static void RegisterWeakMembers(VisitorDispatcher visitor,
                                   const void* closure,
                                   WeakCallback callback) {
-    visitor->RegisterWeakCallback(const_cast<void*>(closure), callback);
+    GetMarkingVisitor(visitor)->RegisterWeakCallback(const_cast<void*>(closure),
+                                                     callback);
   }
 
   template <typename VisitorDispatcher>
@@ -195,22 +198,22 @@ class PLATFORM_EXPORT HeapAllocator {
                                 const void* closure,
                                 EphemeronCallback iteration_callback,
                                 EphemeronCallback iteration_done_callback) {
-    visitor->RegisterWeakTable(closure, iteration_callback,
-                               iteration_done_callback);
+    GetMarkingVisitor(visitor)->RegisterWeakTable(closure, iteration_callback,
+                                                  iteration_done_callback);
   }
 
 #if DCHECK_IS_ON()
   template <typename VisitorDispatcher>
   static bool WeakTableRegistered(VisitorDispatcher visitor,
                                   const void* closure) {
-    return visitor->WeakTableRegistered(closure);
+    return GetMarkingVisitor(visitor)->WeakTableRegistered(closure);
   }
 #endif
 
   template <typename T, typename VisitorDispatcher>
   static void RegisterBackingStoreReference(VisitorDispatcher visitor,
                                             T** slot) {
-    visitor->RegisterBackingStoreReference(slot);
+    GetMarkingVisitor(visitor)->RegisterBackingStoreReference(slot);
   }
 
   template <typename T, typename VisitorDispatcher>
@@ -218,8 +221,8 @@ class PLATFORM_EXPORT HeapAllocator {
                                            T* backing_store,
                                            MovingObjectCallback callback,
                                            void* callback_data) {
-    visitor->RegisterBackingStoreCallback(backing_store, callback,
-                                          callback_data);
+    GetMarkingVisitor(visitor)->RegisterBackingStoreCallback(
+        backing_store, callback, callback_data);
   }
 
   static void EnterGCForbiddenScope() {
@@ -285,6 +288,10 @@ class PLATFORM_EXPORT HeapAllocator {
   static bool BackingShrink(void*,
                             size_t quantized_current_size,
                             size_t quantized_shrunk_size);
+
+  static MarkingVisitor* GetMarkingVisitor(Visitor* visitor) {
+    return reinterpret_cast<MarkingVisitor*>(visitor);
+  }
 
   template <typename T, size_t u, typename V>
   friend class WTF::Vector;

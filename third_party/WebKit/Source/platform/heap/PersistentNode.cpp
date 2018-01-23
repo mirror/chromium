@@ -135,7 +135,8 @@ bool CrossThreadPersistentRegion::ShouldTracePersistentNode(
   Address raw_object = reinterpret_cast<Address>(persistent->Get());
   if (!raw_object)
     return false;
-  return &visitor->Heap() == &ThreadState::FromObject(raw_object)->Heap();
+  return &reinterpret_cast<MarkingVisitor*>(visitor)->Heap() ==
+         &ThreadState::FromObject(raw_object)->Heap();
 }
 
 void CrossThreadPersistentRegion::PrepareForThreadStateTermination(

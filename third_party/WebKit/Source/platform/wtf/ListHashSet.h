@@ -463,8 +463,8 @@ class ListHashSetNode : public ListHashSetNodeBase<ValueArg> {
     if (WasAlreadyDestructed())
       return;
     NodeAllocator::TraceValue(visitor, this);
-    visitor->Mark(Next());
-    visitor->Mark(Prev());
+    reinterpret_cast<blink::MarkingVisitor*>(visitor)->Mark(Next());
+    reinterpret_cast<blink::MarkingVisitor*>(visitor)->Mark(Prev());
   }
 
   ListHashSetNode* Next() const {

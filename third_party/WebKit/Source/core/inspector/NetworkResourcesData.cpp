@@ -90,9 +90,10 @@ NetworkResourcesData::ResourceData::ResourceData(
 void NetworkResourcesData::ResourceData::Trace(blink::Visitor* visitor) {
   visitor->Trace(network_resources_data_);
   visitor->Trace(xhr_replay_data_);
-  visitor->template RegisterWeakMembers<
-      NetworkResourcesData::ResourceData,
-      &NetworkResourcesData::ResourceData::ClearWeakMembers>(this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->template RegisterWeakMembers<
+          NetworkResourcesData::ResourceData,
+          &NetworkResourcesData::ResourceData::ClearWeakMembers>(this);
 }
 
 void NetworkResourcesData::ResourceData::SetContent(const String& content,

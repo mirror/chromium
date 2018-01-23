@@ -1309,17 +1309,19 @@ void ThreadState::MarkPhasePrologue(BlinkGC::StackState stack_state,
   current_gc_data_.marking_time_in_milliseconds = 0;
 
   if (gc_type == BlinkGC::kTakeSnapshot) {
-    current_gc_data_.visitor = Visitor::Create(this, Visitor::kSnapshotMarking);
+    current_gc_data_.visitor =
+        MarkingVisitor::Create(this, MarkingVisitor::kSnapshotMarking);
   } else {
     DCHECK(gc_type == BlinkGC::kGCWithSweep ||
            gc_type == BlinkGC::kGCWithoutSweep);
     if (Heap().Compaction()->ShouldCompact(&Heap(), stack_state, gc_type,
                                            reason)) {
       Heap().Compaction()->Initialize(this);
-      current_gc_data_.visitor =
-          Visitor::Create(this, Visitor::kGlobalMarkingWithCompaction);
+      current_gc_data_.visitor = MarkingVisitor::Create(
+          this, MarkingVisitor::kGlobalMarkingWithCompaction);
     } else {
-      current_gc_data_.visitor = Visitor::Create(this, Visitor::kGlobalMarking);
+      current_gc_data_.visitor =
+          MarkingVisitor::Create(this, MarkingVisitor::kGlobalMarking);
     }
   }
 

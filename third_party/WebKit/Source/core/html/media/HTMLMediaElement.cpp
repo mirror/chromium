@@ -3919,9 +3919,9 @@ void HTMLMediaElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(autoplay_policy_);
   visitor->Trace(media_controls_);
   visitor->Trace(controls_list_);
-  visitor->template RegisterWeakMembers<HTMLMediaElement,
-                                        &HTMLMediaElement::ClearWeakMembers>(
-      this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->template RegisterWeakMembers<HTMLMediaElement,
+                                     &HTMLMediaElement::ClearWeakMembers>(this);
   Supplementable<HTMLMediaElement>::Trace(visitor);
   HTMLElement::Trace(visitor);
   PausableObject::Trace(visitor);

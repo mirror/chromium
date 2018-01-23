@@ -1710,12 +1710,13 @@ static void MarkPointer(Visitor* visitor, HeapObjectHeader* header) {
     // If foo() allocates something and triggers a GC, the vtable of A
     // has not yet been initialized. In this case, we should mark the A
     // object without tracing any member of the A object.
-    visitor->MarkHeaderNoTracing(header);
+    reinterpret_cast<MarkingVisitor*>(visitor)->MarkHeaderNoTracing(header);
 #if DCHECK_IS_ON()
     DCHECK(IsUninitializedMemory(header->Payload(), header->PayloadSize()));
 #endif
   } else {
-    visitor->MarkHeader(header, gc_info->trace_);
+    reinterpret_cast<MarkingVisitor*>(visitor)->MarkHeader(header,
+                                                           gc_info->trace_);
   }
 }
 

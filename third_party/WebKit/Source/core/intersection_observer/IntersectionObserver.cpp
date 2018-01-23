@@ -355,8 +355,10 @@ void IntersectionObserver::Deliver() {
 }
 
 void IntersectionObserver::Trace(blink::Visitor* visitor) {
-  visitor->template RegisterWeakMembers<
-      IntersectionObserver, &IntersectionObserver::ClearWeakMembers>(this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->template RegisterWeakMembers<IntersectionObserver,
+                                     &IntersectionObserver::ClearWeakMembers>(
+          this);
   visitor->Trace(delegate_);
   visitor->Trace(observations_);
   visitor->Trace(entries_);

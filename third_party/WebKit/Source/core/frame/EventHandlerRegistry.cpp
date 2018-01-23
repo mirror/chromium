@@ -292,8 +292,10 @@ void EventHandlerRegistry::NotifyDidAddOrRemoveEventHandlerTarget(
 
 void EventHandlerRegistry::Trace(blink::Visitor* visitor) {
   visitor->Trace(page_);
-  visitor->template RegisterWeakMembers<
-      EventHandlerRegistry, &EventHandlerRegistry::ClearWeakMembers>(this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->template RegisterWeakMembers<EventHandlerRegistry,
+                                     &EventHandlerRegistry::ClearWeakMembers>(
+          this);
 }
 
 void EventHandlerRegistry::ClearWeakMembers(Visitor* visitor) {

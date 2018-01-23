@@ -197,7 +197,8 @@ Address ThreadHeap::CheckAndMarkPointer(Visitor* visitor, Address address) {
     DCHECK(page->Contains(address));
 #endif
     DCHECK(!heap_does_not_contain_cache_->Lookup(address));
-    DCHECK(&visitor->Heap() == &page->Arena()->GetThreadState()->Heap());
+    DCHECK(&reinterpret_cast<MarkingVisitor*>(visitor)->Heap() ==
+           &page->Arena()->GetThreadState()->Heap());
     page->CheckAndMarkPointer(visitor, address);
     return address;
   }
@@ -224,7 +225,8 @@ Address ThreadHeap::CheckAndMarkPointer(
   if (BasePage* page = LookupPageForAddress(address)) {
     DCHECK(page->Contains(address));
     DCHECK(!heap_does_not_contain_cache_->Lookup(address));
-    DCHECK(&visitor->Heap() == &page->Arena()->GetThreadState()->Heap());
+    DCHECK(&reinterpret_cast<MarkingVisitor*>(visitor)->Heap() ==
+           &page->Arena()->GetThreadState()->Heap());
     page->CheckAndMarkPointer(visitor, address, callback);
     return address;
   }

@@ -61,9 +61,10 @@ MemoryCache* ReplaceMemoryCacheForTesting(MemoryCache* cache) {
 }
 
 void MemoryCacheEntry::Trace(blink::Visitor* visitor) {
-  visitor->template RegisterWeakMembers<MemoryCacheEntry,
-                                        &MemoryCacheEntry::ClearResourceWeak>(
-      this);
+  reinterpret_cast<MarkingVisitor*>(visitor)
+      ->template RegisterWeakMembers<MemoryCacheEntry,
+                                     &MemoryCacheEntry::ClearResourceWeak>(
+          this);
 }
 
 void MemoryCacheEntry::ClearResourceWeak(Visitor* visitor) {
