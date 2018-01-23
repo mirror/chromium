@@ -46,6 +46,30 @@
       "revId": "f27525fdebf78e59c16a33c81342c98d9c959cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91280e15_a2d872ac",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-23T00:29:27Z",
+      "side": 1,
+      "message": "Actually I\u0027m not sure why dealloc has this check. There are no explanation comments :(",
+      "parentUuid": "ef9a740f_438f403f",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 15
+      },
+      "revId": "f27525fdebf78e59c16a33c81342c98d9c959cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
