@@ -16,6 +16,24 @@
       "revId": "c08a2b07e41c5c92b554d82c5861a4a8ea103c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc11351_85351d34",
+        "filename": "components/ui_devtools/views/root_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-01-23T19:57:17Z",
+      "side": 1,
+      "message": "Thanks!\n\nAre you saying there should be different roots for Aura and Mac? To be clear, this is just a dummy to serve as a parent for the root windows (Aura) or widgets (Mac) per this TODO: https://cs.chromium.org/chromium/src/components/ui_devtools/views/dom_agent.cc?type\u003dcs\u0026q\u003df:dom_agent.cc\u0026sq\u003dpackage:chromium\u0026l\u003d801",
+      "parentUuid": "d30914bb_5142fbeb",
+      "revId": "c08a2b07e41c5c92b554d82c5861a4a8ea103c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
