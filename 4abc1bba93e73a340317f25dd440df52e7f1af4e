@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "be75a9ad_56d0d3ec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrTestFramework.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-23T00:00:56Z",
+      "side": 1,
+      "message": "I would be okay with VR browsing tests making use of the \u0027XrTestFramework\u0027. TestFramework is also okay so long as we\u0027re under a VR namespace/package.",
+      "parentUuid": "7cefc11a_bbf60f4b",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc60883_6c2bb928",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done. This is only going to be temporary (I assume we\u0027ll have no need for WebVR tests once it\u0027s out of origin trial), but that\u0027s multiple months down the line, so probably worth keeping things clean in the meantime.\n\nThoughts on also renaming the other util classes to remove \"Vr\" to keep things consistent?",
       "parentUuid": "bcc60883_6c2bb928",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "4abc1bba93e73a340317f25dd440df52e7f1af4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a30ba43_626d8c3c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-23T00:00:56Z",
+      "side": 1,
+      "message": "No strong opinions oh the other classes. We can rename in a followup if things are unclear.",
+      "parentUuid": "7d623bb2_523abfd2",
       "range": {
         "startLine": 134,
         "startChar": 23,
