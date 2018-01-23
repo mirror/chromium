@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc313c8_cd1ede39",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-23T18:03:10Z",
+      "side": 1,
+      "message": "It really confused me when I was working on this, and had set the in-code define to \"1\" to discover that GN flags were explicitly setting it to 0. \n\nI\u0027d suggest just dropping the explicit \u003d0",
+      "revId": "d460b1da952c61648ed5168e00c683a2878d461d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
