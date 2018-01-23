@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82fac227_17f0dd07",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "Add a comment like:\n// Represents ServiceWorkerContainer#controller. Null if there is no controller.",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf2b6be_2c85dce0",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "also prefer two DCHECKs here with DCHECK_NE\n\nAnd could we just remove kInvalidServiceWorkerHandleId?",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a99b14_18656996",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "when given nullptr? :)",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c01a1b_89900be6",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "I think we can remove \"Returns nullptr if the given object info is invalid.\" from the service_worker_dispatcher.h file. It could say \"Returns nullptr if given nullptr\" but that doesn\u0027t seem helpful.",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b5088f_ae835a63",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "is that needed?",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fecd98e_0e45293e",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "object_host and object_info seem slightly better than worker_host and worker_info... \"worker\" doesn\u0027t really add much in this context.",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06107f55_bf2e019b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a645ecd_226e5ddf",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "two DCHECK_NEs",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae1cf6c_7ffddcb8",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to document Null value here... it\u0027s clear than a null |installing| means a null ServiceWorkerRegistration#installing.",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f100c0_50931f62",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T15:41:35Z",
+      "side": 1,
+      "message": "Hmm, maybe:\n\"Changed objects may be null to indicate that the object does not exist anymore. Unchanged ones are always null.\"",
+      "revId": "bf77b5543baae7414a545ca87be2187687b3d3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
