@@ -160,12 +160,6 @@ class PLATFORM_EXPORT Visitor : public ObjectVisitor {
     VisitHelper(t.Get());
   }
 
-  // Only called from automatically generated bindings code.
-  template <typename T>
-  void TraceFromGeneratedCode(const T* t) {
-    VisitHelper(t);
-  }
-
   // Fallback methods used only when we need to trace raw pointers of T. This is
   // the case when a member is a union where we do not support members.
   template <typename T>
