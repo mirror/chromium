@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "d8ebe056_d2b54435",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0792e85d_3133db04",
+      "range": {
+        "startLine": 352,
+        "startChar": 22,
+        "endLine": 352,
+        "endChar": 34
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9bc0491_60934f39",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -91,6 +115,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cba938_ffcbea16",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "this field no longer exists with the updated patch",
+      "parentUuid": "a9bc0491_60934f39",
+      "range": {
+        "startLine": 376,
+        "startChar": 51,
+        "endLine": 376,
+        "endChar": 62
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "fcbe4bff_06fdf8e1",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "This method no longer exists.",
+      "parentUuid": "f03f7e7d_265ae583",
+      "range": {
+        "startLine": 401,
+        "startChar": 23,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63ea932_fd444f48",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -137,6 +209,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9076fe_c11002a1",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63ea932_fd444f48",
+      "range": {
+        "startLine": 404,
+        "startChar": 14,
+        "endLine": 404,
+        "endChar": 21
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "6eb805fe_55a5832f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Thanks, I was looking for a convenience function like that. Saw several places in the code where we do similar string searching so concluded it didn\u0027t exist.",
+      "parentUuid": "7c9acaed_44f5a8f9",
+      "range": {
+        "startLine": 431,
+        "startChar": 17,
+        "endLine": 431,
+        "endChar": 30
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "704b5597_cb87cfab",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -183,6 +303,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed1d255_fc37aec0",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704b5597_cb87cfab",
+      "range": {
+        "startLine": 444,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 28
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +393,30 @@
     },
     {
       "key": {
+        "uuid": "826e14e3_843c85e1",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c2bf82_da24b333",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d464ec3_d651b784",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -269,6 +437,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dc80dd_f162f310",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d464ec3_d651b784",
+      "range": {
+        "startLine": 507,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +507,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6d0c40_6bead193",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-23T22:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c64c8384_364c1a2d",
+      "range": {
+        "startLine": 1113,
+        "startChar": 25,
+        "endLine": 1113,
+        "endChar": 30
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
