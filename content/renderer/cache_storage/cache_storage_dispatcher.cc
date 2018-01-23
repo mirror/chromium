@@ -20,7 +20,11 @@
 #include "content/common/cache_storage/cache_storage_messages.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
+#include "content/child/child_thread_impl.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "content/renderer/service_worker/service_worker_type_util.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
@@ -238,8 +242,8 @@ bool CacheStorageDispatcher::OnMessageReceived(const IPC::Message& message) {
                           OnCacheStorageOpenSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageDeleteSuccess,
                           OnCacheStorageDeleteSuccess)
-      IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageKeysSuccess,
-                          OnCacheStorageKeysSuccess)
+      //IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageKeysSuccess,
+      //                    OnCacheStorageKeysSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageMatchSuccess,
                           OnCacheStorageMatchSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageHasError,
@@ -308,23 +312,23 @@ void CacheStorageDispatcher::OnCacheStorageDeleteSuccess(int thread_id,
   delete_times_.erase(request_id);
 }
 
-void CacheStorageDispatcher::OnCacheStorageKeysSuccess(
-    int thread_id,
-    int request_id,
-    const std::vector<base::string16>& keys) {
-  DCHECK_EQ(thread_id, CurrentWorkerId());
-  blink::WebVector<blink::WebString> web_keys(keys.size());
-  std::transform(
-      keys.begin(), keys.end(), web_keys.begin(),
-      [](const base::string16& s) { return WebString::FromUTF16(s); });
-  UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Keys",
-                      TimeTicks::Now() - keys_times_[request_id]);
-  WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks* callbacks =
-      keys_callbacks_.Lookup(request_id);
-  callbacks->OnSuccess(web_keys);
-  keys_callbacks_.Remove(request_id);
-  keys_times_.erase(request_id);
-}
+//void CacheStorageDispatcher::OnCacheStorageKeysSuccess(
+//    int thread_id,
+//    int request_id,
+//    const std::vector<base::string16>& keys) {
+//  DCHECK_EQ(thread_id, CurrentWorkerId());
+//  blink::WebVector<blink::WebString> web_keys(keys.size());
+//  std::transform(
+//      keys.begin(), keys.end(), web_keys.begin(),
+//      [](const base::string16& s) { return WebString::FromUTF16(s); });
+//  UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Keys",
+//                      TimeTicks::Now() - keys_times_[request_id]);
+//  WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks* callbacks =
+//      keys_callbacks_.Lookup(request_id);
+//  callbacks->OnSuccess(web_keys);
+//  keys_callbacks_.Remove(request_id);
+//  keys_times_.erase(request_id);
+//}
 
 void CacheStorageDispatcher::OnCacheStorageMatchSuccess(
     int thread_id,
@@ -530,11 +534,57 @@ void CacheStorageDispatcher::dispatchDelete(
 void CacheStorageDispatcher::dispatchKeys(
     std::unique_ptr<WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks>
         callbacks,
-    const url::Origin& origin) {
+    const url::Origin& origin,
+    service_manager::InterfaceProvider* provider) {
   int request_id = keys_callbacks_.Add(std::move(callbacks));
   keys_times_[request_id] = base::TimeTicks::Now();
-  Send(new CacheStorageHostMsg_CacheStorageKeys(CurrentWorkerId(), request_id,
-                                                origin));
+  //DLOG(ERROR) << "Getting mojo interface...";
+  //auto* t1 = RenderThread::Get();
+  //DLOG(ERROR) << "Got thread 1...";
+  //auto* con1 = t1->GetConnector();
+  //DLOG(ERROR) << "Got conn1...";
+  //con1->BindInterface(content::mojom::kBrowserServiceName, &cache_storage_ptr_);
+  //RenderThread::Get()->GetConnector()->BindInterface(
+  //    content::mojom::kBrowserServiceName, &cache_storage_ptr_);
+  DLOG(ERROR) << "WorkerThread::GetCurrentId(): " << WorkerThread::GetCurrentId();
+
+  //auto* t = ChildThreadImpl::current();
+  //DCHECK(t) << "no tea for you";
+  //DLOG(ERROR) << "Got thread, calling GetConnector()..." << &t << " " << &*t;
+
+  //auto* con = t->GetConnector();
+  DLOG(ERROR) << "Getting Interface...";
+  provider->GetInterface(mojo::MakeRequest(&cache_storage_ptr_));
+  //con->BindInterface(content::mojom::kBrowserServiceName, &cache_storage_ptr_);
+  DLOG(ERROR) << "Got mojo interface.";
+  // TODO(lucmult): How to detect errors to remove |keys_callbacks_| ?
+  DLOG(ERROR) << "Iface: " << (cache_storage_ptr_ ? "not null" : "null") ;
+  DCHECK(cache_storage_ptr_) << "Checking...";
+
+  DLOG(ERROR) << "Calling ->Keys(...) method..";
+  cache_storage_ptr_->Keys(
+      origin,
+      base::BindOnce(&CacheStorageDispatcher::OnKeys,
+                     base::Unretained(this), CurrentWorkerId(), request_id));
+
+}
+
+void CacheStorageDispatcher::OnKeys(
+    int thread_id,
+    int request_id,
+    const std::vector<base::string16>& keys) {
+  DCHECK_EQ(thread_id, CurrentWorkerId());
+  blink::WebVector<blink::WebString> web_keys(keys.size());
+  std::transform(
+      keys.begin(), keys.end(), web_keys.begin(),
+      [](const base::string16& s) { return WebString::FromUTF16(s); });
+  UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Keys",
+                      TimeTicks::Now() - keys_times_[request_id]);
+  WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks* callbacks =
+      keys_callbacks_.Lookup(request_id);
+  callbacks->OnSuccess(web_keys);
+  keys_callbacks_.Remove(request_id);
+  keys_times_.erase(request_id);
 }
 
 void CacheStorageDispatcher::dispatchMatch(

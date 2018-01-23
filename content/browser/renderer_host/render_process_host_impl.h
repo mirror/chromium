@@ -27,6 +27,7 @@
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
 #include "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.h"
 #include "content/browser/renderer_host/offscreen_canvas_provider_impl.h"
+#include "content/browser/cache_storage/cache_storage_dispatcher_host.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/child_control.mojom.h"
@@ -389,6 +390,15 @@ class CONTENT_EXPORT RenderProcessHostImpl
     return *permission_service_context_;
   }
 
+  CacheStorageDispatcherHost* dpi() {
+    DCHECK(cache_storage_dispatcher_host_);
+    return cache_storage_dispatcher_host_.get();
+  }
+  void BindCacheStorage(blink::mojom::CacheStorageRequest request) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    cache_storage_dispatcher_host_.get()->AddBinding(std::move(request));
+  }
+
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
   std::unique_ptr<IPC::ChannelProxy> channel_;
@@ -738,6 +748,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   std::unique_ptr<IndexedDBDispatcherHost, BrowserThread::DeleteOnIOThread>
       indexed_db_factory_;
+
+  scoped_refptr<CacheStorageDispatcherHost> cache_storage_dispatcher_host_;
 
   bool channel_connected_;
   bool sent_render_process_ready_;

@@ -12,7 +12,9 @@
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 #include "url/origin.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
 
@@ -30,7 +32,8 @@ class WebServiceWorkerCacheStorageImpl
     : public blink::WebServiceWorkerCacheStorage {
  public:
   WebServiceWorkerCacheStorageImpl(ThreadSafeSender* thread_safe_sender,
-                                   const url::Origin& origin);
+                                   const url::Origin& origin,
+                                   service_manager::InterfaceProvider* provider);
   ~WebServiceWorkerCacheStorageImpl() override;
 
   // From WebServiceWorkerCacheStorage:
@@ -53,7 +56,8 @@ class WebServiceWorkerCacheStorageImpl
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   const url::Origin origin_;
-
+  //scoped_refptr<blink::mojom::ThreadSafeCacheStoragePtr> cache_storage_ptr_;
+  service_manager::InterfaceProvider* provider_;
   DISALLOW_COPY_AND_ASSIGN(WebServiceWorkerCacheStorageImpl);
 };
 

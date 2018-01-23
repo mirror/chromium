@@ -274,6 +274,7 @@ ScriptPromise CacheStorage::Delete(ScriptState* script_state,
 ScriptPromise CacheStorage::keys(ScriptState* script_state) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();
+  DLOG(ERROR) << "Keys...";
 
   if (web_cache_storage_)
     web_cache_storage_->DispatchKeys(std::make_unique<KeysCallbacks>(resolver));

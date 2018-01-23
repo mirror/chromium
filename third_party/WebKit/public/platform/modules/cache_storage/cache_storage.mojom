@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 module blink.mojom;
+import "mojo/common/string16.mojom";
+import "url/mojo/origin.mojom";
 
 // This enum is used in histograms, so do not change the ordering and always
 // append new types to the end.
@@ -19,4 +21,14 @@ enum CacheStorageError {
   kErrorNotImplemented = 7,
   // Add new values here.
   kLast = kErrorNotImplemented
+};
+
+struct KeyResult {
+  int64 thread_id;
+  int64 request_id;
+  array<mojo.common.mojom.String16> keys;
+};
+
+interface CacheStorage {
+  Keys(url.mojom.Origin origin) => (array<mojo.common.mojom.String16> keys);
 };

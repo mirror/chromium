@@ -94,7 +94,6 @@
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/database/database_identifier.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
@@ -126,6 +125,7 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/sqlite/sqlite3.h"
 #include "url/gurl.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #if defined(OS_MACOSX)
 #include "content/common/mac/font_loader.h"
@@ -310,11 +310,15 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
   top_level_blame_context_.Initialize();
   renderer_scheduler_->SetTopLevelBlameContext(&top_level_blame_context_);
 
+  DLOG(ERROR) << __PRETTY_FUNCTION__;
   GetInterfaceProvider()->GetInterface(
       mojo::MakeRequest(&web_database_host_info_));
 
   GetInterfaceProvider()->GetInterface(
       mojo::MakeRequest(&file_utilities_host_info_));
+
+  //GetInterfaceProvider()->GetInterface(
+  //    mojo::MakeRequest(&cache_storage_info_));
 }
 
 RendererBlinkPlatformImpl::~RendererBlinkPlatformImpl() {
@@ -588,9 +592,11 @@ WebIDBFactory* RendererBlinkPlatformImpl::IdbFactory() {
 
 std::unique_ptr<blink::WebServiceWorkerCacheStorage>
 RendererBlinkPlatformImpl::CreateCacheStorage(
-    const blink::WebSecurityOrigin& security_origin) {
+    const blink::WebSecurityOrigin& security_origin, service_manager::InterfaceProvider* mojo_provider) {
+  // Requires the Interface Provider from ExecutionContext, because it can be
+  // different of RendererBlinkPlatformImpl::GetInterfaceProvider()
   return std::make_unique<WebServiceWorkerCacheStorageImpl>(
-      thread_safe_sender_.get(), security_origin);
+      thread_safe_sender_.get(), security_origin, mojo_provider);
 }
 
 //------------------------------------------------------------------------------

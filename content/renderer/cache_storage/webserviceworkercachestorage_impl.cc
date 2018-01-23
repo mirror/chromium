@@ -13,6 +13,9 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+
 
 using base::TimeTicks;
 
@@ -20,8 +23,11 @@ namespace content {
 
 WebServiceWorkerCacheStorageImpl::WebServiceWorkerCacheStorageImpl(
     ThreadSafeSender* thread_safe_sender,
-    const url::Origin& origin)
-    : thread_safe_sender_(thread_safe_sender), origin_(origin) {}
+    const url::Origin& origin,
+    service_manager::InterfaceProvider* provider)
+    : thread_safe_sender_(thread_safe_sender),
+      origin_(origin),
+      provider_(provider) {}
 
 WebServiceWorkerCacheStorageImpl::~WebServiceWorkerCacheStorageImpl() {
 }
@@ -46,7 +52,7 @@ void WebServiceWorkerCacheStorageImpl::DispatchDelete(
 
 void WebServiceWorkerCacheStorageImpl::DispatchKeys(
     std::unique_ptr<CacheStorageKeysCallbacks> callbacks) {
-  GetDispatcher()->dispatchKeys(std::move(callbacks), origin_);
+  GetDispatcher()->dispatchKeys(std::move(callbacks), origin_, provider_);
 }
 
 void WebServiceWorkerCacheStorageImpl::DispatchMatch(

@@ -28,6 +28,7 @@
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/platform/modules/webdatabase/web_database.mojom.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 
 namespace IPC {
 class SyncMessageFilter;
@@ -55,6 +56,7 @@ class OrientationData;
 
 namespace service_manager {
 class Connector;
+//class InterfaceProvider;
 }
 
 namespace content {
@@ -134,7 +136,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   blink::WebScrollbarBehavior* ScrollbarBehavior() override;
   blink::WebIDBFactory* IdbFactory() override;
   std::unique_ptr<blink::WebServiceWorkerCacheStorage> CreateCacheStorage(
-      const blink::WebSecurityOrigin& security_origin) override;
+      const blink::WebSecurityOrigin& security_origin, service_manager::InterfaceProvider* mojo_provider) override;
   blink::WebFileSystem* FileSystem() override;
   blink::WebString FileSystemCreateOriginIdentifier(
       const blink::WebSecurityOrigin& origin) override;
@@ -341,6 +343,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   blink::mojom::WebDatabaseHostPtrInfo web_database_host_info_;
   scoped_refptr<blink::mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;
+
+  //blink::mojom::CacheStoragePtrInfo cache_storage_info_;
 
   mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 

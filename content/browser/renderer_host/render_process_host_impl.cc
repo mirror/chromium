@@ -1765,10 +1765,10 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new TextInputClientMessageFilter());
 #endif
 
-  scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
-      new CacheStorageDispatcherHost();
-  cache_storage_filter->Init(storage_partition_impl_->GetCacheStorageContext());
-  AddFilter(cache_storage_filter.get());
+  DLOG(ERROR) << "Initializing CacheStorageDispatcherHost";
+  cache_storage_dispatcher_host_ = new CacheStorageDispatcherHost();
+  cache_storage_dispatcher_host_->Init(storage_partition_impl_->GetCacheStorageContext());
+  AddFilter(cache_storage_dispatcher_host_.get());
 
   scoped_refptr<ServiceWorkerDispatcherHost> service_worker_filter =
       new ServiceWorkerDispatcherHost(GetID(), resource_context);
@@ -1806,6 +1806,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   channel_->AddAssociatedInterfaceForIOThread(
       base::Bind(&IndexedDBDispatcherHost::AddBinding,
                  base::Unretained(indexed_db_factory_.get())));
+
+  //DLOG(ERROR) << "Binding CacheStorageDispatcherHost to channel_";
+  //channel_->AddAssociatedInterfaceForIOThread(
+  //    base::Bind(&CacheStorageDispatcherHost::AddBinding,
+  //               base::Unretained(cache_storage_dispatcher_host_.get())));
 
   AddUIThreadInterface(
       registry.get(), base::Bind(&ForwardRequest<device::mojom::BatteryMonitor>,

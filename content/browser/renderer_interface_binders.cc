@@ -33,6 +33,7 @@
 #include "services/shape_detection/public/interfaces/textdetection.mojom.h"
 #include "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom.h"
 #include "url/origin.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 
 namespace content {
 namespace {
@@ -136,6 +137,26 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPaymentAppContext()
             ->CreatePaymentManager(std::move(request));
+      }));
+  DLOG(ERROR) << "Attaching binding...";
+  parameterized_binder_registry_.AddInterface(
+      base::Bind([](blink::mojom::CacheStorageRequest request,
+                    RenderProcessHost* host, const url::Origin& origin) {
+
+        DCHECK_CURRENTLY_ON(BrowserThread::UI);
+        auto* rphi = static_cast<RenderProcessHostImpl*>(host);
+        CacheStorageDispatcherHost* dispatcher = rphi->dpi();
+        DLOG(ERROR) << "Binding...";
+
+        BrowserThread::PostTask(
+            BrowserThread::IO, FROM_HERE,
+            //base::BindOnce(&RenderProcessHostImpl::BindCacheStorage, base::Unretained(rphi),
+            base::BindOnce(&CacheStorageDispatcherHost::AddBinding, dispatcher, std::move(request))
+        );
+        //browswerthread posttask
+        //static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
+        //    ->GetPaymentAppContext()
+        //    ->CreatePaymentManager(std::move(request));
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind([](blink::mojom::PermissionServiceRequest request,

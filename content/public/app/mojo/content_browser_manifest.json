@@ -131,6 +131,7 @@
           "blink::mojom::BudgetService",
           "blink::mojom::ColorChooserFactory",
           "blink::mojom::DedicatedWorkerFactory",
+          "blink::mojom::CacheStorage",
           "blink::mojom::LockManager",
           "blink::mojom::GeolocationService",
           "blink::mojom::InsecureInputService",
@@ -194,6 +195,7 @@
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "payments::mojom::PaymentManager",
+          "blink::mojom::CacheStorage",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
           "shape_detection::mojom::TextDetection"
@@ -213,6 +215,7 @@
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
+          "blink::mojom::CacheStorage",
           "shape_detection::mojom::TextDetection"
         ]
       }
@@ -225,6 +228,7 @@
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
+          "blink::mojom::CacheStorage",
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
