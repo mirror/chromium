@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650a652d_a15ee655",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T20:01:38Z",
+      "side": 1,
+      "message": "what if the app_id is not an Arc app?",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d0794c_215afb95",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T20:01:38Z",
+      "side": 1,
+      "message": "should this code live there instead?",
+      "range": {
+        "startLine": 56,
+        "startChar": 57,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0de28a2_45384f31",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T20:01:38Z",
+      "side": 1,
+      "message": "correct",
+      "range": {
+        "startLine": 88,
+        "startChar": 40,
+        "endLine": 88,
+        "endChar": 46
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f568a2_bb5a978b",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T20:01:38Z",
+      "side": 1,
+      "message": "app_url?",
+      "range": {
+        "startLine": 113,
+        "startChar": 9,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8c2405_5980fad6",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-23T20:01:38Z",
+      "side": 1,
+      "message": "should we check app id before we return a org.chromium.arc url here? ideally we\u0027d use a non-arc app id here to so we\u0027re convinced that this works with other app ids..",
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
