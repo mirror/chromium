@@ -22,6 +22,30 @@
       "revId": "aa29d504e6eb21ecd53aa6d2cb6fa3d754eae594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e94bbc_a12ba5d9",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-23T00:27:21Z",
+      "side": 1,
+      "message": "It is accessible, but it is never deleted.\nIf I remove this, then some instrumented unit tests start failing by reporting memory leaks.",
+      "parentUuid": "0ffce0f8_c20cacf2",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "aa29d504e6eb21ecd53aa6d2cb6fa3d754eae594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
