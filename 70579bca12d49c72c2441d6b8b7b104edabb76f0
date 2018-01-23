@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83bd4f07_7bd96102",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T16:40:44Z",
+      "side": 1,
+      "message": "@Nullable please.",
+      "range": {
+        "startLine": 159,
+        "startChar": 28,
+        "endLine": 159,
+        "endChar": 34
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b20796_71e1b6aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T16:40:44Z",
+      "side": 1,
+      "message": "You can use StringUtil.isEmpty() for this. Also, the parentheses around `assert` aren\u0027t necessary, as it\u0027s a language feature and not a method call.",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 52
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d991afb7_986c5e10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T16:40:44Z",
+      "side": 1,
+      "message": "This one also isn\u0027t necessary.",
+      "range": {
+        "startLine": 284,
+        "startChar": 17,
+        "endLine": 284,
+        "endChar": 37
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
