@@ -51,6 +51,24 @@
       "revId": "15b348860482ab6108cb4aaa313719fb7362be0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0af8da2_c623206b",
+        "filename": "content/public/app/mojo/content_renderer_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-23T21:16:00Z",
+      "side": 1,
+      "message": "I did try. It seems the capture works properly without this line. The mojom was not in this manifest before either. So I removed this line. Should I re-add it?",
+      "parentUuid": "1cc5501b_15d5b5fc",
+      "revId": "15b348860482ab6108cb4aaa313719fb7362be0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
