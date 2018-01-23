@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "83a8303d_7c248146",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-23T14:07:02Z",
+      "side": 1,
+      "message": "Yep, basically I would like to use expect_ rather than assert_ so that the result is a table of what\u0027s missing rather than \"this is the next thing that\u0027s wrong\". I can live with -expected files for quite a while.\n\nBut that\u0027s a design limitation in testharness.js - they\u0027ve chosen to provide assert and not expect, which limits the usefulness for not-quite-finished APIs.\n\nNot going to resolve this in this CL.",
+      "parentUuid": "4ce258cf_1d5f1f28",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab28b8ac_0ddf083a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f07515_8eec7d14",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-23T14:07:02Z",
+      "side": 1,
+      "message": "Done. https://github.com/w3c/webrtc-stats/issues/305",
+      "parentUuid": "ab28b8ac_0ddf083a",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "91a96de2_e4b4d64f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-23T14:07:02Z",
+      "side": 1,
+      "message": "I think comment belongs to the if on \"framesSent\" - switching between video and audio seems like a no-brainer.\nThis test needs to align with the new multilevel hierarchy of stats types that Jan-Ivar introduced. I noticed while rewriting this part that there\u0027s no single value that distinguishes a sending track from a receiving track, and there probably should be one.\n\nReading the description of \"remoteSource\", I got confused about what it meant - I *think* it\u0027s that the stats are remotely sourced (ie they\u0027re RTCP-derived), but I\u0027m not 100% sure that\u0027s what the words say. Means that the description needs revision.",
+      "parentUuid": "f17932c7_3ce07164",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d44b1a5_6096b961",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
         "patchSetId": 1
@@ -84,6 +138,24 @@
       "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e88bb9_fc5a8efe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCStats-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-23T14:07:02Z",
+      "side": 1,
+      "message": "Oops. I commented out a number of tests while trying to verify that I\u0027d caught all the erroneous ones, and I missed this one. Will remove the commenting-out.\n\nAgreed that the use of assert_ not expect_ is an issue. But not going to solve in this CL.",
+      "parentUuid": "4d44b1a5_6096b961",
+      "revId": "42713b347b40a59d5df36de90d00df593a7125e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
