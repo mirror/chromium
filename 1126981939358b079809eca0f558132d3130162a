@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b704a7_0af8ff73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-23T21:31:16Z",
+      "side": 1,
+      "message": "Super class keeps a weak reference to web contents to ensure they don\u0027t hold it for too long. I think we want to do the same thing to be safe. Or maybe just expose a getter off the super class instead of holding another copy?",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 27
+      },
+      "revId": "1126981939358b079809eca0f558132d3130162a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
