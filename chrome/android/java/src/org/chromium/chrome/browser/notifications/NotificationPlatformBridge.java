@@ -475,10 +475,6 @@ public class NotificationPlatformBridge {
      *                 comes from.
      * @param profileId Id of the profile that showed the notification.
      * @param incognito if the session of the profile is an off the record one.
-     * @param tag A string identifier for this notification. If the tag is not empty, the new
-     *            notification will replace the previous notification with the same tag and origin,
-     *            if present. If no matching previous notification is present, the new one will just
-     *            be added.
      * @param title Title to be displayed in the notification.
      * @param body Message to be displayed in the notification. Will be trimmed to one line of
      *             text by the Android notification system.
@@ -499,10 +495,9 @@ public class NotificationPlatformBridge {
     @CalledByNative
     private void displayNotification(final String notificationId, final String origin,
             final String scopeUrl, final String profileId, final boolean incognito,
-            final String tag, final String title, final String body, final Bitmap image,
-            final Bitmap icon, final Bitmap badge, final int[] vibrationPattern,
-            final long timestamp, final boolean renotify, final boolean silent,
-            final ActionInfo[] actions) {
+            final String title, final String body, final Bitmap image, final Bitmap icon,
+            final Bitmap badge, final int[] vibrationPattern, final long timestamp,
+            final boolean renotify, final boolean silent, final ActionInfo[] actions) {
         final String webApkPackage =
                 WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), scopeUrl);
         if (webApkPackage != null) {
@@ -511,7 +506,7 @@ public class NotificationPlatformBridge {
                         @Override
                         public void onChecked(boolean doesBrowserBackWebApk) {
                             displayNotificationInternal(notificationId, origin, scopeUrl, profileId,
-                                    incognito, tag, title, body, image, icon, badge,
+                                    incognito, notificationId, title, body, image, icon, badge,
                                     vibrationPattern, timestamp, renotify, silent, actions,
                                     doesBrowserBackWebApk ? webApkPackage : "");
                         }
@@ -520,9 +515,9 @@ public class NotificationPlatformBridge {
             return;
         }
 
-        displayNotificationInternal(notificationId, origin, scopeUrl, profileId, incognito, tag,
-                title, body, image, icon, badge, vibrationPattern, timestamp, renotify, silent,
-                actions, "");
+        displayNotificationInternal(notificationId, origin, scopeUrl, profileId, incognito,
+                notificationId, title, body, image, icon, badge, vibrationPattern, timestamp,
+                renotify, silent, actions, "");
     }
 
     /** Called after querying whether the browser backs the given WebAPK. */
@@ -785,7 +780,7 @@ public class NotificationPlatformBridge {
             @Nullable String reply) {
         mLastNotificationClickMs = System.currentTimeMillis();
         nativeOnNotificationClicked(mNativeNotificationPlatformBridge, notificationId, origin,
-                scopeUrl, profileId, incognito, tag, webApkPackage, actionIndex, reply);
+                scopeUrl, profileId, incognito, webApkPackage, actionIndex, reply);
     }
 
     /**
@@ -802,16 +797,16 @@ public class NotificationPlatformBridge {
     private void onNotificationClosed(String notificationId, String origin, String profileId,
             boolean incognito, String tag, boolean byUser) {
         nativeOnNotificationClosed(mNativeNotificationPlatformBridge, notificationId, origin,
-                profileId, incognito, tag, byUser);
+                profileId, incognito, byUser);
     }
 
     private static native void nativeInitializeNotificationPlatformBridge();
 
     private native void nativeOnNotificationClicked(long nativeNotificationPlatformBridgeAndroid,
             String notificationId, String origin, String scopeUrl, String profileId,
-            boolean incognito, String tag, String webApkPackage, int actionIndex, String reply);
+            boolean incognito, String webApkPackage, int actionIndex, String reply);
     private native void nativeOnNotificationClosed(long nativeNotificationPlatformBridgeAndroid,
-            String notificationId, String origin, String profileId, boolean incognito, String tag,
+            String notificationId, String origin, String profileId, boolean incognito,
             boolean byUser);
     private native void nativeStoreCachedWebApkPackageForNotificationId(
             long nativeNotificationPlatformBridgeAndroid, String notificationId,
