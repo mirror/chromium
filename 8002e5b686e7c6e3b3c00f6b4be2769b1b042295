@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "403086cc_71a57be6",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T02:32:39Z",
+      "side": 1,
+      "message": "Is this the same string that is returned from blink?",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd71648_4a68173c",
+        "filename": "content/browser/device_sensors/device_sensor_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T02:32:39Z",
+      "side": 1,
+      "message": "This seems a bit strange. Is there a state (of delegate or so) that should be valid after Wait()? maybe an extra check for that here..",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6daedcf_ea7b75da",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T02:32:39Z",
+      "side": 1,
+      "message": "Should this be DeviceMotionController::.. here? (instead of DeviceOrientationController..). Maybe just define the CheckPolicyFeatures in the superclass?",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3ac5d58_ab0de3f0",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationAbsoluteController.cpp",
         "patchSetId": 4
@@ -13,6 +64,40 @@
       "writtenOn": "2018-01-23T01:47:17Z",
       "side": 1,
       "message": "Maybe would it be tidier to merge LogToConsolePolicyFeaturesDisabled into CheckPolicyFeatures?\n\ni.e., you can write the code like this:\n\nif (!CheckFeaturePolicies(frame, ...))  // This adds a console message if necessary.\n  return;",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ee5de6_31e0ee6b",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T02:32:39Z",
+      "side": 1,
+      "message": "IIRC some fallback cases of Device Orientation (used to) rely on magnetic field sensor, does that need to be handled here?",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41e0c2b_bd6bae95",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-23T02:32:39Z",
+      "side": 1,
+      "message": "Would it make sense to implement this in the superclass (i.e. DeviceSingleWindowEventController)?",
       "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
