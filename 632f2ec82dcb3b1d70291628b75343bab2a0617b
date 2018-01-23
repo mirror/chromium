@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "697fd175_ab14c0ae",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-23T00:25:07Z",
+      "side": 1,
+      "message": "Does anyone have a better suggestion for this? I assume we want to keep the keywords for display on the fast path, and not skip this.",
+      "range": {
+        "startLine": 1700,
+        "startChar": 3,
+        "endLine": 1700,
+        "endChar": 21
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
