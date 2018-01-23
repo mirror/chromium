@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13605f2e_96df41bf",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-23T01:27:50Z",
+      "side": 1,
+      "message": "Do we need to clear them by nullptr explicitly?",
+      "range": {
+        "startLine": 68,
+        "startChar": 19,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5a6676_52a09b2d",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-23T01:27:50Z",
+      "side": 1,
+      "message": "nit: having two DCHECK_EQs seems better for readability.\nBTW, can we remove this completely?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09febca8_134ae4f6",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-23T01:27:50Z",
+      "side": 1,
+      "message": "How about moving the DCHECK to L.313 (just after if (state-\u003econtroller))?",
+      "range": {
+        "startLine": 301,
+        "startChar": 9,
+        "endLine": 304,
+        "endChar": 59
+      },
+      "revId": "b5a61b0e30e4c6e97f0f9236a26251e21217d6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
