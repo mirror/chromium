@@ -6,6 +6,8 @@
 #define WebFrameScheduler_h
 
 #include "base/memory/scoped_refptr.h"
+#include "platform/wtf/Optional.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebScopedVirtualTimePauser.h"
 
@@ -87,6 +89,11 @@ class WebFrameScheduler {
   // Returns the frame type, which currently determines whether this frame is
   // the top level frame, i.e. a main frame.
   virtual FrameType GetFrameType() const = 0;
+
+  // Set the Time To Interactive of the frame's document.
+  virtual void SetInteractiveTime(TimeTicks interactive_time) = 0;
+  // Returns the Time To Interactive, or WTF::nullopt if it has not been set.
+  virtual WTF::Optional<TimeTicks> GetInteractiveTime() const = 0;
 
   // The tasks runners below are listed in increasing QoS order.
   // - throttleable task queue. Designed for custom user-provided javascript

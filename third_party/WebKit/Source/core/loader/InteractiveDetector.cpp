@@ -5,6 +5,7 @@
 #include "core/loader/InteractiveDetector.h"
 
 #include "core/dom/Document.h"
+#include "core/frame/LocalFrame.h"
 #include "core/loader/DocumentLoader.h"
 #include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -359,6 +360,19 @@ void InteractiveDetector::OnTimeToInteractiveDetected() {
 
   if (GetSupplementable()->Loader())
     GetSupplementable()->Loader()->DidChangePerformanceTiming();
+
+  for (Frame* frame = GetSupplementable()->GetFrame(); frame;
+       frame = frame->Tree().TraverseNext()) {
+    if (!frame->IsLocalFrame())
+      continue;
+
+    LocalFrame* local_frame = ToLocalFrame(frame);
+    if (!local_frame->FrameScheduler())
+      continue;
+
+    local_frame->FrameScheduler()->SetInteractiveTime(
+        TimeTicks::FromSeconds(interactive_time_));
+  }
 }
 
 void InteractiveDetector::Trace(Visitor* visitor) {

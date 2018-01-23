@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_QUEUEING_TIME_ESTIMATOR_H_
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
@@ -52,18 +53,24 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
 
   class PLATFORM_EXPORT Calculator {
    public:
-    explicit Calculator(int steps_per_window);
+    Calculator(int steps_per_window, base::TimeDelta window_duration);
     static const char* GetReportingMessageFromQueueType(
         MainThreadTaskQueue::QueueType queue_type);
     static const char* GetReportingMessageFromFrameStatus(
         FrameStatus frame_status);
+    static const char* GetReportingMessageFromInteractiveStatus(
+        bool is_interactive);
 
     void UpdateStatusFromTaskQueue(MainThreadTaskQueue* queue);
     void AddQueueingTime(base::TimeDelta queuing_time);
-    void EndStep(Client* client);
+    void EndStep(Client* client, base::TimeTicks step_end_time);
     void ResetStep();
 
    private:
+    void MaybeReportInteractiveSplit(base::TimeTicks window_end,
+                                     base::TimeDelta window_queueing_time,
+                                     QueueingTimeEstimator::Client* client);
+
     // Variables to compute the total Expected Queueing Time.
     // |steps_per_window_| is the ratio of window duration to the sliding
     // window's step width. It is an integer since the window must be a integer
@@ -108,11 +115,21 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     std::array<base::TimeDelta, static_cast<int>(FrameStatus::kCount)>
         eqt_by_frame_status_;
     FrameStatus current_frame_status_ = FrameStatus::kNone;
+
+    // Variables to split Expected Queueing Time by pre/post Time to
+    // Interactive.
+    base::TimeDelta window_duration_;
+    base::Optional<base::TimeTicks> interactive_time_;
+    struct WindowTiming {
+      base::TimeTicks end_time;
+      base::TimeDelta queueing_time;
+    };
+    std::vector<WindowTiming> window_timings_;
   };
 
   class State {
    public:
-    explicit State(int steps_per_window);
+    State(int steps_per_window, base::TimeDelta window_duration);
     void OnTopLevelTaskStarted(Client* client,
                                base::TimeTicks task_start_time,
                                MainThreadTaskQueue* queue);

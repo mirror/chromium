@@ -224,6 +224,14 @@ WebFrameScheduler::FrameType WebFrameSchedulerImpl::GetFrameType() const {
   return frame_type_;
 }
 
+void WebFrameSchedulerImpl::SetInteractiveTime(TimeTicks interactive_time) {
+  interactive_time_ = interactive_time;
+}
+
+WTF::Optional<TimeTicks> WebFrameSchedulerImpl::GetInteractiveTime() const {
+  return interactive_time_;
+}
+
 scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     TaskType type) {
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.

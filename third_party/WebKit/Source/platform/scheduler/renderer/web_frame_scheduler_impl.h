@@ -16,6 +16,7 @@
 #include "platform/WebFrameScheduler.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/util/tracing_helper.h"
+#include "platform/wtf/Time.h"
 
 namespace base {
 namespace trace_event {
@@ -66,6 +67,8 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetCrossOrigin(bool cross_origin) override;
   bool IsCrossOrigin() const override;
   WebFrameScheduler::FrameType GetFrameType() const override;
+  void SetInteractiveTime(TimeTicks interactive_time) override;
+  WTF::Optional<TimeTicks> GetInteractiveTime() const override;
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
   WebViewScheduler* GetWebViewScheduler() const override;
   void DidStartProvisionalLoad(bool is_main_frame) override;
@@ -146,6 +149,7 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   TraceableState<bool, kTracingCategoryNameInfo> frame_paused_;
   TraceableState<bool, kTracingCategoryNameInfo> cross_origin_;
   WebFrameScheduler::FrameType frame_type_;
+  WTF::Optional<TimeTicks> interactive_time_;
   int active_connection_count_;
 
   base::WeakPtrFactory<WebFrameSchedulerImpl> weak_factory_;

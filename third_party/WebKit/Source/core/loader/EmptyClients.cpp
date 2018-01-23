@@ -36,7 +36,9 @@
 #include "core/html/forms/FileChooser.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/loader/DocumentLoader.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebMediaPlayer.h"
@@ -78,6 +80,10 @@ class EmptyFrameScheduler : public WebFrameScheduler {
   bool IsCrossOrigin() const override { return false; }
   WebFrameScheduler::FrameType GetFrameType() const override {
     return WebFrameScheduler::FrameType::kSubframe;
+  }
+  void SetInteractiveTime(TimeTicks interactive_time) override {}
+  WTF::Optional<TimeTicks> GetInteractiveTime() const override {
+    return WTF::nullopt;
   }
   WebViewScheduler* GetWebViewScheduler() const override { return nullptr; }
   WebScopedVirtualTimePauser CreateWebScopedVirtualTimePauser() {
