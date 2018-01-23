@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d29b851_858be940",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/matches.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "b1 and b3 already appear in \"Invalidate :matches() for simple selector arguments.\"\n\nRedundant?",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd90231b_7162cbbe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/matches.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "e2 already appears in \"Invalidate nested :matches().\"",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16eb3731_e99e532a",
         "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
         "patchSetId": 1
@@ -13,6 +47,148 @@
       "writtenOn": "2018-01-23T02:55:57Z",
       "side": 1,
       "message": "true",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645112d8_575f3e02",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "Let\u0027s rename this. e.g. SelectorBoundaries",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fefdaf_baf8023d",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "matches_arg_boundaries",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059cbeba_8710729c",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "Add comment explaining motivation.",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059d6ebc_c401ad9e",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "do { } while (transformed.HasPseudoMatches());",
+      "range": {
+        "startLine": 204,
+        "startChar": 20,
+        "endLine": 204,
+        "endChar": 50
+      },
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54767329_b323fccb",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf0a3ea_8092b7cf",
+        "filename": "third_party/WebKit/Source/core/css/CSSTestHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "Why not sheet_length ?",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1513673d_eeb4d413",
+        "filename": "third_party/WebKit/Source/core/css/RuleFeatureSetTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "no need for blank line",
+      "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f534a800_31477977",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-23T03:45:12Z",
+      "side": 1,
+      "message": "Perhaps    if (result.HasPseudoMatches())\n\nand TransformedList could DCHECK(HasPseudoMatches())",
       "revId": "6f21d0cf064ab77a84ad62a2fa07ed8f62def34a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
