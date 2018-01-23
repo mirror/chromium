@@ -117,7 +117,26 @@ TEST_F(
   LayoutObject* containing_blocklayout_object =
       GetDocument().body()->GetLayoutObject()->SlowFirstChild();
   LayoutObject* layout_object = containing_blocklayout_object->SlowFirstChild();
+  EXPECT_EQ(layout_object->Container(), containing_blocklayout_object);
   EXPECT_EQ(layout_object->ContainingBlock(), containing_blocklayout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForAbsolutePosition(),
+            containing_blocklayout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForFixedPosition(), GetLayoutView());
+}
+
+TEST_F(LayoutObjectTest, ContainingBlockFixedLayoutObjectInTransformedDiv) {
+  SetBodyInnerHTML(
+      "<div style='transform: translateX(0px)'><bar "
+      "style='position:fixed'></bar></div>");
+  LayoutObject* containing_blocklayout_object =
+      GetDocument().body()->GetLayoutObject()->SlowFirstChild();
+  LayoutObject* layout_object = containing_blocklayout_object->SlowFirstChild();
+  EXPECT_EQ(layout_object->Container(), containing_blocklayout_object);
+  EXPECT_EQ(layout_object->ContainingBlock(), containing_blocklayout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForAbsolutePosition(),
+            containing_blocklayout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForFixedPosition(),
+            containing_blocklayout_object);
 }
 
 TEST_F(
@@ -127,15 +146,19 @@ TEST_F(
       "<span style='position:relative'><bar "
       "style='position:absolute'></bar></span>");
   LayoutObject* body_layout_object = GetDocument().body()->GetLayoutObject();
-  LayoutObject* layout_object =
-      body_layout_object->SlowFirstChild()->SlowFirstChild();
+  LayoutObject* span_layout_object = body_layout_object->SlowFirstChild();
+  LayoutObject* layout_object = span_layout_object->SlowFirstChild();
 
   // Sanity check: Make sure we don't generate anonymous objects.
   EXPECT_EQ(nullptr, body_layout_object->SlowFirstChild()->NextSibling());
   EXPECT_EQ(nullptr, layout_object->SlowFirstChild());
   EXPECT_EQ(nullptr, layout_object->NextSibling());
 
+  EXPECT_EQ(layout_object->Container(), span_layout_object);
   EXPECT_EQ(layout_object->ContainingBlock(), body_layout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForAbsolutePosition(),
+            body_layout_object);
+  EXPECT_EQ(layout_object->ContainingBlockForFixedPosition(), GetLayoutView());
 }
 
 TEST_F(LayoutObjectTest, PaintingLayerOfOverflowClipLayerUnderColumnSpanAll) {
