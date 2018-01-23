@@ -1,0 +1,19 @@
++AXWebArea AXTitle='Table example #2'
++++AXGroup
++++++AXStaticText AXValue='1'
++++AXGroup
++++++AXStaticText AXValue='2'
++++AXGroup
++++++AXStaticText AXValue='3'
++++AXGroup
++++++AXStaticText AXValue='4'
++++AXGroup
++++++AXStaticText AXValue='5'
++++AXGroup
++++++AXStaticText AXValue='6'
++++AXGroup
++++++AXStaticText AXValue='7'
++++AXGroup
++++++AXStaticText AXValue='8'
++++AXGroup
++++++AXStaticText AXValue='9'
