@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c400c2a0_8442aa62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": ":) I made an attempt. I\u0027m wondering if I went overboard with defining the custom return type, and also whether it is a good idea to inline an anonymous AsyncTask in an anonymous Callback.",
+      "parentUuid": "d9424af1_16c9f6d4",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c303ea4f_f72dd9b8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 8
@@ -93,6 +117,30 @@
       "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa2647b_4685ad92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": "Thanks for checking this for me. I should have looked into what is a security manager.",
+      "parentUuid": "c303ea4f_f72dd9b8",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 52
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "fd939230_9c47b8bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": "Good point, thanks for the hint!",
+      "parentUuid": "15ad65c2_6b926175",
+      "range": {
+        "startLine": 265,
+        "startChar": 53,
+        "endLine": 265,
+        "endChar": 78
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f0d0f0d_6b4d1833",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 8
@@ -139,6 +211,30 @@
       "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41abbf2_12ada294",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": "Sure, this this was not intentional.",
+      "parentUuid": "5f0d0f0d_6b4d1833",
+      "range": {
+        "startLine": 299,
+        "startChar": 17,
+        "endLine": 299,
+        "endChar": 33
+      },
+      "revId": "5aa13671fb6c3e3dec9aefaff44ffd49c789c1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

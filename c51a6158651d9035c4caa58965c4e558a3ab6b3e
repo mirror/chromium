@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "079686cc_e9ba6ea6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": "Thanks a lot for the detailed answer, Bernhard. I\u0027m sure I will come handy to me before I move to a nice farm upstate! :)\n\nI should have remembered the native-code logic guaranteeing no calls after destruction. It was just two CLs ago...\n\nI opted to do this without the mDestroyed flag, because the class is already rather big, there is a unit test for the corresponding contract in native code (PasswordUIViewAndroidTest.GetSerializedPasswords_Cancelled) and this situation is rather unlikely to occur (the user would need to have many passwords and be very fast in interacting with UI).",
+      "parentUuid": "027e60d0_d3583207",
+      "range": {
+        "startLine": 160,
+        "startChar": 31,
+        "endLine": 160,
+        "endChar": 70
+      },
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fdd5bab_f2369676",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 5
@@ -378,6 +402,24 @@
       "side": 1,
       "message": "Yeah, try-with is definitely supported, I just wasn\u0027t sure whether all the classes in here support AutoClosable which try-with relies on. But it looks like we\u0027re good :)",
       "parentUuid": "dcc8ca25_8948cf08",
+      "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7650db9_b5a9a093",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-23T16:01:54Z",
+      "side": 1,
+      "message": "Indeed, [1] says that \"Any object that implements java.lang.AutoCloseable, which includes all objects which implement java.io.Closeable...\", so as long as BufferedWriter implements java.io.Closeable, it should work. I took the close() call as a hint that the latter holds true, and the compiler believed that. :)\n\n[1] https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+      "parentUuid": "c9cbb51f_33c45805",
       "revId": "c51a6158651d9035c4caa58965c4e558a3ab6b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
