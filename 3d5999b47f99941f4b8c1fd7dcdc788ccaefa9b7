@@ -34,6 +34,24 @@
       "revId": "3d5999b47f99941f4b8c1fd7dcdc788ccaefa9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561f0937_5075f53c",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-23T06:08:59Z",
+      "side": 1,
+      "message": "Thanks for the details. I find this a bit surprising that we didn\u0027t get this error before. I\u0027ll cc dcheng@ and tsepez@ to double check me here.",
+      "parentUuid": "399c4de8_cd1d0794",
+      "revId": "3d5999b47f99941f4b8c1fd7dcdc788ccaefa9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
