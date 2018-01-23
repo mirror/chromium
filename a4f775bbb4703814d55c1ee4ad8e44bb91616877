@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9180e794_005098a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:45:03Z",
+      "side": 1,
+      "message": "what if we have multi-display and on one display we only have one window and on the other display we have no window, and then we close the only window, what should happen?",
+      "revId": "a4f775bbb4703814d55c1ee4ad8e44bb91616877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7240613b_d56b1393",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:45:03Z",
+      "side": 1,
+      "message": "nit: delete \"have\"",
+      "revId": "a4f775bbb4703814d55c1ee4ad8e44bb91616877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3602dce5_0cbb0b98",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:45:03Z",
+      "side": 1,
+      "message": "extract this to a private function?",
+      "revId": "a4f775bbb4703814d55c1ee4ad8e44bb91616877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b40b9c7_885b4005",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-23T17:45:03Z",
+      "side": 1,
+      "message": "nit: third",
+      "revId": "a4f775bbb4703814d55c1ee4ad8e44bb91616877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
