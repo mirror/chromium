@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1ce836_bea1ce65",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1118354
+      },
+      "writtenOn": "2018-01-23T19:04:26Z",
+      "side": 1,
+      "message": "Added a new section, since these aren\u0027t external.",
+      "revId": "298a205f930fe9241b207e69178c2b2e9cbbf445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
