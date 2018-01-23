@@ -68,6 +68,13 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void SetFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 #endif  // defined(USE_AURA)
 
+  bool OnMessageReceived(const IPC::Message& msg) override;
+
+  void OnIntrinsicSizingInfoChanged(gfx::SizeF size,
+                                    gfx::SizeF aspect_ratio,
+                                    bool has_width,
+                                    bool has_height);
+
   // This functions registers single-use callbacks that want to be notified when
   // the next frame is swapped. The callback is triggered by
   // ProcessCompositorFrame, which is the appropriate time to request pixel

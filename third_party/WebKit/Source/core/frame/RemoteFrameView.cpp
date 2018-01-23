@@ -220,9 +220,31 @@ bool RemoteFrameView::CanThrottleRendering() const {
   return hidden_for_throttling_;
 }
 
+void RemoteFrameView::SetIntrinsicSizeInfo(
+    const IntrinsicSizingInfo& size_info) {
+  intrinsic_sizing_info_ = new IntrinsicSizingInfo(size_info);
+}
+
+bool RemoteFrameView::GetIntrinsicSizingInfo(
+    IntrinsicSizingInfo& sizing_info) const {
+  if (!intrinsic_sizing_info_)
+    return false;
+
+  sizing_info.size = intrinsic_sizing_info_->size;
+  sizing_info.aspect_ratio = intrinsic_sizing_info_->aspect_ratio;
+  sizing_info.has_width = intrinsic_sizing_info_->has_width;
+  sizing_info.has_height = intrinsic_sizing_info_->has_height;
+  return true;
+}
+
+bool RemoteFrameView::HasIntrinsicSizingInfo() const {
+  return !!intrinsic_sizing_info_;
+}
+
 void RemoteFrameView::Trace(blink::Visitor* visitor) {
   visitor->Trace(remote_frame_);
   visitor->Trace(visibility_observer_);
+  visitor->Trace(intrinsic_sizing_info_);
 }
 
 }  // namespace blink
