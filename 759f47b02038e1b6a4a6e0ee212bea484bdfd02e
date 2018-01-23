@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "46f3455e_ceb19512",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 9245,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "899086dc_87f7f5ee",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591aec4f_db01b086",
         "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-08T06:37:53Z",
       "side": 1,
       "message": "I think this whole class can be removed? It\u0027s just an NSTextField subclass - with no string value, it is just empty space.",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952b869f_8c2413ed",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Because I\u0027m not very confident w/ cocoa / objc, and your screenshots of this looked decent, can we remove this file completely later as it\u0027s irrelevant with Harmony launching on Mac?",
+      "parentUuid": "591aec4f_db01b086",
       "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0efe7890_da251744",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Do we need to do this now?",
+      "parentUuid": "60b0b265_a8084279",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1114103_fc407e30",
         "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
         "patchSetId": 2
@@ -85,6 +139,24 @@
       "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d16e1c1_f91c9598",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Per your screenshots this looked alright.",
+      "parentUuid": "a1114103_fc407e30",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "d3b82dde_c3022b84",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa033163_af05821d",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45ceca23_793f731a",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 2
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "8e4192da_7ec142ba",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ceca23_793f731a",
+      "range": {
+        "startLine": 240,
+        "startChar": 33,
+        "endLine": 240,
+        "endChar": 48
+      },
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81c3ba5_e660769c",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 2
@@ -154,6 +274,30 @@
       "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fb4c4f_d28754cf",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-23T23:48:49Z",
+      "side": 1,
+      "message": "I reverted this and added a LayoutManager instead so that they can share code. This\u0027ll be useful/necessary when moving this into the base code. seems to be some kind of minimum size kicking in, as far as I can tell this doesn\u0027t take the title into account. I don\u0027t know why this doesn\u0027t end up being a 0x0 size when there\u0027s no content, but this is true both with and without Harmony.",
+      "parentUuid": "e81c3ba5_e660769c",
+      "range": {
+        "startLine": 288,
+        "startChar": 11,
+        "endLine": 288,
+        "endChar": 75
+      },
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
