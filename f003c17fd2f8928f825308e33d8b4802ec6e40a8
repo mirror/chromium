@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67972f75_55b95ef1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-23T23:21:55Z",
+      "side": 1,
+      "message": "Part of the original TODO comment might help to understand why HasClipPath() is not checked here.",
+      "revId": "f003c17fd2f8928f825308e33d8b4802ec6e40a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
