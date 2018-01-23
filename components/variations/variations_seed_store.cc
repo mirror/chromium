@@ -26,7 +26,6 @@
 #endif  // OS_ANDROID
 
 namespace variations {
-
 namespace {
 
 // The ECDSA public key of the variations server for verifying variations seed
@@ -40,6 +39,11 @@ const uint8_t kPublicKey[] = {
   0x71, 0xc9, 0x80, 0x87, 0xde, 0x35, 0x0d, 0x25, 0x71, 0x09, 0x7f, 0xb4, 0x15,
   0x2b, 0xff, 0x82, 0x4d, 0xd3, 0xfe, 0xc5, 0xef, 0x20, 0xc6, 0xa3, 0x10, 0xbf,
 };
+
+// A sentinel value that may be stored as the latest variations seed value in
+// prefs to indicate that the latest seed is identical to the safe seed. Used to
+// avoid duplicating storage space.
+constexpr char kIdenticalToSafeSeedSentinel[] = "Identical to the safe seed";
 
 // Verifies a variations seed (the serialized proto bytes) with the specified
 // base-64 encoded signature that was received from the server and returns the
@@ -256,6 +260,15 @@ bool VariationsSeedStore::StoreSafeSeed(
                           client_state.permanent_consistency_country);
   local_state_->SetString(prefs::kVariationsSafeSeedSessionConsistencyCountry,
                           client_state.session_consistency_country);
+
+  // As a space optimization, overwrite the stored latest seed data with an
+  // alias to the safe seed, if they are identical.
+  if (base64_seed_data ==
+      local_state_->GetString(prefs::kVariationsCompressedSeed)) {
+    local_state_->SetString(prefs::kVariationsCompressedSeed,
+                            kIdenticalToSafeSeedSentinel);
+  }
+
   return true;
 }
 
@@ -423,6 +436,13 @@ LoadSeedResult VariationsSeedStore::ReadSeedData(SeedType seed_type,
   if (base64_seed_data.empty())
     return LoadSeedResult::EMPTY;
 
+  // As a space optimization, the latest seed might not be stored directly, but
+  // rather aliased to the safe seed.
+  if (seed_type == SeedType::LATEST &&
+      base64_seed_data == kIdenticalToSafeSeedSentinel) {
+    return ReadSeedData(SeedType::SAFE, seed_data);
+  }
+
   // If the decode process fails, assume the pref value is corrupt and clear it.
   std::string decoded_data;
   if (!base::Base64Decode(base64_seed_data, &decoded_data)) {
@@ -468,6 +488,13 @@ bool VariationsSeedStore::StoreSeedDataNoDelta(
   // Update the saved country code only if one was returned from the server.
   if (!country_code.empty())
     local_state_->SetString(prefs::kVariationsCountry, country_code);
+
+  // As a space optimization, store an alias to the safe seed if the contents
+  // are identical.
+  if (base64_seed_data ==
+      local_state_->GetString(prefs::kVariationsSafeCompressedSeed)) {
+    base64_seed_data = kIdenticalToSafeSeedSentinel;
+  }
 
   local_state_->SetString(prefs::kVariationsCompressedSeed, base64_seed_data);
   UpdateSeedDateAndLogDayChange(date_fetched);

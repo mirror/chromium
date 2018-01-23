@@ -40,6 +40,14 @@ const char kBase64SeedSignature[] =
     "MEQCIDD1IVxjzWYncun+9IGzqYjZvqxxujQEayJULTlbTGA/AiAr0oVmEgVUQZBYq5VLOSvy"
     "96JkMYgzTkHPwbv7K/CmgA==";
 
+// The sentinel value that may be stored as the latest variations seed value in
+// prefs to indicate that the latest seed is identical to the safe seed.
+// Note: This constant is intentionally duplicated in the test because it is
+// persisted to disk. In order to maintain backward-compatibility, it's
+// important that code continue to correctly handle this specific constant, even
+// if the constant used internally in the implementation changes.
+constexpr char kIdenticalToSafeSeedSentinel[] = "Identical to the safe seed";
+
 class TestVariationsSeedStore : public VariationsSeedStore {
  public:
   explicit TestVariationsSeedStore(PrefService* local_state)
@@ -261,6 +269,35 @@ TEST(VariationsSeedStoreTest, LoadSeed_EmptySeed) {
                                    &loaded_base64_seed_signature));
 }
 
+TEST(VariationsSeedStoreTest, LoadSeed_IdenticalToSafeSeed) {
+  // Store good seed data to the safe seed prefs, and store a sentinel value to
+  // the latest seed pref, to verify that loading via the alias works.
+  const VariationsSeed seed = CreateTestSeed();
+  const std::string base64_seed = SerializeSeedBase64(seed);
+  const std::string base64_seed_signature = "a test signature, ignored.";
+
+  TestingPrefServiceSimple prefs;
+  VariationsSeedStore::RegisterPrefs(prefs.registry());
+  prefs.SetString(prefs::kVariationsCompressedSeed,
+                  kIdenticalToSafeSeedSentinel);
+  prefs.SetString(prefs::kVariationsSafeCompressedSeed, base64_seed);
+  prefs.SetString(prefs::kVariationsSeedSignature, base64_seed_signature);
+
+  TestVariationsSeedStore seed_store(&prefs);
+
+  VariationsSeed loaded_seed;
+  std::string loaded_seed_data;
+  std::string loaded_base64_seed_signature;
+  // Check that loading the seed works correctly.
+  EXPECT_TRUE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                  &loaded_base64_seed_signature));
+
+  // Check that the loaded data is the same as the original.
+  EXPECT_EQ(SerializeSeed(seed), SerializeSeed(loaded_seed));
+  EXPECT_EQ(SerializeSeed(seed), loaded_seed_data);
+  EXPECT_EQ(base64_seed_signature, loaded_base64_seed_signature);
+}
+
 TEST(VariationsSeedStoreTest, StoreSeedData) {
   const VariationsSeed seed = CreateTestSeed();
   const std::string serialized_seed = SerializeSeed(seed);
@@ -389,6 +426,33 @@ TEST(VariationsSeedStoreTest, LoadSafeSeed_ValidSeed) {
   EXPECT_FALSE(
       PrefHasDefaultValue(prefs, prefs::kVariationsSafeCompressedSeed));
   EXPECT_EQ(base64_seed, prefs.GetString(prefs::kVariationsSafeCompressedSeed));
+}
+
+TEST(VariationsSeedStoreTest, StoreSeedData_IdenticalToSafeSeed) {
+  const VariationsSeed seed = CreateTestSeed();
+  const std::string serialized_seed = SerializeSeed(seed);
+  const std::string base64_seed = SerializeSeedBase64(seed);
+
+  TestingPrefServiceSimple prefs;
+  VariationsSeedStore::RegisterPrefs(prefs.registry());
+  prefs.SetString(prefs::kVariationsSafeCompressedSeed, base64_seed);
+
+  TestVariationsSeedStore seed_store(&prefs);
+  EXPECT_TRUE(seed_store.StoreSeedForTesting(serialized_seed));
+
+  // Verify that the pref has a sentinel value, rather than the full string.
+  EXPECT_EQ(kIdenticalToSafeSeedSentinel,
+            prefs.GetString(prefs::kVariationsCompressedSeed));
+
+  // Verify that loading the stored seed returns the original seed value.
+  VariationsSeed loaded_seed;
+  std::string loaded_seed_data;
+  std::string unused_loaded_base64_seed_signature;
+  EXPECT_TRUE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                  &unused_loaded_base64_seed_signature));
+
+  EXPECT_EQ(SerializeSeed(seed), SerializeSeed(loaded_seed));
+  EXPECT_EQ(SerializeSeed(seed), loaded_seed_data);
 }
 
 TEST(VariationsSeedStoreTest, LoadSafeSeed_InvalidSeed) {
@@ -698,6 +762,50 @@ TEST(VariationsSeedStoreTest, StoreSafeSeed_ValidSignature) {
   histogram_tester.ExpectUniqueSample(
       "Variations.SafeMode.StoreSafeSeed.SignatureValidity",
       VerifySignatureResult::VALID_SIGNATURE, 1);
+}
+
+TEST(VariationsSeedStoreTest, StoreSafeSeed_IdenticalToLatestSeed) {
+  const VariationsSeed seed = CreateTestSeed();
+  const std::string serialized_seed = SerializeSeed(seed);
+  const std::string base64_seed = SerializeSeedBase64(seed);
+  const std::string signature = "a completely ignored signature";
+  ClientFilterableState unused_client_state;
+
+  TestingPrefServiceSimple prefs;
+  VariationsSeedStore::RegisterPrefs(prefs.registry());
+  prefs.SetString(prefs::kVariationsCompressedSeed, base64_seed);
+
+  TestVariationsSeedStore seed_store(&prefs);
+  base::HistogramTester histogram_tester;
+  EXPECT_TRUE(seed_store.StoreSafeSeed(serialized_seed, signature,
+                                       unused_client_state));
+
+  // Verify the latest seed value was migrated to a sentinel value, rather than
+  // the full string.
+  EXPECT_EQ(kIdenticalToSafeSeedSentinel,
+            prefs.GetString(prefs::kVariationsCompressedSeed));
+
+  // Verify that loading the stored seed returns the original seed value.
+  VariationsSeed loaded_seed;
+  std::string loaded_seed_data;
+  std::string unused_loaded_base64_seed_signature;
+  EXPECT_TRUE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                  &unused_loaded_base64_seed_signature));
+
+  EXPECT_EQ(SerializeSeed(seed), SerializeSeed(loaded_seed));
+  EXPECT_EQ(SerializeSeed(seed), loaded_seed_data);
+
+  // Verify that the safe seed prefs indeed contain the serialized seed value.
+  std::string loaded_compressed_seed =
+      prefs.GetString(prefs::kVariationsSafeCompressedSeed);
+  std::string decoded_compressed_seed;
+  ASSERT_TRUE(
+      base::Base64Decode(loaded_compressed_seed, &decoded_compressed_seed));
+  EXPECT_EQ(Compress(serialized_seed), decoded_compressed_seed);
+
+  // Verify metrics.
+  histogram_tester.ExpectUniqueSample(
+      "Variations.SafeMode.StoreSafeSeed.Result", StoreSeedResult::SUCCESS, 1);
 }
 
 TEST(VariationsSeedStoreTest, StoreSeedData_GzippedEmptySeed) {
