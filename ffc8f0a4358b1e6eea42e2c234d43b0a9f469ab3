@@ -16,6 +16,23 @@
       "revId": "ffc8f0a4358b1e6eea42e2c234d43b0a9f469ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746396f8_8c50e10a",
+        "filename": "content/network/cors/cors_url_loader_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-23T09:33:05Z",
+      "side": 1,
+      "message": "nit: create a URLLoader",
+      "revId": "ffc8f0a4358b1e6eea42e2c234d43b0a9f469ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
