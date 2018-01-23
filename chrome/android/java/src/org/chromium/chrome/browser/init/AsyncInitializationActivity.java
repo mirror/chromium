@@ -335,6 +335,10 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         if (mFirstDrawComplete) onFirstDrawComplete();
     }
 
+    protected boolean isStartupDelayed() {
+        return mStartupDelayed;
+    }
+
     /**
      * Creates an {@link ActivityWindowAndroid} to delegate calls to, if the Activity requires it.
      */
