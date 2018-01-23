@@ -133,7 +133,10 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   FRIEND_TEST_ALL_PREFIXES(ChromeMetricsServiceAccessorTest,
                            MetricsReportingEnabled);
 
-  // Returns true if metrics reporting is enabled.
+  // Returns true if metrics reporting is allowed. This does NOT necessary mean
+  // that it is active as configuration may prevent it on some devices (i.e.
+  // the "MetricsReporting" field trial that controls sampling). To include
+  // that, call: metrics_services_manager->IsReportingEnabled()
   // TODO(gayane): Consolidate metric prefs on all platforms.
   // http://crbug.com/362192,  http://crbug.com/532084
   static bool IsMetricsAndCrashReportingEnabled();
