@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89e15a8f_94c7fc43",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9892,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cde6029_7097fe6c",
+      "range": {
+        "startLine": 9892,
+        "startChar": 21,
+        "endLine": 9892,
+        "endChar": 44
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8909d0f3_414433c1",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d7bfd293_81dfb0ae",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9894,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "I\u0027m only basing this on the given mock from UX. I presume it\u0027ll be reviewed by the appropriate individuals.",
+      "parentUuid": "8909d0f3_414433c1",
+      "range": {
+        "startLine": 9894,
+        "startChar": 8,
+        "endLine": 9894,
+        "endChar": 40
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879afb68_c48a50df",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ade813_500be39d",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9896,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "879afb68_c48a50df",
+      "range": {
+        "startLine": 9896,
+        "startChar": 21,
+        "endLine": 9896,
+        "endChar": 42
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "21c4fb53_69015dfe",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3412d790_46475148",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02a26d4_477c742b",
         "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
         "patchSetId": 5
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "74dd0d2a_61cb61c0",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7f2704_36851e66",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abdce09_006ad9cb",
         "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
         "patchSetId": 5
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "e79d5478_7802a2ac",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2abdce09_006ad9cb",
+      "range": {
+        "startLine": 115,
+        "startChar": 17,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6de5a14c_8737d008",
         "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
         "patchSetId": 5
@@ -202,6 +346,24 @@
       "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9596c447_3726d595",
+        "filename": "chrome/browser/ui/views/accessibility/invert_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-23T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de5a14c_8737d008",
+      "revId": "8b4a9d5e0154cb5b5724a6f717fb7ecdcd238c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
