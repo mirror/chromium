@@ -1842,6 +1842,9 @@ const FeatureEntry kFeatureEntries[] = {
      MULTI_VALUE_TYPE(kReaderModeHeuristicsChoices)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
+    {"enable-chrome-duplex", flag_descriptions::kChromeDuplexName,
+     flag_descriptions::kChromeDuplexDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeDuplexFeature)},
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
