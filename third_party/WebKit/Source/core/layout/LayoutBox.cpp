@@ -5614,9 +5614,10 @@ LayoutUnit LayoutBox::OffsetFromLogicalTopOfFirstPage() const {
     return IsHorizontalWritingMode() ? offset.Height() : offset.Width();
   }
 
-  // A LayoutBlock always establishes a layout state, and this method is only
-  // meant to be called on the object currently being laid out.
-  DCHECK(!IsLayoutBlock());
+  // A LayoutBlock (except for TableBoxComponent) always establishes a layout
+  // state, and this method is only meant to be called on the object currently
+  // being laid out.
+  DCHECK(!IsLayoutBlock() || IsTableBoxComponent());
 
   // In case this box doesn't establish a layout state, try the containing
   // block.

@@ -101,6 +101,8 @@ class LayoutTableCol final : public LayoutTableBoxComponent {
 
   LayoutTable* Table() const final;
 
+  void UpdateLayout() override;
+
   unsigned span_;
 };
 

@@ -173,4 +173,9 @@ LayoutTableCol* LayoutTableCol::NextColumn() const {
   return ToLayoutTableCol(next);
 }
 
+void LayoutTableCol::UpdateLayout() {
+  // Skip LayoutBlock::UpdateLayout() which is not needed by LayoutTableCol.
+  LayoutBox::UpdateLayout();
+}
+
 }  // namespace blink

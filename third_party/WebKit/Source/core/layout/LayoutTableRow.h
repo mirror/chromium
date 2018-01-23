@@ -106,8 +106,6 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
 
   PaginationBreakability GetPaginationBreakability() const final;
 
-  void ComputeOverflow();
-
   const char* GetName() const override { return "LayoutTableRow"; }
 
   // Whether a row has opaque background depends on many factors, e.g. border
@@ -122,7 +120,11 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
   }
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
 
+  // For LayoutTableSection::LayoutRows().
+  using LayoutBlock::LayoutPositionedObjects;
+
  private:
+  void AddOverflowFromChildren() override;
   void AddOverflowFromCell(const LayoutTableCell*);
 
   bool IsOfType(LayoutObjectType type) const override {
