@@ -75,7 +75,7 @@ const char* RadioButton::GetClassName() const {
 
 void RadioButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   Checkbox::GetAccessibleNodeData(node_data);
-  node_data->role = ui::AX_ROLE_RADIO_BUTTON;
+  node_data->role = ax::mojom::Role::RADIO_BUTTON;
 }
 
 View* RadioButton::GetSelectedViewForGroup(int group) {
