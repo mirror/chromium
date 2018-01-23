@@ -758,6 +758,11 @@ IPC_STRUCT_TRAITS_END()
 // -----------------------------------------------------------------------------
 // Messages sent from the browser to the renderer.
 
+IPC_MESSAGE_ROUTED4(FrameMsg_IntrinsicSizeOfChildChanged,
+                    gfx::SizeF, /* size */
+                    gfx::SizeF, /* aspect_ratio */
+                    bool,       /* has_width */
+                    bool /* has_height */);
 IPC_MESSAGE_ROUTED1(FrameMsg_SetChildFrameSurface,
                     viz::SurfaceInfo /* surface_info */)
 

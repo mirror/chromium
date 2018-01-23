@@ -187,6 +187,28 @@ void RenderWidgetHostViewChildFrame::SetFrameSinkId(
 }
 #endif  // defined(USE_AURA)
 
+void RenderWidgetHostViewChildFrame::OnIntrinsicSizingInfoChanged(
+    gfx::SizeF size,
+    gfx::SizeF aspect_ratio,
+    bool has_width,
+    bool has_height) {
+  if (frame_connector_)
+    frame_connector_->SendIntrinsicSizingInfoToParent(size, aspect_ratio,
+                                                      has_width, has_height);
+}
+
+bool RenderWidgetHostViewChildFrame::OnMessageReceived(
+    const IPC::Message& msg) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(RenderWidgetHostViewChildFrame, msg)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_IntrinsicSizeChanged,
+                        OnIntrinsicSizingInfoChanged)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+
+  return handled;
+}
+
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
     TouchSelectionControllerClientManager* manager) {
   // We get the manager via the observer callback instead of through the
