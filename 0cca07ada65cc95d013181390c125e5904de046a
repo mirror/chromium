@@ -123,6 +123,24 @@
       "revId": "0cca07ada65cc95d013181390c125e5904de046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13124084_087ee604",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-23T19:23:06Z",
+      "side": 1,
+      "message": "Thanks for review! I prefer to keep the check since the error messages can be kept as well.",
+      "parentUuid": "f4b675ff_df591462",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
