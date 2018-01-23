@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f29f739_e114de90",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-23T21:17:05Z",
+      "side": 0,
+      "message": "this was redundant (was added a few lines earlier)",
+      "range": {
+        "startLine": 175,
+        "startChar": 43,
+        "endLine": 175,
+        "endChar": 49
+      },
+      "revId": "5d58446477738bdea980f343ba439719208e189e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
