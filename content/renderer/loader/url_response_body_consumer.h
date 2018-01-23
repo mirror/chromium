@@ -55,7 +55,7 @@ class CONTENT_EXPORT URLResponseBodyConsumer final
   void UnsetDefersLoading();
 
   // Reads data and dispatches messages synchronously.
-  void OnReadable(MojoResult unused);
+  void OnReadable();
 
   void ArmOrNotify();
 
@@ -71,6 +71,7 @@ class CONTENT_EXPORT URLResponseBodyConsumer final
   ~URLResponseBodyConsumer();
 
   class ReceivedData;
+  void OnReadableInternal(MojoResult unused);
   void Reclaim(uint32_t size);
 
   void NotifyCompletionIfAppropriate();
@@ -82,6 +83,7 @@ class CONTENT_EXPORT URLResponseBodyConsumer final
   network::URLLoaderCompletionStatus status_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+  int num_pending_calls_ = false;
   bool has_received_completion_ = false;
   bool has_been_cancelled_ = false;
   bool has_seen_end_of_data_;
