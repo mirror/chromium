@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33801ff8_4a83f5c6",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-23T23:48:55Z",
+      "side": 1,
+      "message": "I\u0027ll stick with the local file convention. Thanks for letting me know nonetheless!",
+      "parentUuid": "06633892_12ac479c",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 495,
+        "endChar": 55
+      },
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb36658_2c40d687",
         "filename": "base/i18n/rtl_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T19:48:39Z",
       "side": 1,
       "message": "this test does not test any new behavior we get from SanitizeUserSuppliedString because the input does not have any U+202x (paired with PDF or not). That is, this test only tests \u0027AdjustString...\u0027 part. Would you add a few more cases? \n\nAnd, how about testing unterminated U+202x\u0027s in LTR input in RTL UI?",
+      "range": {
+        "startLine": 511,
+        "startChar": 7,
+        "endLine": 511,
+        "endChar": 29
+      },
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edae4a8e_58812ee4",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-23T23:48:55Z",
+      "side": 1,
+      "message": "I have addressed your first point in RTLTest.SanitizeUserSuppliedString.\n\nYour second point, to test unterminated U+202x\u0027s in LTR input in RTL UI -- I have put this in RTLTest.EnsureTerminatedDirectionalFormatting.",
+      "parentUuid": "eeb36658_2c40d687",
       "range": {
         "startLine": 511,
         "startChar": 7,
@@ -62,6 +110,24 @@
       "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4093e03_b61e7cca",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-23T23:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1501a30_73897ac9",
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
