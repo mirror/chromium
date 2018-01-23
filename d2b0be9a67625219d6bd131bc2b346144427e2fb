@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2caee78b_86040cd1",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-23T02:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e09acb3_8cd4ea7f",
+      "range": {
+        "startLine": 3167,
+        "startChar": 0,
+        "endLine": 3175,
+        "endChar": 20
+      },
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56df8f5c_d8f800e9",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
         "patchSetId": 1
@@ -62,6 +86,24 @@
       "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e4c59f_39980582",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3185,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-23T02:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56df8f5c_d8f800e9",
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +127,30 @@
       "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac1319d_ba18644f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-23T02:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8520d8ca_467d8648",
+      "range": {
+        "startLine": 3187,
+        "startChar": 0,
+        "endLine": 3190,
+        "endChar": 43
+      },
+      "revId": "d2b0be9a67625219d6bd131bc2b346144427e2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
