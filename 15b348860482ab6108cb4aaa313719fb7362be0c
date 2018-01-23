@@ -34,6 +34,23 @@
       "revId": "15b348860482ab6108cb4aaa313719fb7362be0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc5501b_15d5b5fc",
+        "filename": "content/public/app/mojo/content_renderer_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T20:43:57Z",
+      "side": 1,
+      "message": "I think the renderer manifest still needs this change, unless I\u0027m missing something.",
+      "revId": "15b348860482ab6108cb4aaa313719fb7362be0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
