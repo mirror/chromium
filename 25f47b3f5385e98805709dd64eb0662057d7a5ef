@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2246f641_8ada3237",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-23T22:45:36Z",
+      "side": 1,
+      "message": "This is kinda an open question. I don\u0027t like test-returns. But also should I have to make a backing in unit tests that just want to test TileManager but not do any exporting? thots?",
+      "revId": "25f47b3f5385e98805709dd64eb0662057d7a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eca480f_26207153",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-23T22:45:36Z",
+      "side": 1,
+      "message": "The ordering here is a thing, you have to\n1. acquire from pool\n2. allocate in rasterbufferprovider\n3. tell pool about the backing for export (but tbh not really until raster is complete, should i defer it? maybe that fixes tests I will try that..)",
+      "revId": "25f47b3f5385e98805709dd64eb0662057d7a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
