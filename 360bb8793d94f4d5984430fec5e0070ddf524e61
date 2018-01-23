@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a639cc7_6e3912c9",
+        "filename": "content/shell/browser/shell_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-23T23:00:38Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this need be done outside of ozone?",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "360bb8793d94f4d5984430fec5e0070ddf524e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
