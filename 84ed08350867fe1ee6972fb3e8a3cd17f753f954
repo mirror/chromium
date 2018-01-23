@@ -411,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "4a494928_ba65e913",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-23T13:20:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb69b9d6_9bef51e0",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c7fecc_62f92739",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 9
@@ -443,6 +461,24 @@
       "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ed83a4_8a053e85",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-23T13:20:32Z",
+      "side": 1,
+      "message": "Using the MAYBE_ / DISABLED_ pattern does make sense for this test as well, but it also applies to all other tests in this file. I will file a bug so that this gets done in a follow up CL.",
+      "parentUuid": "5a312b41_41b9f8a4",
+      "revId": "84ed08350867fe1ee6972fb3e8a3cd17f753f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

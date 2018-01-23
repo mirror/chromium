@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e5db76d_f9db16a5",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-23T13:20:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75faf30a_b20308ab",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a8a7700_aca520ac",
         "filename": "device/bluetooth/bluetooth_adapter_mac.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0cce3c_f4e719a7",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-23T13:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a8a7700_aca520ac",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-23T00:07:17Z",
       "side": 1,
       "message": "heh, this is the first time I\u0027ve seen BindLambdaForTesting -- I usually end up doing\n\nbase::Bind([](bool* called, BluetoothAdapter* adapter), \u0026error_callback_called_, adapter.get())\n\nI\u0027m not sure whether capturing an expression into a reference technically violates the style guide rule that you can\u0027t have non-const reference arguments. But ¯\\_(ツ)_/¯ - what you have looks OK.\n\nI think if you\u0027re going this route you could also bind |this| and just refer to adapter_-\u003e in the lambda. i.e. base::BindFoo([this,\u0026] {\n\nthat might be simpler than the \u0026adapter thing",
+      "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b402b8ca_62b1c30a",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-23T13:20:32Z",
+      "side": 1,
+      "message": "Initially I had the same idea, but unfortunately just capturing `this` doesn\u0027t work. I left a comment to explain why. I am not a big fan of `\u0026adapter \u003d *adapter_` either and I\u0027d rather use `adapter \u003d adapter_.get()`, but the chromium-style plugin currently doesn\u0027t let me. It thinks I am deducing auto to a pointer [1] and breaks compilation. So I think this is the best we can do right now with a lambda.\n\nRegarding your style guide concern: The style guide lists lambdas with captures by references as examples, so I think this should be fine. [2]\n\n[1] https://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Do-not-use-auto-to-deduce-a-raw-pointer\n[2] https://google.github.io/styleguide/cppguide.html#Lambda_expressions",
+      "parentUuid": "e25357aa_2993592b",
       "revId": "dd890e621a25d0f659cf773854ca9c9474185601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
