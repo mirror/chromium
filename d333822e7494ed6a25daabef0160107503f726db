@@ -52,6 +52,24 @@
       "revId": "d333822e7494ed6a25daabef0160107503f726db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb572f37_37393466",
+        "filename": "third_party/WebKit/Source/platform/bindings/ActiveScriptWrappableBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-23T13:01:27Z",
+      "side": 1,
+      "message": "I changed to TraceWrappersFromGeneratedCode and re-worded the comment.",
+      "parentUuid": "5e9800da_d88f0fff",
+      "revId": "d333822e7494ed6a25daabef0160107503f726db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
