@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cd46bae_6030e010",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-23T21:58:27Z",
+      "side": 1,
+      "message": "The service is not currently provided for Android. I added a comment to clarify it. Indeed, this should be revisited if this function is ever used in Android builds.",
+      "parentUuid": "9338c7c4_a835321a",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104866a3_54df7161",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f3dab492_635185e1",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-23T21:58:27Z",
+      "side": 1,
+      "message": "I agree. I changed the name to the one you suggested.",
+      "parentUuid": "104866a3_54df7161",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c09190_47fa67d2",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-23T20:59:04Z",
       "side": 1,
       "message": "Why subtract base::Time()? Based on a cursory reading of that class, it seems like that would have no effect (Time() is defined as 0). If it\u0027s necessary for whatever reason, can you add a comment explaining?",
+      "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645b644d_7a7577d3",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-23T21:58:27Z",
+      "side": 1,
+      "message": "This is logging the time of navigation, as measured in microseconds since Windows epoch. This is a common way of encoding a time event and it is easily converted on server side. I updated the code to something mode descriptive. PTAL.",
+      "parentUuid": "14c09190_47fa67d2",
       "revId": "3b26100d04317c029976aca664391fa6505fc8a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
