@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "198d2f33_a9eabc4f",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "dcastagna@ we could, but we talked about keeping the \"capability\"\nseparated from its \"being enabled for use\": so, platforms have or\nhave not the capability (signalled by |image_xr30|), and we use\nit or not, depending on status and policies, similar to what we\ndo with |image_ycbcr_420v_disabled_for_video_frames| in l.321.\nLet me know if you feel strongly about this.",
+      "parentUuid": "2a5eb158_c6ae6a99",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a352c679_d98e584d",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
         "patchSetId": 18
@@ -66,6 +84,24 @@
       "writtenOn": "2018-01-23T00:00:50Z",
       "side": 1,
       "message": "This format is used by the decoder.\nWe implement that, why can\u0027t we make the decoder accept GL_RGB10_EXT if that is the format that should be used?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74031853_1186cc75",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "glTexImage2D() in Gles 3.0 only accepts GL_RGB10_A2 (and\nGL_RGB10_A2_UI). Since we\u0027re using a command decoder that\ntries to stick to gles standards, I thought it better to\nuse this format and ignore the alpha ourselves.\n\nhttps://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexImage2D.xhtml",
+      "parentUuid": "a352c679_d98e584d",
       "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8678e46f_ea886abd",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae645973_573e1e16",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f71fdd5e_a0ae24ab",
         "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
         "patchSetId": 18
@@ -100,6 +154,24 @@
       "writtenOn": "2018-01-23T00:00:50Z",
       "side": 1,
       "message": "This should be ok on mac, but on CrOS we should fix ExternalResourceTypeForHardwarePlanes so that buffer_format will be BGRX_1010102 for VideoFrames produced with this format.",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c014337_08dd5207",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "Good thing we don\u0027t enable CrOs yet in this CL ;-). But yeah, \nI had a few follow-up patches mounting up on this one for \nCrOs and Linux and the new format needs to be explicitly \nenabled in a few spots.",
+      "parentUuid": "f71fdd5e_a0ae24ab",
       "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "924ec2dd_d8a72c95",
+        "filename": "media/video/gpu_video_accelerator_factories.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef4a178_7b620d64",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88ead358_ff6246a2",
         "filename": "media/video/mock_gpu_video_accelerator_factories.cc",
         "patchSetId": 18
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "b03f1492_fef1c5af",
+        "filename": "media/video/mock_gpu_video_accelerator_factories.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "In some style guides (embedded code, TBH), conditions are \nreversed to prevent the accidental \"var \u003d constant\" ISO\n\"var \u003d\u003d constant\". Clang and Chromium tell us that this is\nnot necessary. Here I just went for consistency. Do you want\nme to change then whole DCHECK()?",
+      "parentUuid": "88ead358_ff6246a2",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a559934_580f13a1",
         "filename": "ui/gl/gl_image_io_surface.mm",
         "patchSetId": 18
@@ -151,6 +259,24 @@
       "writtenOn": "2018-01-23T00:00:50Z",
       "side": 1,
       "message": "Why are we using this internal format if in another comment you suggest the other one should be used?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d46b3e3_cf53af41",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-23T14:47:44Z",
+      "side": 1,
+      "message": "See my other answer.",
+      "parentUuid": "5a559934_580f13a1",
       "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
