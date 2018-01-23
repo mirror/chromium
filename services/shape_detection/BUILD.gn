@@ -6,10 +6,27 @@ import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//testing/test.gni")
 
+if (is_mac) {
+  import("//build/config/mac/mac_sdk.gni")
+}
+
+config("shape_detection_config") {
+  visibility = [ ":lib" ]
+
+  if (is_mac) {
+    # Vision Framework is only available since Mac 10.13. In order to run
+    # on OSes older than OSX 10.13, the Vision Framework must be weakly
+    # linked.
+    ldflags = [
+      "-weak_framework",
+      "Vision",
+    ]
+  }
+}
+
 source_set("lib") {
   sources = [
     "barcode_detection_impl.h",
-    "face_detection_provider_impl.h",
     "shape_detection_service.cc",
     "shape_detection_service.h",
     "text_detection_impl.h",
@@ -23,12 +40,19 @@ source_set("lib") {
       "detection_utils_mac.mm",
       "face_detection_impl_mac.h",
       "face_detection_impl_mac.mm",
+      "face_detection_provider_mac.h",
+      "face_detection_provider_mac.mm",
       "text_detection_impl_mac.h",
       "text_detection_impl_mac.mm",
     ]
     libs = [ "QuartzCore.framework" ]
+    if (mac_sdk_version == "10.13") {
+      sources += [
+        "face_detection_impl_mac_vision.h",
+        "face_detection_impl_mac_vision.mm",
+      ]
+    }
   } else if (is_win) {
-    sources -= [ "face_detection_provider_impl.h" ]
     sources += [
       "barcode_detection_impl.cc",
       "detection_utils_win.cc",
@@ -44,6 +68,7 @@ source_set("lib") {
     sources += [
       "barcode_detection_impl.cc",
       "face_detection_provider_impl.cc",
+      "face_detection_provider_impl.h",
       "text_detection_impl.cc",
     ]
   }
@@ -64,6 +89,9 @@ source_set("lib") {
   if (is_android) {
     deps += [ ":shape_detection_jni_headers" ]
   }
+
+  # public_configs  = [ ":shape_detection_config" ]
+  all_dependent_configs = [ ":shape_detection_config" ]
 }
 
 if (is_android) {
