@@ -16,6 +16,24 @@
       "revId": "d460b1da952c61648ed5168e00c683a2878d461d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235227a7_a566be4d",
+        "filename": "third_party/android_crazy_linker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-23T23:21:54Z",
+      "side": 1,
+      "message": "I understand. Done :)",
+      "parentUuid": "8bc313c8_cd1ede39",
+      "revId": "d460b1da952c61648ed5168e00c683a2878d461d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
