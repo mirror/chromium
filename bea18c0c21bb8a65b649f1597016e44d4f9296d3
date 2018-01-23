@@ -22,6 +22,30 @@
       "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce82e12_be0ab7ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-horizontal-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T14:00:08Z",
+      "side": 1,
+      "message": "Do the problems stem from the fact that positioning is done using inline-level elements (\u003cspan\u003e)? Doing that usually yields problems due to font metrics (and thus rendering) differences between platforms. I\u0027d try recreating more of the actual cue layout - i.e wrap the \u003cspan\u003es with the text in a \u003cdiv\u003e and position the \u003cdiv\u003e et.c.",
+      "parentUuid": "dc866bc8_cd800182",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
