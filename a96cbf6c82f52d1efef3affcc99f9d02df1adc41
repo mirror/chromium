@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a05cea_275c76a9",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T17:46:01Z",
+      "side": 1,
+      "message": "not needed anymore",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 43
+      },
+      "revId": "a96cbf6c82f52d1efef3affcc99f9d02df1adc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1daa704_da83daeb",
+        "filename": "chrome/browser/extensions/api/autofill_private/autofill_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T17:46:01Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "a96cbf6c82f52d1efef3affcc99f9d02df1adc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422c9bbf_e8f26710",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T17:46:01Z",
+      "side": 1,
+      "message": "add addressLevel3",
+      "revId": "a96cbf6c82f52d1efef3affcc99f9d02df1adc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af0689d_e203c799",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T17:46:01Z",
+      "side": 1,
+      "message": "test that guid has no tchanged",
+      "revId": "a96cbf6c82f52d1efef3affcc99f9d02df1adc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29c5bcb_8163431a",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-23T17:46:01Z",
+      "side": 1,
+      "message": "remove properties not expected to change (to test the case where only subset of properties is changed)",
+      "revId": "a96cbf6c82f52d1efef3affcc99f9d02df1adc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
