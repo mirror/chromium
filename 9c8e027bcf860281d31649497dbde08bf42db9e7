@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4aab593_7bc353fd",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "DCHECK(!url_fetcher_ \u0026\u0026 on_collection_names_fetched_.is_null());\n\nA DCHECK is sufficient. The assignment in L73 would cancel previous fetch.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98345d00_85b70058",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "ditto, let\u0027s just use a DCHECK",
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fde5e3_7cd4342c",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "no longer used ?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f00609_c523d4cb",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "ditto, seems unused",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9257e8_ba87fe43",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fd2bc4_dd63fd20",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "#include \"base/callback.h\"",
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7feeeb_0905c9dd",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "nit: Pass by value to avoid the Clone call. And CollectionNameFetcher can std::move when it invokes the callback.",
+      "range": {
+        "startLine": 835,
+        "startChar": 4,
+        "endLine": 835,
+        "endChar": 22
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa897d6_e22a2999",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "ditto, pass by value",
+      "range": {
+        "startLine": 866,
+        "startChar": 4,
+        "endLine": 866,
+        "endChar": 22
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb86507_698a351d",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 324,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 17
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54cab84_07473586",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "nit: pre-increment",
+      "range": {
+        "startLine": 241,
+        "startChar": 27,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "9c8e027bcf860281d31649497dbde08bf42db9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

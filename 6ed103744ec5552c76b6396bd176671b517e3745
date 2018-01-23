@@ -423,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "0bbe463f_f219fe23",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "OnURLFetchComplete should be called on UI thread as well. So we should not run into such case.",
+      "parentUuid": "f3b898c9_a9709419",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f11ca066_b9650e01",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
         "patchSetId": 7
@@ -505,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "0e2691b7_b6f52d7e",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "Yep, deleting fetcher should cancel the request.",
+      "parentUuid": "7df35fd5_91467495",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c925fa98_a9613274",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
         "patchSetId": 7
@@ -569,6 +605,24 @@
       "side": 1,
       "message": "I added these load flags. Normally how do we know which flags are needed?",
       "parentUuid": "3b37ec42_898d4a19",
+      "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc229cba_243a8268",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handler/backdrop_wallpaper_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-23T20:47:49Z",
+      "side": 1,
+      "message": "Usually we only send the minimum needed by the server endpoint. For requests on system context, we don\u0027t send and save cookies since system context is shared and should be stateless. Same goes for the auth data.\n\nCache depends on whether you want to stored the response in http cache and re-used it later. Disable cache would by pass the cache and always hit server to get latest data. This is optional.",
+      "parentUuid": "016604f3_dded832b",
       "revId": "6ed103744ec5552c76b6396bd176671b517e3745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
