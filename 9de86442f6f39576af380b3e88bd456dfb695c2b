@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6381285_7c767e09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/PwaAmbientBadgeInfoBar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-23T23:43:00Z",
+      "side": 1,
+      "message": "mdjones: it seems that using a bitmap icon for the compact infobar results in the icon having no padding to the left or to the right, which looks awful (i.e. the text is right next to the icon). I\u0027m assuming this might be because the icons shipped with Chrome and accessed with an ID already have padding? In any case, that\u0027s why I\u0027m manually added this padding back here. Let me know if there\u0027s a better solution (perhaps pushing this change into InfoBarCompactLayout if the icon is from a bitmap?).",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
