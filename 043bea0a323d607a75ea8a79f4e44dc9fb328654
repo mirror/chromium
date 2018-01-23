@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee93b4d2_bb5483ad",
+        "filename": "content/renderer/loader/url_response_body_consumer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-01-23T13:14:19Z",
+      "side": 1,
+      "message": "Can we make single RepeatingCallback before the loop, and reuse it for each PostTask?",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 55
+      },
+      "revId": "043bea0a323d607a75ea8a79f4e44dc9fb328654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
