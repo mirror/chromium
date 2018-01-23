@@ -1298,6 +1298,16 @@ class CONTENT_EXPORT RenderFrameImpl
   void UpdateStateForCommit(const blink::WebHistoryItem& item,
                             blink::WebHistoryCommitType commit_type);
 
+  // Internal function used by same document navigation as well as cross
+  // document navigation that factors state update and sending the message to
+  // the browser.
+  void DidCommitNavigationInternal(
+      const blink::WebHistoryItem& item,
+      blink::WebHistoryCommitType commit_type,
+      bool was_within_same_document,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interface_provider_request);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
