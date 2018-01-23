@@ -1900,12 +1900,14 @@ void WebMediaPlayerImpl::OnFrameHidden() {
 }
 
 void WebMediaPlayerImpl::OnFrameClosed() {
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   UpdatePlayState();
 }
 
 void WebMediaPlayerImpl::OnFrameShown() {
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   background_pause_timer_.Stop();
 
