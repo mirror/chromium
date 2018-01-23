@@ -14,10 +14,10 @@ mojo::ScopedHandle
 StructTraits<gfx::mojom::CALayerParamsDataView, gfx::CALayerParams>::
     io_surface_mach_port(const gfx::CALayerParams& ca_layer_params) {
 #if defined(OS_MACOSX) && !defined(OS_IOS)
-  return mojo::WrapMachPort(ca_layer_params.io_surface_mach_port.get());
-#else
-  return mojo::ScopedHandle();
+  if (!ca_layer_params.ca_context_id)
+    return mojo::WrapMachPort(ca_layer_params.io_surface_mach_port.get());
 #endif
+  return mojo::ScopedHandle();
 }
 
 bool StructTraits<gfx::mojom::CALayerParamsDataView, gfx::CALayerParams>::Read(
@@ -27,12 +27,14 @@ bool StructTraits<gfx::mojom::CALayerParamsDataView, gfx::CALayerParams>::Read(
   out->ca_context_id = data.ca_context_id();
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
-  mach_port_t io_surface_mach_port;
-  MojoResult unwrap_result =
-      mojo::UnwrapMachPort(data.TakeIoSurfaceMachPort(), &io_surface_mach_port);
-  if (unwrap_result != MOJO_RESULT_OK)
-    return false;
-  out->io_surface_mach_port.reset(io_surface_mach_port);
+  if (!out->ca_context_id) {
+    mach_port_t io_surface_mach_port;
+    MojoResult unwrap_result = mojo::UnwrapMachPort(
+        data.TakeIoSurfaceMachPort(), &io_surface_mach_port);
+    if (unwrap_result != MOJO_RESULT_OK)
+      return false;
+    out->io_surface_mach_port.reset(io_surface_mach_port);
+  }
 #endif
 
   if (!data.ReadPixelSize(&out->pixel_size))
