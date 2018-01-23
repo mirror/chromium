@@ -999,6 +999,11 @@ const char kEnableNewAppMenuIcon[] = "enable-new-app-menu-icon";
 const char kUseSystemDefaultPrinter[] = "use-system-default-printer";
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+// Enables MPRIS D-Bus services.
+const char kEnableMprisClient[] = "enable-mpris-client";
+#endif
+
 bool ExtensionsDisabled(const base::CommandLine& command_line) {
   return command_line.HasSwitch(switches::kDisableExtensions) ||
          command_line.HasSwitch(switches::kDisableExtensionsExcept);
