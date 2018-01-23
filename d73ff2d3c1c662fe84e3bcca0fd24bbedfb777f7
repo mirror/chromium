@@ -105,6 +105,24 @@
       "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7510a79a_847b1ac0",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-23T05:32:00Z",
+      "side": 1,
+      "message": "huh, on a whim I checked https://crbug.com/772476 - looks like the plan as of 5 days ago is just to delete ElideUrlSimple - vr don\u0027t want it any more. So this shouldn\u0027t be an issue for long.",
+      "parentUuid": "f0e5116a_d30a2d9f",
+      "revId": "d73ff2d3c1c662fe84e3bcca0fd24bbedfb777f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
