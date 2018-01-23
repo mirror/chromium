@@ -32,6 +32,7 @@
 #include "core/html/forms/TextFieldInputType.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/DOMTokenList.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/editing/FrameSelection.h"
 #include "core/events/BeforeTextInsertedEvent.h"
@@ -270,6 +271,10 @@ LayoutObject* TextFieldInputType::CreateLayoutObject(
   return new LayoutTextControlSingleLine(&GetElement());
 }
 
+bool TextFieldInputType::ShouldHaveAssistButton() const {
+  return LayoutTheme::GetTheme().ShouldHaveAssistButton(&GetElement());
+}
+
 bool TextFieldInputType::ShouldHaveSpinButton() const {
   return LayoutTheme::GetTheme().ShouldHaveSpinButton(&GetElement());
 }
@@ -286,14 +291,16 @@ void TextFieldInputType::CreateShadowSubtree() {
       AtomicString("-webkit-textfield-decoration-container"));
   shadow_root->AppendChild(container);
 
-  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
   EditingViewPortElement* editing_view_port =
       EditingViewPortElement::Create(document);
+  HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
   editing_view_port->AppendChild(inner_editor);
   container->AppendChild(editing_view_port);
 
   if (GetElement().HasValidDataListOptions())
     container->AppendChild(DataListIndicatorElement::Create(document));
+  if (ShouldHaveAssistButton())
+    container->AppendChild(AssistButtonElement::Create(document, *this));
   // FIXME: Because of a special handling for a spin button in
   // LayoutTextControlSingleLine, we need to put it to the last position. It's
   // inconsistent with multiple-fields date/time types.
@@ -301,11 +308,37 @@ void TextFieldInputType::CreateShadowSubtree() {
     container->AppendChild(SpinButtonElement::Create(document, *this));
 
   // See listAttributeTargetChanged too.
+  AssistConfigurationChanged();
 }
 
 Element* TextFieldInputType::ContainerElement() const {
   return GetElement().UserAgentShadowRoot()->getElementById(
       ShadowElementNames::TextFieldContainer());
+}
+
+void TextFieldInputType::AssistConfigurationChanged() {
+  DCHECK(GetElement().GetAssistanceIconType() !=
+             WebInputElement::AssistanceType::kNone ||
+         GetElement().GetAssistanceIconVisibility() ==
+             WebInputElement::AssistanceIconVisibility::kDisabled);
+  DCHECK(GetElement().GetAssistanceIconVisibility() !=
+             WebInputElement::AssistanceIconVisibility::kDisabled ||
+         GetElement().GetAssistanceIconType() ==
+             WebInputElement::AssistanceType::kNone);
+  Element* assist_button =
+      ContainerElement()->getElementById(ShadowElementNames::AssistButton());
+  switch (GetElement().GetAssistanceIconVisibility()) {
+    case WebInputElement::AssistanceIconVisibility::kDisabled:
+      assist_button->classList().setValue(AtomicString("disabled"));
+      break;
+    case WebInputElement::AssistanceIconVisibility::kAlwaysVisible:
+      assist_button->classList().setValue(AtomicString("always-visible"));
+      break;
+    case WebInputElement::AssistanceIconVisibility::kVisibleOnInteraction:
+      assist_button->classList().setValue(
+          AtomicString("visible-on-interaction"));
+      break;
+  }
 }
 
 void TextFieldInputType::DestroyShadowSubtree() {
@@ -532,6 +565,13 @@ void TextFieldInputType::SpinButtonDidReleaseMouseCapture(
     SpinButtonElement::EventDispatch event_dispatch) {
   if (event_dispatch == SpinButtonElement::kEventDispatchAllowed)
     GetElement().DispatchFormControlChangeEvent();
+}
+
+void TextFieldInputType::AssistButtonPressed() {
+  WebInputElement::AssistanceIconClickedCallback callback =
+      GetElement().GetAssistanceIconCallback();
+  if (callback)
+    callback.Run();
 }
 
 }  // namespace blink

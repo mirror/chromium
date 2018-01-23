@@ -31,6 +31,7 @@
 #include "core/html/forms/FileChooser.h"
 #include "core/html/forms/StepRange.h"
 #include "core/html/forms/TextControlElement.h"
+#include "public/web/WebInputElement.h"
 
 namespace blink {
 
@@ -302,6 +303,15 @@ class CORE_EXPORT HTMLInputElement
 
   void ChildrenChanged(const ChildrenChange&) override;
 
+  void SetAssistance(WebInputElement::AssistanceIconVisibility,
+                     WebInputElement::AssistanceType,
+                     WebInputElement::AssistanceIconClickedCallback);
+
+  WebInputElement::AssistanceIconVisibility GetAssistanceIconVisibility() const;
+  WebInputElement::AssistanceType GetAssistanceIconType() const;
+  WebInputElement::AssistanceIconClickedCallback GetAssistanceIconCallback()
+      const;
+
  protected:
   HTMLInputElement(Document&, bool created_by_parser);
 
@@ -432,6 +442,10 @@ class CORE_EXPORT HTMLInputElement
   // element lives on.
   Member<HTMLImageLoader> image_loader_;
   Member<ListAttributeTargetObserver> list_attribute_target_observer_;
+
+  WebInputElement::AssistanceIconVisibility assistance_icon_visibility_;
+  WebInputElement::AssistanceType assistance_icon_type_;
+  WebInputElement::AssistanceIconClickedCallback assistance_icon_callback_;
 
   FRIEND_TEST_ALL_PREFIXES(HTMLInputElementTest, RadioKeyDownDCHECKFailure);
 };

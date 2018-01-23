@@ -54,6 +54,11 @@ const AtomicString& DateTimeEdit() {
   return name;
 }
 
+const AtomicString& AssistButton() {
+  DEFINE_STATIC_LOCAL(AtomicString, name, ("assist"));
+  return name;
+}
+
 const AtomicString& SpinButton() {
   DEFINE_STATIC_LOCAL(AtomicString, name, ("spin"));
   return name;
