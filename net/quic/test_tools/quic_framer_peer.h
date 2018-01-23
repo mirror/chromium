@@ -33,6 +33,16 @@ class QuicFramerPeer {
 
   static QuicEncrypter* GetEncrypter(QuicFramer* framer, EncryptionLevel level);
 
+  // IETF defined frame append/process methods.
+  static bool ProcessIetfStreamFrame(QuicFramer* framer,
+                                     QuicDataReader* reader,
+                                     uint8_t frame_type,
+                                     QuicStreamFrame* frame);
+  static bool AppendIetfStreamFrame(QuicFramer* framer,
+                                    const QuicStreamFrame& frame,
+                                    bool last_frame_in_packet,
+                                    QuicDataWriter* writer);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(QuicFramerPeer);
 };

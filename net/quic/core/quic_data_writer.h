@@ -89,6 +89,8 @@ class QUIC_EXPORT_PRIVATE QuicDataWriter {
 
   size_t capacity() const { return capacity_; }
 
+  size_t remaining() const { return capacity_ - length_; }
+
  private:
   // Returns the location that the data should be written at, or nullptr if
   // there is not enough room. Call EndWrite with the returned offset and the

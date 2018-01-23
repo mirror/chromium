@@ -1322,6 +1322,70 @@ bool QuicFramer::ProcessStreamFrame(QuicDataReader* reader,
   return true;
 }
 
+bool QuicFramer::ProcessIetfStreamFrame(QuicDataReader* reader,
+                                        uint8_t frame_type,
+                                        QuicStreamFrame* frame) {
+  // Read stream id from the frame. It's always present.
+  QuicIetfStreamId streamid;
+  if (!reader->ReadVarInt62(&streamid)) {
+    set_detailed_error("Unable to read stream_id.");
+    return false;
+  }
+  if (streamid > 0xffffffff) {
+    set_detailed_error("stream_id is too large.");
+    return false;
+  }
+  frame->stream_id = static_cast<QuicStreamId>(streamid);
+
+  // If we have a data offset, read it. If not, set to 0.
+  if (frame_type & IETF_STREAM_FRAME_OFF_BIT) {
+    QuicStreamOffset offset;
+    if (!reader->ReadVarInt62(&offset)) {
+      set_detailed_error("Unable to read stream data offset.");
+      return false;
+    }
+    frame->offset = offset;
+  } else {
+    // no offset in the frame, ensure it's 0 in the Frame.
+    frame->offset = 0;
+  }
+
+  // If we have a data length, read it. If not, set to 0.
+  if (frame_type & IETF_STREAM_FRAME_LEN_BIT) {
+    QuicIetfStreamDataLength length;
+    if (!reader->ReadVarInt62(&length)) {
+      set_detailed_error("Unable to read stream data length.");
+      return false;
+    }
+    if (length > 0xffff) {
+      set_detailed_error("stream data offset is too large.");
+      return false;
+    }
+    frame->data_length = length;
+  } else {
+    // no length in the frame, it is the number of bytes remaining in the
+    // packet.
+    frame->data_length = reader->BytesRemaining();
+  }
+
+  if (frame_type & IETF_STREAM_FRAME_FIN_BIT) {
+    frame->fin = true;
+  } else {
+    frame->fin = false;
+  }
+
+  // TODO(ianswett): Don't use QuicStringPiece as an intermediary.
+  QuicStringPiece data;
+  if (!reader->ReadStringPiece(&data, frame->data_length)) {
+    set_detailed_error("Unable to read frame data.");
+    return false;
+  }
+  frame->data_buffer = data.data();
+  frame->data_length = static_cast<QuicIetfStreamDataLength>(data.length());
+
+  return true;
+}
+
 bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
                                  uint8_t frame_type,
                                  QuicAckFrame* ack_frame) {
@@ -2076,6 +2140,80 @@ bool QuicFramer::AppendStreamFrame(const QuicStreamFrame& frame,
   if (!writer->WriteBytes(frame.data_buffer, frame.data_length)) {
     QUIC_BUG << "Writing frame data failed.";
     return false;
+  }
+  return true;
+}
+
+// Add a new ietf-format stream frame.
+// Bits controlling whether there is a frame-length and frame-offset
+// are in the QuicStreamFrame.
+bool QuicFramer::AppendIetfStreamFrame(const QuicStreamFrame& frame,
+                                       bool last_frame_in_packet,
+                                       QuicDataWriter* writer) {
+  // figure out whether we will have FIN, LEN, and/or OFFSET fields
+  // in the packet and create a type-byte with the proper flag settings.
+  uint8_t frame_type = static_cast<uint8_t>(IETF_STREAM);
+  if (frame.fin) {
+    frame_type |= IETF_STREAM_FRAME_FIN_BIT;
+  }
+  // Calculate how long the header and type byte will be. This
+  // is done so that we can determine how much data can be placed in
+  // the packet _after_ doing the header. Start the length with the
+  // encoded size of the streamid and type byte.
+
+  // We will include the frame offset if it is not 0
+  if (frame.offset != 0) {
+    frame_type |= IETF_STREAM_FRAME_OFF_BIT;
+  }
+
+  // If not the last frame in the packet, include the length field.
+  if (!last_frame_in_packet) {
+    frame_type |= IETF_STREAM_FRAME_LEN_BIT;
+  }
+
+  // Put the type-byte in the header.
+  if (writer->WriteUInt8(frame_type) == false) {
+    set_detailed_error("Unable to write frame-type.");
+    return false;
+  }
+
+  // Stream ID always goes in the header...
+  if (writer->WriteVarInt62(static_cast<uint64_t>(frame.stream_id)) == false) {
+    set_detailed_error("Writing stream id failed.");
+    return false;
+  }
+
+  // Offset may go in the header...
+  if (frame_type & IETF_STREAM_FRAME_OFF_BIT) {
+    if (writer->WriteVarInt62(static_cast<uint64_t>(frame.offset)) == false) {
+      set_detailed_error("Writing data offset failed.");
+      return false;
+    }
+  }
+
+  // Frame data length...
+  if (frame_type & IETF_STREAM_FRAME_LEN_BIT) {
+    if (writer->WriteVarInt62(frame.data_length) == false) {
+      set_detailed_error("Writing data length failed.");
+      return false;
+    }
+  }
+
+  // now move the data in
+  if (data_producer_ == nullptr) {
+    // data comes from the frame's buffer -- append the necessary
+    // number of bytes to the frame.
+    if (!writer->WriteBytes(frame.data_buffer, frame.data_length)) {
+      set_detailed_error("Writing frame data failed.");
+      return false;
+    }
+  } else {
+    DCHECK_EQ(nullptr, frame.data_buffer);
+    if (!data_producer_->WriteStreamData(frame.stream_id, frame.offset,
+                                         frame.data_length, writer)) {
+      set_detailed_error("Writing frame data failed.");
+      return false;
+    }
   }
   return true;
 }

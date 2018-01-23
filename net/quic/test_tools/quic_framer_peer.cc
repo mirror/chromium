@@ -41,6 +41,21 @@ void QuicFramerPeer::SetPerspective(QuicFramer* framer,
 }
 
 // static
+bool QuicFramerPeer::ProcessIetfStreamFrame(QuicFramer* framer,
+                                            QuicDataReader* reader,
+                                            uint8_t frame_type,
+                                            QuicStreamFrame* frame) {
+  return framer->ProcessIetfStreamFrame(reader, frame_type, frame);
+}
+// static
+bool QuicFramerPeer::AppendIetfStreamFrame(QuicFramer* framer,
+                                           const QuicStreamFrame& frame,
+                                           bool last_frame_in_packet,
+                                           QuicDataWriter* writer) {
+  return framer->AppendIetfStreamFrame(frame, last_frame_in_packet, writer);
+}
+
+// static
 void QuicFramerPeer::SwapCrypters(QuicFramer* framer1, QuicFramer* framer2) {
   for (int i = ENCRYPTION_NONE; i < NUM_ENCRYPTION_LEVELS; i++) {
     framer1->encrypter_[i].swap(framer2->encrypter_[i]);

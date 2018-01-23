@@ -501,6 +501,15 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   bool AppendPaddingFrame(const QuicPaddingFrame& frame,
                           QuicDataWriter* writer);
 
+  // IETF defined frame append/process methods.
+  bool ProcessIetfStreamFrame(QuicDataReader* reader,
+                              uint8_t frame_type,
+                              QuicStreamFrame* frame);
+  // Append a stream frame and data to the packet.
+  bool AppendIetfStreamFrame(const QuicStreamFrame& frame,
+                             bool last_frame_in_packet,
+                             QuicDataWriter* writer);
+
   bool RaiseError(QuicErrorCode error);
 
   void set_error(QuicErrorCode error) { error_ = error; }
