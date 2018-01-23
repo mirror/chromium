@@ -1844,6 +1844,8 @@ crbug.com/803200 external/wpt/websockets/opening-handshake/005.html?wss [ Pass F
 
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/css/css-display/display-contents-fieldset-nested-legend.html [ Failure ]
+crbug.com/626703 external/wpt/css/css-ui/text-overflow-026.html [ Failure ]
 crbug.com/626703 external/wpt/svg/path/closepath/segment-completing.svg [ Failure ]
 crbug.com/626703 external/wpt/svg/path/distance/pathLength-positive.svg [ Failure ]
 crbug.com/626703 external/wpt/svg/path/distance/pathLength-zero.svg [ Failure ]
