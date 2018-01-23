@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbb7a8f_34724ba4",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T01:29:06Z",
+      "side": 1,
+      "message": "This was low-hanging. CFIndex is signed, so this is legal, but what was I thinking when I wrote this line originally with a reverse scan with a \u003e\u003d 0 check?",
+      "revId": "154b415e5abaf973b6989bbfe3b8a04b728ce65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8205a607_e1e06503",
+        "filename": "net/cert/cert_verify_proc_nss.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-23T01:29:06Z",
+      "side": 1,
+      "message": "So this *is* potentially expensive, since it\u0027ll flap a lock, so I did go ahead and try to more aggressively optimize this.",
+      "revId": "154b415e5abaf973b6989bbfe3b8a04b728ce65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
