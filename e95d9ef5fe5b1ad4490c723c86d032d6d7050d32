@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "06633892_12ac479c",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-23T19:48:39Z",
+      "side": 1,
+      "message": "nit/optional (I know you followed the local-file convention. :-) ). \n\nYou may use UTF-8 strings here (without u8, it still works.) \n\nu8\"\\u202egoogle.com\\u202c\", .....\n\nThen, use UTF8ToUTF16 instead of WideToUTF16 below.",
+      "range": {
+        "startLine": 477,
+        "startChar": 6,
+        "endLine": 495,
+        "endChar": 55
+      },
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb36658_2c40d687",
+        "filename": "base/i18n/rtl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-23T19:48:39Z",
+      "side": 1,
+      "message": "this test does not test any new behavior we get from SanitizeUserSuppliedString because the input does not have any U+202x (paired with PDF or not). That is, this test only tests \u0027AdjustString...\u0027 part. Would you add a few more cases? \n\nAnd, how about testing unterminated U+202x\u0027s in LTR input in RTL UI?",
+      "range": {
+        "startLine": 511,
+        "startChar": 7,
+        "endLine": 511,
+        "endChar": 29
+      },
+      "revId": "e95d9ef5fe5b1ad4490c723c86d032d6d7050d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1501a30_73897ac9",
         "filename": "chrome/common/extensions/extension_unittest.cc",
         "patchSetId": 2
