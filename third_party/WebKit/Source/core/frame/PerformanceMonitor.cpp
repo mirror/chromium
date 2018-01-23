@@ -22,7 +22,8 @@
 namespace blink {
 
 namespace {
-static const double kLongTaskSubTaskThresholdInSeconds = 0.012;
+static const TimeDelta kLongTaskSubTaskThresholdInSeconds =
+    TimeDelta::FromSecondsD(0.012);
 }  // namespace
 
 void PerformanceMonitor::BypassLongCompileThresholdOnceForTesting() {
@@ -230,7 +231,7 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
   Violation handler_type =
       user_callback->recurring ? kRecurringHandler : kHandler;
   double threshold = thresholds_[handler_type];
-  double duration = probe.Duration();
+  double duration = probe.Duration().InSecondsF();
   if (!threshold || duration < threshold)
     return;
 
@@ -254,7 +255,7 @@ void PerformanceMonitor::Did(const probe::V8Compile& probe) {
   if (!enabled_ || !thresholds_[kLongTask])
     return;
 
-  double v8_compile_duration = probe.Duration();
+  TimeDelta v8_compile_duration = probe.Duration();
 
   if (bypass_long_compile_threshold_) {
     bypass_long_compile_threshold_ = false;
@@ -310,9 +311,9 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
   // Reset everything for regular and nested tasks.
   script_depth_ = 0;
   layout_depth_ = 0;
-  per_task_style_and_layout_time_ = 0;
+  per_task_style_and_layout_time_ = TimeDelta();
   user_callback_ = nullptr;
-  v8_compile_start_time_ = 0;
+  v8_compile_start_time_ = TimeTicks();
   sub_task_attributions_.clear();
 }
 
@@ -320,12 +321,13 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
   if (!enabled_ || !task_should_be_reported_)
     return;
   double layout_threshold = thresholds_[kLongLayout];
-  if (layout_threshold && per_task_style_and_layout_time_ > layout_threshold) {
+  double layout_time = per_task_style_and_layout_time_.InSecondsF();
+  if (layout_threshold && layout_time > layout_threshold) {
     ClientThresholds* client_thresholds = subscriptions_.at(kLongLayout);
     DCHECK(client_thresholds);
     for (const auto& it : *client_thresholds) {
-      if (it.value < per_task_style_and_layout_time_)
-        it.key->ReportLongLayout(per_task_style_and_layout_time_);
+      if (it.value < layout_time)
+        it.key->ReportLongLayout(layout_time);
     }
   }
 
