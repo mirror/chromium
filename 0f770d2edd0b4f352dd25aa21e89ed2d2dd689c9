@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811c6feb_9877d1b9",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T13:57:30Z",
+      "side": 1,
+      "message": "Doesn\u0027t this disable libc++ for nacl builds on linux (?)",
+      "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3e054e_aea0f828",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-23T13:57:30Z",
+      "side": 1,
+      "message": "can we add a LIBCPP_DONT_BABYSIT define to libc++ to disable the embeddd linkerflags?",
+      "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
