@@ -5,11 +5,11 @@
 #ifndef IOS_CLEAN_CHROME_BROWSER_UI_FULLSCREEN_FULLSCREEN_WEB_STATE_LIST_OBSERVER_H_
 #define IOS_CLEAN_CHROME_BROWSER_UI_FULLSCREEN_FULLSCREEN_WEB_STATE_LIST_OBSERVER_H_
 
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_impl.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_observer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer.h"
 #include "ios/web/public/web_state/web_state_observer.h"
 
-class FullscreenController;
 class FullscreenModel;
 
 // A WebStateListObserver that creates WebStateObservers that update a
@@ -19,9 +19,7 @@ class FullscreenWebStateListObserver : public WebStateListObserver {
   // Constructor for an observer for |web_state_list| that updates |model|.
   // |controller| is used to create ScopedFullscreenDisablers for WebState
   // navigation events that require the toolbar to be visible.
-  FullscreenWebStateListObserver(FullscreenController* controller,
-                                 FullscreenModel* model,
-                                 WebStateList* web_state_list);
+  FullscreenWebStateListObserver(FullscreenControllerImpl* controller);
   ~FullscreenWebStateListObserver() override;
 
   // Stops observing the the WebStateList.
@@ -39,10 +37,12 @@ class FullscreenWebStateListObserver : public WebStateListObserver {
                            int active_index,
                            int reason) override;
 
-  // The model passed on construction.
-  FullscreenModel* model_;
-  // The WebStateList passed on construction.
-  WebStateList* web_state_list_;
+  // FullscreenControllerImpl accessors.
+  FullscreenModel* model() const { return controller_->model(); }
+  WebStateList* web_state_list() const { return controller_->web_state_list(); }
+
+  // The FullscreenController passed on initialization.
+  FullscreenControllerImpl* controller_;
   // The observer for the active WebState.
   FullscreenWebStateObserver web_state_observer_;
 };

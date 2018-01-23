@@ -15,27 +15,21 @@
 #endif
 
 FullscreenWebStateListObserver::FullscreenWebStateListObserver(
-    FullscreenController* controller,
-    FullscreenModel* model,
-    WebStateList* web_state_list)
-    : model_(model),
-      web_state_list_(web_state_list),
-      web_state_observer_(controller, model) {
-  DCHECK(model_);
-  DCHECK(web_state_list_);
-  web_state_list_->AddObserver(this);
-  web_state_observer_.SetWebState(web_state_list_->GetActiveWebState());
+    FullscreenControllerImpl* controller)
+    : controller_(controller), web_state_observer_(controller) {
+  web_state_list()->AddObserver(this);
+  web_state_observer_.SetWebState(web_state_list()->GetActiveWebState());
 }
 
 FullscreenWebStateListObserver::~FullscreenWebStateListObserver() {
   // Disconnect() should be called before destruction.
-  DCHECK(!web_state_list_);
+  DCHECK(!controller_);
 }
 
 void FullscreenWebStateListObserver::Disconnect() {
-  web_state_list_->RemoveObserver(this);
-  web_state_list_ = nullptr;
+  web_state_list()->RemoveObserver(this);
   web_state_observer_.SetWebState(nullptr);
+  controller_ = nullptr;
 }
 
 void FullscreenWebStateListObserver::WebStateReplacedAt(
@@ -46,10 +40,10 @@ void FullscreenWebStateListObserver::WebStateReplacedAt(
   if (new_web_state == web_state_list->GetActiveWebState()) {
     // Reset the model if the active WebState is replaced.
     web_state_observer_.SetWebState(new_web_state);
-    model_->ResetForNavigation();
+    model()->ResetForNavigation();
     if (new_web_state) {
       UpdateFullscreenWebViewProxyForReplacedScrollView(
-          new_web_state->GetWebViewProxy(), model_);
+          new_web_state->GetWebViewProxy(), model());
     }
   }
 }
