@@ -23,6 +23,7 @@
     for (var key in classes) {
         let specifiedValue = classes[key];
         test(function() {
+            element.style.alignContent = "";
             element.style.alignContent = specifiedValue;
             let computedValue = specifiedValue;
             if (specifiedValue === "baseline")

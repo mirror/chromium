@@ -28,10 +28,10 @@ function checkPlaceShorhand(shorthand, alignValue, justifyValue)
         specifiedValue = alignValue;
 
     var resolvedValue = getComputedStyle(div).getPropertyValue(shorthand);
-    if (alignValue === "first baseline")
-        alignValue = "baseline";
-    if (justifyValue === "first baseline")
-        justifyValue = "baseline";
+    if (alignValue === "baseline")
+        alignValue = "first baseline";
+    if (justifyValue === "baseline")
+        justifyValue = "first baseline";
     if (justifyValue === "")
         justifyValue = alignValue;
     var expectedResolvedValue = (alignValue + " " + justifyValue).trim()

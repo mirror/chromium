@@ -631,7 +631,7 @@ CSSValueList* ComputedStyleUtils::ValueForItemPositionWithOverflowAlignment(
     result->Append(*CSSIdentifierValue::Create(CSSValueLegacy));
   if (data.GetPosition() == ItemPosition::kBaseline) {
     result->Append(
-        *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueBaseline),
+        *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueFirst),
                               CSSIdentifierValue::Create(CSSValueBaseline),
                               CSSValuePair::kDropIdenticalValues));
   } else if (data.GetPosition() == ItemPosition::kLastBaseline) {
@@ -664,6 +664,12 @@ ComputedStyleUtils::ValueForContentPositionAndDistributionWithOverflowAlignment(
       if (data.Distribution() == ContentDistributionType::kDefault) {
         result->Append(*CSSIdentifierValue::Create(CSSValueNormal));
       }
+      break;
+    case ContentPosition::kBaseline:
+      result->Append(
+          *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueFirst),
+                                CSSIdentifierValue::Create(CSSValueBaseline),
+                                CSSValuePair::kDropIdenticalValues));
       break;
     case ContentPosition::kLastBaseline:
       result->Append(

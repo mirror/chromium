@@ -549,6 +549,7 @@ bool IsContentPositionOrLeftOrRightKeyword(CSSValueID id) {
 CSSValue* ConsumeSelfPositionOverflowPosition(
     CSSParserTokenRange& range,
     IsPositionKeyword is_position_keyword) {
+  DCHECK(is_position_keyword);
   CSSValueID id = range.Peek().Id();
   if (IsAutoOrNormalOrStretch(id))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
@@ -570,6 +571,7 @@ CSSValue* ConsumeSelfPositionOverflowPosition(
 
 CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange& range,
                                         IsPositionKeyword is_position_keyword) {
+  DCHECK(is_position_keyword);
   CSSValueID id = range.Peek().Id();
   if (IsAutoOrNormalOrStretch(id) || is_position_keyword(id))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
@@ -583,6 +585,7 @@ CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange& range,
 CSSValue* ConsumeContentDistributionOverflowPosition(
     CSSParserTokenRange& range,
     IsPositionKeyword is_position_keyword) {
+  DCHECK(is_position_keyword);
   CSSValueID id = range.Peek().Id();
   if (CSSPropertyParserHelpers::IdentMatches<CSSValueNormal>(id)) {
     return CSSContentDistributionValue::Create(
@@ -618,6 +621,7 @@ CSSValue* ConsumeContentDistributionOverflowPosition(
 CSSValue* ConsumeSimplifiedContentPosition(
     CSSParserTokenRange& range,
     IsPositionKeyword is_position_keyword) {
+  DCHECK(is_position_keyword);
   CSSValueID id = range.Peek().Id();
   if (CSSPropertyParserHelpers::IdentMatches<CSSValueNormal>(id) ||
       is_position_keyword(id)) {
@@ -2380,9 +2384,18 @@ bool ConsumePlaceAlignment(CSSParserTokenRange& range,
   DCHECK(!align_value);
   DCHECK(!justify_value);
 
+  bool is_baseline = IsBaselineKeyword(range.Peek().Id());
   align_value = consume_alignment_value(range, IsSelfPositionKeyword);
   if (!align_value)
     return false;
+
+  // justify-content property does not allow the <baseline-position> values.
+  if (consume_alignment_value == ConsumeSimplifiedContentPosition) {
+    if (range.AtEnd() && is_baseline)
+      return false;
+    if (IsBaselineKeyword(range.Peek().Id()))
+      return false;
+  }
 
   justify_value =
       range.AtEnd()

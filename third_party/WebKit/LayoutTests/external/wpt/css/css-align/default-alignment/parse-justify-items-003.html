@@ -22,6 +22,7 @@
     for (var key in classes) {
         let specifiedValue = classes[key];
         test(function() {
+            element.style.justifyItems = "";
             element.style.justifyItems = specifiedValue;
             let computedValue = specifiedValue;
             if (specifiedValue === "baseline")
