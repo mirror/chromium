@@ -1154,6 +1154,10 @@ const char kPushApiBackgroundModeDescription[] =
     "running after the last window is closed, and to launch at OS startup, if "
     "the Push API needs it.";
 
+const char kPwaAmbientBadgeName[] = "PWA Ambient Badge";
+const char kPwaAmbientBadgeDescription[] =
+    "Enables the ambient badge shown when browsing to a PWA in a tab";
+
 const char kQuicName[] = "Experimental QUIC protocol";
 const char kQuicDescription[] = "Enable experimental QUIC protocol support.";
 

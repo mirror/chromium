@@ -97,6 +97,7 @@
 #include "chrome/browser/android/voice_search_tab_helper.h"
 #include "chrome/browser/android/webapps/single_tab_mode_tab_helper.h"
 #include "chrome/browser/banners/app_banner_manager_android.h"
+#include "chrome/browser/installable/pwa_ambient_badge_manager_android.h"
 #include "chrome/browser/ui/android/context_menu_helper.h"
 #include "chrome/browser/ui/android/view_android_helper.h"
 #else
@@ -273,6 +274,9 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   if (OomInterventionTabHelper::IsEnabled()) {
     OomInterventionTabHelper::CreateForWebContents(web_contents);
   }
+
+  if (base::FeatureList::IsEnabled(features::kPwaAmbientBadge))
+    PwaAmbientBadgeManagerAndroid::CreateForWebContents(web_contents);
 
   SearchGeolocationDisclosureTabHelper::CreateForWebContents(web_contents);
   SingleTabModeTabHelper::CreateForWebContents(web_contents);

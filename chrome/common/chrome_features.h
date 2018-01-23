@@ -247,6 +247,8 @@ extern const base::Feature kPrintPdfAsImage;
 
 extern const base::Feature kPushMessagingBackgroundMode;
 
+extern const base::Feature kPwaAmbientBadge;
+
 #if !defined(OS_ANDROID)
 extern const base::Feature kRemoveUsageOfDeprecatedGaiaSigninEndpoint;
 #endif
