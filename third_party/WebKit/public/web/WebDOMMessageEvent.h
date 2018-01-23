@@ -34,7 +34,7 @@
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebSerializedScriptValue.h"
-#include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/public/common/message_port/message_port_channel.h"
 
 #if INSIDE_BLINK
 #include "core/events/MessageEvent.h"

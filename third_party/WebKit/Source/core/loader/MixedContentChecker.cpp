@@ -28,7 +28,7 @@
 
 #include "core/loader/MixedContentChecker.h"
 
-#include "common/net/ip_address_space.mojom-blink.h"
+#include "public/common/net/ip_address_space.mojom-blink.h"
 #include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/Frame.h"

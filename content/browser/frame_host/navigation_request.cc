@@ -57,7 +57,7 @@
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/cpp/resource_response.h"
-#include "third_party/WebKit/common/sandbox_flags.h"
+#include "third_party/WebKit/public/common/frame/sandbox_flags.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
 namespace content {

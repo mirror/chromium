@@ -18,7 +18,7 @@
 #include "content/common/service_worker/controller_service_worker.mojom.h"
 #include "content/common/service_worker/service_worker.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_provider_type.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_provider_type.mojom.h"
 
 namespace blink {
 class WebLocalFrame;

@@ -16,7 +16,7 @@
 #include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
+#include "third_party/WebKit/public/common/quota/quota_types.mojom.h"
 
 class HostContentSettingsMap;
 class Profile;

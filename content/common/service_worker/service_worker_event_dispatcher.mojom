@@ -8,11 +8,11 @@ import "content/common/service_worker/service_worker_fetch_response_callback.moj
 import "mojo/common/string16.mojom";
 import "mojo/common/time.mojom";
 import "services/network/public/interfaces/url_loader.mojom";
+import "third_party/WebKit/public/common/service_worker/service_worker_client.mojom";
+import "third_party/WebKit/public/common/service_worker/service_worker_event_status.mojom";
+import "third_party/WebKit/public/common/service_worker/service_worker_object.mojom";
 import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
 import "third_party/WebKit/public/platform/modules/payments/payment_app.mojom";
-import "third_party/WebKit/common/service_worker/service_worker_client.mojom";
-import "third_party/WebKit/common/service_worker/service_worker_event_status.mojom";
-import "third_party/WebKit/common/service_worker/service_worker_object.mojom";
 import "url/mojo/origin.mojom";
 import "url/mojo/url.mojom";
 
