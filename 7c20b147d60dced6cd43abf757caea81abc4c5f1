@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86513ed_a1427c84",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-23T16:47:46Z",
+      "side": 1,
+      "message": "I had this file see a change in one of my patchsets recently too. I suggest reverting this change. Maybe the git cl format is changing it?",
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50aaed5_04946dea",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-23T16:47:46Z",
+      "side": 1,
+      "message": "This comment seems circular, in that this-\u003eOverflowClipRect actually calls this new method. The comments made me believe it was the other way around. I suggest moving the current comment for OverflowClipRect down to here, and using a variant of this comment, with the names swapped, for OverflowClipRect.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 5,
+        "endLine": 1056,
+        "endChar": 58
+      },
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c6c3a1_8af3ccd8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-23T16:47:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t apply the rect to anything, so I would go with CalculateOverflowClipRect, or DetermineOverflowClipRect.\n\nAnd is it genuinely public, or just needs to be protected?",
+      "range": {
+        "startLine": 1057,
+        "startChar": 14,
+        "endLine": 1057,
+        "endChar": 36
+      },
+      "revId": "7c20b147d60dced6cd43abf757caea81abc4c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
