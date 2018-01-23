@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02055097_bcae3c5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-23T08:53:54Z",
+      "side": 1,
+      "message": "We can remove storage permission from manifest.json.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f60ff4f_3cc2bc76",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/css/passphrase-dialog.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-23T08:53:54Z",
+      "side": 1,
+      "message": "nit: can we merge #bar and #buttons?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ad43fc_4a21be78",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-23T08:53:54Z",
+      "side": 1,
+      "message": "We need to remove this call as well.",
+      "range": {
+        "startLine": 247,
+        "startChar": 12,
+        "endLine": 247,
+        "endChar": 60
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b70121_19681a55",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-23T08:53:54Z",
+      "side": 1,
+      "message": "nit: we can remove this part as we no longer use local storage.",
+      "range": {
+        "startLine": 342,
+        "startChar": 41,
+        "endLine": 342,
+        "endChar": 72
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
