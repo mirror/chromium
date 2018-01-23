@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e7d19e_3b500515",
+        "filename": "components/background_task_scheduler/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-23T00:35:40Z",
+      "side": 1,
+      "message": "Nit: Trailing space?",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 16
+      },
+      "revId": "830ad5f1cc6cc0a03061539632e79e32bce8c40e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
