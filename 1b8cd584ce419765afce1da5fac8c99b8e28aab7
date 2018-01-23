@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "51d68e9d_2de562b9",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "// TODO(dcheng): Remove DestructorAtExit completely in a follow-up.",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd5e649_7445472b",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "TODO(dcheng) here as well",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2de00e76_0ae02abb",
         "filename": "base/lazy_instance_unittest.cc",
         "patchSetId": 13
@@ -13,6 +47,86 @@
       "writtenOn": "2018-01-19T22:46:15Z",
       "side": 1,
       "message": "This basic pattern is used for the three test helpers that have static state: they\u0027ve all been updated to hold a pointer, and then tests that use these objects need to instantiate a scoper.\n\nI\u0027m skeptical of the value of keeping destructed_seq_ around (it seems misleading at best, since it will never run) so I\u0027ll probably just remove it in the next patchset.",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59eea15_9b9a6485",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "include logging.h for CHECKs (or use ASSERTs but I agree that CHECKs are nice for checking preconditions as they\u0027ll trigger stacktrace on failure)",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b66931a_c4d35db2",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "I think it\u0027s simpler to use AtomicFlag here now (AtomicSequenceNumber was nice before because it could be a POD global, but otherwise AtomicFlag is easier to use -- check it\u0027s not set, then set, then check set).\n\nA bool is sufficient even I think because you have happens-after relationships between your accesses and hence don\u0027t need atomics.",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2de1b65_d04b6fae",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "bool is sufficient now? (we never construct multiple times -- can ASSERT_FALSE(constructed) before setting it to check for constructing multiple times)",
+      "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3dad4c_721fd85a",
+        "filename": "base/lazy_instance_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-23T12:32:42Z",
+      "side": 1,
+      "message": "Update the comments.",
       "revId": "1b8cd584ce419765afce1da5fac8c99b8e28aab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
