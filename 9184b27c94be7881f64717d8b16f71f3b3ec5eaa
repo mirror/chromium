@@ -116,6 +116,30 @@
       "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe73661_7571ebc7",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-23T07:40:40Z",
+      "side": 1,
+      "message": "I tried it but it wasn\u0027t as simple as adding it back. For example a hash table wrapper collection (e.g. LinkedHashSet) gets destructed in the sweep phase, which immediately destructs the impl_ HashTable. But promptly freeing that HashTable\u0027s backing means, heap object finalizer touching another heap object and that trips ASAN poisoning. I still think promptly freeing in the finalizer should be possible but I think it will take some effort.",
+      "parentUuid": "57176a4e_e3574783",
+      "range": {
+        "startLine": 1400,
+        "startChar": 14,
+        "endLine": 1400,
+        "endChar": 19
+      },
+      "revId": "9184b27c94be7881f64717d8b16f71f3b3ec5eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
