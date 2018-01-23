@@ -43,6 +43,7 @@
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/proxy_resolution/proxy_info.h"
 #include "net/proxy_resolution/proxy_service.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_job_factory.h"
@@ -712,8 +713,9 @@ TEST_F(NetworkContextTest, CreateUDPSocket) {
 
   net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
   network::mojom::UDPSocketPtr server_socket;
-  network_context->CreateUDPSocket(mojo::MakeRequest(&server_socket),
-                                   std::move(receiver_interface_ptr));
+  network_context->CreateUDPSocket(
+      mojo::MakeRequest(&server_socket), std::move(receiver_interface_ptr),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::OpenSync(
                          &server_socket, server_addr.GetFamily()));
   ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::BindSync(
@@ -724,8 +726,9 @@ TEST_F(NetworkContextTest, CreateUDPSocket) {
   network::mojom::UDPSocketRequest client_socket_request(
       mojo::MakeRequest(&client_socket));
   network::mojom::UDPSocketReceiverPtr client_receiver_ptr;
-  network_context->CreateUDPSocket(std::move(client_socket_request),
-                                   std::move(client_receiver_ptr));
+  network_context->CreateUDPSocket(
+      std::move(client_socket_request), std::move(client_receiver_ptr),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   net::IPEndPoint client_addr(GetLocalHostWithAnyPort());
   ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::OpenSync(
