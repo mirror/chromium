@@ -22,6 +22,30 @@
       "revId": "8d2663ea0106fe84aff240bc8c46745d1cec0b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4975b6fa_561cb237",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-01-23T18:54:39Z",
+      "side": 1,
+      "message": "It looks normal in my browser. I think I cut it with 72 char length in terminal.\nBut if my browser window is not wide enough, it will wrap automatically ...",
+      "parentUuid": "4e66b279_d3a0f10e",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "8d2663ea0106fe84aff240bc8c46745d1cec0b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
