@@ -387,6 +387,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidChangeSelection(bool is_selection_empty) {}
 
   virtual void DidChangeContents() {}
+
+  virtual void FrameRectsChanged(const IntRect&){};
 };
 
 }  // namespace blink

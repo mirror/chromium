@@ -267,6 +267,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DidChangeContents() override;
 
+  void FrameRectsChanged(const IntRect&) override;
+
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
 
