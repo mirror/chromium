@@ -482,14 +482,24 @@ void DownloadManagerImpl::StartDownload(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(info);
 
+  uint32_t download_id = info->download_id;
+  const bool new_download = (download_id == content::DownloadItem::kInvalidId);
+  if (new_download && delegate_ &&
+      delegate_->InterceptDownloadIfApplicable(info->url(), info->mime_type)) {
+    info->request_handle->CancelRequest(false);
+    if (!on_started.is_null())
+      on_started.Run(nullptr, info->result);
+    if (info->result == DOWNLOAD_INTERRUPT_REASON_NONE)
+      GetDownloadTaskRunner()->DeleteSoon(FROM_HERE, stream.release());
+    return;
+  }
+
   // |stream| is only non-nil if the download request was successful.
   DCHECK(
       (info->result == DOWNLOAD_INTERRUPT_REASON_NONE && !stream->IsEmpty()) ||
       (info->result != DOWNLOAD_INTERRUPT_REASON_NONE && stream->IsEmpty()));
   DVLOG(20) << __func__
             << "() result=" << DownloadInterruptReasonToString(info->result);
-  uint32_t download_id = info->download_id;
-  const bool new_download = (download_id == content::DownloadItem::kInvalidId);
   if (new_download)
     RecordDownloadConnectionSecurity(info->url(), info->url_chain);
   base::Callback<void(uint32_t)> got_id(base::Bind(
