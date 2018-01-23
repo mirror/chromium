@@ -16,6 +16,24 @@
       "revId": "0ad11d849849768c745d20649e64957d39b8052b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b7912f_e21a8878",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2018-01-23T13:08:56Z",
+      "side": 1,
+      "message": "It\u0027s more or less arbitrary. The fuzzer uses up to 64 bytes per generated subject string, 16 per generated pattern, and then requires enough remaining bytes to provide randomness for other things.\n\nPerhaps it\u0027d make sense to remove max_len?",
+      "parentUuid": "aa880d9b_2c9d0014",
+      "revId": "0ad11d849849768c745d20649e64957d39b8052b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
