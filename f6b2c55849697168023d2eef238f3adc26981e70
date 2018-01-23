@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8019493d_c5c0e2e9",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5440,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T16:07:18Z",
+      "side": 1,
+      "message": "This apparently passes on every platform bug Fuchsia...Why doesn\u0027t it pass there?  I\u0027m reluctant to move this just to gloss over a possible Fuchsia bug.",
+      "range": {
+        "startLine": 5440,
+        "startChar": 23,
+        "endLine": 5440,
+        "endChar": 48
+      },
+      "revId": "f6b2c55849697168023d2eef238f3adc26981e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
