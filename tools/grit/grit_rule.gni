@@ -424,6 +424,9 @@ template("grit") {
 
       # Only call exec_script when the user has explicitly opted into greater
       # precision at the expense of performance.
+      print(grit_info_script)
+      print(grit_info_args)
+      print(root_build_dir)
       rel_inputs = exec_script(grit_info_script,
                                grit_info_args,
                                "list lines",
