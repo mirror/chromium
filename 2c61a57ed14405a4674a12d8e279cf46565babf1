@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "433d8b55_532ca47c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-23T18:19:55Z",
+      "side": 1,
+      "message": "This is only true currently for relpositioned inlines, but it would not be true for filtered inlines? I\u0027d rather leave the DCHECK off since I don\u0027t think it\u0027s adding much more than checking correctness of FindAncestorByPredicate which can be tested independently.",
+      "parentUuid": "0760665f_cf0da9d0",
+      "revId": "2c61a57ed14405a4674a12d8e279cf46565babf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29eca08b_3b06876a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2c61a57ed14405a4674a12d8e279cf46565babf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4389c8_8264d74b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-23T18:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29eca08b_3b06876a",
+      "revId": "2c61a57ed14405a4674a12d8e279cf46565babf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
