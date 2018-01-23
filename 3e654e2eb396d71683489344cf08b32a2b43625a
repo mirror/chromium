@@ -70,6 +70,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7db574_d6c13c38",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-23T17:54:30Z",
+      "side": 1,
+      "message": "Thanks Eve for the detailed explanation. You are absolutely right about the issue. Sorry I didn\u0027t think too much to realize the close relationship between cpp/bindings and interfaces/bindings.\n\nOne possible solution without introducing this new dep-overridden feature:\n- don\u0027t allow anyone other than cpp/bindings refers to interfaces/bindings. We could do that by restrict visibility of that target.\n- duplicate the SerializedHandle struct in ipc.mojom.\n\nSerializedHandle is a pretty simiple struct without custom typemapping. So duplicating it doesn\u0027t seem too bad to me.\n\nWhat do you think? +CC Ken.",
+      "parentUuid": "343ba733_313f97ac",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
