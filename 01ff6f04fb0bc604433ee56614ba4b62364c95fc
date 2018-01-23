@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "44b27491_08634a09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "nit: We\u0027ve been prefixing CL descriptions with \"[CrOS Tether]\" for clarity.\n\nAlso, please wrap CL descriptions to 72 characters max per line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e63798c_727a3bbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "Please add the bug number to your commit message.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5ceb69_1bfb137c",
+        "filename": "chromeos/components/tether/host_connection_metrics_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "Please add tests for these new cases.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 12
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72213f56_e76f35b8",
+        "filename": "chromeos/components/tether/host_connection_metrics_logger.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "You also need to add changes to enums.xml which correspond to these new values.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d4d628a_64100cc9",
         "filename": "chromeos/components/tether/proto/tether.proto",
         "patchSetId": 5
@@ -18,6 +110,75 @@
         "startChar": 12,
         "endLine": 66,
         "endChar": 13
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1981d6_c4f05ea2",
+        "filename": "chromeos/components/tether/proto/tether.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "nit: Seems like the next ID is 6?",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15095c16_efbc38d3",
+        "filename": "chromeos/components/tether/proto/tether.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "nit: Let\u0027s fix this as well.",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 13
+      },
+      "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49beb4ad_36648c83",
+        "filename": "chromeos/components/tether/tether_connector_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-23T01:21:08Z",
+      "side": 1,
+      "message": "Please add tests for these new values. You should just be able to call VerifyConnectTetheringOperationFails() for each new value.",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 3
       },
       "revId": "01ff6f04fb0bc604433ee56614ba4b62364c95fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
