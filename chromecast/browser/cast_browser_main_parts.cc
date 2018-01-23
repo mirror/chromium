@@ -89,6 +89,7 @@
 // header, but is exported to allow injecting the overlay-composited
 // callback.
 #include "chromecast/browser/cast_display_configurator.h"
+#include "chromecast/browser/cast_touch_device_manager.h"
 #include "chromecast/graphics/cast_screen.h"
 #include "ui/display/screen.h"
 #include "ui/ozone/platform/cast/overlay_manager_cast.h"  // nogncheck
@@ -443,6 +444,8 @@ int CastBrowserMainParts::PreCreateThreads() {
   DCHECK(!display::Screen::GetScreen());
   display::Screen::SetScreenInstance(cast_browser_process_->cast_screen());
   display_configurator_ = std::make_unique<CastDisplayConfigurator>(
+      cast_browser_process_->cast_screen());
+  touch_device_manager_ = std::make_unique<CastTouchDeviceManager>(
       cast_browser_process_->cast_screen());
 #endif  // defined(USE_AURA)
 
