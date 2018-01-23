@@ -389,6 +389,7 @@
         [button addTarget:self
                       action:@selector(linkButtonTapped:)
             forControlEvents:UIControlEventTouchUpInside];
+        [button setExclusiveTouch:YES];
         [[_label superview] insertSubview:button aboveSubview:_label];
         [_linkButtons addObject:button];
       }
