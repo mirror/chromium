@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b244497_66f265c4",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:47:29Z",
+      "side": 1,
+      "message": "nit: Just inline base::UnguessableToken::Create().ToString()?",
+      "revId": "4efba246874722ff813597d5b06fafb3020ad6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b83e38_ea3ac232",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T20:47:29Z",
+      "side": 1,
+      "message": "nit: If it references |this|, is there a non-zero chance this can be the last reference and ultimately delete |this|? If so we should make sure not to access any other members after that happens.",
+      "revId": "4efba246874722ff813597d5b06fafb3020ad6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
