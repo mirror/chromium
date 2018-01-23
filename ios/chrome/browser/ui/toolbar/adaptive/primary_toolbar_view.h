@@ -19,6 +19,9 @@
 // The location bar view, containing the omnibox.
 @property(nonatomic, strong) UIView* locationBarView;
 
+// Container for the location bar.
+@property(nonatomic, strong, readonly) UIView* locationBarContainer;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_VIEW_H_
