@@ -716,7 +716,7 @@ void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
   }
   item_result->needs_box_when_empty |=
       style.CanContainAbsolutePositionObjects() ||
-      style.CanContainFixedPositionObjects();
+      style.CanContainFixedPositionObjects(false);
   SetCurrentStyle(style);
   MoveToNextOf(item);
 }

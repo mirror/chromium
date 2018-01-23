@@ -1521,8 +1521,8 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         // Absolutely positioned content in an inline should be positioned
         // relative to the inline.
         const auto* container = full_context_.container_for_absolute_position;
-        if (container && container->IsInFlowPositioned() &&
-            container->IsLayoutInline()) {
+        if (container && container->IsLayoutInline() &&
+            container->CanContainAbsolutePositionObjects()) {
           DCHECK(box_model_object.IsBox());
           context_.current.paint_offset +=
               ToLayoutInline(container)->OffsetForInFlowPositionedInline(
@@ -1534,7 +1534,7 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         context_.current.paint_offset +=
             box_model_object.OffsetForInFlowPosition();
         break;
-      case EPosition::kFixed:
+      case EPosition::kFixed: {
         context_.current = context_.fixed_position;
         // Fixed-position elements that are fixed to the vieport have a
         // transform above the scroll of the LayoutView. Child content is
@@ -1542,7 +1542,17 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         if (context_.fixed_position.fixed_position_children_fixed_to_root)
           context_.current.paint_offset_root = &box_model_object;
 
+        // TODO(vmpstr): should be |container_for_fixed_position| below.
+        const auto* container = full_context_.container_for_absolute_position;
+        if (container && container->IsLayoutInline() &&
+            container->CanContainFixedPositionObjects()) {
+          DCHECK(box_model_object.IsBox());
+          context_.current.paint_offset +=
+              ToLayoutInline(container)->OffsetForInFlowPositionedInline(
+                  ToLayoutBox(box_model_object));
+        }
         break;
+      }
       default:
         NOTREACHED();
     }

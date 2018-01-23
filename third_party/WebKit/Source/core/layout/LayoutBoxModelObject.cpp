@@ -308,8 +308,8 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
     }
   }
 
-  if (old_style && (old_style->CanContainFixedPositionObjects() !=
-                        StyleRef().CanContainFixedPositionObjects() ||
+  if (old_style && (old_style->CanContainFixedPositionObjects(IsBody()) !=
+                        StyleRef().CanContainFixedPositionObjects(IsBody()) ||
                     old_style->GetPosition() != StyleRef().GetPosition() ||
                     had_layer != HasLayer())) {
     // This may affect paint properties of the current object, and descendants
@@ -1122,10 +1122,11 @@ LayoutPoint LayoutBoxModelObject::AdjustedPositionRelativeTo(
     if (offset_parent_object->IsLayoutInline()) {
       const LayoutInline* inline_parent = ToLayoutInline(offset_parent_object);
 
-      if (IsBox() && Style()->GetPosition() == EPosition::kAbsolute &&
-          inline_parent->IsInFlowPositioned()) {
-        // Offset for absolute elements with inline parent is a special
-        // case in the CSS spec
+      if (IsBox() && IsOutOfFlowPositioned() &&
+          inline_parent->CanContainOutOfFlowPositionedElement(
+              Style()->GetPosition())) {
+        // Offset for out of flow positioned elements with inline containers is
+        // a special case in the CSS spec
         reference_point +=
             inline_parent->OffsetForInFlowPositionedInline(*ToLayoutBox(this));
       }

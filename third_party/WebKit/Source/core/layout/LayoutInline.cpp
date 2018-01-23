@@ -241,6 +241,9 @@ void LayoutInline::StyleDidChange(StyleDifference diff,
   }
 
   PropagateStyleToAnonymousChildren();
+
+  // Only filtered inlines can contain fixed position objects.
+  SetCanContainFixedPositionObjects(new_style.HasFilterInducingProperty());
 }
 
 void LayoutInline::UpdateAlwaysCreateLineBoxes(bool full_layout) {
@@ -1450,8 +1453,8 @@ LayoutSize LayoutInline::OffsetForInFlowPositionedInline(
     const LayoutBox& child) const {
   // FIXME: This function isn't right with mixed writing modes.
 
-  DCHECK(IsInFlowPositioned());
-  if (!IsInFlowPositioned())
+  DCHECK(IsInFlowPositioned() || HasFilterInducingProperty());
+  if (!IsInFlowPositioned() && !HasFilterInducingProperty())
     return LayoutSize();
 
   // When we have an enclosing relpositioned inline, we need to add in the
@@ -1609,6 +1612,14 @@ void LayoutInline::InvalidateDisplayItemClients(
 
   for (InlineFlowBox* box = FirstLineBox(); box; box = box->NextLineBox())
     paint_invalidator.InvalidateDisplayItemClient(*box, invalidation_reason);
+}
+
+void LayoutInline::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
+                                      TransformState& transform_state,
+                                      MapCoordinatesFlags mode) const {
+  if (CanContainFixedPositionObjects())
+    mode &= ~kIsFixed;
+  LayoutBoxModelObject::MapLocalToAncestor(ancestor, transform_state, mode);
 }
 
 // TODO(loonybear): Not to just dump 0, 0 as the x and y here

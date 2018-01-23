@@ -2091,8 +2091,9 @@ class ComputedStyle : public ComputedStyleBase,
   bool CanContainAbsolutePositionObjects() const {
     return GetPosition() != EPosition::kStatic;
   }
-  bool CanContainFixedPositionObjects() const {
-    return HasTransformRelatedProperty() || ContainsPaint();
+  bool CanContainFixedPositionObjects(bool is_body) const {
+    return HasTransformRelatedProperty() || ContainsPaint() ||
+           (!is_body && HasFilterInducingProperty());
   }
 
   // Whitespace utility functions.

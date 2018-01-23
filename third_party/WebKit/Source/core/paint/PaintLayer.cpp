@@ -839,14 +839,18 @@ void PaintLayer::UpdateLayerPosition() {
       IntSize offset =
           containing_layer->GetLayoutBox()->ScrolledContentOffset();
       local_point -= offset;
-    } else if (GetLayoutObject().IsAbsolutePositioned() &&
-               containing_layer->GetLayoutObject().IsInFlowPositioned() &&
-               containing_layer->GetLayoutObject().IsLayoutInline()) {
-      // Adjust offset for absolute under in-flow positioned inline.
-      LayoutSize offset =
-          ToLayoutInline(containing_layer->GetLayoutObject())
-              .OffsetForInFlowPositionedInline(ToLayoutBox(GetLayoutObject()));
-      local_point += offset;
+    } else {
+      auto& containing_layout_object = containing_layer->GetLayoutObject();
+      if (GetLayoutObject().IsOutOfFlowPositioned() &&
+          containing_layout_object.IsLayoutInline() &&
+          containing_layout_object.CanContainOutOfFlowPositionedElement(
+              GetLayoutObject().Style()->GetPosition())) {
+        // Adjust offset for out of flow positioned under container inline.
+        LayoutSize offset = ToLayoutInline(containing_layout_object)
+                                .OffsetForInFlowPositionedInline(
+                                    ToLayoutBox(GetLayoutObject()));
+        local_point += offset;
+      }
     }
   }
 
