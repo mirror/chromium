@@ -1167,6 +1167,27 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CrossSiteCrash) {
   // Should not crash at this point.
 }
 
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, InspectorTargetCrashed) {
+  set_agent_host_can_close();
+  GURL url = GURL("data:text/html,<body></body>");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  Attach();
+  SendCommand("Inspector.enable", nullptr);
+
+  shell()->web_contents()->GetMainFrame()->GetProcess()->Shutdown(0, false);
+  WaitForNotification("Inspector.targetCrashed");
+  ClearNotifications();
+  shell()->LoadURL(url);
+  WaitForNotification("Inspector.targetReloadedAfterCrash", true);
+
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  shell()->web_contents()->GetMainFrame()->GetProcess()->Shutdown(0, false);
+  WaitForNotification("Inspector.targetCrashed");
+  ClearNotifications();
+  SendCommand("Page.reload", nullptr, false);
+  WaitForNotification("Inspector.targetReloadedAfterCrash", true);
+}
+
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ReconnectPreservesState) {
   ASSERT_TRUE(embedded_test_server()->Start());
   GURL test_url = embedded_test_server()->GetURL("/devtools/navigation.html");
