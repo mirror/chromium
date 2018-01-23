@@ -93,6 +93,30 @@
       "revId": "9c2b7e204b38ed137804a34a6744014554c8d8aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a27f79_79448e23",
+        "filename": "ui/accessibility/ax_enums.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-23T21:41:17Z",
+      "side": 1,
+      "message": "i think that kFooStyle is the long-term plan. see https://crrev.com/c/754169/1/services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc#278",
+      "parentUuid": "38a51835_18c26a5e",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "9c2b7e204b38ed137804a34a6744014554c8d8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
