@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2bba6a7_93f8e288",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "Replaced with a call to HasState.",
+      "parentUuid": "e1054196_a37b30f9",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58684256_6f734af2",
         "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T19:41:38Z",
       "side": 1,
       "message": "Don\u0027t switch statements work with enum classes without the cast?\nhttps://stackoverflow.com/questions/9062082/switch-statements-with-strongly-typed-enumerations",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35948ca4_57f3bd3f",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "No, this didn\u0027t compile without this change (when I replace with enum class).\nWithout the cast, we\u0027d be comparing an int to an InvalidState.\n\nThe problem isn\u0027t the switch, it\u0027s the fact that GetIntAttribute returns an int.",
+      "parentUuid": "58684256_6f734af2",
       "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e90feb9c_03e35262",
+        "filename": "ui/accessibility/ax_node_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "We could auto-generate an iterator if that would help.\n\nI think we should propose that the mojo bindings generators\nauto-generate some more helpers like that.",
+      "parentUuid": "2fd8ed9a_ba41e0e4",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c5d297_46ae78c1",
         "filename": "ui/accessibility/ax_node_data.h",
         "patchSetId": 11
@@ -98,6 +152,24 @@
       "writtenOn": "2018-01-23T19:41:38Z",
       "side": 1,
       "message": "Why are we inconsistent about using int32_t vs uint32_t?",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c58102_dc4014e6",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "Sometimes preferred for bitmasks? But you\u0027re right, in this case\nwe should be consistent. Changed to int32_t.",
+      "parentUuid": "7c6dec0d_ec80aee2",
       "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +213,30 @@
       "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902a57d7_cd642135",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc0abfb_6c47062e",
+      "range": {
+        "startLine": 390,
+        "startChar": 18,
+        "endLine": 390,
+        "endChar": 19
+      },
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "181530a1_a63a2348",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "No, the AXNodeData struct doesn\u0027t persist.",
+      "parentUuid": "42f22337_93476670",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e77611_a5c76720",
         "filename": "ui/views/controls/button/menu_button.cc",
         "patchSetId": 11
@@ -210,6 +330,30 @@
       "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e1ce02_e09bb0d1",
+        "filename": "ui/views/controls/button/menu_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T21:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e77611_a5c76720",
+      "range": {
+        "startLine": 290,
+        "startChar": 17,
+        "endLine": 290,
+        "endChar": 18
+      },
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
