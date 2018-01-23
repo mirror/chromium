@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f44491ac_241029e8",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T08:06:27Z",
+      "side": 1,
+      "message": "Done, added test cases for blob url with self-origin and chrome:// origin.",
+      "parentUuid": "f8582200_f40f3243",
+      "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95b8ac75_bba63a03",
         "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
       "writtenOn": "2018-01-23T01:52:00Z",
       "side": 1,
       "message": "view-source: is a prefix, so this looks like an invalid URL.  I\u0027m not opposed to blocking invalid URLs, but you may also want to test that view-source:http://chromium.org is not blocked while view-source:chrome://settings is blocked.",
+      "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484af933_5a83b0ee",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T08:06:27Z",
+      "side": 1,
+      "message": "Ahh thanks for pointing that out!  My intent is to be consistent with CanRequestURL() here.  It looks like it rejects any \u0027view-source\u0027 URL since it is a pseudoScheme, so us blocking \u0027view-source:http://chromium.org\u0027 aligns.",
+      "parentUuid": "95b8ac75_bba63a03",
       "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +109,24 @@
       "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2237db6e_661bce2a",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T08:06:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ef48e25e_db1d83aa",
+      "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "e22873a9_133a7a11",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2124,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T08:06:27Z",
+      "side": 1,
+      "message": "Done.  I\u0027ll keep these in mind for future tests.",
+      "parentUuid": "09de61b6_c5f1bcd9",
+      "range": {
+        "startLine": 2124,
+        "startChar": 4,
+        "endLine": 2124,
+        "endChar": 13
+      },
+      "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52cbdc29_e052066c",
         "filename": "chrome/browser/devtools/devtools_window.cc",
         "patchSetId": 6
@@ -119,6 +197,30 @@
       "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178f97bd_807fa591",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-23T08:06:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52cbdc29_e052066c",
+      "range": {
+        "startLine": 1292,
+        "startChar": 10,
+        "endLine": 1292,
+        "endChar": 53
+      },
+      "revId": "b75ca80d8a0585441376aa7770ad8982222bf315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
