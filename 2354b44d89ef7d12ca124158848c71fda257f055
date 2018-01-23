@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d6b190d_52a74e16",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-23T10:47:03Z",
+      "side": 1,
+      "message": "I am not sure this was the good replacement :)",
+      "range": {
+        "startLine": 1972,
+        "startChar": 45,
+        "endLine": 1972,
+        "endChar": 55
+      },
+      "revId": "2354b44d89ef7d12ca124158848c71fda257f055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
