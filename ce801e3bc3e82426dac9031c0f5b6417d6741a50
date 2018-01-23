@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "db605bfa_2f3d892b",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T09:16:23Z",
+      "side": 1,
+      "message": "Thanks, got it.\n\nYeah, if we could drop Mark from the descriptor, things will become clearer.",
+      "parentUuid": "6cac7c79_530b6d23",
+      "revId": "ce801e3bc3e82426dac9031c0f5b6417d6741a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14db2c75_8aed2d63",
         "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
         "patchSetId": 4
