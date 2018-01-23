@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e905d541_d50b1e7f",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T00:17:26Z",
+      "side": 1,
+      "message": "Not your code, but I personally think that the typedef of PermissionDetails reduces readability (I\u0027d rather just see `std::vector\u003cbase::string16\u003e permission_details`).  If it were me, I\u0027d take it out - but I don\u0027t feel terribly strongly.  WDYT?",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4be71eff_9ca19c3d",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -13,6 +30,23 @@
       "writtenOn": "2018-01-22T22:00:28Z",
       "side": 1,
       "message": "Nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc23df8_906e7590",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T00:17:26Z",
+      "side": 1,
+      "message": "It looks like this will be owned by this struct, right?  Maybe make this a unique_ptr, and std::move() it once it\u0027s added as a view?",
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "b90d201e_25b42645",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T00:17:26Z",
+      "side": 1,
+      "message": "(if you make the ownership change above, you\u0027d just make this a reference instead of a copy - which isn\u0027t a bad idea in either case)",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b97f3e29_88c6a4d4",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 12
@@ -64,6 +115,23 @@
       "writtenOn": "2018-01-22T22:00:28Z",
       "side": 1,
       "message": "Where did this magic number come from?",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a622679c_96f9df26",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T00:17:26Z",
+      "side": 1,
+      "message": "For my own edification, what do we create in CreateContents() (called from the ctor) as opposed to AddedToWidget()?  Why not create everything in one place?",
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +166,29 @@
       "writtenOn": "2018-01-22T22:00:28Z",
       "side": 1,
       "message": "Nit: ?: can move inside the GetStringUTF16() call",
+      "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14b27ec_79f54ae8",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-23T00:17:26Z",
+      "side": 1,
+      "message": "I have no idea what this is, but it doesn\u0027t seem right. :)  Mind updating this comment while you\u0027re here?",
+      "range": {
+        "startLine": 124,
+        "startChar": 49,
+        "endLine": 124,
+        "endChar": 69
+      },
       "revId": "76bfd6f2c9ddaecb303a12fd15bc735e57aebb8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
