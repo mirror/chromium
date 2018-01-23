@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad5627c_ce0e98b1",
+        "filename": "chrome/browser/geolocation/geolocation_permission_context_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-23T07:24:03Z",
+      "side": 1,
+      "message": "This can be removed",
+      "range": {
+        "startLine": 153,
+        "startChar": 6,
+        "endLine": 153,
+        "endChar": 32
+      },
+      "revId": "6f4661417a4f403c89d5251dd74f7a01338e13c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e662bd_9470a863",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-23T07:24:03Z",
+      "side": 1,
+      "message": "Do we need any logic inside this function?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 49
+      },
+      "revId": "6f4661417a4f403c89d5251dd74f7a01338e13c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

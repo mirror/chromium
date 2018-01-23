@@ -16,6 +16,29 @@
       "revId": "7a1af3dc2561b5c7874db57ed62ce0da139b0c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3943258_30b37f3c",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-23T07:24:03Z",
+      "side": 0,
+      "message": "I think this is the only caller.",
+      "range": {
+        "startLine": 227,
+        "startChar": 25,
+        "endLine": 227,
+        "endChar": 47
+      },
+      "revId": "7a1af3dc2561b5c7874db57ed62ce0da139b0c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
