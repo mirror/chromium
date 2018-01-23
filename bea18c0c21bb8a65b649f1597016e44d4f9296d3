@@ -46,6 +46,30 @@
       "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d06353f_546a4c0b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-horizontal-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-23T15:43:37Z",
+      "side": 1,
+      "message": "The existing expected png files are different for each platform. There is a pixel or two difference between these pngs. So the cue layout itself is different for this testcase on each platform which means we need to write different ref test for each platform which is not possible. So the problem here is the testcase itself and not the ref test. Or is it still possible and did I miss something which you are trying to convey?",
+      "parentUuid": "dce82e12_be0ab7ed",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
