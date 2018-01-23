@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7be0c09_5c8790a6",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-23T19:46:13Z",
+      "side": 1,
+      "message": "looking at the UMA impl, we have some logic for:\n\nif (timing.interactive_timing-\u003efirst_invalidating_input \u0026\u0026\n      timing.interactive_timing-\u003efirst_invalidating_input.value() \u003c\n          timing.interactive_timing-\u003einteractive) {\n... return;\n}\n\nshould we replicate that here (only log TTI if this condition is not hit)?",
+      "revId": "399889f7b7c282f4bbb79cd5dfed0e265245c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
