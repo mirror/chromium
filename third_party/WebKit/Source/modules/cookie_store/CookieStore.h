@@ -8,6 +8,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "core/dom/events/EventTarget.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
@@ -21,7 +22,7 @@ class CookieStoreSetOptions;
 class ScriptPromiseResolver;
 class ScriptState;
 
-class CookieStore final : public ScriptWrappable,
+class CookieStore final : public EventTargetWithInlineData,
                           public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(CookieStore);
@@ -73,9 +74,14 @@ class CookieStore final : public ScriptWrappable,
                        ExceptionState&);
 
   void Trace(blink::Visitor* visitor) override {
-    ScriptWrappable::Trace(visitor);
+    EventTargetWithInlineData::Trace(visitor);
     ContextLifecycleObserver::Trace(visitor);
   }
+
+  // EventTarget
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
   // ActiveScriptWrappable
   void ContextDestroyed(ExecutionContext*) override;

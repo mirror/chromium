@@ -10,9 +10,11 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/event_type_names.h"
 #include "modules/cookie_store/CookieListItem.h"
 #include "modules/cookie_store/CookieStoreGetOptions.h"
 #include "modules/cookie_store/CookieStoreSetOptions.h"
+#include "modules/event_target_modules_names.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
@@ -268,6 +270,14 @@ ScriptPromise CookieStore::Delete(ScriptState* script_state,
                                   ExceptionState& exception_state) {
   return DoWrite(script_state, name, WTF::String(), options,
                  true /* is_deletion */, exception_state);
+}
+
+const AtomicString& CookieStore::InterfaceName() const {
+  return EventTargetNames::CookieStore;
+}
+
+ExecutionContext* CookieStore::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
 }
 
 void CookieStore::ContextDestroyed(ExecutionContext* execution_context) {
