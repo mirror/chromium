@@ -56,6 +56,7 @@ class DocumentLoader;
 class Element;
 class ExceptionState;
 class FloatQuad;
+class Frame;
 class HTMLFrameOwnerElement;
 class HTMLSlotElement;
 class V0InsertionPoint;
@@ -230,7 +231,8 @@ class CORE_EXPORT InspectorDOMAgent final
   void DidPerformElementShadowDistribution(Element*);
   void DidPerformSlotDistribution(HTMLSlotElement*);
   void FrameDocumentUpdated(LocalFrame*);
-  void FrameDisconnected(LocalFrame*, HTMLFrameOwnerElement*);
+  void FrameOwnerContentUpdated(LocalFrame* frame,
+                                HTMLFrameOwnerElement* frame_owner);
   void PseudoElementCreated(PseudoElement*);
   void PseudoElementDestroyed(PseudoElement*);
 
