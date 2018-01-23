@@ -945,6 +945,28 @@ TEST_F(DocumentTest, ViewportPropagationNoRecalc) {
   EXPECT_EQ(1, new_element_count - old_element_count);
 }
 
+class InvalidatorObserver : public InterfaceInvalidator::Observer {
+ public:
+  void OnInvalidate() { ++invalidate_called_counter_; }
+
+  int InvalidateCalledCounter() { return invalidate_called_counter_; }
+
+ private:
+  int invalidate_called_counter_ = 0;
+};
+
+TEST_F(DocumentTest, InterfaceInvalidatorDestruction) {
+  InvalidatorObserver obs;
+  InterfaceInvalidator* invalidator = GetDocument().GetInterfaceInvalidator();
+  invalidator->AddObserver(&obs);
+  EXPECT_EQ(obs.InvalidateCalledCounter(), 0);
+
+  GetDocument().Shutdown();
+  EXPECT_NE(invalidator, GetDocument().GetInterfaceInvalidator());
+  EXPECT_EQ(GetDocument().GetInterfaceInvalidator(), nullptr);
+  EXPECT_EQ(obs.InvalidateCalledCounter(), 1);
+}
+
 typedef bool TestParamRootLayerScrolling;
 class ParameterizedDocumentTest
     : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
