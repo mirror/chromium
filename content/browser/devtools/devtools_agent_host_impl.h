@@ -63,8 +63,8 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
 
   static bool ShouldForceCreation();
 
-  virtual void AttachSession(DevToolsSession* session) = 0;
-  virtual void DetachSession(DevToolsSession* session) = 0;
+  virtual void AttachSession(DevToolsSession* session, bool is_first) = 0;
+  virtual void DetachSession(DevToolsSession* session, bool is_last) = 0;
   virtual void DispatchProtocolMessage(DevToolsSession* session,
                                        const std::string& message) = 0;
   virtual void InspectElement(DevToolsSession* session, int x, int y);

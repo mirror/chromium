@@ -33,8 +33,8 @@ DevToolsSession::DevToolsSession(DevToolsAgentHostImpl* agent_host,
     : binding_(this),
       agent_host_(agent_host),
       client_(client),
-      process_(nullptr),
-      host_(nullptr),
+      process_host_(nullptr),
+      frame_host_(nullptr),
       dispatcher_(new protocol::UberDispatcher(this)),
       weak_factory_(this) {
   dispatcher_->setFallThroughForNotFound(true);
@@ -50,16 +50,8 @@ DevToolsSession::~DevToolsSession() {
 void DevToolsSession::AddHandler(
     std::unique_ptr<protocol::DevToolsDomainHandler> handler) {
   handler->Wire(dispatcher_.get());
-  handler->SetRenderer(process_, host_);
+  handler->SetRenderer(process_host_, frame_host_);
   handlers_[handler->name()] = std::move(handler);
-}
-
-void DevToolsSession::SetRenderer(RenderProcessHost* process_host,
-                                  RenderFrameHostImpl* frame_host) {
-  process_ = process_host;
-  host_ = frame_host;
-  for (auto& pair : handlers_)
-    pair.second->SetRenderer(process_, host_);
 }
 
 void DevToolsSession::SetBrowserOnly(bool browser_only) {
@@ -67,11 +59,23 @@ void DevToolsSession::SetBrowserOnly(bool browser_only) {
   dispatcher_->setFallThroughForNotFound(!browser_only);
 }
 
-void DevToolsSession::AttachToAgent(
-    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
+void DevToolsSession::SetRenderer(
+    RenderProcessHost* process_host,
+    RenderFrameHostImpl* frame_host,
+    const blink::mojom::DevToolsAgentAssociatedPtr& agent_ptr) {
+  process_host_ = frame_host ? frame_host->GetProcess() : process_host;
+  frame_host_ = frame_host;
+  for (auto& pair : handlers_)
+    pair.second->SetRenderer(process_host_, frame_host_);
+
+  if (!agent_ptr.is_bound()) {
+    MojoConnectionDestroyed();
+    return;
+  }
+
   blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
-  agent->AttachDevToolsSession(
+  agent_ptr->AttachDevToolsSession(
       std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
       mojo::MakeRequest(&io_session_ptr_), state_cookie_);
   session_ptr_.set_connection_error_handler(base::BindOnce(
@@ -215,9 +219,9 @@ void DevToolsSession::DispatchProtocolMessage(
 
 void DevToolsSession::ReceivedBadMessage() {
   MojoConnectionDestroyed();
-  if (process_) {
+  if (process_host_) {
     bad_message::ReceivedBadMessage(
-        process_, bad_message::RFH_INCONSISTENT_DEVTOOLS_MESSAGE);
+        process_host_, bad_message::RFH_INCONSISTENT_DEVTOOLS_MESSAGE);
   }
 }
 

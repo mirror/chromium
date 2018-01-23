@@ -48,7 +48,8 @@ BrowserDevToolsAgentHost::BrowserDevToolsAgentHost(
 BrowserDevToolsAgentHost::~BrowserDevToolsAgentHost() {
 }
 
-void BrowserDevToolsAgentHost::AttachSession(DevToolsSession* session) {
+void BrowserDevToolsAgentHost::AttachSession(DevToolsSession* session,
+                                             bool is_first) {
   session->SetBrowserOnly(true);
   session->AddHandler(base::WrapUnique(new protocol::TargetHandler()));
   if (only_discovery_)
@@ -68,7 +69,8 @@ void BrowserDevToolsAgentHost::AttachSession(DevToolsSession* session) {
       GetIOContext())));
 }
 
-void BrowserDevToolsAgentHost::DetachSession(DevToolsSession* session) {}
+void BrowserDevToolsAgentHost::DetachSession(DevToolsSession* session,
+                                             bool is_last) {}
 
 std::string BrowserDevToolsAgentHost::GetType() {
   return kTypeBrowser;

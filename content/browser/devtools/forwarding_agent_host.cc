@@ -47,11 +47,13 @@ ForwardingAgentHost::ForwardingAgentHost(
 ForwardingAgentHost::~ForwardingAgentHost() {
 }
 
-void ForwardingAgentHost::AttachSession(DevToolsSession* session) {
+void ForwardingAgentHost::AttachSession(DevToolsSession* session,
+                                        bool is_first) {
   session_proxies_[session].reset(new SessionProxy(this, session));
 }
 
-void ForwardingAgentHost::DetachSession(DevToolsSession* session) {
+void ForwardingAgentHost::DetachSession(DevToolsSession* session,
+                                        bool is_last) {
   session_proxies_.erase(session);
 }
 

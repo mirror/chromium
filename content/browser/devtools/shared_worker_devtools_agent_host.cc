@@ -63,18 +63,17 @@ bool SharedWorkerDevToolsAgentHost::Close() {
   return true;
 }
 
-void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
+void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session,
+                                                  bool is_first) {
   session->AddHandler(std::make_unique<protocol::InspectorHandler>());
   session->AddHandler(std::make_unique<protocol::NetworkHandler>(GetId()));
   session->AddHandler(std::make_unique<protocol::SchemaHandler>());
-  session->SetRenderer(GetProcess(), nullptr);
   if (state_ == WORKER_READY)
-    session->AttachToAgent(EnsureAgent());
+    session->SetRenderer(GetProcess(), nullptr, EnsureAgent());
 }
 
-void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-}
+void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session,
+                                                  bool is_last) {}
 
 void SharedWorkerDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
@@ -91,7 +90,7 @@ void SharedWorkerDevToolsAgentHost::WorkerReadyForInspection() {
   DCHECK(worker_host_);
   state_ = WORKER_READY;
   for (DevToolsSession* session : sessions())
-    session->AttachToAgent(EnsureAgent());
+    session->SetRenderer(GetProcess(), nullptr, EnsureAgent());
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerRestarted(
@@ -100,8 +99,6 @@ void SharedWorkerDevToolsAgentHost::WorkerRestarted(
   DCHECK(!worker_host_);
   state_ = WORKER_NOT_READY;
   worker_host_ = worker_host;
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(GetProcess(), nullptr);
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -110,10 +107,10 @@ void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
   state_ = WORKER_TERMINATED;
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(nullptr, nullptr);
   worker_host_ = nullptr;
   agent_ptr_.reset();
+  for (DevToolsSession* session : sessions())
+    session->SetRenderer(nullptr, nullptr, agent_ptr_);
 }
 
 RenderProcessHost* SharedWorkerDevToolsAgentHost::GetProcess() {

@@ -115,27 +115,29 @@ ServiceWorkerDevToolsAgentHost::~ServiceWorkerDevToolsAgentHost() {
   ServiceWorkerDevToolsManager::GetInstance()->AgentHostDestroyed(this);
 }
 
-void ServiceWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  if (state_ == WORKER_READY) {
-    if (sessions().size() == 1) {
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                              base::BindOnce(&SetDevToolsAttachedOnIO,
-                                             context_weak_, version_id_, true));
-    }
-    // RenderProcessHost should not be null here, but even if it _is_ null,
-    // session does not depend on the process to do messaging.
-    session->SetRenderer(RenderProcessHost::FromID(worker_process_id_),
-                         nullptr);
-    session->AttachToAgent(agent_ptr_);
+void ServiceWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session,
+                                                   bool is_first) {
+  if (is_first) {
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::BindOnce(&SetDevToolsAttachedOnIO,
+                                           context_weak_, version_id_, true));
   }
+
   session->AddHandler(base::WrapUnique(new protocol::InspectorHandler()));
   session->AddHandler(base::WrapUnique(new protocol::NetworkHandler(GetId())));
   session->AddHandler(base::WrapUnique(new protocol::SchemaHandler()));
+
+  if (state_ == WORKER_READY) {
+    // RenderProcessHost should not be null here, but even if it _is_ null,
+    // session does not depend on the process to do messaging.
+    session->SetRenderer(RenderProcessHost::FromID(worker_process_id_), nullptr,
+                         agent_ptr_);
+  }
 }
 
-void ServiceWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-  if (state_ == WORKER_READY && sessions().empty()) {
+void ServiceWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session,
+                                                   bool is_last) {
+  if (is_last) {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                             base::BindOnce(&SetDevToolsAttachedOnIO,
                                            context_weak_, version_id_, false));
@@ -153,19 +155,11 @@ void ServiceWorkerDevToolsAgentHost::WorkerReadyForInspection(
   DCHECK_EQ(WORKER_NOT_READY, state_);
   state_ = WORKER_READY;
   agent_ptr_.Bind(std::move(devtools_agent_ptr_info));
-  if (!sessions().empty()) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&SetDevToolsAttachedOnIO,
-                                           context_weak_, version_id_, true));
-  }
-
   // RenderProcessHost should not be null here, but even if it _is_ null,
   // session does not depend on the process to do messaging.
   RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_);
-  for (DevToolsSession* session : sessions()) {
-    session->SetRenderer(host, nullptr);
-    session->AttachToAgent(agent_ptr_);
-  }
+  for (DevToolsSession* session : sessions())
+    session->SetRenderer(host, nullptr, agent_ptr_);
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
@@ -174,9 +168,6 @@ void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
   state_ = WORKER_NOT_READY;
   worker_process_id_ = worker_process_id;
   worker_route_id_ = worker_route_id;
-  RenderProcessHost* host = RenderProcessHost::FromID(worker_process_id_);
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(host, nullptr);
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -186,7 +177,7 @@ void ServiceWorkerDevToolsAgentHost::WorkerDestroyed() {
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
   for (DevToolsSession* session : sessions())
-    session->SetRenderer(nullptr, nullptr);
+    session->SetRenderer(nullptr, nullptr, agent_ptr_);
 }
 
 }  // namespace content
