@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe6f355_14078774",
+        "filename": "extensions/renderer/api_activity_logger.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 0,
+      "message": "this function still seems static?",
+      "revId": "4c6a357b01c51b7bd9226ec35a066cc8a318b81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

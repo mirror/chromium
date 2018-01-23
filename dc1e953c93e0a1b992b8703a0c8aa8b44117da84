@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434e130e_b927b155",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "nit: There\u0027s an overload of v8::ReturnValue::Set that takes bool directly, which is slightly shorter and in principle could be more efficient. You also definitely don\u0027t need a HandleScope then (as it happens v8::Boolean::New doesn\u0027t *actually* need one, but also you always have the a scope in a function callback).\n\nSo this function can be simplified to:\n\nvoid GetInIncognitoContext(v8::Local\u003cv8::Name\u003e property_name,\n                           const v8::PropertyCallbackInfo\u003cv8::Value\u003e\u0026 info) {\n  info.GetReturnValue().Set(\n      ExtensionsRendererClient::Get()-\u003eIsIncognitoProcess());\n}\n\nBetter yet, just make it a plain data property on the template, assuming I understand correctly that it is constant for the entire renderer process across its entire lifetime, i.e.\n\nbool is_incognito \u003d ExtensionsRendererClient::Get()-\u003eIsIncognitoProcess();\nobject_template-\u003eSet(isolate,\n                     \"inIncognitoContext\",\n                     v8::Boolean::New(isolate, is_incognito));\n\nThen we don\u0027t need a callback at all. :D",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7c2782_c13440df",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "nit: probably somewhat faster to use base::StrCat? No strong feelings, especially since \nStringPrintf is probably more ubiquitous in */extensions/*.\n\nstd::string url \u003d\n    base::StrCat({\"chrome-extension://\", script_context-\u003eextension()-\u003eid(),\n                  !path.empty() \u0026\u0026 path[0] \u003d\u003d \u0027/\u0027 ? \"\" : \"/\", path});",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7c0f50_e906be94",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "nit: while it was clear to me, expanding why this shouldn\u0027t be reached might be slightly helpful:\n\nNOTREACHED() \u003c\u003c \"Unexpected exception: argument parsing produces plain objects.\";",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab2edfd_5acd526d",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "nit: here and below, v8_window_id.As\u003cv8::Int32\u003e()-\u003eValue() is marginally faster, because it doesn\u0027t need to deal with potential coersion",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867b2e15_42015693",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "super-nit: you can just return without this local variable...up to you, I guess.\n\n  if (web_frame \u0026\u0026 blink::WebFrame::ScriptCanAccess(web_frame))\n    return web_frame-\u003eMainWorldScriptContext()-\u003eGlobal();\n  else\n    return v8::Undefined(isolate);",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820a616c_761c30d8",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "Safe to assume this is always called with the appropriate context current? WebFrame::ScriptCanAccess relies on the current context on the main thread isolate.",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b247536e_6ad0a50f",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "nit: GetList() all over the place here is very repetitive. This could be somewhat more concise like this:\n\n    auto\u0026 list \u003d activity_logging_args-\u003eGetList();\n    list.reserve(2u);\n    \n    if (!info.source_id.empty())\n      list.emplace_back(info.source_id);\n    else\n      list.emplace_back();\n    \n    if (!info.source_url.is_empty())\n      list.emplace_back(info.source_url.spec());\n    else\n      list.emplace_back();\n\nor something similar to that",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0128048c_0ef695f1",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "I think CompleteRequest could invalidate this iterator (if |openers| is mutated during script execution). If so, you\u0027ll need to find again rather than reusing the iterator. If not, could you explain why this cannot happen?\n\nFurther, if !IsContextValid, is it possible that OneTimeMessageContextData has also been destructed?",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c06b8c2_e0f26043",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "This API is kinda unfortunate insofar as it seems to explicitly permit cross-world wrapper leakage, IIUC. If the Blink-side checking ever gets more aggressive, we\u0027ll have to add special cases to avoid this blowing up. :/\n\nBut we\u0027re stuck with it. :)",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8dedb0_aba99b24",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what this does. Mind a comment?",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a6ff38_f499dd55",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "Did we ever write down what context we expected to be used here? Currently WebFrame::ScriptCanAccess will check the current context, which does seem to be what is passed in here. (I think this is what we intended, though, so OK.)",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a755dbf2_c16c412e",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "Urgh. Confusingly, ModuleSystem::Require returns a maybe when it fails, but sometimes it has thrown (but realistically won\u0027t) and sometimes it has not. I think this is fine, but :(",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dc8dfc_3162157a",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "hmm, maybe handle set RequestResult::THROWN if Object::Get threw. Really shouldn\u0027t happen, but hey.",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b956b5c2_ee994aa1",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "do natives still need to be enabled here, or only during the module system load?",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206c9b58_d817588c",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-23T16:27:35Z",
+      "side": 1,
+      "message": "ditto: if it failed due to an exception being thrown (here during RunJSFunctionSync), probably we should say THROWN?",
+      "revId": "dc1e953c93e0a1b992b8703a0c8aa8b44117da84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
