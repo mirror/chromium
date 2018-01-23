@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce4b51b4_d813711d",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "invalidate_called_counter() const",
+      "range": {
+        "startLine": 952,
+        "startChar": 6,
+        "endLine": 952,
+        "endChar": 29
+      },
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff97531_bb024a55",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this with the next check.",
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c082950_bdcc17b1",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(GetDocument().GetInterfaceInvalidator());",
+      "range": {
+        "startLine": 966,
+        "startChar": 2,
+        "endLine": 966,
+        "endChar": 11
+      },
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74338d53_2e4ae1bd",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "The convention is to put the expected value first.",
+      "range": {
+        "startLine": 967,
+        "startChar": 12,
+        "endLine": 967,
+        "endChar": 44
+      },
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e39af4_b17a553a",
+        "filename": "third_party/WebKit/Source/core/dom/ExecutionContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "Can you forward declare InterfaceInvalidator instead?",
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2593352_0d0f1dd5",
+        "filename": "third_party/WebKit/Source/core/dom/ExecutionContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "No blink:: prefix inside blink. Fix everywhere.",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 7
+      },
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b3741a_d9d6fe39",
+        "filename": "third_party/WebKit/Source/core/dom/ExecutionContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-23T06:13:25Z",
+      "side": 1,
+      "message": "Empty line after this.",
+      "revId": "5f1245dac6dbac6baa0c3974159c8e89fbf61f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
