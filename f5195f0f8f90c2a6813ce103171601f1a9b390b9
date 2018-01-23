@@ -34,6 +34,126 @@
       "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a5eb158_c6ae6a99",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "Isn\u0027t this the only place where xr30 images are used though?\nIf that\u0027s the case we could remove the ifdef here and enable image_xr30 per platform.",
+      "parentUuid": "9ffe25ad_c03ecbb3",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a352c679_d98e584d",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "This format is used by the decoder.\nWe implement that, why can\u0027t we make the decoder accept GL_RGB10_EXT if that is the format that should be used?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae645973_573e1e16",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "Can you compute all the params that are the same between libyuv::H010ToAR30 and libyuv::I010ToAR30 call and put them in temporaries before the switch?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71fdd5e_a0ae24ab",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "This should be ok on mac, but on CrOS we should fix ExternalResourceTypeForHardwarePlanes so that buffer_format will be BGRX_1010102 for VideoFrames produced with this format.",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ef4a178_7b620d64",
+        "filename": "media/video/gpu_video_accelerator_factories.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "nit: Add a comment to be consistent with the other formats?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ead358_ff6246a2",
+        "filename": "media/video/mock_gpu_video_accelerator_factories.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "I believe this is a Yoda condition: https://en.wikipedia.org/wiki/Yoda_conditions",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a559934_580f13a1",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-23T00:00:50Z",
+      "side": 1,
+      "message": "Why are we using this internal format if in another comment you suggest the other one should be used?",
+      "revId": "f5195f0f8f90c2a6813ce103171601f1a9b390b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
