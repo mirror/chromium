@@ -22,6 +22,7 @@ class RenderProcessHost;
 
 namespace media {
 class AudioManager;
+class AudioDebugRecordingSession;
 }
 
 // AudioDebugRecordingsHandler provides an interface to start and stop
@@ -90,6 +91,8 @@ class AudioDebugRecordingsHandler
 
   // Audio manager, used for enabling output recordings.
   media::AudioManager* const audio_manager_;
+  std::unique_ptr<media::AudioDebugRecordingSession>
+      audio_debug_recording_session_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingsHandler);
 };
