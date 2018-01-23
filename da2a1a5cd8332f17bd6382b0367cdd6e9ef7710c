@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "8002eb25_46994947",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-23T02:18:44Z",
+      "side": 1,
+      "message": "Would it be hard to make the change?\n\nAt the moment this CL is passing around WebFrame parameters in a bunch of places unnecessarily. If we make RenderFrameImpl own AOMContextAXTree, that will be gone. (i.e., it doesn\u0027t make sense to create AOMContextAXTree on a per-renderer basis but use it on a per-frame basis.)",
+      "parentUuid": "63dc6453_25dc9327",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe8cef1a_89a3587c",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 14
