@@ -1,0 +1,80 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef SANDBOX_LINUX_SERVICES_LIBC_INTERCEPTOR_H_
+#define SANDBOX_LINUX_SERVICES_LIBC_INTERCEPTOR_H_
+
+#include <vector>
+
+#include "base/files/scoped_file.h"
+#include "base/pickle.h"
+#include "build/build_config.h"
+#include "sandbox/sandbox_export.h"
+
+namespace sandbox {
+
+// Sandbox interception of libc calls.
+//
+// Because we are running in a sandbox certain libc calls will fail (localtime
+// being the motivating example - it needs to read /etc/localtime). We need to
+// intercept these calls and proxy them to a parent process. However, these
+// calls may come from us or from our libraries. In some cases we can't just
+// change our code.
+//
+// It's for these cases that we have the following setup:
+//
+// We define global functions for those functions which we wish to override.
+// Since we will be first in the dynamic resolution order, the dynamic linker
+// will point callers to our versions of these functions. However, we have the
+// same binary for both the browser and the renderers, which means that our
+// overrides will apply in the browser too.
+//
+// The global |g_am_zygote_or_renderer| is true iff we are in a zygote or
+// renderer process. It's set in ZygoteMain and inherited by the renderers when
+// they fork. (This means that it'll be incorrect for global constructor
+// functions and before ZygoteMain is called - beware).
+//
+// Our replacement functions can check this global and either proxy
+// the call to the browser over the sandbox IPC
+// (https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandbox_ipc.md)
+// or they can use dlsym with RTLD_NEXT to resolve the symbol, ignoring any
+// symbols in the current module.
+//
+// Other avenues:
+//
+// Our first attempt involved some assembly to patch the GOT of the current
+// module. This worked, but was platform specific and doesn't catch the case
+// where a library makes a call rather than current module.
+//
+// We also considered patching the function in place, but this would again by
+// platform specific and the above technique seems to work well enough.
+
+// This isn't the full list, values < 32 are reserved for methods called from
+// Skia, and values >= 64 are reserved for sandbox_ipc_linux.cc.
+enum InterceptedIPCMethods {
+  METHOD_LOCALTIME = 32,
+};
+
+// Gets the well-known file descriptor on which we expect to find the
+// sandbox IPC channel.
+SANDBOX_EXPORT int GetSandboxFD();
+
+// Currently, only METHOD_LOCALTIME, returns false if |kind| is otherwise.
+// Gets the well-known file descriptor on which we expect to find the
+// sandbox IPC channel.
+SANDBOX_EXPORT bool HandleInterceptedCall(
+    int kind,
+    int fd,
+    base::PickleIterator iter,
+    const std::vector<base::ScopedFD>& fds);
+
+// On Linux, localtime is overridden to use a synchronous IPC to the browser
+// process to determine the locale. This can be disabled, which causes
+// localtime to use UTC instead. https://crbug.com/772503.
+SANDBOX_EXPORT void SetLocaltimeOverride(bool enable);
+SANDBOX_EXPORT void SetAmZygoteOrRenderer(bool enable);
+
+}  // namespace sandbox
+
+#endif  // SANDBOX_LINUX_SERVICES_LIBC_INTERCEPTOR_H_

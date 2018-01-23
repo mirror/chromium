@@ -418,6 +418,11 @@ component("sandbox_services") {
       "syscall_broker/broker_process.cc",
       "syscall_broker/broker_process.h",
     ]
+  } else {
+    sources += [
+      "services/libc_interceptor.cc",
+      "services/libc_interceptor.h",
+    ]
   }
 }
 
