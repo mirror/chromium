@@ -36,9 +36,9 @@ class CC_EXPORT ImageController {
   virtual ~ImageController();
 
   void SetImageDecodeCache(ImageDecodeCache* cache);
-  void GetTasksForImagesAndRef(
+  // Returns true if any images will be decoded at-raster.
+  bool GetTasksForImagesAndRef(
       std::vector<DrawImage>* sync_decoded_images,
-      std::vector<DrawImage>* at_raster_images,
       std::vector<scoped_refptr<TileTask>>* tasks,
       const ImageDecodeCache::TracingInfo& tracing_info);
   void UnrefImages(const std::vector<DrawImage>& images);
