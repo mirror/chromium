@@ -1093,4 +1093,11 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
       ->CanBecomeVisible();
 }
 
+void RenderWidgetHostViewChildFrame::DidNavigate() {
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
+}
+
 }  // namespace content
