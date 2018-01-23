@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a1641b_a6e84a68",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-23T23:44:36Z",
+      "side": 0,
+      "message": "This is the part that needed fixing -- the above assumption is not true under viz.",
+      "revId": "5b1d60ce33bbb33b5e42098903bd7ac551f60bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
