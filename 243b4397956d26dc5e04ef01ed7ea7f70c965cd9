@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "12dc3e86_0551c7fb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-23T04:40:22Z",
+      "side": 1,
+      "message": "Right, sorry, I meant NGPhysicalFragment.\n\nWell, it may be personal preference, but the code isn\u0027t clean enough doesn\u0027t necessarily mean it should be static function. It\u0027s possible that it makes refactoring harder, can move to NGPhysicalFragment with the comment of needing arguments refactoring might be needed?",
+      "parentUuid": "85ee7689_d7de3ba0",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657cc32c_a439332a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 38
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "dbc730ae_3c5bb9be",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-23T04:40:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "583480bf_db82d4da",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e95adc5_03659df5",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 38
@@ -139,6 +175,24 @@
       "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61fc3b1_454c30a5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-23T04:40:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "15217d08_3fb959e6",
+      "revId": "243b4397956d26dc5e04ef01ed7ea7f70c965cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
