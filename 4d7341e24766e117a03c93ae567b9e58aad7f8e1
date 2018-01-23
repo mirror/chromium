@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8b1ab1_1a5cfcfa",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Document?",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b396ca35_9485d974",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 735,
+        "startChar": 41,
+        "endLine": 735,
+        "endChar": 51
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2899680_9ef02056",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/svg/as-object/intrinsic-size-change-embedded-object-expected.png",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Does this really need to be a pixel test? Maybe just use testharness and gBCR?",
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a54cd36_2affbb55",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/svg/as-object/intrinsic-size-change-embedded-object.html",
+        "patchSetId": 24
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "testRunner\n\n(why doesn\u0027t this test timeout?)",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c33a306_1ffc6c81",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Nit: Inside Blink WebFloatSize will implicitly convert to FloatSize, so these should be possible to write as the more natural:\n\nsizing_info.size \u003d size;\nsizing_info.aspect_ratio \u003d aspect_ratio;",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 377,
+        "endChar": 58
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8f3243_a02d107e",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "This seems like an odd \"hiding place\" for this type. (If we feel the need to move it, then maybe just throw into a file of it\u0027s own.)",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba169f51_5721cf96",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "No need for this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97092d2c_b08a1b03",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6472dacd_5d7a3c11",
+        "filename": "third_party/WebKit/Source/core/frame/FrameView.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "...and thus not this either. (And I have doubts about the copy-constructor.)",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc34db78_d1df2517",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Typo.",
+      "range": {
+        "startLine": 464,
+        "startChar": 5,
+        "endLine": 464,
+        "endChar": 12
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0aceaae_d0446b29",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Why not just always thread this through the FrameOwner (remote or not), computing the intrinsic sizing info as needed (if needed - a local frame owner won\u0027t need it.) I don\u0027t see why we\u0027d need to go through the Frame here at all.",
+      "range": {
+        "startLine": 466,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 3
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0072b38c_5737d61a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 2953,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "range": {
+        "startLine": 2953,
+        "startChar": 2,
+        "endLine": 2953,
+        "endChar": 33
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b3a644_878febca",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "(I suspect we\u0027ll need a way to clear this too.)",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 225,
+        "endChar": 62
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feea73b9_b0293397",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "sizing_info \u003d *intrinsic_sizing_info_;",
+      "range": {
+        "startLine": 233,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e099d33a_2f4027f7",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Use a unique_ptr instead?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 8
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9279c9_3b42c25e",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Nit: I believe these would be handled/converted implicitly.",
+      "range": {
+        "startLine": 539,
+        "startChar": 2,
+        "endLine": 542,
+        "endChar": 75
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f23238_22c4e2a3",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Could we thread this directly through/to the WebWidgetClient instead?",
+      "range": {
+        "startLine": 546,
+        "startChar": 2,
+        "endLine": 546,
+        "endChar": 55
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0eac434_183099af",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 24
+      },
+      "lineNbr": 6081,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "(This looks a bit unrelated...)",
+      "range": {
+        "startLine": 6081,
+        "startChar": 65,
+        "endLine": 6081,
+        "endChar": 101
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03207de5_7931e92c",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGRoot.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "This is also true when embedded (cross-site) through an \u003ciframe\u003e. (Add test?)\n\n(AFAIK, embedding through an \u003ciframe\u003e is not as common, so we could keep this \"for now\" and fix incrementally.)",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 50
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bd28d6_29c55f07",
+        "filename": "third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Nit: I\u0027m suspecting this isn\u0027t used.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5cc420_fbd405bd",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Nit: This should order with the other structs below?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b84eb5_75685a9c",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrame.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Use the WebIntrinsicSizingInfo type?",
+      "range": {
+        "startLine": 124,
+        "startChar": 42,
+        "endLine": 127,
+        "endChar": 57
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a22ecd_8b07c4b4",
+        "filename": "third_party/WebKit/public/web/WebWidgetClient.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T11:18:25Z",
+      "side": 1,
+      "message": "Document?",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
