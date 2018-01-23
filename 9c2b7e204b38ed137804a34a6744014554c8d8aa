@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca9ce36a_b54eaa59",
+        "filename": "ui/accessibility/ax_enums.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T20:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ccf7a72_160d11b9",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9c2b7e204b38ed137804a34a6744014554c8d8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d28ecf85_20745d59",
         "filename": "ui/accessibility/ax_enums.mojom",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T20:26:18Z",
       "side": 1,
       "message": "Use kFooStyle?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "9c2b7e204b38ed137804a34a6744014554c8d8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a51835_18c26a5e",
+        "filename": "ui/accessibility/ax_enums.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-23T20:54:31Z",
+      "side": 1,
+      "message": "Are you sure that\u0027s preferred? I\u0027m fine either way and I can just\nre-run my script with any format we want - but I did a code search\nfor enum in .mojom files and most of them seem to use uppercase\nconstants, e.g.:\n\ncontent/common/appcache.mojom\ncomponents/arc/common/net.mojom\ngpu/ipc/common/sync_token.mojom\nui/events/mojo/event_constants.mojom\nui/latency/mojo/latency_info.mojom\n\nSome exceptions (kFooStyle):\nchrome/common/plugin.mojom\ncontent/common/page_state.mojom",
+      "parentUuid": "d28ecf85_20745d59",
       "range": {
         "startLine": 27,
         "startChar": 2,
