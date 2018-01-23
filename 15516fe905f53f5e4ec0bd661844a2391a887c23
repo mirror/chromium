@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d5dc0f4d_fb55273f",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T22:17:50Z",
+      "side": 1,
+      "message": "Looked at this more and there\u0027s several different orders in which these functions can be called:\n\n1) TabStripModelObserver::TabClosingAt -\u003e TabStripModelObserver::TabDetachedAt : \"normal\" closing scenario.\n2) TabStripModelObserver::TabDetachedAt -\u003e TabStripModelObserver::TabInsertedAt : drag-n-drop into a different window.\n3) TabStripModel::WebContentsData::WebContentsDestroyed -\u003e  TabStripModelObserver::TabDetachedAt and later TabStatsTracker::WebContentsObserver::WebContentsDestroyed \n4) TabStatsTracker::WebContentsObserver::WebContentsDestroyed and later TabStripModel::WebContentsData::WebContentsDestroyed -\u003e  TabStripModelObserver::TabDetachedAt (opposite order compared to #3)\n\nIn #3 and #4 I need the TabID for this WebContents to be remembered until TabStripModel::WebContentsData::WebContentsDestroyed has been called, as as mentioned below this function might cause the WebContents to become active. \n\nI\u0027ll build a state machine around this but it\u0027ll probably require some ugly duct taping anyway :(",
+      "parentUuid": "2c938a68_76e3517e",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043c46d5_d72d877e",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 9
