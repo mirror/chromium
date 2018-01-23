@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ceac84_551cf56e",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-23T22:46:20Z",
+      "side": 1,
+      "message": "ASSERT_TRUE",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "6be0e9c65c9a01b98c6224ad2797d99e9878cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec474d8f_28fb879b",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-23T22:46:20Z",
+      "side": 1,
+      "message": "Tests that rely on activation generally need to be in interactive_ui_tests. Otherwise it\u0027s possible for another test running at the same time on the bot to impact the active status causing flake.",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 34
+      },
+      "revId": "6be0e9c65c9a01b98c6224ad2797d99e9878cd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
