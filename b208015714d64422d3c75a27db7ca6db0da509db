@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "8ebf6f28_257f23f8",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T15:39:17Z",
+      "side": 1,
+      "message": "For consistency with the rest of the code, I would call this webState or activeWebState.",
+      "range": {
+        "startLine": 159,
+        "startChar": 18,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0674301_9add4787",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 2
@@ -82,6 +105,30 @@
       "writtenOn": "2018-01-23T15:27:19Z",
       "side": 1,
       "message": "You can remove this method I think.",
+      "range": {
+        "startLine": 524,
+        "startChar": 18,
+        "endLine": 524,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c402edcb_db4bbc64",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-23T15:39:17Z",
+      "side": 1,
+      "message": "If you keep this method, I think it should be called webState or activeWebState for consitency.",
+      "parentUuid": "b7849069_4fc0c9ca",
       "range": {
         "startLine": 524,
         "startChar": 18,
