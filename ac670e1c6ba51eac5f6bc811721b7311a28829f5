@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9bbd5a_0bbff4bc",
+        "filename": "components/viz/common/features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T19:32:11Z",
+      "side": 1,
+      "message": "As discussed offline, also check kVizDisplayCompositor feature. (as above in line 30)",
+      "revId": "ac670e1c6ba51eac5f6bc811721b7311a28829f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b675659_107dbb9b",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T19:32:11Z",
+      "side": 1,
+      "message": "Use features::IsVizHitTestingEnabled() instead.",
+      "revId": "ac670e1c6ba51eac5f6bc811721b7311a28829f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
