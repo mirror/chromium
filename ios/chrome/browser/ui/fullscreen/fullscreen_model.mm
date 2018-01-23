@@ -85,7 +85,7 @@ void FullscreenModel::SetYContentOffset(CGFloat y_content_offset) {
   if (!has_base_offset())
     UpdateBaseOffset();
 
-  if (scrolling_ && !observer_callback_count_) {
+  if ((scrolling_ || scrolling_to_top_) && !observer_callback_count_) {
     CGFloat delta = base_offset_ - y_content_offset_;
     SetProgress(1.0 + delta / toolbar_height_);
   } else {
@@ -123,6 +123,7 @@ void FullscreenModel::SetScrollViewIsDragging(bool dragging) {
       observer.FullscreenModelScrollEventStarted(this);
     }
     UpdateBaseOffset();
+    scrolling_to_top_ = false;
   }
 }
 
@@ -157,6 +158,10 @@ void FullscreenModel::OnScrollViewIsScrollingBroadcasted(bool scrolling) {
 
 void FullscreenModel::OnScrollViewIsDraggingBroadcasted(bool dragging) {
   SetScrollViewIsDragging(dragging);
+}
+
+void FullscreenModel::OnScrollViewIsScrollingToTopBroadcasted(bool scrolling) {
+  scrolling_to_top_ = scrolling;
 }
 
 void FullscreenModel::OnToolbarHeightBroadcasted(CGFloat toolbar_height) {

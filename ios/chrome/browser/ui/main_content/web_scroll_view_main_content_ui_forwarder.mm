@@ -120,6 +120,16 @@
   [self.updater scrollViewDidEndDecelerating];
 }
 
+- (void)webViewScrollViewWillScrollToTop:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy {
+  [self.updater scrollViewWillScrollToTop];
+}
+
+- (void)webViewScrollViewDidScrollToTop:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy {
+  [self.updater scrollViewDidScrollToTop];
+}
+
 #pragma mark - WebStateListObserving
 
 - (void)webStateList:(WebStateList*)webStateList

@@ -21,6 +21,9 @@ class ChromeBroadcastObserverInterface {
   // Invoked by |-broadcastScrollViewIsDragging:|.
   virtual void OnScrollViewIsDraggingBroadcasted(bool dragging) {}
 
+  // Invoked by |-broadcastScrollViewIsScrollingToTop:|.
+  virtual void OnScrollViewIsScrollingToTopBroadcasted(bool scrolling) {}
+
   // Invoked by |-broadcastToolbarHeight:|.
   virtual void OnToolbarHeightBroadcasted(CGFloat toolbar_height) {}
 };

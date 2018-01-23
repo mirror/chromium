@@ -16,6 +16,7 @@
 @property(nonatomic, assign) CGFloat yContentOffset;
 @property(nonatomic, assign, getter=isScrolling) BOOL scrolling;
 @property(nonatomic, assign, getter=isDragging) BOOL dragging;
+@property(nonatomic, assign, getter=isScrollingToTop) BOOL scrollingToTop;
 // Whether the scroll view is decelerating.
 @property(nonatomic, assign, getter=isDecelerating) BOOL decelerating;
 
@@ -29,10 +30,21 @@
 @synthesize scrolling = _scrolling;
 @synthesize dragging = _dragging;
 @synthesize decelerating = _decelerating;
+@synthesize scrollingToTop = _scrollingToTop;
+
+- (void)setScrolling:(BOOL)scrolling {
+  if (_scrolling == scrolling)
+    return;
+  if (scrolling)
+    self.scrollingToTop = NO;
+  _scrolling = scrolling;
+}
 
 - (void)setDragging:(BOOL)dragging {
   if (_dragging == dragging)
     return;
+  if (dragging)
+    self.scrollingToTop = NO;
   _dragging = dragging;
   [self updateIsScrolling];
 }
@@ -47,6 +59,14 @@
   DCHECK(!decelerating || self.dragging);
   _decelerating = decelerating;
   [self updateIsScrolling];
+}
+
+- (void)setScrollingToTop:(BOOL)scrollingToTop {
+  if (_scrollingToTop == scrollingToTop)
+    return;
+  if (scrollingToTop)
+    self.scrolling = NO;
+  _scrollingToTop = scrollingToTop;
 }
 
 #pragma mark Private
@@ -105,6 +125,14 @@
 
 - (void)scrollViewDidEndDecelerating {
   self.state.decelerating = NO;
+}
+
+- (void)scrollViewWillScrollToTop {
+  self.state.scrollingToTop = YES;
+}
+
+- (void)scrollViewDidScrollToTop {
+  self.state.scrollingToTop = NO;
 }
 
 @end

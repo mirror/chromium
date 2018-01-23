@@ -23,6 +23,9 @@ void StartBroadcastingMainContentUI(id<MainContentUI> main_content,
   [broadcaster broadcastValue:@"dragging"
                      ofObject:main_content.mainContentUIState
                      selector:@selector(broadcastScrollViewIsDragging:)];
+  [broadcaster broadcastValue:@"scrollingToTop"
+                     ofObject:main_content.mainContentUIState
+                     selector:@selector(broadcastScrollViewIsScrollingToTop:)];
 }
 
 void StopBroadcastingMainContentUI(ChromeBroadcaster* broadcaster) {
@@ -32,4 +35,6 @@ void StopBroadcastingMainContentUI(ChromeBroadcaster* broadcaster) {
       stopBroadcastingForSelector:@selector(broadcastScrollViewIsScrolling:)];
   [broadcaster
       stopBroadcastingForSelector:@selector(broadcastScrollViewIsDragging:)];
+  [broadcaster stopBroadcastingForSelector:@selector
+               (broadcastScrollViewIsScrollingToTop:)];
 }

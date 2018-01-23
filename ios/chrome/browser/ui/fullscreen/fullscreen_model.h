@@ -84,6 +84,7 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   void OnContentScrollOffsetBroadcasted(CGFloat offset) override;
   void OnScrollViewIsScrollingBroadcasted(bool scrolling) override;
   void OnScrollViewIsDraggingBroadcasted(bool dragging) override;
+  void OnScrollViewIsScrollingToTopBroadcasted(bool scrolling) override;
   void OnToolbarHeightBroadcasted(CGFloat toolbar_height) override;
 
   // The observers for this model.
@@ -104,6 +105,8 @@ class FullscreenModel : public ChromeBroadcastObserverInterface {
   bool scrolling_ = false;
   // Whether the main content is being dragged.
   bool dragging_ = false;
+  // Whether the main content is performing the scroll-to-top animation.
+  bool scrolling_to_top_ = false;
   // The number of FullscreenModelObserver callbacks currently being executed.
   size_t observer_callback_count_ = 0;
 

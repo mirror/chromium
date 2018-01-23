@@ -19,6 +19,9 @@
 // Whether the scroll view is currently being dragged.
 // This should be broadcast using |-broadcastScrollViewIsDragging:|.
 @property(nonatomic, readonly, getter=isDragging) BOOL dragging;
+// Whether the scroll view is currently being scrolled to top.
+// This should be broadcast using |-broadcastScrollViewIsScrollingToTop:|.
+@property(nonatomic, readonly, getter=isScrollingToTop) BOOL scrollingToTop;
 
 @end
 
@@ -45,6 +48,10 @@
                            residualVelocity:(CGPoint)velocity;
 // Called when the scroll view stops decelerating.
 - (void)scrollViewDidEndDecelerating;
+// Called when the scroll view begins scrolling to top.
+- (void)scrollViewWillScrollToTop;
+// Called after the scroll view finishes scrolling to top.
+- (void)scrollViewDidScrollToTop;
 
 @end
 

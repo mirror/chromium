@@ -35,6 +35,10 @@ ChromeBroadcastObserverInterface::~ChromeBroadcastObserverInterface() = default;
   self.observer->OnScrollViewIsDraggingBroadcasted(dragging);
 }
 
+- (void)broadcastScrollViewIsScrollingToTop:(BOOL)scrolling {
+  self.observer->OnScrollViewIsScrollingToTopBroadcasted(scrolling);
+}
+
 - (void)broadcastToolbarHeight:(CGFloat)height {
   self.observer->OnToolbarHeightBroadcasted(height);
 }

@@ -32,6 +32,8 @@ FullscreenControllerImpl::FullscreenControllerImpl()
   [broadcaster_ addObserver:bridge_
                 forSelector:@selector(broadcastScrollViewIsDragging:)];
   [broadcaster_ addObserver:bridge_
+                forSelector:@selector(broadcastScrollViewIsScrollingToTop:)];
+  [broadcaster_ addObserver:bridge_
                 forSelector:@selector(broadcastToolbarHeight:)];
 }
 
@@ -46,8 +48,7 @@ void FullscreenControllerImpl::SetWebStateList(WebStateList* web_state_list) {
     web_state_list_observer_->Disconnect();
   web_state_list_ = web_state_list;
   web_state_list_observer_ =
-      web_state_list_ ? std::make_unique<FullscreenWebStateListObserver>(
-                            this, model_.get(), web_state_list_)
+      web_state_list_ ? std::make_unique<FullscreenWebStateListObserver>(this)
                       : nullptr;
 }
 
@@ -84,6 +85,8 @@ void FullscreenControllerImpl::Shutdown() {
                    forSelector:@selector(broadcastScrollViewIsScrolling:)];
   [broadcaster_ removeObserver:bridge_
                    forSelector:@selector(broadcastScrollViewIsDragging:)];
+  [broadcaster_ removeObserver:bridge_
+                   forSelector:@selector(broadcastScrollViewIsScrollingToTop:)];
   [broadcaster_ removeObserver:bridge_
                    forSelector:@selector(broadcastToolbarHeight:)];
 }
