@@ -22,6 +22,30 @@
       "revId": "a8d43fdf1111545cc1eb2426052251907ac91938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb6e40a_84ea09ed",
+        "filename": "net/cookies/canonical_cookie.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-23T16:38:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand your concern.  This will make creation dates unique within the following constraints:\n* Only cookies created within a single process\n* Only cookies created with CC::Create(), the four element version.\n\nThis is substantially short of ideal, but (I don\u0027t think) any worse than what we\u0027re currently seeing.  Longer term, I think we can require cookies coming in through the RestrictedCookieManager interface to not have creation dates set (i.e. they\u0027ll be set in the process that implements the RCM interface).  \n\nOf course, one implication of this is that users of the RCM interface can\u0027t use CC::Create(,,,).  We could get around that by simply resetting the creation time on anything coming in through the RCM interface, or we could have a separate interface that keeps the creation date null while doing everything else CC::Create(,,,) does.  But I think of that as being a solution for a problem we\u0027re going to run into rather than a current one, and I flagged it in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d800414#c5 so hopefully we won\u0027t forget.  \n\nBut I\u0027m not sure I\u0027m addressing your concern with this comment; does this make sense or make things worse?",
+      "parentUuid": "ca9efe3b_2f0c7c7f",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "a8d43fdf1111545cc1eb2426052251907ac91938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
