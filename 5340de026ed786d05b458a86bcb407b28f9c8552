@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8294c566_6c5c5e3a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T16:31:00Z",
+      "side": 1,
+      "message": "I think this may cause flickering if you\n1) Set focus on a content editable.\n2) Hide keyboard by pressing \u0027down\u0027 button on the device.\n3) Set focus on another content editable with inputMode\u003d\u0027none\u0027.\n\nbecause mTextInputMode is not up to date and showSoftKeyboard() might happen at the first updateState().\n\nHow about merging else-if and else here into something like this?\n\nif (needsRestart) restartInput();\nif (textInputMode \u003d\u003d NONE \u0026\u0026 isHardwareKeyboardAttached()) {\n    hideKeyboard();\n} else if (showIfNeeded) {\n    showSoftKeyboard();\n}",
+      "range": {
+        "startLine": 460,
+        "startChar": 24,
+        "endLine": 460,
+        "endChar": 55
+      },
+      "revId": "5340de026ed786d05b458a86bcb407b28f9c8552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3f61d9_6eaabc62",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T16:31:00Z",
+      "side": 1,
+      "message": "As we talked offline, could you add physical keyboard + inputMode\u003d\"none\" test cases?",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "5340de026ed786d05b458a86bcb407b28f9c8552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
