@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a28feb_8aa0df22",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-23T22:37:29Z",
+      "side": 1,
+      "message": "Combine with the other two rules for \u0027e\u0027 below (both in comments and code)?\n\nMaybe this would be easier if this list were alphabetized by destination letter.",
+      "revId": "4417872098ea09855e71314afd47c458572fe0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
