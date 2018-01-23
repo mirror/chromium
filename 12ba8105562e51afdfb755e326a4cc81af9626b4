@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e101178_a2745f67",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-23T23:53:00Z",
+      "side": 1,
+      "message": "This name implies the value should be used in all scrollviews. I would be shocked if you can use this enum in all scrollviews (otherwise you would be changing scrollview directly). How about a more specific name, such as MESSAGE_BOX_SCROLLABLE_HEIGHT? If you do intend to use this in more places, is there a better name that can be used?",
+      "range": {
+        "startLine": 256,
+        "startChar": 37,
+        "endLine": 256,
+        "endChar": 72
+      },
+      "revId": "12ba8105562e51afdfb755e326a4cc81af9626b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
