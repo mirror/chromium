@@ -88,7 +88,10 @@ void ChildFrameCompositingHelper::OnContainerDestroy() {
   UpdateWebLayer(nullptr);
 }
 
-void ChildFrameCompositingHelper::ChildFrameGone() {
+void ChildFrameCompositingHelper::ChildFrameGone(
+    const gfx::Size& frame_size_in_dip,
+    float device_scale_factor) {
+  fallback_surface_id_ = viz::SurfaceId();
   scoped_refptr<cc::SolidColorLayer> crashed_layer =
       cc::SolidColorLayer::Create();
   crashed_layer->SetMasksToBounds(true);
@@ -97,8 +100,8 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
   if (web_layer_) {
     SkBitmap* sad_bitmap =
         GetContentClient()->renderer()->GetSadWebViewBitmap();
-    if (sad_bitmap && web_layer_->Bounds().width > sad_bitmap->width() &&
-        web_layer_->Bounds().height > sad_bitmap->height()) {
+    if (sad_bitmap && frame_size_in_dip.width() > sad_bitmap->width() &&
+        frame_size_in_dip.height() > sad_bitmap->height()) {
       scoped_refptr<cc::PictureImageLayer> sad_layer =
           cc::PictureImageLayer::Create();
       sad_layer->SetImage(cc::PaintImageBuilder::WithDefault()
@@ -106,10 +109,11 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
                               .set_image(SkImage::MakeFromBitmap(*sad_bitmap))
                               .TakePaintImage());
       sad_layer->SetBounds(
-          gfx::Size(sad_bitmap->width(), sad_bitmap->height()));
-      sad_layer->SetPosition(gfx::PointF(
-          (web_layer_->Bounds().width - sad_bitmap->width()) / 2,
-          (web_layer_->Bounds().height - sad_bitmap->height()) / 2));
+          gfx::Size(sad_bitmap->width() * device_scale_factor,
+                    sad_bitmap->height() * device_scale_factor));
+      sad_layer->SetPosition(
+          gfx::PointF((frame_size_in_dip.width() - sad_bitmap->width()) / 2,
+                      (frame_size_in_dip.height() - sad_bitmap->height()) / 2));
       sad_layer->SetIsDrawable(true);
 
       crashed_layer->AddChild(sad_layer);

@@ -262,6 +262,12 @@ void RenderFrameProxy::WillBeginCompositorFrame() {
 
 void RenderFrameProxy::OnScreenInfoChanged(const ScreenInfo& screen_info) {
   pending_resize_params_.screen_info = screen_info;
+  if (crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(frame_rect().size(),
+                                        screen_info.device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
@@ -419,7 +425,9 @@ void RenderFrameProxy::OnDeleteProxy() {
 }
 
 void RenderFrameProxy::OnChildFrameProcessGone() {
-  compositing_helper_->ChildFrameGone();
+  crashed_ = true;
+  compositing_helper_->ChildFrameGone(frame_rect().size(),
+                                      screen_info().device_scale_factor);
 }
 
 void RenderFrameProxy::OnSetChildFrameSurface(
@@ -543,7 +551,7 @@ void RenderFrameProxy::SetMusEmbeddedFrame(
 #endif
 
 void RenderFrameProxy::WasResized() {
-  if (!frame_sink_id_.is_valid())
+  if (!frame_sink_id_.is_valid() || crashed_)
     return;
 
   bool synchronized_params_changed =
@@ -675,9 +683,15 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
 
-void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
-  pending_resize_params_.frame_rect = gfx::Rect(frame_rect);
+void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& web_frame_rect) {
+  pending_resize_params_.frame_rect = gfx::Rect(web_frame_rect);
   pending_resize_params_.screen_info = render_widget_->screen_info();
+  if (crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(frame_rect().size(),
+                                        screen_info().device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
