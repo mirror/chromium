@@ -434,10 +434,12 @@ void NetworkContext::SetNetworkConditions(
 
 void NetworkContext::CreateUDPSocket(
     network::mojom::UDPSocketRequest request,
-    network::mojom::UDPSocketReceiverPtr receiver) {
+    network::mojom::UDPSocketReceiverPtr receiver,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   if (!udp_socket_factory_)
     udp_socket_factory_ = std::make_unique<network::UDPSocketFactory>();
-  udp_socket_factory_->CreateUDPSocket(std::move(request), std::move(receiver));
+  udp_socket_factory_->CreateUDPSocket(std::move(request), std::move(receiver),
+                                       traffic_annotation);
 }
 
 void NetworkContext::AddHSTSForTesting(const std::string& host,

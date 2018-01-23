@@ -6,6 +6,7 @@ module network.mojom;
 
 import "cookie_manager.mojom";
 import "network_change_manager.mojom";
+import "mutable_network_traffic_annotation_tag.mojom";
 import "proxy_config.mojom";
 import "net/interfaces/ip_endpoint.mojom";
 import "url_loader.mojom";
@@ -159,8 +160,9 @@ interface NetworkContext {
   // is not interested in incoming data.
   // Any sockets that are created but are yet to be destroyed will be destroyed
   // when NetworkContext goes away.
-  CreateUDPSocket(network.mojom.UDPSocket& request,
-                  network.mojom.UDPSocketReceiver? receiver);
+  CreateUDPSocket(UDPSocket& request,
+                  UDPSocketReceiver? receiver,
+		  MutableNetworkTrafficAnnotationTag traffic_annotation);
 
   [Sync]
   // Adds explicitly-specified data as if it was processed from an
