@@ -371,6 +371,24 @@
       "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10793c0b_7812d80e",
+        "filename": "ui/views/vector_icons/notification_inline_reply.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-23T06:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854beb4e_b6536fb2",
+      "revId": "8a235e74bcc34a6bd9133c57c47028606f5e31b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
