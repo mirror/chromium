@@ -4,10 +4,12 @@
 
 #include "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.h"
 
+#include "ui/chromeos/ksv/views/keyboard_shortcut_view.h"
+
 namespace keyboard_shortcut_viewer_util {
 
 void ShowKeyboardShortcutViewer() {
-  // TODO(wutao): create KSV window.
+  keyboard_shortcut_viewer::KeyboardShortcutView::Show();
 }
 
 }  // namespace keyboard_shortcut_viewer_util
