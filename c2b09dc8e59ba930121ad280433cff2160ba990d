@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b12d3f_f108cc97",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "Hmm... this re-entering into Host is super weird. It\u0027s would be more natural if all of these tracking state  were in SynchronousCompositorHost instead. Maybe can change the IPC path to behave like mojo as well, and then move all the state to SynchronousCompositorHost?\n\nthat doesn\u0027t solve the locking problem though. But thinking a bit on that, it seems more natural to just follow the DemandDrawHwAsync pattern and make this into \"futures\" pattern.. at which point maybe we should just do that first in a separate CL",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbf7574_d00769a7",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "this is tricky.. we also need to stop more futures being inserted *just for that route*, so wait_on_futures_ needs to be a per-route state :/",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d1401c_52cf38c5",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "\u003e The filter isn\u0027t created until the render process is actually created and initialized. (see https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?type\u003dcs\u0026q\u003dSynchronousCompositorBrowserFilter\u0026sq\u003dpackage:chromium\u0026l\u003d1804) \n\u003e \n\u003e Unfortunately this class is created before the filter is created and ready sometimes.\n\nCan we not initialize ControlHost with anything, and pass it the filter later when the filter can be used. That also serves as the \"renderer side ready\" signal. It should be ok to just post that to IO thread instead of some fancy thread safe thing. All these thread safe things makes me uncomfortable...\n\n\u003e So we need some type of cross thread object between the IO thread and the main thread even when the filter isn\u0027t ready so that we can eventually get a handle to the browser filter. Ultimately this new Object will replace the browser filter once we remove the non-mojo path.",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9eded5_c52db353",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "looks to me this is only needed on the UI thread?",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7541d8af_49c7ed71",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "since there is SinkDestroyed, make this a DCHECK(!sink_) instead",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d251f6_de0ab55a",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "this only sets but never unsets?",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c02d56_3397f110",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "this is temporary until we get a host_ right? can you change the var name to reflect that?",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be455d5c_062a976b",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "can we make this LayerTreeFrameSinkCreatedAndHostBound or something? and move around the checks to make this easier to read. this is super hard to understand right now with all the temporary states going on\n\nshould remove needs_layer_frame_sink_create_ if possible as well, we can tell from other state already, right?",
+      "range": {
+        "startLine": 356,
+        "startChar": 33,
+        "endLine": 356,
+        "endChar": 58
+      },
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855b6c56_6cddb927",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "need to be careful this needs to happen on every FrameSink creation, not just the first one",
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59290cab_8e42f3d4",
+        "filename": "content/renderer/android/synchronous_compositor_proxy_chrome_ipc.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T18:48:27Z",
+      "side": 1,
+      "message": "carry over from old comment, can we make an pure virtual base class, and then have a ProxyMojo, and a ProxyChromeIPC?\n\nvery easy to forget about one when modifying the other right now",
+      "range": {
+        "startLine": 17,
+        "startChar": 51,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "c2b09dc8e59ba930121ad280433cff2160ba990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
