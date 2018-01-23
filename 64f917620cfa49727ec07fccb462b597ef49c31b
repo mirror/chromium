@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c74b6b6_47d6c60c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/worker-interception.https-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T13:23:22Z",
+      "side": 1,
+      "message": "Was this file manually edited? The -expected.txt files aren\u0027t \"desired behavior\" expectations; they simply match the output of running the corresponding test. So they shouldn\u0027t be manually edited. You\u0027d generate this file via a command like:\n\n$ third_party/WebKit/Tools/Scripts/run-webkit-tests  --target\u003dDefault  --reset-results external/wpt/service-workers/service-worker/worker-interception.https.html",
+      "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e70c14fc_61f08c0b",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
         "patchSetId": 9
@@ -13,6 +30,23 @@
       "writtenOn": "2018-01-23T07:29:24Z",
       "side": 1,
       "message": "nit: an -\u003e a",
+      "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11b1e9c_0d75750f",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/FetchRespondWithObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T13:23:22Z",
+      "side": 1,
+      "message": "further nits:\n\"CORS\" -\u003e \"cors\" (matches the spec: https://fetch.spec.whatwg.org/#concept-response-type)\n\"request mode\" -\u003e \"request mode\" which I think we can just shorten to \"mode\": \"request whose mode is...\"",
       "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
