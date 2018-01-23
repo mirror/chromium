@@ -16,6 +16,23 @@
       "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376beb3b_6f51e348",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_error_type.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-23T10:59:54Z",
+      "side": 1,
+      "message": "one quick nit (since I\u0027m out of time now): This name seems a bit too general, I\u0027d prefer something more like \"ResponseTypeCORSForRequestModeSameOrigin\" as ResponseTypeCORS is not an error in general.",
+      "revId": "64f917620cfa49727ec07fccb462b597ef49c31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
