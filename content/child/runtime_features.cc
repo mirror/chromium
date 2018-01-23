@@ -420,6 +420,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnablePictureInPicture(
       base::FeatureList::IsEnabled(media::kPictureInPicture));
+
+  if (base::FeatureList::IsEnabled(features::kUnifiedTouchAdjustment))
+    WebRuntimeFeatures::EnableUnifiedTouchAdjustment(true);
 };
 
 }  // namespace content
