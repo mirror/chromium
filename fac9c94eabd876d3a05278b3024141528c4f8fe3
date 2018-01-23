@@ -22,6 +22,30 @@
       "revId": "fac9c94eabd876d3a05278b3024141528c4f8fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18702e2_7efb58e2",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-23T04:19:42Z",
+      "side": 1,
+      "message": "\u003e However, the other place [1] only set it on M+, I doubt that if we should remove this or add the same reflection to the other place ..\n\u003e \n\u003e [1] https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java?type\u003dcs\u0026q\u003dsetWindowLayoutType+-f:third_party\u0026sq\u003dpackage:chromium\u0026l\u003d179\n\nthis kind of thing is supposed to live in ApiCompatibilityUtils I think",
+      "parentUuid": "bd1b25cc_ce9608ee",
+      "range": {
+        "startLine": 204,
+        "startChar": 12,
+        "endLine": 204,
+        "endChar": 44
+      },
+      "revId": "fac9c94eabd876d3a05278b3024141528c4f8fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
