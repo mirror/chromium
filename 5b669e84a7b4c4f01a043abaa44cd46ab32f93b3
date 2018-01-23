@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0fb5af_9dd12adb",
+        "filename": "services/viz/public/cpp/compositing/paint_filter_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-23T00:03:18Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need to construct local base::Optional. base::Optional\u003cT\u003e can be implicitly constructed from a T, so you can just return a vector or base::nullopt.",
+      "revId": "5b669e84a7b4c4f01a043abaa44cd46ab32f93b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
