@@ -34,6 +34,24 @@
       "revId": "098dfbfaec9f275966b86d820790e290f78c0468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dafed1a_37bf561d",
+        "filename": "chrome/browser/extensions/content_capabilities_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T23:57:21Z",
+      "side": 1,
+      "message": "It would be nice to add a brief comment as such to the subframe with kUserActionV2 case.",
+      "parentUuid": "743a7637_8ab1648a",
+      "revId": "098dfbfaec9f275966b86d820790e290f78c0468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
