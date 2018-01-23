@@ -180,6 +180,13 @@ void LabelButton::SetImageLabelSpacing(int spacing) {
   InvalidateLayout();
 }
 
+void LabelButton::SetImageAlignment(VerticalAlignment v_align) {
+  if (v_align == v_align_)
+    return;
+  v_align_ = v_align;
+  InvalidateLayout();
+}
+
 gfx::Size LabelButton::CalculatePreferredSize() const {
   if (cached_preferred_size_valid_)
     return cached_preferred_size_;
@@ -273,7 +280,19 @@ void LabelButton::Layout() {
       label_area.height());
 
   gfx::Point image_origin(child_area.origin());
-  image_origin.Offset(0, (child_area.height() - image_size.height()) / 2);
+  if (v_align_ == ALIGN_MIDDLE) {
+    image_origin.Offset(0, (child_area.height() - image_size.height()) / 2);
+  } else if (v_align_ == ALIGN_TOP) {
+    image_origin.Offset(
+        0, std::max(
+               0, (label_->font_list().GetHeight() - image_size.height()) / 2));
+  } else {
+    image_origin.Offset(
+        0, child_area.height() - (image_size.height() +
+                                  std::max(0, (label_->font_list().GetHeight() -
+                                               image_size.height()) /
+                                                  2)));
+  }
   if (horizontal_alignment_ == gfx::ALIGN_CENTER) {
     const int spacing = (image_size.width() > 0 && label_size.width() > 0) ?
         image_label_spacing_ : 0;

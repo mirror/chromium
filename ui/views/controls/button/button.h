@@ -69,6 +69,12 @@ class VIEWS_EXPORT Button : public InkDropHostView,
     CLICK_NONE,
   };
 
+  // An enum describing the horizontal alignment of images on Buttons.
+  enum HorizontalAlignment { ALIGN_LEFT = 0, ALIGN_CENTER, ALIGN_RIGHT };
+
+  // An enum describing the vertical alignment of images on Buttons.
+  enum VerticalAlignment { ALIGN_TOP = 0, ALIGN_MIDDLE, ALIGN_BOTTOM };
+
   // The menu button's class name.
   static const char kViewClassName[];
 

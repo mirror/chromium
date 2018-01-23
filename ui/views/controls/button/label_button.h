@@ -89,6 +89,9 @@ class VIEWS_EXPORT LabelButton : public Button, public NativeThemeDelegate {
   // subclasses.
   virtual std::unique_ptr<LabelButtonBorder> CreateDefaultBorder() const;
 
+  // Set vertical image centering. default = ALIGN_MIDDLE.
+  void SetImageAlignment(VerticalAlignment v_align);
+
   // View:
   void SetBorder(std::unique_ptr<Border> border) override;
   gfx::Size CalculatePreferredSize() const override;
@@ -238,6 +241,8 @@ class VIEWS_EXPORT LabelButton : public Button, public NativeThemeDelegate {
   // text direction) while |this| is laid out as ALIGN_LEFT (alignment matches
   // UI direction).
   gfx::HorizontalAlignment horizontal_alignment_;
+
+  VerticalAlignment v_align_ = ALIGN_MIDDLE;
 
   DISALLOW_COPY_AND_ASSIGN(LabelButton);
 };
