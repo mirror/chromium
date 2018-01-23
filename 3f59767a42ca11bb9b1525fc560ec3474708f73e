@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b09f94_0b3f01d8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "source is too generic. Could you change this to submissionSource?",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e414f858_07cda645",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "Could you log submissionSource as well?",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751188c0_90065405",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "submissionSource?",
+      "range": {
+        "startLine": 457,
+        "startChar": 31,
+        "endLine": 457,
+        "endChar": 37
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802c4fc4_09ba1315",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "nit: assertEquals? Or replace other uses of assertEquals by Assert.assertEquals?",
+      "range": {
+        "startLine": 830,
+        "startChar": 12,
+        "endLine": 830,
+        "endChar": 31
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cac0919_d06497ee",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "Could you add another test case to ensure that navigation without user interaction does not trigger commit()?",
+      "range": {
+        "startLine": 1032,
+        "startChar": 47,
+        "endLine": 1032,
+        "endChar": 67
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a66241_512c3447",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-23T19:35:03Z",
+      "side": 1,
+      "message": "Hmm... This still allows for a chance that AUTOFILL_CANCEL occurs after AUTOFILL_COMMIT in production.\nWould it help here to load another URL and check for types?",
+      "range": {
+        "startLine": 1033,
+        "startChar": 12,
+        "endLine": 1033,
+        "endChar": 41
+      },
+      "revId": "3f59767a42ca11bb9b1525fc560ec3474708f73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
