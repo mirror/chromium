@@ -596,6 +596,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     return last_auto_resize_request_number_;
   }
 
+  const viz::LocalSurfaceId& last_auto_resize_surface_id() const {
+    return last_auto_resize_surface_id_;
+  }
+
   bool HasGestureStopped() override;
 
   // viz::mojom::CompositorFrameSink implementation.
@@ -881,6 +885,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   gfx::Size max_size_for_auto_resize_;
 
   uint64_t last_auto_resize_request_number_ = 0ul;
+  viz::LocalSurfaceId last_auto_resize_surface_id_;
 
   bool waiting_for_screen_rects_ack_;
   gfx::Rect last_view_screen_rect_;

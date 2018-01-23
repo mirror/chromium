@@ -301,6 +301,11 @@ IPC_STRUCT_BEGIN(ViewHostMsg_ResizeOrRepaint_ACK_Params)
   // A unique monotonically increasing sequence number used to identify this
   // ACK.
   IPC_STRUCT_MEMBER(uint64_t, sequence_number)
+
+  // When |optional_local_surface_id| is populated, the child has created a new
+  // local surface id for the parent to use.
+  IPC_STRUCT_MEMBER(base::Optional<viz::LocalSurfaceId>,
+                    optional_local_surface_id)
 IPC_STRUCT_END()
 
 // Messages sent from the browser to the renderer.

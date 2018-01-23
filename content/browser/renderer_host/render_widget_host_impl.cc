@@ -2074,6 +2074,8 @@ void RenderWidgetHostImpl::OnResizeOrRepaintACK(
   DidCompleteResizeOrRepaint(params, paint_start);
 
   last_auto_resize_request_number_ = params.sequence_number;
+  if (params.optional_local_surface_id)
+    last_auto_resize_surface_id_ = *params.optional_local_surface_id;
 
   if (auto_resize_enabled_) {
     bool post_callback = new_auto_size_.IsEmpty();
@@ -2497,6 +2499,9 @@ void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
     return;
 
   viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  if (last_auto_resize_surface_id_ == local_surface_id)
+    return;
+
   if (local_surface_id.is_valid()) {
     ScreenInfo screen_info;
     GetScreenInfo(&screen_info);
