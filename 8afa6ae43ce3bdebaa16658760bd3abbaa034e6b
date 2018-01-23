@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32f717b8_826eac80",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3169,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-23T02:31:42Z",
+      "side": 1,
+      "message": "I think the old test was setting a selection after the \u003cspan\u003e but before the text node, but the test is now setting a selection at the beginning of the \"b\" text node. Doesn\u0027t really matter either way I think (I verified that this test still fails before the fix).",
+      "revId": "8afa6ae43ce3bdebaa16658760bd3abbaa034e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
