@@ -105,6 +105,24 @@
       "revId": "0cca07ada65cc95d013181390c125e5904de046a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b675ff_df591462",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-23T18:37:36Z",
+      "side": 1,
+      "message": "It\u0027s not really redundant as there is no duplicated logic, but I agree that it\u0027s extra. The code that checks is redundant IMO because it\u0027s already handled in AddOnSystemSaltReady.\n\nAnyway, it\u0027s not a big deal so lgtm.",
+      "parentUuid": "02c2e454_7b5bdb88",
+      "revId": "0cca07ada65cc95d013181390c125e5904de046a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
