@@ -1574,3 +1574,6 @@ crbug.com/708175 virtual/mojo-blobs/external/wpt/IndexedDB/interleaved-cursors.h
 
 crbug.com/529963 paint/invalidation/background/background-attachment-fixed-scrolled.html [ Failure ]
 Bug(none) fast/multicol/hit-test-translate-z.html [ Failure ]
+
+crbug.com/805134 http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
+crbug.com/805134 virtual/threaded/http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
