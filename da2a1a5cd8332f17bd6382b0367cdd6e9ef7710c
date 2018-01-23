@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "fcdae3c6_b2779a24",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-23T02:20:50Z",
+      "side": 1,
+      "message": "Could you explain what the flow should be to retrieve the correct AOMContentAXTree from ComputedAccessibleNode in blink, in this scenario?",
+      "parentUuid": "8002eb25_46994947",
+      "revId": "da2a1a5cd8332f17bd6382b0367cdd6e9ef7710c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe8cef1a_89a3587c",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 14
