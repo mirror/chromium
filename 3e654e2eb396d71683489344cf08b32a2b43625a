@@ -124,6 +124,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753a9839_7ffed946",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-23T18:11:07Z",
+      "side": 1,
+      "message": "Agreed that decomposing public/cpp is the best solution. Currently the auto-gen code makes use of almost everything in cpp/bindings. We could consider changing the generator to do less #include\u0027s when the mojom file doesn\u0027t contain any interfaces.\n\n(But for now, I am fine with duplicating SerializedHandle.)",
+      "parentUuid": "1a95a941_260edc76",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
