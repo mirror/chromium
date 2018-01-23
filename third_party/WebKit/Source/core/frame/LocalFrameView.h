@@ -923,6 +923,8 @@ class CORE_EXPORT LocalFrameView final
   // scrolling should continue in the parent process.
   void ScrollRectToVisibleInRemoteParent(const LayoutRect&,
                                          const WebScrollIntoViewParams&);
+  // Zooms into the given rectangle.
+  void ZoomIntoRect(const LayoutRect&, const WebScrollIntoViewParams&);
 
   PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());

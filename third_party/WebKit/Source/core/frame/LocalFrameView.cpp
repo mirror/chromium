@@ -4566,6 +4566,12 @@ void LocalFrameView::ScrollRectToVisibleInRemoteParent(
       params);
 }
 
+void LocalFrameView::ZoomIntoRect(const LayoutRect& rect,
+                                  const WebScrollIntoViewParams& params) {
+  DCHECK(GetFrame().IsMainFrame());
+  GetFrame().Client()->ZoomIntoRect(PixelSnappedIntRect(rect), params);
+}
+
 void LocalFrameView::ScrollContentsIfNeeded() {
   if (pending_scroll_delta_.IsZero())
     return;
