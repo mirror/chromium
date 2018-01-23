@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abada62_468d5033",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-23T17:18:12Z",
+      "side": 1,
+      "message": "We\u0027re now passing notificationId twice in both places we call displayNotificationInternal.\n\nActually we are now in a position to stop using this \u0027tag\u0027 parameter at all - we can do away with NotificationConstants.EXTRA_NOTIFICATION_INFO_TAG completely, and stop passing it back to c++ on click/close, since we pass the notification id back anyway, which is the same.\n\n(android studio has some v useful \u0027find usages\u0027 \u0026 \u0027refactor method\u0027 tools that can speed up this kind of refactoring, let me know if you want a demo!)",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 100
+      },
+      "revId": "d48b1670f051196057dd42bfbced1ef48f466275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6412c2_d63cde54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-23T17:18:12Z",
+      "side": 1,
+      "message": "|tag| is now unused here - see my comment above",
+      "revId": "d48b1670f051196057dd42bfbced1ef48f466275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
