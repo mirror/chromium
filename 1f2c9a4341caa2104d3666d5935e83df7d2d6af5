@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0abed872_7c122dd9",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-23T21:14:00Z",
+      "side": 1,
+      "message": "Can you rewrite this so that use_icf uses this conditional for the default value in compiler.gni instead? i.e., this becomes\n\nif (use_icf) {\n  ldflags +\u003d [ ... ]\n}\n\nand you move the rest of this logic into the declare_args() block.",
+      "revId": "1f2c9a4341caa2104d3666d5935e83df7d2d6af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
