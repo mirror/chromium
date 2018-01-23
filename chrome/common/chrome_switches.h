@@ -324,6 +324,10 @@ extern const char kEnableNewAppMenuIcon[];
 extern const char kUseSystemDefaultPrinter[];
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+extern const char kEnableMprisClient[];
+#endif
+
 bool ExtensionsDisabled(const base::CommandLine& command_line);
 bool ExtensionsDisabled();
 

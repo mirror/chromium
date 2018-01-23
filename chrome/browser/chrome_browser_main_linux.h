@@ -11,6 +11,8 @@
 #include "base/macros.h"
 #include "chrome/browser/chrome_browser_main_posix.h"
 
+class MprisClient;
+
 class ChromeBrowserMainPartsLinux : public ChromeBrowserMainPartsPosix {
  public:
   explicit ChromeBrowserMainPartsLinux(
@@ -25,6 +27,8 @@ class ChromeBrowserMainPartsLinux : public ChromeBrowserMainPartsPosix {
   void PostDestroyThreads() override;
 
  private:
+  std::unique_ptr<MprisClient> mpris_client_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsLinux);
 };
 
