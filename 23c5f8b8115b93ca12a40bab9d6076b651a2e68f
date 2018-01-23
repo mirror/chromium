@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d7fa09_dbaa2bf1",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-23T00:23:36Z",
+      "side": 1,
+      "message": "Don\u0027t these need to be:\n\nstatic_cast\u003cdouble\u003e(dpi.width()) / dpi_max;\n\ninstead of:\n\nstatic_cast\u003cdouble\u003e(dpi.width() / dpi_max);\n\n?",
+      "revId": "23c5f8b8115b93ca12a40bab9d6076b651a2e68f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
