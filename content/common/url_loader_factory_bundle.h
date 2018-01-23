@@ -72,6 +72,10 @@ class CONTENT_EXPORT URLLoaderFactoryBundle {
   // original (this) bundle.
   URLLoaderFactoryBundle Clone();
 
+  // The |new_bundle| contains replacement factories for a subset of the
+  // existing bundle.
+  void Update(URLLoaderFactoryBundle new_bundle);
+
  private:
   friend struct mojo::StructTraits<
       content::mojom::URLLoaderFactoryBundleDataView,
