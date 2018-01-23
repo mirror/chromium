@@ -70,6 +70,30 @@
       "revId": "f6b2c55849697168023d2eef238f3adc26981e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834c9cb5_e380835b",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 5440,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-23T17:26:59Z",
+      "side": 1,
+      "message": "I\u0027m fine with disabling it on iOS (I consider a disabled test something that should be looked into, even if, in practice, it likely won\u0027t be, while a build rule buries it).  I do feel that someone should look into this, but as this isn\u0027t code worked on by the network team, we\u0027re unlikely to do it.",
+      "parentUuid": "e31b7d93_bfbf4029",
+      "range": {
+        "startLine": 5440,
+        "startChar": 23,
+        "endLine": 5440,
+        "endChar": 48
+      },
+      "revId": "f6b2c55849697168023d2eef238f3adc26981e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
