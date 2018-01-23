@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a2f585_3492d109",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T11:27:31Z",
+      "side": 1,
+      "message": "Do we know that these methods are not going to be called more than once per navigation? If so, we could assert in maybeSchedule() that there isn\u0027t already a runnable scheduled (otherwise we\u0027d end up overwriting the existing one and therefore not being able to cancel it). If not, we have to find some other way of preventing that...",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466911ec_12ca0662",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-23T11:27:31Z",
+      "side": 1,
+      "message": "This is included in cancel() (via clearRunnable()). Or you could just replace the call to cancel() with setting |mCancelled| to true.",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
