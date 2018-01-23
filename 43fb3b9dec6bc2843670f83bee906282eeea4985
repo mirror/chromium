@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c249135f_e3d2700c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-23T16:04:51Z",
+      "side": 1,
+      "message": "Would it be better to pass an empty string?",
+      "range": {
+        "startLine": 1824,
+        "startChar": 39,
+        "endLine": 1824,
+        "endChar": 45
+      },
+      "revId": "43fb3b9dec6bc2843670f83bee906282eeea4985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93206ceb_e68864a4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4702,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-23T16:04:51Z",
+      "side": 1,
+      "message": "default does not allow compiler to show warnings for unhandled cases. Can we replace default with concrete enum entries?",
+      "range": {
+        "startLine": 4702,
+        "startChar": 6,
+        "endLine": 4702,
+        "endChar": 13
+      },
+      "revId": "43fb3b9dec6bc2843670f83bee906282eeea4985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
