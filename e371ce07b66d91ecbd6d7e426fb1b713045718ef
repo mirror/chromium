@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e3b4482_c3c08146",
+        "filename": "components/viz/common/switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T02:01:13Z",
+      "side": 1,
+      "message": "Maybe remove the flag in ui [1]?\n\n[1] https://cs.chromium.org/chromium/src/services/ui/common/switches.h?type\u003dcs\u0026l\u003d16",
+      "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d158f19_3f532e04",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-23T02:01:13Z",
+      "side": 1,
+      "message": "Can you file a bug to set-up a finch-trial for this? And leave a TODO here for that? (see for example [1])\n\n[1] https://cs.chromium.org/chromium/src/components/viz/common/features.h?type\u003dcs\u0026l\u003d17",
+      "revId": "e371ce07b66d91ecbd6d7e426fb1b713045718ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
