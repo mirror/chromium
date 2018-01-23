@@ -1151,4 +1151,9 @@ void LocalFrameClientImpl::DidChangeContents() {
     web_frame_->Client()->DidChangeContents();
 }
 
+void LocalFrameClientImpl::FrameRectsChanged(const IntRect& frame_rect) {
+  if (web_frame_->Client())
+    web_frame_->Client()->FrameRectsChanged(frame_rect);
+}
+
 }  // namespace blink
