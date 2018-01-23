@@ -111,9 +111,10 @@ void ServiceWorkerDispatcher::WillStopCurrentWorkerThread() {
 scoped_refptr<WebServiceWorkerImpl>
 ServiceWorkerDispatcher::GetOrCreateServiceWorker(
     blink::mojom::ServiceWorkerObjectInfoPtr info) {
-  if (!info || info->handle_id == blink::mojom::kInvalidServiceWorkerHandleId ||
-      info->version_id == blink::mojom::kInvalidServiceWorkerVersionId)
+  if (!info)
     return nullptr;
+  DCHECK(info->handle_id != blink::mojom::kInvalidServiceWorkerHandleId &&
+         info->version_id != blink::mojom::kInvalidServiceWorkerVersionId);
 
   WorkerObjectMap::iterator found = service_workers_.find(info->handle_id);
   if (found != service_workers_.end())

@@ -65,9 +65,11 @@ void WebServiceWorkerProviderImpl::SetClient(
 
   blink::mojom::ServiceWorkerObjectInfoPtr controller =
       context_->TakeController();
-  if (!controller ||
-      controller->handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
+  if (!controller)
     return;
+  DCHECK(controller->handle_id != blink::mojom::kInvalidServiceWorkerHandleId &&
+         controller->version_id !=
+             blink::mojom::kInvalidServiceWorkerVersionId);
   SetController(std::move(controller), context_->used_features(),
                 false /* notify_controllerchange */);
 }
