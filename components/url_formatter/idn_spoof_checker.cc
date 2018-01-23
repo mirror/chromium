@@ -156,7 +156,8 @@ IDNSpoofChecker::IDNSpoofChecker() {
   //   - {U+0185 (ƅ), U+044C (ь), U+048D (ҍ), U+0432 (в)} => b
   //   - {U+03C9 (ω), U+0448 (ш), U+0449 (щ)} => w
   //   - {U+043C (м), U+04CE (ӎ)} => m
-  //   - U+043F(п) => n
+  //   - U+043F (п) => n
+  //   - U+0454 (є) => e
   //   - U+0491 (ґ) => r
   //   - U+0493 (ғ) => f
   //   - U+04AB (ҫ) => c
@@ -172,7 +173,7 @@ IDNSpoofChecker::IDNSpoofChecker() {
       icu::UnicodeString::fromUTF8("[þϼҏ] > p; [ħнћңҥӈԧԩ] > h;"
                                    "[ĸκкқҝҟҡӄԟ] > k; [ŧтҭ] > t;"
                                    "[ƅьҍв] > b;  [ωшщ] > w; [мӎ] > m;"
-                                   "п > n; ћ > h; ґ > r; ғ > f; ҫ > c;"
+                                   "п > n; є > e; ґ > r; ғ > f; ҫ > c;"
                                    "ұ > y; [χҳӽӿ] > x; [ҽҿ] > e;"
 #if defined(OS_WIN)
                                    "ӏ > i;"
