@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "167cea89_26f63fb6",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T21:50:08Z",
+      "side": 1,
+      "message": "Ok, so \"pulling\" in the sizing info is tricky then. (Using FrameOwner interface still seems like a reasonable thing to do though.)",
+      "parentUuid": "226af6c3_bb4173a3",
+      "range": {
+        "startLine": 466,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 3
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0072b38c_5737d61a",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 24
@@ -871,6 +895,30 @@
     },
     {
       "key": {
+        "uuid": "2b94f4de_dd0c8df4",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T21:50:08Z",
+      "side": 1,
+      "message": "What \"value\" does this method add when we could do the sizing repack in the caller and then just access the client \"directly\":\n\n...-\u003eFrameWidget()-\u003eClient()-\u003eIntrinsicSizingInfoChanged(web_sizing_info);\n\n(meaning one less extension point; one that ATM does not add any additional semantics et.c)",
+      "parentUuid": "2b54ccf1_412055e2",
+      "range": {
+        "startLine": 546,
+        "startChar": 2,
+        "endLine": 546,
+        "endChar": 55
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0eac434_183099af",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 24
@@ -953,6 +1001,30 @@
       "side": 1,
       "message": "\u003e This is also true when embedded (cross-site) through an \u003ciframe\u003e. (Add test?)\n\nThat is true, but in that case it should not re-size, right? Are you suggesting that I\nadd a test to verify that?",
       "parentUuid": "03207de5_7931e92c",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 50
+      },
+      "revId": "4d7341e24766e117a03c93ae567b9e58aad7f8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc61aa62_e7a69b54",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGRoot.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-23T21:50:08Z",
+      "side": 1,
+      "message": "This predicate is used below to determine the replaced logical width/height, so while the embedder is not affected, the embeddee will be.",
+      "parentUuid": "1091cef8_7259d646",
       "range": {
         "startLine": 104,
         "startChar": 6,
