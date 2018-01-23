@@ -1109,8 +1109,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         [[SideSwipeController alloc] initWithTabModel:_model
                                          browserState:_browserState];
     [_sideSwipeController setSnapshotDelegate:self];
-    _sideSwipeController.toolbarInteractionHandler =
+    _sideSwipeController.primaryToolbarInteractionHandler =
         self.primaryToolbarCoordinator;
+    _sideSwipeController.secondaryToolbarSnapshotProvider =
+        self.secondaryToolbarCoordinator;
     [_sideSwipeController setSwipeDelegate:self];
     [_sideSwipeController setTabStripDelegate:self.tabStripCoordinator];
   }
@@ -1975,8 +1977,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [_toolbarCoordinator start];
   }
 
-  self.sideSwipeController.toolbarInteractionHandler =
+  self.sideSwipeController.primaryToolbarInteractionHandler =
       self.primaryToolbarCoordinator;
+  self.sideSwipeController.secondaryToolbarSnapshotProvider =
+      self.secondaryToolbarCoordinator;
 
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
@@ -2169,7 +2173,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     if (self.secondaryToolbarCoordinator) {
       [[self view]
           insertSubview:self.secondaryToolbarCoordinator.viewController.view
-           aboveSubview:infoBarContainerView];
+           aboveSubview:self.primaryToolbarCoordinator.viewController.view];
     }
     AddNamedGuide(kOmniboxGuide, self.view);
     AddNamedGuide(kBackButtonGuide, self.view);

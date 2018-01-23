@@ -6,14 +6,20 @@
 
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/chrome_url_constants.h"
+#import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+subclassing.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
+#import "ios/web/public/navigation_item.h"
+#import "ios/web/public/navigation_manager.h"
+#import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -58,6 +64,22 @@
       ios::BookmarkModelFactory::GetForBrowserState(self.browserState);
 }
 
+#pragma mark - SideSwipeToolbarSnapshotProviding
+
+- (UIImage*)toolbarSideSwipeSnapshotForTab:(Tab*)tab {
+  web::WebState* webState = tab.webState;
+
+  [self updateToolbarForSideSwipeSnapshot:webState];
+
+  UIImage* toolbarSnapshot = CaptureViewWithOption(
+      [self.viewController view], [[UIScreen mainScreen] scale],
+      kClientSideRendering);
+
+  [self resetToolbarAfterSideSwipeSnapshot];
+
+  return toolbarSnapshot;
+}
+
 #pragma mark - ToolbarCoordinating
 
 - (void)updateToolbarState {
@@ -92,6 +114,24 @@
       [[ToolbarButtonVisibilityConfiguration alloc] initWithType:type];
 
   return buttonFactory;
+}
+
+- (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {
+  web::NavigationItem* item =
+      webState->GetNavigationManager()->GetVisibleItem();
+  GURL URL = item ? item->GetURL().GetOrigin() : GURL::EmptyGURL();
+  BOOL isNTP = (URL == GURL(kChromeUINewTabURL));
+
+  [self.mediator updateConsumerForWebState:webState];
+  if (webState != self.webStateList->GetActiveWebState() || isNTP) {
+    [self.viewController updateForSideSwipeSnapshotOnNTP:isNTP];
+  }
+}
+
+- (void)resetToolbarAfterSideSwipeSnapshot {
+  [self.mediator
+      updateConsumerForWebState:self.webStateList->GetActiveWebState()];
+  [self.viewController resetAfterSideSwipeSnapshot];
 }
 
 @end
