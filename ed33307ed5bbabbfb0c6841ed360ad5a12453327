@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e36bc539_8c8a2064",
+        "filename": "content/common/url_loader_factory_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:59:55Z",
+      "side": 1,
+      "message": "Nit: emplace()",
+      "revId": "ed33307ed5bbabbfb0c6841ed360ad5a12453327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e2486a_c4772c13",
+        "filename": "content/common/url_loader_factory_bundle_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-23T10:59:55Z",
+      "side": 1,
+      "message": "Nit: no need to use an intermediate here, |out_bundle| shouldn\u0027t ever be used if this function returns false.",
+      "revId": "ed33307ed5bbabbfb0c6841ed360ad5a12453327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
