@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4dc56ac_bc6cd858",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-23T05:32:05Z",
+      "side": 1,
+      "message": "It\u0027s defined in ContentViewCore. It is still the class providing the API for embedder who wants to add the observer.",
+      "parentUuid": "dd2d15a4_c00304ee",
+      "revId": "330e1f3904ba2ca5fd4e42bbdfb05557d05a1856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be865b5_6a8bbd7a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-23T04:38:23Z",
       "side": 1,
       "message": "I don\u0027t see this being actually added as observer?",
+      "range": {
+        "startLine": 25,
+        "startChar": 64,
+        "endLine": 25,
+        "endChar": 92
+      },
+      "revId": "330e1f3904ba2ca5fd4e42bbdfb05557d05a1856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8e0824_463757a4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-23T05:32:05Z",
+      "side": 1,
+      "message": "Should have added it in CVCImpl.initialize(). Was a bigger CL and it was left out by mistake. while splitting it.... done.",
+      "parentUuid": "0be865b5_6a8bbd7a",
       "range": {
         "startLine": 25,
         "startChar": 64,
@@ -56,6 +98,24 @@
       "revId": "330e1f3904ba2ca5fd4e42bbdfb05557d05a1856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c459d7_cfcb27a7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-23T05:32:05Z",
+      "side": 1,
+      "message": "Good catch. Done",
+      "parentUuid": "5a50034b_46423523",
+      "revId": "330e1f3904ba2ca5fd4e42bbdfb05557d05a1856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
