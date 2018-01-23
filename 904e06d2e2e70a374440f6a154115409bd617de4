@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439e4ebb_490867d6",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-23T02:55:26Z",
+      "side": 1,
+      "message": "nit: move this to test_suites.pyl",
+      "revId": "904e06d2e2e70a374440f6a154115409bd617de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81515a8_ab4d57fc",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-23T02:55:26Z",
+      "side": 1,
+      "message": "i.e., to \u0027args\u0027 here.",
+      "revId": "904e06d2e2e70a374440f6a154115409bd617de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
