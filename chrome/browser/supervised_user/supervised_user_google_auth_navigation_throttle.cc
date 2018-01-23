@@ -120,6 +120,13 @@ SupervisedUserGoogleAuthNavigationThrottle::ShouldProceed() {
     return content::NavigationThrottle::DEFER;
 
 #if !defined(OS_ANDROID)
+
+#if defined(OS_CHROMEOS)
+  // Chrome OS uses Mirror account consistency for Unicorn users and a re-mint
+  // is already underway when we reach here.
+  return content::NavigationThrottle::DEFER;
+#endif
+
   // TODO(bauerb): Show a reauthentication dialog.
   return content::NavigationThrottle::CANCEL_AND_IGNORE;
 #else
