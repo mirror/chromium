@@ -3163,4 +3163,31 @@ TEST_F(InputMethodControllerTest, ExecCommandDuringComposition) {
   EXPECT_EQ("hello<b>world</b>", div->InnerHTMLAsString());
 }
 
+TEST_F(InputMethodControllerTest, SetCompositionAfterNonEditableElement) {
+  Element* div = InsertHTMLElement(
+      "<div id='sample' contenteditable='true'>"
+      "<span contenteditable='false'>a</span>b</div>",
+      "sample");
+
+  GetFrame().Selection().SetSelectionAndEndTyping(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(EphemeralRange(Position(div, 1), Position(div, 1)))
+          .Build());
+
+  // Open a composition and insert some text.
+  Controller().SetComposition(String::FromUTF8("c"), Vector<ImeTextSpan>(), 1,
+                              1);
+
+  // Add some more text to the composition.
+  Controller().SetComposition(String::FromUTF8("cd"), Vector<ImeTextSpan>(), 2,
+                              2);
+
+  EXPECT_STREQ("acdb", div->innerText().Utf8().data());
+
+  const PlainTextRange& composition_offsets =
+      PlainTextRange::Create(*div, Controller().CompositionEphemeralRange());
+  EXPECT_EQ(1u, composition_offsets.Start());
+  EXPECT_EQ(3u, composition_offsets.End());
+}
+
 }  // namespace blink
