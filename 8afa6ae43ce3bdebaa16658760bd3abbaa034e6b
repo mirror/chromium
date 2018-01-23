@@ -16,6 +16,47 @@
       "revId": "8afa6ae43ce3bdebaa16658760bd3abbaa034e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e37aeb_3df8af4b",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3169,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T03:38:29Z",
+      "side": 1,
+      "message": "Yes for \u003cspan\u003efoo\u003c/span\u003e. span@0 and \"foo\"@0 should work as same.",
+      "parentUuid": "32f717b8_826eac80",
+      "revId": "8afa6ae43ce3bdebaa16658760bd3abbaa034e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12e65396_9d30760b",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3169,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-23T03:38:29Z",
+      "side": 1,
+      "message": "nit: s/^|/|/",
+      "range": {
+        "startLine": 3169,
+        "startChar": 45,
+        "endLine": 3169,
+        "endChar": 47
+      },
+      "revId": "8afa6ae43ce3bdebaa16658760bd3abbaa034e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
