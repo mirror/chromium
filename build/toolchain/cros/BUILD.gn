@@ -132,5 +132,17 @@ gcc_toolchain("v8_snapshot") {
     v8_current_cpu = v8_target_cpu
     current_os = "linux"
     use_sysroot = false
+
+    use_ozone = false
+    ozone_platform_cast = false
+    ozone_platform_gbm = false
+    ozone_platform_headless = false
+    ozone_platform_x11 = false
+    ozone_platform_wayland = false
+    use_v4lplugin = false
+    use_v4l2_codec = false
+    use_vaapi = false
+    use_cras = false
+    use_bundled_fontconfig = false
   }
 }
