@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb6bdf2_2a05f47b",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-23T20:55:01Z",
+      "side": 1,
+      "message": "I think the SHA-1 derived ID should be used in the browser code as well, when the sink is created. This would lessen the chance of inadvertently leaking device UUIDs in collected data.",
+      "revId": "68c0b4ce8b9ec4d78da45f88d8c3adbbbfcc4594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ed1c01_23580e2b",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-23T20:55:01Z",
+      "side": 1,
+      "message": "- Is it important that we use a different token for each profile?\n- Is it important that we use a randomized token?\n\nIn other words, is it possible to just use a fixed token given that SHA-1 is one-way?",
+      "revId": "68c0b4ce8b9ec4d78da45f88d8c3adbbbfcc4594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e645ceb_e7b82731",
+        "filename": "chrome/common/media_router/discovery/media_sink_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-23T20:55:01Z",
+      "side": 1,
+      "message": "IIUC this is done for DIAL sinks to detect duplicate sinks in dual discovery. Do we still detect duplicates by sink IDs in the in-browser cast discovery? If not, can this logic be removed?",
+      "revId": "68c0b4ce8b9ec4d78da45f88d8c3adbbbfcc4594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
