@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "418176e1_117932af",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "This is not the tracker code, the data store doesn\u0027t know about the TabStrip and doesn\u0027t use the WebContentObservers, it just maintain the current state.",
+      "parentUuid": "4a8bd11a_3fb328e0",
+      "range": {
+        "startLine": 67,
+        "startChar": 45,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043c46d5_d72d877e",
         "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T16:11:54Z",
       "side": 1,
       "message": "Why not have a different code path for WebContentsDestroyed?",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 46
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b41fcf_e95e7941",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "The problem will be the same, the issue is that another observer might cause the tab to be active (or audible) after our WebContentObserver::WebContentsDestroyed has been called, so I need to modify how the Tab -\u003e TabID mapping is done (i.e. stop using the existing_tabs_ structure). Having 2 separate functions will mean that in some case the TabID will be removed from |tab_ids_|, and in some case not. Whether it gets removed or not from this map doesn\u0027t matter so much, the only thing we need to be careful with is to not reuse a previous TabID when the memory for a WebContents get reused.",
+      "parentUuid": "043c46d5_d72d877e",
       "range": {
         "startLine": 101,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "922a1803_11b12cfa",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8f4c66_0e63ffcf",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7e0315f_0fdca1b1",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "23fad260_d9df7814",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7e0315f_0fdca1b1",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80dceb8c_4a67c4b1",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-23T16:11:54Z",
       "side": 1,
       "message": "Better as a map from interval length to the tab state map?",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1c7482_e9420c0c",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "The data store doesn\u0027t need to know about the interval lengths, this is controlled by the tracker (this wasn\u0027t the case in my initial implementation but fdoray@ suggested that I remove the lengths from this class).",
+      "parentUuid": "80dceb8c_4a67c4b1",
       "range": {
         "startLine": 142,
         "startChar": 7,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "39964845_8827e987",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82481e0_a700c1f8",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 38
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecfc2093_0f5fd54e",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 9
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "21c7335b_002e7d9d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecfc2093_0f5fd54e",
+      "range": {
+        "startLine": 147,
+        "startChar": 40,
+        "endLine": 147,
+        "endChar": 46
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82befd2d_433597f8",
         "filename": "chrome/browser/metrics/tab_stats_data_store.h",
         "patchSetId": 9
@@ -183,6 +351,30 @@
       "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfc4819_8d06b7af",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-23T17:59:43Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "82befd2d_433597f8",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "15516fe905f53f5e4ec0bd661844a2391a887c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
