@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa010039_4b1654e9",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e53803a_1f2121a7",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b4434a_ab065f3b",
         "filename": "components/arc/arc_session.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d88e62c_c758b64d",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b4434a_ab065f3b",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "80bb5499_f460bee5",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "Agreed, I\u0027ve been wanting to do that. I don\u0027t think adding a TODO here really makes sense, since this is just one such usage of of StartArcInstance, but I\u0027ll open a bug for it.",
+      "parentUuid": "11e39cb8_c6b4ef4f",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54048a6f_2f0e331e",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 6
@@ -85,6 +139,24 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce35cfd_26a11efe",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54048a6f_2f0e331e",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "10158faa_aed89101",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c70296f_45896b66",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "944f26b9_9d619729",
         "filename": "components/arc/arc_session_impl.h",
         "patchSetId": 6
@@ -119,6 +209,24 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf59dc32_8bf1e7fc",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "I prefer your suggestion. I\u0027ll change it.",
+      "parentUuid": "944f26b9_9d619729",
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +250,30 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84fea67_c3ecc67f",
+        "filename": "components/arc/test/fake_arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 1,
+      "message": "It is in EmulateMiniContainerStart also (instead of StartMiniInstance). I created this function so that the mock behaves more like the real thing, that is the boot failure notification occurs asynchronously. boot_failure_emulated_enabled_ will cause starting the mini and doing the upgrade to fail, as how it behaved before.",
+      "parentUuid": "0748de17_50e64691",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cafd1d71_46d919fd",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 0,
+      "message": "Not as far as I can tell. It\u0027s still being used in arc_session_runner.h.",
+      "parentUuid": "3a081739_431c9490",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ec6153_9d32f0fd",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2419c8fb_16ffd2a9",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-23T06:09:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a3ec6153_9d32f0fd",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
