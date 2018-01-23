@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c065a5_cffee9ef",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-23T14:18:36Z",
+      "side": 1,
+      "message": "Please clarify what is the difference, and why we care about no renames.",
+      "range": {
+        "startLine": 139,
+        "startChar": 33,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "c589db64d6f837193ae0a9b128b02db3b9ad9cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
