@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed6ce69_f961d5a6",
+        "filename": "device/ctap/ctap_authenticator_request_param.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-23T16:51:18Z",
+      "side": 1,
+      "message": "nit: Let\u0027s rename this. I don\u0027t think it\u0027s accurate to call this CBOR serialization for commands with no parameters. The distinction is that while parameters are certainly CBOR-encoded, this is returning the command value, which is not.",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "c13d9410e3f6a0d7a5e07ab255f811242c0acc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20ce237_6bccc40c",
+        "filename": "device/ctap/ctap_request_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-23T16:51:18Z",
+      "side": 1,
+      "message": "Can you change all these test vectors to be like \"constexpr uint8_t kClientDataHash[]\"? (per style guide)",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c13d9410e3f6a0d7a5e07ab255f811242c0acc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
