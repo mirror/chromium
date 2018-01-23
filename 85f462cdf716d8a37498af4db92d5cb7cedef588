@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd31f0e4_deedbd8d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ARIAUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T21:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b9c6995_b936af74",
+      "range": {
+        "startLine": 136,
+        "startChar": 49,
+        "endLine": 136,
+        "endChar": 56
+      },
+      "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84272b2_44c6f07a",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/TextPrompt.js",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2018-01-17T22:31:39Z",
       "side": 1,
       "message": "let\u0027s put either inline or inside inspectorView css. (this will inject css in every shadowRoot)",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 10
+      },
+      "revId": "85f462cdf716d8a37498af4db92d5cb7cedef588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c82ffa4_02b7ee1f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/inspectorCommon.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-23T21:00:38Z",
+      "side": 1,
+      "message": "Inlined.",
+      "parentUuid": "316da7db_cb2419ed",
       "range": {
         "startLine": 402,
         "startChar": 0,
