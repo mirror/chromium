@@ -21,6 +21,8 @@ static_library("storage_monitor") {
     "removable_storage_observer.h",
     "storage_info.cc",
     "storage_info.h",
+    "storage_info_utils.cc",
+    "storage_info_utils.h",
     "storage_monitor.cc",
     "storage_monitor.h",
     "storage_monitor_chromeos.cc",
