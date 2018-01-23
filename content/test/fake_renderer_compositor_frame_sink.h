@@ -44,6 +44,9 @@ class FakeRendererCompositorFrameSink
   // Runs all queued messages.
   void Flush();
 
+  void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
+                             viz::CompositorFrame frame);
+
  private:
   mojo::Binding<viz::mojom::CompositorFrameSinkClient> binding_;
   viz::mojom::CompositorFrameSinkPtr sink_;

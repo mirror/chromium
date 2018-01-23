@@ -33,4 +33,11 @@ void FakeRendererCompositorFrameSink::Flush() {
   binding_.FlushForTesting();
 }
 
+void FakeRendererCompositorFrameSink::SubmitCompositorFrame(
+    const viz::LocalSurfaceId& local_surface_id,
+    viz::CompositorFrame frame) {
+  sink_->SubmitCompositorFrame(local_surface_id, std::move(frame), {}, {});
+  sink_.FlushForTesting();
+}
+
 }  // namespace content
