@@ -291,7 +291,7 @@ class GpuImageDecodeCacheTest
                                  ->image();
       DecodedDrawImage new_draw_image(
           std::move(image), draw_image.src_rect_offset(),
-          draw_image.scale_adjustment(), draw_image.filter_quality());
+          draw_image.scale_adjustment(), draw_image.filter_quality(), true);
       return new_draw_image;
     }
 
