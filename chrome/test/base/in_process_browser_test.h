@@ -189,7 +189,7 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   Browser* CreateBrowser(Profile* profile);
 
   // Similar to |CreateBrowser|, but creates an incognito browser.
-  Browser* CreateIncognitoBrowser();
+  Browser* CreateIncognitoBrowser(Profile* profile = nullptr);
 
   // Creates a browser for a popup window with a single tab (about:blank), waits
   // for the tab to finish loading, and shows the browser.
