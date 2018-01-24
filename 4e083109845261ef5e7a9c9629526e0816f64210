@@ -52,6 +52,24 @@
       "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cd3c7f_e7dcad83",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T23:20:40Z",
+      "side": 1,
+      "message": "Thanks for clarifying that up.",
+      "parentUuid": "2fe14053_50540709",
+      "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

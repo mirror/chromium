@@ -16,6 +16,24 @@
       "revId": "44958f2ba68189d90222624d7d2036253b334816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac085cd_10e02373",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/services-not-found.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T23:20:40Z",
+      "side": 1,
+      "message": "Yes, this should be here. The original test checked for the message.\n\nJust to verify, I checked the API documentation, and it mentions the NotFoundError being thrown in the last step.\nhttps://webbluetoothcg.github.io/web-bluetooth/#getgattchildren",
+      "parentUuid": "f7097da8_5a320025",
+      "revId": "44958f2ba68189d90222624d7d2036253b334816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
