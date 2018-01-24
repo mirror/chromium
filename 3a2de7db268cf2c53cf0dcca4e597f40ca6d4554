@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91734719_04a987a6",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-24T18:54:42Z",
+      "side": 1,
+      "message": "As I understand it, WorkletGlobalScope is not a secure context, as a consequence of the spec:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp?rcl\u003daed3360befb33562ca7c13d4321022b9f67d9a06\u0026l\u003d40\n\nI tried to explain in this CL description, but I\u0027m proposing a different definition of \"is secure\" for the purposes of origin trials. I don\u0027t want to apply that globally.\n\nMy preference would be to avoid special-casing origin trials, but I don\u0027t see how without changing the spec. I\u0027m certainly open to other suggestions.",
+      "parentUuid": "9da561be_1e82fb5d",
+      "revId": "3a2de7db268cf2c53cf0dcca4e597f40ca6d4554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4991b122_1d635f21",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
         "patchSetId": 1
