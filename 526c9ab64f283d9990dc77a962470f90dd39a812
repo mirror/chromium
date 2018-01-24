@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "347cabbc_c9c1c4fa",
+        "filename": "content/browser/media/capture/web_contents_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T07:08:55Z",
+      "side": 1,
+      "message": "It\u0027s a private member of the WCVCD class. It can\u0027t be subclassed. :)",
+      "parentUuid": "1ccc378c_0d962891",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "526c9ab64f283d9990dc77a962470f90dd39a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5b68abe_cceda7a6",
         "filename": "content/browser/media/capture/web_contents_video_capture_device.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "526c9ab64f283d9990dc77a962470f90dd39a812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd8d987_6c2b54ac",
+        "filename": "content/browser/media/capture/web_contents_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T07:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b68abe_cceda7a6",
+      "revId": "526c9ab64f283d9990dc77a962470f90dd39a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
