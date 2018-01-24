@@ -16,6 +16,24 @@
       "revId": "32fd23890dd8bf005ca81b7c81c4dbe01f1a6572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c17d471_f9fde490",
+        "filename": "third_party/polymer/v1_0/rsync_exclude.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:37:32Z",
+      "side": 1,
+      "message": "The way it works is as follows:\n\n1) We invoke bower and store all downloaded code under a temporary components/ folder.\n2) We rsync from components/ folder to components-chromium/ folder. The latter is the only folder that is checked into the repository. rsync_exclude.txt is used during this copying at https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/reproduce.sh?l\u003d72.\n\nSo the \"package.json\" file is not generated automatically. It just happens that the newer version of paper-button (and other Polymer elementns), now have package.json files, and we need to exclude them since they are unnecessary for our purposes.",
+      "parentUuid": "913c22c8_819f774e",
+      "revId": "32fd23890dd8bf005ca81b7c81c4dbe01f1a6572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
