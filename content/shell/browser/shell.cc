@@ -210,8 +210,7 @@ void Shell::LoadURL(const GURL& url) {
 
 void Shell::LoadURLForFrame(const GURL& url, const std::string& frame_name) {
   NavigationController::LoadURLParams params(url);
-  params.transition_type = ui::PageTransitionFromInt(
-      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+  params.transition_type = ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK);
   params.frame_name = frame_name;
   web_contents_->GetController().LoadURLWithParams(params);
   web_contents_->Focus();

@@ -1090,6 +1090,17 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     bool dest_is_view_source_mode,
     bool force_browsing_instance_swap,
     bool was_server_redirect) {
+  LOG(ERROR) << "RFHM::DetermineSiteInstanceForURL";
+  LOG(ERROR) << "  dest_url=" << dest_url;
+  LOG(ERROR) << "  source_instance="
+             << (source_instance ? source_instance->GetSiteURL() : GURL());
+  LOG(ERROR) << "  current_instance=" << current_instance->GetSiteURL();
+  LOG(ERROR) << "  dest_instance="
+             << (dest_instance ? dest_instance->GetSiteURL() : GURL());
+  LOG(ERROR) << "  force_bi_swap=" << force_browsing_instance_swap;
+  LOG(ERROR) << "  transition="
+             << ui::PageTransitionGetCoreTransitionString(transition);
+
   SiteInstanceImpl* current_instance_impl =
       static_cast<SiteInstanceImpl*>(current_instance);
   NavigationControllerImpl& controller =
@@ -1326,6 +1337,19 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
         !dest_url_requires_dedicated_process) {
       return SiteInstanceDescriptor(parent->GetSiteInstance());
     }
+  }
+
+  // TODO(alexmos): is this needed for KEYWORD and KEYWORD_GENERATED?
+  // TODO(alexmos): Move into a helper.
+  if (frame_tree_node_->IsMainFrame() &&
+      (ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_AUTO_BOOKMARK) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_GENERATED))) {
+    LOG(ERROR) << "  --> Page transition is forcing BI swap";
+    return SiteInstanceDescriptor(browser_context, dest_url,
+                                  SiteInstanceRelation::UNRELATED);
   }
 
   // Start the new renderer in a new SiteInstance, but in the current
