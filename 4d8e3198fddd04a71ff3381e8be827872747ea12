@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5ff9ad_a8d769b0",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T20:44:06Z",
+      "side": 1,
+      "message": "What happens if we turn on contextual suggestions for Android and forget to update this?  What are the consequences?",
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e5a0b2_d4de5701",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T20:44:06Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645ed636_f7988011",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T20:44:06Z",
+      "side": 1,
+      "message": "Are you sure you want to append something to the request if visit_time is null?\n(What does the code below do when it is null?)",
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db07c25_282f234e",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T20:44:06Z",
+      "side": 1,
+      "message": "I know you\u0027re sending this to pair with sync data.  Does this calculation actually correspond with what sync is doing?",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
