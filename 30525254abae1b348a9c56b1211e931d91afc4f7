@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc65c9ca_b4adacaa",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-24T22:33:50Z",
+      "side": 1,
+      "message": "IMHO, this is currently a little less readable than inverting this to:\nif (debugFlagsExist \u0026\u0026 shouldUseDebugCommandLine()) {\n     CommandLine.initFromFile(commandLineFile.getPath());\n     return;\n}\n...",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "30525254abae1b348a9c56b1211e931d91afc4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
