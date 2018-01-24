@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "25558d4b_0e8567f1",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "That only solves the problem after the job is queued, and we have exactly the same problem with finding the task runner on which to queue the jobs at submit time, so we need a weak pointer to that too, which adds the overhead to all of the running calls rather than the startup/shutdown.",
+      "parentUuid": "c3bebdd2_76bcaa1d",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3942296_ef0a96e2",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 48
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "8f05c820_4fd41ab5",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "I thought DCHECK is how we catch coding errors (being called on the wrong thread/sequence).  If we do that for this, why not all the rest of the thread affinity checks in these classes?",
+      "parentUuid": "d3942296_ef0a96e2",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97878c35_2861e2ec",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 48
@@ -70,6 +112,24 @@
       "writtenOn": "2018-01-24T10:52:46Z",
       "side": 1,
       "message": "I understand this now, the intent is to signal to the animators that they can no longer use this mutator. However I think this is still racy. This destructor could finish before the worklet gets the seal message and the worklet could try to call GetWeakPtr(). Instead, how about my suggestion to pass a weak pointer rather than a raw pointer at construction time?",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbe7fd5_cb3819e7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "Seal is a blocking call. After completion there will be no further callbacks attempted - which is the key to making sure nothing references the members including the task runner.\n\nIf we are going back to the weak pointer again then we\u0027ll have to work through the how together, because from all of the ways I have looked at and tried it fails to solve all of the issues.  In each of the ways for a small but seemingly fundamental way.",
+      "parentUuid": "97878c35_2861e2ec",
       "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "ae4f06e6_0a3a4c7e",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d44d8cf_ff5d7caa",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac83b75b_4af1684c",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
         "patchSetId": 48
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "8784d34c_65013985",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac83b75b_4af1684c",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5506d0f6_fc39f93a",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
         "patchSetId": 48
@@ -136,6 +244,24 @@
       "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383f6666_af7395fd",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T13:43:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5506d0f6_fc39f93a",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
