@@ -8,6 +8,7 @@
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/test/fake_web_frame_scheduler.h"
 #include "platform/testing/HistogramTester.h"
+#include "platform/wtf/Time.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/page/launching_process_state.h"
@@ -1216,6 +1217,94 @@ TEST_F(QueueingTimeEstimatorTest, SplitEQTByFrameStatus) {
   TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration2", 5,
                 fine_grained);
   TestSplitSumsTotal(expected_sums, 6);
+}
+
+// ExpectedQueueingTime split by before and after interactive time is only
+// reported once per disjoint window. A window is disregarded if it includes
+// both time before and after interactive. The following is a detailed
+// explanation of EQT per window and interactive:
+// A dummy task at 100 ms is used to initialize the QueueingTimeEstimator. Thus
+// disjoint windows are on 1000ms intervals modulo 100ms.
+// Window 1: A 300 ms and a 400 ms task. EQT:125.
+// Window 2: Tasks of durations 200 ms and 500 ms. Also the first 100 ms from a
+// 200 ms task. EQT: 160.
+// Window 3: The second 100 ms from the 200 ms task. Also, tasks of durations
+// 100 ms and 200 ms. EQT: 30. Interactive time is computed to be within this
+// window, at time 2.4 seconds, which is 300 ms after the beginning of this
+// window. However, this value is only computed until window 5. Windows 1-2 will
+// be reported as before the page is interactive, and windows 4-7 will be
+// reported as after.
+// Windows 4-6: Tasks of durations 100 ms and 200 ms, in some order. EQT: 25.
+// Window 7: The first 600 ms from a task of duration 800 ms. EQT: 300.
+TEST_F(QueueingTimeEstimatorTest, SplitEQTByInteractiveness) {
+  QueueingTimeEstimatorForTest estimator(
+      &client, base::TimeDelta::FromSeconds(1), 5, time);
+  time += base::TimeDelta::FromMilliseconds(100);
+  // Dummy task to initialize the estimator.
+  estimator.OnTopLevelTaskStarted(time, nullptr);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  scoped_refptr<MainThreadTaskQueueForTest> queue1(
+      new MainThreadTaskQueueForTest(QueueType::kTest));
+  std::unique_ptr<FakeWebFrameScheduler> frame1 =
+      FakeWebFrameScheduler::Builder().Build();
+  queue1->SetFrameScheduler(frame1.get());
+
+  // Some tasks before the page is interactive.
+  const int task_durations[] = {300, 400, 200, 500, 200};
+  for (int duration : task_durations) {
+    time += base::TimeDelta::FromMilliseconds(100);
+    estimator.OnTopLevelTaskStarted(time, queue1.get());
+    time += base::TimeDelta::FromMilliseconds(duration);
+    estimator.OnTopLevelTaskCompleted(time);
+  }
+  std::vector<BucketExpectation> expected = {{125, 1}, {160, 1}};
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration", 2, expected);
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration2", 2,
+                GetFineGrained(expected));
+  // Interactive time has not yet been detected, so there should be no reports
+  // for that split yet.
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.Before", 0,
+                {});
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.After", 0,
+                {});
+
+  // Some tasks after the page is interactive but before we know it.
+  const int task_durations2[] = {100, 200, 100, 200, 100};
+  for (int duration : task_durations2) {
+    time += base::TimeDelta::FromMilliseconds(300);
+    estimator.OnTopLevelTaskStarted(time, queue1.get());
+    time += base::TimeDelta::FromMilliseconds(duration);
+    estimator.OnTopLevelTaskCompleted(time);
+  }
+  frame1->SetInteractiveTime(TimeTicksFromSeconds(2.4));
+  expected = {{125, 1}, {160, 1}, {30, 1}, {25, 1}};
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration", 4, expected);
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration2", 4,
+                GetFineGrained(expected));
+  // No window has ended after time to interactive was set.
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.Before", 0,
+                {});
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.After", 0,
+                {});
+  // Some more tasks after time to interactive is known.
+  const int task_durations3[] = {200, 200, 100, 800};
+  for (int duration : task_durations3) {
+    time += base::TimeDelta::FromMilliseconds(400);
+    estimator.OnTopLevelTaskStarted(time, queue1.get());
+    time += base::TimeDelta::FromMilliseconds(duration);
+    estimator.OnTopLevelTaskCompleted(time);
+  }
+  expected = {{125, 1}, {160, 1}, {30, 1}, {25, 3}, {300, 1}};
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration", 7, expected);
+  TestHistogram("RendererScheduler.ExpectedTaskQueueingDuration2", 7,
+                GetFineGrained(expected));
+  std::vector<BucketExpectation> before_expected = {{125, 1}, {160, 1}};
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.Before", 2,
+                GetFineGrained(before_expected));
+  std::vector<BucketExpectation> after_expected = {{25, 3}, {300, 1}};
+  TestHistogram("RendererScheduler.ExpectedQueueingTimeByInteractive.After", 4,
+                GetFineGrained(after_expected));
 }
 
 }  // namespace scheduler

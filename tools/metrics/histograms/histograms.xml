@@ -71189,6 +71189,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true"
+    name="RendererScheduler.ExpectedQueueingTimeByInteractive"
+    units="microseconds">
+  <owner>npm@chromium.org</owner>
+  <owner>tdresser@chromium.org</owner>
+  <summary>
+    Expected queueing time split by tasks according to whether the frame was
+    interactive or not, in microseconds. Recorded for each 1000 ms window.
+  </summary>
+</histogram>
+
 <histogram base="true" name="RendererScheduler.ExpectedQueueingTimeByTaskQueue"
     units="microseconds">
   <owner>npm@chromium.org</owner>
@@ -110277,6 +110288,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              frames."/>
   <affected-histogram
       name="RendererScheduler.ExpectedQueueingTimeByFrameStatus"/>
+</histogram_suffixes>
+
+<histogram_suffixes
+    name="RendererScheduler.ExpectedQueueingTime.InteractiveSplit"
+    separator=".">
+  <suffix name="Before"
+      label="Expected Queueing Time before page was interactive"/>
+  <suffix name="After"
+      label="Expected Queueing Time after page became interactive"/>
+  <affected-histogram
+      name="RendererScheduler.ExpectedQueueingTimeByInteractive"/>
 </histogram_suffixes>
 
 <histogram_suffixes
