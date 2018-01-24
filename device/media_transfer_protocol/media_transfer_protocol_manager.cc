@@ -338,7 +338,7 @@ class MediaTransferProtocolManagerImpl : public MediaTransferProtocolManager {
       return;
     }
     for (auto& observer : observers_)
-      observer.StorageChanged(false /* detach */, storage_name);
+      observer.StorageDetached(storage_name);
   }
 
   void OnStorageChanged(bool is_attach, const std::string& storage_name) {
@@ -379,8 +379,11 @@ class MediaTransferProtocolManagerImpl : public MediaTransferProtocolManager {
 
     // New storage. Add it and let the observers know.
     storage_info_map_.insert(std::make_pair(storage_name, storage_info));
+    const auto it = storage_info_map_.find(storage_name);
+    if (it == storage_info_map_.end()) return;
+
     for (auto& observer : observers_)
-      observer.StorageChanged(true /* is attach */, storage_name);
+      observer.StorageAttached(&it->second);
   }
 
   void OnGetStorageInfoFromDevice(const mojom::MtpStorageInfo& storage_info) {
