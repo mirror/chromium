@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2608e22f_9777c525",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-24T23:00:14Z",
+      "side": 1,
+      "message": "Would it just be simpler to tell HitTestAggregator it\u0027s FrameSinkId for it to call FSMI::OnAggregatedHitTestRegionListUpdated() or FSMI:: SwitchActiveAggregatedHitTestRegionList() directly? That would remove the need for HitTestManagerDelegate I think.",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ecf970_24a1019c",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-24T23:00:14Z",
+      "side": 1,
+      "message": "The base::Optional isn\u0027t necessary, since the unique_ptr can be null already.",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
