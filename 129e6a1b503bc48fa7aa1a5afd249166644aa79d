@@ -22,6 +22,30 @@
       "revId": "129e6a1b503bc48fa7aa1a5afd249166644aa79d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47fddf0_bf2fd350",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-24T01:03:59Z",
+      "side": 1,
+      "message": "Oh whoops, I totally meant to add that and forgot. Followup CL incoming.",
+      "parentUuid": "1330f021_0748bf94",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "129e6a1b503bc48fa7aa1a5afd249166644aa79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
