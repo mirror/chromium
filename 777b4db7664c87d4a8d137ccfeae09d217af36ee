@@ -16,6 +16,24 @@
       "revId": "777b4db7664c87d4a8d137ccfeae09d217af36ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece227b6_7df34aa8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadForegroundServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-24T18:49:51Z",
+      "side": 1,
+      "message": "Good point! The way the code is structured, it doesn\u0027t run into that issue (checks the conditions in a certain order), but that doesn\u0027t seem quite robust. I have changed the architecture to set the target SDK instead.",
+      "parentUuid": "f80aecd6_f111e772",
+      "revId": "777b4db7664c87d4a8d137ccfeae09d217af36ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
