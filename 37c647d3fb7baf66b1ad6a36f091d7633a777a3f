@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce16ad3_9de71fd6",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:05:42Z",
+      "side": 1,
+      "message": "A quick audit of LabelButton revealed that Checkbox (and RadioButton) are the only users to toggle multi-line, but I wonder if this behavior would still be appropriate for other buttons. Perhaps that\u0027s okay to ignore for now, but it might help to leave a comment here that this is intended for the Checkbox and RadioButton subclasses of LabelButton.",
+      "revId": "37c647d3fb7baf66b1ad6a36f091d7633a777a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58605779_86522374",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:05:42Z",
+      "side": 1,
+      "message": "nit: \"// The image should be centered on the first line of the multi-line label.\"",
+      "revId": "37c647d3fb7baf66b1ad6a36f091d7633a777a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
