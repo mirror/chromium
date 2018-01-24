@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "09fb49fa_aa2d0132",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T14:27:50Z",
+      "side": 1,
+      "message": "Ok, I can be convinced that there is indeed a bug where delegate_-\u003eOnReconcileFinished() is actually not always called, and in that this is the right place to do this.\n\nIt\u0027s not easy to move the delegate_-\u003eOnReconcileFinished() call here, and this can be considered out of scope for your CL, so I guess we can land this.",
+      "parentUuid": "2a783c49_049682c5",
+      "revId": "c631a9d1ed69600ec8bbaa802a8337013719b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43d4395f_cbdfa0ee",
         "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
         "patchSetId": 6
