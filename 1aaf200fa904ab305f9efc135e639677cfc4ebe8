@@ -22,6 +22,30 @@
       "revId": "1aaf200fa904ab305f9efc135e639677cfc4ebe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee7ef68_0c0f5031",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-24T00:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ec5694_be96795f",
+      "range": {
+        "startLine": 378,
+        "startChar": 6,
+        "endLine": 378,
+        "endChar": 7
+      },
+      "revId": "1aaf200fa904ab305f9efc135e639677cfc4ebe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
