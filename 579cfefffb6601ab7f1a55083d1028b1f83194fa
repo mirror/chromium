@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "741ef045_a4286d44",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-24T02:08:54Z",
+      "side": 1,
+      "message": "Could you remove this as not used anymore?",
+      "revId": "579cfefffb6601ab7f1a55083d1028b1f83194fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
