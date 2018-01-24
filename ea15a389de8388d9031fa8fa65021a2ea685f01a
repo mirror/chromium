@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028a292c_a563e423",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-24T04:57:10Z",
+      "side": 1,
+      "message": "This line is to check if the code under components/arc does not contain base::MakeUnique.\nSo, could you revert?",
+      "revId": "ea15a389de8388d9031fa8fa65021a2ea685f01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
