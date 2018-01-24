@@ -9,7 +9,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/simple_url_loader.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -17,6 +16,7 @@
 #include "content/public/test/simple_url_loader_test_helper.h"
 #include "content/shell/browser/shell.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 
 namespace content {
@@ -74,7 +74,8 @@ int LoadBasicRequestOnIOThread(
 class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
  public:
   NetworkServiceRestartBrowserTest() {
-    scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
+    scoped_feature_list_.InitAndEnableFeature(
+        network::features::kNetworkService);
     EXPECT_TRUE(embedded_test_server()->Start());
   }
 
