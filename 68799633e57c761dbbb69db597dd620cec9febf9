@@ -16,6 +16,24 @@
       "revId": "68799633e57c761dbbb69db597dd620cec9febf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ae0b37_364812ac",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2201,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-24T16:59:47Z",
+      "side": 1,
+      "message": "|-infoBarContainerStateDidChangeAnimated:| handles rotation changes for the infobar and is called from |-didRotateFromInterfaceOrientation:|. I\u0027ve tested that this CL works properly in rotations on iPhoneX.",
+      "parentUuid": "2fa8979f_699d2506",
+      "revId": "68799633e57c761dbbb69db597dd620cec9febf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
