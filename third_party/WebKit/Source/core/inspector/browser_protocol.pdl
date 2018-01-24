@@ -3162,6 +3162,11 @@ experimental domain Memory
   # Stop collecting native memory profile.
   command stopSampling
 
+  # Take current native memory snapshot.
+  command takeSnapshot
+    returns
+      SamplingProfile profile
+
   # Retrieve collected native memory profile.
   command getSamplingProfile
     returns
