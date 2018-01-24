@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "791a48b9_08fe5ddf",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-24T23:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f989a1b_ce23323b",
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba63bc5f_30c4f7b1",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5632a5dd_d7fda981",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-24T23:43:48Z",
+      "side": 1,
+      "message": "Yes, it is initialized to null until print-preview-app is attached and creates it. Fixed.",
+      "parentUuid": "ba63bc5f_30c4f7b1",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5091cf14_37c152bd",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-24T23:43:48Z",
+      "side": 1,
+      "message": "Removed. It was left over from when I put destination-dialog inside of print-preview-app instead of destination-settings, where this is not needed since destination-settings contains the change button.",
+      "parentUuid": "b38d2fd4_3c54f5b5",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d38b6890_1ea98c43",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ef62ea_c615a718",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-24T23:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38b6890_1ea98c43",
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
