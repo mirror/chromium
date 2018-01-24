@@ -22,6 +22,23 @@
       "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a674725_845e53ca",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-24T21:07:54Z",
+      "side": 1,
+      "message": "Comments should be complete sentences. This \"Returns the filename of the elided logcat of the device.\" ?",
+      "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
