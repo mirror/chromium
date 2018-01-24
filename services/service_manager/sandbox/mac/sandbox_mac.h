@@ -47,6 +47,7 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxMac {
   static const char* kSandboxBrowserPID;
   static const char* kSandboxBundlePath;
   static const char* kSandboxChromeBundleId;
+  static const char* kSandboxComponentFlash;
   static const char* kSandboxComponentPath;
   static const char* kSandboxDisableDenialLogging;
   static const char* kSandboxEnableLogging;

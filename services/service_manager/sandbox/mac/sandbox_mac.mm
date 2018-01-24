@@ -85,6 +85,7 @@ static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) ==
 const char* SandboxMac::kSandboxBrowserPID = "BROWSER_PID";
 const char* SandboxMac::kSandboxBundlePath = "BUNDLE_PATH";
 const char* SandboxMac::kSandboxChromeBundleId = "BUNDLE_ID";
+const char* SandboxMac::kSandboxComponentFlash = "COMPONENT_FLASH";
 const char* SandboxMac::kSandboxComponentPath = "COMPONENT_PATH";
 const char* SandboxMac::kSandboxDisableDenialLogging =
     "DISABLE_SANDBOX_DENIAL_LOGGING";
