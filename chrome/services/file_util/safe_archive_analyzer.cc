@@ -43,3 +43,12 @@ void SafeArchiveAnalyzer::AnalyzeDmgFile(base::File dmg_file,
   NOTREACHED();
 #endif
 }
+
+void SafeArchiveAnalyzer::AnalyzeRarFile(base::File rar_file,
+                                         AnalyzeRarFileCallback callback) {
+  DCHECK(rar_file.IsValid());
+
+  safe_browsing::ArchiveAnalyzerResults results;
+  //TODO(vakh): Implement this.
+  std::move(callback).Run(results);
+}
