@@ -18,6 +18,8 @@
 #include "components/viz/service/frame_sinks/surface_resource_holder.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
 #include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
+#include "components/viz/service/hit_test/hit_test_aggregator.h"
+#include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
 #include "components/viz/service/surfaces/surface_client.h"
 #include "components/viz/service/viz_service_export.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
@@ -34,7 +36,8 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
       public SurfaceResourceHolderClient,
       public SurfaceClient,
       public CapturableFrameSink,
-      public mojom::CompositorFrameSink {
+      public mojom::CompositorFrameSink,
+      public HitTestAggregatorDelegate {
  public:
   using AggregatedDamageCallback =
       base::RepeatingCallback<void(const LocalSurfaceId& local_surface_id,
@@ -98,12 +101,24 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
       CompositorFrame frame,
       mojom::HitTestRegionListPtr hit_test_region_list = nullptr);
 
+  // HitTestAggregatorDelegate:
+  // These two functions are called if and only if |is_root_| is true.
+  void OnAggregatedHitTestRegionListUpdated(
+      mojo::ScopedSharedBufferHandle active_handle,
+      uint32_t active_handle_size,
+      mojo::ScopedSharedBufferHandle idle_handle,
+      uint32_t idle_handle_size) override;
+  void SwitchActiveAggregatedHitTestRegionList(
+      uint8_t active_handle_index) override;
+
   // CapturableFrameSink implementation.
   void AttachCaptureClient(CapturableFrameSink::Client* client) override;
   void DetachCaptureClient(CapturableFrameSink::Client* client) override;
   gfx::Size GetSurfaceSize() override;
   void RequestCopyOfSurface(
       std::unique_ptr<CopyOutputRequest> request) override;
+
+  HitTestAggregator* GetHitTestAggregator();
 
   Surface* GetCurrentSurfaceForTesting();
 
@@ -154,6 +169,9 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   base::Optional<LocalSurfaceId> referenced_local_surface_id_;
 
   SurfaceResourceHolder surface_resource_holder_;
+
+  // This has a HitTestAggregator if and only if |is_root_| is true.
+  base::Optional<std::unique_ptr<HitTestAggregator>> hit_test_aggregator_;
 
   // Counts the number of CompositorFrames that have been submitted and have not
   // yet received an ACK.

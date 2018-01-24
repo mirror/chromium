@@ -33,6 +33,11 @@ CompositorFrameSinkSupport::CompositorFrameSinkSupport(
       weak_factory_(this) {
   // This may result in SetBeginFrameSource() being called.
   frame_sink_manager_->RegisterCompositorFrameSinkSupport(frame_sink_id_, this);
+
+  if (is_root) {
+    hit_test_aggregator_ = std::make_unique<HitTestAggregator>(
+        frame_sink_manager->hit_test_manager(), this);
+  }
 }
 
 CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
@@ -278,6 +283,24 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   return true;
 }
 
+void CompositorFrameSinkSupport::OnAggregatedHitTestRegionListUpdated(
+    mojo::ScopedSharedBufferHandle active_handle,
+    uint32_t active_handle_size,
+    mojo::ScopedSharedBufferHandle idle_handle,
+    uint32_t idle_handle_size) {
+  DCHECK(is_root_);
+  frame_sink_manager_->OnAggregatedHitTestRegionListUpdated(
+      frame_sink_id_, std::move(active_handle), active_handle_size,
+      std::move(idle_handle), idle_handle_size);
+}
+
+void CompositorFrameSinkSupport::SwitchActiveAggregatedHitTestRegionList(
+    uint8_t active_handle_index) {
+  DCHECK(is_root_);
+  frame_sink_manager_->SwitchActiveAggregatedHitTestRegionList(
+      frame_sink_id_, active_handle_index);
+}
+
 void CompositorFrameSinkSupport::UpdateSurfaceReferences(
     const LocalSurfaceId& local_surface_id,
     const std::vector<SurfaceId>& active_referenced_surfaces) {
@@ -430,6 +453,11 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
   ack.has_damage = true;
   if (current_surface->HasActiveFrame())
     surface_manager_->SurfaceModified(current_surface->surface_id(), ack);
+}
+
+HitTestAggregator* CompositorFrameSinkSupport::GetHitTestAggregator() {
+  DCHECK(is_root_ && hit_test_aggregator_.has_value());
+  return hit_test_aggregator_.value().get();
 }
 
 Surface* CompositorFrameSinkSupport::GetCurrentSurfaceForTesting() {
