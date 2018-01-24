@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7c1a411a_3b6a8df3",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-24T08:40:53Z",
+      "side": 1,
+      "message": "I meant 1 AND 2.\nIt would be similar to FileInputType::file_list_/Files()/SetFiles() and HTMLInputType::files()/setFiles().",
+      "parentUuid": "1c424408_ba43c7f0",
+      "revId": "b3b01e6e490d90ade45ba0db8b457093b43e8db0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee0eeb54_59d7a4fe",
         "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.cpp",
         "patchSetId": 9
