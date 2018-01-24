@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0a77cf32_ae4aaf2b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-24T07:12:43Z",
+      "side": 1,
+      "message": "Is nullptr enough?",
+      "range": {
+        "startLine": 1136,
+        "startChar": 24,
+        "endLine": 1136,
+        "endChar": 68
+      },
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f206f6_abe253a9",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-24T07:12:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1145,
+        "startChar": 24,
+        "endLine": 1145,
+        "endChar": 68
+      },
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82890345_81116f22",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
