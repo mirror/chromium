@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93db956_ea89fbf5",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleGradientValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T06:27:56Z",
+      "side": 1,
+      "message": "GetImage is unfortunately not const (I guess because it does some caching behind the scenes, although the cache could just mutable...). I\u0027ll have to implement something to copy a CSSGradientValue :(",
+      "revId": "c794bab2e4cd7586a87815651a282eddbdb7957c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9eb9cd5_f587188f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleGradientValue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T06:27:56Z",
+      "side": 1,
+      "message": "Not sure what to return here.",
+      "revId": "c794bab2e4cd7586a87815651a282eddbdb7957c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785a5f9b_e61e35b9",
+        "filename": "third_party/WebKit/Source/core/css/cssom/StylePropertyMapReadOnly.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T06:27:56Z",
+      "side": 1,
+      "message": "I\u0027ll have to think about how to make this nicer.",
+      "revId": "c794bab2e4cd7586a87815651a282eddbdb7957c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1065d925_e382f5c3",
+        "filename": "third_party/WebKit/Source/core/css/cssom/StyleValueFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T06:27:56Z",
+      "side": 1,
+      "message": "Lots of ugly plumbing of Node to get it to a CSSStyleGradientValue.",
+      "revId": "c794bab2e4cd7586a87815651a282eddbdb7957c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
