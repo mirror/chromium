@@ -22,6 +22,29 @@
       "revId": "eca0b1b81c830eced267db1e25c101c4a8769aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96de6e5_d373e61a",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T19:17:38Z",
+      "side": 1,
+      "message": "I don\u0027t think Chrome side should know about this. It looks only used for UMA. Can we move the UMA recording into ui/app_list instead of exposing this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "eca0b1b81c830eced267db1e25c101c4a8769aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
