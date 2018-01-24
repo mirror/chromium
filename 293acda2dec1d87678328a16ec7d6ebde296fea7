@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31cb25e1_aab367b5",
+        "filename": "components/assist_ranker/example_preprocessing.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-24T23:05:35Z",
+      "side": 1,
+      "message": "Nit: Consider a type alias for the Map\u003c\u003e class here to reduce verbosity.  This would also allow avoiding a using declaration in the .cc file, which would be nice.",
+      "revId": "293acda2dec1d87678328a16ec7d6ebde296fea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
