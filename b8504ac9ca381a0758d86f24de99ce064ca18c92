@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "780f759f_acccf562",
+        "filename": "chrome/common/extensions/docs/templates/intros/commands.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T01:54:46Z",
+      "side": 1,
+      "message": "nit: we don\u0027t want to be inaccurate here, and right now this isn\u0027t the case (right?).  So instead let\u0027s just say \"to be uninstallable.\" (no mention of platforms.)  That way, it\u0027s accurate now and when we fix it to be uniform, which is also useful since we won\u0027t have to specify \"in this version, it doesn\u0027t work most places, and in this version, it doesn\u0027t work anywhere.\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 44,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "b8504ac9ca381a0758d86f24de99ce064ca18c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
