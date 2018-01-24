@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de96d23_6a6192ab",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-24T21:06:41Z",
+      "side": 1,
+      "message": "Let\u0027s combine the OS_CHROMEOS and Feature checks.\n\nbool ShouldAllowStackedTabStripLayout() {\n#if defined(OS_CHROMEOS)\n  return true;\n#else\n  return base::FeatureList::IsEnabled(features::kStackedTabStrip);\n#endif\n}\n\nbool DetermineTabStripLayoutStacked(PrefService* prefs, bool* adjust_layout) {\n  *adjust_layout \u003d false;\n  if (ShouldAllowStackedTabStripLayout()) {\n    *adjust_layout \u003d true;\n    return prefs-\u003eGetBoolean(prefs::kTabStripStackedLayout);\n  }\n  return base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n      switches::kForceStackedTabStripLayout);",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 65
+      },
+      "revId": "f5c001452ae75ceb7eb246efa4ecf4fc5fd13888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
