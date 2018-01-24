@@ -16,6 +16,24 @@
       "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4047e02c_14c79b70",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-24T12:57:03Z",
+      "side": 1,
+      "message": "I am fine with your proposal; I am just surprised that it is more permissive than my proposal. My proposal aims at storing icons as kTouchIcon and checks that there are no icons of this type. On top of that it checks additional properties (only icons of kFavicon of at most of size 16x16).\n\nIn my opinion, your proposal leaves more room for favicon wars (between on-demand and on-visit icons). Say a site has only 32x32 favicon (of type kFavicon) and we desire for a larger icon we would repetitively download an on-demand icon (when displaying the NTP) and delete it again (when visiting the site). My proposal leaves only room for such wars for 16x16 favicon icons.\n\nI agree that my function does not deliver what it promises by its name. Maybe this can be circumvented by \n#1 Renaming to FaviconsForPageURLLookLikeFromSync\n#2 Checking for \"!\u003d 16\" instead of \"\u003e 16\" on line 2326\n\nWhat I conceptually like that the function name refers to sync. If we ever stop syncing favicons, it is more clear that this check is obsolete and can be returned by \"false\".\n\nNevertheless, if this is unacceptable for you, I am also fine for your proposal.",
+      "parentUuid": "f7ef347e_948d0366",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
