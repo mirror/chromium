@@ -4,6 +4,7 @@
 
 #include "chrome/browser/signin/account_reconcilor_factory.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/logging.h"
@@ -20,9 +21,47 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_features.h"
 
+#if defined(OS_CHROMEOS)
+#include "base/time/time.h"
+#include "chrome/browser/lifetime/application_lifetime.h"
+#include "components/user_manager/user_manager.h"
+#include "google_apis/gaia/google_service_auth_error.h"
+#endif
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 #include "components/signin/core/browser/dice_account_reconcilor_delegate.h"
 #endif
+
+namespace {
+
+#if defined(OS_CHROMEOS)
+class ChromeOSChildAccountReconcilorDelegate
+    : public signin::MirrorAccountReconcilorDelegate {
+ public:
+  explicit ChromeOSChildAccountReconcilorDelegate(
+      SigninManagerBase* signin_manager)
+      : signin::MirrorAccountReconcilorDelegate(signin_manager) {}
+
+  base::TimeDelta GetReconcileTimeout() const override {
+    return base::TimeDelta::FromSeconds(10);
+  }
+
+  void OnReconcileError(const GoogleServiceAuthError& error) override {
+    if (error.state() == GoogleServiceAuthError::CONNECTION_FAILED) {
+      // Mark the account to require an online sign in.
+      const user_manager::User* primary_user =
+          user_manager::UserManager::Get()->GetPrimaryUser();
+      user_manager::UserManager::Get()->SaveForceOnlineSignin(
+          primary_user->GetAccountId(), true /* force_online_signin */);
+
+      // Force a logout.
+      chrome::AttemptUserExit();
+    }
+  }
+};
+#endif
+
+}  // namespace
 
 AccountReconcilorFactory::AccountReconcilorFactory()
     : BrowserContextKeyedServiceFactory(
@@ -65,15 +104,35 @@ KeyedService* AccountReconcilorFactory::BuildServiceInstanceFor(
 std::unique_ptr<signin::AccountReconcilorDelegate>
 AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
   if (AccountConsistencyModeManager::IsMirrorEnabledForProfile(profile)) {
-    return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+    std::unique_ptr<signin::AccountReconcilorDelegate> mirror_delegate;
+
+#if defined(OS_CHROMEOS)
+    // Only for child accounts on Chrome OS, use the specialized Mirror
+    // delegate.
+    if (profile->IsChild()) {
+      mirror_delegate =
+          std::make_unique<ChromeOSChildAccountReconcilorDelegate>(
+              SigninManagerFactory::GetForProfile(profile));
+    } else {
+      mirror_delegate =
+          std::make_unique<signin::MirrorAccountReconcilorDelegate>(
+              SigninManagerFactory::GetForProfile(profile));
+    }
+#else
+    mirror_delegate = std::make_unique<signin::MirrorAccountReconcilorDelegate>(
         SigninManagerFactory::GetForProfile(profile));
+#endif
+
+    return mirror_delegate;
   }
   // TODO(droger): Remove this switch case. |AccountConsistencyModeManager| is
   // the source of truth.
   switch (signin::GetAccountConsistencyMethod()) {
     case signin::AccountConsistencyMethod::kMirror:
-      return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
-          SigninManagerFactory::GetForProfile(profile));
+      // It is not possible for |IsMirrorEnabledForProfile| to return false,
+      // and this case being true.
+      NOTREACHED();
+      return nullptr;
     case signin::AccountConsistencyMethod::kDisabled:
     case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
       return std::make_unique<signin::AccountReconcilorDelegate>();
