@@ -16,6 +16,24 @@
       "revId": "f003c17fd2f8928f825308e33d8b4802ec6e40a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02729a50_a1751e0d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "Actually I\u0027m very torn on this one, because CSS clip-path/mask/filter do have the side effect of breaking clip inheritance chain. However I think HasClipRelatedProperty() is really a poor generalization because all these properties affect clip inheritance chain in different way, such generalization is practically useless and leads to bugs when misused. I\u0027ll add a comment to discourage new use of this function.",
+      "parentUuid": "67972f75_55b95ef1",
+      "revId": "f003c17fd2f8928f825308e33d8b4802ec6e40a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

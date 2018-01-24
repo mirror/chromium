@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "341ea9ec_da3e434f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e3c3c06_612d768a",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa778374_b3f74073",
         "filename": "third_party/WebKit/Source/core/paint/CSSMaskPainter.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4794af4b_68591478",
+        "filename": "third_party/WebKit/Source/core/paint/CSSMaskPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa778374_b3f74073",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a7f061_d093b20b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-23T23:16:51Z",
       "side": 1,
       "message": "Do you mean !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07186fa_163aa8de",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "I don\u0027t know yet, since there are other missing pieces for SPv175. However most likely SPv175 is going to match SPv1\u0027s paint behavior in verbatim.",
+      "parentUuid": "d1a7f061_d093b20b",
       "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f34306ae_ea28edd8",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "We currently don\u0027t composite SVGChild. For LayoutSVGRoot it should be fine because the mask is applied as CSS mask instead of SVG mask.",
+      "parentUuid": "323bbdce_0afd4f54",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62e02a1c_88ce59ed",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 7
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6ce40b35_53e8ac94",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "The tricky thing is we can\u0027t intersect layer bound with local_compositing_bound, because child layers can overflow. e.g.\n\n\u003cdiv style\u003d\"mask-box-image:blah; mask-box-outset:10px; width:100px; height:100px; will-change:transform;\"\u003e\n  \u003cdiv style\u003d\"width:1000px; height:1000px; will-change:transform;\"\u003e\u003c/div\u003e\n\u003c/div\u003e\n\nThe layer with mask layer has compositing bounds 100x100 and mask bounding box 120x120, and the mask have to apply to child layer without getting cropped to 100x100.",
+      "parentUuid": "62e02a1c_88ce59ed",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a2d243_73aa2cd1",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-23T23:16:51Z",
       "side": 1,
       "message": "I think this is not necessary since you modified CreatesGroup() also.",
+      "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9258630_cbf4d267",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 1,
+      "message": "Because I modified CreatesGroup() I need to update this DCHECK to match.\n\nThis really needs to be some kind of static_assert to make sure CreatesGroup() matches what we expected, but there is no way we can compare function definition...",
+      "parentUuid": "01a2d243_73aa2cd1",
       "revId": "3f5deac1d044b72c37048b2422474a482b1a74fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

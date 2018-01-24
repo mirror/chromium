@@ -16,6 +16,24 @@
       "revId": "e3c030803714da78700a16020e28fa37016c58f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d837a1b_3ba0d12f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T02:01:23Z",
+      "side": 0,
+      "message": "It was incorrect because we should limit clip-path to only the mask layer or non-composited mask.\n\nkPaintLayerPaintingCompositingMaskPhase can be set by CLM upon painting the mask layer, or by PaintLayerPainter::Paint()/PaintLayerContentsCompositingAllPhases() when painting non-composited layers.",
+      "parentUuid": "7f3713eb_07742e2e",
+      "revId": "e3c030803714da78700a16020e28fa37016c58f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
