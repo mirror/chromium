@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7295d605_b8bd329c",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-24T00:46:14Z",
+      "side": 1,
+      "message": "We don\u0027t really need anything special from sequence task runner. For file operations, we usually create a task runner like this.",
+      "parentUuid": "0191dd73_fb2f4a2d",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04e8557_909271ba",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "00a50c25_9f05d1cf",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-24T00:46:14Z",
+      "side": 1,
+      "message": "Yes, it is back to IO thread. All methods of OfflinePageRequestJob should be called from IO thread and I don\u0027t want to add DCHECK_CURRENTLY_ON for all methods, to complicate the code.",
+      "parentUuid": "f04e8557_909271ba",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a3f79fb_69f05b43",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-23T23:31:31Z",
       "side": 1,
       "message": "If this is on IO thread, shoudl it go to file_task_runner_ to open and read the file?",
+      "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d82c0d_e0a0ec9e",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-24T00:46:14Z",
+      "side": 1,
+      "message": "OpenFile calls FileStream::OpenFile which will delegate the job to file file_task_runner.",
+      "parentUuid": "0a3f79fb_69f05b43",
       "revId": "0434637cf1cf270de5ec7a40f3a462a64065f76d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
