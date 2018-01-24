@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73dbf93_40ccfbbf",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T22:41:57Z",
+      "side": 1,
+      "message": "nit: Pass this in instead of using default arg.",
+      "range": {
+        "startLine": 144,
+        "startChar": 55,
+        "endLine": 144,
+        "endChar": 72
+      },
+      "revId": "d8cc7c1c011a93cba529f6add7484302f6632941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596b482f_c42118fd",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T22:41:57Z",
+      "side": 1,
+      "message": "nit: explicit for single arg ctor",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "d8cc7c1c011a93cba529f6add7484302f6632941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d10ad52_a256b3bb",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T22:41:57Z",
+      "side": 1,
+      "message": "private: section from this point onwards",
+      "revId": "d8cc7c1c011a93cba529f6add7484302f6632941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb6c76c_0a75f1c5",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T22:41:57Z",
+      "side": 1,
+      "message": "This leaks if not added to a view hierarchy. So move it into the \"if\" block around L302 where it is added to the view hierarchy.",
+      "range": {
+        "startLine": 275,
+        "startChar": 30,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "d8cc7c1c011a93cba529f6add7484302f6632941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
