@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc35ba71_f4ac4f1a",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T15:24:54Z",
+      "side": 1,
+      "message": "Add a comment justifying these values (or mentioning that they do matter / picked out of a hat)",
+      "revId": "43c546ddac2b2de7d624d6dd6e1f34256e241394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b36f54_5b892117",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T15:24:54Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "revId": "43c546ddac2b2de7d624d6dd6e1f34256e241394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
