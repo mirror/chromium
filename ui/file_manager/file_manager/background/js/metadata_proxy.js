@@ -21,11 +21,12 @@ metadataProxy.cache_ = new LRUCache(metadataProxy.MAX_CACHED_METADATA_);
  * Returns metadata for the given FileEntry. Uses cached metadata if possible.
  *
  * @param {!FileEntry} entry
+ * @param {boolean=} opt_force_refresh_cache
  * @return {!Promise<!Metadata>}
  */
-metadataProxy.getEntryMetadata = function(entry) {
+metadataProxy.getEntryMetadata = function(entry, opt_force_refresh_cache) {
   var entryURL = entry.toURL();
-  if (metadataProxy.cache_.hasKey(entryURL)) {
+  if (!opt_force_refresh_cache && metadataProxy.cache_.hasKey(entryURL)) {
     return Promise.resolve(metadataProxy.cache_.get(entryURL));
   } else {
     return new Promise(function(resolve, reject) {
