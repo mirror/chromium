@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aab54342_c47652df",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T00:43:30Z",
+      "side": 1,
+      "message": "nit: {} is needed for if statement spanning multiple lines",
+      "revId": "66b8069ac287e6e4e2bad7547e8eaa2f485c13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf20d1e8_f46bc1fa",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 4
