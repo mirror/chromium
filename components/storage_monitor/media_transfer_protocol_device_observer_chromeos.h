@@ -61,10 +61,8 @@ class MediaTransferProtocolDeviceObserverChromeOS
   typedef std::map<std::string, StorageInfo> StorageLocationToInfoMap;
 
   // Enumerate existing mtp storage devices.
-  void EnumerateStorages();
-
-  // The callback for EnumerateStorages().
-  void OnReceivedStorages(const std::vector<std::string>& storages);
+  void EnumerateStorages(
+      std::vector<const device::mojom::MtpStorageInfo*> storage_info_list);
 
   // Find the |storage_map_| key for the record with this |device_id|. Returns
   // true on success, false on failure.
