@@ -69,6 +69,13 @@ class FakeWebMediaPlayerDelegate
     EXPECT_EQ(delegate_id_, delegate_id);
   }
 
+  void PictureInPictureSurfaceIdUpdated(int delegate_id,
+                                        viz::FrameSinkId frame_sink_id,
+                                        uint32_t parent_id,
+                                        base::UnguessableToken nonce) override {
+    EXPECT_EQ(delegate_id_, delegate_id);
+  }
+
   void DidPause(int delegate_id) override {
     EXPECT_EQ(delegate_id_, delegate_id);
     EXPECT_TRUE(playing_);

@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/common/content_export.h"
 #include "ipc/ipc_message_macros.h"
 #include "media/base/media_content_type.h"
@@ -70,6 +71,13 @@ IPC_MESSAGE_ROUTED5(MediaPlayerDelegateHostMsg_OnMediaPlaying,
 IPC_MESSAGE_ROUTED2(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                     int /* delegate_id, distinguishes instances */,
                     bool /* the new muted status */)
+
+IPC_MESSAGE_ROUTED4(
+    MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+    int /* delegate id */,
+    viz::FrameSinkId /* the frame sink id */,
+    uint32_t /* the parent id of the surface id */,
+    base::UnguessableToken /* the nonce of the surface id */)
 
 IPC_MESSAGE_ROUTED2(
     MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
