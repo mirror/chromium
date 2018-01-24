@@ -30,6 +30,10 @@ Polymer({
       notify: true,
     },
 
+    // <if expr="not chromeos">
+    diceEnabled: Boolean,
+    // </if>
+
     /** @private */
     overscroll_: {
       type: Number,

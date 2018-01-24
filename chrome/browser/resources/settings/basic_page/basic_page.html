@@ -24,6 +24,7 @@
 </if>
 
 <if expr="not chromeos">
+<link rel="import" href="../people_page/sync_account_section.html">
 <link rel="import" href="../default_browser_page/default_browser_page.html">
 </if>
 
@@ -139,7 +140,12 @@
         <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
           <settings-section page-title="$i18n{peoplePageTitle}"
               section="people">
-            <settings-people-page prefs="{{prefs}}"></settings-people-page>
+            <settings-people-page prefs="{{prefs}}"
+<if expr="not chromeos">
+                dice-enabled="[[diceEnabled]]"
+</if>
+                >
+            </settings-people-page>
           </settings-section>
         </template>
         <template is="dom-if" if="[[showPage_(pageVisibility.appearance)]]"
