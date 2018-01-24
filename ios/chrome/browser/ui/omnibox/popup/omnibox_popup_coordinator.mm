@@ -44,6 +44,7 @@
 }
 
 - (void)start {
+  _canShowPopup = YES;
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> imageFetcher =
       std::make_unique<image_fetcher::IOSImageDataFetcherWrapper>(
           self.browserState->GetRequestContext());
@@ -68,6 +69,12 @@
 
 - (void)stop {
   _popupView.reset();
+}
+
+#pragma mark - Property accessor
+
+- (BOOL)hasResults {
+  return self.mediator.hasResults;
 }
 
 @end
