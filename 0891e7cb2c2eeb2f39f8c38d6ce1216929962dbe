@@ -22,6 +22,30 @@
       "revId": "0891e7cb2c2eeb2f39f8c38d6ce1216929962dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387f3dfa_070f484e",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-24T18:01:01Z",
+      "side": 1,
+      "message": "Looking at the error it seems to be that the binary contains the content code and tries to use (link against) content.dll at the same time. I\u0027m not sure what is right here but I think all test binaries are statically linked.\n\nSo I guess something depends both on the \"content\" component and some lower level target inside content. Does that make sense?",
+      "parentUuid": "5d96e5e1_fecfc523",
+      "range": {
+        "startLine": 965,
+        "startChar": 0,
+        "endLine": 969,
+        "endChar": 3
+      },
+      "revId": "0891e7cb2c2eeb2f39f8c38d6ce1216929962dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
