@@ -1626,10 +1626,13 @@ TEST_F(SurfaceSynchronizationTest, DeadlineInheritance) {
   const SurfaceId child_id1 = MakeSurfaceId(kChildFrameSink1, 1);
   const SurfaceId arbitrary_id = MakeSurfaceId(kArbitraryFrameSink, 1);
 
+  // Using the default lower bound deadline results in the deadline of 2 frames
+  // effectively being ignored because the default lower bound is 4 frames.
   parent_support().SubmitCompositorFrame(
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
-                          std::vector<TransferableResource>()));
+                          std::vector<TransferableResource>(),
+                          FrameDeadline(2, true)));
 
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
