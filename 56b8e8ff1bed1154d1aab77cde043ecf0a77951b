@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90e71db4_92b197a3",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-24T18:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9b27b20_e9952207",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cb97635_5385999a",
         "filename": "extensions/common/extension_updater_uma.h",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4d30e74a_c8a82cdc",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-24T18:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb97635_5385999a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb7e47a7_1428232e",
         "filename": "extensions/common/extension_updater_uma.h",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cc246aca_504660b0",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-24T18:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7e47a7_1428232e",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb70c919_b812b3ea",
         "filename": "extensions/common/extension_updater_uma.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884c77dc_b26f1590",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-24T18:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb70c919_b812b3ea",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
