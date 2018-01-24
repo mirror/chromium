@@ -581,7 +581,7 @@ bool SystemTray::PerformAction(const ui::Event& event) {
   // detailed menu, hide it; otherwise, show it (and hide any popup that's
   // currently shown).
   if (HasSystemBubble() && full_system_tray_menu_) {
-    system_bubble_->bubble()->Close();
+    CloseBubble();
   } else {
     ShowBubble(event.IsMouseEvent() || event.IsGestureEvent());
     if (event.IsKeyEvent() || (event.flags() & ui::EF_TOUCH_ACCESSIBILITY))
@@ -591,6 +591,7 @@ bool SystemTray::PerformAction(const ui::Event& event) {
 }
 
 void SystemTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   if (!system_bubble_)
     return;
   system_bubble_->bubble()->Close();
