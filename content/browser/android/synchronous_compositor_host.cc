@@ -13,6 +13,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "content/browser/android/synchronous_compositor_browser_filter.h"
+#include "content/browser/android/synchronous_compositor_host_helper.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/android/sync_compositor_statics.h"
@@ -60,14 +61,12 @@ SynchronousCompositorHost::SynchronousCompositorHost(
       need_invalidate_count_(0u),
       did_activate_pending_tree_count_(0u) {
   client_->DidInitializeCompositor(this, process_id_, routing_id_);
+  helper_ = new SynchronousCompositorHostHelper(this);
 }
 
 SynchronousCompositorHost::~SynchronousCompositorHost() {
   client_->DidDestroyCompositor(this, process_id_, routing_id_);
-  if (registered_with_filter_) {
-    if (SynchronousCompositorBrowserFilter* filter = GetFilter())
-      filter->UnregisterHost(this);
-  }
+  helper_->HostDestroyed();
 }
 
 bool SynchronousCompositorHost::OnMessageReceived(const IPC::Message& message) {
@@ -101,16 +100,11 @@ SynchronousCompositorHost::DemandDrawHwAsync(
   SyncCompositorDemandDrawHwParams params(viewport_size,
                                           viewport_rect_for_tile_priority,
                                           transform_for_tile_priority);
-  if (SynchronousCompositorBrowserFilter* filter = GetFilter()) {
-    if (!registered_with_filter_) {
-      filter->RegisterHost(this);
-      registered_with_filter_ = true;
-    }
-    filter->SetFrameFuture(routing_id_, frame_future);
-    sender_->Send(new SyncCompositorMsg_DemandDrawHwAsync(routing_id_, params));
-  } else {
-    frame_future->SetFrame(nullptr);
-  }
+  helper_->BindFilter(static_cast<RenderProcessHostImpl*>(
+                          rwhva_->GetRenderWidgetHost()->GetProcess())
+                          ->synchronous_compositor_filter());
+  helper_->SetFrameFuture(frame_future);
+  sender_->Send(new SyncCompositorMsg_DemandDrawHwAsync(routing_id_, params));
   return frame_future;
 }
 
@@ -150,12 +144,6 @@ SynchronousCompositor::Frame SynchronousCompositorHost::DemandDrawHw(
 void SynchronousCompositorHost::UpdateFrameMetaData(
     viz::CompositorFrameMetadata frame_metadata) {
   rwhva_->SynchronousFrameMetadata(std::move(frame_metadata));
-}
-
-SynchronousCompositorBrowserFilter* SynchronousCompositorHost::GetFilter() {
-  return static_cast<RenderProcessHostImpl*>(
-             rwhva_->GetRenderWidgetHost()->GetProcess())
-      ->synchronous_compositor_filter();
 }
 
 namespace {
@@ -377,10 +365,12 @@ void SynchronousCompositorHost::SendBeginFrame(
     ui::WindowAndroid* window_android,
     const viz::BeginFrameArgs& args) {
   compute_scroll_needs_synchronous_draw_ = false;
-  sender_->Send(new SyncCompositorMsg_BeginFrame(routing_id_, args));
-
-  if (SynchronousCompositorBrowserFilter* filter = GetFilter())
-    filter->SyncStateAfterVSync(window_android, this);
+  helper_->BindFilter(static_cast<RenderProcessHostImpl*>(
+                          rwhva_->GetRenderWidgetHost()->GetProcess())
+                          ->synchronous_compositor_filter());
+  if (!sender_->Send(new SyncCompositorMsg_BeginFrame(routing_id_, args)))
+    return;
+  helper_->WaitAfterVSync(window_android);
 }
 
 void SynchronousCompositorHost::SetBeginFramePaused(bool paused) {
