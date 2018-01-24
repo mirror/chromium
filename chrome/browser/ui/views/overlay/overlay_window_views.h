@@ -24,6 +24,7 @@ class OverlayWindowViews : public OverlayWindow {
   void Hide() override;
   void Close() override;
   void Activate() override;
+  bool IsVisible() override;
   bool IsAlwaysOnTop() const override;
   ui::Layer* GetLayer() override;
   gfx::NativeWindow GetNativeWindow() const override;
@@ -31,6 +32,7 @@ class OverlayWindowViews : public OverlayWindow {
 
  private:
   std::unique_ptr<views::Widget> widget_;
+  std::unique_ptr<views::WidgetDelegate> widget_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayWindowViews);
 };

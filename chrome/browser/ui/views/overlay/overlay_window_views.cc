@@ -74,7 +74,8 @@ void OverlayWindowViews::Init() {
   params.visible_on_all_workspaces = true;
 
   // Set WidgetDelegate for more control over |widget_|.
-  params.delegate = new OverlayWindowWidgetDelegate(widget_.get());
+  widget_delegate_.reset(new OverlayWindowWidgetDelegate(widget_.get()));
+  params.delegate = widget_delegate_.get();
 
   widget_->Init(params);
   widget_->Show();
@@ -98,6 +99,10 @@ void OverlayWindowViews::Close() {
 
 void OverlayWindowViews::Activate() {
   widget_->Activate();
+}
+
+bool OverlayWindowViews::IsVisible() {
+  return widget_->IsVisible();
 }
 
 bool OverlayWindowViews::IsAlwaysOnTop() const {
