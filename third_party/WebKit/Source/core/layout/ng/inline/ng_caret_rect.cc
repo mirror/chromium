@@ -49,6 +49,19 @@ struct CaretPositionResolution {
   NGCaretPosition caret_position;
 };
 
+// TODO(xiaochengh): We shouldn't assume visual fragment order here.
+// NGPhysicalLineBoxFragment should provide its logically first fragment.
+bool IsFragmentLogicallyFirstInLine(
+    const NGPhysicalFragment& fragment,
+    const NGPhysicalLineBoxFragment& current_line) {
+  DCHECK(current_line.Children().size());
+  const NGPhysicalFragment* first_in_line =
+      current_line.Style().Direction() == TextDirection::kLtr
+          ? current_line.Children().front().get()
+          : current_line.Children().back().get();
+  return &fragment == first_in_line;
+}
+
 // TODO(xiaochengh): Try to avoid passing the seemingly redundant line boxes.
 // TODO(xiaochengh): Move this function to NGPhysicalFragment.
 bool IsFragmentAfterLineWrap(const NGPhysicalFragment& fragment,
@@ -58,8 +71,7 @@ bool IsFragmentAfterLineWrap(const NGPhysicalFragment& fragment,
     return false;
   // Only the logically first fragment in each line can be continuation from the
   // last line.
-  // TODO(xiaochengh): Verify if this works for RtL
-  if (&fragment != current_line.Children().front().get())
+  if (!IsFragmentLogicallyFirstInLine(fragment, current_line))
     return false;
   DCHECK(last_line->BreakToken());
   DCHECK(last_line->BreakToken()->IsInlineType());
@@ -77,14 +89,26 @@ bool CanResolveCaretPositionBeforeFragment(
   return !IsFragmentAfterLineWrap(fragment, current_line, last_line);
 }
 
+// TODO(xiaochengh): We shouldn't assume visual fragment order here.
+// NGPhysicalLineBoxFragment should provide its logically last fragment.
+bool IsFragmentLogicallyLastInLine(
+    const NGPhysicalFragment& fragment,
+    const NGPhysicalLineBoxFragment& current_line) {
+  DCHECK(current_line.Children().size());
+  const NGPhysicalFragment* last_in_line =
+      current_line.Style().Direction() == TextDirection::kLtr
+          ? current_line.Children().back().get()
+          : current_line.Children().front().get();
+  return &fragment == last_in_line;
+}
+
 // TODO(xiaochengh): Try to avoid passing the seemingly redundant line box.
 // TODO(xiaochengh): Move this function to NGPhysicalFragment.
 bool IsFragmentBeforeLineWrap(const NGPhysicalFragment& fragment,
                               const NGPhysicalLineBoxFragment& current_line) {
   // Only the logically last fragment in each line can have continuation in the
   // next line.
-  // TODO(xiaochengh): Verify if this works for RtL
-  if (&fragment != current_line.Children().back().get())
+  if (!IsFragmentLogicallyLastInLine(fragment, current_line))
     return false;
   DCHECK(current_line.BreakToken());
   DCHECK(current_line.BreakToken()->IsInlineType());
