@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51754b9c_ed3bc7ad",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPositionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-24T05:02:31Z",
+      "side": 1,
+      "message": "Could you explain why you use ::testing::Test?\n\nIf you don\u0027t need to use functions in EditingTestBase, please consider\nto use PageTest.\n\nAnyway, I\u0027m not sure to benefit of using ::testingTest.",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "1b89189defd0be171764624f0e60da78b2eaa026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
