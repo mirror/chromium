@@ -637,5 +637,10 @@
     "prefix": "unified-autoplay",
     "base": "external/wpt/feature-policy",
     "args": ["--autoplay-policy=document-user-activation-required"]
+  },
+  {
+    "prefix": "sampling-heap-profiler",
+    "base": "inspector-protocol/memory",
+    "args": ["--sampling-heap-profiler"]
   }
 ]

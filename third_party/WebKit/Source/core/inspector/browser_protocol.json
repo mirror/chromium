@@ -6994,6 +6994,16 @@
                     "description": "Stop collecting native memory profile."
                 },
                 {
+                    "name": "takeSnapshot",
+                    "description": "Take current native memory snapshot.",
+                    "returns": [
+                        {
+                            "name": "profile",
+                            "$ref": "SamplingProfile"
+                        }
+                    ]
+                },
+                {
                     "name": "getSamplingProfile",
                     "description": "Retrieve collected native memory profile.",
                     "returns": [

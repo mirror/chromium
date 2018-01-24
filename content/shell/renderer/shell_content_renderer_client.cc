@@ -14,6 +14,7 @@
 #include "components/cdm/renderer/external_clear_key_key_system_properties.h"
 #include "components/web_cache/renderer/web_cache_impl.h"
 #include "content/public/child/child_thread.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/test/test_service.mojom.h"
@@ -25,6 +26,7 @@
 #include "net/base/net_errors.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/platform/SamplingHeapProfiler.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/web/WebTestingSupport.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -99,7 +101,11 @@ void CreateTestService(mojom::TestServiceRequest request) {
 
 }  // namespace
 
-ShellContentRendererClient::ShellContentRendererClient() {}
+ShellContentRendererClient::ShellContentRendererClient() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kSamplingHeapProfiler))
+    blink::SamplingHeapProfiler::GetInstance()->Start();
+}
 
 ShellContentRendererClient::~ShellContentRendererClient() {
 }
