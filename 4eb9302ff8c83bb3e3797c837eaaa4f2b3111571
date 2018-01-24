@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b01c2341_6cce8a91",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T01:02:49Z",
+      "side": 1,
+      "message": "would this work (I think it\u0027s little easier to parse):\nif (this.isNetworkPolicyControlled(property) \u0026\u0026 property.UserPolicy) {\n  return !!property.UserEditable;\n}",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c80eda3_a359c37d",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T01:02:49Z",
+      "side": 1,
+      "message": "is UserEditable necessarily set for user policy defined networks?\nIf not, this would return different results for\n{UserPolicy: true} and {UserPolicy: true, UserEditable: false}\n\n(does UserEditable default to false?)",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
