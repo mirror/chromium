@@ -22,8 +22,10 @@
 // Factory used to create the buttons.
 @property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
 
-// Container for the location bar.
-@property(nonatomic, strong) UIView* locationBarContainer;
+// Container for the location bar. Redefined as readwrite.
+@property(nonatomic, strong, readwrite) UIView* locationBarContainer;
+// Constraint for the height of the LocationBar. Redefined as readwrite.
+@property(nonatomic, strong, readwrite) NSLayoutConstraint* locationBarHeight;
 
 // StackView containing the leading buttons (relative to the location bar). It
 // should only contain ToolbarButtons. Redefined as readwrite.
@@ -66,6 +68,7 @@
 @implementation PrimaryToolbarView
 
 @synthesize locationBarView = _locationBarView;
+@synthesize locationBarHeight = _locationBarHeight;
 @synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize buttonFactory = _buttonFactory;
 @synthesize allButtons = _allButtons;
@@ -182,6 +185,9 @@
 // Sets the constraints up.
 - (void)setUpConstraints {
   id<LayoutGuideProvider> safeArea = SafeAreaLayoutGuideForView(self);
+  [self.bottomAnchor constraintEqualToAnchor:self.topSafeAnchor
+                                    constant:kToolbarHeight]
+      .active = YES;
 
   // Leading StackView constraints
   [NSLayoutConstraint activateConstraints:@[
@@ -194,6 +200,9 @@
   ]];
 
   // LocationBar constraints.
+  self.locationBarHeight = [self.locationBarContainer.heightAnchor
+      constraintEqualToConstant:kToolbarHeight -
+                                2 * kLocationBarVerticalMargin];
   [NSLayoutConstraint activateConstraints:@[
     [self.locationBarContainer.leadingAnchor
         constraintEqualToAnchor:self.leadingStackView.trailingAnchor],
@@ -202,12 +211,7 @@
     [self.locationBarContainer.bottomAnchor
         constraintEqualToAnchor:self.bottomAnchor
                        constant:-kLocationBarVerticalMargin],
-    [self.locationBarContainer.topAnchor
-        constraintEqualToAnchor:self.topSafeAnchor
-                       constant:kLocationBarVerticalMargin],
-    [self.locationBarContainer.heightAnchor
-        constraintEqualToConstant:kToolbarHeight -
-                                  2 * kLocationBarVerticalMargin],
+    self.locationBarHeight,
   ]];
 
   // Trailing StackView constraints.
