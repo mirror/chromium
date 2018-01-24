@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c3754dd_7dca4389",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Also maybe DCHECK(!it-\u003esecond.is_ad_subframe || activation_state.activation_level \u003d\u003d DRYRUN) to show that the bit being set implies dryrun.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f76f97_4e4df039",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Briefly comment why this bit is guaranteed to be set by this point in the navigation lifecycle. Also, maybe DCHECK(!it-\u003esecond.is_ad_subframe || !navigation_handle-\u003eIsInMainFrame()) to show that the bit being set implies the frame is a subframe.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dd3dd8_0780a4de",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "nit: don\u0027t use auto here because it isn\u0027t obvious what the type is.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 8
+      },
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bea793_3578a621",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Comment that although we change this for disallowed loads, it is only really relevant for dryrun.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7077c9e_2d60e3ba",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "I don\u0027t think this needed to change, it was only at 80 chars.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65eb6db7_479822b2",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "The |is_ad_subframe| bit is not related to the activation state computing throttle, so this name is slightly off. Maybe \"OngoingThrottleInfo\". Also, include a comment that the bit comes from the filtering throttle in DRYRUN mode.",
+      "range": {
+        "startLine": 153,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 38
+      },
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95580cf1_47feb620",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Can you add a test where we successfully filter the subframe, and expect no activation signal? I didn\u0027t see it here.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71de5642_e59e51b1",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "This is really weird formatting. Is it `git cl format`ed?",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de1f5e1_62f5277d",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Would probably prefer to just inline this logic, unless you had a good reason to put it in a method.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f113baf_900f4070",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T17:53:30Z",
+      "side": 1,
+      "message": "Needs a comment.",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
