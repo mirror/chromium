@@ -87,7 +87,6 @@ TEST_F(WorkletAnimationPlayerTest,
   MockLayerTreeMutator* mock_mutator = new MockLayerTreeMutator();
   host_impl_->SetLayerTreeMutator(
       base::WrapUnique<LayerTreeMutator>(mock_mutator));
-  ON_CALL(*mock_mutator, HasAnimators()).WillByDefault(Return(true));
 
   client_.RegisterElement(element_id_, ElementListType::ACTIVE);
   client_impl_.RegisterElement(element_id_, ElementListType::PENDING);

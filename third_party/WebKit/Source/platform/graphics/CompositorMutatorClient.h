@@ -25,14 +25,12 @@ class PLATFORM_EXPORT CompositorMutatorClient
   // cc::LayerTreeMutator
   void SetClient(cc::LayerTreeMutatorClient*);
   void Mutate(std::unique_ptr<cc::MutatorInputState>) override;
-  // TODO(majidvp): Remove this when CC knows about timeline input.
-  bool HasAnimators() override;
 
-  CompositorMutator* Mutator() { return mutator_.Get(); }
+  CompositorMutator* Mutator() { return mutator_.get(); }
 
  private:
   // Accessed by main and compositor threads.
-  CrossThreadPersistent<CompositorMutator> mutator_;
+  std::unique_ptr<CompositorMutator> mutator_;
   cc::LayerTreeMutatorClient* client_;
 };
 
