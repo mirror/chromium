@@ -268,6 +268,7 @@ ui::Layer* MessageView::GetSlideOutLayer() {
 void MessageView::OnSlideChanged() {}
 
 void MessageView::OnSlideOut() {
+  removed_by_slide_ = true;
   MessageCenter::Get()->RemoveNotification(notification_id_,
                                            true /* by_user */);
 }
