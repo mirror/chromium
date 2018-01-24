@@ -117,12 +117,11 @@ void ParallelDownloadJob::BuildParallelRequestAfterDelay() {
                &ParallelDownloadJob::BuildParallelRequests);
 }
 
-void ParallelDownloadJob::OnByteStreamReady(
+void ParallelDownloadJob::OnInputStreamReady(
     DownloadWorker* worker,
-    std::unique_ptr<ByteStreamReader> stream_reader) {
+    std::unique_ptr<DownloadManager::InputStream> input_stream) {
   bool success = DownloadJob::AddInputStream(
-      std::make_unique<DownloadManager::InputStream>(std::move(stream_reader)),
-      worker->offset(), worker->length());
+      std::move(input_stream), worker->offset(), worker->length());
   RecordParallelDownloadAddStreamSuccess(success);
 
   // Destroy the request if the sink is gone.
@@ -284,7 +283,7 @@ void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
   download_params->set_referrer(Referrer(download_item_->GetReferrerUrl(),
                                          blink::kWebReferrerPolicyAlways));
   // Send the request.
-  worker->SendRequest(std::move(download_params));
+  worker->SendRequest(std::move(download_params), storage_partition);
   DCHECK(workers_.find(offset) == workers_.end());
   workers_[offset] = std::move(worker);
 }

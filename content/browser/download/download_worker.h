@@ -12,6 +12,7 @@
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/url_downloader.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -26,12 +27,12 @@ class CONTENT_EXPORT DownloadWorker : public UrlDownloadHandler::Delegate {
  public:
   class Delegate {
    public:
-    // Called when the the byte stream is established after server response is
+    // Called when the the input stream is established after server response is
     // handled. The stream contains data starts from |offset| of the
     // destination file.
-    virtual void OnByteStreamReady(
+    virtual void OnInputStreamReady(
         DownloadWorker* worker,
-        std::unique_ptr<ByteStreamReader> stream_reader) = 0;
+        std::unique_ptr<DownloadManager::InputStream> input_stream) = 0;
   };
 
   DownloadWorker(DownloadWorker::Delegate* delegate,
@@ -43,7 +44,8 @@ class CONTENT_EXPORT DownloadWorker : public UrlDownloadHandler::Delegate {
   int64_t length() const { return length_; }
 
   // Send network request to ask for a download.
-  void SendRequest(std::unique_ptr<DownloadUrlParameters> params);
+  void SendRequest(std::unique_ptr<DownloadUrlParameters> params,
+                   StoragePartition* storage_partition);
 
   // Download operations.
   void Pause();
