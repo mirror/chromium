@@ -14,6 +14,7 @@
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/command_line.h"
@@ -104,6 +105,20 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
   Shelf* shelf = Shelf::ForWindow(root_window);
   view->SetDragAndDropHostOfCurrentAppList(
       shelf->shelf_widget()->GetDragAndDropHostForAppList());
+  if (Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
+    aura::Window* app_list_window = view->GetWidget()->GetNativeWindow();
+    aura::Window::Windows windows =
+        Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
+    for (aura::Window::Windows::iterator iter = windows.begin();
+         iter != windows.end(); ++iter) {
+      // Ignore active window and minimized windows.
+      if (*iter == app_list_window || wm::GetWindowState(*iter)->IsMinimized())
+        continue;
+      wm::GetWindowState(*iter)->Minimize();
+    }
+  }
 }
 
 void AppListPresenterDelegate::OnShown(int64_t display_id) {
@@ -186,6 +201,27 @@ void AppListPresenterDelegate::ProcessLocatedEvent(ui::LocatedEvent* event) {
   }
 
   aura::Window* window = view_->GetWidget()->GetNativeView()->parent();
+
+  aura::Window* shelf_window =
+      RootWindowController::ForWindow(target)->GetContainer(
+          kShellWindowId_ShelfContainer);
+  const gfx::Rect ALB_Bounds =
+      gfx::Rect(gfx::Point(40, 1024 - 60), gfx::Size(60, 60));
+  const gfx::Rect other_ALB_bounds(gfx::Point(40, 768 - 60), gfx::Size(60, 60));
+  gfx::Point event_location = event->location();
+  ::wm::ConvertPointToScreen(shelf_window, &event_location);
+  const bool experimental_tablet_mode =
+      (other_ALB_bounds.Contains(event->root_location()) ||
+       ALB_Bounds.Contains(event->root_location())) &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled();
+  if (experimental_tablet_mode) {
+    // dont close on tablet mode.
+    view_->ScrollToFirstPage();
+    return;
+  }
+
   if (!window->Contains(target) &&
       !app_list::switches::ShouldNotDismissOnBlur()) {
     presenter_->Dismiss();

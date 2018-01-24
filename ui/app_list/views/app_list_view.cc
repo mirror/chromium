@@ -339,6 +339,11 @@ void AppListView::SetAppListOverlayVisible(bool visible) {
   }
 }
 
+void AppListView::ScrollToFirstPage() {
+  if (GetAppsGridView()->pagination_model()->selected_page() != 0)
+    GetAppsGridView()->pagination_model()->SelectPage(0, true);
+}
+
 gfx::Size AppListView::CalculatePreferredSize() const {
   return app_list_main_view_->GetPreferredSize();
 }
@@ -507,6 +512,8 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
 }
 
 void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
+  LOG(ERROR) << "Coords!: " << event->location().ToString();
+
   // No-op if app list is on fullscreen all apps state and the event location is
   // within apps grid view's bounds.
   if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&

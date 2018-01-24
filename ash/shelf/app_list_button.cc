@@ -19,6 +19,7 @@
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/voice_interaction/voice_interaction_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -28,6 +29,7 @@
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/presenter/app_list.h"
+#include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/scoped_canvas.h"
@@ -98,6 +100,15 @@ void AppListButton::OnAppListDismissed() {
 }
 
 void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
+  if (Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
+    if (Shell::Get()->app_list()->IsVisible()) {
+      event->SetHandled();
+      return;
+    }
+    // clean up
+  }
   // Handle gesture events that are on the app list circle.
   switch (event->type()) {
     case ui::ET_GESTURE_SCROLL_BEGIN:
@@ -193,6 +204,18 @@ std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
 }
 
 void AppListButton::NotifyClick(const ui::Event& event) {
+  if (Shell::Get()->app_list()->IsVisible() &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
+    /*  aura::Window::Windows windows = Shell::Get()->GetAllRootWindows();
+      for (auto window : windows) {
+        if (window->id() == 8)
+          continue;
+        window->Hide();
+      }*/
+    return;
+  }
   ImageButton::NotifyClick(event);
   if (listener_)
     listener_->ButtonPressed(this, event, GetInkDrop());

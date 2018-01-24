@@ -122,6 +122,9 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // hiding the app list when a modal dialog is being shown).
   void SetAppListOverlayVisible(bool visible);
 
+  // Resets the applist to the first page.
+  void ScrollToFirstPage();
+
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
