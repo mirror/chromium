@@ -39,6 +39,30 @@
       "revId": "cbdd31c39ed8664bb64ee0f71ec707422173c99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba54839a_f20de6ad",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6752,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T23:40:29Z",
+      "side": 1,
+      "message": "Or as Charlie suggested in chat, we are better off disabling the timer during tests, unless we expect to test the timeout logic.",
+      "parentUuid": "e3223ed7_64a3167d",
+      "range": {
+        "startLine": 6752,
+        "startChar": 24,
+        "endLine": 6752,
+        "endChar": 42
+      },
+      "revId": "cbdd31c39ed8664bb64ee0f71ec707422173c99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
