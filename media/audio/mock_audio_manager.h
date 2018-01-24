@@ -59,7 +59,8 @@ class MockAudioManager : public AudioManager {
       AudioLogFactory::AudioComponent component) override;
 
   void InitializeDebugRecording() override;
-  void EnableDebugRecording(const base::FilePath& base_file_name) override;
+  void EnableDebugRecording(const AudioDebugRecordingHelper::CreateFileCallback&
+                                create_file_callback) override;
   void DisableDebugRecording() override;
 
   const char* GetName() override;
