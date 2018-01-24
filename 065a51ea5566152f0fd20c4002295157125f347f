@@ -200,6 +200,30 @@
       "revId": "065a51ea5566152f0fd20c4002295157125f347f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513334f8_d35f573e",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-24T18:53:32Z",
+      "side": 1,
+      "message": "CastCrashUploaderFactory checks if these strings are empty and if so, will use AndroidAppLogcatProvider instead",
+      "parentUuid": "c7e9c2a3_62b8fe2f",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
