@@ -291,6 +291,7 @@ void ResourcePrefetchPredictor::RecordPageRequestSummary(
         profile_, ServiceAccessType::EXPLICIT_ACCESS);
     DCHECK(history_service);
     history_service->ScheduleDBTask(
+        FROM_HERE,
         std::make_unique<GetUrlVisitCountTask>(
             std::move(summary),
             base::BindOnce(&ResourcePrefetchPredictor::OnVisitCountLookup,
