@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "41686e38_4a5f3ba0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:44:30Z",
+      "side": 1,
+      "message": "\u003e Thanks, neat shortcut.\n\u003e \n\u003e I could not find StringUtil, but found android.text.TextUtils. Does that work for you?\n\nYes, that\u0027s what I meant. Sorry!\n\n\u003e Also, I removed the parentheses from the other asserts I introduced, thanks for pointing that out as well.\n\nThanks!",
+      "parentUuid": "747e1d43_95f7bb9f",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 52
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d991afb7_986c5e10",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 9
@@ -140,6 +164,52 @@
       "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "212aac32_a3030a68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:44:30Z",
+      "side": 1,
+      "message": "You could use File.createTempFile() to get a file with some convenient properties for one-time use (guaranteed unique name, access rights).",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba2fd3d_fd8aa705",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:44:30Z",
+      "side": 1,
+      "message": "You can initialize the variable where it\u0027s declared.",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 16
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

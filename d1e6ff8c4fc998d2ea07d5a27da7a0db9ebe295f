@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e7c733_7b18c93d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:44:30Z",
+      "side": 1,
+      "message": "Nit: I think I would just move this directly after the closing brace:\n\n  }.execute...\n\n(clang-formatting for Java is sadly a bit broken...)",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 202,
+        "endChar": 16
+      },
+      "revId": "d1e6ff8c4fc998d2ea07d5a27da7a0db9ebe295f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
