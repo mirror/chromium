@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80aecd6_f111e772",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadForegroundServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T17:36:24Z",
+      "side": 1,
+      "message": "I would use a single int to set sdk version here, or otherwise, you will have to deal with cases that mIsSdkAtLeast23\u003dtrue but mIsSdkAtLeast24\u003dfalse",
+      "revId": "777b4db7664c87d4a8d137ccfeae09d217af36ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
