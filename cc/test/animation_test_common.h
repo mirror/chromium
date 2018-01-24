@@ -13,15 +13,13 @@
 #include "cc/test/geometry_test_utils.h"
 #include "cc/trees/element_id.h"
 
-namespace cc {
-class AnimationPlayer;
-}
-
 namespace gfx {
 class ScrollOffset;
 }
 
 namespace cc {
+
+class SingleAnimationPlayer;
 
 class FakeFloatAnimationCurve : public FloatAnimationCurve {
  public:
@@ -75,33 +73,33 @@ class FakeFloatTransition : public FloatAnimationCurve {
   float to_;
 };
 
-int AddScrollOffsetAnimationToPlayer(AnimationPlayer* player,
+int AddScrollOffsetAnimationToPlayer(SingleAnimationPlayer* player,
                                      gfx::ScrollOffset initial_value,
                                      gfx::ScrollOffset target_value,
                                      bool impl_only);
 
-int AddAnimatedTransformToPlayer(AnimationPlayer* player,
+int AddAnimatedTransformToPlayer(SingleAnimationPlayer* player,
                                  double duration,
                                  int delta_x,
                                  int delta_y);
 
-int AddAnimatedTransformToPlayer(AnimationPlayer* player,
+int AddAnimatedTransformToPlayer(SingleAnimationPlayer* player,
                                  double duration,
                                  TransformOperations start_operations,
                                  TransformOperations operations);
 
-int AddOpacityTransitionToPlayer(AnimationPlayer* player,
+int AddOpacityTransitionToPlayer(SingleAnimationPlayer* player,
                                  double duration,
                                  float start_opacity,
                                  float end_opacity,
                                  bool use_timing_function);
 
-int AddAnimatedFilterToPlayer(AnimationPlayer* player,
+int AddAnimatedFilterToPlayer(SingleAnimationPlayer* player,
                               double duration,
                               float start_brightness,
                               float end_brightness);
 
-int AddOpacityStepsToPlayer(AnimationPlayer* player,
+int AddOpacityStepsToPlayer(SingleAnimationPlayer* player,
                             double duration,
                             float start_opacity,
                             float end_opacity,
