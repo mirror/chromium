@@ -16,6 +16,24 @@
       "revId": "cd94c63c23a807a625c262e072a773a2b0561e04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494a4bbe_abb78ff8",
+        "filename": "third_party/WebKit/Source/core/fileapi/PublicURLManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T21:25:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f4912b_9f3fd635",
+      "revId": "cd94c63c23a807a625c262e072a773a2b0561e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
