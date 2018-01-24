@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8a8440_6765b8ea",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T14:36:00Z",
+      "side": 0,
+      "message": "Can you update this to return self.locationBarCoordinator?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "7533c64f8ca3b8afb6c329a7b7d1efcda0b0c81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3de2db_6c188054",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T14:36:00Z",
+      "side": 0,
+      "message": "Same.",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "7533c64f8ca3b8afb6c329a7b7d1efcda0b0c81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
