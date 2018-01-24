@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390a7d61_b43d1786",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:59:25Z",
+      "side": 1,
+      "message": "The header recommends passing by value rather than const reference.",
+      "range": {
+        "startLine": 249,
+        "startChar": 28,
+        "endLine": 249,
+        "endChar": 52
+      },
+      "revId": "63c8bd4d3099ffc0e39ba758f0e5c361c6e478f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
