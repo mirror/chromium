@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "b02cb6b0_59f4643d",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T19:42:03Z",
+      "side": 1,
+      "message": "For this CL, I think it\u0027s fine if you don\u0027t create the error message/exit VR, but I\u0027d like the DCHECKs for lifecycle, and I\u0027d like keyboard creation to at least return an error back to this class so the internal state is set correctly and we don\u0027t try to double-delete etc. and make it easier to hook up the error message/etc. later.",
+      "parentUuid": "53d2a154_ae7b9a3f",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4699273a_e769eb91",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 8
