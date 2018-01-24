@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99914128_6d02fab2",
+        "filename": "third_party/WebKit/Source/core/css/CSSLayoutFunctionValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "55706879_4f768252",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1443f002_1baf01ed",
         "filename": "third_party/WebKit/Source/core/css/CSSValueIDMappings.h",
         "patchSetId": 2
@@ -36,6 +54,47 @@
     },
     {
       "key": {
+        "uuid": "9d1fc6cc_ac04d597",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueIDMappings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "So it looks like that this didn\u0027t get generated still?",
+      "parentUuid": "1443f002_1baf01ed",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b06e94_29660350",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "Is this the right way to do this?",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 13
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86b0bbc4_d306c42f",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 2
@@ -47,6 +106,24 @@
       "writtenOn": "2018-01-23T02:45:24Z",
       "side": 1,
       "message": "Dunno if we should store an AtomicString directly on ComputedStyle. Do you think this value is rare enough to go into rare-inherited-data?",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5db347e_668d50ba",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "Oh, I thought this did that? \"*\" would use the auto grouping thingy? The generated computed style for this looks like:\n\n  // DisplayLayoutCustomName\n  const AtomicString\u0026 DisplayLayoutCustomName() const {\n    return rare_inherited_usage_less_than_40_percent_data_-\u003erare_inherited_usage_less_than_40_percent_sub_data_-\u003edisplay_layout_custom_name_;\n  }\n\n  void SetDisplayLayoutCustomName(const AtomicString\u0026 v) {\n    if (!(rare_inherited_usage_less_than_40_percent_data_-\u003erare_inherited_usage_less_than_40_percent_sub_data_-\u003edisplay_layout_custom_name_ \u003d\u003d v))\n      rare_inherited_usage_less_than_40_percent_data_.Access()-\u003erare_inherited_usage_less_than_40_percent_sub_data_.Access()-\u003edisplay_layout_custom_name_ \u003d v;\n  }\n\n  void SetDisplayLayoutCustomName(AtomicString\u0026\u0026 v) {\n    if (!(rare_inherited_usage_less_than_40_percent_data_-\u003erare_inherited_usage_less_than_40_percent_sub_data_-\u003edisplay_layout_custom_name_ \u003d\u003d v))\n      rare_inherited_usage_less_than_40_percent_data_.Access()-\u003erare_inherited_usage_less_than_40_percent_sub_data_.Access()-\u003edisplay_layout_custom_name_ \u003d std::move(v);\n  }\n  inline void ResetDisplayLayoutCustomName() {\n    rare_inherited_usage_less_than_40_percent_data_.Access()-\u003erare_inherited_usage_less_than_40_percent_sub_data_.Access()-\u003edisplay_layout_custom_name_ \u003d g_null_atom;\n  }",
+      "parentUuid": "86b0bbc4_d306c42f",
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "580182eb_9aec98c6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "PTAL did the simple thing, but you might have a better idea for names etc.",
+      "parentUuid": "56ddfa02_89805b45",
+      "range": {
+        "startLine": 1700,
+        "startChar": 3,
+        "endLine": 1700,
+        "endChar": 21
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a7a9ee_1c6836e1",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
         "patchSetId": 2
@@ -114,6 +215,24 @@
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f317474_9a3fef05",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "Done, thanks. I was wondering how TextEmphasisMark achieved that. Didn\u0027t realize that if it wasn\u0027t a keyword it would still be valid.",
+      "parentUuid": "82a7a9ee_1c6836e1",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
