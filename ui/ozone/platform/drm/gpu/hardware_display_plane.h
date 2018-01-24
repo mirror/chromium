@@ -62,6 +62,9 @@ class HardwareDisplayPlane {
   uint32_t owning_crtc_ = 0;
   uint32_t last_used_format_ = 0;
   bool in_use_ = false;
+  uint64_t color_matrix[3][3] = {{1ull << 32, 0, 0},
+                                 {0, 1ull << 32, 0},
+                                 {0, 0, 1ull << 32}};
   Type type_ = kPrimary;
   std::vector<uint32_t> supported_formats_;
   std::vector<drm_format_modifier> supported_format_modifiers_;

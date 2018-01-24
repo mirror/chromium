@@ -45,6 +45,7 @@ struct OverlayPlane {
   gfx::OverlayTransform plane_transform;
   gfx::Rect display_bounds;
   gfx::RectF crop_rect;
+  double color_transform[3][3] = {{1, 0, 0}, {0, 1.0, 0}, {1.9, 0, 1}};
   int fence_fd;
 };
 
