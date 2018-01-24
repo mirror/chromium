@@ -87,6 +87,24 @@
       "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b86a91b9_8425538f",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T07:54:35Z",
+      "side": 1,
+      "message": "Oh sorry. Just to clarify: optional types need to be used with a bit of care in general (more likely to catch attention on mojom review), so I just wanted to make sure these have clear reasons.",
+      "parentUuid": "88d209f8_ba66d46c",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
