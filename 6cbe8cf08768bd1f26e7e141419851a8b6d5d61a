@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "a9ebfa94_b39621f0",
+        "filename": "net/base/proxy_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T00:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e2843ba_5481b069",
+      "range": {
+        "startLine": 85,
+        "startChar": 14,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "231aecd9_83fbf08f",
+        "filename": "net/base/proxy_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T00:50:59Z",
+      "side": 1,
+      "message": "Unless SpdySession is used for QUIC as well I\u0027d rather leave this check as is until we start explicitly supporting cross-origin pushes for QUIC proxies.",
+      "parentUuid": "c629202b_d970f01f",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "874de080_1bc7caee",
         "filename": "net/base/proxy_server.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f354d965_75c2bb06",
+        "filename": "net/base/proxy_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T00:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "874de080_1bc7caee",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 29
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9dfce648_3cb422e1",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T00:50:59Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "2df3e873_36786c8e",
+      "range": {
+        "startLine": 1235,
+        "startChar": 26,
+        "endLine": 1235,
+        "endChar": 52
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a09852ff_8c940589",
         "filename": "net/spdy/chromium/spdy_session.h",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-23T22:38:20Z",
       "side": 1,
       "message": "can this be const or set to false here? That would ensure that this variable is guaranteed to be initialized to false in all cases (in case a new constructor is added).",
+      "range": {
+        "startLine": 1047,
+        "startChar": 7,
+        "endLine": 1047,
+        "endChar": 24
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44096420_5ade2844",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T00:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09852ff_8c940589",
       "range": {
         "startLine": 1047,
         "startChar": 7,
