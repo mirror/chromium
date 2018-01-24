@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "ash/display/cursor_window_controller.h"
+#include "ash/display/display_util.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/root_window_transformers.h"
 #include "ash/host/ash_window_tree_host.h"
@@ -24,6 +25,8 @@
 #include "ash/root_window_settings.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray.h"
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
@@ -570,6 +573,8 @@ void WindowTreeHostManager::OnDisplayAdded(const display::Display& display) {
         AddWindowTreeHostForDisplay(display, AshWindowTreeHostInitParams());
     RootWindowController::CreateForSecondaryDisplay(ash_host);
   }
+
+  LoadPersistentWindowBounds();
 }
 
 void WindowTreeHostManager::DeleteHost(AshWindowTreeHost* host_to_delete) {
@@ -587,6 +592,8 @@ void WindowTreeHostManager::DeleteHost(AshWindowTreeHost* host_to_delete) {
 }
 
 void WindowTreeHostManager::OnDisplayRemoved(const display::Display& display) {
+  SavePersistentWindowBounds();
+
   AshWindowTreeHost* host_to_delete = window_tree_hosts_[display.id()];
   CHECK(host_to_delete) << display.ToString();
 
@@ -745,6 +752,25 @@ void WindowTreeHostManager::PostDisplayConfigurationChange() {
   // displays along with other display content through reflector.
   if (display_manager->is_multi_mirroring_enabled())
     Shell::Get()->UpdateCursorCompositingEnabled();
+
+  LOG(ERROR) << "check if i am called...";
+  if (display_manager->IsInMirrorMode())
+    return;
+  MruWindowTracker::WindowList window_list =
+      Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+  for (auto* window : window_list) {
+    wm::WindowState* window_state = wm::GetWindowState(window);
+    if (!window_state->pre_display_window_bounds())
+      continue;
+    const gfx::Rect pre_display_window_bounds =
+        *window_state->pre_display_window_bounds();
+    LOG(ERROR) << "pre_display_window_bounds here: "
+               << pre_display_window_bounds.ToString();
+    const display::Display target_display =
+        display::Screen::GetScreen()->GetDisplayMatching(
+            pre_display_window_bounds);
+    window->SetBoundsInScreen(pre_display_window_bounds, target_display);
+  }
 }
 
 display::DisplayConfigurator* WindowTreeHostManager::display_configurator() {

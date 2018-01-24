@@ -16,6 +16,8 @@
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
@@ -188,6 +190,31 @@ void ShowDisplayErrorNotification(const base::string16& message,
   notification->set_priority(message_center::SYSTEM_PRIORITY);
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
+}
+
+void SavePersistentWindowBounds() {
+  MruWindowTracker::WindowList window_list =
+      Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+  for (auto* window : window_list) {
+    wm::WindowState* window_state = wm::GetWindowState(window);
+    window_state->SetPreDisplayWindowBounds(window->GetBoundsInScreen());
+  }
+}
+
+void LoadPersistentWindowBounds() {
+  MruWindowTracker::WindowList window_list =
+      Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+  for (auto* window : window_list) {
+    wm::WindowState* window_state = wm::GetWindowState(window);
+    if (!window_state->pre_display_window_bounds())
+      continue;
+    const gfx::Rect pre_display_window_bounds =
+        *window_state->pre_display_window_bounds();
+    const display::Display target_display =
+        display::Screen::GetScreen()->GetDisplayMatching(
+            pre_display_window_bounds);
+    window->SetBoundsInScreen(pre_display_window_bounds, target_display);
+  }
 }
 
 base::string16 GetDisplayErrorNotificationMessageForTest() {

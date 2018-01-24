@@ -18,6 +18,10 @@
 #include "ui/display/display_layout.h"
 #include "ui/display/manager/display_manager.h"
 
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_state.h"
+#include "ui/display/screen.h"
+
 DEFINE_UI_CLASS_PROPERTY_TYPE(ash::ScreenRotationAnimator*);
 
 namespace {
@@ -203,6 +207,20 @@ void DisplayConfigurationController::SetDisplayLayoutImpl(
 }
 
 void DisplayConfigurationController::SetMirrorModeImpl(bool mirror) {
+  if (mirror) {
+    MruWindowTracker::WindowList window_list =
+        Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
+    for (auto* window : window_list) {
+      display::Screen* screen = display::Screen::GetScreen();
+      if (screen->GetDisplayNearestWindow(window).id() ==
+          screen->GetPrimaryDisplay().id()) {
+        continue;
+      }
+      wm::WindowState* window_state = wm::GetWindowState(window);
+      LOG(ERROR) << "window bounds: " << window->GetBoundsInScreen().ToString();
+      window_state->SetPreDisplayWindowBounds(window->GetBoundsInScreen());
+    }
+  }
   display_manager_->SetMirrorMode(
       mirror ? display::MirrorMode::kNormal : display::MirrorMode::kOff,
       base::nullopt);

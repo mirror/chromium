@@ -52,6 +52,9 @@ void MoveCursorTo(AshWindowTreeHost* ash_host,
 void ShowDisplayErrorNotification(const base::string16& message,
                                   bool allow_feedback);
 
+void SavePersistentWindowBounds();
+void LoadPersistentWindowBounds();
+
 ASH_EXPORT base::string16 GetDisplayErrorNotificationMessageForTest();
 
 }  // namespace ash
