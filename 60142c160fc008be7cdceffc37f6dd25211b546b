@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff60b1f_2768f239",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-24T06:21:58Z",
+      "side": 1,
+      "message": "nit: different -\u003e difference?",
+      "revId": "60142c160fc008be7cdceffc37f6dd25211b546b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
