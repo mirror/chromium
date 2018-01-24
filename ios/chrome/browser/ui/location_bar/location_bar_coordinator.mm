@@ -14,6 +14,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
+#include "ios/chrome/browser/ui/location_bar/location_bar_view.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
@@ -30,12 +31,16 @@
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "ios/web/public/referrer.h"
 #include "url/gurl.h"
+//#include "components/omnibox/browser/autocomplete_input.h"
+#include "components/search_engines/util.h"
+#include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
+#include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-@interface LocationBarCoordinator () {
+@interface LocationBarCoordinator ()<LocationBarDelegate> {
   std::unique_ptr<LocationBarControllerImpl> _locationBarController;
 }
 // Object taking care of adding the accessory views to the keyboard.
@@ -43,6 +48,8 @@
     ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
 // Coordinator for the omnibox popup.
 @property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
+// Redefined as readwrite and as LocationBarView.
+@property(nonatomic, strong, readwrite) LocationBarView* locationBarView;
 
 @end
 
@@ -58,6 +65,10 @@
 @synthesize popupPositioner = _popupPositioner;
 
 #pragma mark - public
+
+- (UIView*)view {
+  return self.locationBarView;
+}
 
 - (void)start {
   BOOL isIncognito = self.browserState->IsOffTheRecord();
@@ -135,6 +146,46 @@
   model->SetCaretVisibility(false);
 }
 
+- (BOOL)isOmniboxFirstResponder {
+  return [self.locationBarView.textField isFirstResponder];
+}
+
+- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator
+                completionAnimator:(UIViewPropertyAnimator*)completionAnimator {
+  [self.locationBarView addExpandOmniboxAnimations:animator
+                                completionAnimator:completionAnimator];
+}
+
+- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator {
+  [self.locationBarView addContractOmniboxAnimations:animator];
+}
+
+#pragma mark - VoiceSearchControllerDelegate
+
+- (void)receiveVoiceSearchResult:(NSString*)result {
+  DCHECK(result);
+  [self loadURLForQuery:result];
+}
+
+#pragma mark - QRScannerResultLoading
+
+- (void)receiveQRScannerResult:(NSString*)result loadImmediately:(BOOL)load {
+  DCHECK(result);
+  if (load) {
+    [self loadURLForQuery:result];
+  } else {
+    [self focusOmnibox];
+    [self.locationBarView.textField insertTextWhileEditing:result];
+    // The call to |setText| shouldn't be needed, but without it the "Go" button
+    // of the keyboard is disabled.
+    [self.locationBarView.textField setText:result];
+    // Notify the accessibility system to start reading the new contents of the
+    // Omnibox.
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
+                                    self.locationBarView.textField);
+  }
+}
+
 #pragma mark - LocationBarURLLoader
 
 - (void)loadGURLFromLocationBar:(const GURL&)url
@@ -201,6 +252,32 @@
 - (ToolbarModel*)toolbarModel {
   ToolbarModelIOS* toolbarModelIOS = [self.delegate toolbarModelIOS];
   return toolbarModelIOS ? toolbarModelIOS->GetToolbarModel() : nullptr;
+}
+
+#pragma mark - private
+
+// Navigate to |query| from omnibox.
+- (void)loadURLForQuery:(NSString*)query {
+  GURL searchURL;
+  metrics::OmniboxInputType type = AutocompleteInput::Parse(
+      base::SysNSStringToUTF16(query), std::string(),
+      AutocompleteSchemeClassifierImpl(), nullptr, nullptr, &searchURL);
+  if (type != metrics::OmniboxInputType::URL || !searchURL.is_valid()) {
+    searchURL = GetDefaultSearchURLForSearchTerms(
+        ios::TemplateURLServiceFactory::GetForBrowserState(self.browserState),
+        base::SysNSStringToUTF16(query));
+  }
+  if (searchURL.is_valid()) {
+    // It is necessary to include PAGE_TRANSITION_FROM_ADDRESS_BAR in the
+    // transition type is so that query-in-the-omnibox is triggered for the
+    // URL.
+    ui::PageTransition transition = ui::PageTransitionFromInt(
+        ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+    [self.URLLoader loadURL:GURL(searchURL)
+                   referrer:web::Referrer()
+                 transition:transition
+          rendererInitiated:NO];
+  }
 }
 
 @end
