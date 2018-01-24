@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75c6139f_3ab7bbd2",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:18:58Z",
+      "side": 1,
+      "message": ".then({service} \u003d\u003e Promise.all([",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29df170c_4e4a68e5",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:18:58Z",
+      "side": 1,
+      "message": "No apostrophe.",
+      "range": {
+        "startLine": 10,
+        "startChar": 74,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8c0232_53fc1eec",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:18:58Z",
+      "side": 1,
+      "message": ".then({characteristic} \u003d\u003e {\n  assert_equals(characteristic.service, characteristic.service);\n})",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
