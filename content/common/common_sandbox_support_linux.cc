@@ -18,6 +18,7 @@
 #include "base/sys_byteorder.h"
 #include "base/trace_event/trace_event.h"
 #include "content/public/common/content_descriptors.h"
+#include "sandbox/linux/services/libc_interceptor.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 
 namespace content {
@@ -106,14 +107,11 @@ int MakeSharedMemorySegmentViaIPC(size_t length, bool executable) {
   uint8_t reply_buf[10];
   int result_fd;
   ssize_t result = base::UnixDomainSocket::SendRecvMsg(
-      GetSandboxFD(), reply_buf, sizeof(reply_buf), &result_fd, request);
+      sandbox::GetBackChannelFDNumber(), reply_buf, sizeof(reply_buf),
+      &result_fd, request);
   if (result == -1)
     return -1;
   return result_fd;
-}
-
-int GetSandboxFD() {
-  return kSandboxIPCChannel + base::GlobalDescriptors::kBaseDescriptor;
 }
 
 }  // namespace content

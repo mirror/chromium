@@ -43,6 +43,7 @@
     !defined(OS_FUCHSIA)
 #include "content/common/font_config_ipc_linux.h"
 #include "content/public/common/common_sandbox_support_linux.h"
+#include "sandbox/linux/services/libc_interceptor.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
@@ -122,7 +123,8 @@ int RendererMain(const MainFunctionParams& parameters) {
   // This call could already have been made from zygote_main_linux.cc. However
   // we need to do it here if Zygote is disabled.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kNoZygote)) {
-    SkFontConfigInterface::SetGlobal(new FontConfigIPC(GetSandboxFD()))
+    SkFontConfigInterface::SetGlobal(
+        new FontConfigIPC(sandbox::GetBackChannelFDNumber()))
         ->unref();
   }
 #endif

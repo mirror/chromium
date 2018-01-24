@@ -150,6 +150,7 @@
 #include "content/public/common/common_sandbox_support_linux.h"
 #include "content/public/common/zygote_handle.h"
 #include "media/base/media_switches.h"
+#include "sandbox/linux/services/libc_interceptor.h"
 #endif
 
 #if defined(OS_ANDROID)
@@ -290,7 +291,8 @@ pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
   // sandboxed processes to talk to it.
   base::FileHandleMappingVector additional_remapped_fds;
   additional_remapped_fds.emplace_back(
-      SandboxHostLinux::GetInstance()->GetChildSocket(), GetSandboxFD());
+      SandboxHostLinux::GetInstance()->GetChildSocket(),
+      sandbox::GetBackChannelFDNumber());
 
   return ZygoteHostImpl::GetInstance()->LaunchZygote(
       cmd_line, control_fd, std::move(additional_remapped_fds));
