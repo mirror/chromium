@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1f192b_9db16543",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T14:20:48Z",
+      "side": 1,
+      "message": "delete these things in subclasses",
+      "revId": "66be1a8399bf1ea73b80edff53d0fbc196b36a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
