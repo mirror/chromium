@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3896eb08_7b513f8d",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-24T19:31:58Z",
+      "side": 1,
+      "message": "I\u0027d mention this applies to dialogs? Or do we use it for anything else?",
+      "revId": "3fef9742fd28ee9442e4ed1b0144bff6a676e898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
