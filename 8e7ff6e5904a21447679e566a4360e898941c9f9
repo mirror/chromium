@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ddfb413_908e15ed",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-24T20:08:03Z",
+      "side": 1,
+      "message": "Nit: I haven\u0027t seen this type pattern in naming elsewhere in Blink. Does it really add much here?",
+      "revId": "8e7ff6e5904a21447679e566a4360e898941c9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3805dd1c_78dcb339",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-24T20:08:03Z",
+      "side": 1,
+      "message": "Nit: No newline.",
+      "revId": "8e7ff6e5904a21447679e566a4360e898941c9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
