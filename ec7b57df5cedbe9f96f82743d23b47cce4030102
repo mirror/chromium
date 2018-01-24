@@ -22,6 +22,29 @@
       "revId": "ec7b57df5cedbe9f96f82743d23b47cce4030102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e83a7ad_3b209c43",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30959,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-24T19:00:57Z",
+      "side": 1,
+      "message": "nit: Connections can also be initiated via the settings page or by quick settings in addition the \"Connect\" button on the notification. Let\u0027s just say something like, \"This metric is emitted each time a connection attempt has completed, whether that attempt concludes in a successful connection or a failure.\"",
+      "range": {
+        "startLine": 30958,
+        "startChar": 44,
+        "endLine": 30959,
+        "endChar": 10
+      },
+      "revId": "ec7b57df5cedbe9f96f82743d23b47cce4030102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
