@@ -119,8 +119,7 @@ void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
 }
 
 bool HTMLPlugInElement::RequestObjectInternal(
-    const Vector<String>& param_names,
-    const Vector<String>& param_values) {
+    const PluginParameters& plugin_params) {
   if (url_.IsEmpty() && service_type_.IsEmpty())
     return false;
 
@@ -146,8 +145,8 @@ bool HTMLPlugInElement::RequestObjectInternal(
   // it be handled as a plugin to show the broken plugin icon.
   bool use_fallback =
       object_type == ObjectContentType::kNone && HasFallbackContent();
-  return LoadPlugin(completed_url, service_type_, param_names, param_values,
-                    use_fallback, true);
+  return LoadPlugin(completed_url, service_type_, plugin_params, use_fallback,
+                    true);
 }
 
 bool HTMLPlugInElement::CanProcessDrag() const {
@@ -260,15 +259,12 @@ void HTMLPlugInElement::CreatePluginWithoutLayoutObject() {
   if (!AllowedToLoadObject(url, service_type_))
     return;
 
-  Vector<String> param_names;
-  Vector<String> param_values;
-
-  param_names.push_back("type");
-  param_values.push_back(service_type_);
+  PluginParameters plugin_params;
+  plugin_params.AppendNames("type");
+  plugin_params.AppendValues(service_type_);
 
   bool use_fallback = false;
-  LoadPlugin(url, service_type_, param_names, param_values, use_fallback,
-             false);
+  LoadPlugin(url, service_type_, plugin_params, use_fallback, false);
 }
 
 bool HTMLPlugInElement::ShouldAccelerate() const {
@@ -550,9 +546,8 @@ bool HTMLPlugInElement::AllowedToLoadFrameURL(const String& url) {
                ContentFrame()->GetSecurityContext()->GetSecurityOrigin()));
 }
 
-bool HTMLPlugInElement::RequestObject(const Vector<String>& param_names,
-                                      const Vector<String>& param_values) {
-  bool result = RequestObjectInternal(param_names, param_values);
+bool HTMLPlugInElement::RequestObject(const PluginParameters& plugin_params) {
+  bool result = RequestObjectInternal(plugin_params);
 
   DEFINE_STATIC_LOCAL(
       EnumerationHistogram, result_histogram,
@@ -565,8 +560,7 @@ bool HTMLPlugInElement::RequestObject(const Vector<String>& param_names,
 
 bool HTMLPlugInElement::LoadPlugin(const KURL& url,
                                    const String& mime_type,
-                                   const Vector<String>& param_names,
-                                   const Vector<String>& param_values,
+                                   const PluginParameters& plugin_params,
                                    bool use_fallback,
                                    bool require_layout_object) {
   if (!AllowedToLoadPlugin(url, mime_type))
@@ -593,9 +587,9 @@ bool HTMLPlugInElement::LoadPlugin(const KURL& url,
     LocalFrameClient::DetachedPluginPolicy policy =
         require_layout_object ? LocalFrameClient::kFailOnDetachedPlugin
                               : LocalFrameClient::kAllowDetachedPlugin;
-    WebPluginContainerImpl* plugin =
-        frame->Client()->CreatePlugin(*this, url, param_names, param_values,
-                                      mime_type, load_manually, policy);
+    WebPluginContainerImpl* plugin = frame->Client()->CreatePlugin(
+        *this, url, plugin_params.Names(), plugin_params.Values(), mime_type,
+        load_manually, policy);
     if (!plugin) {
       if (layout_object && !layout_object->ShowsUnavailablePluginIndicator()) {
         plugin_is_available_ = false;

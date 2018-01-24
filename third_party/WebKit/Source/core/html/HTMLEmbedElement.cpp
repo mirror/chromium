@@ -132,12 +132,11 @@ void HTMLEmbedElement::ParseAttribute(
   }
 }
 
-void HTMLEmbedElement::ParametersForPlugin(Vector<String>& param_names,
-                                           Vector<String>& param_values) {
+void HTMLEmbedElement::ParametersForPlugin(PluginParameters& plugin_params) {
   AttributeCollection attributes = Attributes();
   for (const Attribute& attribute : attributes) {
-    param_names.push_back(attribute.LocalName().GetString());
-    param_values.push_back(attribute.Value().GetString());
+    plugin_params.AppendNames(attribute.LocalName().GetString());
+    plugin_params.AppendValues(attribute.Value().GetString());
   }
 }
 
@@ -156,10 +155,8 @@ void HTMLEmbedElement::UpdatePluginInternal() {
   if (!AllowedToLoadFrameURL(url_))
     return;
 
-  // FIXME: These should be joined into a PluginParameters class.
-  Vector<String> param_names;
-  Vector<String> param_values;
-  ParametersForPlugin(param_names, param_values);
+  PluginParameters plugin_params;
+  ParametersForPlugin(plugin_params);
 
   // FIXME: Can we not have layoutObject here now that beforeload events are
   // gone?
@@ -175,7 +172,7 @@ void HTMLEmbedElement::UpdatePluginInternal() {
     service_type_ = "text/html";
   }
 
-  RequestObject(param_names, param_values);
+  RequestObject(plugin_params);
 }
 
 bool HTMLEmbedElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
