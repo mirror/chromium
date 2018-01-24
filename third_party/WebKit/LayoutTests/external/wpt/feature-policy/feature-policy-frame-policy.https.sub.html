@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<body>
+  <script src=/resources/testharness.js></script>
+  <script src=/resources/testharnessreport.js></script>
+  <script src=/feature-policy/resources/featurepolicy.js></script>
+  <script>
+  'use strict';
+  var local_origin = 'https://{{domains[]}}:{{ports[https][0]}}';
+  var cross_origin = 'https://{{domains[www]}}:{{ports[https][0]}}';
+  var src = '/feature-policy/resources/feature-policy-frame-policy.html';
+  var src1 = '/feature-policy/resources/feature-policy-frame-policy-with-headers.https.sub.html';
+
+  // Withouth iframe allow attribute, frame.policy will inherit from header policy.
+  test(function() {
+    test_frame_policy(
+        ['usb', 'speaker', 'camera', 'geolocation', 'fullscreen', 'payment'],
+        ['midi'],
+        local_origin + src);
+  }, 'Test frame.policy on local iframe without allow attribute');
+  test(function() {
+    test_frame_policy(
+        ['usb', 'camera'],
+        // speaker, geolocation, fullscreen and payment are allowed for self.
+        ['midi', 'speaker', 'geolocation', 'fullscreen', 'payment'],
+        cross_origin + src);
+  }, 'Test frame.policy on remote iframe without allow attribute');
+
+  // With allow attribute:
+  //   - midi is disabled by parents, cannot be enabled in subframes.
+  //   - geolocation is not disabled by parents, can be enabled for subframes.
+  //   - usb is enabled by parents, but disabled by subframes.
+  //   - allowfullscreen overrides parent policy, fullscreen is allowed for subframes.
+  //   - allowpaymentrequest overrides parent policy, but is overriden by allow attribute.
+  var allow = "midi *; geolocation 'src'; usb 'none'; payment 'self';";
+  test(function() {
+    test_frame_policy(
+        ['speaker', 'camera', 'geolocation', 'fullscreen', 'payment'],
+        ['usb', 'midi'],
+        local_origin + src,
+        allow, true, true);
+  }, 'Test frame.policy on local iframe with allow attribute');
+  test(function() {
+    test_frame_policy(
+        ['camera', 'geolocation', 'fullscreen'],
+        ['speaker', 'usb', 'midi', 'payment'],
+        cross_origin + src,
+        allow, true, true);
+  }, 'Test frame.policy on remote iframe with allow attribute');
+
+  // However, if header policy is set for the subframe documents, frame.policy does not get affected.
+  // Subframe header policy:
+  //   Feature-Policy: camera 'none'; fullscreen 'none'; payment 'none';
+  test(function() {
+    test_frame_policy(
+        ['speaker', 'camera', 'geolocation', 'fullscreen', 'payment'],
+        ['usb', 'midi'],
+        local_origin + src1,
+        allow, true, true);
+  }, 'Test frame.policy on local iframe with allow attribute and header policy');
+  test(function() {
+    test_frame_policy(
+        ['camera', 'geolocation', 'fullscreen'],
+        ['speaker', 'usb', 'midi', 'payment'],
+        cross_origin + src1,
+        allow, true, true);
+  }, 'Test frame.policy on remote iframe with allow attribute and header policy');
+  </script>
+</body>
