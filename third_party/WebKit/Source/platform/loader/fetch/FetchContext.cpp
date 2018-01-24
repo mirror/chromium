@@ -35,9 +35,9 @@
 
 namespace blink {
 
-FetchContext& FetchContext::NullInstance() {
-  DEFINE_STATIC_LOCAL(FetchContext, instance, (new FetchContext));
-  return instance;
+// static
+FetchContext* FetchContext::CreateNullInstance() {
+  return new FetchContext;
 }
 
 FetchContext::FetchContext() : platform_probe_sink_(new PlatformProbeSink) {
