@@ -111,6 +111,52 @@
     },
     {
       "key": {
+        "uuid": "b65220e4_2908757b",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-01-24T15:15:15Z",
+      "side": 1,
+      "message": "Please use a BUILDFLAG here. And check the indentation.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee138630_f0e83efc",
+        "filename": "chromecast/browser/android/junit/src/org/chromium/chromecast/shell/DumpStreamBuilderUnitTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-01-24T15:15:15Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t direct explicit action; please remove.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e926dae_0ff1f394",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 4
@@ -127,6 +173,29 @@
         "startChar": 2,
         "endLine": 63,
         "endChar": 27
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e9c2a3_62b8fe2f",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-01-24T15:15:15Z",
+      "side": 1,
+      "message": "What happens if the default values are used? How does the Component behave? \n\nAlso, please wrap these in is_android{}",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
       },
       "revId": "065a51ea5566152f0fd20c4002295157125f347f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
