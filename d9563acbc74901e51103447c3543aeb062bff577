@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45d44501_4198eaec",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1436bbd_21a1ee6b",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e33c42_ec01e476",
         "filename": "ui/views/controls/button/label_button.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eafb2f80_03a8d88b",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e33c42_ec01e476",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "686db202_94a91668",
         "filename": "ui/views/controls/button/label_button.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "d9563acbc74901e51103447c3543aeb062bff577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf68e21_6ef684df",
+        "filename": "ui/views/controls/button/label_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "Just to cover the ALIGN_BOTTOM case to be congruent with the other cases. However, I\u0027ve made it dependent on the multi-line setting of the label, so this case doesn\u0027t exist now.",
+      "parentUuid": "686db202_94a91668",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "2d57587e_19c73035",
+        "filename": "ui/views/controls/button/label_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "Removed. Now dependent on multi-line being set on the label.",
+      "parentUuid": "8d3cded1_bc3431eb",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2a826c_de6ed86c",
         "filename": "ui/views/controls/button/label_button_unittest.cc",
         "patchSetId": 5
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0f099439_e3573a1e",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "A new-line doesn\u0027t seem to force the text to wrap. This code (and the code setting the size below) is to force the label to wrap to two lines.",
+      "parentUuid": "ba2a826c_de6ed86c",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe5b2b2_fed25269",
         "filename": "ui/views/controls/button/label_button_unittest.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "d9563acbc74901e51103447c3543aeb062bff577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2155d854_d4fdb383",
+        "filename": "ui/views/controls/button/label_button_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2018-01-24T18:01:38Z",
+      "side": 1,
+      "message": "The max size (width only) is set above in order to ensure the label will wrap. Even then, CalculatePreferredSize() doesn\u0027t seem to take into account a word-wrapping label. SizeToPreferredSize() doesn\u0027t do the right thing here.",
+      "parentUuid": "cbe5b2b2_fed25269",
+      "revId": "d9563acbc74901e51103447c3543aeb062bff577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
