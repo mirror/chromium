@@ -2621,4 +2621,108 @@ QuicStringPiece QuicFramer::TruncateErrorString(QuicStringPiece error) {
   return QuicStringPiece(error.data(), kMaxErrorStringLength);
 }
 
+bool QuicFramer::AppendIetfConnectionCloseFrame(
+    const QuicConnectionCloseFrame& frame,
+    QuicDataWriter* writer) {
+  return AppendIetfCloseFrame(IETF_CONNECTION_CLOSE,
+                              static_cast<uint16_t>(frame.error_code),
+                              frame.error_details, writer);
+}
+
+bool QuicFramer::AppendIetfConnectionCloseFrame(
+    const QuicIetfTransportErrorCodes code,
+    const string& phrase,
+    QuicDataWriter* writer) {
+  return AppendIetfCloseFrame(
+      IETF_CONNECTION_CLOSE, static_cast<const uint16_t>(code), phrase, writer);
+}
+
+bool QuicFramer::AppendIetfApplicationCloseFrame(
+    const QuicConnectionCloseFrame& frame,
+    QuicDataWriter* writer) {
+  return AppendIetfCloseFrame(IETF_APPLICATION_CLOSE,
+                              static_cast<const uint16_t>(frame.error_code),
+                              frame.error_details, writer);
+}
+bool QuicFramer::AppendIetfApplicationCloseFrame(const uint16_t code,
+                                                 const string& phrase,
+                                                 QuicDataWriter* writer) {
+  return AppendIetfCloseFrame(IETF_APPLICATION_CLOSE, code, phrase, writer);
+}
+// Generate either an IETF-Connection- or IETF-Application-close frame.
+// General format is
+//    type-byte
+//    error code (fixed 16 bits)
+//    phrase length (varint)
+//    phrase  (string)
+bool QuicFramer::AppendIetfCloseFrame(const QuicIetfFrameType type,
+                                      const uint16_t code,
+                                      const string& phrase,
+                                      QuicDataWriter* writer) {
+  if (!writer->WriteUInt8(type)) {
+    set_detailed_error("Can not write close frame type byte");
+    return false;
+  }
+  if (!writer->WriteUInt16(code)) {
+    set_detailed_error("Can not write close frame code");
+    return false;
+  }
+  if (!writer->WriteVarInt62(phrase.size())) {
+    set_detailed_error("Can not write phrase-length");
+    return false;
+  }
+  if (!phrase.empty()) {
+    // append the phrase
+    if (!writer->WriteBytes(static_cast<const void*>(phrase.c_str()),
+                            phrase.size())) {
+      set_detailed_error("Can not write phrase");
+      return false;
+    }
+  }
+  return true;
+}
+
+// Parse either an IETF-Connection- or IETF-Application-close frame.
+// General format is
+//    type-byte
+//    error code (fixed 16 bits)
+//    phrase length (varint)
+//    phrase  (string)
+bool QuicFramer::ProcessIetfConnectionCloseFrame(
+    QuicDataReader* reader,
+    const uint8_t frame_type,
+    QuicConnectionCloseFrame* frame) {
+  return ProcessIetfCloseFrame(reader, frame_type, frame);
+}
+bool QuicFramer::ProcessIetfApplicationCloseFrame(
+    QuicDataReader* reader,
+    const uint8_t frame_type,
+    QuicConnectionCloseFrame* frame) {
+  return ProcessIetfCloseFrame(reader, frame_type, frame);
+}
+bool QuicFramer::ProcessIetfCloseFrame(QuicDataReader* reader,
+                                       const uint8_t frame_type,
+                                       QuicConnectionCloseFrame* frame) {
+  uint16_t code;
+  if (!reader->ReadUInt16(&code)) {
+    set_detailed_error("Unable to read clode frame code.");
+    return false;
+  }
+  frame->error_code = static_cast<QuicErrorCode>(code);
+
+  uint64_t phrase_length;
+  if (!reader->ReadVarInt62(&phrase_length)) {
+    set_detailed_error("Unable to read phrase length");
+    return false;
+  }
+  QuicStringPiece phrase;
+  if (!reader->ReadStringPiece(&phrase, static_cast<size_t>(phrase_length))) {
+    set_detailed_error("Can not read extended close information phrase");
+    return false;
+  }
+  frame->error_details = phrase.as_string();
+
+  return true;
+}
+
 }  // namespace net

@@ -510,6 +510,30 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
                              bool last_frame_in_packet,
                              QuicDataWriter* writer);
 
+  bool AppendIetfConnectionCloseFrame(const QuicConnectionCloseFrame& frame,
+                                      QuicDataWriter* writer);
+  bool AppendIetfConnectionCloseFrame(const QuicIetfTransportErrorCodes code,
+                                      const std::string& phrase,
+                                      QuicDataWriter* writer);
+  bool AppendIetfApplicationCloseFrame(const QuicConnectionCloseFrame& frame,
+                                       QuicDataWriter* writer);
+  bool AppendIetfApplicationCloseFrame(const uint16_t code,
+                                       const std::string& phrase,
+                                       QuicDataWriter* writer);
+  bool AppendIetfCloseFrame(const QuicIetfFrameType type,
+                            const uint16_t code,
+                            const std::string& phrase,
+                            QuicDataWriter* writer);
+  bool ProcessIetfConnectionCloseFrame(QuicDataReader* reader,
+                                       const uint8_t frame_type,
+                                       QuicConnectionCloseFrame* frame);
+  bool ProcessIetfApplicationCloseFrame(QuicDataReader* reader,
+                                        const uint8_t frame_type,
+                                        QuicConnectionCloseFrame* frame);
+  bool ProcessIetfCloseFrame(QuicDataReader* reader,
+                             const uint8_t frame_type,
+                             QuicConnectionCloseFrame* frame);
+
   bool RaiseError(QuicErrorCode error);
 
   void set_error(QuicErrorCode error) { error_ = error; }

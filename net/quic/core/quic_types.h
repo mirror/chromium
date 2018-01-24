@@ -338,6 +338,21 @@ struct LostPacket {
 // A vector of lost packets.
 typedef std::vector<LostPacket> LostPacketVector;
 
+enum QuicIetfTransportErrorCodes : uint16_t {
+  NO_ERROR = 0x0,
+  INTERNAL_ERROR = 0x1,
+  FLOW_CONTROL_ERROR = 0x3,
+  STREAM_ID_ERROR = 0x4,
+  STREAM_STATE_ERROR = 0x5,
+  FINAL_OFFSET_ERROR = 0x6,
+  FRAME_FORMAT_ERROR = 0x7,
+  TRANSPORT_PARAMETER_ERROR = 0x8,
+  VERSION_NEGOTIATION_ERROR = 0x9,
+  PROTOCOL_VIOLATION = 0xA,
+  UNSOLICITED_PONG = 0xB,
+  FRAME_ERROR_base = 0x100,  // add frame type to this base
+};
+
 }  // namespace net
 
 #endif  // NET_QUIC_CORE_QUIC_TYPES_H_

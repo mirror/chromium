@@ -40,6 +40,8 @@
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/quic/test_tools/simple_data_producer.h"
 
+using std::string;
+
 namespace net {
 namespace test {
 namespace {
@@ -64,11 +66,8 @@ const QuicIetfStreamOffset kOffset0 = UINT64_C(0x00);
 class QuicIetfFramerTest : public QuicTestWithParam<ParsedQuicVersion> {
  public:
   QuicIetfFramerTest()
-      : version_(GetParam()),
-        start_(QuicTime::Zero() + QuicTime::Delta::FromMicroseconds(0x10)),
-        framer_(AllSupportedVersions(), start_, Perspective::IS_SERVER) {
-    framer_.set_version(version_);
-  }
+      : start_(QuicTime::Zero() + QuicTime::Delta::FromMicroseconds(0x10)),
+        framer_(AllSupportedVersions(), start_, Perspective::IS_SERVER) {}
 
   // Utility functions to do actual framing/deframing.
   bool TryStreamFrame(char* packet_buffer,
@@ -77,8 +76,8 @@ class QuicIetfFramerTest : public QuicTestWithParam<ParsedQuicVersion> {
                       size_t xmit_packet_data_size,
                       QuicIetfStreamId stream_id,
                       QuicIetfStreamOffset offset,
-                      bool last_frame_bit,
                       bool fin_bit,
+                      bool last_frame_bit,
                       QuicIetfFrameType frame_type) {
     // initialize a writer so that the serialized packet is placed in
     // packet_buffer.
@@ -130,7 +129,6 @@ class QuicIetfFramerTest : public QuicTestWithParam<ParsedQuicVersion> {
         0);
     return true;
   }
-  ParsedQuicVersion version_;
   QuicTime start_;
   QuicFramer framer_;
 };
@@ -142,29 +140,30 @@ struct stream_frame_variant {
   bool last_frame_bit;
   uint8_t frame_type;
 } stream_frame_to_test[] = {
-#define IETF_STREAM0 (((uint8_t)IETF_STREAM)
+#define IETF_STREAM0 (((uint8_t)IETF_STREAM))
 
-#define IETF_STREAM1 (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_FIN_BIT)
+#define IETF_STREAM1 (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_FIN_BIT)
 
-#define IETF_STREAM2 (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_LEN_BIT)
+#define IETF_STREAM2 (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_LEN_BIT)
 
-#define IETF_STREAM3                                      \
-  (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_LEN_BIT || \
+#define IETF_STREAM3                                    \
+  (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_LEN_BIT | \
    IETF_STREAM_FRAME_FIN_BIT)
 
-#define IETF_STREAM4 (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_OFF_BIT)
+#define IETF_STREAM4 (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_OFF_BIT)
 
-#define IETF_STREAM5                                      \
-  (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_OFF_BIT || \
+#define IETF_STREAM5                                    \
+  (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_OFF_BIT | \
    IETF_STREAM_FRAME_FIN_BIT)
 
-#define IETF_STREAM6                                      \
-  (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_OFF_BIT || \
+#define IETF_STREAM6                                    \
+  (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_OFF_BIT | \
    IETF_STREAM_FRAME_LEN_BIT)
 
-#define IETF_STREAM7                                      \
-  (((uint8_t)IETF_STREAM) || IETF_STREAM_FRAME_OFF_BIT || \
-   IETF_STREAM_FRAME_LEN_BIT || IETF_STREAM_FRAME_FIN_BIT)
+#define IETF_STREAM7                                    \
+  (((uint8_t)IETF_STREAM) | IETF_STREAM_FRAME_OFF_BIT | \
+   IETF_STREAM_FRAME_LEN_BIT | IETF_STREAM_FRAME_FIN_BIT)
+
     {kStreamId8, kOffset8, true, false, IETF_STREAM7},
     {kStreamId8, kOffset8, false, false, IETF_STREAM6},
     {kStreamId8, kOffset4, true, false, IETF_STREAM7},
@@ -173,8 +172,8 @@ struct stream_frame_variant {
     {kStreamId8, kOffset2, false, false, IETF_STREAM6},
     {kStreamId8, kOffset1, true, false, IETF_STREAM7},
     {kStreamId8, kOffset1, false, false, IETF_STREAM6},
-    {kStreamId8, kOffset0, true, false, IETF_STREAM7},
-    {kStreamId8, kOffset0, false, false, IETF_STREAM6},
+    {kStreamId8, kOffset0, true, false, IETF_STREAM3},
+    {kStreamId8, kOffset0, false, false, IETF_STREAM2},
     {kStreamId4, kOffset8, true, false, IETF_STREAM7},
     {kStreamId4, kOffset8, false, false, IETF_STREAM6},
     {kStreamId4, kOffset4, true, false, IETF_STREAM7},
@@ -183,8 +182,8 @@ struct stream_frame_variant {
     {kStreamId4, kOffset2, false, false, IETF_STREAM6},
     {kStreamId4, kOffset1, true, false, IETF_STREAM7},
     {kStreamId4, kOffset1, false, false, IETF_STREAM6},
-    {kStreamId4, kOffset0, true, false, IETF_STREAM7},
-    {kStreamId4, kOffset0, false, false, IETF_STREAM6},
+    {kStreamId4, kOffset0, true, false, IETF_STREAM3},
+    {kStreamId4, kOffset0, false, false, IETF_STREAM2},
     {kStreamId2, kOffset8, true, false, IETF_STREAM7},
     {kStreamId2, kOffset8, false, false, IETF_STREAM6},
     {kStreamId2, kOffset4, true, false, IETF_STREAM7},
@@ -193,8 +192,8 @@ struct stream_frame_variant {
     {kStreamId2, kOffset2, false, false, IETF_STREAM6},
     {kStreamId2, kOffset1, true, false, IETF_STREAM7},
     {kStreamId2, kOffset1, false, false, IETF_STREAM6},
-    {kStreamId2, kOffset0, true, false, IETF_STREAM7},
-    {kStreamId2, kOffset0, false, false, IETF_STREAM6},
+    {kStreamId2, kOffset0, true, false, IETF_STREAM3},
+    {kStreamId2, kOffset0, false, false, IETF_STREAM2},
     {kStreamId1, kOffset8, true, false, IETF_STREAM7},
     {kStreamId1, kOffset8, false, false, IETF_STREAM6},
     {kStreamId1, kOffset4, true, false, IETF_STREAM7},
@@ -203,8 +202,8 @@ struct stream_frame_variant {
     {kStreamId1, kOffset2, false, false, IETF_STREAM6},
     {kStreamId1, kOffset1, true, false, IETF_STREAM7},
     {kStreamId1, kOffset1, false, false, IETF_STREAM6},
-    {kStreamId1, kOffset0, true, false, IETF_STREAM7},
-    {kStreamId1, kOffset0, false, false, IETF_STREAM6},
+    {kStreamId1, kOffset0, true, false, IETF_STREAM3},
+    {kStreamId1, kOffset0, false, false, IETF_STREAM2},
     {kStreamId0, kOffset8, true, false, IETF_STREAM7},
     {kStreamId0, kOffset8, false, false, IETF_STREAM6},
     {kStreamId0, kOffset4, true, false, IETF_STREAM7},
@@ -213,8 +212,8 @@ struct stream_frame_variant {
     {kStreamId0, kOffset2, false, false, IETF_STREAM6},
     {kStreamId0, kOffset1, true, false, IETF_STREAM7},
     {kStreamId0, kOffset1, false, false, IETF_STREAM6},
-    {kStreamId0, kOffset0, true, false, IETF_STREAM7},
-    {kStreamId0, kOffset0, false, false, IETF_STREAM6},
+    {kStreamId0, kOffset0, true, false, IETF_STREAM3},
+    {kStreamId0, kOffset0, false, false, IETF_STREAM2},
 
     {kStreamId8, kOffset8, true, true, IETF_STREAM7},
     {kStreamId8, kOffset8, false, true, IETF_STREAM6},
@@ -224,8 +223,8 @@ struct stream_frame_variant {
     {kStreamId8, kOffset2, false, true, IETF_STREAM6},
     {kStreamId8, kOffset1, true, true, IETF_STREAM7},
     {kStreamId8, kOffset1, false, true, IETF_STREAM6},
-    {kStreamId8, kOffset0, true, true, IETF_STREAM7},
-    {kStreamId8, kOffset0, false, true, IETF_STREAM6},
+    {kStreamId8, kOffset0, true, true, IETF_STREAM3},
+    {kStreamId8, kOffset0, false, true, IETF_STREAM2},
     {kStreamId4, kOffset8, true, true, IETF_STREAM7},
     {kStreamId4, kOffset8, false, true, IETF_STREAM6},
     {kStreamId4, kOffset4, true, true, IETF_STREAM7},
@@ -234,8 +233,8 @@ struct stream_frame_variant {
     {kStreamId4, kOffset2, false, true, IETF_STREAM6},
     {kStreamId4, kOffset1, true, true, IETF_STREAM7},
     {kStreamId4, kOffset1, false, true, IETF_STREAM6},
-    {kStreamId4, kOffset0, true, true, IETF_STREAM7},
-    {kStreamId4, kOffset0, false, true, IETF_STREAM6},
+    {kStreamId4, kOffset0, true, true, IETF_STREAM3},
+    {kStreamId4, kOffset0, false, true, IETF_STREAM2},
     {kStreamId2, kOffset8, true, true, IETF_STREAM7},
     {kStreamId2, kOffset8, false, true, IETF_STREAM6},
     {kStreamId2, kOffset4, true, true, IETF_STREAM7},
@@ -244,8 +243,8 @@ struct stream_frame_variant {
     {kStreamId2, kOffset2, false, true, IETF_STREAM6},
     {kStreamId2, kOffset1, true, true, IETF_STREAM7},
     {kStreamId2, kOffset1, false, true, IETF_STREAM6},
-    {kStreamId2, kOffset0, true, true, IETF_STREAM7},
-    {kStreamId2, kOffset0, false, true, IETF_STREAM6},
+    {kStreamId2, kOffset0, true, true, IETF_STREAM3},
+    {kStreamId2, kOffset0, false, true, IETF_STREAM2},
     {kStreamId1, kOffset8, true, true, IETF_STREAM7},
     {kStreamId1, kOffset8, false, true, IETF_STREAM6},
     {kStreamId1, kOffset4, true, true, IETF_STREAM7},
@@ -254,8 +253,8 @@ struct stream_frame_variant {
     {kStreamId1, kOffset2, false, true, IETF_STREAM6},
     {kStreamId1, kOffset1, true, true, IETF_STREAM7},
     {kStreamId1, kOffset1, false, true, IETF_STREAM6},
-    {kStreamId1, kOffset0, true, true, IETF_STREAM7},
-    {kStreamId1, kOffset0, false, true, IETF_STREAM6},
+    {kStreamId1, kOffset0, true, true, IETF_STREAM3},
+    {kStreamId1, kOffset0, false, true, IETF_STREAM2},
     {kStreamId0, kOffset8, true, true, IETF_STREAM7},
     {kStreamId0, kOffset8, false, true, IETF_STREAM6},
     {kStreamId0, kOffset4, true, true, IETF_STREAM7},
@@ -264,8 +263,8 @@ struct stream_frame_variant {
     {kStreamId0, kOffset2, false, true, IETF_STREAM6},
     {kStreamId0, kOffset1, true, true, IETF_STREAM7},
     {kStreamId0, kOffset1, false, true, IETF_STREAM6},
-    {kStreamId0, kOffset0, true, true, IETF_STREAM7},
-    {kStreamId0, kOffset0, false, true, IETF_STREAM6},
+    {kStreamId0, kOffset0, true, true, IETF_STREAM3},
+    {kStreamId0, kOffset0, false, true, IETF_STREAM2},
 
     // try some cases where the offset is _not_ present; we will give
     // the framer a non-0 offset; however, if we say that there is to be
@@ -278,7 +277,7 @@ struct stream_frame_variant {
     {0, 0, false, false, IETF_STREAM6},
 };
 
-TEST_P(QuicIetfFramerTest, StreamFrame) {
+TEST_F(QuicIetfFramerTest, StreamFrame) {
   char packet_buffer[kNormalPacketBufferSize];
   const char* transmit_packet_data =
       "this is a test of some packet data, "
@@ -296,6 +295,243 @@ TEST_P(QuicIetfFramerTest, StreamFrame) {
         static_cast<QuicIetfFrameType>(variant->frame_type)));
     variant++;
   }
+}
+
+// tests for the ietf connection/application close frames.
+// These are not regular enough to be table driven, so doing
+// explicit tests is what we need to do...
+
+TEST_F(QuicIetfFramerTest, ConnectionClose1) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  string test_string = "This is a test of the emergency broadcast system";
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfConnectionCloseFrame(
+      &framer_, QuicIetfTransportErrorCodes::VERSION_NEGOTIATION_ERROR,
+      test_string, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_CONNECTION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfConnectionCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code,
+            static_cast<QuicErrorCode>(
+                QuicIetfTransportErrorCodes::VERSION_NEGOTIATION_ERROR));
+  EXPECT_EQ(sink_frame.error_details, test_string);
+}
+
+// test case of having no string. also the 0 error code,
+TEST_F(QuicIetfFramerTest, ConnectionClose2) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  // empty string,
+  string test_string;
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfConnectionCloseFrame(
+      &framer_, QuicIetfTransportErrorCodes::NO_ERROR,  // NO_ERROR == 0
+      test_string, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_CONNECTION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfConnectionCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code,
+            static_cast<QuicErrorCode>(QuicIetfTransportErrorCodes::NO_ERROR));
+  EXPECT_EQ(sink_frame.error_details, test_string);
+}
+// Set fields of the frame via a QuicConnectionClose object
+// test case of having no string. also the 0 error code,
+TEST_F(QuicIetfFramerTest, ConnectionClose3) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  // empty string,
+  string test_string = "Ich Bin Ein Jelly Donut?";
+  QuicConnectionCloseFrame sent_frame;
+  sent_frame.error_code = static_cast<QuicErrorCode>(0);
+  sent_frame.error_details = test_string;
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfConnectionCloseFrame(
+      &framer_, sent_frame, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_CONNECTION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfConnectionCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code, static_cast<QuicErrorCode>(0));
+  EXPECT_EQ(sink_frame.error_details, test_string);
+}
+
+TEST_F(QuicIetfFramerTest, ApplicationClose1) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  string test_string = "This is a test of the emergency broadcast system";
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfApplicationCloseFrame(
+      &framer_,
+      static_cast<uint16_t>(QuicErrorCode::QUIC_CRYPTO_VERSION_NOT_SUPPORTED),
+      test_string, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_APPLICATION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfApplicationCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code,
+            QuicErrorCode::QUIC_CRYPTO_VERSION_NOT_SUPPORTED);
+  EXPECT_EQ(sink_frame.error_details, test_string);
+}
+
+// test case of having no string. also the 0 error code,
+TEST_F(QuicIetfFramerTest, ApplicationClose2) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  // empty string,
+  string test_string;
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfApplicationCloseFrame(
+      &framer_, 0, test_string, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_APPLICATION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfApplicationCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code, 0);
+  EXPECT_EQ(sink_frame.error_details, test_string);
+}
+
+// Set fields of the frame via a QuicConnectionClose object   wahoo
+// test case of having no string. also the 0 error code,
+TEST_F(QuicIetfFramerTest, ApplicationClose3) {
+  char packet_buffer[kNormalPacketBufferSize];
+
+  // initialize a writer so that the serialized packet is placed in
+  // packet_buffer.
+  QuicDataWriter writer(sizeof(packet_buffer), packet_buffer,
+                        NETWORK_BYTE_ORDER);
+
+  // empty string,
+  string test_string = "Ich Bin Ein Jelly Donut?";
+  QuicConnectionCloseFrame sent_frame;
+  sent_frame.error_code = static_cast<QuicErrorCode>(0);
+  sent_frame.error_details = test_string;
+  // write the frame to the packet buffer.
+  EXPECT_TRUE(QuicFramerPeer::AppendIetfApplicationCloseFrame(
+      &framer_, sent_frame, &writer));
+
+  // better have something in the packet buffer.
+  EXPECT_NE(0u, writer.length());
+
+  // now set up a reader to read in the thing in.
+  QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+  // read in the frame type
+  uint8_t received_frame_type;
+  EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+  EXPECT_EQ(received_frame_type, QuicIetfFrameType::IETF_APPLICATION_CLOSE);
+
+  // a QuicConnectionCloseFrame to hold the results.
+  QuicConnectionCloseFrame sink_frame;
+
+  EXPECT_TRUE(QuicFramerPeer::ProcessIetfApplicationCloseFrame(
+      &framer_, &reader, received_frame_type, &sink_frame));
+
+  // Now check that received == sent
+  EXPECT_EQ(sink_frame.error_code, static_cast<QuicErrorCode>(0));
+  EXPECT_EQ(sink_frame.error_details, test_string);
 }
 
 }  // namespace

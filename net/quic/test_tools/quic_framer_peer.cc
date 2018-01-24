@@ -11,6 +11,8 @@
 namespace net {
 namespace test {
 
+using std::string;
+
 // static
 QuicPacketNumber QuicFramerPeer::CalculatePacketNumberFromWire(
     QuicFramer* framer,
@@ -53,6 +55,52 @@ bool QuicFramerPeer::AppendIetfStreamFrame(QuicFramer* framer,
                                            bool last_frame_in_packet,
                                            QuicDataWriter* writer) {
   return framer->AppendIetfStreamFrame(frame, last_frame_in_packet, writer);
+}
+
+// static
+bool QuicFramerPeer::AppendIetfConnectionCloseFrame(
+    QuicFramer* framer,
+    const QuicConnectionCloseFrame& frame,
+    QuicDataWriter* writer) {
+  return framer->AppendIetfConnectionCloseFrame(frame, writer);
+}
+// static
+bool QuicFramerPeer::AppendIetfConnectionCloseFrame(
+    QuicFramer* framer,
+    const QuicIetfTransportErrorCodes code,
+    const string& phrase,
+    QuicDataWriter* writer) {
+  return framer->AppendIetfConnectionCloseFrame(code, phrase, writer);
+}
+// static
+bool QuicFramerPeer::AppendIetfApplicationCloseFrame(
+    QuicFramer* framer,
+    const QuicConnectionCloseFrame& frame,
+    QuicDataWriter* writer) {
+  return framer->AppendIetfApplicationCloseFrame(frame, writer);
+}
+// static
+bool QuicFramerPeer::AppendIetfApplicationCloseFrame(QuicFramer* framer,
+                                                     const uint16_t code,
+                                                     const string& phrase,
+                                                     QuicDataWriter* writer) {
+  return framer->AppendIetfApplicationCloseFrame(code, phrase, writer);
+}
+// static
+bool QuicFramerPeer::ProcessIetfConnectionCloseFrame(
+    QuicFramer* framer,
+    QuicDataReader* reader,
+    const uint8_t frame_type,
+    QuicConnectionCloseFrame* frame) {
+  return framer->ProcessIetfConnectionCloseFrame(reader, frame_type, frame);
+}
+// static
+bool QuicFramerPeer::ProcessIetfApplicationCloseFrame(
+    QuicFramer* framer,
+    QuicDataReader* reader,
+    const uint8_t frame_type,
+    QuicConnectionCloseFrame* frame) {
+  return framer->ProcessIetfApplicationCloseFrame(reader, frame_type, frame);
 }
 
 // static
