@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95591c7a_e3f80beb",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-24T21:02:37Z",
+      "side": 1,
+      "message": "This value will be a filename now. Added a comment in the .aidl file to note this. We still elide it though.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
