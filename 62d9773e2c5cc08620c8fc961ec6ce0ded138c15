@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e6d3e06_0475563b",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e656a72c_e810c262",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32c3eae_ad7eaedd",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b075c333_c57e8173",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32c3eae_ad7eaedd",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d953655c_7e4bd42f",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ecf1bf8_b831954d",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01fe874c_47a66684",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3ce405_0c975110",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "01fe874c_47a66684",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "85b14563_e6fc1a76",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "As talked offline, will merge back to one test.",
+      "parentUuid": "7a8f9693_fcf9acfb",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4886ee8_6d66d2c1",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b61da073_e16bce35",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Yes, \"the tab strip\u0027s preferred width isn\u0027t considered when determining the tabbed pane\u0027s preferred width\".\nIn the horizontal mode, the label text in the tab will be elided and the tab size getting smaller when reducing the window width.\nThe behavior looks like: all the tab titles are elided, and the right most tab size are reduced to 0 and be cut off by the window bounds.\n\nAs talked offline, will merge back to one test.",
+      "parentUuid": "d4886ee8_6d66d2c1",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c92ff9_17a844c1",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03802609_ff921771",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Merged back to one test.",
+      "parentUuid": "18c92ff9_17a844c1",
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +267,30 @@
       "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcec9e7_126538ea",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-24T01:41:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "de2ca32f_7b05cd4c",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "62d9773e2c5cc08620c8fc961ec6ce0ded138c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
