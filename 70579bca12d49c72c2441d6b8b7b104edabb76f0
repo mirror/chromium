@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "531151e6_3998268b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T11:33:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41686e38_4a5f3ba0",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 52
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d991afb7_986c5e10",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 9
@@ -210,6 +234,54 @@
       "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51cb374_1f06944f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T11:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba2fd3d_fd8aa705",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 16
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83fa0829_0b0b1d21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T11:33:38Z",
+      "side": 1,
+      "message": "Good idea!\nI also shortened the name prefix a little, to follow the guideline [1] that \u0027that the prefix be a short, meaningful string such as \"hjb\" or \"mail\".\u0027 (Not sure about \"hjb\" being meaningful, but at least it sets a low bar for \"pwd\".)\n\n(Currently, the user will see the generated name in the receiving app (such as Google Drive), but I plan to set a translated string following the mocks to the OpenableColumns.DISPLAY_NAME of the content URI in a follow-up CL.)",
+      "parentUuid": "212aac32_a3030a68",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
