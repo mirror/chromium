@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdb2124_775fc1b5",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:54:28Z",
+      "side": 1,
+      "message": "nit: remove this, and other references to //google3",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1bd5cc_73646c1b",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:54:28Z",
+      "side": 1,
+      "message": "is there a ChromeOS specific label?",
+      "range": {
+        "startLine": 83,
+        "startChar": 39,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d44051_4b9f8606",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:54:28Z",
+      "side": 1,
+      "message": "is this really an error? I\u0027d assume a collection could be empty.",
+      "range": {
+        "startLine": 838,
+        "startChar": 12,
+        "endLine": 838,
+        "endChar": 17
+      },
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f56140_391f1204",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:54:28Z",
+      "side": 1,
+      "message": "check that collectionsInfo is not empty first.",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b61b535_b80c059f",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:54:28Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that retry logic is needed here, but if you keep it, can you get a reference to the timeout here, and cancel it in getCollectionInfo_",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
