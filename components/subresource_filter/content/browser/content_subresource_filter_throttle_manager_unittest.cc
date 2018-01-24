@@ -157,7 +157,8 @@ class ContentSubresourceFilterThrottleManagerTest
   }
 
   void ExpectActivationSignalForFrame(content::RenderFrameHost* rfh,
-                                      bool expect_activation) {
+                                      bool expect_activation,
+                                      bool expect_is_ad_subframe) {
     content::MockRenderProcessHost* render_process_host =
         static_cast<content::MockRenderProcessHost*>(rfh->GetProcess());
     const IPC::Message* message =
@@ -165,10 +166,12 @@ class ContentSubresourceFilterThrottleManagerTest
             SubresourceFilterMsg_ActivateForNextCommittedLoad::ID);
     ASSERT_EQ(expect_activation, !!message);
     if (expect_activation) {
-      std::tuple<ActivationState> args;
+      std::tuple<ActivationState, bool> args;
       SubresourceFilterMsg_ActivateForNextCommittedLoad::Read(message, &args);
       ActivationLevel level = std::get<0>(args).activation_level;
       EXPECT_NE(ActivationLevel::DISABLED, level);
+      bool is_ad_subframe = std::get<1>(args);
+      EXPECT_EQ(expect_is_ad_subframe, is_ad_subframe);
     }
     render_process_host->sink().ClearMessages();
   }
@@ -308,7 +311,9 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameAndFilterSubframeNavigation) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */
+                                 ,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation should be successfully filtered.
   CreateSubframeWithTestNavigation(
@@ -322,7 +327,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 TEST_P(ContentSubresourceFilterThrottleManagerTest, NoPageActivation) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithNoActivation));
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
   EXPECT_FALSE(ManagerHasRulesetHandle());
 
   // A disallowed subframe navigation should not be filtered.
@@ -337,7 +343,9 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameAndDoNotFilterDryRun) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */
+                                 ,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation should not be filtered in dry-run mode.
   CreateSubframeWithTestNavigation(
@@ -346,7 +354,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
   // But it should still be activated.
-  ExpectActivationSignalForFrame(child, true /* expect_activation */);
+  ExpectActivationSignalForFrame(child, true /* expect_activation */,
+                                 true /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -355,7 +364,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameAndFilterSubframeNavigationOnRedirect) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation via redirect should be successfully
   // filtered.
@@ -376,7 +386,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameAndDoNotFilterSubframeNavigation) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // An allowed subframe navigation should complete successfully.
   CreateSubframeWithTestNavigation(
@@ -386,7 +397,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
                                   content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(child, true /* expect_activation */);
+  ExpectActivationSignalForFrame(child, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -397,7 +409,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameAndFilterTwoSubframeNavigations) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation should be successfully filtered.
   CreateSubframeWithTestNavigation(
@@ -419,7 +432,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateTwoMainFramesAndFilterTwoSubframeNavigations) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation should be successfully filtered.
   CreateSubframeWithTestNavigation(
@@ -431,7 +445,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 
   // Commit another navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation2));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/2/disallowed.html"), main_rfh());
@@ -447,7 +462,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
        ActivateMainFrameDoNotNotifyAfterSameDocumentNav) {
   // Commit a navigation that triggers page level activation.
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A disallowed subframe navigation should be successfully filtered.
   CreateSubframeWithTestNavigation(
@@ -461,7 +477,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   GURL url2 = GURL(base::StringPrintf("%s#ref", kTestURLWithActivation));
   CreateTestNavigation(url2, main_rfh());
   SimulateSameDocumentCommit();
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/2/disallowed.html"), main_rfh());
@@ -474,7 +491,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 TEST_P(ContentSubresourceFilterThrottleManagerTest,
        DoNotFilterForInactiveFrame) {
   NavigateAndCommitMainFrame(GURL("https://do-not-activate.html"));
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A subframe navigation should complete successfully.
   CreateSubframeWithTestNavigation(GURL("https://www.example.com/allowed.html"),
@@ -482,7 +500,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(child, false /* expect_activation */);
+  ExpectActivationSignalForFrame(child, false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -491,7 +510,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 // another frame is activated, make sure the handle is regenerated.
 TEST_P(ContentSubresourceFilterThrottleManagerTest, RulesetHandleRegeneration) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/disallowed.html"), main_rfh());
@@ -507,7 +527,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, RulesetHandleRegeneration) {
 
   NavigateAndCommit(GURL("https://example.reset"));
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/disallowed.html"), main_rfh());
@@ -523,11 +544,13 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
       GURL(base::StringPrintf("%sinactive.html", kTestURLWithActivation));
 
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
   EXPECT_TRUE(ManagerHasRulesetHandle());
 
   NavigateAndCommitMainFrame(same_site_inactive_url);
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
   EXPECT_FALSE(ManagerHasRulesetHandle());
 
   // A subframe navigation should complete successfully.
@@ -536,7 +559,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(child, false /* expect_activation */);
+  ExpectActivationSignalForFrame(child, false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -544,7 +568,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 TEST_P(ContentSubresourceFilterThrottleManagerTest,
        SameSiteFailedNavigation_MaintainActivation) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
   EXPECT_TRUE(ManagerHasRulesetHandle());
 
   GURL same_site_inactive_url =
@@ -553,7 +578,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   CreateTestNavigation(same_site_inactive_url, main_rfh());
   SimulateFailedNavigation(net::ERR_ABORTED);
   EXPECT_TRUE(ManagerHasRulesetHandle());
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A subframe navigation fail.
   CreateSubframeWithTestNavigation(
@@ -567,7 +593,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 TEST_P(ContentSubresourceFilterThrottleManagerTest,
        FailedNavigationToErrorPage_NoActivation) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
   EXPECT_TRUE(ManagerHasRulesetHandle());
 
   GURL same_site_inactive_url =
@@ -576,14 +603,16 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   CreateTestNavigation(same_site_inactive_url, main_rfh());
   SimulateFailedNavigation(net::ERR_FAILED);
   EXPECT_FALSE(ManagerHasRulesetHandle());
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/disallowed.html"), main_rfh());
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(child, false /* expect_activation */);
+  ExpectActivationSignalForFrame(child, false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -592,7 +621,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
 // process ones.
 TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Navigate a subframe to a URL that is not itself disallowed. Subresource
   // filtering for this subframe document should still be activated.
@@ -601,7 +631,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe1 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Navigate a sub-subframe to a URL that is not itself disallowed. Subresource
   // filtering for this subframe document should still be activated.
@@ -610,7 +641,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe2 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe2, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe2, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // A final, nested subframe navigation is filtered.
   CreateSubframeWithTestNavigation(GURL("https://www.c.com/disallowed.html"),
@@ -624,14 +656,16 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation) {
 // Ensure activation propagates through whitelisted documents.
 TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation2) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Navigate a subframe that is not filtered, but should still activate.
   CreateSubframeWithTestNavigation(GURL("https://whitelist.com"), main_rfh());
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe1 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Navigate a sub-subframe that is not filtered due to the whitelist.
   CreateSubframeWithTestNavigation(
@@ -639,7 +673,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation2) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe2 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe2, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe2, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 
@@ -649,7 +684,8 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation2) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe3 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe3, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe3, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Navigate a sub-subframe that is not filtered due to the whitelist.
   CreateSubframeWithTestNavigation(
@@ -664,20 +700,23 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest, ActivationPropagation2) {
 TEST_P(ContentSubresourceFilterThrottleManagerTest,
        SameSiteNavigationStopsActivation) {
   NavigateAndCommitMainFrame(GURL(kTestURLWithActivation));
-  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   // Mock a same-site navigation, in the same RFH, this URL does not trigger
   // page level activation.
   NavigateAndCommitMainFrame(
       GURL(base::StringPrintf("%s/some_path/", kTestURLWithActivation)));
-  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */);
+  ExpectActivationSignalForFrame(main_rfh(), false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   CreateSubframeWithTestNavigation(
       GURL("https://www.example.com/disallowed.html"), main_rfh());
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* child =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(child, false /* expect_activation */);
+  ExpectActivationSignalForFrame(child, false /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   EXPECT_EQ(0, disallowed_notification_count());
 }
@@ -703,7 +742,8 @@ TEST_F(ContentSubresourceFilterThrottleManagerTest, LogActivation) {
   SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
   content::RenderFrameHost* subframe1 =
       SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
-  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */);
+  ExpectActivationSignalForFrame(subframe1, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
 
   tester.ExpectTotalCount(kActivationStateHistogram, 3);
   // Only those with page level activation do ruleset lookups.

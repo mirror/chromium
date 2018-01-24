@@ -73,7 +73,7 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
 
   // TODO(crbug.com/736249): Remove CHECKs in this file when the root cause of
   // the crash is found.
-  ActivationStateComputingNavigationThrottle* throttle = it->second;
+  ActivationStateComputingNavigationThrottle* throttle = it->second.throttle;
   CHECK_EQ(navigation_handle, throttle->navigation_handle());
 
   // Main frame throttles with disabled page-level activation will not have
@@ -96,7 +96,8 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
   content::RenderFrameHost* frame_host =
       navigation_handle->GetRenderFrameHost();
   frame_host->Send(new SubresourceFilterMsg_ActivateForNextCommittedLoad(
-      frame_host->GetRoutingID(), filter->activation_state()));
+      frame_host->GetRoutingID(), filter->activation_state(),
+      it->second.is_ad_subframe));
 }
 
 void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
@@ -109,12 +110,13 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
     return;
   }
 
-  auto throttle = ongoing_activation_throttles_.find(navigation_handle);
+  auto throttle_it = ongoing_activation_throttles_.find(navigation_handle);
   std::unique_ptr<AsyncDocumentSubresourceFilter> filter;
-  if (throttle != ongoing_activation_throttles_.end()) {
-    CHECK_EQ(navigation_handle, throttle->second->navigation_handle());
-    filter = throttle->second->ReleaseFilter();
-    ongoing_activation_throttles_.erase(throttle);
+  if (throttle_it != ongoing_activation_throttles_.end()) {
+    auto* throttle = throttle_it->second.throttle;
+    CHECK_EQ(navigation_handle, throttle->navigation_handle());
+    filter = throttle->ReleaseFilter();
+    ongoing_activation_throttles_.erase(throttle_it);
   }
 
   content::RenderFrameHost* frame_host =
@@ -196,8 +198,18 @@ void ContentSubresourceFilterThrottleManager::OnPageActivationComputed(
 
   auto it = ongoing_activation_throttles_.find(navigation_handle);
   if (it != ongoing_activation_throttles_.end()) {
-    it->second->NotifyPageActivationWithRuleset(EnsureRulesetHandle(),
-                                                activation_state);
+    it->second.throttle->NotifyPageActivationWithRuleset(EnsureRulesetHandle(),
+                                                         activation_state);
+  }
+}
+
+void ContentSubresourceFilterThrottleManager::OnSubframeNavigationEvaluated(
+    content::NavigationHandle* navigation_handle,
+    LoadPolicy load_policy) {
+  DCHECK(!navigation_handle->IsInMainFrame());
+  auto it = ongoing_activation_throttles_.find(navigation_handle);
+  if (it != ongoing_activation_throttles_.end()) {
+    it->second.is_ad_subframe = load_policy != LoadPolicy::ALLOW;
   }
 }
 
@@ -215,7 +227,7 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   DCHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
   if (auto activation_throttle =
           MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
-    ongoing_activation_throttles_[navigation_handle] =
+    ongoing_activation_throttles_[navigation_handle].throttle =
         activation_throttle.get();
     activation_throttle->set_destruction_closure(base::BindOnce(
         &ContentSubresourceFilterThrottleManager::OnActivationThrottleDestroyed,
@@ -278,9 +290,9 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
     parent = it->first->GetParent();
   }
 
-  // Since null filter is only possible for special navigations of iframes, the
-  // above loop should have found a filter for at least the top level frame,
-  // thus making this unreachable.
+  // Since null filter is only possible for special navigations of iframes,
+  // the above loop should have found a filter for at least the top level
+  // frame, thus making this unreachable.
   NOTREACHED();
   return nullptr;
 }

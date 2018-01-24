@@ -1424,6 +1424,11 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
 
+  void SetIsAdSubframe(bool is_ad_subframe) {
+    is_ad_subframe_ = is_ad_subframe;
+  }
+  bool GetIsAdSubframe() const { return is_ad_subframe_; }
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1816,6 +1821,8 @@ class CORE_EXPORT Document : public ContainerNode,
   bool needs_to_record_ukm_outlive_time_;
 
   Member<Policy> policy_;
+
+  bool is_ad_subframe_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

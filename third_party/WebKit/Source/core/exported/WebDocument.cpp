@@ -280,6 +280,16 @@ WebDistillabilityFeatures WebDocument::DistillabilityFeatures() {
   return DocumentStatisticsCollector::CollectStatistics(*Unwrap<Document>());
 }
 
+void WebDocument::SetIsAdSubframe(bool is_ad_subframe) {
+  Document* document = Unwrap<Document>();
+  document->SetIsAdSubframe(is_ad_subframe);
+}
+
+bool WebDocument::GetIsAdSubframe() const {
+  const Document* document = ConstUnwrap<Document>();
+  return document->GetIsAdSubframe();
+}
+
 WebDocument::WebDocument(Document* elem) : WebNode(elem) {}
 
 DEFINE_WEB_NODE_TYPE_CASTS(WebDocument, ConstUnwrap<Node>()->IsDocumentNode());
