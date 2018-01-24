@@ -34,6 +34,7 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
     kFlexType,
     kFrequencyType,
     kInvertType,
+    kImageType,
     kKeywordType,
     kLengthType,
     kMaxType,

@@ -35,8 +35,11 @@ double CSSStyleImageValue::intrinsicRatio(bool& is_null) const {
 
 FloatSize CSSStyleImageValue::ElementSize(
     const FloatSize& default_object_size) const {
-  bool not_used;
-  return FloatSize(intrinsicWidth(not_used), intrinsicHeight(not_used));
+  const WTF::Optional<IntSize> size = IntrinsicSize();
+  if (!size)
+    return default_object_size;
+
+  return FloatSize(size.value().Width(), size.value().Height());
 }
 
 }  // namespace blink

@@ -5,6 +5,7 @@
 #include "core/css/cssom/StyleValueFactory.h"
 
 #include "core/css/CSSCustomPropertyDeclaration.h"
+#include "core/css/CSSGradientValue.h"
 #include "core/css/CSSImageValue.h"
 #include "core/css/CSSValue.h"
 #include "core/css/CSSVariableReferenceValue.h"
@@ -12,6 +13,7 @@
 #include "core/css/cssom/CSSNumericValue.h"
 #include "core/css/cssom/CSSOMTypes.h"
 #include "core/css/cssom/CSSPositionValue.h"
+#include "core/css/cssom/CSSStyleGradientValue.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "core/css/cssom/CSSStyleVariableReferenceValue.h"
 #include "core/css/cssom/CSSTransformValue.h"
@@ -41,7 +43,7 @@ CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
   return nullptr;
 }
 
-CSSStyleValue* CreateStyleValue(const CSSValue& value) {
+CSSStyleValue* CreateStyleValue(const CSSValue& value, Node* node) {
   if (value.IsIdentifierValue() || value.IsCustomIdentValue())
     return CSSKeywordValue::FromCSSValue(value);
   if (value.IsPrimitiveValue())
@@ -54,14 +56,18 @@ CSSStyleValue* CreateStyleValue(const CSSValue& value) {
     DCHECK(variable_data);
     return CSSUnparsedValue::FromCSSValue(*variable_data);
   }
-  if (value.IsImageValue()) {
-    return CSSURLImageValue::FromCSSValue(*ToCSSImageValue(value).Clone());
+  if (value.IsGradientValue()) {
+    return CSSStyleGradientValue::FromCSSValue(
+        cssvalue::ToCSSGradientValue(value), node);
   }
+  if (value.IsImageValue())
+    return CSSURLImageValue::FromCSSValue(*ToCSSImageValue(value).Clone());
   return nullptr;
 }
 
 CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
-                                            const CSSValue& value) {
+                                            const CSSValue& value,
+                                            Node* node) {
   if (value.IsCSSWideKeyword())
     return CSSKeywordValue::FromCSSValue(value);
 
@@ -69,7 +75,7 @@ CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
       CreateStyleValueWithPropertyInternal(property_id, value);
   if (style_value)
     return style_value;
-  return CreateStyleValue(value);
+  return CreateStyleValue(value, node);
 }
 
 CSSStyleValueVector UnsupportedCSSValue(CSSPropertyID property_id,
@@ -126,11 +132,12 @@ CSSStyleValueVector StyleValueFactory::FromString(
 
 CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
     CSSPropertyID property_id,
-    const CSSValue& css_value) {
+    const CSSValue& css_value,
+    Node* node) {
   CSSStyleValueVector style_value_vector;
 
   CSSStyleValue* style_value =
-      CreateStyleValueWithProperty(property_id, css_value);
+      CreateStyleValueWithProperty(property_id, css_value, node);
   if (style_value) {
     style_value_vector.push_back(style_value);
     return style_value_vector;
@@ -143,7 +150,7 @@ CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
   // If it's a list, we can try it as a list valued property.
   const CSSValueList& css_value_list = ToCSSValueList(css_value);
   for (const CSSValue* inner_value : css_value_list) {
-    style_value = CreateStyleValueWithProperty(property_id, *inner_value);
+    style_value = CreateStyleValueWithProperty(property_id, *inner_value, node);
     if (!style_value)
       return UnsupportedCSSValue(property_id, css_value);
     style_value_vector.push_back(style_value);
@@ -152,8 +159,9 @@ CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
 }
 
 CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
-    const CSSValue& css_value) {
-  return CssValueToStyleValueVector(CSSPropertyInvalid, css_value);
+    const CSSValue& css_value,
+    Node* node) {
+  return CssValueToStyleValueVector(CSSPropertyInvalid, css_value, node);
 }
 
 }  // namespace blink

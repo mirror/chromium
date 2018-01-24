@@ -80,7 +80,8 @@ CSSStyleValueVector StylePropertyMapReadOnly::getAll(
   if (!value)
     return CSSStyleValueVector();
 
-  return StyleValueFactory::CssValueToStyleValueVector(property_id, *value);
+  return StyleValueFactory::CssValueToStyleValueVector(property_id, *value,
+                                                       GetNode());
 }
 
 bool StylePropertyMapReadOnly::has(const String& property_name,

@@ -37,6 +37,7 @@ class CORE_EXPORT StylePropertyMapReadOnly
 
   virtual const CSSValue* GetProperty(CSSPropertyID) = 0;
   virtual const CSSValue* GetCustomProperty(AtomicString) = 0;
+  virtual Node* GetNode() { return nullptr; }
 
   using IterationCallback =
       std::function<void(const AtomicString&, const CSSValue&)>;

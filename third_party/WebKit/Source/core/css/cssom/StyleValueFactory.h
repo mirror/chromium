@@ -22,9 +22,11 @@ class CORE_EXPORT StyleValueFactory {
                                         const String&,
                                         const CSSParserContext*);
   static CSSStyleValueVector CssValueToStyleValueVector(CSSPropertyID,
-                                                        const CSSValue&);
+                                                        const CSSValue&,
+                                                        Node* = nullptr);
   // If you don't have complex CSS properties, use this one.
-  static CSSStyleValueVector CssValueToStyleValueVector(const CSSValue&);
+  static CSSStyleValueVector CssValueToStyleValueVector(const CSSValue&,
+                                                        Node* = nullptr);
 };
 
 }  // namespace blink
