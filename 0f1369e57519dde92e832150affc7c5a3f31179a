@@ -16,6 +16,24 @@
       "revId": "0f1369e57519dde92e832150affc7c5a3f31179a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8561978_87507033",
+        "filename": "net/websockets/websocket_basic_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-24T10:18:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8987d7_1cdc6615",
+      "revId": "0f1369e57519dde92e832150affc7c5a3f31179a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
