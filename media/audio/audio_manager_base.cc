@@ -574,11 +574,11 @@ void AudioManagerBase::InitializeDebugRecording() {
 }
 
 void AudioManagerBase::EnableDebugRecording(
-    const base::FilePath& base_file_name) {
+    const AudioDebugRecordingHelper::CreateFileCallback& create_file_callback) {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   DCHECK(debug_recording_manager_)
       << "InitializeDebugRecording() must be called before enabling";
-  debug_recording_manager_->EnableDebugRecording(base_file_name);
+  debug_recording_manager_->EnableDebugRecording(create_file_callback);
 }
 
 void AudioManagerBase::DisableDebugRecording() {

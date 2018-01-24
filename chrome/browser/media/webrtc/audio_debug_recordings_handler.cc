@@ -17,6 +17,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "media/audio/audio_debug_recording_session.h"
 #include "media/audio/audio_manager.h"
 
 using content::BrowserThread;
@@ -112,12 +113,13 @@ void AudioDebugRecordingsHandler::DoStartAudioDebugRecordings(
       log_directory, ++current_audio_debug_recordings_id_);
   host->EnableAudioDebugRecordings(prefix_path);
 
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, which is owned by content::RenderProcessHost, so it's safe to
-  // post unretained.
-  audio_manager_->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::EnableDebugRecording,
-                                base::Unretained(audio_manager_), prefix_path));
+  // Creating an AudioDebugRecordingSession will enable debug recording.
+  // AudioDebugRecordingSession posts AudioManager unretained, which is safe
+  // because AudioManager is deleted on the audio thread, and the AudioManager
+  // outlives this object, which is owned by content::RenderProcessHost.
+  audio_debug_recording_session_ =
+      std::make_unique<media::AudioDebugRecordingSession>(audio_manager_,
+                                                          prefix_path);
 
   if (delay.is_zero()) {
     const bool is_stopped = false, is_manual_stop = false;
@@ -163,12 +165,11 @@ void AudioDebugRecordingsHandler::DoStopAudioDebugRecordings(
     return;
   }
 
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, which is owned by content::RenderProcessHost, so it's safe to
-  // post unretained.
-  audio_manager_->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::DisableDebugRecording,
-                                base::Unretained(audio_manager_)));
+  // Debug recording is disabled in AudioDebugRecordingSession.
+  // AudioDebugRecordingSession posts AudioManager unretained, which is safe
+  // because AudioManager is deleted on the audio thread, and the AudioManager
+  // outlives this object, which is owned by content::RenderProcessHost.
+  audio_debug_recording_session_.reset();
 
   host->DisableAudioDebugRecordings();
 
