@@ -66,9 +66,9 @@ void SigninDiceInternalsHandler::HandleEnableSync(const base::ListValue* args) {
   // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile_, browser, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
+      profile_, signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,
       signin_metrics::Reason::REASON_UNKNOWN_REASON, account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT, browser);
 }
 
 void SigninDiceInternalsHandler::HandleDisableSync(
