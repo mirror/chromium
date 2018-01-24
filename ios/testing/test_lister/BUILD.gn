@@ -1,0 +1,23 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/ios/rules.gni")
+
+ios_app_bundle("xctest_lister") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  testonly = true
+  output_name = "XCTestLister"
+  info_plist = "Info.plist"
+  sources = [
+    "main.m",
+  ]
+
+  libs = [
+    "Foundation.framework",
+    "XCTest.framework",
+  ]
+  deps = [
+    "//build/config/ios:xctest",
+  ]
+}
