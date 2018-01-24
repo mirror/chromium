@@ -311,6 +311,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
 
   // Timer that ticks every 10 seconds and calls MarkTemporaryReference().
   base::RepeatingTimer temporary_reference_timer_;
+  const bool use_timer_;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 
