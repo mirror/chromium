@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1330f021_0748bf94",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2018-01-24T00:50:22Z",
+      "side": 1,
+      "message": "it will not be triggered on commits, is that what you want? \n\nSee \u0027triggers\u0027 in \"master-gitiles-trigger\" above.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "129e6a1b503bc48fa7aa1a5afd249166644aa79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
