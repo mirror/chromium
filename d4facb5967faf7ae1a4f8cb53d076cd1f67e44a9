@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efdf59a1_33eeb828",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3840,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: const pointer to const.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9e1370_e24c0c2c",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3843,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: No need to test the policy-to-pref mapping. policy_test_cases.json takes care of that.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac0479b_281e6cfa",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: const pointer to const.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e44f0c_96b7948d",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3883,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: No need to test the policy-to-pref mapping. policy_test_cases.json takes care of that.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc13826_cfcd3918",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3471,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Do these prefs show up in the settings UI? If so, you need to add controlled setting indicators (little icons that tell the user when a setting is managed). The indicators also are what allows you to return to a recommended value. The indicators need to be listed in this file to get testing.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4983a512_d69eaa87",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10955,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "You missed 65. Trunk is at 66 now.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f661a56_7cac9d8e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10967,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: We typically refer to the options by their plain text names, not their numeric values, here.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01686767_e9342dd0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10970,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: Document what happens when the policy is not set. We also tend to include a blurb saying that if you set this policy, the user cannot change or override it.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65002920_75a6d8a6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10995,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "As above, s/65/66/",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fde147a_e84694b7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11007,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: We typically refer to the options by their plain text names, not their numeric values, here.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3663e2d5_2ddb1642",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11010,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-24T14:47:49Z",
+      "side": 1,
+      "message": "Nit: Document what happens when the policy is not set. We also tend to include a blurb saying that if you set this policy, the user cannot change or override it.",
+      "revId": "d4facb5967faf7ae1a4f8cb53d076cd1f67e44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
