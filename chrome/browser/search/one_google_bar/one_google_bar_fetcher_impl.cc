@@ -16,6 +16,8 @@
 #include "chrome/common/chrome_content_client.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/signin/core/browser/chrome_connected_header_helper.h"
+#include "components/signin/core/browser/signin_header_helper.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "content/public/common/service_manager_connection.h"
 #include "net/base/load_flags.h"
@@ -135,6 +137,7 @@ class OneGoogleBarFetcherImpl::AuthenticatedURLFetcher
                           const GURL& google_base_url,
                           const std::string& application_locale,
                           const base::Optional<std::string>& api_url_override,
+                          bool account_consistency_mirror_required,
                           FetchDoneCallback callback);
   ~AuthenticatedURLFetcher() override = default;
 
@@ -151,6 +154,7 @@ class OneGoogleBarFetcherImpl::AuthenticatedURLFetcher
   const GURL google_base_url_;
   const std::string application_locale_;
   const base::Optional<std::string> api_url_override_;
+  const bool account_consistency_mirror_required_;
 
   FetchDoneCallback callback_;
 
@@ -163,11 +167,13 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::AuthenticatedURLFetcher(
     const GURL& google_base_url,
     const std::string& application_locale,
     const base::Optional<std::string>& api_url_override,
+    bool account_consistency_mirror_required,
     FetchDoneCallback callback)
     : request_context_(request_context),
       google_base_url_(google_base_url),
       application_locale_(application_locale),
       api_url_override_(api_url_override),
+      account_consistency_mirror_required_(account_consistency_mirror_required),
       callback_(std::move(callback)) {}
 
 GURL OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetApiUrl() const {
@@ -193,6 +199,21 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetExtraRequestHeaders(
   // transmission of experiments coming from the variations server.
   variations::AppendVariationHeaders(url, variations::InIncognito::kNo,
                                      variations::SignedIn::kNo, &headers);
+  signin::ChromeConnectedHeaderHelper chrome_connected_header_helper(
+      account_consistency_mirror_required_);
+  std::string chrome_connected_header_value =
+      chrome_connected_header_helper.BuildRequestHeader(
+          /*is_header_request=*/true, url,
+          // Account ID is only needed for (drive|docs).google.com.
+          /*account_id=*/std::string(),
+          // Both in the policy and the child account case (where currently
+          // |account_consistency_mirror_required_| is true), we want to
+          // disable adding an account and going to incognito.
+          signin::PROFILE_MODE_INCOGNITO_DISABLED |
+              signin::PROFILE_MODE_ADD_ACCOUNT_DISABLED);
+  if (!chrome_connected_header_value.empty())
+    headers.SetHeader(signin::kChromeConnectedHeader,
+                      chrome_connected_header_value);
   return headers.ToString();
 }
 
@@ -241,11 +262,13 @@ OneGoogleBarFetcherImpl::OneGoogleBarFetcherImpl(
     net::URLRequestContextGetter* request_context,
     GoogleURLTracker* google_url_tracker,
     const std::string& application_locale,
-    const base::Optional<std::string>& api_url_override)
+    const base::Optional<std::string>& api_url_override,
+    bool account_consistency_mirror_required)
     : request_context_(request_context),
       google_url_tracker_(google_url_tracker),
       application_locale_(application_locale),
       api_url_override_(api_url_override),
+      account_consistency_mirror_required_(account_consistency_mirror_required),
       weak_ptr_factory_(this) {}
 
 OneGoogleBarFetcherImpl::~OneGoogleBarFetcherImpl() = default;
@@ -263,6 +286,7 @@ void OneGoogleBarFetcherImpl::Fetch(OneGoogleCallback callback) {
   // the result obsolete.
   pending_request_ = base::MakeUnique<AuthenticatedURLFetcher>(
       request_context_, google_base_url, application_locale_, api_url_override_,
+      account_consistency_mirror_required_,
       base::BindOnce(&OneGoogleBarFetcherImpl::FetchDone,
                      base::Unretained(this)));
   pending_request_->Start();
