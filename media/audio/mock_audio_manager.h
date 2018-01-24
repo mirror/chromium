@@ -62,7 +62,7 @@ class MockAudioManager : public AudioManager {
 
   void InitializeDebugRecording() override;
   MOCK_METHOD1(EnableDebugRecording,
-               void(const base::FilePath& base_file_name));
+               void(const AudioDebugRecordingHelper::CreateFileCallback&));
   MOCK_METHOD0(DisableDebugRecording, void());
 
   const char* GetName() override;

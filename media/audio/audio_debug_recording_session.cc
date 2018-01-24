@@ -11,6 +11,26 @@
 
 namespace media {
 
+namespace {
+
+void CreateFile(const base::FilePath& file_path,
+                const base::FilePath& suffix,
+                base::OnceCallback<void(base::File)> reply_callback) {
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(
+          [](const base::FilePath& file_name) {
+            return base::File(file_name, base::File::FLAG_CREATE_ALWAYS |
+                                             base::File::FLAG_WRITE);
+          },
+          file_path.InsertBeforeExtension(suffix.value())),
+      std::move(reply_callback));
+}
+
+}  // namespace
+
 AudioDebugRecordingSession::~AudioDebugRecordingSession() {}
 
 std::unique_ptr<AudioDebugRecordingSession>
@@ -26,7 +46,8 @@ AudioDebugRecordingSessionImpl::AudioDebugRecordingSessionImpl(
   // AudioManager must outlive this object because it posts unretained.
   audio_manager_->GetTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&AudioManager::EnableDebugRecording,
-                                base::Unretained(audio_manager_), file_path));
+                                base::Unretained(audio_manager_),
+                                base::BindRepeating(&CreateFile, file_path)));
 }
 
 AudioDebugRecordingSessionImpl::~AudioDebugRecordingSessionImpl() {
