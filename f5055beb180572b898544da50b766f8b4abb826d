@@ -16,6 +16,24 @@
       "revId": "f5055beb180572b898544da50b766f8b4abb826d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c96ac4_64c8a07f",
+        "filename": "content/renderer/pepper/event_conversion.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-24T20:33:17Z",
+      "side": 1,
+      "message": "Yeah. This event is created with CreateWebInputEvent earlier in this function and\nhttps://cs.chromium.org/chromium/src/content/renderer/pepper/event_conversion.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d624\n\nguarantees it is indeed a WebTouchEvent.",
+      "parentUuid": "2c046611_0931170f",
+      "revId": "f5055beb180572b898544da50b766f8b4abb826d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
