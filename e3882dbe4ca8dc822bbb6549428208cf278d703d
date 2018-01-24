@@ -16,6 +16,24 @@
       "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffe9109_7c7c79fe",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-24T05:30:03Z",
+      "side": 0,
+      "message": "I\u0027m not 100% sure. Given the comment, I think the original intent of the DCHECK was to verify that that GURL::query_piece() did not include the delimiting \"?\" (and similarly for ref_piece()).\n\nIf there is still a concern about the code working correctly, I think instead of a DCHECK this might be better served as an explicit conditional check then (failing closed to \"does not contain\" seems correct, since it is used to filter out Google search result/redirector URLs).\n\nI\u0027ll see if I can come up with a counterexample where a leading delimiter character (that isn\u0027t the delimiter) actually affects the correctness of the algorithm below.",
+      "parentUuid": "00a0810a_c1469528",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
