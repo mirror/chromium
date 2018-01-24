@@ -56,6 +56,19 @@ bool QuicFramerPeer::AppendIetfStreamFrame(QuicFramer* framer,
                                            QuicDataWriter* writer) {
   return framer->AppendIetfStreamFrame(frame, last_frame_in_packet, writer);
 }
+// static
+bool QuicFramerPeer::ProcessIetfAckFrame(QuicFramer* framer,
+                                         QuicDataReader* reader,
+                                         uint8_t frame_type,
+                                         QuicAckFrame* ack_frame) {
+  return framer->ProcessIetfAckFrame(reader, frame_type, ack_frame);
+}
+// static
+bool QuicFramerPeer::AppendIetfAckFrameAndTypeByte(QuicFramer* framer,
+                                                   const QuicAckFrame& frame,
+                                                   QuicDataWriter* writer) {
+  return framer->AppendIetfAckFrameAndTypeByte(frame, writer);
+}
 
 // static
 bool QuicFramerPeer::AppendIetfConnectionCloseFrame(

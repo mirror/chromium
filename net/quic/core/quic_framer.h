@@ -510,6 +510,7 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
                              bool last_frame_in_packet,
                              QuicDataWriter* writer);
 
+  // Add/process an IETF-Formatted Connection and Application close frames.
   bool AppendIetfConnectionCloseFrame(const QuicConnectionCloseFrame& frame,
                                       QuicDataWriter* writer);
   bool AppendIetfConnectionCloseFrame(const QuicIetfTransportErrorCodes code,
@@ -533,6 +534,14 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   bool ProcessIetfCloseFrame(QuicDataReader* reader,
                              const uint8_t frame_type,
                              QuicConnectionCloseFrame* frame);
+
+  // Parse an IETF-format Ack frame from the packet
+  bool ProcessIetfAckFrame(QuicDataReader* reader,
+                           uint8_t frame_type,
+                           QuicAckFrame* ack_frame);
+  // Append an IETf-format Ack frame to the packet
+  bool AppendIetfAckFrameAndTypeByte(const QuicAckFrame& frame,
+                                     QuicDataWriter* writer);
 
   bool RaiseError(QuicErrorCode error);
 

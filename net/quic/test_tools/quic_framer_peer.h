@@ -69,6 +69,14 @@ class QuicFramerPeer {
                                                const uint8_t frame_type,
                                                QuicConnectionCloseFrame* frame);
 
+  static bool ProcessIetfAckFrame(QuicFramer* framer,
+                                  QuicDataReader* reader,
+                                  uint8_t frame_type,
+                                  QuicAckFrame* ack_frame);
+  static bool AppendIetfAckFrameAndTypeByte(QuicFramer* framer,
+                                            const QuicAckFrame& frame,
+                                            QuicDataWriter* writer);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(QuicFramerPeer);
 };

@@ -63,6 +63,14 @@ const QuicIetfStreamOffset kOffset2 = UINT64_C(0x3456);
 const QuicIetfStreamOffset kOffset1 = UINT64_C(0x3f);
 const QuicIetfStreamOffset kOffset0 = UINT64_C(0x00);
 
+// Structures used to create various ack frames.
+
+// Defines an ack frame to feed through the framer/deframer.
+struct ack_frame {
+  uint64_t delay_time;
+  const std::vector<QuicAckBlock>& ranges;
+};
+
 class QuicIetfFramerTest : public QuicTestWithParam<ParsedQuicVersion> {
  public:
   QuicIetfFramerTest()
@@ -129,6 +137,75 @@ class QuicIetfFramerTest : public QuicTestWithParam<ParsedQuicVersion> {
         0);
     return true;
   }
+
+  // Overall ack frame encode/decode/compare function
+  //  Encodes an ack frame as specified at |*frame|
+  //  Then decodes the frame,
+  //  Then compares the two
+  // Does some basic checking:
+  //   - did the writer write something?
+  //   - did the reader read the entire packet?
+  //   - did the things the reader read match what the writer wrote?
+  // Returns true if it all worked false if not.
+  bool TryAckFrame(char* packet_buffer,
+                   size_t packet_buffer_size,
+                   struct ack_frame* frame) {
+    // Make a writer so that the serialized packet is placed in
+    // packet_buffer.
+    QuicDataWriter writer(packet_buffer_size, packet_buffer,
+                          NETWORK_BYTE_ORDER);
+
+    QuicAckFrame transmit_frame = InitAckFrame(frame->ranges);
+    transmit_frame.ack_delay_time =
+        QuicTime::Delta::FromMicroseconds(frame->delay_time);
+    QUIC_LOG(INFO) << "XXXXXXXXXX transmit frame is " << transmit_frame;
+
+    // write the frame to the packet buffer.
+    EXPECT_TRUE(QuicFramerPeer::AppendIetfAckFrameAndTypeByte(
+        &framer_, transmit_frame, &writer));
+    // better have something in the packet buffer.
+    EXPECT_NE(0u, writer.length());
+
+    // now set up a reader to read in the thing in.
+    QuicDataReader reader(packet_buffer, writer.length(), NETWORK_BYTE_ORDER);
+
+    // read in the frame type
+    uint8_t received_frame_type;
+    EXPECT_TRUE(reader.ReadUInt8(&received_frame_type));
+    EXPECT_EQ(received_frame_type, IETF_ACK);
+
+    // an AckFrame to hold the results
+    QuicAckFrame receive_frame;
+
+    EXPECT_TRUE(QuicFramerPeer::ProcessIetfAckFrame(
+        &framer_, &reader, received_frame_type, &receive_frame));
+
+    // Now check that things are correct
+    EXPECT_EQ(transmit_frame.largest_acked, receive_frame.largest_acked);
+    // The ~0x7 needs some explaining.  The ack frame format down shifts the
+    // delay time by 3 (divide by 8) to allow for greater ranges in delay time.
+    // Therefore, if we give the framer a delay time that is not an
+    // even multiple of 8, the value that the deframer produces will
+    // not be the same as what the framer got. The downshift on
+    // framing and upshift on deframing results in clearing the 3
+    // low-order bits ... The masking basically does the same thing,
+    // so the compare works properly.
+    EXPECT_EQ(transmit_frame.ack_delay_time.ToMicroseconds() & ~0x7,
+              receive_frame.ack_delay_time.ToMicroseconds());
+    EXPECT_EQ(transmit_frame.packets.NumIntervals(),
+              receive_frame.packets.NumIntervals());
+    // now go through the two sets of intervals....
+    auto xmit_itr = transmit_frame.packets.begin();  // first range
+    auto recv_itr = receive_frame.packets.begin();   // first range
+    while (xmit_itr != transmit_frame.packets.end()) {
+      EXPECT_EQ(xmit_itr->max(), recv_itr->max());
+      EXPECT_EQ(xmit_itr->min(), recv_itr->min());
+      xmit_itr++;
+      recv_itr++;
+    }
+    return true;
+  }
+
   QuicTime start_;
   QuicFramer framer_;
 };
@@ -286,7 +363,6 @@ TEST_F(QuicIetfFramerTest, StreamFrame) {
 
   size_t transmit_packet_data_len = strlen(transmit_packet_data) + 1;
   struct stream_frame_variant* variant = stream_frame_to_test;
-
   while (variant->stream_id != 0) {
     EXPECT_TRUE(TryStreamFrame(
         packet_buffer, sizeof(packet_buffer), transmit_packet_data,
@@ -532,6 +608,28 @@ TEST_F(QuicIetfFramerTest, ApplicationClose3) {
   // Now check that received == sent
   EXPECT_EQ(sink_frame.error_code, static_cast<QuicErrorCode>(0));
   EXPECT_EQ(sink_frame.error_details, test_string);
+}
+
+// Testing for the IETF ACK framer.
+// clang-format off
+struct ack_frame ack_frame_variants[] = {
+  { 90000, {{1000, 2001}} },
+  { 0, {{1000, 2001}} },
+  { 1, {{1, 2}, {5, 6}} },
+  { 63, {{1, 2}, {5, 6}} },
+  { 64, {{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}, {11, 12}}},
+  { 10000, {{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}, {11, 12}}},
+  { 100000000, {{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}, {11, 12}}},
+};
+// clang-format on
+
+TEST_F(QuicIetfFramerTest, AckFrame) {
+  char packet_buffer[kNormalPacketBufferSize];
+  for (auto ack_frame_variant : ack_frame_variants) {
+    QUIC_LOG(INFO) << "Doing an ack, delay = " << ack_frame_variant.delay_time;
+    EXPECT_TRUE(
+        TryAckFrame(packet_buffer, sizeof(packet_buffer), &ack_frame_variant));
+  }
 }
 
 }  // namespace
