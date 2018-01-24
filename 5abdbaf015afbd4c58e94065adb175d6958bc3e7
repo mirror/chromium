@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfea9251_b1b0197c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Out of curiosity, why is this change necessary?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe1991f_100ebdf1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 6213,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Wow at first glance it was totally not obvious to me that this would allocate a new LocalSurfaceId. I wonder if we can come up with a new name here? StartNewContentRendererTimeout does not say anything about allocating new surfaces...then again it doesn\u0027t do that without surface sync. Maybe a TODO to rename this once surface sync is on for all platforms?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7915fc07_0c6a060d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Did you try to exercise this code path? This is probably exercised by \u003cwebview\u003e, right?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcc5936_83e0fcc2",
+        "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Why were changing to this file necessary?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35942d96_b587ace2",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "TODO(fsamuel): Replace these parameters with ResizeParams eventually. After surface sync is on by default everywhere, ResizeParams should be renamed to SynchronizedVisualParams.",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4fdd20_7366330d",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Have you tested this code path? ...it seems super subtle",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62bf9c4_e90bde7c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Maybe DCHECK that params.content_source_id \u003c\u003d current_content_source_id_ (or it wrapped around)?\n\nI guess we don\u0027t want to deal with that to handle wrapping?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9314bf14_54f3885b",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "Does it hurt if we do? What does this solve?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946d2d12_77b1d687",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-24T13:17:48Z",
+      "side": 1,
+      "message": "What is going on here? You are suppressing the next ACK as soon as navigation happen? Comment please? Why is this necessary?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
