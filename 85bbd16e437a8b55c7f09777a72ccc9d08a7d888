@@ -257,6 +257,30 @@
       "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "875af047_a59499f5",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:22:42Z",
+      "side": 1,
+      "message": "On line 690 we pass in a string literal. base::UTF8ToUTF16 takes a base::StringPiece.",
+      "parentUuid": "f4675fa8_b1c456dd",
+      "range": {
+        "startLine": 765,
+        "startChar": 45,
+        "endLine": 765,
+        "endChar": 63
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
