@@ -490,7 +490,8 @@ aura::Window* TrayBackgroundView::GetBubbleWindowContainer() {
   // in maximize mode, to avoid tray bubble and shelf overlap.
   if (Shell::Get()
           ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+          ->IsTabletModeWindowManagerEnabled() &&
+      drag_controller()) {
     if (!clipping_window_.get()) {
       clipping_window_ = std::make_unique<aura::Window>(nullptr);
       clipping_window_->Init(ui::LAYER_NOT_DRAWN);
