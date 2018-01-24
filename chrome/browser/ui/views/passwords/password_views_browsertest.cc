@@ -2,22 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h"
 
 #include <memory>
 
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/passwords/manage_passwords_test.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/passwords/manage_password_auto_sign_in_view.h"
 
-class ManagePasswordsBubbleDialogViewTest
+class PasswordViewsBrowserTest
     : public SupportsTestDialog<ManagePasswordsTest> {
  public:
-  ManagePasswordsBubbleDialogViewTest() {}
-  ~ManagePasswordsBubbleDialogViewTest() override {}
+  PasswordViewsBrowserTest() {}
+  ~PasswordViewsBrowserTest() override {}
 
   void ShowUi(const std::string& name) override {
     if (name == "PendingPasswordBubble") {
@@ -52,27 +53,26 @@ class ManagePasswordsBubbleDialogViewTest
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleDialogViewTest);
+  DISALLOW_COPY_AND_ASSIGN(PasswordViewsBrowserTest);
 };
 
-IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
+IN_PROC_BROWSER_TEST_F(PasswordViewsBrowserTest,
                        InvokeUi_PendingPasswordBubble) {
   ShowAndVerifyUi();
 }
 
-IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
+IN_PROC_BROWSER_TEST_F(PasswordViewsBrowserTest,
                        InvokeUi_AutomaticPasswordBubble) {
   ShowAndVerifyUi();
 }
 
 // Disabled: ExecuteManagePasswordsCommand() spins a runloop which will be flaky
 // in a browser test. See http://crbug.com/716681.
-IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
+IN_PROC_BROWSER_TEST_F(PasswordViewsBrowserTest,
                        DISABLED_InvokeUi_ManagePasswordBubble) {
   ShowAndVerifyUi();
 }
 
-IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
-                       InvokeUi_AutoSignin) {
+IN_PROC_BROWSER_TEST_F(PasswordViewsBrowserTest, InvokeUi_AutoSignin) {
   ShowAndVerifyUi();
 }

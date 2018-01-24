@@ -12,6 +12,7 @@
 
 namespace views {
 class Combobox;
+class GridLayout;
 class Label;
 class StyledLabel;
 class ToggleImageButton;
@@ -37,6 +38,16 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
 #endif
 
  private:
+  // TODO(pbos): Remove friend class when UpdatePendingView is merged into this
+  // class.
+  friend class ManagePasswordUpdatePendingView;
+  static void BuildCredentialRows(
+      views::GridLayout* layout,
+      views::View* username_field,
+      views::View* password_field,
+      views::ToggleImageButton* password_view_button,
+      bool show_password_label);
+
   ~ManagePasswordPendingView() override;
 
   // views::ButtonListener:
