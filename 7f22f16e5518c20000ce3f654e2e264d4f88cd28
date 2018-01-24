@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1c6e96_4ba53607",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T00:36:20Z",
+      "side": 1,
+      "message": "nit: remove {}",
+      "revId": "7f22f16e5518c20000ce3f654e2e264d4f88cd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77bcc83_0477aa9b",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T00:36:20Z",
+      "side": 1,
+      "message": "How about define a utility function to fit letter box, then flip the width/height for the pillar box?",
+      "revId": "7f22f16e5518c20000ce3f654e2e264d4f88cd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11aedaf6_59776f34",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T00:36:20Z",
+      "side": 1,
+      "message": "It\u0027s probably better to call it more explicit, something like GridWindowFillMode, and Normal, LetterBoxed, PillarBoxed.",
+      "revId": "7f22f16e5518c20000ce3f654e2e264d4f88cd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
