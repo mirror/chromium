@@ -566,6 +566,37 @@ cr.define('print_preview', function() {
       return this.lastAccessTime_;
     }
 
+    /** @return {string} Tooltip string for the destination's icon. */
+    get iconTooltip() {
+      return loadTimeData.getString(this.iconTooltipName());
+    }
+
+    /** @return {string} Tooltip name for the destination's icon. */
+    iconTooltipName() {
+      if (this.id_ == Destination.GooglePromotedId.DOCS) {
+        return Destination.IconTooltip_.DOCS;
+      }
+      if (this.id_ == Destination.GooglePromotedId.SAVE_AS_PDF) {
+        return Destination.IconTooltip_.PDF;
+      }
+      if (this.isEnterprisePrinter) {
+        return Destination.IconTooltip_.ENTERPRISE;
+      }
+      if (this.isLocal) {
+        return Destination.IconTooltip_.LOCAL;
+      }
+      if (this.type_ == print_preview.DestinationType.MOBILE && this.isOwned_) {
+        return Destination.IconTooltip_.MOBILE;
+      }
+      if (this.type_ == print_preview.DestinationType.MOBILE) {
+        return Destination.IconTooltip_.MOBILE_SHARED;
+      }
+      if (this.isOwned_) {
+        return Destination.IconTooltip_.CLOUD;
+      }
+      return Destination.IconTooltip_.CLOUD_SHARED;
+    }
+
     /** @return {string} Relative URL of the destination's icon. */
     get iconUrl() {
       if (this.id_ == Destination.GooglePromotedId.DOCS) {
@@ -768,6 +799,22 @@ cr.define('print_preview', function() {
   };
 
   /**
+   * Enumeration of icon tooltips for various types of destinations.
+   * @enum {string}
+   * @private
+   */
+  Destination.IconTooltip_ = {
+    CLOUD: 'tooltipPrinterCloud',
+    CLOUD_SHARED: 'tooltipPrinterCloudShared',
+    DOCS: 'tooltipPrinterDocs',
+    ENTERPRISE: 'tooltipPrinterEnterprise',
+    LOCAL: 'tooltipPrinterLocal',
+    MOBILE: 'tooltipPrinterMobile',
+    MOBILE_SHARED: 'tooltipPrinterMobileShared',
+    PDF: 'printToPDF'
+  };
+
+  /**
    * Enumeration of relative icon URLs for various types of destinations.
    * @enum {string}
    * @private
@@ -777,13 +824,13 @@ cr.define('print_preview', function() {
     CLOUD_2X: 'images/2x/printer.png',
     CLOUD_SHARED_1X: 'images/1x/printer_shared.png',
     CLOUD_SHARED_2X: 'images/2x/printer_shared.png',
+    DOCS: 'images/google_doc.png',
+    ENTERPRISE: 'images/business.svg',
     LOCAL_1X: 'images/1x/printer.png',
     LOCAL_2X: 'images/2x/printer.png',
     MOBILE: 'images/mobile.png',
     MOBILE_SHARED: 'images/mobile_shared.png',
-    PDF: 'images/pdf.png',
-    DOCS: 'images/google_doc.png',
-    ENTERPRISE: 'images/business.svg'
+    PDF: 'images/pdf.png'
   };
 
   // Export

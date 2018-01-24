@@ -351,6 +351,21 @@ void AddPrintPreviewStrings(content::WebUIDataSource* source) {
       "printerSharingInviteText", IDS_PRINT_PREVIEW_INVITE_TEXT);
   source->AddLocalizedString("moreOptionsLabel", IDS_MORE_OPTIONS_LABEL);
   source->AddLocalizedString("lessOptionsLabel", IDS_LESS_OPTIONS_LABEL);
+  source->AddLocalizedString("tooltipPrinterCloud",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_CLOUD);
+  source->AddLocalizedString("tooltipPrinterCloudShared",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_CLOUD_SHARED);
+  source->AddLocalizedString("tooltipPrinterDocs",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_DOCS);
+  source->AddLocalizedString("tooltipPrinterEnterprise",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_ENTERPRISE);
+  source->AddLocalizedString("tooltipPrinterLocal",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_LOCAL);
+  source->AddLocalizedString("tooltipPrinterMobile",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_MOBILE);
+  source->AddLocalizedString("tooltipPrinterMobileShared",
+                             IDS_PRINT_PREVIEW_TOOLTIP_PRINTER_MOBILE_SHARED);
+
 #if defined(OS_CHROMEOS)
   source->AddLocalizedString("configuringInProgressText",
                              IDS_PRINT_CONFIGURING_IN_PROGRESS_TEXT);

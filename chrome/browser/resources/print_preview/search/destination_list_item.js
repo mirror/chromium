@@ -144,6 +144,7 @@ cr.define('print_preview', function() {
       const iconImg = this.getChildElement('.destination-list-item-icon');
       iconImg.src = this.destination_.iconUrl;
       iconImg.srcset = this.destination_.srcSet;
+      iconImg.title = this.destination_.iconTooltip;
 
       const nameEl = this.getChildElement('.destination-list-item-name');
       let textContent = this.destination_.displayName;
