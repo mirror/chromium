@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "374def8b_301b7104",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8eb4e19_ca977ada",
+      "range": {
+        "startLine": 26,
+        "startChar": 86,
+        "endLine": 26,
+        "endChar": 87
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "653fdb72_13d59731",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4686a6a9_6297bcd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653fdb72_13d59731",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d17a6b80_fc7c709e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-24T16:19:13Z",
       "side": 1,
       "message": "Could you use an @IntDef (https://developer.android.com/reference/android/support/annotation/IntDef.html) for this? They tend to have less runtime overhead than Java enums (which generate all sorts of methods etc.)",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116f35f8_2b6f6606",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "If I\u0027m reading https://cs.chromium.org/chromium/src/base/android/proguard/chromium_apk.flags correctly, Chromium does not exclude the class/unboxing/enum optimisation in proguard. And if this instance is a case of \"whenever possible\" [1], then proguard turns the enum into IntDef for us.\n\nGiven the above and how much clearer the single-line enum looks compared to the multiline IntDef, I would prefer to keep the enum (here and on line 24 too).\n\nWhat do you think?\n\n[1] https://www.guardsquare.com/en/proguard/manual/optimizations",
+      "parentUuid": "d17a6b80_fc7c709e",
       "range": {
         "startLine": 28,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ec80e630_a63b9103",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd274287_9cf39a54",
+      "range": {
+        "startLine": 60,
+        "startChar": 32,
+        "endLine": 60,
+        "endChar": 33
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf35b6cb_e78ff6bc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-24T16:19:13Z",
       "side": 1,
       "message": "Ooh, this is another advantage of using @IntDef: You don\u0027t have to use Java serialization to persist them. I could see a whole bunch of problems with serialization :)",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc8bbbd_52edcae9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Could you be more specific, Bernhard? Which problems with serialization?",
+      "parentUuid": "cf35b6cb_e78ff6bc",
       "range": {
         "startLine": 128,
         "startChar": 13,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4edbe278_8194b25c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bbdbef2_b936b34a",
+      "range": {
+        "startLine": 141,
+        "startChar": 48,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7736fe88_60082751",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8e0d3f06_8018c7f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7736fe88_60082751",
+      "range": {
+        "startLine": 142,
+        "startChar": 48,
+        "endLine": 142,
+        "endChar": 93
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de99063d_88708126",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-24T17:01:26Z",
       "side": 1,
       "message": "The only times this return false due to the scope check is if sLastReauthScope is null or if the last request was ONE_AT_A_TIME and the current request is BULK. Is that correct?",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 42
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58b1e1c_3a2235b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "My intention was not to allow sLastReauthScope to be null. TIL that enum-type variables actually can be null, which seems one of the reasons to prefer IntDef, but at least the code as it is written should ensure that the ReauthScope values passed around and stored are always non-null.\n\nSo the second condition (last request ONE_AT_A_TIME and current request BULK) should be the only reason for scopeIncluded being false.",
+      "parentUuid": "de99063d_88708126",
       "range": {
         "startLine": 148,
         "startChar": 16,
@@ -206,6 +398,30 @@
       "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55799480_dd136eaf",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T20:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e032dfe_51b793ef",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 52
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
