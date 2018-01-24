@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00d60cb_0d0c096a",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-24T00:32:32Z",
+      "side": 1,
+      "message": "Maybe call this exposedButWrongArityMethod",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "eec7cfc73a8889ff942a9d68fca59693bd637cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
