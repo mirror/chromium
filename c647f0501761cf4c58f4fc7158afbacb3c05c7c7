@@ -16,6 +16,24 @@
       "revId": "c647f0501761cf4c58f4fc7158afbacb3c05c7c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0f675a_8526134e",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-24T17:31:12Z",
+      "side": 1,
+      "message": "Nothing! I just forgot to remove the old code. :)\ndone.",
+      "parentUuid": "a1b3d145_eb0653d2",
+      "revId": "c647f0501761cf4c58f4fc7158afbacb3c05c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
