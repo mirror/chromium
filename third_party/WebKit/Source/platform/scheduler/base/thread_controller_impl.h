@@ -35,6 +35,8 @@ class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController {
       base::TickClock* time_source);
 
   // ThreadController:
+  void SetWorkBatchSize(int work_batch_size) override;
+  void DidQueueTask(const base::PendingTask& pending_task) override;
   void ScheduleWork() override;
   void ScheduleDelayedWork(base::TimeDelta delay) override;
   void CancelDelayedWork() override;
@@ -69,6 +71,7 @@ class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController {
   base::CancelableClosure cancelable_delayed_do_work_closure_;
   Sequence* sequence_ = nullptr;  // NOT OWNED
   base::debug::TaskAnnotator task_annotator_;
+  int work_batch_size_ = 1;
 
   base::WeakPtrFactory<ThreadControllerImpl> weak_factory_;
 

@@ -9,6 +9,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/time/tick_clock.h"
+#include "base/trace_event/trace_event.h"
 #include "platform/scheduler/base/sequence.h"
 
 namespace blink {
@@ -89,16 +90,37 @@ void ThreadControllerImpl::RestoreDefaultTaskRunner() {
   message_loop_->SetTaskRunner(message_loop_task_runner_);
 }
 
+void ThreadControllerImpl::DidQueueTask(const base::PendingTask& pending_task) {
+  task_annotator_.DidQueueTask("TaskQueueManager::PostTask", pending_task);
+}
+
 void ThreadControllerImpl::DoWork(Sequence::WorkType work_type) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(sequence_);
-  base::Optional<base::PendingTask> task = sequence_->TakeTask(work_type);
-  if (!task)
-    return;
+
   base::WeakPtr<ThreadControllerImpl> weak_ptr = weak_factory_.GetWeakPtr();
-  task_annotator_.RunTask("ThreadControllerImpl::DoWork", &task.value());
-  if (weak_ptr)
-    sequence_->DidRunTask();
+  bool more_work_to_do = false;
+  for (int i = 0; i < work_batch_size_; i++) {
+    base::Optional<base::PendingTask> task = sequence_->TakeTask(work_type);
+    if (!task)
+      return;
+
+    TRACE_TASK_EXECUTION("ThreadControllerImpl::DoWork", *task);
+    task_annotator_.RunTask("ThreadControllerImpl::DoWork", &*task);
+
+    if (!weak_ptr)
+      return;
+
+    more_work_to_do = sequence_->DidRunTask();
+    if (!more_work_to_do)
+      break;
+
+    // If we're running a batch then treat subsequent tasks as immediate work.
+    work_type = Sequence::WorkType::kImmediate;
+  }
+
+  if (more_work_to_do)
+    ScheduleWork();
 }
 
 void ThreadControllerImpl::AddNestingObserver(
@@ -111,6 +133,11 @@ void ThreadControllerImpl::RemoveNestingObserver(
     base::RunLoop::NestingObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
+}
+
+void ThreadControllerImpl::SetWorkBatchSize(int work_batch_size) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  work_batch_size_ = work_batch_size;
 }
 
 }  // namespace internal

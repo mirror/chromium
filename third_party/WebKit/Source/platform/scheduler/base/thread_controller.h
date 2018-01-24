@@ -13,6 +13,7 @@
 
 namespace base {
 class TickClock;
+struct PendingTask;
 };
 
 namespace blink {
@@ -26,9 +27,18 @@ class PLATFORM_EXPORT ThreadController {
  public:
   virtual ~ThreadController() = default;
 
+  // Set the number of tasks executed in a single invocation of DoWork.
+  // Increasing the batch size can reduce the overhead of yielding back to the
+  // main message loop. The batch size is 1 by default.
+  virtual void SetWorkBatchSize(int work_batch_size) = 0;
+
+  // Notifies that |pending_task| was enqueued. Needed for tracing purposes.
+  virtual void DidQueueTask(const base::PendingTask& pending_task) = 0;
+
   // Notify the controller that its associated sequence has immediate work
   // to run. Shortly after this is called, the thread associated with this
-  // controller will run a task returned by sequence->TakeTask().
+  // controller will run a task returned by sequence->TakeTask(). Can be called
+  // from any sequence.
   //
   // TODO(altimin): Change this to "the thread associated with this
   // controller will run tasks returned by sequence->TakeTask() until it
@@ -40,7 +50,7 @@ class PLATFORM_EXPORT ThreadController {
   // delayed work to run when |delay| expires. When |delay| expires,
   // the thread associated with this controller will run a task
   // returned by sequence->TakeTask(). This call cancels any previously
-  // scheduled delayed work.
+  // scheduled delayed work. Will be called from the main sequence.
   //
   // TODO(altimin): Change this to "the thread associated with this
   // controller will run tasks returned by sequence->TakeTask() until
