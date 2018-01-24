@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="../resources/get-host-info.js"></script>
+<style>
+#test {
+  display: flex;
+  display: layout(foo);
+}
+</style>
+<div id="test"></div>
+<script>
+  if (window.location.origin != get_host_info().UNAUTHENTICATED_ORIGIN) {
+    window.location = get_host_info().UNAUTHENTICATED_ORIGIN + window.location.pathname;
+  } else {
+    test(function() {
+      const element = document.getElementById('test');
+      assert_false(window.isSecureContext);
+      assert_equals(getComputedStyle(element).display, 'flex');
+    });
+  }
+</script>
