@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e90c1660_fffa0f47",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-24T04:39:51Z",
+      "side": 1,
+      "message": "Does this function expects only direct children and not descendants of them? If so, please add comments and DCHECK.",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c0880c_2382f92e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-24T04:39:51Z",
+      "side": 1,
+      "message": "Please move these functions to NGPhysicalLineBoxFragment.",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf450ad6_ad631fc2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-24T04:39:51Z",
+      "side": 1,
+      "message": "Add TODO saying this is incorrect for mixed RTL.",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89670e2_78455b16",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-24T04:39:51Z",
+      "side": 1,
+      "message": "What are the expectation of when this line is broken at hyphenation, or when it has text-overflow: ellipsis? We generate fragments for them, are they supposed to be included, or not?",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
