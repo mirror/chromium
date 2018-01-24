@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e052c3b7_1a47ddaf",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T19:12:12Z",
+      "side": 1,
+      "message": "May want to invoke the callback with null here, even though, as the comment says, this should never happen.",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa2daadd_52a1c1b8",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploaderFactory.java",
         "patchSetId": 4
@@ -88,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "e43f9965_cf7cd921",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/LogcatProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T19:12:12Z",
+      "side": 1,
+      "message": "If we want safety to ensure that clients can only get the elided version of the logcat (to protect privacy at compile time, etc.) we can make a protected abstract method that takes an internal Callback that takes an Iterable\u003cString\u003e;\n\nSo we might have:\n\n  class ElidedLogcatProvider {\n    \n    public abstract class RawLogcatProvider { \n      protected interface InnerCallback { public void onLogsDone(Iterable\u003cString\u003e logs); }\n      // Subclasses can override getLogcat(), but only ElidedLogcatProvider can call it.\n      protected abstract void getLogcat(InnerCallback callback); \n    }\n\n    private final RawLogcatProvider mDelegate;\n    \n    public interface LogcatCallback { public void onLogsDone(String logs); }\n    \n    public void getLogcat(LogcatCallback callback) {\n      mDelegate.getLogcat((Iterable\u003cString\u003e rawLogs) -\u003e { \n        callback.onLogsDone(elideLogcat(rawLogs));\n      });\n    }\n\n    static String elideLogcat(Iterable\u003cString\u003e rawLogcat) {...}\n  }\n\nThis allows the Delegate classes (RemoteServiceLogcatProvider and AndroidAppLogcatProvider) to implement a functional interface and not worry about the concern of elision themselves.",
+      "parentUuid": "e79b4168_eb773be1",
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a6b3a85_de62e71a",
         "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
         "patchSetId": 4
@@ -128,6 +169,47 @@
         "endLine": 22,
         "endChar": 6
       },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5abdd1_deb13a0c",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T19:12:12Z",
+      "side": 1,
+      "message": "+1 on indentation, but I don\u0027t know if BUILDFLAGs work in java_cpp_templates.",
+      "parentUuid": "b65220e4_2908757b",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bbb512_44d0706d",
+        "filename": "chromecast/browser/android/junit/src/org/chromium/chromecast/shell/DumpStreamBuilderUnitTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T19:12:12Z",
+      "side": 1,
+      "message": "Is this file actually used in this CL? Or did it accidentally carry over from the DumpStream refactor?",
       "revId": "065a51ea5566152f0fd20c4002295157125f347f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -215,6 +297,30 @@
       "side": 1,
       "message": "CastCrashUploaderFactory checks if these strings are empty and if so, will use AndroidAppLogcatProvider instead",
       "parentUuid": "c7e9c2a3_62b8fe2f",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be39c01_86729bc7",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T19:12:12Z",
+      "side": 1,
+      "message": "May be a good idea to document that in the comment, since it\u0027s non-obvious what an empty string will do.",
+      "parentUuid": "513334f8_d35f573e",
       "range": {
         "startLine": 66,
         "startChar": 32,
