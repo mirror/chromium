@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "3440f4d7_6ff764f1",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-24T17:29:04Z",
+      "side": 1,
+      "message": "Cookie setting check: that\u0027s a great point. Actually, for both the child account and the policy case on Chrome OS, we don\u0027t want to allow the user to disable sending the header by disabling cookies for google.com, so probably we should change the behavior on the original flow. I filed crbug.com/805519 to track this.",
+      "parentUuid": "6e775afa_acead5c4",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
@@ -211,6 +235,30 @@
       "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72534f2b_80980ae3",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-24T17:29:04Z",
+      "side": 1,
+      "message": "IsMirrorEnabledForProfile is currently only supporting the child use case, not the policy one. I\u0027m adding a TODO for sinhak@ to update this after IsMirrorEnabledForProfile will support both policy and child user.",
+      "parentUuid": "848e56ed_ff36a458",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
