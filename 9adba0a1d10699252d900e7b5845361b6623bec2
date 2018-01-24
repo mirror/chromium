@@ -22,6 +22,30 @@
       "revId": "9adba0a1d10699252d900e7b5845361b6623bec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558d51f6_2a959944",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-24T14:19:27Z",
+      "side": 1,
+      "message": "Good catch, sorry for the oversight!",
+      "parentUuid": "160e9db6_c21b3d52",
+      "range": {
+        "startLine": 2239,
+        "startChar": 24,
+        "endLine": 2239,
+        "endChar": 31
+      },
+      "revId": "9adba0a1d10699252d900e7b5845361b6623bec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
