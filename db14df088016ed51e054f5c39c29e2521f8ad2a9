@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82890345_81116f22",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T03:54:28Z",
+      "side": 1,
+      "message": "what\u0027s the harm of passing the |clients| for a stopped or stopping worker? Either way we\u0027re running the callback.\n\nIt seems we could just run the callback normally for simplicity?",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cf97f3_d617d697",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T03:54:28Z",
+      "side": 1,
+      "message": "ditto, why not just run the callback normally?",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6f65ed_1e5dc76a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T03:54:28Z",
+      "side": 1,
+      "message": "web_client \u003d std::make_unique\u003c\u003e?",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
