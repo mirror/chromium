@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742c5370_3d0c481f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-24T16:41:29Z",
+      "side": 1,
+      "message": "../SRC_ROOT1/chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java:305 Field requires API level 19 (current min is 16): `java.ni\no.charset.StandardCharsets#UTF_8`: NewApi [warning]                                                                                                                                                   new FileOutputStream(tempFile), StandardCharsets.UTF_8))) {                                                                                                                                                      ~~~~~~~~~~~~~~~~~~~~~~       \n\nIs this code guaranteed to run with API level 19+? If so it should be surrounded with @TargetApi",
+      "range": {
+        "startLine": 305,
+        "startChar": 53,
+        "endLine": 305,
+        "endChar": 69
+      },
+      "revId": "e39e30c7fd03ac37e4ac0909ac937ae0def2d07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
