@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a783c89_02dadc65",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T06:35:44Z",
+      "side": 1,
+      "message": "Im not sure, i just changed this class from:\nclass C {\nfn1();\nfn2();\n};\nC:fn1() { impl; }\nC:fn2() { impl; }\n\nto \n\nclass C {\nfn1() { impl; }\nfn2() { impl; }\n};\n\nso im not quite sure what might change if i change it",
+      "parentUuid": "707f64d4_3f553ddf",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "581ad5d7_d3939365",
         "filename": "ash/wm/overview/window_grid.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T00:49:05Z",
       "side": 1,
       "message": "where is this animation applied? or will it be in a separate CL?",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30acf0ab_e5cb27fa",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T06:35:44Z",
+      "side": 1,
+      "message": "Oops, that was when i thought we would have to animate seperately. But now the widget which own this view has the animation, like before.",
+      "parentUuid": "581ad5d7_d3939365",
       "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7675e3bc_4c18e118",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T06:35:44Z",
+      "side": 1,
+      "message": "I think there was some artifacts when i was animating |label_container_| before without this, but now I am just animating the widget, so this is not needed.",
+      "parentUuid": "70815f1d_c8f52a36",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5dcbfba_0e496172",
         "filename": "ash/wm/overview/window_grid.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b4f49a_bc3a874f",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T06:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5dcbfba_0e496172",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
