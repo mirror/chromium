@@ -2,6 +2,335 @@
   "comments": [
     {
       "key": {
+        "uuid": "873b1fa3_7292edb2",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "does `if (!GetWidget()-\u003eIsActive())` work?\n\n(if not.. it\u0027s probably a bug, or there should be a comment why - we shouldn\u0027t need platform_util)\n\nAlso note sometimes GetWidget() returns null. This method should either\n\n DCHECK(GetWidget());\n if (!GetWidget()-\u003eIsActive())\n   return;\n\nor\n\n if (!GetWidget() || !GetWidget()-\u003eIsActive())\n   return;\n\n(preferably the first, if there\u0027s no codepath where there is no widget)",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d210ef48_05e36220",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c80c01b_f9b566cc",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "private:\n DISALLOW_COPY_AND_ASSIGN(..)\n\nyou\u0027ll need a default constructor",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44c4272_82bf46d5",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "\u003d nullptr",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf14b66_57adc7a0",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "browser_tests can\u0027t rely on activation usually - another test can run in parallel and steal focus away. For Mac, there\u0027s  #import \"ui/base/test/scoped_fake_nswindow_focus.h\" but it\u0027s not typically used in browser_tests (just unit tests).\n\nTypically for focus tests, we use an interactive_ui_test rather than a browser_test. see e.g. browser_focus_uitest.cc views/frame/browser_view_focus_uitest.cc\n\nIf this is working on Windows currently, it may be flaky. Try something like --gtest_repeat\u003d10 --gtest_filter\u003dHoverButtonWidgetTest.* and see if you get any errors.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025a6846_d433efa5",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "note this doesn\u0027t make \"authentic\" bubbles anywhere except ChromeOS. Switching to CreateNativeDesktopWidget() will probably expose Linux to the activation issues you\u0027re seeing on Mac.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4f5eb6_a516a894",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "remove empty line",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c513166_4f03ea44",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "This should come from LayoutProvider::Get() -- DISTANCE_CONTENT_LIST_VERTICAL_MULTI or DISTANCE_RELATED_CONTROL_VERTICAL_SMALL . At the very least it needs a comment and a better name -- \"vertical space\" is too ambiguous.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f93013_4ab725dd",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "it\u0027s -\u003e its",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1e7819_916ae9f0",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY..",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3892af6_020c149b",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "comment about this?  (do you know this can happen or is it hypothetical?)",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4bd2bd_7ee6a1dd",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "can this happen before CreateBubble()? Otherwise it will resize/relayout a second time",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c51837_3abe08e3",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "remove commented code",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c182a153_83910397",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "BubbleDialogDelegateView observes two widgets -- which one do you care about here? Also you need to call the parent class implementation.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f803f27b_5f9517dc",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "shouldn\u0027t the parent window be responsible for closing itself still? I don\u0027t understand why you need this.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebc16be_53274416",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "activation is asynchronous on Linux and Mac -- I don\u0027t think you can rely on this. I expect it will never work, or at best be flaky, since activation hasn\u0027t transferred yet when the widget is destroyed.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f83249_c211f95a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "try something like pressing the browser window\u0027s close button while both popups are active, or right-clicking the Chrome taskbar icon and selecting close from there. I suspect you\u0027ll encounter lifetime issues here.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca67f1e8_68e57628",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "rather than a raw pointer, I think this would be better as a helper function doing\n\nanchor_widget()-\u003ewidget_delegate()-\u003eAsBubbleDialogDelegate()\n\nBubbleDialogDelegateView already does some lifetime management of anchor_widget_",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdb5464_486530d9",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "we typically put these things in an anonymous namespace - is that possible?",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4677c58_42f1fe6b",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 15
@@ -13,6 +342,30 @@
       "writtenOn": "2018-01-24T17:39:33Z",
       "side": 1,
       "message": "Do I have to move the above line down here?",
+      "range": {
+        "startLine": 4118,
+        "startChar": 18,
+        "endLine": 4118,
+        "endChar": 0
+      },
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd4cda8_27763d4b",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 4118,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T23:55:17Z",
+      "side": 1,
+      "message": "\u003e Do I have to move the above line down here?\n\nthat would exclude it from Mac. The best way is probably to add an `else`  to the `if (is_chromeos) { } ...` above",
+      "parentUuid": "f4677c58_42f1fe6b",
       "range": {
         "startLine": 4118,
         "startChar": 18,
