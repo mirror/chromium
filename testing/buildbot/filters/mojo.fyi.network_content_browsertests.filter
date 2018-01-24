@@ -117,6 +117,10 @@
 -ResourceDispatcherHostBrowserTest.SniffHTMLWithNoContentType
 -ResourceDispatcherHostBrowserTest.SniffNoContentTypeNoData
 
+# Test uses ResourceDispatcherHostImpl::CancelRequest(). The
+# ResourceDispatcherHost is no more used with the NetworkService.
+BrowserSideNavigationBaseBrowserTest.CancelRequestAfterReadyToCommit
+
 # Cross-site document blocking needs to be implemented in the network service.
 # https://crbug.com/786505 (cross site document blocking)
 # https://crbug.com/792546 (cross site document blocking in network service)

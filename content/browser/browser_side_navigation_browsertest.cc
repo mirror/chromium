@@ -575,6 +575,77 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
 
+// Using ResourceDispatcherHostImpl::CancelRequest to cancel a subresource
+// load must work. In particular, the renderer process must be notified.
+// See https://crbug.com/804868.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest, CancelRequestXHR) {
+  ControllableHttpResponse xhr_response(embedded_test_server(), "/xhr");
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // 1) Open a new document.
+  GURL url(embedded_test_server()->GetURL("/simple_page.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // 2) Send an XHR.
+  DOMMessageQueue dom_message_queue(WebContents::FromRenderFrameHost(
+      shell()->web_contents()->GetMainFrame()));
+  ExecuteScriptAsync(shell(), R"(
+    let send_once = function(message) {
+      let ran = false;
+      return function() {
+        if (ran)
+          return;
+        ran = true;
+        window.domAutomationController.send(message)
+      };
+    };
+    let xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", send_once("load"));
+    xhr.addEventListener("error", send_once("error"));
+    xhr.addEventListener("abort", send_once("abort"));
+    xhr.addEventListener("progress", send_once("progress"));
+    xhr.open("GET", "/xhr");
+    xhr.send();
+
+    setTimeout(send_once("timeout"), 4000);
+  )");
+
+  // 3) Send half of the XHR response.
+  xhr_response.WaitForRequest();
+  xhr_response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html><body> ... ");
+
+  // 4) Receive it.
+  {
+    std::string message;
+    EXPECT_TRUE(dom_message_queue.WaitForMessage(&message));
+    EXPECT_EQ("\"progress\"", message);
+  }
+
+  // 5) The ResourceDispatcherHost cancels the request.
+  auto cancel_request = []() {
+    ResourceDispatcherHostImpl* rdh =
+        static_cast<ResourceDispatcherHostImpl*>(ResourceDispatcherHost::Get());
+    EXPECT_EQ(1, rdh->pending_requests());
+    rdh->CancelRequest(3, 1);  // hardcoded value.
+    EXPECT_EQ(0, rdh->pending_requests());
+  };
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(cancel_request));
+
+  // 6) Wait for XHR cancellation.
+  {
+    std::string message;
+    EXPECT_TRUE(dom_message_queue.WaitForMessage(&message));
+    // TODO(arthursonzogni): This is wrong, "abort" should be received.
+    // See https://crbug.com/804868
+    EXPECT_EQ("\"timeout\"", message);
+  }
+}
+
 // TODO(arthursonzogni): Remove these tests once NavigationMojoResponse has
 // launched.
 class NavigationMojoResponseBrowserTest : public ContentBrowserTest {
