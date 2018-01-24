@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2a783c49_049682c5",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T11:04:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure I am following. Have you actually been able to repro this?\n\nI believe OnReconcileFinished() is always called exactly once per reconcile.\n\nIt\u0027s true that is_reconcile_started_ may be true at the end of FinishReconcile() because we\u0027re still waiting for cookies (this FininshReconcile() function is poorly named, as it often doesn\u0027t actually finish the reconcile).\n\nHowever, the relevant callback for the cookies being added is not OnAddAccountToCookieCompleted() (sorry, again the naming is terrible here), but it is OnGaiaAccountsInCookieUpdated(). From there, FinishReconcile is called again, and at some point when all the cookies are present, is_reconcile_started_ becomes false and OnReconcileFinished() is called.",
+      "parentUuid": "591fbacf_b53d16bb",
+      "revId": "c631a9d1ed69600ec8bbaa802a8337013719b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43d4395f_cbdfa0ee",
         "filename": "components/signin/core/browser/account_reconcilor_delegate.h",
         "patchSetId": 6
