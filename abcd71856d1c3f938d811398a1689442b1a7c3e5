@@ -166,6 +166,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfd0e90_c2e3b65b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-24T22:32:40Z",
+      "side": 1,
+      "message": "Well, the way it\u0027s currently done, it could just be a Runnable. However, I agree with Ted\u0027s concerns so would prefer to switch to Callable or NoThrowingCallable. Having to catch an exception doesn\u0027t seem awful to me",
+      "parentUuid": "0aa15df8_1ffcfc01",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
