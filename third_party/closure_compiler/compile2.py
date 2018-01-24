@@ -7,6 +7,7 @@
 minified output."""
 
 import argparse
+import distutils.spawn
 import os
 import re
 import subprocess
@@ -236,6 +237,17 @@ class Checker(object):
       os.makedirs(out_dir)
 
     checks_only = 'checks_only' in closure_args
+
+    # Java isn't an official requirement for building Chromium on all
+    # platforms, so we need to do something sensible when it's not
+    # available.  If we're compiling to generate output code, we're
+    # out of luck, but when the compiler is only being invoked for
+    # type-checking, we can punt and report success.
+    if (checks_only and
+        not distutils.spawn.find_executable(self._JAR_COMMAND[0])):
+      self._log_debug("JVM not available.  Reporting success.")
+      self._nuke_temp_files()
+      return (False, "")
 
     if not checks_only:
       args += ["--js_output_file=%s" % out_file]
