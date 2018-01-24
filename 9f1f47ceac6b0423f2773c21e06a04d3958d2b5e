@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3bc5ae_edc2ba06",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T17:29:13Z",
+      "side": 1,
+      "message": "Just FYI: Turns out lambda init-captures were still in the to-be-discussed section of the style guide. Since my proposal to allow them [1] received some push back and an alternative solution to this problem was provided in the thread I changed it to declare the pointer outside of the lambda.\n\n[1] https://groups.google.com/a/chromium.org/d/msg/cxx/8BHoi4T6ZhA/pWHB6IYoAgAJ",
+      "range": {
+        "startLine": 839,
+        "startChar": 2,
+        "endLine": 839,
+        "endChar": 18
+      },
+      "revId": "9f1f47ceac6b0423f2773c21e06a04d3958d2b5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
