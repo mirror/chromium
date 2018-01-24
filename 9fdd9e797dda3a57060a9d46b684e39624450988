@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de4743b_ecdebb8a",
+        "filename": "chrome/browser/resources/media_router/extension/assemble_extension.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T02:28:34Z",
+      "side": 1,
+      "message": "2018?",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d647346a_2bc3e2fe",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T02:28:34Z",
+      "side": 1,
+      "message": "Could this file be in JSON directly, and avoid the need for the YAML to JSON conversion? Is the primary motivation for YAML the ability to have comments within the file?",
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abae39a_a513b468",
+        "filename": "third_party/closure_compiler/compile2.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T02:28:34Z",
+      "side": 1,
+      "message": "How is the code getting to this point to begin with? Can we just move this check to some more targeted location?",
+      "range": {
+        "startLine": 246,
+        "startChar": 4,
+        "endLine": 250,
+        "endChar": 24
+      },
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
