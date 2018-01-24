@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db46554_be3a685f",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb26bc90_33aa9c80",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "\"JSON ruleset file does not exist.\"",
+      "range": {
+        "startLine": 690,
+        "startChar": 25,
+        "endLine": 690,
+        "endChar": 47
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d1b26a_bbc4ab2a",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "This move is unsafe because depending on compiler behavior it may invalidate |json_parser_ptr| before it is dereferenced to call Parse(). Call json_parser_ptr.get() to save the raw pointer a local variable before making this call.",
+      "range": {
+        "startLine": 702,
+        "startChar": 42,
+        "endLine": 702,
+        "endChar": 68
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19edbfc_67011da1",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bfc9c3_73d4e963",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "!json_ruleset ||",
+      "range": {
+        "startLine": 717,
+        "startChar": 6,
+        "endLine": 717,
+        "endChar": 21
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b328ec9_95c63cdb",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T18:57:05Z",
+      "side": 1,
+      "message": "base::StringPiece",
+      "range": {
+        "startLine": 765,
+        "startChar": 45,
+        "endLine": 765,
+        "endChar": 63
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
