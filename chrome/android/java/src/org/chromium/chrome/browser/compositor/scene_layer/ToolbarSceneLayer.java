@@ -160,8 +160,8 @@ public class ToolbarSceneLayer extends SceneOverlayLayer implements SceneOverlay
         if (FeatureUtilities.isChromeModernDesignEnabled()) alpha = 0;
 
         update(color, alpha, mLayoutProvider.getFullscreenManager(), resourceManager,
-                forceHideBrowserControlsAndroidView, viewportMode, DeviceFormFactor.isTablet(),
-                viewport.height());
+                forceHideBrowserControlsAndroidView, viewportMode,
+                DeviceFormFactor.isTablet(mContext), viewport.height());
 
         return this;
     }

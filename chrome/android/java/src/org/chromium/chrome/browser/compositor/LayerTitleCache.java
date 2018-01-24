@@ -126,7 +126,8 @@ public class LayerTitleCache implements TitleCache {
 
         boolean isDarkTheme = tab.isIncognito();
         // The theme might require lighter text.
-        if (!DeviceFormFactor.isTablet() && !FeatureUtilities.isChromeModernDesignEnabled()) {
+        if (!DeviceFormFactor.isTablet(mContext)
+                && !FeatureUtilities.isChromeModernDesignEnabled()) {
             isDarkTheme |= ColorUtils.shouldUseLightForegroundOnBackground(tab.getThemeColor());
         }
 

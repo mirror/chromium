@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.toolbar;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -85,7 +84,6 @@ import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationEntry;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.UiUtils;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.PageTransition;
 
 import java.util.List;
@@ -153,6 +151,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     private final LoadProgressSimulator mLoadProgressSimulator;
     private final Callback<Boolean> mUrlFocusChangedCallback;
     private final Handler mHandler = new Handler();
+    private final ChromeActivity mActivity;
 
     private BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
     private int mFullscreenFocusToken = FullscreenManager.INVALID_TOKEN;
@@ -186,10 +185,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      * @param invalidator Handler for synchronizing invalidations across UI elements.
      * @param urlFocusChangedCallback The callback to be notified when the URL focus changes.
      */
-    public ToolbarManager(final ChromeActivity activity,
-            ToolbarControlContainer controlContainer, final AppMenuHandler menuHandler,
-            AppMenuPropertiesDelegate appMenuPropertiesDelegate,
+    public ToolbarManager(ChromeActivity activity, ToolbarControlContainer controlContainer,
+            final AppMenuHandler menuHandler, AppMenuPropertiesDelegate appMenuPropertiesDelegate,
             Invalidator invalidator, Callback<Boolean> urlFocusChangedCallback) {
+        mActivity = activity;
         if (activity.getBottomSheet() != null) {
             mActionBarDelegate =
                     new ViewShiftingActionBarDelegate(activity, activity.getBottomSheet());
@@ -394,7 +393,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             @Override
             public void onContentChanged(Tab tab) {
                 mToolbar.onTabContentViewChanged();
-                if (shouldShowCusrsorInLocationBar()) {
+                if (shouldShowCursorInLocationBar()) {
                     mToolbar.getLocationBar().showUrlBarCursorWithoutFocusAnimations();
                 }
             }
@@ -438,7 +437,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 if (visible) RecordUserAction.record("MobileActionBarShown");
                 ActionBar actionBar = mActionBarDelegate.getSupportActionBar();
                 if (!visible && actionBar != null) actionBar.hide();
-                if (DeviceFormFactor.isTablet()) {
+                if (mActivity.isTablet()) {
                     if (visible) {
                         mActionModeController.startShowAnimation();
                     } else {
@@ -510,7 +509,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             }
 
             private void handleIPHForErrorPageShown(Tab tab) {
-                if (!(activity instanceof ChromeTabbedActivity) || DeviceFormFactor.isTablet()) {
+                if (!(mActivity instanceof ChromeTabbedActivity) || mActivity.isTablet()) {
                     return;
                 }
 
@@ -602,7 +601,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
         // TODO(shaktisahu): Find out if the download menu button is enabled (crbug/712438).
         ChromeActivity activity = tab.getActivity();
-        if (!(activity instanceof ChromeTabbedActivity) || DeviceFormFactor.isTablet()
+        if (!(activity instanceof ChromeTabbedActivity) || activity.isTablet()
                 || activity.isInOverviewMode() || !DownloadUtils.isAllowedToDownloadPage(tab)) {
             return;
         }
@@ -1232,7 +1231,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             // Place the cursor in the Omnibox if applicable.  We always clear the focus above to
             // ensure the shield placed over the content is dismissed when switching tabs.  But if
             // needed, we will refocus the omnibox and make the cursor visible here.
-            if (shouldShowCusrsorInLocationBar()) {
+            if (shouldShowCursorInLocationBar()) {
                 mToolbar.getLocationBar().showUrlBarCursorWithoutFocusAnimations();
             }
         }
@@ -1318,7 +1317,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         mToolbar.getProgressBar().setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
-    private boolean shouldShowCusrsorInLocationBar() {
+    private boolean shouldShowCursorInLocationBar() {
         Tab tab = mToolbarModel.getTab();
         if (tab == null) return false;
         NativePage nativePage = tab.getNativePage();
@@ -1326,9 +1325,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             return false;
         }
 
-        Context context = mToolbar.getContext();
-        return DeviceFormFactor.isTablet()
-                && context.getResources().getConfiguration().keyboard
+        return mActivity.isTablet()
+                && mActivity.getResources().getConfiguration().keyboard
                 == Configuration.KEYBOARD_QWERTY;
     }
 

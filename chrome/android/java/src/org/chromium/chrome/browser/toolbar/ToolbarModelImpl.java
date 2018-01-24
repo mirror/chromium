@@ -30,7 +30,6 @@ import org.chromium.components.dom_distiller.core.DomDistillerService;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.browser.WebContents;
-import org.chromium.ui.base.DeviceFormFactor;
 
 /**
  * Contains the data and state for the toolbar.
@@ -235,11 +234,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     }
 
     @Override
-    public boolean shouldShowSecurityIcon() {
-        return !clearUrlForBottomSheetOpen() && getSecurityIconResource() != 0;
-    }
-
-    @Override
     public boolean shouldShowVerboseStatus() {
         // Because is offline page is cleared a bit slower, we also ensure that connection security
         // level is NONE or HTTP_SHOW_WARNING (http://crbug.com/671453).
@@ -255,9 +249,10 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     }
 
     @Override
-    public int getSecurityIconResource() {
-        return getSecurityIconResource(
-                getSecurityLevel(), !DeviceFormFactor.isTablet(), isOfflinePage());
+    public int getSecurityIconResource(boolean isTablet) {
+        return clearUrlForBottomSheetOpen()
+                ? 0
+                : getSecurityIconResource(getSecurityLevel(), !isTablet, isOfflinePage());
     }
 
     @VisibleForTesting

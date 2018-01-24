@@ -40,7 +40,6 @@ import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.util.concurrent.TimeUnit;
@@ -151,7 +150,9 @@ public class AppMenuPropertiesDelegate {
             boolean shouldShowIconRow = mActivity.getBottomSheet() == null
                     && (!mActivity.isTablet()
                                || mActivity.getWindow().getDecorView().getWidth()
-                                       < DeviceFormFactor.getMinimumTabletWidthPx(mActivity));
+                                       < mActivity.getWindowAndroid()
+                                                 .getDisplay()
+                                                 .getMinimumTabletWidthPx());
 
             // Update the icon row items (shown in narrow form factors).
             menu.findItem(R.id.icon_row_menu_id).setVisible(shouldShowIconRow);

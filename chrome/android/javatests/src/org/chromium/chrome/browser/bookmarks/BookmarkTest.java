@@ -48,7 +48,6 @@ import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.components.bookmarks.BookmarkType;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.net.test.EmbeddedTestServer;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.test.util.UiRestriction;
 
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public class BookmarkTest {
     }
 
     private void openBookmarkManager() throws InterruptedException {
-        if (DeviceFormFactor.isTablet()) {
+        if (mActivityTestRule.getActivity().isTablet()) {
             mActivityTestRule.loadUrl(UrlConstants.BOOKMARKS_URL);
             mItemsContainer =
                     (RecyclerView) mActivityTestRule.getActivity().findViewById(R.id.recycler_view);
@@ -454,7 +453,8 @@ public class BookmarkTest {
         // TODO(twellington): Remove after bookmarks redesign is complete.
         // The +1 for large devices stems from the divider being added to the state folder for now,
         // which will offset all counts by one.
-        final int expectedCount = DeviceFormFactor.isLargeTablet(mActivityTestRule.getActivity())
+        final int expectedCount =
+                mActivityTestRule.getActivity().getWindowAndroid().getDisplay().isLargeTablet()
                         && BookmarkUIState.STATE_FOLDER == delegate.getCurrentState()
                 ? expectedOnRegularDevice + 1
                 : expectedOnRegularDevice;

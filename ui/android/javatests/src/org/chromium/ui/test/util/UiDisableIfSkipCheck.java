@@ -8,7 +8,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import org.chromium.base.test.util.DisableIfSkipCheck;
-import org.chromium.ui.base.DeviceFormFactor;
+import org.chromium.ui.display.DisplayAndroid;
 
 /**
  * Checks for conditional disables. Currently only includes checks against
@@ -23,14 +23,14 @@ public class UiDisableIfSkipCheck extends DisableIfSkipCheck {
 
     @Override
     protected boolean deviceTypeApplies(String type) {
-        if (TextUtils.equals(type, UiDisableIf.PHONE) && !DeviceFormFactor.isTablet()) {
+        DisplayAndroid display = DisplayAndroid.getNonMultiDisplay(mTargetContext);
+        if (TextUtils.equals(type, UiDisableIf.PHONE) && !display.isTablet()) {
             return true;
         }
-        if (TextUtils.equals(type, UiDisableIf.TABLET) && DeviceFormFactor.isTablet()) {
+        if (TextUtils.equals(type, UiDisableIf.TABLET) && display.isTablet()) {
             return true;
         }
-        if (TextUtils.equals(type, UiDisableIf.LARGETABLET)
-                && DeviceFormFactor.isLargeTablet(mTargetContext)) {
+        if (TextUtils.equals(type, UiDisableIf.LARGETABLET) && display.isLargeTablet()) {
             return true;
         }
         return false;
