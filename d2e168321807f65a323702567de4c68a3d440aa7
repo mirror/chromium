@@ -16,6 +16,24 @@
       "revId": "d2e168321807f65a323702567de4c68a3d440aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bad4fc_abb88f20",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-24T18:52:23Z",
+      "side": 1,
+      "message": "This is not really an error, it\u0027s just that the browser has disabled updating extension (for some reason). We only want to count when there\u0027s really an update error.",
+      "parentUuid": "1453f8a4_858e333b",
+      "revId": "d2e168321807f65a323702567de4c68a3d440aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
