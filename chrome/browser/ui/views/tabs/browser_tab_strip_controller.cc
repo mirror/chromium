@@ -32,6 +32,7 @@
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -52,6 +53,7 @@
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/metrics_proto/omnibox_event.pb.h"
 #include "ui/base/models/list_selection_model.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/gfx/image/image.h"
 #include "ui/views/controls/menu/menu_runner.h"
 #include "ui/views/widget/widget.h"
@@ -74,6 +76,10 @@ bool DetermineTabStripLayoutStacked(PrefService* prefs, bool* adjust_layout) {
   *adjust_layout = true;
   return prefs->GetBoolean(prefs::kTabStripStackedLayout);
 #else
+  if (base::FeatureList::IsEnabled(features::kStackedTabStrip)) {
+    *adjust_layout = true;
+    return prefs->GetBoolean(prefs::kTabStripStackedLayout);
+  }
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kForceStackedTabStripLayout);
 #endif

@@ -521,6 +521,10 @@ const base::Feature kNativeSmb{"NativeSmb", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kSoundContentSetting{"SoundContentSetting",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables or disables stacked tabs for touch users.
+const base::Feature kStackedTabStrip{"StackedTabStrip",
+                                     base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Enables or disables the creation of (legacy) supervised users. Does not
 // affect existing supervised users.
 const base::Feature kSupervisedUserCreation{"SupervisedUserCreation",

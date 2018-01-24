@@ -170,8 +170,8 @@ extern const char kDisableTabForDesktopShareDescription[];
 extern const char kDisallowDocWrittenScriptsUiName[];
 extern const char kDisallowDocWrittenScriptsUiDescription[];
 
-extern const char kDisplayList2dCanvasName[];
-extern const char kDisplayList2dCanvasDescription[];
+extern const char kStackedTabStripName[];
+extern const char kStackedTabStripDescription[];
 
 extern const char kDistanceFieldTextName[];
 extern const char kDistanceFieldTextDescription[];
