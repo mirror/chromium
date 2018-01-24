@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75793af7_9f7e0437",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "Leftover from debugging?",
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc5c700_aa80fc4c",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "Add a class-level comment explaining the use of this class.",
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc58069c_b4856dac",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add0e402_4ca29189",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "rectangle_request_class",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82be023b_e68817ad",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "Is this indirection necessary since this code is only ever called on platforms where this class exists?",
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b7c4fb_8a3ca820",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "image_handler_class",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d2493a_7f1e7887",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "image_handler_class",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 29
+      },
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8894ff5b_ce7ee0cb",
+        "filename": "services/shape_detection/face_detection_provider_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "Add a class-level comment explaining the use of this class.",
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7076b230_d471f200",
+        "filename": "services/shape_detection/face_detection_provider_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-24T19:44:45Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(FaceDetectionProviderMac);",
+      "revId": "0b737e5be16d4a3a064cb53a35b54866890149f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
