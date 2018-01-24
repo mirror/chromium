@@ -14,6 +14,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/default_clock.h"
+#include "build/buildflag.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
@@ -28,11 +29,16 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_util.h"
+#endif
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #endif
 
 namespace metrics_util = password_manager::metrics_util;
@@ -511,6 +517,20 @@ void ManagePasswordsBubbleModel::OnSignInToChromeClicked() {
     delegate_->NavigateToChromeSignIn();
 }
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+void ManagePasswordsBubbleModel::OnEnableSyncClicked(
+    const AccountInfo& account) {
+  // Enabling sync for an existing account and starting a new sign-in are
+  // triggered by the user interacting with the sign-in promo.
+  interaction_keeper_->set_sign_in_promo_dismissal_reason(
+      metrics_util::CHROME_SIGNIN_OK);
+  GetProfile()->GetPrefs()->SetBoolean(
+      password_manager::prefs::kWasSignInPasswordPromoClicked, true);
+  if (delegate_)
+    delegate_->EnableSync(account);
+}
+#endif
+
 void ManagePasswordsBubbleModel::OnSkipSignInClicked() {
   interaction_keeper_->set_sign_in_promo_dismissal_reason(
       metrics_util::CHROME_SIGNIN_CANCEL);
@@ -541,7 +561,16 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
           prefs, sync_service)) {
     interaction_keeper_->ReportInteractions(this);
     title_brand_link_range_ = gfx::Range();
-    title_ = l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE);
+    int title_string_id =
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+        AccountConsistencyModeManager::IsDiceEnabledForProfile(GetProfile())
+            ? IDS_PASSWORD_MANAGER_DICE_PROMO_TITLE
+            : IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE;
+#else
+        IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE;
+#endif
+    title_ = l10n_util::GetStringUTF16(title_string_id);
+
     state_ = password_manager::ui::CHROME_SIGN_IN_PROMO_STATE;
     int show_count = prefs->GetInteger(
         password_manager::prefs::kNumberSignInPasswordPromoShown);
