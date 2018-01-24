@@ -94,6 +94,7 @@ action("bindings_modules_v8_generated_init_partial") {
   deps = [
     "//third_party/WebKit/Source/bindings/modules:interfaces_info",
   ]
+  pool = "//build/toolchain:action_pool($default_toolchain)"
 }
 
 blink_modules_sources("bindings_modules_impl") {
@@ -154,4 +155,5 @@ action("generate_v8_context_snapshot_external_references") {
     "//third_party/WebKit/Source/bindings/scripts:cached_jinja_templates",
     "//third_party/WebKit/Source/bindings/scripts:cached_lex_yacc_tables",
   ]
+  pool = "//build/toolchain:action_pool($default_toolchain)"
 }

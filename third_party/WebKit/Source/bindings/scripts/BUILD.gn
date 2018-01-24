@@ -24,6 +24,8 @@ action("cached_lex_yacc_tables") {
   ]
 
   args = [ rebase_path(bindings_scripts_output_dir, root_build_dir) ]
+
+  pool = "//build/toolchain:action_pool($default_toolchain)"
 }
 
 # A separate pre-caching step is *required* to use bytecode caching in
@@ -45,4 +47,6 @@ action("cached_jinja_templates") {
     rebase_path(bindings_scripts_output_dir, root_build_dir),
     rebase_path(stamp_file, root_build_dir),
   ]
+
+  pool = "//build/toolchain:action_pool($default_toolchain)"
 }

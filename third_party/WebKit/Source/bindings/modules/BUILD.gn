@@ -132,6 +132,7 @@ action("interfaces_info") {
     ":interfaces_info_individual_modules",
     "//third_party/WebKit/Source/bindings/core:interfaces_info_individual_core",
   ]
+  pool = "//build/toolchain:action_pool($default_toolchain)"
 }
 
 compute_global_objects("modules_global_objects") {
