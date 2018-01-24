@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382d2009_04c7e3db",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T00:54:37Z",
+      "side": 1,
+      "message": "isn\u0027t it safer to remember the original mask layer here?",
+      "revId": "aa1ec19744666f7718ba45775cd021e3fd6b618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
