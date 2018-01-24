@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdc79bd_47b02597",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-24T17:49:49Z",
+      "side": 1,
+      "message": "it would be battor.steady_state/*",
+      "revId": "02dd531f8d1a471e83db6c316e6d58973f5fc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8e364c_06c91933",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-24T17:49:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "02dd531f8d1a471e83db6c316e6d58973f5fc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
