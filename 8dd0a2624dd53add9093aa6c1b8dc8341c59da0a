@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c462b45e_8a68ab7d",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-24T22:31:47Z",
+      "side": 1,
+      "message": "So I found a weird thing. When checking feature::IsVizHitTestingEnabled() with --use-viz-hit-test, it returns false; when checking feature::IsVizHitTestingEnabled() with --enable-features\u003dVizDisplayCompositor, it returns true. Either of these two conditions should result in true - are there any differences between feature and flag in this case??",
+      "range": {
+        "startLine": 191,
+        "startChar": 13,
+        "endLine": 191,
+        "endChar": 30
+      },
+      "revId": "8dd0a2624dd53add9093aa6c1b8dc8341c59da0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
