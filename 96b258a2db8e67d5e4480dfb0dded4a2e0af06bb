@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87d0d50_ec505921",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T00:50:41Z",
+      "side": 1,
+      "message": "Let\u0027s have something in this comment indicating that javascript: URLs are also considered as RendererDebugURL, which is not intuitive at all.",
+      "revId": "96b258a2db8e67d5e4480dfb0dded4a2e0af06bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35932261_3c393e21",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3684,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T00:50:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t setting the loading state to true be done before sending the URL to the renderer? Doing it after doesn\u0027t seem logical.",
+      "revId": "96b258a2db8e67d5e4480dfb0dded4a2e0af06bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
