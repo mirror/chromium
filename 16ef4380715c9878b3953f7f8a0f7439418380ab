@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7eeb69_cb0adb14",
+        "filename": "mojo/public/cpp/bindings/array_traits_wtf_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T21:34:57Z",
+      "side": 1,
+      "message": "nit: non-blink code, please use CamelCase not camelCase",
+      "revId": "16ef4380715c9878b3953f7f8a0f7439418380ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
