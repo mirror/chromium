@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b14e2c89_2e5966cb",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_coordinating.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T13:31:50Z",
+      "side": 0,
+      "message": "I am keeping this protocol for now as it might be useful in the future.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "9dcd8a50be9b54ed785a24db76b3908da8be300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
