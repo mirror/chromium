@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "776873c8_c80e888e",
+        "filename": "mojo/public/cpp/system/buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-24T01:56:44Z",
+      "side": 1,
+      "message": "|this| is always non-null. It\u0027s a pointer to the object. So |!this| is not invoking operator bool. It should be (!*this).",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "61803df17e555a28c1ec68813e3495b391fb37e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccef5c5a_27340d34",
+        "filename": "mojo/public/cpp/system/handle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2018-01-24T01:56:44Z",
+      "side": 1,
+      "message": "*this",
+      "range": {
+        "startLine": 170,
+        "startChar": 11,
+        "endLine": 170,
+        "endChar": 15
+      },
+      "revId": "61803df17e555a28c1ec68813e3495b391fb37e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
