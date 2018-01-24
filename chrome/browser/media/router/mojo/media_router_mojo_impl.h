@@ -353,6 +353,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
       int32_t tab_id,
       media::mojom::MirrorServiceRemoterPtr remoter,
       media::mojom::MirrorServiceRemotingSourceRequest source_request) override;
+  void GetDiscoveryLogs(
+      mojom::MediaRouter::GetDiscoveryLogsCallback callback) override;
 
   // Result callback when Mojo TerminateRoute is invoked.
   // |route_id|: ID of MediaRoute passed to the TerminateRoute request.

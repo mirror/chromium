@@ -942,6 +942,14 @@ MediaRouter.prototype.onMediaRemoterCreated = function(tabId, remoter,
 }
 
 /**
+ * Gets browser side discovery logs.
+ * @return {!Promise<Object>}
+ */
+MediaRouter.prototype.getDiscoveryLogs = function() {
+  return this.service_.getDiscoveryLogs();
+}
+
+/**
  * Object containing callbacks set by the provider manager.
  *
  * @constructor

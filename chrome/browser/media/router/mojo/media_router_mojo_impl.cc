@@ -892,6 +892,11 @@ void MediaRouterMojoImpl::OnMediaRemoterCreated(
   connector->ConnectToService(std::move(source_request), std::move(remoter));
 }
 
+void MediaRouterMojoImpl::GetDiscoveryLogs(
+    mojom::MediaRouter::GetDiscoveryLogsCallback callback) {
+  // TODO(zhaobin): Run |callback| with browser side discovery logs.
+}
+
 void MediaRouterMojoImpl::BindToMojoRequest(
     mojo::InterfaceRequest<mojom::MediaRouter> request) {
   bindings_.AddBinding(this, std::move(request));

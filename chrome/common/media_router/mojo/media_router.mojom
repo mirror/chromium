@@ -520,4 +520,7 @@ interface MediaRouter {
   // receive the updates/messages from MediaRemoter.
   OnMediaRemoterCreated(int32 tab_id, media.mojom.MirrorServiceRemoter remoter,
       media.mojom.MirrorServiceRemotingSource& remoting_source);
+
+  // Gets browser side discovery logs.
+  GetDiscoveryLogs() => (string logs);
 };
