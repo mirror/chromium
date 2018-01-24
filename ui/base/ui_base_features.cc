@@ -7,6 +7,10 @@
 namespace features {
 
 #if defined(OS_WIN)
+// Enables DirectManipulation API for processing Precision Touchpad events.
+const base::Feature kPrecisionTouchpad{"PrecisionTouchpad",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables stylus appearing as touch when in contact with digitizer.
 const base::Feature kDirectManipulationStylus = {
     "DirectManipulationStylus", base::FEATURE_ENABLED_BY_DEFAULT};
