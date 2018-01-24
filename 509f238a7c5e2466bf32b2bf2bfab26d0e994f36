@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce4c69a6_1d10378b",
+        "filename": "chrome/browser/plugins/plugin_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-24T02:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb74c1d0_ad8e0205",
+      "revId": "509f238a7c5e2466bf32b2bf2bfab26d0e994f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fade619_169257ae",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "160e0d53_5500869b",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-24T02:04:26Z",
+      "side": 1,
+      "message": "I think you may have missed site_details.js? This gets called when the \"Reset site settings\" button gets pressed. So the UI is already existing.",
+      "parentUuid": "7fade619_169257ae",
+      "revId": "509f238a7c5e2466bf32b2bf2bfab26d0e994f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4053a75b_50bacc42",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "509f238a7c5e2466bf32b2bf2bfab26d0e994f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4d57ba_31210653",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-24T02:04:26Z",
+      "side": 1,
+      "message": "See previous comment. Thanks for pointing out there were no tests for the webui though, I modified an existing test to test the js side and added one for the C++ in site_settings_handler_unittest.cc.",
+      "parentUuid": "4053a75b_50bacc42",
+      "revId": "509f238a7c5e2466bf32b2bf2bfab26d0e994f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
