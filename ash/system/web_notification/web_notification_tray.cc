@@ -474,6 +474,7 @@ base::string16 WebNotificationTray::GetAccessibleNameForTray() {
 
 void WebNotificationTray::HideBubbleWithView(
     const views::TrayBubbleView* bubble_view) {
+  TrayBackgroundView::HideBubbleWithView(bubble_view);
   if (message_center_bubble() &&
       bubble_view == message_center_bubble()->bubble_view()) {
     message_center_ui_controller_->HideMessageCenterBubble();
@@ -641,6 +642,7 @@ bool WebNotificationTray::PerformAction(const ui::Event& event) {
 }
 
 void WebNotificationTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   message_center_ui_controller_->HideMessageCenterBubble();
 }
 

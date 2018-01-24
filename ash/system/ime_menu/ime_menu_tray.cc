@@ -438,6 +438,7 @@ base::string16 ImeMenuTray::GetAccessibleNameForTray() {
 }
 
 void ImeMenuTray::HideBubbleWithView(const views::TrayBubbleView* bubble_view) {
+  TrayBackgroundView::HideBubbleWithView(bubble_view);
   if (bubble_->bubble_view() == bubble_view)
     CloseBubble();
 }
@@ -457,6 +458,7 @@ bool ImeMenuTray::PerformAction(const ui::Event& event) {
 }
 
 void ImeMenuTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   bubble_.reset();
   ime_list_view_ = nullptr;
   SetIsActive(false);

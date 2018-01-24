@@ -62,9 +62,6 @@ base::string16 VirtualKeyboardTray::GetAccessibleNameForTray() {
       IDS_ASH_VIRTUAL_KEYBOARD_TRAY_ACCESSIBLE_NAME);
 }
 
-void VirtualKeyboardTray::HideBubbleWithView(
-    const views::TrayBubbleView* bubble_view) {}
-
 void VirtualKeyboardTray::ClickedOutsideBubble() {}
 
 bool VirtualKeyboardTray::PerformAction(const ui::Event& event) {

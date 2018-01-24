@@ -24,6 +24,8 @@
 #include "ash/system/tray/tray_event_filter.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/aura/window_delegate.h"
+#include "ui/base/hit_test.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_element.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -76,6 +78,42 @@ gfx::Insets GetMirroredBackgroundInsets(bool is_shelf_horizontal) {
   MirrorInsetsIfNecessary(&insets);
   return insets;
 }
+
+class ClippingWindowDelegate : public aura::WindowDelegate {
+ public:
+  ClippingWindowDelegate() {}
+  ~ClippingWindowDelegate() override {}
+
+ private:
+  // aura::WindowDelegate:
+  gfx::Size GetMinimumSize() const override { return gfx::Size(); }
+  gfx::Size GetMaximumSize() const override { return gfx::Size(); }
+  void OnBoundsChanged(const gfx::Rect& old_bounds,
+                       const gfx::Rect& new_bounds) override {}
+  gfx::NativeCursor GetCursor(const gfx::Point& point) override {
+    return gfx::kNullCursor;
+  }
+  int GetNonClientComponent(const gfx::Point& point) const override {
+    return HTNOWHERE;
+  }
+  bool ShouldDescendIntoChildForEventHandling(
+      aura::Window* child,
+      const gfx::Point& location) override {
+    return true;
+  }
+  bool CanFocus() override { return false; }
+  void OnCaptureLost() override {}
+  void OnPaint(const ui::PaintContext& context) override {}
+  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                  float new_device_scale_factor) override {}
+  void OnWindowDestroying(aura::Window* window) override {}
+  void OnWindowDestroyed(aura::Window* window) override { delete this; }
+  void OnWindowTargetVisibilityChanged(bool visible) override {}
+  bool HasHitTestMask() const override { return false; }
+  void GetHitTestMask(gfx::Path* mask) const override {}
+
+  DISALLOW_COPY_AND_ASSIGN(ClippingWindowDelegate);
+};
 
 }  // namespace
 
@@ -387,7 +425,10 @@ TrayBubbleView* TrayBackgroundView::GetBubbleView() {
   return nullptr;
 }
 
-void TrayBackgroundView::CloseBubble() {}
+void TrayBackgroundView::CloseBubble() {
+  if (clipping_window_)
+    clipping_window_.reset();
+}
 
 void TrayBackgroundView::ShowBubble(bool show_by_click) {}
 
@@ -402,6 +443,12 @@ void TrayBackgroundView::AnchorUpdated() {
 
 void TrayBackgroundView::BubbleResized(
     const views::TrayBubbleView* bubble_view) {}
+
+void TrayBackgroundView::HideBubbleWithView(
+    const views::TrayBubbleView* bubble_view) {
+  if (clipping_window_)
+    clipping_window_.reset();
+}
 
 void TrayBackgroundView::OnImplicitAnimationsCompleted() {
   // If there is another animation in the queue, the reverse animation was
@@ -494,7 +541,8 @@ aura::Window* TrayBackgroundView::GetBubbleWindowContainer() {
           ->IsTabletModeWindowManagerEnabled() &&
       drag_controller()) {
     if (!clipping_window_.get()) {
-      clipping_window_ = std::make_unique<aura::Window>(nullptr);
+      clipping_window_ =
+          std::make_unique<aura::Window>(new ClippingWindowDelegate());
       clipping_window_->Init(ui::LAYER_NOT_DRAWN);
       clipping_window_->layer()->SetMasksToBounds(true);
       container->AddChild(clipping_window_.get());

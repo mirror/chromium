@@ -412,6 +412,46 @@ TEST_F(SystemTrayTest, DISABLED_SwipingOnSystemTrayBubble) {
   EXPECT_TRUE(system_tray->HasSystemBubble());
 }
 
+// TODO(minch): Swiping the status area tray or associated bubble in tablet mode
+// has been disabled currently, it may be added back in the future.
+// http://crbug.com/767679.
+// Tests that when swiping the system tray and bubble is enabled. Pressing the
+// search key can toggle the launcher when all the windows are minimized after
+// open the system tray bubble in tablet mode.
+TEST_F(
+    SystemTrayTest,
+    DISABLED_ToggleAppListAfterOpenSystemTrayBubbleInTabletModeWithSwipingEnabled) {
+  EXPECT_FALSE(wm::GetActiveWindow());
+  SystemTray* system_tray = GetPrimarySystemTray();
+
+  // Open the system tray bubble in tablet mode will create the clipping window.
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  EXPECT_FALSE(system_tray->clipping_window_for_test());
+  system_tray->ShowDefaultView(BUBBLE_CREATE_NEW, false /* show_by_click */);
+  ASSERT_TRUE(system_tray->clipping_window_for_test());
+
+  app_list::test::TestAppListPresenter test_app_list_presenter;
+  Shell::Get()->app_list()->SetAppListPresenter(
+      test_app_list_presenter.CreateInterfacePtrAndBind());
+
+  // Convert from tablet mode to clamshell.
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
+  EXPECT_TRUE(system_tray->clipping_window_for_test());
+  wm::ActivateWindow(system_tray->clipping_window_for_test());
+  EXPECT_EQ(0u, test_app_list_presenter.toggle_count());
+
+  // Press the search key should toggle the launcher.
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  generator.PressKey(ui::VKEY_BROWSER_SEARCH, ui::EF_NONE);
+  RunAllPendingInMessageLoop();
+  EXPECT_EQ(1u, test_app_list_presenter.toggle_count());
+
+  // Press the search key again should still toggle the launcher.
+  generator.PressKey(ui::VKEY_BROWSER_SEARCH, ui::EF_NONE);
+  RunAllPendingInMessageLoop();
+  EXPECT_EQ(2u, test_app_list_presenter.toggle_count());
+}
+
 // Tests that press the search key can toggle the launcher when all the windows
 // are minimized after open the system tray bubble in tablet mode.
 TEST_F(SystemTrayTest, ToggleAppListAfterOpenSystemTrayBubbleInTabletMode) {

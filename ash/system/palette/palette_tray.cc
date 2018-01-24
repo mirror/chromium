@@ -275,6 +275,7 @@ base::string16 PaletteTray::GetAccessibleNameForTray() {
 }
 
 void PaletteTray::HideBubbleWithView(const views::TrayBubbleView* bubble_view) {
+  TrayBackgroundView::HideBubbleWithView(bubble_view);
   if (bubble_->bubble_view() == bubble_view)
     HidePalette();
 }
@@ -456,6 +457,7 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
 }
 
 void PaletteTray::CloseBubble() {
+  TrayBackgroundView::CloseBubble();
   HidePalette();
 }
 
