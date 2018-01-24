@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "865097c4_4f2c5466",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T18:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951644ea_fbb95619",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "581ad5d7_d3939365",
         "filename": "ash/wm/overview/window_grid.cc",
         "patchSetId": 8
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "so we don\u0027t need other layers (background_view_, label_container_), do we?",
       "parentUuid": "30acf0ab_e5cb27fa",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d835cc4_cc8a573a",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T18:34:10Z",
+      "side": 1,
+      "message": "They will not show up without layer, i think because shield_widget_ is created with layer_type LAYER_SOLID_COLOR.",
+      "parentUuid": "ce9770ac_8487c15b",
       "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
