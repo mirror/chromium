@@ -4566,6 +4566,14 @@ void LocalFrameView::ScrollRectToVisibleInRemoteParent(
       params);
 }
 
+void LocalFrameView::ApplyFinalZoomForRecursiveScroll(
+    const LayoutRect& rect,
+    const WebScrollIntoViewParams& params) {
+  DCHECK(GetFrame().IsMainFrame());
+  GetFrame().Client()->ApplyFinalZoomForRecursiveScroll(
+      PixelSnappedIntRect(rect), params);
+}
+
 void LocalFrameView::ScrollContentsIfNeeded() {
   if (pending_scroll_delta_.IsZero())
     return;

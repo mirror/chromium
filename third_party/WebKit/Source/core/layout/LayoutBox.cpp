@@ -741,10 +741,16 @@ void LayoutBox::ScrollRectToVisibleRecursive(
 
   if (parent_box) {
     parent_box->ScrollRectToVisibleRecursive(new_rect, params);
-  } else if (GetFrame()->IsLocalRoot() && !GetFrame()->IsMainFrame()) {
+  } else if (GetFrame()->IsLocalRoot()) {
     LocalFrameView* frame_view = GetFrameView();
-    if (frame_view && frame_view->SafeToPropagateScrollToParent()) {
+    if (!frame_view)
+      return;
+
+    if (!GetFrame()->IsMainFrame() &&
+        frame_view->SafeToPropagateScrollToParent()) {
       frame_view->ScrollRectToVisibleInRemoteParent(new_rect, params);
+    } else if (GetFrame()->IsMainFrame() && params.zoom_into_final_rect) {
+      frame_view->ApplyFinalZoomForRecursiveScroll(new_rect, params);
     }
   }
 }

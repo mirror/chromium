@@ -923,6 +923,11 @@ class CORE_EXPORT LocalFrameView final
   // scrolling should continue in the parent process.
   void ScrollRectToVisibleInRemoteParent(const LayoutRect&,
                                          const WebScrollIntoViewParams&);
+  // Zooms into the given rectangle. This is the last step in a recursive scroll
+  // which has initiated in a cross-process frame and requires a final zoom step
+  // in the root layer.
+  void ApplyFinalZoomForRecursiveScroll(const LayoutRect&,
+                                        const WebScrollIntoViewParams&);
 
   PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
