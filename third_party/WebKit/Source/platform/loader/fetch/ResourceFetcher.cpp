@@ -278,7 +278,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
 }
 
 ResourceFetcher::ResourceFetcher(FetchContext* new_context)
-    : context_(new_context),
+    : context_(new_context ? new_context : FetchContext::CreateNullInstance()),
       scheduler_(ResourceLoadScheduler::Create(&Context())),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
