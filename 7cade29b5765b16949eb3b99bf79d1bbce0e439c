@@ -33,6 +33,24 @@
       "revId": "7cade29b5765b16949eb3b99bf79d1bbce0e439c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef86b9d_5a3e2431",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-24T09:06:07Z",
+      "side": 1,
+      "message": "Not sure what you\u0027re getting at. The callee is responsible for not holding on to the StringPiece after returning. That said, I could switch to std::string. StringPiece doesn\u0027t really play well with Chrome anyways (since const std::string\u0026 is almost always used in function signatures elsewhere).",
+      "parentUuid": "8d808d5d_a0cc86ec",
+      "revId": "7cade29b5765b16949eb3b99bf79d1bbce0e439c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
