@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf67150f_d7ad5c6b",
+        "filename": "ash/public/cpp/app_list/app_list_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-24T19:15:01Z",
+      "side": 1,
+      "message": "Sorry, there\u0027s a mistake here. Will upload a next PS",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "eca0b1b81c830eced267db1e25c101c4a8769aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
