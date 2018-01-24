@@ -76,7 +76,7 @@ import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -167,7 +167,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
     private AppMenuButtonHelper mAppMenuButtonHelper;
 
-    private ViewAnchoredTextBubble mTextBubble;
+    private TextBubble mTextBubble;
 
     private HomepageStateListener mHomepageStateListener;
 
@@ -611,9 +611,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
         if (!tracker.shouldTriggerHelpUI(featureName)) return;
 
-        mTextBubble = new ViewAnchoredTextBubble(mToolbar.getContext(), getMenuButton(),
+        mTextBubble = new TextBubble(mToolbar.getContext(), getMenuButton(),
                 R.string.iph_download_page_for_offline_usage_text,
                 R.string.iph_download_page_for_offline_usage_accessibility_text);
+        mTextBubble.setAnchorView(getMenuButton());
         mTextBubble.setDismissOnTouchInteraction(true);
         mTextBubble.addOnDismissListener(new OnDismissListener() {
             @Override
