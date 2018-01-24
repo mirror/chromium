@@ -81,6 +81,9 @@ NET_EXPORT bool GetIsCaptivePortal();
 // Otherwise, returns empty string.
 NET_EXPORT_PRIVATE std::string GetWifiSSID();
 
+// Returns true if a VPN network is present.
+NET_EXPORT_PRIVATE bool GetIsVpnPresent();
+
 // Gets the DNS servers and puts them in |dns_servers|.
 // Only callable on Marshmallow and newer releases.
 NET_EXPORT_PRIVATE void GetDnsServers(std::vector<IPEndPoint>* dns_servers);

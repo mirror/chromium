@@ -184,6 +184,11 @@ ConfigParsePosixResult ReadDnsConfig(DnsConfig* dns_config) {
     return CONFIG_PARSE_POSIX_OK;
   }
 
+  if (net::android::GetIsVpnPresent()) {
+    dns_config->unhandled_options = true;
+    return CONFIG_PARSE_POSIX_UNHANDLED_OPTIONS;
+  }
+
   char property_value[PROP_VALUE_MAX];
   __system_property_get("net.dns1", property_value);
   std::string dns1_string = property_value;

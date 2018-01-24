@@ -230,6 +230,31 @@ class AndroidNetworkLibrary {
         return "";
     }
 
+    /**
+     * Returns true if any of the current networks is a VPN.
+     */
+    @CalledByNative
+    public static boolean getIsVpnPresent() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) ContextUtils.getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) return false;
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            NetworkInfo[] infos = connectivityManager.getAllNetworkInfo();
+            for (NetworkInfo info : infos) {
+                if (info.getType() == ConnectivityManager.TYPE_VPN) return true;
+            }
+        } else {
+            Network[] networks = connectivityManager.getAllNetworks();
+            for (Network network : networks) {
+                NetworkInfo info = connectivityManager.getNetworkInfo(network);
+                if (info.getType() == ConnectivityManager.TYPE_VPN) return true;
+            }
+        }
+        return false;
+    }
+
     public static class NetworkSecurityPolicyProxy {
         private static NetworkSecurityPolicyProxy sInstance = new NetworkSecurityPolicyProxy();
 

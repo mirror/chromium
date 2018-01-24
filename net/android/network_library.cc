@@ -123,6 +123,11 @@ std::string GetWifiSSID() {
           base::android::AttachCurrentThread()));
 }
 
+bool GetIsVpnPresent() {
+  return Java_AndroidNetworkLibrary_getIsVpnPresent(
+      base::android::AttachCurrentThread());
+}
+
 void GetDnsServers(std::vector<IPEndPoint>* dns_servers) {
   JNIEnv* env = AttachCurrentThread();
   std::vector<std::string> dns_servers_strings;
