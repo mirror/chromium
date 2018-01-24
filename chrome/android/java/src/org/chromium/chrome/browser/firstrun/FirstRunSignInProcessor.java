@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.firstrun;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
@@ -199,8 +198,8 @@ public final class FirstRunSignInProcessor {
     /**
      * Allows the user to sign-in if there are no pending FRE sign-in requests.
      */
-    public static void updateSigninManagerFirstRunCheckDone(Context context) {
-        SigninManager manager = SigninManager.get(context);
+    public static void updateSigninManagerFirstRunCheckDone() {
+        SigninManager manager = SigninManager.get();
         if (manager.isSignInAllowed()) return;
         if (!FirstRunStatus.getFirstRunFlowComplete()) return;
         if (!getFirstRunFlowSignInComplete()) return;

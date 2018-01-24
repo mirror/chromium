@@ -435,7 +435,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
         final Activity activity = getActivity();
         final DialogFragment clearDataProgressDialog = new ClearDataProgressDialog();
-        SigninManager.get(activity).signOut(null, new SigninManager.WipeDataHooks() {
+        SigninManager.get().signOut(null, new SigninManager.WipeDataHooks() {
             @Override
             public void preWipeData() {
                 clearDataProgressDialog.show(
