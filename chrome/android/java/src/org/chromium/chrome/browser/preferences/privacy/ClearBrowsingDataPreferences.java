@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.preferences.ClearBrowsingDataCheckBoxPreferen
 import org.chromium.chrome.browser.preferences.Pref;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.PreferenceUtils;
+import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.SpinnerPreference;
 import org.chromium.chrome.browser.preferences.privacy.BrowsingDataCounterBridge.BrowsingDataCounterCallback;
 import org.chromium.chrome.browser.widget.TintedDrawable;
@@ -49,9 +50,7 @@ import java.util.concurrent.TimeUnit;
  * from which to clear data.
  */
 public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
-        implements BrowsingDataBridge.ImportantSitesCallback,
-                   BrowsingDataBridge.OnClearBrowsingDataListener,
-                   BrowsingDataBridge.OtherFormsOfBrowsingHistoryListener,
+        implements BrowsingDataBridge.OnClearBrowsingDataListener,
                    Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
     /**
      * Represents a single item in the dialog.
@@ -260,20 +259,10 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
     }
 
     private OtherFormsOfHistoryDialogFragment mDialogAboutOtherFormsOfBrowsingHistory;
-    private boolean mIsDialogAboutOtherFormsOfBrowsingHistoryEnabled;
 
     private ProgressDialog mProgressDialog;
     private Item[] mItems;
 
-    // This is a constant on the C++ side.
-    private int mMaxImportantSites;
-    // This is the sorted list of important registerable domains. If null, then we haven't finished
-    // fetching them yet.
-    private String[] mSortedImportantDomains;
-    // These are the reasons the above domains were chosen as important.
-    private int[] mSortedImportantDomainReasons;
-    // These are full url examples of the domains above. We use them for favicons.
-    private String[] mSortedExampleOrigins;
     // This is the dialog we show to the user that lets them 'uncheck' (or exclude) the above
     // important domains from being cleared.
     private ConfirmImportantSitesDialogFragment mConfirmImportantSitesDialog;
@@ -403,7 +392,7 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
         // this preference screen.
         if (MultiWindowUtils.isActivityVisible(getActivity())
                 && getSelectedOptions().contains(DialogOption.CLEAR_HISTORY)
-                && mIsDialogAboutOtherFormsOfBrowsingHistoryEnabled
+                && getFetcher().isDialogAboutOtherFormsOfBrowsingHistoryEnabled()
                 && !OtherFormsOfHistoryDialogFragment.wasDialogShown()) {
             mDialogAboutOtherFormsOfBrowsingHistory = new OtherFormsOfHistoryDialogFragment();
             mDialogAboutOtherFormsOfBrowsingHistory.show(getActivity());
@@ -432,8 +421,9 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
                 && !selectedOptions.contains(DialogOption.CLEAR_COOKIES_AND_SITE_DATA)) {
             return false;
         }
-        boolean haveImportantSites =
-                mSortedImportantDomains != null && mSortedImportantDomains.length != 0;
+        ClearBrowsingDataFetcher fetcher = getFetcher();
+        boolean haveImportantSites = fetcher.getSortedImportantDomains() != null
+                && fetcher.getSortedImportantDomains().length != 0;
         RecordHistogram.recordBooleanHistogram(
                 "History.ClearBrowsingData.ImportantDialogShown", haveImportantSites);
         return haveImportantSites;
@@ -479,6 +469,13 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
     }
 
     /**
+     * Get the ClearBrowsingDataFetcher from the activity.
+     */
+    private ClearBrowsingDataFetcher getFetcher() {
+        return ((Preferences) getActivity()).getClearBrowsingDataFetcher();
+    }
+
+    /**
      * Disable the "Clear" button if none of the options are selected. Otherwise, enable it.
      */
     private void updateButtonState() {
@@ -499,9 +496,6 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
         super.onCreate(savedInstanceState);
 
         mDialogOpened = SystemClock.elapsedRealtime();
-        mMaxImportantSites = BrowsingDataBridge.getMaxImportantSites();
-        if (!OtherFormsOfHistoryDialogFragment.wasDialogShown())
-            BrowsingDataBridge.getInstance().requestInfoAboutOtherFormsOfBrowsingHistory(this);
         getActivity().setTitle(R.string.clear_browsing_data_title);
         PreferenceUtils.addPreferencesFromResource(this, getPreferenceXmlId());
         DialogOption[] options = getDialogOptions();
@@ -553,10 +547,6 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
         assert spinnerOptionIndex != -1;
         spinner.setOptions(spinnerOptions, spinnerOptionIndex);
         spinner.setOnPreferenceChangeListener(this);
-
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.IMPORTANT_SITES_IN_CBD)) {
-            BrowsingDataBridge.fetchImportantSites(this);
-        }
     }
 
     @Override
@@ -617,18 +607,13 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
      * This method shows the important sites dialog. After the dialog is shown, we correctly clear.
      */
     private void showImportantDialogThenClear() {
+        ClearBrowsingDataFetcher fetcher = getFetcher();
         mConfirmImportantSitesDialog = ConfirmImportantSitesDialogFragment.newInstance(
-                mSortedImportantDomains, mSortedImportantDomainReasons, mSortedExampleOrigins);
+                fetcher.getSortedImportantDomains(), fetcher.getSortedImportantDomainReasons(),
+                fetcher.getSortedExampleOrigins());
         mConfirmImportantSitesDialog.setTargetFragment(this, IMPORTANT_SITES_DIALOG_CODE);
         mConfirmImportantSitesDialog.show(
                 getFragmentManager(), ConfirmImportantSitesDialogFragment.FRAGMENT_TAG);
-    }
-
-    @Override
-    public void enableDialogAboutOtherFormsOfBrowsingHistory() {
-        if (getActivity() == null) return;
-
-        mIsDialogAboutOtherFormsOfBrowsingHistoryEnabled = true;
     }
 
     /**
@@ -639,19 +624,6 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
         return mDialogAboutOtherFormsOfBrowsingHistory;
     }
 
-    @Override
-    public void onImportantRegisterableDomainsReady(String[] domains, String[] exampleOrigins,
-            int[] importantReasons, boolean dialogDisabled) {
-        if (domains == null || dialogDisabled) return;
-        // mMaxImportantSites is a constant on the C++ side. While 0 is valid, use 1 as the minimum
-        // because histogram code assumes a min >= 1; the underflow bucket will record the 0s.
-        RecordHistogram.recordLinearCountHistogram("History.ClearBrowsingData.NumImportant",
-                domains.length, 1, mMaxImportantSites + 1, mMaxImportantSites + 1);
-        mSortedImportantDomains = Arrays.copyOf(domains, domains.length);
-        mSortedImportantDomainReasons = Arrays.copyOf(importantReasons, importantReasons.length);
-        mSortedExampleOrigins = Arrays.copyOf(exampleOrigins, exampleOrigins.length);
-    }
-
     /**
      * This is the callback for the important domain dialog. We should only clear if we get the
      * positive button response.
@@ -659,6 +631,7 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == IMPORTANT_SITES_DIALOG_CODE && resultCode == Activity.RESULT_OK) {
+            ClearBrowsingDataFetcher fetcher = getFetcher();
             // Deselected means that the user is excluding the domain from being cleared.
             String[] deselectedDomains = data.getStringArrayExtra(
                     ConfirmImportantSitesDialogFragment.DESELECTED_DOMAINS_TAG);
@@ -668,26 +641,26 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
                     ConfirmImportantSitesDialogFragment.IGNORED_DOMAINS_TAG);
             int[] ignoredDomainReasons = data.getIntArrayExtra(
                     ConfirmImportantSitesDialogFragment.IGNORED_DOMAIN_REASONS_TAG);
-            if (deselectedDomains != null && mSortedImportantDomains != null) {
+            if (deselectedDomains != null && fetcher.getSortedImportantDomains() != null) {
                 // mMaxImportantSites is a constant on the C++ side.
                 RecordHistogram.recordCustomCountHistogram(
                         "History.ClearBrowsingData.ImportantDeselectedNum",
-                        deselectedDomains.length, 1, mMaxImportantSites + 1,
-                        mMaxImportantSites + 1);
+                        deselectedDomains.length, 1, fetcher.getMaxImportantSites() + 1,
+                        fetcher.getMaxImportantSites() + 1);
                 RecordHistogram.recordCustomCountHistogram(
                         "History.ClearBrowsingData.ImportantIgnoredNum", ignoredDomains.length, 1,
-                        mMaxImportantSites + 1, mMaxImportantSites + 1);
+                        fetcher.getMaxImportantSites() + 1, fetcher.getMaxImportantSites() + 1);
                 // We put our max at 20 instead of 100 to reduce the number of empty buckets (as
                 // our maximum denominator is 5).
                 RecordHistogram.recordEnumeratedHistogram(
                         "History.ClearBrowsingData.ImportantDeselectedPercent",
                         deselectedDomains.length * IMPORTANT_SITES_PERCENTAGE_BUCKET_COUNT
-                                / mSortedImportantDomains.length,
+                                / fetcher.getSortedImportantDomains().length,
                         IMPORTANT_SITES_PERCENTAGE_BUCKET_COUNT + 1);
                 RecordHistogram.recordEnumeratedHistogram(
                         "History.ClearBrowsingData.ImportantIgnoredPercent",
                         ignoredDomains.length * IMPORTANT_SITES_PERCENTAGE_BUCKET_COUNT
-                                / mSortedImportantDomains.length,
+                                / fetcher.getSortedImportantDomains().length,
                         IMPORTANT_SITES_PERCENTAGE_BUCKET_COUNT + 1);
             }
             clearBrowsingData(getSelectedOptions(), deselectedDomains, deselectedDomainReasons,

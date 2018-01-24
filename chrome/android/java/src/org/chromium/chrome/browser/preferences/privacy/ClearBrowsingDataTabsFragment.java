@@ -59,6 +59,21 @@ public class ClearBrowsingDataTabsFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ClearBrowsingDataFetcher fetcher = new ClearBrowsingDataFetcher();
+        fetcher.fetchImportantSites();
+        fetcher.requestInfoAboutOtherFormsOfBrowsingHistory();
+        ((Preferences) context).setClearBrowsingDataFetcher(fetcher);
+    }
+
+    @Override
+    public void onDetach() {
+        ((Preferences) getActivity()).setClearBrowsingDataFetcher(null);
+        super.onDetach();
+    }
+
+    @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment.

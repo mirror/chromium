@@ -109,6 +109,15 @@ public class ClearBrowsingDataPreferencesTest {
         clearButton.callOnClick();
     }
 
+    private Preferences startPrefences() {
+        Preferences prefences = mActivityTestRule.startPreferences(
+                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        ClearBrowsingDataFetcher fetcher = new ClearBrowsingDataFetcher();
+        prefences.setClearBrowsingDataFetcher(fetcher);
+        ThreadUtils.runOnUiThreadBlocking(fetcher::fetchImportantSites);
+        return prefences;
+    }
+
     /**
      * Tests that web apps are cleared when the "cookies and site data" option is selected.
      */
@@ -123,9 +132,7 @@ public class ClearBrowsingDataPreferencesTest {
 
         setDataTypesToClear(Arrays.asList(DialogOption.CLEAR_COOKIES_AND_SITE_DATA));
         final ClearBrowsingDataPreferences preferences =
-                (ClearBrowsingDataPreferences) mActivityTestRule
-                        .startPreferences(ClearBrowsingDataPreferencesAdvanced.class.getName())
-                        .getFragmentForTest();
+                (ClearBrowsingDataPreferences) startPrefences().getFragmentForTest();
 
         ThreadUtils.runOnUiThreadBlocking(() -> clickClearButton(preferences));
         waitForProgressToComplete(preferences);
@@ -151,9 +158,7 @@ public class ClearBrowsingDataPreferencesTest {
 
         setDataTypesToClear(Arrays.asList(DialogOption.CLEAR_HISTORY));
         final ClearBrowsingDataPreferences preferences =
-                (ClearBrowsingDataPreferences) mActivityTestRule
-                        .startPreferences(ClearBrowsingDataPreferencesAdvanced.class.getName())
-                        .getFragmentForTest();
+                (ClearBrowsingDataPreferences) startPrefences().getFragmentForTest();
 
         ThreadUtils.runOnUiThreadBlocking(() -> clickClearButton(preferences));
         waitForProgressToComplete(preferences);
@@ -178,9 +183,7 @@ public class ClearBrowsingDataPreferencesTest {
         setDataTypesToClear(Arrays.asList(DialogOption.values()));
 
         final ClearBrowsingDataPreferences preferences =
-                (ClearBrowsingDataPreferences) mActivityTestRule
-                        .startPreferences(ClearBrowsingDataPreferencesAdvanced.class.getName())
-                        .getFragmentForTest();
+                (ClearBrowsingDataPreferences) startPrefences().getFragmentForTest();
 
         ThreadUtils.runOnUiThreadBlocking(() -> {
             PreferenceScreen screen = preferences.getPreferenceScreen();
@@ -222,7 +225,8 @@ public class ClearBrowsingDataPreferencesTest {
             PreferenceScreen screen = fragment.getPreferenceScreen();
 
             // Enable the dialog and click the "Clear" button.
-            fragment.enableDialogAboutOtherFormsOfBrowsingHistory();
+            mPreferences.getClearBrowsingDataFetcher()
+                    .enableDialogAboutOtherFormsOfBrowsingHistory();
             clickClearButton(fragment);
         }
     }
@@ -267,8 +271,7 @@ public class ClearBrowsingDataPreferencesTest {
         // History is not selected. We still need to select some other datatype, otherwise the
         // "Clear" button won't be enabled.
         setDataTypesToClear(Arrays.asList(DialogOption.CLEAR_CACHE));
-        final Preferences preferences1 = mActivityTestRule.startPreferences(
-                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        final Preferences preferences1 = startPrefences();
         ThreadUtils.runOnUiThreadBlocking(
                 new OpenPreferencesEnableDialogAndClickClearRunnable(preferences1));
 
@@ -278,8 +281,7 @@ public class ClearBrowsingDataPreferencesTest {
 
         // Reopen Clear Browsing Data preferences, this time with history selected for clearing.
         setDataTypesToClear(Arrays.asList(DialogOption.CLEAR_HISTORY));
-        final Preferences preferences2 = mActivityTestRule.startPreferences(
-                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        final Preferences preferences2 = startPrefences();
         ThreadUtils.runOnUiThreadBlocking(
                 new OpenPreferencesEnableDialogAndClickClearRunnable(preferences2));
 
@@ -308,8 +310,7 @@ public class ClearBrowsingDataPreferencesTest {
 
         // Reopen Clear Browsing Data preferences and clear history once again.
         setDataTypesToClear(Arrays.asList(DialogOption.CLEAR_HISTORY));
-        final Preferences preferences3 = mActivityTestRule.startPreferences(
-                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        final Preferences preferences3 = startPrefences();
         ThreadUtils.runOnUiThreadBlocking(
                 new OpenPreferencesEnableDialogAndClickClearRunnable(preferences3));
 
@@ -398,9 +399,7 @@ public class ClearBrowsingDataPreferencesTest {
                 "true", mActivityTestRule.runJavaScriptCodeInCurrentTab("hasAllStorage()"));
 
         ClearBrowsingDataPreferences preferences =
-                (ClearBrowsingDataPreferences) mActivityTestRule
-                        .startPreferences(ClearBrowsingDataPreferencesAdvanced.class.getName())
-                        .getFragmentForTest();
+                (ClearBrowsingDataPreferences) startPrefences().getFragmentForTest();
 
         // Clear in root preference.
         ThreadUtils.runOnUiThreadBlocking(getPressClearRunnable(preferences));
@@ -447,8 +446,7 @@ public class ClearBrowsingDataPreferencesTest {
         Assert.assertEquals(
                 "true", mActivityTestRule.runJavaScriptCodeInCurrentTab("hasAllStorage()"));
 
-        Preferences preferences = mActivityTestRule.startPreferences(
-                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        Preferences preferences = startPrefences();
         ClearBrowsingDataPreferences fragment =
                 (ClearBrowsingDataPreferences) preferences.getFragmentForTest();
         ThreadUtils.runOnUiThreadBlocking(getPressClearRunnable(fragment));
@@ -493,8 +491,7 @@ public class ClearBrowsingDataPreferencesTest {
         Assert.assertEquals(
                 "true", mActivityTestRule.runJavaScriptCodeInCurrentTab("hasAllStorage()"));
 
-        final Preferences preferences = mActivityTestRule.startPreferences(
-                ClearBrowsingDataPreferencesAdvanced.class.getName());
+        final Preferences preferences = startPrefences();
         final ClearBrowsingDataPreferences fragment =
                 (ClearBrowsingDataPreferences) preferences.getFragmentForTest();
 

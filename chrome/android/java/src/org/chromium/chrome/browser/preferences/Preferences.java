@@ -31,6 +31,7 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
+import org.chromium.chrome.browser.preferences.privacy.ClearBrowsingDataFetcher;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.profiles.ProfileManagerUtils;
 
@@ -55,6 +56,8 @@ public class Preferences extends AppCompatActivity implements
 
     /** Whether this activity has been created for the first time but not yet resumed. */
     private boolean mIsNewlyCreated;
+
+    private ClearBrowsingDataFetcher mClearBrowsingDataFetcher;
 
     private static boolean sActivityNotExportedChecked;
 
@@ -238,5 +241,13 @@ public class Preferences extends AppCompatActivity implements
             // Something terribly wrong has happened.
             throw new RuntimeException(ex);
         }
+    }
+
+    public ClearBrowsingDataFetcher getClearBrowsingDataFetcher() {
+        return mClearBrowsingDataFetcher;
+    }
+
+    public void setClearBrowsingDataFetcher(ClearBrowsingDataFetcher clearBrowsingDataFetcher) {
+        mClearBrowsingDataFetcher = clearBrowsingDataFetcher;
     }
 }
