@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <script>
-let device;
+let device, gatt;
 
 function requestDeviceWithOptionsAndConnect(options) {
   return navigator.bluetooth.requestDevice(options)
@@ -25,6 +25,15 @@ window.onmessage = messageEvent => {
           .catch(err => {
             parent.postMessage(`FAIL: ${err}`, '*');
           });
+      break;
+    case 'GetService':
+      if (typeof gatt === 'undefined') {
+        parent.postMessage('FAIL: no GATT server', '*');
+        break;
+      }
+      gatt.getPrimaryService(messageEvent.data.options)
+          .then(() => parent.postMessage('ServiceReceived', '*'))
+          .catch(err => parent.postMessage(`FAIL: ${err}`, '*'));
       break;
     default:
       parent.postMessage(`FAIL: Bad message type: ${messageEvent.data.type}`,
