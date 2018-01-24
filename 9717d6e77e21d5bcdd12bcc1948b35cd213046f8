@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ae333a_f8dce70d",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-24T17:34:50Z",
+      "side": 1,
+      "message": "What happens in the meantime while there\u0027s no bottom toolbar?",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a29ecb_a415e128",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-24T17:34:50Z",
+      "side": 1,
+      "message": "Is this comment needed?",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
