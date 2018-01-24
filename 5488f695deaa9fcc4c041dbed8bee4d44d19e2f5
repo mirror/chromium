@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0de62461_235ca123",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T11:35:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9392b1d8_c1083ba5",
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9211bd2a_5124e30d",
         "filename": "components/exo/wayland/clients/rects.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6320a7ad_860b5888",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T11:35:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9211bd2a_5124e30d",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dfa34c73_7b7cd469",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T11:35:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4873af87_33da75c8",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246700cc_f2cd9ce2",
         "filename": "components/exo/wayland/clients/rects.cc",
         "patchSetId": 8
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d02ed34b_a078eeab",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T11:35:12Z",
+      "side": 1,
+      "message": "Ack. This was a check (along with clearing the timestamp later) to ensure the server implementation is correct and we don\u0027t end up using a stale timestamp, but it\u0027s fine to leave it out.",
+      "parentUuid": "246700cc_f2cd9ce2",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfb2609_009ee5d5",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 8
@@ -108,6 +198,30 @@
       "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a91096_c05956f6",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T11:35:12Z",
+      "side": 1,
+      "message": "I didn\u0027t make it virtual since the dtor is protected and no objects can be deleted through a pointer of WaylandInputDelegate (and also WaylandInputDelegate objects don\u0027t delete themselves), so no polymorphism is involved for destruction at this level.\n\nThat being said, it seems to be the pattern here (e.g. the same reasoning applies to Observer which we changed to have a protected virtual destructor), so I have changed it to virtual for consistency in patchset 9.",
+      "parentUuid": "cbfb2609_009ee5d5",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 23
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
