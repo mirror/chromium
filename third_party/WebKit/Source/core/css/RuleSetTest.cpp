@@ -240,6 +240,98 @@ TEST(RuleSetTest, findBestRuleSetAndAdd_PlaceholderPseudo) {
   ASSERT_EQ(2u, rules->size());
 }
 
+TEST(RuleSetTest, findBestRuleSetAndAdd_PseudoMatches) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(".a :matches(.b+.c, .d>:matches(.e, .f)) { }");
+  RuleSet& rule_set = helper.GetRuleSet();
+  {
+    AtomicString str("c");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+  {
+    AtomicString str("e");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+  {
+    AtomicString str("f");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+}
+
+TEST(RuleSetTest, findBestRuleSetAndAdd_TooManyPseudoMatches) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(
+      ".a :matches(.b, :matches(.c))+:matches(.d, "
+      ":matches(.e)):matches(.f)>:matches(.g)>:matches(.h):matches(.i)~:"
+      "matches(.j, :matches(.k, :matches(.l))) { }",
+      true);
+  RuleSet& rule_set = helper.GetRuleSet();
+
+  {
+    AtomicString str("b");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("c");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("d");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("e");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("f");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("g");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("h");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("i");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("j");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("k");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+  {
+    AtomicString str("l");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(0u, rules->size());
+  }
+}
+
 TEST(RuleSetTest, SelectorIndexLimit) {
   StringBuilder builder;
 

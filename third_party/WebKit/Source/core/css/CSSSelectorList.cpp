@@ -27,6 +27,7 @@
 #include "core/css/CSSSelectorList.h"
 
 #include <memory>
+#include <vector>
 #include "core/css/parser/CSSParserSelector.h"
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -53,6 +54,163 @@ CSSSelectorList CSSSelectorList::Copy() const {
     new (&list.selector_array_[i]) CSSSelector(selector_array_[i]);
 
   return list;
+}
+
+CSSSelectorList CSSSelectorList::Concatenate(const CSSSelectorList& original,
+                                             const CSSSelectorList& expanded) {
+  unsigned original_length = original.ComputeLength();
+  unsigned expanded_length = expanded.ComputeLength();
+  unsigned total_length = original_length + expanded_length;
+
+  CSSSelectorList list;
+  list.selector_array_ = reinterpret_cast<CSSSelector*>(
+      WTF::Partitions::FastMalloc(WTF::Partitions::ComputeAllocationSize(
+                                      total_length, sizeof(CSSSelector)),
+                                  kCSSSelectorTypeName));
+
+  unsigned list_index = 0;
+  for (unsigned i = 0; i < original_length; ++i) {
+    new (&list.selector_array_[list_index])
+        CSSSelector(original.selector_array_[i]);
+    ++list_index;
+  }
+  DCHECK(list.selector_array_[list_index - 1].IsLastInOriginalList());
+  DCHECK(list.selector_array_[list_index - 1].IsLastInSelectorList());
+  list.selector_array_[list_index - 1].SetNotLastInSelectorList();
+  for (unsigned i = 0; i < expanded_length; ++i) {
+    new (&list.selector_array_[list_index])
+        CSSSelector(expanded.selector_array_[i]);
+    ++list_index;
+  }
+  DCHECK(list.selector_array_[list_index - 1].IsLastInOriginalList());
+  DCHECK(list.selector_array_[list_index - 1].IsLastInSelectorList());
+  return list;
+}
+
+std::vector<const CSSSelector*> SelectorBoundaries(
+    const CSSSelectorList& list) {
+  std::vector<const CSSSelector*> result;
+  for (const CSSSelector* s = list.First(); s; s = list.Next(*s)) {
+    result.push_back(s);
+  }
+  result.push_back(list.First() + list.ComputeLength());
+  return result;
+}
+
+void AddToList(CSSSelector*& destination,
+               const CSSSelector* begin,
+               const CSSSelector* end) {
+  for (const CSSSelector* current = begin; current != end; ++current) {
+    new (destination) CSSSelector(*current);
+    destination->SetNotLastInSelectorList();
+    destination->SetNotLastInOriginalList();
+    destination++;
+  }
+}
+
+void AddToList(CSSSelector*& destination,
+               const CSSSelector* begin,
+               const CSSSelector* end,
+               CSSSelector::RelationType relation,
+               bool IsLastInTagHistory) {
+  for (const CSSSelector* current = begin; current != end; ++current) {
+    new (destination) CSSSelector(*current);
+    DCHECK_EQ(current + 1 == end, current->IsLastInTagHistory());
+    if (current->IsLastInTagHistory()) {
+      destination->SetRelation(relation);
+      if (!IsLastInTagHistory)
+        destination->SetNotLastInTagHistory();
+    }
+    destination->SetNotLastInSelectorList();
+    destination->SetNotLastInOriginalList();
+    destination++;
+  }
+}
+
+CSSSelectorList CSSSelectorList::ExpandedFirstMatches() const {
+  unsigned original_length = this->ComputeLength();
+  std::vector<const CSSSelector*> matches_boundaries =
+      SelectorBoundaries(*this);
+
+  size_t i = 0;
+  while (!matches_boundaries[i]->HasPseudoMatches()) {
+    ++i;
+  }
+  const CSSSelector* selector_with_matches_begin = matches_boundaries[i];
+  const CSSSelector* selector_with_matches_end = matches_boundaries[i + 1];
+  size_t selector_with_matches_length =
+      selector_with_matches_end - selector_with_matches_begin;
+
+  const CSSSelector* simple_matches = selector_with_matches_begin;
+  while (simple_matches->GetPseudoType() != CSSSelector::kPseudoMatches) {
+    simple_matches = simple_matches->TagHistory();
+  }
+
+  unsigned inner_matches_length =
+      simple_matches->SelectorList()->ComputeLength();
+  std::vector<const CSSSelector*> matches_arg_boundaries =
+      SelectorBoundaries(*simple_matches->SelectorList());
+
+  size_t num_matches_args = matches_arg_boundaries.size() - 1;
+  unsigned other_selectors_length =
+      original_length - selector_with_matches_length;
+
+  unsigned expanded_matches_length =
+      (selector_with_matches_length - 1) * num_matches_args +
+      inner_matches_length + other_selectors_length;
+
+  CSSSelectorList list;
+  list.selector_array_ =
+      reinterpret_cast<CSSSelector*>(WTF::Partitions::FastMalloc(
+          WTF::Partitions::ComputeAllocationSize(expanded_matches_length,
+                                                 sizeof(CSSSelector)),
+          kCSSSelectorTypeName));
+
+  CSSSelector* destination = list.selector_array_;
+
+  AddToList(destination, matches_boundaries[0], selector_with_matches_begin);
+  for (size_t i = 0; i < num_matches_args; ++i) {
+    AddToList(destination, selector_with_matches_begin, simple_matches);
+    AddToList(destination, matches_arg_boundaries[i],
+              matches_arg_boundaries[i + 1], simple_matches->Relation(),
+              simple_matches->IsLastInTagHistory());
+    AddToList(destination, simple_matches + 1, selector_with_matches_end);
+  }
+  AddToList(destination, selector_with_matches_end, matches_boundaries.back());
+
+  DCHECK(destination == list.selector_array_ + expanded_matches_length);
+
+  list.selector_array_[expanded_matches_length - 1].SetLastInOriginalList();
+  list.selector_array_[expanded_matches_length - 1].SetLastInSelectorList();
+
+  return list;
+}
+
+CSSSelectorList CSSSelectorList::TransformedList() {
+  DCHECK_GT(this->ComputeLength(), 0u);
+  DCHECK(
+      this->selector_array_[this->ComputeLength() - 1].IsLastInOriginalList());
+  DCHECK(this->HasPseudoMatches());
+
+  for (const CSSSelector* s = this->First(); s; s = this->NextInFullList(*s)) {
+    if (s->NumberOfPseudoMatches() > 10) {
+      return CSSSelectorList();
+    }
+  }
+  // Append the expanded form of matches to the original selector list
+  CSSSelectorList transformed = this->Copy();
+  do {
+    transformed = transformed.ExpandedFirstMatches();
+  } while (transformed.HasPseudoMatches());
+  return CSSSelectorList::Concatenate(*this, transformed);
+}
+
+bool CSSSelectorList::HasPseudoMatches() const {
+  for (const CSSSelector* s = First(); s; s = Next(*s)) {
+    if (s->HasPseudoMatches())
+      return true;
+  }
+  return false;
 }
 
 CSSSelectorList CSSSelectorList::AdoptSelectorVector(
@@ -91,9 +249,21 @@ CSSSelectorList CSSSelectorList::AdoptSelectorVector(
   }
   DCHECK_EQ(flattened_size, array_index);
   list.selector_array_[array_index - 1].SetLastInSelectorList();
+  list.selector_array_[array_index - 1].SetLastInOriginalList();
   selector_vector.clear();
 
   return list;
+}
+
+const CSSSelector* CSSSelectorList::FirstInMatchesTransform() const {
+  const CSSSelector* s = this->First();
+  if (!s)
+    return nullptr;
+  while (this->Next(*s))
+    s = this->Next(*s);
+  if (this->NextInFullList(*s))
+    return this->NextInFullList(*s);
+  return this->First();
 }
 
 unsigned CSSSelectorList::ComputeLength() const {
