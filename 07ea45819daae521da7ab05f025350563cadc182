@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a3144aa_52c97084",
+        "filename": "ui/compositor/dip_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-24T21:10:33Z",
+      "side": 1,
+      "message": "Actually, please add a comment as to why this value was chosen.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "07ea45819daae521da7ab05f025350563cadc182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
