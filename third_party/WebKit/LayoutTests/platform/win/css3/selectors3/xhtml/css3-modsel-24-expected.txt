@@ -12,8 +12,10 @@ layer at (0,0) size 800x76
           text run at (259,1) width 4: " "
         LayoutBR {br} at (0,0) size 0x0
         LayoutTextControl {input} at (0,22) size 285x22 [color=#545454] [bgcolor=#00FF00] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {div} at (2,3) size 281x16
+            LayoutBlockFlow {div} at (0,0) size 281x16
         LayoutText {#text} at (0,0) size 0x0
 layer at (10,41) size 281x16
-  LayoutBlockFlow {div} at (2,3) size 281x16
+  LayoutBlockFlow {div} at (0,0) size 281x16
     LayoutText {#text} at (0,0) size 256x16
       text run at (0,0) width 256: "a text area (disabled) with green background"

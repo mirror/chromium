@@ -17,6 +17,8 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (156,12) size 4x20
           text run at (156,12) width 4: " "
         LayoutTextControl {INPUT} at (160,0) size 154x45 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,14.50) size 150x16
+            LayoutBlockFlow {DIV} at (0,0) size 150x16
         LayoutText {#text} at (0,0) size 0x0
       LayoutBlockFlow {P} at (0,117) size 784x20
         LayoutTextControl {INPUT} at (0,2) size 156x16 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
@@ -25,6 +27,8 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (156,0) size 4x19
           text run at (156,0) width 4: " "
         LayoutTextControl {INPUT} at (160,2) size 154x16 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,0) size 150x16
+            LayoutBlockFlow {DIV} at (0,0) size 150x16
         LayoutText {#text} at (0,0) size 0x0
       LayoutBlockFlow {P} at (0,153) size 784x20
         LayoutTextControl {INPUT} at (0,4) size 156x12 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
@@ -33,13 +37,15 @@ layer at (0,0) size 800x600
         LayoutText {#text} at (156,0) size 4x19
           text run at (156,0) width 4: " "
         LayoutTextControl {INPUT} at (160,4) size 154x12 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (2,-2) size 150x16
+            LayoutBlockFlow {DIV} at (0,0) size 150x16
         LayoutText {#text} at (0,0) size 0x0
 layer at (11,79) size 137x16
   LayoutBlockFlow {DIV} at (0,0) size 137x16
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (170,79) size 150x16
-  LayoutBlockFlow {DIV} at (2,14.50) size 150x16
+  LayoutBlockFlow {DIV} at (0,0) size 150x16
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (11,127) size 137x16 backgroundClip at (11,129) size 137x12 clip at (11,129) size 137x12
@@ -47,7 +53,7 @@ layer at (11,127) size 137x16 backgroundClip at (11,129) size 137x12 clip at (11
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (170,127) size 150x16 backgroundClip at (170,129) size 150x12 clip at (170,129) size 150x12
-  LayoutBlockFlow {DIV} at (2,0) size 150x16
+  LayoutBlockFlow {DIV} at (0,0) size 150x16
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (11,163) size 137x16 backgroundClip at (11,167) size 137x8 clip at (11,167) size 137x8
@@ -55,7 +61,7 @@ layer at (11,163) size 137x16 backgroundClip at (11,167) size 137x8 clip at (11,
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (170,163) size 150x16 backgroundClip at (170,167) size 150x8 clip at (170,167) size 150x8
-  LayoutBlockFlow {DIV} at (2,-2) size 150x16
+  LayoutBlockFlow {DIV} at (0,0) size 150x16
     LayoutText {#text} at (0,0) size 25x16
       text run at (0,0) width 25: "Text"
 layer at (149,82) size 9x9 transparent

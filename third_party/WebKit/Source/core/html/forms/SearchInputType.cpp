@@ -69,10 +69,6 @@ const AtomicString& SearchInputType::FormControlType() const {
   return InputTypeNames::search;
 }
 
-bool SearchInputType::NeedsContainer() const {
-  return true;
-}
-
 void SearchInputType::CreateShadowSubtree() {
   TextFieldInputType::CreateShadowSubtree();
   Element* container = ContainerElement();

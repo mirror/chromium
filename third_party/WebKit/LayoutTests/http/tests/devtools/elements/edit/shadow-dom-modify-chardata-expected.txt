@@ -6,7 +6,11 @@ Running: testDumpInitial
 - <div id="container">
     - <input type="text" id="input1">
         - #shadow-root (user-agent)
-              <div></div>
+            - <div id="text-field-container" pseudo="-webkit-textfield-decoration-container">
+                - <div id="editing-view-port">
+                      <div></div>
+                  </div>
+              </div>
       </input>
   </div>
 
@@ -15,7 +19,11 @@ Running: testAppend
 - <div id="container">
     - <input type="text" id="input1">
         - #shadow-root (user-agent)
-              <div>Bar</div>
+            - <div id="text-field-container" pseudo="-webkit-textfield-decoration-container">
+                - <div id="editing-view-port">
+                      <div>Bar</div>
+                  </div>
+              </div>
       </input>
   </div>
 

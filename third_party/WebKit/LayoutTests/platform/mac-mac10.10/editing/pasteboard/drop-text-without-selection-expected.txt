@@ -25,6 +25,8 @@ layer at (0,0) size 800x600
           text run at (486,0) width 181: "no text is currently selected."
       LayoutBlockFlow (anonymous) at (0,96) size 784x19
         LayoutTextControl {INPUT} at (0,0) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 125x13
+            LayoutBlockFlow {DIV} at (0,0) size 125x13
         LayoutText {#text} at (131,0) size 4x18
           text run at (131,0) width 4: " "
         LayoutInline {A} at (0,0) size 166x18 [color=#0000EE]
@@ -34,8 +36,8 @@ layer at (0,0) size 800x600
 layer at (8,94) size 784x2 clip at (0,0) size 0x0
   LayoutBlockFlow {HR} at (0,86) size 784x2 [border: (1px inset #EEEEEE)]
 layer at (11,107) size 125x13
-  LayoutBlockFlow {DIV} at (3,3) size 125x13
+  LayoutBlockFlow {DIV} at (0,0) size 125x13
     LayoutText {#text} at (0,0) size 106x13
       text run at (0,0) width 106: "http://www.ibm.com/"
-selection start: position 0 of child 0 {#text} of child 0 {DIV} of {#document-fragment} of child 7 {INPUT} of body
-selection end:   position 19 of child 0 {#text} of child 0 {DIV} of {#document-fragment} of child 7 {INPUT} of body
+selection start: position 0 of child 0 {#text} of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 7 {INPUT} of body
+selection end:   position 19 of child 0 {#text} of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 7 {INPUT} of body

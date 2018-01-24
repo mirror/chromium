@@ -25,16 +25,22 @@ TEST_F(RenderedPositionTest, MAYBE_IsVisible) {
       " style='will-change: transform; font-size:40pt;'/>");
 
   Element* target = GetDocument().getElementById("target");
-  Position visible_position(
-      target->GetLayoutObject()->SlowFirstChild()->SlowFirstChild()->GetNode(),
-      0);
+  Position visible_position(target->GetLayoutObject()
+                                ->SlowFirstChild()
+                                ->SlowFirstChild()
+                                ->SlowFirstChild()
+                                ->GetNode(),
+                            0);
   RenderedPosition rendered_visible_position(
       CreateVisiblePosition(visible_position));
   EXPECT_TRUE(rendered_visible_position.IsVisible(true));
 
-  Position hidden_position(
-      target->GetLayoutObject()->SlowFirstChild()->SlowFirstChild()->GetNode(),
-      32);
+  Position hidden_position(target->GetLayoutObject()
+                               ->SlowFirstChild()
+                               ->SlowFirstChild()
+                               ->SlowFirstChild()
+                               ->GetNode(),
+                           32);
   RenderedPosition rendered_hidden_position(
       CreateVisiblePosition(hidden_position));
   EXPECT_FALSE(rendered_hidden_position.IsVisible(true));

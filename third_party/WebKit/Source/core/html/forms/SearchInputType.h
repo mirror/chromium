@@ -45,7 +45,6 @@ class SearchInputType final : public BaseTextInputType {
   void CountUsage() override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) const override;
   const AtomicString& FormControlType() const override;
-  bool NeedsContainer() const override;
   void CreateShadowSubtree() override;
   void HandleKeydownEvent(KeyboardEvent*) override;
   void DidSetValueByUserEdit() override;

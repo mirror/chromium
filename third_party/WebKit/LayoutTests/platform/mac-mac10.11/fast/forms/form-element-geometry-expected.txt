@@ -89,6 +89,8 @@ layer at (0,0) size 800x617 backgroundClip at (0,0) size 800x600 clip at (0,0) s
             LayoutTableCell {TD} at (2,2) size 77x25 [r=0 c=0 rs=1 cs=1]
               LayoutBlockFlow {DIV} at (1,1) size 75x23 [border: (2px solid #0000FF)]
                 LayoutTextControl {INPUT} at (2,2) size 71x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+                  LayoutFlexibleBox {DIV} at (3,3) size 65x13
+                    LayoutBlockFlow {DIV} at (0,0) size 65x13
             LayoutTableCell {TD} at (81,2) size 39x64.75 [r=0 c=1 rs=1 cs=1]
               LayoutBlockFlow {DIV} at (1,1) size 37x62.75 [border: (2px solid #0000FF)]
             LayoutTableCell {TD} at (122,2) size 242x24 [r=0 c=2 rs=1 cs=1]
@@ -169,6 +171,8 @@ layer at (0,0) size 800x617 backgroundClip at (0,0) size 800x600 clip at (0,0) s
         LayoutText {#text} at (0,18) size 28x18
           text run at (0,18) width 28: "text "
         LayoutTextControl {INPUT} at (27.98,18) size 71x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+          LayoutFlexibleBox {DIV} at (3,3) size 65x13
+            LayoutBlockFlow {DIV} at (0,0) size 65x13
         LayoutText {#text} at (98,18) size 5x18
           text run at (98,18) width 5: " "
         LayoutFileUploadControl {INPUT} at (102.98,19) size 236x18 "No file chosen"
@@ -241,7 +245,7 @@ layer at (0,0) size 800x617 backgroundClip at (0,0) size 800x600 clip at (0,0) s
                 text run at (8,2) width 47: "xxxxxxxx"
           LayoutText {#text} at (0,0) size 0x0
 layer at (16,244) size 65x13
-  LayoutBlockFlow {DIV} at (3,3) size 65x13
+  LayoutBlockFlow {DIV} at (0,0) size 65x13
     LayoutText {#text} at (0,0) size 46x13
       text run at (0,0) width 46: "text field"
 layer at (92,241) size 32x59 clip at (93,242) size 19x57 scrollHeight 71
@@ -267,7 +271,7 @@ layer at (377,241) size 141x32 clip at (378,242) size 139x30
       LayoutText {#text} at (0,0) size 43x13
         text run at (0,0) width 43: "textarea"
 layer at (39,460) size 65x13
-  LayoutBlockFlow {DIV} at (3,3) size 65x13
+  LayoutBlockFlow {DIV} at (0,0) size 65x13
     LayoutText {#text} at (0,0) size 46x13
       text run at (0,0) width 46: "text field"
 layer at (351,439) size 141x32 clip at (352,440) size 139x30

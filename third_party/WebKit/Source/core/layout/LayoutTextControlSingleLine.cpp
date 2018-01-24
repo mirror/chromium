@@ -107,20 +107,10 @@ void LayoutTextControlSingleLine::UpdateLayout() {
 
   LayoutBox* inner_editor_layout_object = InnerEditorElement()->GetLayoutBox();
   Element* container = ContainerElement();
-  LayoutBox* container_layout_object =
-      container ? container->GetLayoutBox() : nullptr;
+  LayoutBox* container_layout_object = container->GetLayoutBox();
   // Center the child block in the block progression direction (vertical
   // centering for horizontal text fields).
-  if (!container && inner_editor_layout_object &&
-      inner_editor_layout_object->Size().Height() != ContentLogicalHeight()) {
-    LayoutUnit logical_height_diff =
-        inner_editor_layout_object->LogicalHeight() - ContentLogicalHeight();
-    inner_editor_layout_object->SetLogicalTop(
-        inner_editor_layout_object->LogicalTop() -
-        (logical_height_diff / 2 + LayoutMod(logical_height_diff, 2)));
-  } else if (container && container_layout_object &&
-             container_layout_object->Size().Height() !=
-                 ContentLogicalHeight()) {
+  if (container_layout_object->Size().Height() != ContentLogicalHeight()) {
     LayoutUnit logical_height_diff =
         container_layout_object->LogicalHeight() - ContentLogicalHeight();
     container_layout_object->SetLogicalTop(
@@ -146,8 +136,7 @@ void LayoutTextControlSingleLine::UpdateLayout() {
     if (EditingViewPortElement() && EditingViewPortElement()->GetLayoutBox())
       text_offset +=
           ToLayoutSize(EditingViewPortElement()->GetLayoutBox()->Location());
-    if (container_layout_object)
-      text_offset += ToLayoutSize(container_layout_object->Location());
+    text_offset += ToLayoutSize(container_layout_object->Location());
     if (inner_editor_layout_object) {
       // We use inlineBlockBaseline() for innerEditor because it has no
       // inline boxes when we show the placeholder.
@@ -185,10 +174,9 @@ bool LayoutTextControlSingleLine::NodeAtPoint(
   //  - we hit regions not in any decoration buttons.
   Element* container = ContainerElement();
   if (result.InnerNode()->IsDescendantOf(InnerEditorElement()) ||
-      result.InnerNode() == GetNode() ||
-      (container && container == result.InnerNode())) {
+      result.InnerNode() == GetNode() || (container == result.InnerNode())) {
     LayoutPoint point_in_parent = location_in_container.Point();
-    if (container && EditingViewPortElement()) {
+    if (EditingViewPortElement()) {
       if (EditingViewPortElement()->GetLayoutBox())
         point_in_parent -=
             ToLayoutSize(EditingViewPortElement()->GetLayoutBox()->Location());

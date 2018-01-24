@@ -21,6 +21,12 @@ Tests basic dump-as-markup functionality.
 |       this.value=""
 |       <shadow:root>
 |         <div>
+|           id="text-field-container"
+|           pseudo="-webkit-textfield-decoration-container"
+|           shadow:pseudoId="-webkit-textfield-decoration-container"
+|           <div>
+|             id="editing-view-port"
+|             <div>
 |     "
 "
 |     <div>

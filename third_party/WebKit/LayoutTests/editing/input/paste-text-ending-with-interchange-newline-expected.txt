@@ -1,4 +1,10 @@
 This tests pasting a text with an interchange new line at the end. WebKit shouldn't insert a new line.
 |   <shadow:root>
 |     <div>
-|       "abc def"
+|       id="text-field-container"
+|       pseudo="-webkit-textfield-decoration-container"
+|       shadow:pseudoId="-webkit-textfield-decoration-container"
+|       <div>
+|         id="editing-view-port"
+|         <div>
+|           "abc def"

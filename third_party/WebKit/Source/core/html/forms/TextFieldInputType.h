@@ -69,7 +69,6 @@ class TextFieldInputType : public InputType,
   void UpdateView() override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) const override;
 
-  virtual bool NeedsContainer() const { return false; }
   virtual String ConvertFromVisibleValue(const String&) const;
   virtual void DidSetValueByUserEdit();
 

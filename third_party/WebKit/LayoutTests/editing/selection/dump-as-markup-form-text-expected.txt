@@ -13,7 +13,13 @@ Tests dump-as-markup for input and textarea forms.
 |       this.value="replaced"
 |       <shadow:root>
 |         <div>
-|           "replaced"
+|           id="text-field-container"
+|           pseudo="-webkit-textfield-decoration-container"
+|           shadow:pseudoId="-webkit-textfield-decoration-container"
+|           <div>
+|             id="editing-view-port"
+|             <div>
+|               "replaced"
 |     "
 "
 |     <textarea>
