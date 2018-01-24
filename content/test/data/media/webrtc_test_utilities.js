@@ -6,8 +6,8 @@
 const VIDEO_TAG_WIDTH = 320;
 const VIDEO_TAG_HEIGHT = 240;
 
-// Fake video capture background green is of value 135.
-const COLOR_BACKGROUND_GREEN = 135;
+// Fake video capture background green is of value 77.
+const COLOR_BACKGROUND_GREEN = 77;
 
 var gPendingTimeout;
 

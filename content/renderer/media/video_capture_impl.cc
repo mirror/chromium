@@ -325,6 +325,7 @@ void VideoCaptureImpl::OnBufferReady(int32_t buffer_id,
     GetVideoCaptureHost()->ReleaseBuffer(device_id_, buffer_id, -1.0);
     return;
   }
+  frame->set_color_space(gfx::ColorSpace::CreateREC709());
 
   frame->AddDestructionObserver(base::BindOnce(
       &VideoCaptureImpl::DidFinishConsumingFrame, frame->metadata(),

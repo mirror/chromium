@@ -401,6 +401,7 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
       base::Bind(
           &RenderWidgetHostViewBrowserTest::FinishCopyFromSurfaceToVideoFrame,
           base::Unretained(this), run_loop.QuitClosure()));
+  dest->set_color_space(gfx::ColorSpace::CreateREC601());
   run_loop.Run();
 
   EXPECT_EQ(1, callback_invoke_count());
@@ -444,11 +445,13 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest, CopyTwice) {
       base::Bind(&RenderWidgetHostViewBrowserTest::FrameDelivered,
                  base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
                  closure, base::TimeTicks::Now()));
+  first_output->set_color_space(gfx::ColorSpace::CreateREC601());
   view->CopyFromSurfaceToVideoFrame(
       gfx::Rect(), second_output,
       base::Bind(&RenderWidgetHostViewBrowserTest::FrameDelivered,
                  base::Unretained(this), base::ThreadTaskRunnerHandle::Get(),
                  closure, base::TimeTicks::Now()));
+  second_output->set_color_space(gfx::ColorSpace::CreateREC601());
   run_loop.Run();
 
   EXPECT_EQ(2, callback_invoke_count());
@@ -680,6 +683,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
                        base::Unretained(this), video_frame,
                        run_loop.QuitClosure());
         rwhv->CopyFromSurfaceToVideoFrame(copy_rect, video_frame, callback);
+        video_frame->set_color_space(gfx::ColorSpace::CreateREC601());
       } else {
         // Skia rendering can cause color differences, particularly in the
         // middle two columns.
