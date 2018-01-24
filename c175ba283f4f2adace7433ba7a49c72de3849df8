@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af263eba_7427b215",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee67aacc_10352862",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f752910_423ca8e7",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "461abb7b_e35de081",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f752910_423ca8e7",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad572152_bcdc40b7",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 21
@@ -50,6 +86,24 @@
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8264413_c1a75181",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Done. Also updated the unit test.",
+      "parentUuid": "ad572152_bcdc40b7",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "f44d428c_59c3108f",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f8dab7_4a463650",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c65e81aa_06ff4f3d",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 21
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "c13542bf_6469db42",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "We may have 2 different keyframe effects from 2 different targets running managed by the same AnimationPlayer. That way the AnimationPlayer has 2 AnimationTickers and each of them belongs to its own Element. That\u0027s when we need a second ticker. Comments added.\nI agree that the name can be improved. majidvp@ has been thinking about renaming the cc classes so that they could match their blink counterparts. e.g. AnimationPlayer -\u003e Animation, AnimationTicker -\u003e Effect etc.. Maybe we should change the names all together in a follow-up patch so that we won\u0027t have AnimationTicker indexed by EffectId.",
+      "parentUuid": "c65e81aa_06ff4f3d",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dcfad28_59dc0c35",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 21
@@ -104,6 +200,24 @@
       "writtenOn": "2018-01-20T07:49:35Z",
       "side": 1,
       "message": "With all of these *ForTicker methods, how many of them make sense to actually require a ticker_id? How often would we know the ticker id being paused? I think it may make sense to just loop over each ticker and call Pause on it.",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64d4cfd_38d9f915",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Other than AbortAnimations which aborts all animations, the rest *ForTicker methods operate on a certain animation. e.g. when blink needs to pause an animation it provides an animation id. This animation is owned by one ticker, say id 1, and pausing it on ticker2 doesn\u0027t make sense. WDYT?",
+      "parentUuid": "5dcfad28_59dc0c35",
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "a0c94fb7_d273052c",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0406f310_deb8d578",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 28
+      },
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444ee180_efe49695",
         "filename": "cc/animation/single_animation_player.h",
         "patchSetId": 21
@@ -144,6 +282,24 @@
       "writtenOn": "2018-01-20T07:49:35Z",
       "side": 1,
       "message": "Seems like SingleAnimationPlayer isn\u0027t quite the right name given it has multiple animations. As it is right now you might call it SingleTickerPlayer but I don\u0027t think the concept of ticker is well explained / understood and perhaps SingleEffectPlayer would be a better name to relate it back to GroupEffects",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63664ab_78fed74a",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-24T18:52:30Z",
+      "side": 1,
+      "message": "SingleAnimationPlayer is not supposed to be parsed as SingleAnimation + Player. Rather, it should be AnimationPlayer which does Single Effect(as you mentioned last). Eventually we will have only one AnimationPlayer which handles both single and group effects. But ATM we have this class and call it SingleAP to match its base class AnimationPlayer. majidvp@ is about to rename the cc animation related classes to match their blink counterparts and \"AnimationPlayer\" will be renamed too. Maybe we should rename this class then?",
+      "parentUuid": "444ee180_efe49695",
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
