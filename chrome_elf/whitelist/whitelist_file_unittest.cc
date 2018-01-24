@@ -169,12 +169,15 @@ TEST_F(WhitelistFileTest, Success) {
 
   // Test a failure to match.
   EXPECT_FALSE(IsModuleListed("booya.dll", 1337, 0x12345678));
+
+  DeinitFromFileForTesting();
 }
 
 // Test successful initialization with no packed files.
 TEST_F(WhitelistFileTest, NoFiles) {
   ASSERT_EQ(InitFromFile(), FileStatus::kSuccess);
   EXPECT_FALSE(IsModuleListed("booya.dll", 1337, 0x12345678));
+  DeinitFromFileForTesting();
 }
 
 TEST_F(WhitelistFileTest, CorruptFile) {
