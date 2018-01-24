@@ -22,6 +22,30 @@
       "revId": "fe05f8be489be440fa43e6292e3f9cf0cae36c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2c5ccc_df0cc517",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2018-01-24T15:22:30Z",
+      "side": 1,
+      "message": "Ack, fixed in patchset 10.",
+      "parentUuid": "7491af9e_c653113c",
+      "range": {
+        "startLine": 395,
+        "startChar": 14,
+        "endLine": 396,
+        "endChar": 35
+      },
+      "revId": "fe05f8be489be440fa43e6292e3f9cf0cae36c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
