@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/trace_event/trace_buffer.h"
 #include "base/trace_event/trace_log.h"
@@ -19,9 +20,7 @@ namespace test {
 TraceToFile::TraceToFile() : started_(false) {
 }
 
-TraceToFile::~TraceToFile() {
-  EndTracingIfNeeded();
-}
+TraceToFile::~TraceToFile() = default;
 
 void TraceToFile::BeginTracingFromCommandLineOptions() {
   DCHECK(CommandLine::InitializedForCurrentProcess());
@@ -35,6 +34,10 @@ void TraceToFile::BeginTracingFromCommandLineOptions() {
   std::string filter = CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
       switches::kTraceToFile);
 
+  // TODO(chiniforooshan): If tests are run in several batches, since we are
+  // using the same file name for all batches, we only get traces for the last
+  // batch. Maybe use PID or some sort of counter in the file name to avoid
+  // this.
   FilePath path;
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kTraceToFileName)) {
     path = FilePath(CommandLine::ForCurrentProcess()
@@ -84,6 +87,7 @@ static void OnTraceDataCollected(
 }
 
 void TraceToFile::EndTracingIfNeeded() {
+  DCHECK(!MessageLoop::current());
   if (!started_)
     return;
   started_ = false;
@@ -94,6 +98,7 @@ void TraceToFile::EndTracingIfNeeded() {
   buffer.SetOutputCallback(
       Bind(&TraceToFile::TraceOutputCallback, Unretained(this)));
 
+  MessageLoop message_loop;
   RunLoop run_loop;
   trace_event::TraceLog::GetInstance()->Flush(
       Bind(&OnTraceDataCollected, run_loop.QuitClosure(), Unretained(&buffer)));

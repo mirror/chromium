@@ -475,6 +475,7 @@ void TestSuite::Initialize() {
 
 void TestSuite::Shutdown() {
   base::debug::StopProfiling();
+  trace_to_file_.EndTracingIfNeeded();
 }
 
 }  // namespace base
