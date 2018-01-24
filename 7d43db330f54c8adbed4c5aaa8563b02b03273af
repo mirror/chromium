@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe66109_e24b76a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-24T21:10:24Z",
+      "side": 1,
+      "message": "won\u0027t this draw the location bar in the tab switcher?  I thought that is why we checked the state was static_tab?",
+      "range": {
+        "startLine": 1386,
+        "startChar": 25,
+        "endLine": 1386,
+        "endChar": 40
+      },
+      "revId": "7d43db330f54c8adbed4c5aaa8563b02b03273af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
