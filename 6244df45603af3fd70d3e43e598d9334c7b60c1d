@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "077ad654_c261a83b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/RejectedPromises.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2018-01-24T12:55:28Z",
+      "side": 1,
+      "message": "Done: introduced a new non-internal task type kPromise.",
+      "parentUuid": "e8b88a14_34dbe10c",
+      "revId": "6244df45603af3fd70d3e43e598d9334c7b60c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ec0c6e_7720acd5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/RejectedPromises.cpp",
         "patchSetId": 1
