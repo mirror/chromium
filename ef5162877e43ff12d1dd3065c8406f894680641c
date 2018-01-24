@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "bafd307a_7f77e28e",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T16:32:43Z",
+      "side": 1,
+      "message": "Local variables would be the first thing to get cleaned up and it is the only one with destruction. Also thought that but not explicitly calling signal you could invert the global scope check to be an early return which is more canonical and rely on must signal to signal when the task has run.",
+      "parentUuid": "08e0e2ed_84f9aaee",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b01cf59_1e75796b",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 47

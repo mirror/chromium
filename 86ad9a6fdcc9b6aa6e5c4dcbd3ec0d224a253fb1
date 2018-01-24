@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "01c3be6c_f6ae01a8",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T16:32:43Z",
+      "side": 1,
+      "message": "Just thinking because this one would hang the compositor forever if on the wrong thread whereas with a check we\u0027ll get a crash report and the user will get a crashed renderer, but I could see arguments either way.",
+      "parentUuid": "8f05c820_4fd41ab5",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97878c35_2861e2ec",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 48
@@ -130,6 +148,24 @@
       "side": 1,
       "message": "Seal is a blocking call. After completion there will be no further callbacks attempted - which is the key to making sure nothing references the members including the task runner.\n\nIf we are going back to the weak pointer again then we\u0027ll have to work through the how together, because from all of the ways I have looked at and tried it fails to solve all of the issues.  In each of the ways for a small but seemingly fundamental way.",
       "parentUuid": "97878c35_2861e2ec",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db63b0e_0a6cba38",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T16:32:43Z",
+      "side": 1,
+      "message": "Oh right! Sorry this should be fine for now.",
+      "parentUuid": "7dbe7fd5_cb3819e7",
       "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
