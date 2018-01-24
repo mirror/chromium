@@ -288,7 +288,6 @@ NSString* GetSizeString(long long size_in_bytes) {
       }
       break;
     case kDownloadManagerStateInProgress:
-      // TODO(crbug.com/805533): Localize this string.
       statusText =
           [NSString stringWithFormat:@"Downloading... %@",
                                      GetSizeString(self.countOfBytesReceived)];
@@ -303,7 +302,6 @@ NSString* GetSizeString(long long size_in_bytes) {
       statusText = self.fileName;
       break;
     case kDownloadManagerStateFailed:
-      // TODO(crbug.com/805533): Localize this string.
       statusText = @"Couldn't Download";
       break;
   }
@@ -317,17 +315,14 @@ NSString* GetSizeString(long long size_in_bytes) {
   NSString* title = nil;
   switch (self.state) {
     case kDownloadManagerStateNotStarted:
-      // TODO(crbug.com/805533): Localize this string.
       title = @"Download";
       break;
     case kDownloadManagerStateInProgress:
       break;
     case kDownloadManagerStateSuceeded:
-      // TODO(crbug.com/805533): Localize this string.
       title = @"Open In...";
       break;
     case kDownloadManagerStateFailed:
-      // TODO(crbug.com/805533): Localize this string.
       title = @"Try Again";
       break;
   }
