@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c4db04a_518e234b",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-24T11:23:27Z",
+      "side": 1,
+      "message": "Note: this specific log message was excluded from tests before, so I fixed it by bumping the expected log message count by 1. Let me know if you feel strongly about this :).",
+      "revId": "3a8bc472398698db79efc1308631e215848674e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
