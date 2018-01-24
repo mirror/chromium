@@ -29,6 +29,9 @@ class FullscreenModelObserver {
   // Invoked when a scroll event being tracked by |model| has ended.
   virtual void FullscreenModelScrollEventEnded(FullscreenModel* model) {}
 
+  // Invoked when the model is reset for a navigation event.
+  virtual void FullscreenModelWasResetForNavigation(FullscreenModel* model) {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(FullscreenModelObserver);
 };

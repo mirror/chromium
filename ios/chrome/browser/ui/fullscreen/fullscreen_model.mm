@@ -51,6 +51,11 @@ void FullscreenModel::DecrementDisabledCounter() {
 }
 
 void FullscreenModel::ResetForNavigation() {
+  ScopedIncrementer navigation_incrementer(&observer_callback_count_);
+  for (auto& observer : observers_) {
+    observer.FullscreenModelWasResetForNavigation(this);
+  }
+
   SetProgress(1.0);
   scrolling_ = false;
   base_offset_ = NAN;
