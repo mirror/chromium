@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfc0bca4_a0f0c533",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30958,
+      "author": {
+        "id": 1000266
+      },
+      "writtenOn": "2018-01-24T18:59:58Z",
+      "side": 1,
+      "message": "This might be a bit terse.  I recommend simplifying with more words, e.g.,\n\nThis metric counts the top-level user action of clicking connect all the way through success or failure of the connection, excluding any programmatic retries within the connection attempt.\n\nThough you can word it how you like.",
+      "range": {
+        "startLine": 30958,
+        "startChar": 16,
+        "endLine": 30958,
+        "endChar": 34
+      },
+      "revId": "ec7b57df5cedbe9f96f82743d23b47cce4030102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
