@@ -2392,7 +2392,7 @@ static void RemoveShellDelegate(Shell* shell) {
 
 class CountingDownloadFile : public DownloadFileImpl {
  public:
-  CountingDownloadFile(std::unique_ptr<DownloadSaveInfo> save_info,
+  CountingDownloadFile(std::unique_ptr<download::DownloadSaveInfo> save_info,
                        const base::FilePath& default_downloads_directory,
                        std::unique_ptr<DownloadManager::InputStream> stream,
                        uint32_t download_id,
@@ -2449,7 +2449,7 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
 
   // DownloadFileFactory interface.
   DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
+      std::unique_ptr<download::DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<DownloadManager::InputStream> stream,
       uint32_t download_id,
