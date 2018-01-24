@@ -70,6 +70,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c68136_448f24da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-24T17:31:40Z",
+      "side": 1,
+      "message": "If we want to make progress, it seems like we should convert this from passing a boolean to passing a Callable\u003cBoolean\u003e into the base component.  Then we could defer reading this until we deemed it was necessary.\n\nA meta question again, why do we read command line this early?  What in java land do we care about having in the command line before native?   I see things in ChromeSwitches that seem relevant (like strict mode and the like), but are these things we really need to be doing?  Could they be deferred till later?  I thought we had something that would force the waitForDebugger, but I only see that called in ChildProcessService in base.\n\nIf we could force all of our shared pref access through a single point, we could potentially introduce the warmup if we made all the other points crash in debug to catch regressions if we wanted to prevent the slow leak here.\n\nI actually think we need shared prefs earlier than we do commandline for many things (in prod code), so it would be good to find some balance here.",
+      "parentUuid": "8c561e1c_0a195ffe",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
