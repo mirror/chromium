@@ -122,7 +122,7 @@ class MockFetchContext : public FetchContext {
     scoped_refptr<WebTaskRunner> runner_;
   };
 
-  MockFetchContext(LoadPolicy load_policy)
+  explicit MockFetchContext(LoadPolicy load_policy)
       : load_policy_(load_policy),
         runner_(base::MakeRefCounted<scheduler::FakeWebTaskRunner>()),
         security_origin_(SecurityOrigin::CreateUnique()),

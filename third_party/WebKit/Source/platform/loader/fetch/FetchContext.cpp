@@ -35,8 +35,18 @@
 
 namespace blink {
 
-FetchContext& FetchContext::NullInstance() {
-  return *(new FetchContext);
+namespace {
+
+class DetachedFetchContext : public FetchContext {
+  // FetchContext implementation.
+  bool IsDetached() const override { return true; }
+};
+
+}  // namespace
+
+// static
+FetchContext* FetchContext::CreateNullInstance() {
+  return new FetchContext;
 }
 
 FetchContext::FetchContext() : platform_probe_sink_(new PlatformProbeSink) {
@@ -122,5 +132,9 @@ void FetchContext::PopulateResourceRequest(
     ResourceRequest&) {}
 
 void FetchContext::SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) {}
+
+FetchContext* FetchContext::Detach() {
+  return new DetachedFetchContext;
+}
 
 }  // namespace blink

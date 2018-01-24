@@ -109,7 +109,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
   // Try to request a url. The request should fail, and a resource in an error
   // state should be returned, and no resource should be present in the cache.
   ResourceFetcher* fetcher =
-      ResourceFetcher::Create(&FetchContext::NullInstance());
+      ResourceFetcher::Create(FetchContext::CreateNullInstance());
 
   ResourceRequest resource_request(secure_url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
