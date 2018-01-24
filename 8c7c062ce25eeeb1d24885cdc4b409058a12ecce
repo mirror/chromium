@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18fc2ed2_fbaef163",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41146f05_e25e629a",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5e8dce9_d59e4d63",
         "filename": "content/browser/loader/signed_exchange_handler.cc",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1446262a_b5a5847c",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e8dce9_d59e4d63",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9fff39b1_355b54e3",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55be07f8_ec96374a",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5adf504_f6de0a15",
         "filename": "content/browser/loader/signed_exchange_handler.h",
         "patchSetId": 23
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-24T09:22:38Z",
       "side": 1,
       "message": "I have a slight preference that this class itself doesn\u0027t depend on DataPipe (which we wouldn\u0027t be using if we port this in //net), while for initial implementation I could be fine with this...",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e4db92_f6332b77",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Added TODO comment.",
+      "parentUuid": "f5adf504_f6de0a15",
       "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2cf8acc2_716fda06",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done\nI think we should handle non-GET method as an error in WebPackageLoader::OnHTTPExchangeFound.",
+      "parentUuid": "7fedaf3b_26b499d3",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e567028a_59d37d4b",
         "filename": "content/browser/loader/signed_exchange_handler.h",
         "patchSetId": 23
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e3f311bf_11b7462a",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e567028a_59d37d4b",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c825ba04_cb5c8fb2",
         "filename": "content/browser/loader/signed_exchange_handler.h",
         "patchSetId": 23
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-24T09:22:38Z",
       "side": 1,
       "message": "We want to be able to express the validation result too, would that be returned via finish_callback?\n\nOne of the gotchas I felt in the last prototype was needing to pass two callbacks always need clearer documentation about what should happen in error cases, e.g. if both of these two callbacks should fire or not etc. Could we clearly document the expected behavior for various cases here, or split the method into two or three where each has its own callback?",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38c8fbc_1c8f3846",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "I think we should redesign the callback model when we will introduce SignedExchangeHandler::Reader class to read the body and introduce the cert verification.\nAdded comments.",
+      "parentUuid": "c825ba04_cb5c8fb2",
       "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1b6be881_9c60af46",
+        "filename": "content/browser/loader/web_package_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b4ad36_4586589f",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43e5cba_fff02f46",
         "filename": "content/browser/loader/web_package_request_handler.cc",
         "patchSetId": 23
@@ -149,6 +293,24 @@
       "writtenOn": "2018-01-24T09:22:38Z",
       "side": 1,
       "message": "I wonder... if we rather want to re-bind the new loader to the throttling loader. In our case directly calling back to the URLLoaderClient is probably fine, but it means we\u0027re bypassing ThrottlingURLLoader for this path, right?",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f9f6a0_25098107",
+        "filename": "content/browser/loader/web_package_request_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Added TODO",
+      "parentUuid": "d43e5cba_fff02f46",
       "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d3df79be_0a875b55",
+        "filename": "content/browser/loader/web_package_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8177492f_26600881",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc600c3c_998ffd54",
         "filename": "content/browser/loader/web_package_url_loader.h",
         "patchSetId": 23
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "6a8b1f69_6e2d67ca",
+        "filename": "content/browser/loader/web_package_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Humm..\nIt looks like we don\u0027t need to split WebPackageLoader and WebPackageURLLoader.\nMerged to WebPackageLoader.",
+      "parentUuid": "fc600c3c_998ffd54",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bad6d966_3bd37c5c",
         "filename": "third_party/WebKit/LayoutTests/TestExpectations",
         "patchSetId": 23
@@ -203,6 +401,24 @@
       "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d9abdb_3c1ac906",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 23
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-24T11:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bad6d966_3bd37c5c",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
