@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca1ef35_60c38d1a",
+        "filename": "mojo/public/cpp/bindings/array_traits_wtf_vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T21:15:22Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be camel-cased inlineCapacity, like in Vector.h? it seems INLINE_CAPACITY is #defined to 0 on ASAN builds making this a compile error?",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "20e8c944aeef4b3bcb6d431d2c5b6b67a56da8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
