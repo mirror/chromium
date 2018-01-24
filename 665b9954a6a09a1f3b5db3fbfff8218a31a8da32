@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "653fdb72_13d59731",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "This should probably be a Javadoc comment (and the one above too). When you do that, wrap ReauthenticationManager.ReauthScope in a {@link }.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17a6b80_fc7c709e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "Could you use an @IntDef (https://developer.android.com/reference/android/support/annotation/IntDef.html) for this? They tend to have less runtime overhead than Java enums (which generate all sorts of methods etc.)",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd274287_9cf39a54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "Nit: You could make this a boxed Integer and use null instead of the magic value 0. You already have a dedicated check for it below anyway.",
+      "range": {
+        "startLine": 60,
+        "startChar": 32,
+        "endLine": 60,
+        "endChar": 33
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf35b6cb_e78ff6bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "Ooh, this is another advantage of using @IntDef: You don\u0027t have to use Java serialization to persist them. I could see a whole bunch of problems with serialization :)",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbdbef2_b936b34a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "Nit: \"enough\"",
+      "range": {
+        "startLine": 141,
+        "startChar": 48,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7736fe88_60082751",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "Use {@code } for code in Javadoc comments.",
+      "range": {
+        "startLine": 142,
+        "startChar": 48,
+        "endLine": 142,
+        "endChar": 93
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e032dfe_51b793ef",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T16:19:13Z",
+      "side": 1,
+      "message": "This seems like it could go into a @Before method.",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 52
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
