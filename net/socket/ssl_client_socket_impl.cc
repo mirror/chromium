@@ -500,6 +500,7 @@ SSLClientSocketImpl::SSLClientSocketImpl(
       ssl_config_(ssl_config),
       ssl_session_cache_shard_(context.ssl_session_cache_shard),
       next_handshake_state_(STATE_NONE),
+      confirm_handshake_(false),
       disconnected_(false),
       negotiated_protocol_(kProtoUnknown),
       channel_id_sent_(false),
@@ -676,6 +677,20 @@ void SSLClientSocketImpl::Disconnect() {
   user_write_buf_len_ = 0;
 
   transport_->socket()->Disconnect();
+}
+
+int SSLClientSocketImpl::ConfirmHandshake(const CompletionCallback& callback) {
+  if (!SSL_in_early_data(ssl_.get())) {
+    return OK;
+  }
+  next_handshake_state_ = STATE_HANDSHAKE;
+  confirm_handshake_ = true;
+  int rv = DoHandshakeLoop(OK);
+  if (rv == ERR_IO_PENDING) {
+    user_connect_callback_ = callback;
+  }
+
+  return rv > OK ? OK : rv;
 }
 
 bool SSLClientSocketImpl::IsConnected() const {
@@ -947,6 +962,8 @@ int SSLClientSocketImpl::Init() {
     return ERR_UNEXPECTED;
   }
 
+  SSL_set_early_data_enabled(ssl_.get(), ssl_config_.early_data_enabled);
+
   switch (ssl_config_.tls13_variant) {
     case kTLS13VariantDraft22:
       SSL_set_tls13_variant(ssl_.get(), tls13_draft22);
@@ -1103,6 +1120,10 @@ int SSLClientSocketImpl::DoHandshake() {
       next_handshake_state_ = STATE_HANDSHAKE;
       return ERR_IO_PENDING;
     }
+    if (ssl_error == SSL_ERROR_EARLY_DATA_REJECTED) {
+      // TODO(svaldez): Drive the full handshake to prevent deadlocks.
+      return ERR_EARLY_DATA_REJECTED;
+    }
 
     OpenSSLErrorInfo error_info;
     net_error = MapLastOpenSSLError(ssl_error, err_tracer, &error_info);
@@ -1110,6 +1131,8 @@ int SSLClientSocketImpl::DoHandshake() {
       // If not done, stay in this state
       next_handshake_state_ = STATE_HANDSHAKE;
       return ERR_IO_PENDING;
+    } else if (net_error == ERR_WRONG_VERSION_ON_EARLY_DATA) {
+      return ERR_EARLY_DATA_REJECTED;
     }
 
     switch (net_error) {
@@ -1158,6 +1181,11 @@ int SSLClientSocketImpl::DoHandshake() {
 int SSLClientSocketImpl::DoHandshakeComplete(int result) {
   if (result < 0)
     return result;
+
+  if (confirm_handshake_) {
+    next_handshake_state_ = STATE_NONE;
+    return OK;
+  }
 
   if (ssl_config_.version_interference_probe) {
     DCHECK_LT(ssl_config_.version_max, TLS1_3_VERSION);
@@ -1384,6 +1412,9 @@ void SSLClientSocketImpl::DoConnectCallback(int rv) {
   if (!user_connect_callback_.is_null()) {
     CompletionCallback c = user_connect_callback_;
     user_connect_callback_.Reset();
+    if (confirm_handshake_) {
+      RetryAllOperations();
+    }
     c.Run(rv > OK ? OK : rv);
   }
 }
@@ -1481,6 +1512,7 @@ int SSLClientSocketImpl::DoPayloadRead(IOBuffer* buf, int buf_len) {
     // A zero return from SSL_read may mean any of:
     // - The underlying BIO_read returned 0.
     // - The peer sent a close_notify.
+    // - The peer rejected early data.
     // - Any arbitrary error. https://crbug.com/466303
     //
     // TransportReadComplete converts the first to an ERR_CONNECTION_CLOSED
@@ -1497,9 +1529,15 @@ int SSLClientSocketImpl::DoPayloadRead(IOBuffer* buf, int buf_len) {
       DCHECK(ssl_config_.client_private_key);
       DCHECK_NE(kNoPendingResult, signature_result_);
       pending_read_error_ = ERR_IO_PENDING;
+    } else if (pending_read_ssl_error_ == SSL_ERROR_EARLY_DATA_REJECTED) {
+      return ERR_EARLY_DATA_REJECTED;
     } else {
       pending_read_error_ = MapLastOpenSSLError(
           pending_read_ssl_error_, err_tracer, &pending_read_error_info_);
+    }
+
+    if (pending_read_error_ == ERR_WRONG_VERSION_ON_EARLY_DATA) {
+      return ERR_EARLY_DATA_REJECTED;
     }
 
     // Many servers do not reliably send a close_notify alert when shutting down
@@ -1554,8 +1592,14 @@ int SSLClientSocketImpl::DoPayloadWrite() {
   int ssl_error = SSL_get_error(ssl_.get(), rv);
   if (ssl_error == SSL_ERROR_WANT_PRIVATE_KEY_OPERATION)
     return ERR_IO_PENDING;
+  if (ssl_error == SSL_ERROR_EARLY_DATA_REJECTED)
+    return ERR_EARLY_DATA_REJECTED;
+
   OpenSSLErrorInfo error_info;
   int net_error = MapLastOpenSSLError(ssl_error, err_tracer, &error_info);
+
+  if (net_error == ERR_WRONG_VERSION_ON_EARLY_DATA)
+    return ERR_EARLY_DATA_REJECTED;
 
   if (net_error != ERR_IO_PENDING) {
     net_log_.AddEvent(
@@ -2035,6 +2079,10 @@ int SSLClientSocketImpl::MapLastOpenSSLError(
     if (ERR_GET_REASON(info->error_code) ==
         SSL_R_NO_COMMON_SIGNATURE_ALGORITHMS) {
       net_error = ERR_SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS;
+    }
+
+    if (ERR_GET_REASON(info->error_code) == SSL_R_WRONG_VERSION_ON_EARLY_DATA) {
+      net_error = ERR_WRONG_VERSION_ON_EARLY_DATA;
     }
   }
 

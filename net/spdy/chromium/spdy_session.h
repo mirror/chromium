@@ -335,6 +335,8 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
                           SpdyFrameType frame_type,
                           std::unique_ptr<SpdyBufferProducer> producer);
 
+  int ConfirmHandshake(const CompletionCallback& callback);
+
   // Creates and returns a HEADERS frame for |stream_id|.
   std::unique_ptr<SpdySerializedFrame> CreateHeaders(
       SpdyStreamId stream_id,

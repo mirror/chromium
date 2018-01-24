@@ -66,6 +66,8 @@ class NET_EXPORT_PRIVATE HttpStreamParser {
                   HttpResponseInfo* response,
                   const CompletionCallback& callback);
 
+  int ConfirmHandshake(const CompletionCallback& callback);
+
   int ReadResponseHeaders(const CompletionCallback& callback);
 
   int ReadResponseBody(IOBuffer* buf, int buf_len,

@@ -134,7 +134,8 @@ int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
     proxy_ssl_config_.rev_checking_enabled = false;
   }
 
-  if (request_info->method != "POST") {
+  if (HttpUtil::IsMethodSafe(request_->method)) {
+    server_ssl_config_.early_data_enabled = true;
     can_send_early_data_ = true;
   }
 
@@ -1250,6 +1251,11 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   if (response_.headers.get() && !ContentEncodingsValid())
     return ERR_CONTENT_DECODING_FAILED;
 
+  if (can_send_early_data_ && response_.headers.get() &&
+      response_.headers->response_code() == HTTP_TOO_EARLY) {
+    return HandleIOError(ERR_EARLY_DATA_REJECTED);
+  }
+
   // On a 408 response from the server ("Request Timeout") on a stale socket,
   // retry the request.
   // Headers can be NULL because of http://crbug.com/384554.
@@ -1563,6 +1569,15 @@ int HttpNetworkTransaction::HandleIOError(int error) {
         ResetConnectionAndRequestForResend();
         error = OK;
       }
+      break;
+    case ERR_EARLY_DATA_REJECTED:
+      net_log_.AddEventWithNetErrorCode(
+          NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR, error);
+      // Disable early data on the SSLConfig on a reset.
+      server_ssl_config_.early_data_enabled = false;
+      can_send_early_data_ = false;
+      ResetConnectionAndRequestForResend();
+      error = OK;
       break;
     case ERR_SPDY_PING_FAILED:
     case ERR_SPDY_SERVER_REFUSED_STREAM:

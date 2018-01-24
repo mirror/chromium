@@ -145,7 +145,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   stream = stream_request.ReleaseStream();
   stream->SendRequestHeaders(
       net::SpdyTestUtil::ConstructGetHeaderBlock("http://www.example.invalid"),
-      net::NO_MORE_DATA_TO_SEND);
+      false, net::NO_MORE_DATA_TO_SEND);
 
   base::RunLoop run_loop;
   FuzzerDelegate delegate(run_loop.QuitClosure());

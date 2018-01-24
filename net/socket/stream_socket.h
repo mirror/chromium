@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "net/base/net_errors.h"
 #include "net/base/net_export.h"
 #include "net/socket/connection_attempts.h"
 #include "net/socket/next_proto.h"
@@ -67,6 +68,14 @@ class NET_EXPORT_PRIVATE StreamSocket : public Socket {
   // disconnected, the pending IO is cancelled, and the completion callback
   // will not be called.
   virtual void Disconnect() = 0;
+
+  // Called to continue the SSL handshake.  Returns OK if the connection could
+  // be established synchronously.  Otherwise, ERR_IO_PENDING is returned and
+  // the given callback will run asynchronously when the connection is
+  // established or when an error occurs.  The result is some other error code
+  // if the connection could not be completed.
+  //
+  virtual int ConfirmHandshake(const CompletionCallback& callback);
 
   // Called to test if the connection is still alive.  Returns false if a
   // connection wasn't established or the connection is dead.  True is returned

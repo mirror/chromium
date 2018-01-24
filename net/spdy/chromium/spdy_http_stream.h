@@ -174,6 +174,8 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
   // data stream is uploaded, whichever is later.
   const HttpRequestInfo* request_info_;
 
+  bool can_send_early_;
+
   // |response_info_| is the HTTP response data object which is filled in
   // when a response HEADERS comes in for the stream.
   // It is not owned by this stream object, or point to |push_response_info_|.
