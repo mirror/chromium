@@ -67,13 +67,6 @@ config("base_flags") {
       # Don't die on dtoa code that uses a char as an array index.
       # This is required solely for base/third_party/dmg_fp/dtoa_wrapper.cc.
       "-Wno-char-subscripts",
-
-      # Ideally all product code (but no test code) in chrome would have these
-      # flags. But this isn't trivial so start with //base as a minimum
-      # requirement.
-      # https://groups.google.com/a/chromium.org/d/topic/chromium-dev/B9Q5KTD7iCo/discussion
-      "-Wglobal-constructors",
-      "-Wexit-time-destructors",
     ]
   }
 }
@@ -261,7 +254,6 @@ jumbo_component("base") {
     "command_line.cc",
     "command_line.h",
     "compiler_specific.h",
-    "component_export.h",
     "containers/adapters.h",
     "containers/circular_deque.h",
     "containers/flat_map.h",
@@ -1223,7 +1215,6 @@ jumbo_component("base") {
     sources += [
       "memory/shared_memory_android.cc",
       "memory/shared_memory_handle_android.cc",
-      "time/time_android.cc",
     ]
 
     # Android uses some Linux sources, put those back.
@@ -1278,7 +1269,6 @@ jumbo_component("base") {
 
     sources += [
       "base_paths_fuchsia.cc",
-      "base_paths_fuchsia.h",
       "debug/stack_trace_fuchsia.cc",
       "files/file_path_watcher_fuchsia.cc",
       "fuchsia/default_job.cc",
@@ -2076,7 +2066,6 @@ test("base_unittests") {
     "callback_unittest.cc",
     "cancelable_callback_unittest.cc",
     "command_line_unittest.cc",
-    "component_export_unittest.cc",
     "containers/adapters_unittest.cc",
     "containers/circular_deque_unittest.cc",
     "containers/flat_map_unittest.cc",

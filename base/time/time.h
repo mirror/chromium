@@ -73,10 +73,6 @@
 #undef TYPE_BOOL
 #endif
 
-#if defined(OS_ANDROID)
-#include <jni.h>
-#endif
-
 #if defined(OS_POSIX)
 #include <unistd.h>
 #include <sys/time.h>
@@ -830,14 +826,6 @@ class BASE_EXPORT TimeTicks : public time_internal::TimeBase<TimeTicks> {
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   static TimeTicks FromMachAbsoluteTime(uint64_t mach_absolute_time);
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
-
-#if defined(OS_ANDROID)
-  // Converts to TimeTicks the value obtained from SystemClock.uptimeMillis().
-  // Note: this convertion may be non-monotonic in relation to previously
-  // obtained TimeTicks::Now() values because of the truncation (to
-  // milliseconds) performed by uptimeMillis().
-  static TimeTicks FromUptimeMillis(jlong uptime_millis_value);
-#endif
 
   // Get an estimate of the TimeTick value at the time of the UnixEpoch. Because
   // Time and TimeTicks respond differently to user-set time and NTP

@@ -11,7 +11,7 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/network/url_request_context_owner.h"
-#include "net/proxy_resolution/dhcp_pac_file_fetcher_factory.h"
+#include "net/proxy/dhcp_proxy_script_fetcher_factory.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
@@ -20,17 +20,16 @@ namespace net {
 class HostResolver;
 class NetLog;
 class NetworkDelegate;
-class ProxyResolutionService;
+class ProxyService;
 class URLRequestContext;
 }  // namespace net
 
 namespace content {
 
-// Specialization of URLRequestContextBuilder that can create a
-// ProxyResolutionService that uses a Mojo ProxyResolver. The consumer is
-// responsible for providing the proxy_resolver::mojom::ProxyResolverFactory.
-// If a ProxyResolutionService is set directly via the URLRequestContextBuilder
-// API, it will be used instead.
+// Specialization of URLRequestContextBuilder that can create a ProxyService
+// that uses a Mojo ProxyResolver. The consumer is responsible for providing
+// the proxy_resolver::mojom::ProxyResolverFactory.  If a ProxyService is set
+// directly via the URLRequestContextBuilder API, it will be used instead.
 class CONTENT_EXPORT URLRequestContextBuilderMojo
     : public net::URLRequestContextBuilder {
  public:
@@ -60,7 +59,7 @@ class CONTENT_EXPORT URLRequestContextBuilderMojo
                                 net::NetLog* net_log);
 
  private:
-  std::unique_ptr<net::ProxyResolutionService> CreateProxyService(
+  std::unique_ptr<net::ProxyService> CreateProxyService(
       std::unique_ptr<net::ProxyConfigService> proxy_config_service,
       net::URLRequestContext* url_request_context,
       net::HostResolver* host_resolver,

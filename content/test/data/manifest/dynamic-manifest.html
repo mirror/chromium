@@ -4,5 +4,18 @@
 </head>
 <body>
 </body>
-<script src="./script.js"></script>
+<script>
+  function setManifestTo(url) {
+    clearManifest();
+
+    var link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = url;
+    document.head.appendChild(link);
+  }
+  function clearManifest() {
+    // Clear everything.
+    document.head.innerHTML = '';
+  }
+</script>
 </html>

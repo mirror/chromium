@@ -4,9 +4,8 @@
 
 #include "components/metrics/persistent_system_profile.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/persistent_memory_allocator.h"
 #include "base/rand_util.h"
 #include "components/variations/metrics_util.h"
@@ -22,9 +21,9 @@ class PersistentSystemProfileTest : public testing::Test {
   ~PersistentSystemProfileTest() override {}
 
   void SetUp() override {
-    memory_allocator_ = std::make_unique<base::LocalPersistentMemoryAllocator>(
+    memory_allocator_ = base::MakeUnique<base::LocalPersistentMemoryAllocator>(
         kAllocatorMemorySize, 0, "");
-    records_ = std::make_unique<PersistentSystemProfile::RecordAllocator>(
+    records_ = base::MakeUnique<PersistentSystemProfile::RecordAllocator>(
         memory_allocator_.get());
     persistent_profile_.RegisterPersistentAllocator(memory_allocator_.get());
   }

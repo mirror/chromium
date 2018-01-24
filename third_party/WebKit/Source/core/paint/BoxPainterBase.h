@@ -151,16 +151,13 @@ class BoxPainterBase {
   LayoutRectOutsets BorderOutsets(const FillLayerInfo&) const;
   LayoutRectOutsets PaddingOutsets(const FillLayerInfo&) const;
 
-  void PaintFillLayerTextFillBox(GraphicsContext&,
-                                 const FillLayerInfo&,
-                                 Image*,
-                                 SkBlendMode composite_op,
-                                 const BackgroundImageGeometry&,
-                                 const LayoutRect&,
-                                 const LayoutRect& scrolled_paint_rect);
-  virtual void PaintTextClipMask(GraphicsContext&,
-                                 const IntRect& mask_rect,
-                                 const LayoutPoint& paint_offset) = 0;
+  virtual void PaintFillLayerTextFillBox(GraphicsContext&,
+                                         const FillLayerInfo&,
+                                         Image*,
+                                         SkBlendMode composite_op,
+                                         const BackgroundImageGeometry&,
+                                         const LayoutRect&,
+                                         LayoutRect scrolled_paint_rect) = 0;
   virtual LayoutRect AdjustForScrolledContent(const PaintInfo&,
                                               const FillLayerInfo&,
                                               const LayoutRect&) = 0;

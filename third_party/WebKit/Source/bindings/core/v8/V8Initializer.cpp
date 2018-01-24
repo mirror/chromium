@@ -55,7 +55,7 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/bindings/DOMWrapperWorld.h"
-#include "platform/bindings/ScriptWrappableMarkingVisitor.h"
+#include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -515,12 +515,12 @@ static void HostGetImportMetaProperties(v8::Local<v8::Context> context,
 static void InitializeV8Common(v8::Isolate* isolate) {
   isolate->AddGCPrologueCallback(V8GCController::GcPrologue);
   isolate->AddGCEpilogueCallback(V8GCController::GcEpilogue);
-  std::unique_ptr<ScriptWrappableMarkingVisitor> visitor(
-      new ScriptWrappableMarkingVisitor(isolate));
-  V8PerIsolateData::From(isolate)->SetScriptWrappableMarkingVisitor(
+  std::unique_ptr<ScriptWrappableVisitor> visitor(
+      new ScriptWrappableVisitor(isolate));
+  V8PerIsolateData::From(isolate)->SetScriptWrappableVisitor(
       std::move(visitor));
   isolate->SetEmbedderHeapTracer(
-      V8PerIsolateData::From(isolate)->GetScriptWrappableMarkingVisitor());
+      V8PerIsolateData::From(isolate)->GetScriptWrappableVisitor());
 
   isolate->SetMicrotasksPolicy(v8::MicrotasksPolicy::kScoped);
 
@@ -679,8 +679,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
   DCHECK(ThreadState::MainThreadState());
   ThreadState::MainThreadState()->RegisterTraceDOMWrappers(
       isolate, V8GCController::TraceDOMWrappers,
-      ScriptWrappableMarkingVisitor::InvalidateDeadObjectsInMarkingDeque,
-      ScriptWrappableMarkingVisitor::PerformCleanup);
+      ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
+      ScriptWrappableVisitor::PerformCleanup);
 
   V8PerIsolateData::From(isolate)->SetThreadDebugger(
       std::make_unique<MainThreadDebugger>(isolate));

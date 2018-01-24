@@ -123,10 +123,13 @@ WorkerFetchContextImpl::WorkerFetchContextImpl(
 
 WorkerFetchContextImpl::~WorkerFetchContextImpl() {}
 
-void WorkerFetchContextImpl::InitializeOnWorkerThread() {
+void WorkerFetchContextImpl::InitializeOnWorkerThread(
+    scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {
+  DCHECK(loading_task_runner->RunsTasksInCurrentSequence());
   DCHECK(!resource_dispatcher_);
   DCHECK(!binding_.is_bound());
-  resource_dispatcher_ = std::make_unique<ResourceDispatcher>();
+  resource_dispatcher_ =
+      std::make_unique<ResourceDispatcher>(std::move(loading_task_runner));
 
   url_loader_factory_getter_ = url_loader_factory_getter_info_.Bind();
   if (service_worker_client_request_.is_pending())

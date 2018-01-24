@@ -19,8 +19,7 @@ const CSSValue* AlignItems::ParseSingleValue(
   // align-items property does not allow the 'auto' value.
   if (CSSPropertyParserHelpers::IdentMatches<CSSValueAuto>(range.Peek().Id()))
     return nullptr;
-  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(
-      range, CSSParsingUtils::IsSelfPositionKeyword);
+  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(range);
 }
 
 const CSSValue* AlignItems::CSSValueFromComputedStyleInternal(

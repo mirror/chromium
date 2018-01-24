@@ -116,15 +116,20 @@ void DOMWrapperWorld::AllWorldsInCurrentThread(
     worlds.push_back(world);
 }
 
-void DOMWrapperWorld::TraceWrappers(const ScriptWrappable* script_wrappable,
-                                    const ScriptWrappableVisitor* visitor) {
+void DOMWrapperWorld::MarkWrappersInAllWorlds(
+    ScriptWrappable* script_wrappable,
+    const ScriptWrappableVisitor* visitor) {
   // Marking for worlds other than the main world.
   DCHECK(ThreadState::Current()->GetIsolate());
   for (DOMWrapperWorld* world : GetWorldMap().Values()) {
     DOMDataStore& data_store = world->DomDataStore();
     if (data_store.ContainsWrapper(script_wrappable))
-      data_store.TraceWrappers(script_wrappable, visitor);
+      data_store.MarkWrapper(script_wrappable);
   }
+
+  // Marking for the main world.
+  if (IsMainThread())
+    script_wrappable->MarkWrapper(visitor);
 }
 
 DOMWrapperWorld::~DOMWrapperWorld() {

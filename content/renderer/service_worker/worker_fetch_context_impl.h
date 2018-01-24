@@ -18,6 +18,10 @@
 #include "third_party/WebKit/public/platform/WebWorkerFetchContext.h"
 #include "url/gurl.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}  // namespace base
+
 namespace IPC {
 class Message;
 }  // namespace IPC
@@ -44,7 +48,8 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   ~WorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
-  void InitializeOnWorkerThread() override;
+  void InitializeOnWorkerThread(
+      scoped_refptr<base::SingleThreadTaskRunner>) override;
   std::unique_ptr<blink::WebURLLoaderFactory> CreateURLLoaderFactory() override;
   void WillSendRequest(blink::WebURLRequest&) override;
   bool IsControlledByServiceWorker() const override;

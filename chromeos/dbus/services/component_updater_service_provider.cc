@@ -61,10 +61,7 @@ void ComponentUpdaterServiceProvider::LoadComponent(
   // |mount| is an optional parameter, and by default is true.
   bool mount = true;
   if (reader.PopString(&component_name)) {
-    // dbus::MessageReader::PopBool sets its out-param to false on failure.
-    // Resets |mount| to its default value on failure.
-    if (!reader.PopBool(&mount))
-      mount = true;
+    reader.PopBool(&mount);
     delegate_->LoadComponent(
         component_name, mount,
         base::Bind(&ComponentUpdaterServiceProvider::OnLoadComponent,

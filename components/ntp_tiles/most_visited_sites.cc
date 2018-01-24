@@ -563,10 +563,8 @@ void MostVisitedSites::SaveTilesAndNotify(NTPTilesVector personal_tiles) {
 
   int num_personal_tiles = 0;
   for (const auto& tile : *current_tiles_) {
-    if (tile.source != TileSource::POPULAR &&
-        tile.source != TileSource::POPULAR_BAKED_IN) {
+    if (tile.source != TileSource::POPULAR)
       num_personal_tiles++;
-    }
   }
   prefs_->SetInteger(prefs::kNumPersonalTiles, num_personal_tiles);
   if (!observer_)

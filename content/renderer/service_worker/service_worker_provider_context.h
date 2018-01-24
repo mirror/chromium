@@ -37,6 +37,7 @@ namespace service_worker_provider_context_unittest {
 class ServiceWorkerProviderContextTest;
 }  // namespace service_worker_provider_context_unittest
 
+class ServiceWorkerHandleReference;
 class WebServiceWorkerRegistrationImpl;
 struct ServiceWorkerProviderContextDeleter;
 
@@ -99,15 +100,22 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // SetRegistrationForServiceWorkerGlobalScope() is called during the setup for
   // service worker startup, so it is guaranteed to be called before
   // TakeRegistrationForServiceWorkerGlobalScope().
+  // |sender| is to initialize ServiceWorkerHandleReference which still needs to
+  // send legacy Incre/Decre IPCs, will disappear together with class
+  // ServiceWorkerHandleReference once ServiceWorkerObjectInfo starts to retain
+  // reference to ServiceWorkerHandle in the browser process.
   void SetRegistrationForServiceWorkerGlobalScope(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
+      scoped_refptr<ThreadSafeSender> sender);
 
   // For service worker execution contexts. Used for initializing
   // ServiceWorkerGlobalScope#registration. Called on the worker thread.
   // This takes the registration that was passed to
   // SetRegistrationForServiceWorkerScope(), then creates a new
   // WebServiceWorkerRegistrationImpl instance and returns it. |io_task_runner|
-  // is used to initialize WebServiceWorkerRegistrationImpl.
+  // is used to initialize WebServiceWorkerRegistrationImpl. While creating the
+  // WebServiceWorkerRegistrationImpl, increments interprocess references to its
+  // versions via ServiceWorkerHandleReference.
   scoped_refptr<WebServiceWorkerRegistrationImpl>
   TakeRegistrationForServiceWorkerGlobalScope(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
@@ -116,9 +124,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // worker object (ServiceWorkerContainer#controller).
   int64_t GetControllerVersionId();
 
-  // For service worker clients. Takes the controller service worker object info
-  // set by SetController() if any, otherwise returns nullptr.
-  blink::mojom::ServiceWorkerObjectInfoPtr TakeController();
+  // For service worker clients. Takes the controller service worker object set
+  // by SetController() if any, otherwise returns nullptr.
+  std::unique_ptr<ServiceWorkerHandleReference> TakeController();
 
   // S13nServiceWorker:
   // For service worker clients. Returns URLLoaderFactory for loading

@@ -655,14 +655,6 @@ void LayoutInline::Paint(const PaintInfo& paint_info,
 
 template <typename GeneratorContext>
 void LayoutInline::GenerateLineBoxRects(GeneratorContext& yield) const {
-  if (const NGPhysicalBoxFragment* box_fragment =
-          EnclosingBlockFlowFragmentOf(*this)) {
-    const auto& descendants =
-        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
-    for (const auto& descendant : descendants)
-      yield(descendant.RectInContainerBox().ToLayoutRect());
-    return;
-  }
   if (!AlwaysCreateLineBoxes()) {
     GenerateCulledLineBoxRects(yield, this);
   } else if (InlineFlowBox* curr = FirstLineBox()) {
@@ -848,14 +840,6 @@ void LayoutInline::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
 }
 
 LayoutPoint LayoutInline::FirstLineBoxTopLeft() const {
-  if (const NGPhysicalBoxFragment* box_fragment =
-          EnclosingBlockFlowFragmentOf(*this)) {
-    const auto& fragments =
-        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
-    if (fragments.IsEmpty())
-      return LayoutPoint();
-    return fragments.front().offset_to_container_box.ToLayoutPoint();
-  }
   if (InlineBox* first_box = FirstLineBoxIncludingCulling())
     return first_box->Location();
   return LayoutPoint();

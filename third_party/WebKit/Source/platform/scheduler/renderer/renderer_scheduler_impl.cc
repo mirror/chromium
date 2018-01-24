@@ -25,7 +25,6 @@
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
-#include "platform/scheduler/child/process_state.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/task_queue_throttler.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
@@ -176,8 +175,6 @@ const char* TaskTypeToString(TaskType task_type) {
       return "InternalWebCrypto";
     case TaskType::kInternalIndexedDB:
       return "InternalIndexedDB";
-    case TaskType::kInternalMedia:
-      return "InternalMedia";
     case TaskType::kCount:
       return "Count";
   }
@@ -244,6 +241,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       std::make_pair(compositor_task_queue_,
                      compositor_task_queue_->CreateQueueEnabledVoter()));
 
+  default_loading_task_queue_ =
+      NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::kDefaultLoading);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::kDefaultTimer);
   v8_task_queue_ = NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
@@ -274,9 +273,6 @@ RendererSchedulerImpl::RendererSchedulerImpl(
   }
   delay_for_background_tab_stopping_ = base::TimeDelta::FromMilliseconds(
       delay_for_background_tab_stopping_millis);
-
-  internal::ProcessState::Get()->is_process_backgrounded =
-      main_thread_only().renderer_backgrounded;
 }
 
 RendererSchedulerImpl::~RendererSchedulerImpl() {
@@ -603,6 +599,12 @@ RendererSchedulerImpl::IPCTaskRunner() {
   return ipc_task_queue_;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+RendererSchedulerImpl::LoadingTaskRunner() {
+  helper_.CheckOnValidThread();
+  return default_loading_task_queue_;
+}
+
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::DefaultTaskQueue() {
   return helper_.DefaultMainThreadTaskQueue();
 }
@@ -611,6 +613,11 @@ scoped_refptr<MainThreadTaskQueue>
 RendererSchedulerImpl::CompositorTaskQueue() {
   helper_.CheckOnValidThread();
   return compositor_task_queue_;
+}
+
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::LoadingTaskQueue() {
+  helper_.CheckOnValidThread();
+  return default_loading_task_queue_;
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
@@ -886,7 +893,6 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   }
 
   main_thread_only().renderer_backgrounded = backgrounded;
-  internal::ProcessState::Get()->is_process_backgrounded = backgrounded;
 
   main_thread_only().background_status_changed_at = tick_clock()->NowTicks();
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
@@ -2284,6 +2290,7 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   // with renderer scheduler which do not have a corresponding frame.
   control_task_queue_->SetBlameContext(blame_context);
   DefaultTaskQueue()->SetBlameContext(blame_context);
+  default_loading_task_queue_->SetBlameContext(blame_context);
   default_timer_task_queue_->SetBlameContext(blame_context);
   compositor_task_queue_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);

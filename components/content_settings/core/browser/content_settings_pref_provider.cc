@@ -13,6 +13,7 @@
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_clock.h"
 #include "components/content_settings/core/browser/content_settings_pref.h"
@@ -112,7 +113,7 @@ PrefProvider::PrefProvider(PrefService* prefs,
   for (const WebsiteSettingsInfo* info : *website_settings) {
     content_settings_prefs_.insert(std::make_pair(
         info->type(),
-        std::make_unique<ContentSettingsPref>(
+        base::MakeUnique<ContentSettingsPref>(
             info->type(), prefs_, &pref_change_registrar_, info->pref_name(),
             is_incognito_,
             base::Bind(&PrefProvider::Notify, base::Unretained(this)))));

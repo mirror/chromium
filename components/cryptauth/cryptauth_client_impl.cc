@@ -4,7 +4,6 @@
 
 #include "components/cryptauth/cryptauth_client_impl.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -334,7 +333,7 @@ CryptAuthClientFactoryImpl::~CryptAuthClientFactoryImpl() {
 }
 
 std::unique_ptr<CryptAuthClient> CryptAuthClientFactoryImpl::CreateInstance() {
-  return std::make_unique<CryptAuthClientImpl>(
+  return base::MakeUnique<CryptAuthClientImpl>(
       base::WrapUnique(new CryptAuthApiCallFlow()),
       base::WrapUnique(
           new CryptAuthAccessTokenFetcherImpl(token_service_, account_id_)),

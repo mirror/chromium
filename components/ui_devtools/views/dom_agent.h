@@ -10,7 +10,6 @@
 #include "components/ui_devtools/views/ui_element_delegate.h"
 #include "ui/aura/env_observer.h"
 #include "ui/compositor/layer_delegate.h"
-#include "ui/gfx/native_widget_types.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -71,7 +70,7 @@ class DOMAgent : public UiDevToolsBaseAgent<protocol::DOM::Metainfo>,
   void RemoveObserver(DOMAgentObserver* observer);
   UIElement* GetElementFromNodeId(int node_id);
   UIElement* window_element_root() const { return window_element_root_.get(); };
-  const std::vector<gfx::NativeWindow>& root_windows() const {
+  const std::vector<aura::Window*>& root_windows() const {
     return root_windows_;
   };
   HighlightRectsConfiguration highlight_rect_config() const {
@@ -85,7 +84,7 @@ class DOMAgent : public UiDevToolsBaseAgent<protocol::DOM::Metainfo>,
   // exists), then the targeted view (if one exists). Return 0 if no valid
   // target is found.
   int FindElementIdTargetedByPoint(const gfx::Point& p,
-                                   gfx::NativeWindow root_window) const;
+                                   aura::Window* root_window) const;
 
   // Shows the distances between the nodes identified by |pinned_id| and
   // |element_id| in the highlight overlay.
@@ -120,7 +119,7 @@ class DOMAgent : public UiDevToolsBaseAgent<protocol::DOM::Metainfo>,
   void RemoveDomNode(UIElement* ui_element);
   void Reset();
   void UpdateHighlight(
-      const std::pair<gfx::NativeWindow, gfx::Rect>& window_and_bounds);
+      const std::pair<aura::Window*, gfx::Rect>& window_and_bounds);
 
   std::unique_ptr<gfx::RenderText> render_text_;
   bool is_building_tree_;

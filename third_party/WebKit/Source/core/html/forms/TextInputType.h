@@ -44,6 +44,7 @@ class TextInputType final : public BaseTextInputType {
   void CountUsage() override;
   const AtomicString& FormControlType() const override;
   bool SupportsInputModeAttribute() const override;
+  const AtomicString& DefaultAutocapitalize() const override;
 };
 
 }  // namespace blink

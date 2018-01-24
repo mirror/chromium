@@ -20,7 +20,6 @@
 #include "net/base/load_flags.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
-#include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
 namespace {
@@ -55,7 +54,7 @@ void UrlFetcherDownloader::URLFetcherDelegate::OnURLFetchDownloadProgress(
 
 UrlFetcherDownloader::UrlFetcherDownloader(
     std::unique_ptr<CrxDownloader> successor,
-    scoped_refptr<net::URLRequestContextGetter> context_getter)
+    net::URLRequestContextGetter* context_getter)
     : CrxDownloader(std::move(successor)),
       delegate_(std::make_unique<URLFetcherDelegate>(this)),
       context_getter_(context_getter) {}
@@ -138,7 +137,7 @@ void UrlFetcherDownloader::StartURLFetch(const GURL& url) {
 
   url_fetcher_ = net::URLFetcher::Create(0, url, net::URLFetcher::GET,
                                          delegate_.get(), traffic_annotation);
-  url_fetcher_->SetRequestContext(context_getter_.get());
+  url_fetcher_->SetRequestContext(context_getter_);
   url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                              net::LOAD_DO_NOT_SAVE_COOKIES |
                              net::LOAD_DISABLE_CACHE);

@@ -51,6 +51,7 @@ class AppsGridViewFolderDelegate;
 class ContentsView;
 class IndicatorChipView;
 class SuggestionsContainerView;
+class PageSwitcher;
 class PaginationController;
 class PulsingBlockView;
 class ExpandArrowView;
@@ -81,20 +82,13 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   int rows_per_page() const { return rows_per_page_; }
 
   // Returns the size of a tile view including its padding.
-  gfx::Size GetTotalTileSize() const;
+  static gfx::Size GetTotalTileSize();
 
   // Returns the padding around a tile view.
-  gfx::Insets GetTilePadding() const;
-
-  // Returns the size of the entire tile grid without padding.
-  gfx::Size GetTileGridSizeWithoutPadding() const;
+  static gfx::Insets GetTilePadding();
 
   // This resets the grid view to a fresh state for showing the app list.
   void ResetForShowApps();
-
-  // All items in this view become unfocusable if |disabled| is true. This is
-  // used to trap focus within the folder when it is opened.
-  void DisableFocusForShowingActiveFolder(bool disabled);
 
   // Sets |model| to use. Note this does not take ownership of |model|.
   void SetModel(AppListModel* model);
@@ -242,8 +236,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
     folder_delegate_ = folder_delegate;
   }
 
-  bool is_in_folder() const { return !!folder_delegate_; }
-
   AppListItemView* activated_folder_item_view() const {
     return activated_folder_item_view_;
   }
@@ -297,6 +289,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Returns all apps tiles per page based on |page|.
   int TilesPerPage(int page) const;
 
+  // Returns the last index of |page|.
+  int LastIndexOfPage(int page) const;
+
   // Updates from model.
   void Update();
 
@@ -330,6 +325,20 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Gets the index of the AppListItemView at the end of the view model.
   Index GetLastViewIndex() const;
+
+  void MoveSelected(int page_delta, int slot_x_delta, int slot_y_delta);
+
+  // Returns true if the given moving operation should be handled by
+  // |suggestions_container_|, otherwise false.
+  bool HandleSuggestionsMove(int page_delta,
+                             int slot_x_delta,
+                             int slot_y_delta);
+
+  // Returns true if the given moving operation should be handled by
+  // |expand_arrow_view_|, otherwise false.
+  bool HandleExpandArrowMove(int page_delta,
+                             int slot_x_delta,
+                             int slot_y_delta);
 
   // Calculates the offset for |page_of_view| based on current page and
   // transition target page.
@@ -524,9 +533,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // state.
   bool HandleFocusMovementInFullscreenAllAppsState(bool arrow_up);
 
-  // Update number of columns and rows for apps within a folder.
-  void UpdateColsAndRowsForFolder();
-
   AppListModel* model_ = nullptr;         // Owned by AppListView.
   AppListItemList* item_list_ = nullptr;  // Not owned.
 
@@ -536,6 +542,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   PaginationModel pagination_model_;
   // Must appear after |pagination_model_|.
   std::unique_ptr<PaginationController> pagination_controller_;
+  PageSwitcher* page_switcher_view_ = nullptr;  // Owned by views hierarchy.
 
   // Created by AppListMainView, owned by views hierarchy.
   ContentsView* contents_view_ = nullptr;
@@ -633,6 +640,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   bool is_ignoring_scroll_events_ = false;
 
   std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
+
+  // True if the fullscreen app list feature is enabled.
+  const bool is_fullscreen_app_list_enabled_;
 
   // Delay in milliseconds of when |page_flip_timer_| should fire after user
   // drags an item near the edges.

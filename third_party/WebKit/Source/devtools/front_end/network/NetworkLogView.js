@@ -1249,8 +1249,8 @@ Network.NetworkLogView = class extends UI.VBox {
     return httpRequests.filter(Network.NetworkLogView.FinishedRequestsFilter);
   }
 
-  async _copyAll() {
-    var harArchive = {log: await NetworkLog.HARLog.build(this._harRequests())};
+  _copyAll() {
+    var harArchive = {log: (new NetworkLog.HARLog(this._harRequests())).build()};
     InspectorFrontendHost.copyText(JSON.stringify(harArchive, null, 2));
   }
 
@@ -1258,17 +1258,18 @@ Network.NetworkLogView = class extends UI.VBox {
    * @param {!SDK.NetworkRequest} request
    * @param {string} platform
    */
-  async _copyCurlCommand(request, platform) {
-    var command = await this._generateCurlCommand(request, platform);
-    InspectorFrontendHost.copyText(command);
+  _copyCurlCommand(request, platform) {
+    InspectorFrontendHost.copyText(this._generateCurlCommand(request, platform));
   }
 
   /**
    * @param {string} platform
    */
-  async _copyAllCurlCommand(platform) {
+  _copyAllCurlCommand(platform) {
     var requests = NetworkLog.networkLog.requests();
-    var commands = await Promise.all(requests.map(request => this._generateCurlCommand(request, platform)));
+    var commands = [];
+    for (var request of requests)
+      commands.push(this._generateCurlCommand(request, platform));
     if (platform === 'win')
       InspectorFrontendHost.copyText(commands.join(' &\r\n'));
     else
@@ -1278,14 +1279,13 @@ Network.NetworkLogView = class extends UI.VBox {
   /**
    * @param {!SDK.NetworkRequest} request
    */
-  async _copyPowerShellCommand(request) {
-    var command = await this._generatePowerShellCommand(request);
-    InspectorFrontendHost.copyText(command);
+  _copyPowerShellCommand(request) {
+    InspectorFrontendHost.copyText(this._generatePowerShellCommand(request));
   }
 
-  async _copyAllPowerShellCommand() {
+  _copyAllPowerShellCommand() {
     var requests = NetworkLog.networkLog.requests();
-    var commands = await Promise.all(requests.map(request => this._generatePowerShellCommand(request)));
+    var commands = requests.map(this._generatePowerShellCommand.bind(this));
     InspectorFrontendHost.copyText(commands.join(';\r\n'));
   }
 
@@ -1633,9 +1633,9 @@ Network.NetworkLogView = class extends UI.VBox {
   /**
    * @param {!SDK.NetworkRequest} request
    * @param {string} platform
-   * @return {!Promise<string>}
+   * @return {string}
    */
-  async _generateCurlCommand(request, platform) {
+  _generateCurlCommand(request, platform) {
     var command = ['curl'];
     // These headers are derived from URL (except "version") and would be added by cURL anyway.
     var ignoredHeaders = {'host': 1, 'method': 1, 'path': 1, 'scheme': 1, 'version': 1};
@@ -1721,15 +1721,15 @@ Network.NetworkLogView = class extends UI.VBox {
     var inferredMethod = 'GET';
     var data = [];
     var requestContentType = request.requestContentType();
-    var formData = await request.requestFormData();
-    if (requestContentType && requestContentType.startsWith('application/x-www-form-urlencoded') && formData) {
+    if (requestContentType && requestContentType.startsWith('application/x-www-form-urlencoded') &&
+        request.requestFormData) {
       data.push('--data');
-      data.push(escapeString(formData));
+      data.push(escapeString(request.requestFormData));
       ignoredHeaders['content-length'] = true;
       inferredMethod = 'POST';
-    } else if (formData) {
+    } else if (request.requestFormData) {
       data.push('--data-binary');
-      data.push(escapeString(formData));
+      data.push(escapeString(request.requestFormData));
       ignoredHeaders['content-length'] = true;
       inferredMethod = 'POST';
     }
@@ -1758,9 +1758,9 @@ Network.NetworkLogView = class extends UI.VBox {
 
   /**
    * @param {!SDK.NetworkRequest} request
-   * @return {!Promise<string>}
+   * @return {string}
    */
-  async _generatePowerShellCommand(request) {
+  _generatePowerShellCommand(request) {
     var command = ['Invoke-WebRequest'];
     var ignoredHeaders = new Set(['host', 'connection', 'proxy-connection', 'content-length', 'expect', 'range']);
 
@@ -1793,11 +1793,11 @@ Network.NetworkLogView = class extends UI.VBox {
       command.push('-Headers');
       command.push('@{' + headerNameValuePairs.join('; ') + '}');
     }
-    var formData = await request.requestFormData();
-    if (formData) {
+
+    if (request.requestFormData) {
       command.push('-Body');
-      var body = escapeString(formData);
-      if (/[^\x20-\x7E]/.test(formData))
+      var body = escapeString(request.requestFormData);
+      if (/[^\x20-\x7E]/.test(request.requestFormData))
         command.push('([System.Text.Encoding]::UTF8.GetBytes(' + body + '))');
       else
         command.push(body);

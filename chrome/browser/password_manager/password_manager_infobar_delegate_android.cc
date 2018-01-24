@@ -15,6 +15,11 @@ PasswordManagerInfoBarDelegate::~PasswordManagerInfoBarDelegate() {}
 PasswordManagerInfoBarDelegate::PasswordManagerInfoBarDelegate()
     : ConfirmInfoBarDelegate(), message_link_range_(gfx::Range()) {}
 
+infobars::InfoBarDelegate::Type PasswordManagerInfoBarDelegate::GetInfoBarType()
+    const {
+  return PAGE_ACTION_TYPE;
+}
+
 infobars::InfoBarDelegate::InfoBarAutomationType
 PasswordManagerInfoBarDelegate::GetInfoBarAutomationType() const {
   return PASSWORD_INFOBAR;

@@ -27,28 +27,16 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
   'SynchronizeOnNonFinalField',
   # TODO(crbug.com/801253): Follow steps in bug.
   'JavaLangClash',
+  # TODO(crbug.com/801256): Follow steps in bug.
+  'ParameterName',
   # TODO(crbug.com/801261): Follow steps in bug
   'ArgumentSelectionDefectChecker',
   # TODO(crbug.com/801268): Follow steps in bug.
   'NarrowingCompoundAssignment',
   # TODO(crbug.com/802073): Follow steps in bug.
   'TypeParameterUnusedInFormals',
-  # TODO(crbug.com/802075): Follow steps in bug.
+  # TODO(crbug.com/802075): Follow steps in bug
   'ReferenceEquality',
-  # TODO(crbug.com/803482): Follow steps in bug.
-  'UseCorrectAssertInTests',
-  # TODO(crbug.com/803484): Follow steps in bug.
-  'CatchFail',
-  # TODO(crbug.com/803485): Follow steps in bug.
-  'JUnitAmbiguousTestClass',
-  # TODO(crbug.com/803486): Follow steps in bug.
-  'AssertionFailureIgnored',
-  # TODO(crbug.com/803587): Follow steps in bug.
-  'MissingOverride',
-  # TODO(crbug.com/803589): Follow steps in bug.
-  'MissingFail',
-  # TODO(crbug.com/803625): Follow steps in bug.
-  'StaticGuardedByInstance',
   # Android platform default is always UTF-8.
   # https://developer.android.com/reference/java/nio/charset/Charset.html#defaultCharset()
   'DefaultCharset',
@@ -90,14 +78,6 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
   'TypeParameterShadowing',
   # Good to have immutable enums, also low priority.
   'ImmutableEnumChecker',
-  # False positives for testing.
-  'InputStreamSlowMultibyteRead',
-  # Nice to have better primitives.
-  'BoxedPrimitiveConstructor',
-  # Not necessary for tests.
-  'OverrideThrowableToString',
-  # Nice to have better type safety.
-  'CollectionToArraySafeParameter',
 ]
 
 ERRORPRONE_WARNINGS_TO_ERROR = [
@@ -231,7 +211,7 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs,
   # _CheckPathMatchesClassName() fails on some of it, and it's not really much
   # benefit.
   for java_file in java_files:
-    if 'third_party' in java_file or not options.chromium_code:
+    if 'third_party' in java_file:
       incremental = False
     else:
       _CheckPathMatchesClassName(java_file)

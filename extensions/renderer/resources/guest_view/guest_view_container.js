@@ -58,8 +58,7 @@ GuestViewContainer.registerElement = function(guestViewContainerType) {
     if (document.readyState == 'loading')
       return;
 
-    registerInternalElement(
-        $String.toLowerCase(guestViewContainerType.VIEW_TYPE));
+    registerInternalElement(guestViewContainerType.VIEW_TYPE.toLowerCase());
     registerGuestViewElement(guestViewContainerType);
     window.removeEventListener(event.type, listener, useCapture);
   }, useCapture);
@@ -293,9 +292,10 @@ function registerGuestViewElement(guestViewContainerType) {
     guestViewContainerType.setupElement(proto);
   }
 
-  window[guestViewContainerType.VIEW_TYPE] = DocumentNatives.RegisterElement(
-      $String.toLowerCase(guestViewContainerType.VIEW_TYPE),
-      {prototype: proto});
+  window[guestViewContainerType.VIEW_TYPE] =
+      DocumentNatives.RegisterElement(
+          guestViewContainerType.VIEW_TYPE.toLowerCase(),
+          {prototype: proto});
 
   // Delete the callbacks so developers cannot call them and produce unexpected
   // behavior.

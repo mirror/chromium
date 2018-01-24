@@ -4,13 +4,11 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/scheduler.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
-using ActionTargetGenerator = TestWithScheduler;
-
 // Tests that actions can't have output substitutions.
-TEST_F(ActionTargetGenerator, ActionOutputSubstitutions) {
+TEST(ActionTargetGenerator, ActionOutputSubstitutions) {
+  Scheduler scheduler;
   TestWithScope setup;
   Scope::ItemVector items_;
   setup.scope()->set_item_collector(&items_);
@@ -45,7 +43,8 @@ TEST_F(ActionTargetGenerator, ActionOutputSubstitutions) {
 
 // Tests that arg and response file substitutions are validated for
 // action_foreach targets.
-TEST_F(ActionTargetGenerator, ActionForeachSubstitutions) {
+TEST(ActionTargetGenerator, ActionForeachSubstitutions) {
+  Scheduler scheduler;
   TestWithScope setup;
   Scope::ItemVector items_;
   setup.scope()->set_item_collector(&items_);

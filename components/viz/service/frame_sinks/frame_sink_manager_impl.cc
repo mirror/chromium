@@ -48,10 +48,11 @@ FrameSinkManagerImpl::SinkAndSupport& FrameSinkManagerImpl::SinkAndSupport::
 operator=(SinkAndSupport&& other) = default;
 
 FrameSinkManagerImpl::FrameSinkManagerImpl(
+    SurfaceManager::LifetimeType lifetime_type,
     uint32_t number_of_frames_to_activation_deadline,
     DisplayProvider* display_provider)
     : display_provider_(display_provider),
-      surface_manager_(number_of_frames_to_activation_deadline),
+      surface_manager_(lifetime_type, number_of_frames_to_activation_deadline),
       hit_test_manager_(this),
       binding_(this) {
   surface_manager_.AddObserver(&hit_test_manager_);
@@ -397,7 +398,8 @@ void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceId& surface_id) {
   } else {
     // There is no client to assign an owner for the temporary reference, so we
     // can drop the temporary reference safely.
-    surface_manager_.DropTemporaryReference(surface_id);
+    if (surface_manager_.using_surface_references())
+      surface_manager_.DropTemporaryReference(surface_id);
   }
 }
 

@@ -10,6 +10,7 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
@@ -123,10 +124,10 @@ class ComponentsUnitTestEventListener : public testing::EmptyTestEventListener {
 
 base::RunTestSuiteCallback GetLaunchCallback(int argc, char** argv) {
 #if !defined(OS_IOS)
-  auto test_suite = std::make_unique<content::UnitTestTestSuite>(
+  auto test_suite = base::MakeUnique<content::UnitTestTestSuite>(
       new ComponentsTestSuite(argc, argv));
 #else
-  auto test_suite = std::make_unique<ComponentsTestSuite>(argc, argv);
+  auto test_suite = base::MakeUnique<ComponentsTestSuite>(argc, argv);
 #endif
 
   // The listener will set up common test environment for all components unit

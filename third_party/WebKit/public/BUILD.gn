@@ -118,6 +118,7 @@ source_set("blink_headers") {
   sources = [
     "platform/BlameContext.h",
     "platform/CORSStatus.h",
+    "platform/ComputedAXTree.h",
     "platform/FilePathConversion.h",
     "platform/InterfaceProvider.h",
     "platform/InterfaceRegistry.h",
@@ -151,7 +152,6 @@ source_set("blink_headers") {
     "platform/WebCompositeAndReadbackAsyncCallback.h",
     "platform/WebCompositorMutatorClient.h",
     "platform/WebCompositorSupport.h",
-    "platform/WebComputedAXTree.h",
     "platform/WebConnectionType.h",
     "platform/WebContentDecryptionModule.h",
     "platform/WebContentDecryptionModuleAccess.h",
@@ -517,6 +517,7 @@ source_set("blink_headers") {
     "web/WebLeakDetector.h",
     "web/WebLocalFrame.h",
     "web/WebMeaningfulLayout.h",
+    "web/WebMediaDeviceChangeObserver.h",
     "web/WebMediaPlayerAction.h",
     "web/WebMediaStreamRegistry.h",
     "web/WebMemoryStatistics.h",
@@ -795,7 +796,6 @@ mojom("mojo_bindings") {
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
     "//services/service_manager/public/interfaces",
-    "//skia/public/interfaces",
     "//third_party/WebKit/common:mojo_platform_bindings",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
@@ -834,7 +834,6 @@ mojom("android_mojo_bindings") {
     "platform/modules/mediasession/media_session.mojom",
     "platform/modules/payments/payment_request.mojom",
     "platform/modules/webshare/webshare.mojom",
-    "web/remote_objects.mojom",
   ]
   public_deps = [
     "//components/payments/mojom",

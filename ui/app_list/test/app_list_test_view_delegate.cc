@@ -47,6 +47,11 @@ void AppListTestViewDelegate::Dismiss() {
   ++dismiss_count_;
 }
 
+views::View* AppListTestViewDelegate::CreateStartPageWebView(
+    const gfx::Size& size) {
+  return NULL;
+}
+
 void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
   model_ = std::make_unique<AppListTestModel>();
   model_->PopulateApps(item_count);

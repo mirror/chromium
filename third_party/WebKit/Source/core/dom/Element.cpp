@@ -124,14 +124,12 @@
 #include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/svg/SVGResources.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/SpatialNavigation.h"
 #include "core/page/scrolling/RootScrollerController.h"
-#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollCustomizationCallbacks.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/page/scrolling/ScrollStateCallback.h"
@@ -141,6 +139,7 @@
 #include "core/resize_observer/ResizeObservation.h"
 #include "core/svg/SVGAElement.h"
 #include "core/svg/SVGElement.h"
+#include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg_names.h"
 #include "core/xml_names.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -616,11 +615,6 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  disable_custom_callbacks |=
-      !RootScrollerUtil::IsGlobal(this) &&
-      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
-      !GetScrollCustomizationCallbacks().InScrollPhase(this);
-
   if (!callback || disable_custom_callbacks) {
     NativeDistributeScroll(scroll_state);
     return;
@@ -634,7 +628,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
   if (callback->NativeScrollBehavior() ==
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
-}
+};
 
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
@@ -703,10 +697,6 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        .GetPage()
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
-  disable_custom_callbacks |=
-      !RootScrollerUtil::IsGlobal(this) &&
-      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
-      !GetScrollCustomizationCallbacks().InScrollPhase(this);
 
   if (!callback || disable_custom_callbacks) {
     NativeApplyScroll(scroll_state);
@@ -1293,7 +1283,6 @@ ComputedAccessibleNode* Element::GetComputedAccessibleNode() {
   if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
-  // TODO(meredithl): Create finer grain method for enabling accessibility.
   GetDocument().GetPage()->GetSettings().SetAccessibilityEnabled(true);
   ElementRareData& rare_data = EnsureElementRareData();
   return rare_data.EnsureComputedAccessibleNode(this);
@@ -1806,8 +1795,11 @@ void Element::RemovedFrom(ContainerNode* insertion_point) {
     if (this == GetDocument().CssTarget())
       GetDocument().SetCSSTarget(nullptr);
 
-    if (HasPendingResources())
-      SVGResources::RemoveWatchesForElement(*this);
+    if (HasPendingResources()) {
+      GetTreeScope()
+          .EnsureSVGTreeScopedResources()
+          .RemoveElementFromPendingResources(*this);
+    }
 
     if (GetCustomElementState() == CustomElementState::kCustom)
       CustomElement::EnqueueDisconnectedCallback(this);
@@ -2167,21 +2159,24 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   if (local_change != kNoChange)
     UpdateCallbackSelectors(old_style.get(), new_style.get());
 
-  if (LayoutObject* layout_object = GetLayoutObject()) {
-    // kNoChange may mean that the computed style didn't change, but there are
-    // additional flags in ComputedStyle which may have changed. For instance,
-    // the AffectedBy* flags. We don't need to go through the visual
-    // invalidation diffing in that case, but we replace the old ComputedStyle
-    // object with the new one to ensure the mentioned flags are up to date.
-    if (local_change == kNoChange)
-      layout_object->SetStyleInternal(new_style.get());
-    else
+  if (LayoutObject* layout_object = this->GetLayoutObject()) {
+    if (local_change != kNoChange) {
       layout_object->SetStyle(new_style.get());
+    } else {
+      // Although no change occurred, we use the new style so that the cousin
+      // style sharing code won't get fooled into believing this style is the
+      // same.
+      // FIXME: We may be able to remove this hack, see discussion in
+      // https://codereview.chromium.org/30453002/
+      layout_object->SetStyleInternal(new_style.get());
+    }
   } else {
-    if (ShouldStoreNonLayoutObjectComputedStyle(*new_style))
-      StoreNonLayoutObjectComputedStyle(new_style);
-    else if (HasRareData())
-      GetElementRareData()->ClearComputedStyle();
+    if (local_change != kNoChange) {
+      if (ShouldStoreNonLayoutObjectComputedStyle(*new_style))
+        StoreNonLayoutObjectComputedStyle(new_style);
+      else if (HasRareData())
+        GetElementRareData()->ClearComputedStyle();
+    }
   }
 
   if (GetStyleChangeType() >= kSubtreeStyleChange)
@@ -2509,9 +2504,9 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
-ShadowRoot& Element::CreateUserAgentShadowRoot() {
+ShadowRoot& Element::CreateUserAgentShadowRootV1() {
   DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
@@ -2569,13 +2564,13 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
   return nullptr;
 }
 
-ShadowRoot& Element::EnsureUserAgentShadowRoot() {
+ShadowRoot& Element::EnsureUserAgentShadowRootV1() {
   if (ShadowRoot* shadow_root = UserAgentShadowRoot()) {
-    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgent);
+    DCHECK(shadow_root->GetType() == ShadowRootType::kUserAgentV1);
     return *shadow_root;
   }
   ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
@@ -3278,24 +3273,6 @@ void Element::SetNeedsResizeObserverUpdate() {
     for (auto& observation : data->Values())
       observation->ElementSizeChanged();
   }
-}
-
-void Element::WillBeginCustomizedScrollPhase(
-    ScrollCustomization::ScrollDirection direction) {
-  DCHECK(!GetScrollCustomizationCallbacks().InScrollPhase(this));
-  LayoutBox* box = GetLayoutBox();
-  if (!box)
-    return;
-
-  ScrollCustomization::ScrollDirection scroll_customization =
-      box->Style()->ScrollCustomization();
-
-  GetScrollCustomizationCallbacks().SetInScrollPhase(
-      this, direction & scroll_customization);
-}
-
-void Element::DidEndCustomizedScrollPhase() {
-  GetScrollCustomizationCallbacks().SetInScrollPhase(this, false);
 }
 
 // Step 1 of http://domparsing.spec.whatwg.org/#insertadjacenthtml()
@@ -4634,9 +4611,9 @@ void Element::AddPropertyToPresentationAttributeStyle(
 void Element::AddPropertyToPresentationAttributeStyle(
     MutableCSSPropertyValueSet* style,
     CSSPropertyID property_id,
-    const CSSValue& value) {
+    const CSSValue* value) {
   DCHECK(IsStyledElement());
-  style->SetProperty(property_id, value);
+  style->SetProperty(property_id, *value);
 }
 
 void Element::LogAddElementIfIsolatedWorldAndInDocument(

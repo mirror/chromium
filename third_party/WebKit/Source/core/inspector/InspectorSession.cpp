@@ -23,25 +23,27 @@ InspectorSession::InspectorSession(Client* client,
                                    int session_id,
                                    v8_inspector::V8Inspector* inspector,
                                    int context_group_id,
-                                   const String& reattach_state)
+                                   const String* saved_state)
     : client_(client),
       v8_session_(nullptr),
       session_id_(session_id),
       disposed_(false),
       instrumenting_agents_(instrumenting_agents),
       inspector_backend_dispatcher_(new protocol::UberDispatcher(this)) {
-  String v8_state;
-  if (!reattach_state.IsNull()) {
+  if (saved_state) {
     std::unique_ptr<protocol::Value> state =
-        protocol::StringUtil::parseJSON(reattach_state);
+        protocol::StringUtil::parseJSON(*saved_state);
     if (state)
       state_ = protocol::DictionaryValue::cast(std::move(state));
     if (!state_)
       state_ = protocol::DictionaryValue::create();
-    state_->getString(kV8StateKey, &v8_state);
   } else {
     state_ = protocol::DictionaryValue::create();
   }
+
+  String v8_state;
+  if (saved_state)
+    state_->getString(kV8StateKey, &v8_state);
   v8_session_ = inspector->connect(context_group_id, this,
                                    ToV8InspectorStringView(v8_state));
 }

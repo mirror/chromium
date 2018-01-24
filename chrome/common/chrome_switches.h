@@ -134,7 +134,6 @@ extern const char kForceEnableMetricsReporting[];
 extern const char kForceFirstRun[];
 extern const char kForceFirstRunDialog[];
 extern const char kForceLocalNtp[];
-extern const char kForceStackedTabStripLayout[];
 extern const char kHomePage[];
 extern const char kIgnoreUrlFetcherCertRequests[];
 extern const char kIncognito[];

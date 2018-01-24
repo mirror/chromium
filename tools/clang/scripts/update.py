@@ -131,6 +131,7 @@ def DownloadUrl(url, output_file):
 
 def EnsureDirExists(path):
   if not os.path.exists(path):
+    print "Creating directory %s" % path
     os.makedirs(path)
 
 
@@ -269,6 +270,20 @@ def CheckoutRepos(args):
     return
 
   Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
+
+  # Back out previous local patches. This needs to be kept around a bit
+  # until all bots have cycled. See https://crbug.com/755777.
+  files = [
+    'lib/Transforms/InstCombine/InstructionCombining.cpp',
+    'test/DebugInfo/X86/formal_parameter.ll',
+    'test/DebugInfo/X86/instcombine-instrinsics.ll',
+    'test/Transforms/InstCombine/debuginfo-skip.ll',
+    'test/Transforms/InstCombine/debuginfo.ll',
+    'test/Transforms/Util/simplify-dbg-declare-load.ll',
+  ]
+  for f in [os.path.join(LLVM_DIR, f) for f in files]:
+    RunCommand(['svn', 'revert', f])
+
   Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
   if True:
     Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
@@ -460,16 +475,20 @@ def UpdateClang(args):
   if ReadStampFile() == expected_stamp and not args.force_local_build:
     return 0
 
+  print 'Updating Clang to %s...' % PACKAGE_VERSION
+
   # Reset the stamp file in case the build is unsuccessful.
   WriteStampFile('')
 
   if not args.force_local_build:
+    print 'Downloading prebuilt clang'
     if os.path.exists(LLVM_BUILD_DIR):
       RmTree(LLVM_BUILD_DIR)
 
     DownloadAndUnpackClangPackage(sys.platform)
     if 'win' in target_os:
       DownloadAndUnpackClangPackage('win32', runtimes_only=True)
+    print 'clang %s unpacked' % PACKAGE_VERSION
     if sys.platform == 'win32':
       CopyDiaDllTo(os.path.join(LLVM_BUILD_DIR, 'bin'))
     WriteStampFile(expected_stamp)
@@ -482,8 +501,6 @@ def UpdateClang(args):
     print 'https://www.chromium.org/developers/how-tos/android-build-instructions'
     print 'for how to install the NDK, or pass --without-android.'
     return 1
-
-  print 'Locally building Clang %s...' % PACKAGE_VERSION
 
   DownloadHostGcc(args)
   AddCMakeToPath(args)

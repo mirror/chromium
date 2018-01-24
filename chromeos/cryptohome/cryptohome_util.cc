@@ -13,86 +13,27 @@
 #include "components/device_event_log/device_event_log.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
+// TODO(crbug.com/797848): Add unit tests for this file.
+
 namespace cryptohome {
 
-namespace {
-
-bool IsEmpty(const base::Optional<BaseReply>& reply) {
+MountError BaseReplyToMountError(const base::Optional<BaseReply>& reply) {
   if (!reply.has_value()) {
-    LOGIN_LOG(ERROR) << "Cryptohome call failed with empty reply.";
-    return true;
-  }
-  return false;
-}
-
-void KeyDefPrivilegesToKeyPrivileges(int key_def_privileges,
-                                     KeyPrivileges* privileges) {
-  privileges->set_mount(key_def_privileges & PRIV_MOUNT);
-  privileges->set_add(key_def_privileges & PRIV_ADD);
-  privileges->set_remove(key_def_privileges & PRIV_REMOVE);
-  privileges->set_update(key_def_privileges & PRIV_MIGRATE);
-  privileges->set_authorized_update(key_def_privileges &
-                                    PRIV_AUTHORIZED_UPDATE);
-}
-
-// TODO(crbug.com/797848): Add tests that cover this logic.
-void KeyDefSecretToKeyAuthorizationSecret(
-    const KeyDefinition::AuthorizationData::Secret& key_def_secret,
-    KeyAuthorizationSecret* secret) {
-  secret->mutable_usage()->set_encrypt(key_def_secret.encrypt);
-  secret->mutable_usage()->set_sign(key_def_secret.sign);
-  secret->set_wrapped(key_def_secret.wrapped);
-  if (!key_def_secret.symmetric_key.empty())
-    secret->set_symmetric_key(key_def_secret.symmetric_key);
-
-  if (!key_def_secret.public_key.empty())
-    secret->set_public_key(key_def_secret.public_key);
-}
-
-// TODO(crbug.com/797848): Add tests that cover this logic.
-void KeyDefProviderDataToKeyProviderDataEntry(
-    const KeyDefinition::ProviderData& provider_data,
-    KeyProviderData::Entry* entry) {
-  entry->set_name(provider_data.name);
-  if (provider_data.number)
-    entry->set_number(*provider_data.number);
-
-  if (provider_data.bytes)
-    entry->set_bytes(*provider_data.bytes);
-}
-
-// TODO(crbug.com/797848): Add tests that cover this logic.
-KeyAuthorizationData::KeyAuthorizationType GetKeyAuthDataType(
-    KeyDefinition::AuthorizationData::Type key_def_auth_data_type) {
-  switch (key_def_auth_data_type) {
-    case KeyDefinition::AuthorizationData::TYPE_HMACSHA256:
-      return KeyAuthorizationData::KEY_AUTHORIZATION_TYPE_HMACSHA256;
-    case KeyDefinition::AuthorizationData::TYPE_AES256CBC_HMACSHA256:
-      return KeyAuthorizationData::KEY_AUTHORIZATION_TYPE_AES256CBC_HMACSHA256;
-  }
-}
-
-}  // namespace
-
-MountError MountExReplyToMountError(const base::Optional<BaseReply>& reply) {
-  if (IsEmpty(reply))
+    LOGIN_LOG(ERROR) << "MountEx failed with no reply.";
     return MOUNT_ERROR_FATAL;
-
+  }
   if (!reply->HasExtension(MountReply::reply)) {
     LOGIN_LOG(ERROR) << "MountEx failed with no MountReply extension in reply.";
     return MOUNT_ERROR_FATAL;
   }
+  if (reply->has_error() && reply->error() != CRYPTOHOME_ERROR_NOT_SET) {
+    LOGIN_LOG(ERROR) << "MountEx failed (CryptohomeErrorCode): "
+                     << reply->error();
+  }
   return CryptohomeErrorToMountError(reply->error());
 }
 
-MountError BaseReplyToMountError(const base::Optional<BaseReply>& reply) {
-  if (IsEmpty(reply))
-    return MOUNT_ERROR_FATAL;
-
-  return CryptohomeErrorToMountError(reply->error());
-}
-
-const std::string& MountExReplyToMountHash(const BaseReply& reply) {
+const std::string& BaseReplyToMountHash(const BaseReply& reply) {
   return reply.GetExtension(MountReply::reply).sanitized_username();
 }
 
@@ -107,7 +48,6 @@ AuthorizationRequest CreateAuthorizationRequest(const std::string& label,
   return auth_request;
 }
 
-// TODO(crbug.com/797848): Finish testing this method.
 void KeyDefinitionToKey(const KeyDefinition& key_def, Key* key) {
   key->set_secret(key_def.secret);
   KeyData* data = key->mutable_data();
@@ -119,26 +59,52 @@ void KeyDefinitionToKey(const KeyDefinition& key_def, Key* key) {
     data->set_revision(key_def.revision);
 
   if (key_def.privileges != 0) {
-    KeyDefPrivilegesToKeyPrivileges(key_def.privileges,
-                                    data->mutable_privileges());
+    KeyPrivileges* privileges = data->mutable_privileges();
+    privileges->set_mount(key_def.privileges & PRIV_MOUNT);
+    privileges->set_add(key_def.privileges & PRIV_ADD);
+    privileges->set_remove(key_def.privileges & PRIV_REMOVE);
+    privileges->set_update(key_def.privileges & PRIV_MIGRATE);
+    privileges->set_authorized_update(key_def.privileges &
+                                      PRIV_AUTHORIZED_UPDATE);
   }
 
-  for (const auto& key_def_auth_data : key_def.authorization_data) {
+  for (const auto& current_auth_data : key_def.authorization_data) {
     KeyAuthorizationData* auth_data = data->add_authorization_data();
-    auth_data->set_type(GetKeyAuthDataType(key_def_auth_data.type));
-    for (const auto& key_def_secret : key_def_auth_data.secrets) {
-      KeyDefSecretToKeyAuthorizationSecret(key_def_secret,
-                                           auth_data->add_secrets());
+    switch (current_auth_data.type) {
+      case KeyDefinition::AuthorizationData::TYPE_HMACSHA256:
+        auth_data->set_type(
+            KeyAuthorizationData::KEY_AUTHORIZATION_TYPE_HMACSHA256);
+        break;
+      case KeyDefinition::AuthorizationData::TYPE_AES256CBC_HMACSHA256:
+        auth_data->set_type(
+            KeyAuthorizationData::KEY_AUTHORIZATION_TYPE_AES256CBC_HMACSHA256);
+        break;
+    }
+
+    for (const auto& current_secret : current_auth_data.secrets) {
+      KeyAuthorizationSecret* secret = auth_data->add_secrets();
+      secret->mutable_usage()->set_encrypt(current_secret.encrypt);
+      secret->mutable_usage()->set_sign(current_secret.sign);
+      secret->set_wrapped(current_secret.wrapped);
+      if (!current_secret.symmetric_key.empty())
+        secret->set_symmetric_key(current_secret.symmetric_key);
+
+      if (!current_secret.public_key.empty())
+        secret->set_public_key(current_secret.public_key);
     }
   }
 
   for (const auto& provider_data : key_def.provider_data) {
-    KeyDefProviderDataToKeyProviderDataEntry(
-        provider_data, data->mutable_provider_data()->add_entry());
+    KeyProviderData::Entry* entry = data->mutable_provider_data()->add_entry();
+    entry->set_name(provider_data.name);
+    if (provider_data.number)
+      entry->set_number(*provider_data.number);
+
+    if (provider_data.bytes)
+      entry->set_bytes(*provider_data.bytes);
   }
 }
 
-// TODO(crbug.com/797848): Finish testing this method.
 MountError CryptohomeErrorToMountError(CryptohomeErrorCode code) {
   switch (code) {
     case CRYPTOHOME_ERROR_NOT_SET:

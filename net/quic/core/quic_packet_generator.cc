@@ -313,7 +313,7 @@ QuicPacketGenerator::SerializeVersionNegotiationPacket(
   return packet_creator_.SerializeVersionNegotiationPacket(supported_versions);
 }
 
-OwningSerializedPacketPointer
+std::unique_ptr<QuicEncryptedPacket>
 QuicPacketGenerator::SerializeConnectivityProbingPacket() {
   return packet_creator_.SerializeConnectivityProbingPacket();
 }

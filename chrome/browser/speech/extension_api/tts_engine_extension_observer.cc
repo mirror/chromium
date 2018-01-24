@@ -11,7 +11,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/speech/extension_api/tts_engine_extension_api.h"
 #include "chrome/browser/speech/tts_controller.h"
-#include "chrome/common/extensions/api/speech/tts_engine_manifest_handler.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -89,22 +88,6 @@ bool TtsEngineExtensionObserver::SawExtensionLoad(
   return previously_loaded;
 }
 
-const std::vector<extensions::TtsVoice>*
-TtsEngineExtensionObserver::GetRuntimeVoices(const std::string extension_id) {
-  auto it = extension_id_to_runtime_voices_.find(extension_id);
-  if (it == extension_id_to_runtime_voices_.end())
-    return nullptr;
-
-  return &it->second->voices;
-}
-
-void TtsEngineExtensionObserver::SetRuntimeVoices(
-    std::unique_ptr<extensions::TtsVoices> tts_voices,
-    const std::string extension_id) {
-  extension_id_to_runtime_voices_[extension_id] = std::move(tts_voices);
-  TtsController::GetInstance()->VoicesChanged();
-}
-
 void TtsEngineExtensionObserver::Shutdown() {
   extensions::EventRouter::Get(profile_)->UnregisterObserver(this);
 }
@@ -137,9 +120,9 @@ void TtsEngineExtensionObserver::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const extensions::Extension* extension,
     extensions::UnloadedExtensionReason reason) {
-  size_t erase_count = 0;
-  erase_count += engine_extension_ids_.erase(extension->id());
-  erase_count += extension_id_to_runtime_voices_.erase(extension->id());
-  if (erase_count >= 0)
+  if (engine_extension_ids_.find(extension->id()) !=
+      engine_extension_ids_.end()) {
+    engine_extension_ids_.erase(extension->id());
     TtsController::GetInstance()->VoicesChanged();
+  }
 }

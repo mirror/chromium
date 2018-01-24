@@ -7,6 +7,8 @@ package org.chromium.chrome.browser.preferences.password;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.PasswordManagerHandler;
+import org.chromium.chrome.browser.PasswordUIView;
 
 /**
  * A provider for PasswordManagerHandler implementations, handling the choice of the proper one

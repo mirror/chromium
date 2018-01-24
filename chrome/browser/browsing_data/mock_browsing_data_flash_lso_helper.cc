@@ -12,21 +12,20 @@ MockBrowsingDataFlashLSOHelper::MockBrowsingDataFlashLSOHelper(
     content::BrowserContext* browser_context) {
 }
 void MockBrowsingDataFlashLSOHelper::StartFetching(
-    GetSitesWithFlashDataCallback callback) {
+    const GetSitesWithFlashDataCallback& callback) {
   ASSERT_FALSE(callback.is_null());
   ASSERT_TRUE(callback_.is_null());
-  callback_ = std::move(callback);
+  callback_ = callback;
 }
 
 void MockBrowsingDataFlashLSOHelper::DeleteFlashLSOsForSite(
-    const std::string& site,
-    base::OnceClosure callback) {
+    const std::string& site, const base::Closure& callback) {
   std::vector<std::string>::iterator entry =
       std::find(domains_.begin(), domains_.end(), site);
   ASSERT_TRUE(entry != domains_.end());
   domains_.erase(entry);
   if (!callback.is_null())
-    std::move(callback).Run();
+    callback.Run();
 }
 
 void MockBrowsingDataFlashLSOHelper::AddFlashLSODomain(
@@ -35,7 +34,7 @@ void MockBrowsingDataFlashLSOHelper::AddFlashLSODomain(
 }
 
 void MockBrowsingDataFlashLSOHelper::Notify() {
-  std::move(callback_).Run(domains_);
+  callback_.Run(domains_);
   callback_ = GetSitesWithFlashDataCallback();
 }
 

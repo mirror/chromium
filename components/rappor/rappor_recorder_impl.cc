@@ -4,8 +4,7 @@
 
 #include "components/rappor/rappor_recorder_impl.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -21,7 +20,7 @@ RapporRecorderImpl::~RapporRecorderImpl() = default;
 void RapporRecorderImpl::Create(
     RapporServiceImpl* rappor_service,
     mojom::RapporRecorderRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<RapporRecorderImpl>(rappor_service),
+  mojo::MakeStrongBinding(base::MakeUnique<RapporRecorderImpl>(rappor_service),
                           std::move(request));
 }
 

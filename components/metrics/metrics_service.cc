@@ -227,11 +227,11 @@ MetricsService::MetricsService(MetricsStateManager* state_manager,
   DCHECK(local_state_);
 
   RegisterMetricsProvider(
-      std::make_unique<StabilityMetricsProvider>(local_state_));
+      base::MakeUnique<StabilityMetricsProvider>(local_state_));
 
   RegisterMetricsProvider(state_manager_->GetProvider());
 
-  RegisterMetricsProvider(std::make_unique<variations::FieldTrialsProvider>(
+  RegisterMetricsProvider(base::MakeUnique<variations::FieldTrialsProvider>(
       &synthetic_trial_registry_, base::StringPiece()));
 }
 
@@ -811,7 +811,7 @@ void MetricsService::CheckForClonedInstall() {
 
 std::unique_ptr<MetricsLog> MetricsService::CreateLog(
     MetricsLog::LogType log_type) {
-  return std::make_unique<MetricsLog>(state_manager_->client_id(), session_id_,
+  return base::MakeUnique<MetricsLog>(state_manager_->client_id(), session_id_,
                                       log_type, client_);
 }
 

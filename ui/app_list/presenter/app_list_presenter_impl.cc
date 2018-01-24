@@ -4,8 +4,8 @@
 
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 
-#include <utility>
-
+#include "ash/app_list/model/app_list_model.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/app_list/app_list_constants.h"
@@ -95,7 +95,13 @@ void AppListPresenterImpl::Show(int64_t display_id) {
     SetView(view);
   }
   presenter_delegate_->OnShown(display_id);
-  presenter_delegate_->GetViewDelegate()->ViewShown();
+
+  base::RecordAction(base::UserMetricsAction("Launcher_Show"));
+  base::UmaHistogramSparse("Apps.AppListBadgedAppsCount",
+                           presenter_delegate_->GetViewDelegate()
+                               ->GetModel()
+                               ->top_level_item_list()
+                               ->BadgedItemCount());
 }
 
 void AppListPresenterImpl::Dismiss() {
@@ -186,6 +192,7 @@ void AppListPresenterImpl::SetView(AppListView* view) {
   view_ = view;
   views::Widget* widget = view_->GetWidget();
   widget->AddObserver(this);
+  widget->GetNativeView()->GetRootWindow()->AddObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->AddObserver(this);
   view_->GetAppsPaginationModel()->AddObserver(this);
   view_->ShowWhenReady();
@@ -199,6 +206,7 @@ void AppListPresenterImpl::ResetView() {
   widget->RemoveObserver(this);
   GetLayer(widget)->GetAnimator()->RemoveObserver(this);
   presenter_delegate_.reset();
+  widget->GetNativeView()->GetRootWindow()->RemoveObserver(this);
   aura::client::GetFocusClient(widget->GetNativeView())->RemoveObserver(this);
 
   view_->GetAppsPaginationModel()->RemoveObserver(this);
@@ -261,6 +269,17 @@ void AppListPresenterImpl::OnWindowFocused(aura::Window* gained_focus,
       Dismiss();
     }
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// AppListPresenterImpl,  aura::WindowObserver implementation:
+void AppListPresenterImpl::OnWindowBoundsChanged(
+    aura::Window* root,
+    const gfx::Rect& old_bounds,
+    const gfx::Rect& new_bounds,
+    ui::PropertyChangeReason reason) {
+  if (presenter_delegate_)
+    presenter_delegate_->UpdateBounds();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

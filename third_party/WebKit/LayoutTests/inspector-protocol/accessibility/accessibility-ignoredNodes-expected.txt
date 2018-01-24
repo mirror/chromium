@@ -429,15 +429,7 @@ WebArea
       }
     ]
   },
-  "properties": [
-    {
-      "name": "selected",
-      "value": {
-        "type": "booleanOrUndefined",
-        "value": true
-      }
-    }
-  ],
+  "properties": [],
   "domNode": "option"
 }
 

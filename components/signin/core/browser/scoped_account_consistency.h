@@ -40,6 +40,8 @@ class ScopedAccountConsistency {
     DISALLOW_COPY_AND_ASSIGN(ScopedAccountConsistency##method);       \
   }
 
+// ScopedAccountConsistencyDisabled:
+SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Disabled);
 // ScopedAccountConsistencyMirror:
 SCOPED_ACCOUNT_CONSISTENCY_SPECIALIZATION(Mirror);
 // ScopedAccountConsistencyDiceFixAuthErrors:

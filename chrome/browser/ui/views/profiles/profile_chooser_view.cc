@@ -48,6 +48,7 @@
 #include "chrome/browser/ui/views/profiles/badged_profile_photo.h"
 #include "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.h"
 #include "chrome/browser/ui/views/profiles/user_manager_view.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/pref_names.h"
@@ -182,6 +183,41 @@ BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   }
   return profile->IsChild() ? BadgedProfilePhoto::BADGE_TYPE_CHILD
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
+}
+
+// Returns the list of all accounts that have a token. The default account in
+// the Gaia cookies will be the first account in the list.
+// TODO(tangltom): Move this code to chrome/browser/ui/signin and add a unit
+// test.
+std::vector<AccountInfo> GetAccountsForProfile(Profile* profile) {
+  // Fetch account ids for accounts that have a token.
+  ProfileOAuth2TokenService* token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
+  std::vector<std::string> account_ids = token_service->GetAccounts();
+  // Fetch accounts in the Gaia cookies.
+  GaiaCookieManagerService* cookie_manager_service =
+      GaiaCookieManagerServiceFactory::GetForProfile(profile);
+  std::vector<gaia::ListedAccount> cookie_accounts;
+  bool gaia_accounts_stale = !cookie_manager_service->ListAccounts(
+      &cookie_accounts, nullptr, "ProfileChooserView");
+  UMA_HISTOGRAM_BOOLEAN("Profile.DiceUI.GaiaAccountsStale",
+                        gaia_accounts_stale);
+  // Fetch account information for each id and make sure that the first account
+  // in the list matches the first account in the Gaia cookies (if available).
+  AccountTrackerService* account_tracker_service =
+      AccountTrackerServiceFactory::GetForProfile(profile);
+  std::string gaia_default_account_id =
+      cookie_accounts.empty() ? "" : cookie_accounts[0].id;
+  std::vector<AccountInfo> accounts;
+  for (const std::string& account_id : account_ids) {
+    AccountInfo account_info =
+        account_tracker_service->GetAccountInfo(account_id);
+    if (account_id == gaia_default_account_id)
+      accounts.insert(accounts.begin(), account_info);
+    else
+      accounts.push_back(account_info);
+  }
+  return accounts;
 }
 
 }  // namespace
@@ -652,8 +688,13 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
   } else if (sender == signin_current_profile_button_) {
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
   } else if (sender == signin_with_gaia_account_button_) {
-    signin_ui_util::EnableSync(browser_, dice_sync_promo_account_,
-                               access_point_);
+    // DiceTurnSyncOnHelper deletes itself once it's done.
+    new DiceTurnSyncOnHelper(
+        browser_->profile(), browser_, access_point_,
+        signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
+        signin_with_gaia_account_id_,
+        DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+
   } else {
     // Either one of the "other profiles", or one of the profile accounts
     // buttons was pressed.
@@ -998,7 +1039,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 views::View* ProfileChooserView::CreateDiceSigninView() {
   // Fetch signed in GAIA web accounts.
   std::vector<AccountInfo> accounts =
-      signin_ui_util::GetAccountsForDicePromos(browser_->profile());
+      GetAccountsForProfile(browser_->profile());
 
   // Create a view that holds an illustration and a promo, which includes a
   // button. The illustration should slightly overlap with the promo at the
@@ -1057,13 +1098,11 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
   }
 
   // Create a hover button to sign in the first account of |accounts|.
+  // TODO(http://crbug.com/794522): Use the account picture instead of the
+  // default avatar.
   gfx::Image account_icon =
-      AccountTrackerServiceFactory::GetForProfile(browser_->profile())
-          ->GetAccountImage(accounts[0].account_id);
-  if (account_icon.IsEmpty()) {
-    account_icon = ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-        profiles::GetPlaceholderAvatarIconResourceID());
-  }
+      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+          profiles::GetPlaceholderAvatarIconResourceID());
   auto account_photo = std::make_unique<BadgedProfilePhoto>(
       BadgedProfilePhoto::BADGE_TYPE_NONE, account_icon);
   base::string16 first_account_button_title =
@@ -1082,7 +1121,7 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
   promo_button_container->AddChildView(signin_button_view);
 
   signin_with_gaia_account_button_ = first_account_button;
-  dice_sync_promo_account_ = accounts[0];
+  signin_with_gaia_account_id_ = accounts[0].account_id;
 
   constexpr int kSmallMenuIconSize = 16;
   HoverButton* sync_to_another_account_button = new HoverButton(

@@ -6,6 +6,7 @@
 
 #include "base/containers/adapters.h"
 #include "services/ui/ws/server_window.h"
+#include "services/ui/ws/server_window_delegate.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_f.h"
@@ -86,7 +87,6 @@ gfx::Transform TransformFromParent(const ServerWindow* window,
 
 bool FindDeepestVisibleWindowForLocationImpl(
     ServerWindow* window,
-    bool is_root_window,
     EventSource event_source,
     const gfx::Point& location_in_root,
     const gfx::Point& location_in_window,
@@ -95,11 +95,7 @@ bool FindDeepestVisibleWindowForLocationImpl(
   // The non-client area takes precedence over descendants, as otherwise the
   // user would likely not be able to hit the non-client area as it's common
   // for descendants to go into the non-client area.
-  //
-  // Display roots aren't allowed to have non-client areas. This is important
-  // as roots may have a transform, which causes problem in comparing sizes.
-  if (!is_root_window &&
-      IsLocationInNonclientArea(window, location_in_window)) {
+  if (IsLocationInNonclientArea(window, location_in_window)) {
     deepest_window->window = window;
     deepest_window->in_non_client_area = true;
     return true;
@@ -137,10 +133,9 @@ bool FindDeepestVisibleWindowForLocationImpl(
         continue;
       }
 
-      const bool child_is_root = false;
       if (FindDeepestVisibleWindowForLocationImpl(
-              child, child_is_root, event_source, location_in_root,
-              location_in_child, child_transform, deepest_window)) {
+              child, event_source, location_in_root, location_in_child,
+              child_transform, deepest_window)) {
         return true;
       }
     }
@@ -169,10 +164,9 @@ DeepestWindow FindDeepestVisibleWindowForLocation(ServerWindow* root_window,
   DeepestWindow result;
   // Allow the root to have a transform, which mirrors what happens with
   // WindowManagerDisplayRoot.
-  const bool is_root_window = true;
-  FindDeepestVisibleWindowForLocationImpl(
-      root_window, is_root_window, event_source, location, initial_location,
-      root_transform, &result);
+  FindDeepestVisibleWindowForLocationImpl(root_window, event_source, location,
+                                          initial_location, root_transform,
+                                          &result);
   return result;
 }
 

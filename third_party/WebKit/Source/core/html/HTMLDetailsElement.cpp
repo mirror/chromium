@@ -44,7 +44,7 @@ using namespace HTMLNames;
 
 HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
   HTMLDetailsElement* details = new HTMLDetailsElement(document);
-  details->EnsureUserAgentShadowRoot();
+  details->EnsureUserAgentShadowRootV1();
   return details;
 }
 
@@ -120,7 +120,7 @@ void HTMLDetailsElement::ParseAttribute(
         WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
                   WrapPersistent(this)));
 
-    Element* content = EnsureUserAgentShadowRoot().getElementById(
+    Element* content = EnsureUserAgentShadowRootV1().getElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)

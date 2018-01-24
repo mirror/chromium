@@ -200,27 +200,17 @@ bool SendBeaconCommon(LocalFrame* frame,
   // mode should always be "no-cors".
   params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::beacon;
 
-  frame->Client()->DidDispatchPingLoader(request.Url());
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-  return resource->GetStatus() != ResourceStatus::kLoadError;
+  if (resource && resource->GetStatus() != ResourceStatus::kLoadError) {
+    frame->Client()->DidDispatchPingLoader(request.Url());
+    return true;
+  }
+
+  return false;
 }
 
 }  // namespace
-
-void PingLoader::LoadImage(LocalFrame* frame, const KURL& url) {
-  ResourceRequest request(url);
-  request.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=0");
-  request.SetKeepalive(true);
-  request.SetRequestContext(WebURLRequest::kRequestContextPing);
-  FetchParameters params(request);
-  params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::ping;
-  // TODO(mkwst): Reevaluate this.
-  params.SetContentSecurityCheck(kDoNotCheckContentSecurityPolicy);
-
-  frame->Client()->DidDispatchPingLoader(request.Url());
-  RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
-}
 
 // http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#hyperlink-auditing
 void PingLoader::SendLinkAuditPing(LocalFrame* frame,
@@ -252,8 +242,10 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
   FetchParameters params(request);
   params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::ping;
 
-  frame->Client()->DidDispatchPingLoader(request.Url());
-  RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource =
+      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
+    frame->Client()->DidDispatchPingLoader(request.Url());
 }
 
 void PingLoader::SendViolationReport(LocalFrame* frame,
@@ -282,8 +274,10 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
   params.MutableOptions().security_origin =
       frame->GetDocument()->GetSecurityOrigin();
 
-  frame->Client()->DidDispatchPingLoader(request.Url());
-  RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource =
+      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
+    frame->Client()->DidDispatchPingLoader(request.Url());
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,

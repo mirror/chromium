@@ -168,9 +168,13 @@ public abstract class ChromeFeatureList {
             "ChromeHomeInactivitySheetExpansion";
     public static final String CHROME_HOME_MENU_ITEMS_EXPAND_SHEET =
             "ChromeHomeMenuItemsExpandSheet";
+    public static final String CHROME_HOME_OPT_OUT_SNACKBAR = "ChromeHomeOptOutSnackbar";
     public static final String CHROME_HOME_PERSISTENT_IPH = "ChromeHomePersistentIph";
     public static final String CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS =
             "ChromeHomePersonalizedOmniboxSuggestions";
+    public static final String CHROME_HOME_PROMO = "ChromeHomePromo";
+    public static final String CHROME_HOME_PROMO_INFO_ONLY = "ChromeHomePromoInfoOnly";
+    public static final String CHROME_HOME_PROMO_ON_STARTUP = "ChromeHomePromoOnStartup";
     public static final String CHROME_HOME_PULL_TO_REFRESH_IPH_AT_TOP =
             "ChromeHomePullToRefreshIphAtTop";
     public static final String CHROME_HOME_SHOW_GOOGLE_G_WHEN_URL_CLEARED =
@@ -178,10 +182,8 @@ public abstract class ChromeFeatureList {
     public static final String CHROME_HOME_SURVEY = "ChromeHomeSurvey";
     public static final String CHROME_HOME_SWIPE_VELOCITY_FEATURE = "ChromeHomeSwipeLogicVelocity";
     public static final String CHROME_MEMEX = "ChromeMemex";
-    public static final String CHROME_MODERN_DESIGN = "ChromeModernDesign";
     public static final String CHROME_SMART_SELECTION = "ChromeSmartSelection";
     public static final String CLEAR_OLD_BROWSING_DATA = "ClearOldBrowsingData";
-    public static final String CLIPBOARD_CONTENT_SETTING = "ClipboardContentSetting";
     public static final String CONTENT_SUGGESTIONS_FAVICONS_FROM_NEW_SERVER =
             "ContentSuggestionsFaviconsFromNewServer";
     public static final String CONTENT_SUGGESTIONS_NOTIFICATIONS =
@@ -238,7 +240,6 @@ public abstract class ChromeFeatureList {
     public static final String READER_MODE_IN_CCT = "ReaderModeInCCT";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String SITE_NOTIFICATION_CHANNELS = "SiteNotificationChannels";
-    public static final String SOLE_INTEGRATION = "SoleIntegration";
     public static final String SOUND_CONTENT_SETTING = "SoundContentSetting";
     public static final String SPANNABLE_INLINE_AUTOCOMPLETE = "SpannableInlineAutocomplete";
     public static final String TAB_REPARENTING = "TabReparenting";
@@ -247,7 +248,6 @@ public abstract class ChromeFeatureList {
     public static final String VR_BROWSING = "VrBrowsing";
     public static final String VR_BROWSING_FEEDBACK = "VrBrowsingFeedback";
     public static final String VR_BROWSING_IN_CUSTOM_TAB = "VrBrowsingInCustomTab";
-    public static final String VR_ICON_IN_DAYDREAM_HOME = "VrIconInDaydreamHome";
     public static final String VR_LAUNCH_INTENT = "VrLaunchIntents";
     public static final String WEB_PAYMENTS = "WebPayments";
     public static final String WEB_PAYMENTS_METHOD_SECTION_ORDER_V2 =

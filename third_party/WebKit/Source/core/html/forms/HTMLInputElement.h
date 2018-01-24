@@ -112,7 +112,6 @@ class CORE_EXPORT HTMLInputElement
   bool checked() const;
   void setChecked(bool, TextFieldEventBehavior = kDispatchNoEvent);
   void DispatchChangeEventIfNeeded();
-  void DispatchInputAndChangeEventIfNeeded();
 
   // 'indeterminate' is a state independent of the checked state that causes the
   // control to draw in a way that hides the actual state.
@@ -380,6 +379,8 @@ class CORE_EXPORT HTMLInputElement
                             Element* old_focused_element,
                             WebFocusType,
                             InputDeviceCapabilities* source_capabilities) final;
+  bool SupportsAutocapitalize() const final;
+  const AtomicString& DefaultAutocapitalize() const final;
 
   bool IsOptionalFormControl() const final { return !IsRequiredFormControl(); }
   bool IsRequiredFormControl() const final;

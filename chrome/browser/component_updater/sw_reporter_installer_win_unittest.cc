@@ -687,7 +687,7 @@ class SwReporterOnDemandFetcherTest : public ::testing::Test,
     EXPECT_CALL(mock_cus_, RemoveObserver(_)).Times(AtLeast(1));
   }
 
-  void CreateOnDemandFetcherAndVerifyExpectations(bool can_be_updated) {
+  void CreateOnDemandFetcherAndVerifyExpecations(bool can_be_updated) {
     component_can_be_updated_ = can_be_updated;
 
     fetcher_ = base::MakeUnique<SwReporterOnDemandFetcher>(
@@ -735,7 +735,7 @@ class SwReporterOnDemandFetcherTest : public ::testing::Test,
   void FireComponentNotUpdatedEvents() {
     fetcher_->OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
                       kSwReporterComponentId);
-    fetcher_->OnEvent(Events::COMPONENT_UPDATE_ERROR, kSwReporterComponentId);
+    fetcher_->OnEvent(Events::COMPONENT_NOT_UPDATED, kSwReporterComponentId);
 
     EXPECT_TRUE(error_callback_called_);
   }
@@ -750,13 +750,13 @@ class SwReporterOnDemandFetcherTest : public ::testing::Test,
 };
 
 TEST_F(SwReporterOnDemandFetcherTest, TestUpdateSuccess) {
-  CreateOnDemandFetcherAndVerifyExpectations(true);
+  CreateOnDemandFetcherAndVerifyExpecations(true);
 
   EXPECT_TRUE(on_demand_update_called_);
 }
 
 TEST_F(SwReporterOnDemandFetcherTest, TestUpdateFailure) {
-  CreateOnDemandFetcherAndVerifyExpectations(false);
+  CreateOnDemandFetcherAndVerifyExpecations(false);
 
   EXPECT_TRUE(on_demand_update_called_);
 }

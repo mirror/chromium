@@ -20,8 +20,7 @@
 // https://w3c.github.io/uievents/#interface-UIEvent
 
 [
-    Constructor(DOMString type, optional UIEventInit eventInitDict),
-    Exposed=Window
+    Constructor(DOMString type, optional UIEventInit eventInitDict)
 ] interface UIEvent : Event {
     readonly attribute Window? view;
     readonly attribute long detail;

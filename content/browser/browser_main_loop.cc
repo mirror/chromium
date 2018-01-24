@@ -147,7 +147,6 @@
 #endif
 
 #if BUILDFLAG(USE_ZYGOTE_HANDLE)
-#include "content/public/common/common_sandbox_support_linux.h"
 #include "content/public/common/zygote_handle.h"
 #include "media/base/media_switches.h"
 #endif
@@ -285,15 +284,7 @@ pid_t LaunchZygoteHelper(base::CommandLine* cmd_line,
                              kForwardSwitches, arraysize(kForwardSwitches));
 
   GetContentClient()->browser()->AppendExtraCommandLineSwitches(cmd_line, -1);
-
-  // Start up the sandbox host process and get the file descriptor for the
-  // sandboxed processes to talk to it.
-  base::FileHandleMappingVector additional_remapped_fds;
-  additional_remapped_fds.emplace_back(
-      SandboxHostLinux::GetInstance()->GetChildSocket(), GetSandboxFD());
-
-  return ZygoteHostImpl::GetInstance()->LaunchZygote(
-      cmd_line, control_fd, std::move(additional_remapped_fds));
+  return ZygoteHostImpl::GetInstance()->LaunchZygote(cmd_line, control_fd);
 }
 
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
@@ -641,7 +632,7 @@ BrowserMainLoop::BrowserMainLoop(const MainFunctionParams& parameters)
   if (GetContentClient()->browser()->ShouldCreateTaskScheduler()) {
     // Use an empty string as TaskScheduler name to match the suffix of browser
     // process TaskScheduler histograms.
-    base::TaskScheduler::Create("Browser");
+    base::TaskScheduler::Create("");
   }
 }
 
@@ -663,7 +654,8 @@ void BrowserMainLoop::Init() {
 int BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
-#if BUILDFLAG(USE_ZYGOTE_HANDLE)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
   // No thread should be created before this call, as SetupSandbox()
   // will end-up using fork().
   SetupSandbox(parsed_command_line_);
@@ -1561,6 +1553,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       ImageTransportFactory::SetFactory(std::move(transport_factory));
     } else {
       frame_sink_manager_impl_ = std::make_unique<viz::FrameSinkManagerImpl>(
+          viz::SurfaceManager::LifetimeType::REFERENCES,
           switches::GetDeadlineToSynchronizeSurfaces());
 
       surface_utils::ConnectWithLocalFrameSinkManager(

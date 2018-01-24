@@ -7,7 +7,6 @@ include_rules = [
   "+media/cast/logging",
   "+media/cast/net",
   "+media/mojo/common",
-  "+mojo/public/cpp/system",
   "+net",
 ]
 

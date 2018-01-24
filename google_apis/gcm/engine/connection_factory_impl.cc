@@ -19,7 +19,7 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_request_headers.h"
 #include "net/log/net_log_source_type.h"
-#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy/proxy_info.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/client_socket_pool_manager.h"
 #include "net/ssl/ssl_config_service.h"
@@ -79,7 +79,7 @@ ConnectionFactoryImpl::~ConnectionFactoryImpl() {
   CloseSocket();
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
   if (proxy_resolve_request_) {
-    gcm_network_session_->proxy_resolution_service()->CancelRequest(
+    gcm_network_session_->proxy_service()->CancelRequest(
         proxy_resolve_request_);
     proxy_resolve_request_ = NULL;
   }
@@ -326,7 +326,7 @@ void ConnectionFactoryImpl::StartConnection() {
   GURL current_endpoint = GetCurrentEndpoint();
   recorder_->RecordConnectionInitiated(current_endpoint.host());
   UpdateFromHttpNetworkSession();
-  int status = gcm_network_session_->proxy_resolution_service()->ResolveProxy(
+  int status = gcm_network_session_->proxy_service()->ResolveProxy(
       current_endpoint, std::string(), &proxy_info_,
       base::Bind(&ConnectionFactoryImpl::OnProxyResolveDone,
                  weak_ptr_factory_.GetWeakPtr()),
@@ -344,9 +344,7 @@ void ConnectionFactoryImpl::InitHandler() {
     event_tracker_.WriteToLoginRequest(&login_request);
   }
 
-  // TODO(crbug.com/656607): Add Proper annotation
-  connection_handler_->Init(login_request, NO_TRAFFIC_ANNOTATION_BUG_656607,
-                            socket_handle_.socket());
+  connection_handler_->Init(login_request, socket_handle_.socket());
 }
 
 std::unique_ptr<net::BackoffEntry> ConnectionFactoryImpl::CreateBackoffEntry(
@@ -548,8 +546,7 @@ int ConnectionFactoryImpl::ReconsiderProxyAfterError(int error) {
         proxy_info_.proxy_server().host_port_pair());
   }
 
-  int status = gcm_network_session_->proxy_resolution_service()
-                                   ->ReconsiderProxyAfterError(
+  int status = gcm_network_session_->proxy_service()->ReconsiderProxyAfterError(
       GetCurrentEndpoint(), std::string(), error, &proxy_info_,
       base::Bind(&ConnectionFactoryImpl::OnProxyResolveDone,
                  weak_ptr_factory_.GetWeakPtr()),
@@ -576,9 +573,8 @@ int ConnectionFactoryImpl::ReconsiderProxyAfterError(int error) {
 }
 
 void ConnectionFactoryImpl::ReportSuccessfulProxyConnection() {
-  if (gcm_network_session_ && gcm_network_session_->proxy_resolution_service())
-    gcm_network_session_->proxy_resolution_service()->ReportSuccess(proxy_info_,
-        NULL);
+  if (gcm_network_session_ && gcm_network_session_->proxy_service())
+    gcm_network_session_->proxy_service()->ReportSuccess(proxy_info_, NULL);
 }
 
 void ConnectionFactoryImpl::CloseSocket() {

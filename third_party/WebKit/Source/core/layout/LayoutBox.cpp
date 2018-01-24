@@ -58,6 +58,7 @@
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/SnapCoordinator.h"
@@ -727,15 +728,16 @@ void LayoutBox::ScrollRectToVisibleRecursive(
 
   // If we are fixed-position and stick to the viewport, it is useless to
   // scroll the parent.
-  if (Style()->GetPosition() == EPosition::kFixed && Container() == View())
+  if (Style()->GetPosition() == EPosition::kFixed &&
+      ContainerForFixedPosition() == View()) {
     return;
+  }
 
   if (GetFrame()
           ->GetPage()
           ->GetAutoscrollController()
-          .SelectionAutoscrollInProgress()) {
+          .SelectionAutoscrollInProgress())
     parent_box = EnclosingScrollableBox();
-  }
 
   if (parent_box) {
     parent_box->ScrollRectToVisibleRecursive(new_rect, params);

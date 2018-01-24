@@ -13,7 +13,7 @@
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
@@ -31,28 +31,18 @@ class TransferCacheSerializeHelperImpl
   ~TransferCacheSerializeHelperImpl() final = default;
 
  private:
-  bool LockEntryInternal(const EntryKey& key) final {
-    return support_->ThreadsafeLockTransferCacheEntry(
-        static_cast<uint32_t>(key.first), key.second);
+  bool LockEntryInternal(cc::TransferCacheEntryType type, uint32_t id) final {
+    return support_->ThreadsafeLockTransferCacheEntry(type, id);
   }
 
   void CreateEntryInternal(const cc::ClientTransferCacheEntry& entry) final {
-    size_t size = entry.SerializedSize();
-    void* data = support_->MapTransferCacheEntry(size);
-    // TODO(piman): handle error (failed to allocate/map shm)
-    DCHECK(data);
-    bool succeeded = entry.Serialize(
-        base::make_span(reinterpret_cast<uint8_t*>(data), size));
-    DCHECK(succeeded);
-    support_->UnmapAndCreateTransferCacheEntry(entry.UnsafeType(), entry.Id());
+    support_->CreateTransferCacheEntry(entry);
   }
 
-  void FlushEntriesInternal(std::set<EntryKey> entries) final {
-    std::vector<std::pair<uint32_t, uint32_t>> transformed;
-    transformed.reserve(entries.size());
-    for (const auto& e : entries)
-      transformed.emplace_back(static_cast<uint32_t>(e.first), e.second);
-    support_->UnlockTransferCacheEntries(transformed);
+  void FlushEntriesInternal(
+      const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
+          entries) final {
+    support_->UnlockTransferCacheEntries(entries);
   }
 
   ContextSupport* support_;
@@ -417,9 +407,9 @@ void RasterImplementationGLES::RasterCHROMIUM(
   // This section duplicates RasterSource::PlaybackToCanvas setup preamble.
   cc::PaintOpBufferSerializer::Preamble preamble;
   preamble.translation = translate;
-  preamble.playback_rect = gfx::RectF(playback_rect);
+  preamble.playback_rect = playback_rect;
   preamble.post_translation = post_translate;
-  preamble.post_scale = gfx::SizeF(post_scale, post_scale);
+  preamble.post_scale = post_scale;
 
   // Wrap the provided provider in a stashing provider so that we can delay
   // unrefing images until we have serialized dependent commands.

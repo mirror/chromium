@@ -285,8 +285,7 @@ UI.markBeingEdited = function(element, value) {
   return true;
 };
 
-// Avoids Infinity, NaN, and scientific notation (e.g. 1e20), see crbug.com/81165.
-UI._numberRegex = /^(-?(?:\d+(?:\.\d+)?|\.\d+))$/;
+UI.CSSNumberRegex = /^(-?(?:\d+(?:\.\d+)?|\.\d+))$/;
 
 UI.StyleValueDelimiters = ' \xA0\t\n"\':;,/()';
 
@@ -365,10 +364,9 @@ UI._modifiedHexValue = function(hexString, event) {
 /**
  * @param {number} number
  * @param {!Event} event
- * @param {number=} modifierMultiplier
  * @return {?number}
  */
-UI._modifiedFloatNumber = function(number, event, modifierMultiplier) {
+UI._modifiedFloatNumber = function(number, event) {
   var direction = UI._valueModificationDirection(event);
   if (!direction)
     return null;
@@ -390,14 +388,13 @@ UI._modifiedFloatNumber = function(number, event, modifierMultiplier) {
 
   if (direction === 'Down')
     delta *= -1;
-  if (modifierMultiplier)
-    delta *= modifierMultiplier;
 
   // Make the new number and constrain it to a precision of 6, this matches numbers the engine returns.
   // Use the Number constructor to forget the fixed precision, so 1.100000 will print as 1.1.
   var result = Number((number + delta).toFixed(6));
-  if (!String(result).match(UI._numberRegex))
+  if (!String(result).match(UI.CSSNumberRegex))
     return null;
+
   return result;
 };
 
@@ -674,26 +671,23 @@ UI.installComponentRootStyles = function(element) {
   UI.themeSupport.injectCustomStyleSheets(element);
   element.classList.add('platform-' + Host.platform());
 
-  // Detect overlay scrollbar enable by checking for nonzero scrollbar width.
-  if (!Host.isMac() && UI.measuredScrollbarWidth(element.ownerDocument) === 0)
-    element.classList.add('overlay-scrollbar-enabled');
-};
+  /**
+   * Detect overlay scrollbar enable by checking clientWidth and offsetWidth of
+   * overflow: scroll div.
+   * @param {?Document=} document
+   * @return {boolean}
+   */
+  function overlayScrollbarEnabled(document) {
+    var scrollDiv = document.createElement('div');
+    scrollDiv.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll;');
+    document.body.appendChild(scrollDiv);
+    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+    return scrollbarWidth === 0;
+  }
 
-/**
- * @param {?Document} document
- * @return {number}
- */
-UI.measuredScrollbarWidth = function(document) {
-  if (typeof UI._measuredScrollbarWidth === 'number')
-    return UI._measuredScrollbarWidth;
-  if (!document)
-    return 16;
-  var scrollDiv = document.createElement('div');
-  scrollDiv.setAttribute('style', 'width: 100px; height: 100px; overflow: scroll;');
-  document.body.appendChild(scrollDiv);
-  UI._measuredScrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-  return UI._measuredScrollbarWidth;
+  if (!Host.isMac() && overlayScrollbarEnabled(element.ownerDocument))
+    element.classList.add('overlay-scrollbar-enabled');
 };
 
 /**
@@ -1516,10 +1510,9 @@ UI.CheckboxLabel = class extends HTMLLabelElement {
  * @param {function(string)} apply
  * @param {function(string):boolean} validate
  * @param {boolean} numeric
- * @param {number=} modifierMultiplier
  * @return {function(string)}
  */
-UI.bindInput = function(input, apply, validate, numeric, modifierMultiplier) {
+UI.bindInput = function(input, apply, validate, numeric) {
   input.addEventListener('change', onChange, false);
   input.addEventListener('input', onInput, false);
   input.addEventListener('keydown', onKeyDown, false);
@@ -1550,7 +1543,17 @@ UI.bindInput = function(input, apply, validate, numeric, modifierMultiplier) {
     if (!numeric)
       return;
 
-    var value = UI._modifiedFloatNumber(parseFloat(input.value), event, modifierMultiplier);
+    var increment = event.key === 'ArrowUp' ? 1 : event.key === 'ArrowDown' ? -1 : 0;
+    if (!increment)
+      return;
+    if (event.shiftKey)
+      increment *= 10;
+
+    var value = input.value;
+    if (!validate(value) || !value)
+      return;
+
+    value = (value ? Number(value) : 0) + increment;
     var stringValue = value ? String(value) : '';
     if (!validate(stringValue) || !value)
       return;

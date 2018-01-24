@@ -4,9 +4,8 @@
 
 #include "components/content_settings/core/browser/website_settings_registry.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "components/content_settings/core/browser/website_settings_info.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -89,7 +88,7 @@ TEST_F(WebsiteSettingsRegistryTest, Properties) {
 
   // Register a new setting.
   registry()->Register(static_cast<ContentSettingsType>(10), "test",
-                       std::make_unique<base::Value>(999),
+                       base::MakeUnique<base::Value>(999),
                        WebsiteSettingsInfo::SYNCABLE,
                        WebsiteSettingsInfo::LOSSY,
                        WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,
@@ -118,7 +117,7 @@ TEST_F(WebsiteSettingsRegistryTest, Properties) {
 
 TEST_F(WebsiteSettingsRegistryTest, Iteration) {
   registry()->Register(static_cast<ContentSettingsType>(10), "test",
-                       std::make_unique<base::Value>(999),
+                       base::MakeUnique<base::Value>(999),
                        WebsiteSettingsInfo::SYNCABLE,
                        WebsiteSettingsInfo::LOSSY,
                        WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,

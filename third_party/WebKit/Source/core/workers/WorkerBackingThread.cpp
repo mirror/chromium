@@ -56,9 +56,9 @@ static void RemoveWorkerIsolate(v8::Isolate* isolate) {
   Isolates().erase(isolate);
 }
 
-WorkerBackingThread::WorkerBackingThread(const WebThreadCreationParams& params,
+WorkerBackingThread::WorkerBackingThread(const char* name,
                                          bool should_call_gc_on_shutdown)
-    : backing_thread_(WebThreadSupportingGC::Create(params)),
+    : backing_thread_(WebThreadSupportingGC::Create(name)),
       is_owning_thread_(true),
       should_call_gc_on_shutdown_(should_call_gc_on_shutdown) {}
 
@@ -84,8 +84,8 @@ void WorkerBackingThread::InitializeOnBackingThread(
 
   ThreadState::Current()->RegisterTraceDOMWrappers(
       isolate_, V8GCController::TraceDOMWrappers,
-      ScriptWrappableMarkingVisitor::InvalidateDeadObjectsInMarkingDeque,
-      ScriptWrappableMarkingVisitor::PerformCleanup);
+      ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
+      ScriptWrappableVisitor::PerformCleanup);
   if (RuntimeEnabledFeatures::V8IdleTasksEnabled())
     V8PerIsolateData::EnableIdleTasks(
         isolate_, WTF::WrapUnique(new V8IdleTaskRunner(

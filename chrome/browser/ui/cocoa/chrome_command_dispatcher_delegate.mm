@@ -89,8 +89,7 @@ bool HandleExtraBrowserKeyboardShortcut(NSEvent* event, NSWindow* window) {
   // let the extension system try to handle the event. In case this is a
   // redispatched event, [event window] gives the correct window.
   if ([event window]) {
-    BrowserWindowController* controller = [BrowserWindowController
-        browserWindowControllerForWindow:[event window]];
+    BrowserWindowController* controller = [[event window] windowController];
     // |controller| is only set in Cocoa. In toolkit-views extension commands
     // are handled by BrowserView.
     if ([controller respondsToSelector:@selector(handledByExtensionCommand:

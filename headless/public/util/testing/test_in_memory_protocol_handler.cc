@@ -54,8 +54,7 @@ class TestInMemoryProtocolHandler::MockURLFetcher : public URLFetcher {
       net::LoadTimingInfo load_timing_info;
       load_timing_info.receive_headers_end = base::TimeTicks::Now();
       result_listener->OnFetchCompleteExtractHeaders(
-          url, response->data.c_str(), response->data.size(), load_timing_info,
-          0);
+          url, response->data.c_str(), response->data.size(), load_timing_info);
     } else {
       result_listener->OnFetchStartError(net::ERR_FILE_NOT_FOUND);
     }

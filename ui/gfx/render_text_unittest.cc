@@ -533,7 +533,8 @@ class RenderTextTest : public testing::Test,
 #endif
 
   Rect GetSubstringBoundsUnion(const Range& range) {
-    const std::vector<Rect> bounds = render_text_->GetSubstringBounds(range);
+    const std::vector<Rect> bounds =
+        render_text_->GetSubstringBoundsForTesting(range);
     return std::accumulate(bounds.begin(), bounds.end(), Rect(), UnionRects);
   }
 

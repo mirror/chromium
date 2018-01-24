@@ -8,9 +8,7 @@
 
 namespace android_webview {
 
-AwPrintRenderFrameHelperDelegate::AwPrintRenderFrameHelperDelegate() = default;
-
-AwPrintRenderFrameHelperDelegate::~AwPrintRenderFrameHelperDelegate() = default;
+AwPrintRenderFrameHelperDelegate::~AwPrintRenderFrameHelperDelegate() {}
 
 bool AwPrintRenderFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {

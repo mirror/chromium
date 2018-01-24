@@ -8,7 +8,6 @@
 #include "cc/paint/paint_op_buffer.h"
 
 #include "third_party/skia/include/utils/SkNoDrawCanvas.h"
-#include "ui/gfx/geometry/rect_f.h"
 
 namespace cc {
 
@@ -25,9 +24,9 @@ class CC_PAINT_EXPORT PaintOpBufferSerializer {
 
   struct Preamble {
     gfx::Vector2dF translation;
-    gfx::RectF playback_rect;
+    gfx::Rect playback_rect;
     gfx::Vector2dF post_translation;
-    gfx::SizeF post_scale = gfx::SizeF(1.f, 1.f);
+    float post_scale = 1.f;
   };
   // Serialize the buffer with a preamble. This function wraps the buffer in a
   // save/restore and includes any translations and/or scales as specified by

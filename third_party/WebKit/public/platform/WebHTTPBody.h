@@ -51,6 +51,7 @@ class WebHTTPBody {
       kTypeData,
       kTypeFile,
       kTypeBlob,
+      kTypeFileSystemURL,
       kTypeDataPipe,
     } type;
     WebData data;
@@ -58,6 +59,7 @@ class WebHTTPBody {
     long long file_start;
     long long file_length;  // -1 means to the end of the file.
     double modification_time;
+    WebURL file_system_url;
     WebString blob_uuid;
     // |data_pipe_getter| is a network::mojom::DataPipeGetterPtr. It's declared
     // as a generic ScopedMessagePipeHandle so it can be "cast" between Blink

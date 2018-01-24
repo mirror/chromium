@@ -24,10 +24,6 @@ class CORE_EXPORT CSSUnparsedValue final : public CSSStyleValue {
     return new CSSUnparsedValue(tokens);
   }
 
-  // Blink-internal constructor
-  static CSSUnparsedValue* Create() {
-    return Create(HeapVector<StringOrCSSVariableReferenceValue>());
-  }
   static CSSUnparsedValue* FromCSSValue(const CSSVariableReferenceValue&);
   static CSSUnparsedValue* FromCSSValue(const CSSVariableData&);
 

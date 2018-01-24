@@ -19,7 +19,7 @@ As of 2018 Blink animations is maintained by the
 
 ## Integration with Chromium
 
-The Blink animation engine interacts with Blink/Chrome in the following ways:
+The Blink animation engine has three main integration points:
 
 *   ### [Blink's Style engine](../css)
 
@@ -52,10 +52,12 @@ The Blink animation engine interacts with Blink/Chrome in the following ways:
 
 *   ### [Chromium's Compositor](../../../../../cc/README.md)
 
-    Chromium's compositor has a separate, more lightweight [animation
-    engine](../../../../../cc/animation/README.md) that runs separate to the
-    main thread. Blink's animation engine delegates animations to the compositor
-    where possible for better performance and power utilisation.
+    Blink uses a multi-threaded LayerTreeHost to render websites as a tree of
+    layers. The compositor creates frames on a separate thread which maintains a
+    copy of Blinks layers and can implement some effects without involving Blink
+    (i.e. while Blink is busy). In particular, the
+    [compositor animations infrastructure](../../../../../cc/animations/README.md)
+    is capable of implementing a subset of web animations.
 
     #### Compositable animations
 
@@ -68,8 +70,7 @@ The Blink animation engine interacts with Blink/Chrome in the following ways:
     Whether or not an animation can be accelerated is determined by
     [CheckCanStartAnimationOnCompositor()][] which looks at several aspects
     such as the composite mode, other animations affecting same property, and
-    whether the target element can be promoted and mutated in compositor.  
-    Reasons for not compositing animations are captured in [FailureCodes][].
+    whether the target element can be promoted and mutated in compositor.
 
     #### Lifetime of a compositor animation
 
@@ -99,7 +100,6 @@ The Blink animation engine interacts with Blink/Chrome in the following ways:
     output.
 
 [CheckCanStartAnimationOnCompositor()]: https://cs.chromium.org/search/?q=file:Animation.h+function:CheckCanStartAnimationOnCompositor
-[FailureCodes]: https://cs.chromium.org/search/?q=return%5Cs%2B(CompositorAnimations::)?FailureCode
 [cc::AnimationPlayer]: https://cs.chromium.org/search/?q=file:src/cc/animation/animation_player.h+class:AnimationPlayer
 [PendingAnimations]: https://cs.chromium.org/search/?q=file:PendingAnimations.h+class:PendingAnimations
 [Animation::PreCommit()]: https://cs.chromium.org/search/?q=file:Animation.h+function:PreCommit
@@ -155,61 +155,39 @@ The animation engine is built around the
 in the Web Animations spec.
 
 This describes a hierarchy of entities:
+*   DocumentTimeline: Represents the wall clock time
+    *   Animation: Represents an individual animation and when it started
+        playing.
+        *   AnimationEffect: Represents the effect an animation has during the
+            animation e.g. updating an elements color property.
 
-*   __[DocumentTimeline][]__: Represents the wall clock time.
-    *   __[Animation][]__: Represents an individual animation and when it
-        started playing.
-        *   __[AnimationEffect][]__: Represents the effect an animation has
-            during the animation (e.g. updating an element's color property).
-
-Time trickles down from the [DocumentTimeline][] and is transformed at each
-stage to produce some progress fraction that can be used to apply the effects of
-the animations.
+Time trickles down from the DocumentTimeline and is transformed at each stage to
+produce some progress fraction that can be used to apply the effects of the
+animations.
 
 For example:
 
-```javascript
-// Page was loaded at 2:00:00PM, the time is currently 2:00:10PM.
-// document.timeline.currentTime is currently 10000 (10 seconds).
+*   DocumentTimeline notifies that the time is 20 seconds.
+    *   Animation was started at 18 seconds and computes that it has a current
+        time of 2 seconds.
+        *   AnimationEffect has a duration of 8 seconds and computes that it has
+            a progress of 25%.
 
-let animation = element.animate([
-    {transform: 'none'},
-    {transform: 'rotate(200deg)'},
-  ], {
-    duration: 20000,  // 20 seconds
-  });
+            The effect is animating an element8s transform property from `none`
+            to `rotate(360deg)` so it computes the current effect to be
+            `rotate(90deg)`.
 
-animation.startTime = 6000;  // 6 seconds
-```
+### Life cycle of an animation
 
-*   __[DocumentTimeline][]__ notifies that the time is 10 seconds.
-    *   __[Animation][]__ computes that its currentTime is 4 seconds due to its
-        startTime being at 6 seconds.
-        *   __[AnimationEffect][]__ has a duration of 20 seconds and computes
-            that it has a progress of 20% from the parent animation being 4
-            seconds into the animation.
-
-            The effect is animating an element from `transform: none` to
-            `transform: rotate(200deg)` so it computes the current effect to be
-            `transfrom: rotate(40deg)`.
-
-[Animation]: https://cs.chromium.org/search/?q=class:blink::Animation$
-[AnimationEffect]: https://cs.chromium.org/search/?q=class:blink::AnimationEffectReadOnly$
-[DocumentTimeline]: https://cs.chromium.org/search/?q=class:blink::DocumentTimeline$
-[EffectStack]: https://cs.chromium.org/search/?q=class:blink::EffectStack
-
-### Lifecycle of an Animation
-
-1.  An [Animation][] is created via CSS<sup>1</sup> or `element.animate()`.
-2.  At the start of the next frame the [Animation][] and its [AnimationEffect][]
-    are updated with the currentTime of the [DocumentTimeline][].
-3.  The [AnimationEffect][] gets sampled with its computed localTime, pushes a
-    [SampledEffect][] into its target element's [EffectStack][] and marks the
-    elements style as dirty to ensure it gets updated later in the document
-    lifecycle.
-4.  During the next [style resolve][styleForElement()] on the target element all
-    the [SampledEffect][]s in its [EffectStack][] are incorporated into building
-    the element's [ComputedStyle][].
+1.  An Animation is created via CSS<sup>1</sup> or `element.animate()`.
+2.  At the start of the next frame the Animation and its AnimationEffect are
+    updated with the currentTime of the DocumentTimeline.
+3.  The AnimationEffect gets sampled with its computed localTime, pushes a
+    SampledEffect into its target element s EffectStack and marks the elements
+    style as dirty to ensure it gets updated later in the document lifecycle.
+4.  During the next style resolve on the target element all the SampledEffects
+    in its EffectStack are incorporated into building the element's
+    ComputedStyle.
 
 One key takeaway here is to note that timing updates are done in a separate
 phase to effect application. Effect application must occur during style
@@ -224,107 +202,21 @@ the same style resolve. An unfortunate side effect of this is that style
 resolution can cause style to get dirtied, this is currently a
 [code health bug](http://crbug.com/492887).
 
-[SampledEffect]: https://cs.chromium.org/search/?q=class:blink::SampledEffect
+### KeyframeEffects
 
-### [KeyframeEffect][]
+TODO: Describe how KeyframeEffects represent an animation's keyframes.
 
-Currently all animations use [KeyframeEffect][] for their [AnimationEffect][].
-The generic [AnimationEffect][] from which it inherits is an extention point in
-Web Animations where other kinds of animation effects can be defined later by
-other specs (for example Javascript callback based effects).
+### Keyframe Interpolations
 
-#### Structure of a [KeyframeEffect][]
+TODO: Describe how interpolation works and where to look for further details.
 
-*   __[KeyframeEffect][]__ represents the effect an animation has (without any
-    details of when it started or whether it's playing) and is comprised of
-    three things:
-    *   Some __[Timing][]__ information (inherited from [AnimationEffect][]).  
-        [Example](http://jsbin.com/nuyohulojo/edit?js,output):  
-        ```javascript
-        {
-          duration: 4000,
-          easing: 'ease-in-out',
-          iterations: 8,
-          direction: 'alternate',
-        }
-        ```
-        This is used to [compute][UpdateInheritedTime()] the percentage progress
-        of the effect given the duration of time that the animation has been
-        playing for.
+#### InterpolationTypes
 
-    *   The DOM __[Element][]__ that is being animated.
+TODO: Describe various interpolation types and where they are defined.
 
-    *   A __[KeyframeEffectModel][]__ that holds a sequence of keyframes to
-        specify the properties being animated and what values they pass
-        through.  
-        [Example](http://jsbin.com/wiyefaxiru/1/edit?js,output):  
-        ```javascript
-        [
-          {backgroundColor: 'red', transform: 'rotate(0deg)'},
-          {backgroundColor: 'yellow'},
-          {backgroundColor: 'lime'},
-          {backgroundColor: 'blue'},
-          {backgroundColor: 'red', transform: 'rotate(360deg)'},
-        ]
-        ```
+#### Applying a stack of Interpolations
 
-        These keyframes are used to compute:
-        *   A __[PropertySpecificKeyframe map][KeyframeGroupMap]__ that simply
-            breaks up the input multi-property keyframes into per-property
-            keyframe lists.
-        *   An __[InterpolationEffect][]__ which holds a set of
-            [Interpolation][]s, each one representing the animated values
-            between adjacent pairs of [PropertySpecificKeyframe][]s, and where
-            in the percentage progress they are active.  
-            In the example keyframes above the [Interpolations][] generated
-            would include, among the 5 different property specific keyframe
-            pairs, one for `backgroundColor: 'red'` to
-            `backgroundColor: 'yellow'` that applied from 0% to 25% and one for
-            `transform: 'rotate(0deg)'` to `transform: 'rotate(360deg)'` that
-            applied from 0% to 100%.
-
-[Element]: https://cs.chromium.org/search/?q=class:blink::Element$
-[KeyframeGroupMap]: https://cs.chromium.org/search/?q=class:blink::KeyframeEffectModelBase+KeyframeGroupMap
-[PropertySpecificKeyframe]: https://cs.chromium.org/search/?q=class:blink::Keyframe::PropertySpecificKeyframe
-[KeyframeEffect]: https://cs.chromium.org/search/?q=class:blink::KeyframeEffectReadOnly$
-[KeyframeEffectModel]: https://cs.chromium.org/search/?q=class:blink::KeyframeEffectModelBase$
-[Timing]: https://cs.chromium.org/search/?q=class:blink::Timing$
-[UpdateInheritedTime()]: https://cs.chromium.org/search/?q=function:%5CbAnimationEffectReadOnly::UpdateInheritedTime
-
-#### Lifecycle of an [Interpolation][]
-
-[Interpolation][] is the data structure that [style
-resolution][styleForElement()] uses to resolve what animated value to apply
-to an animated element's [ComputedStyle][].
-
-1.   [Interpolation][]s are lazily
-     [instantiated][EnsureInterpolationEffectPopulated()] prior to sampling.
-2.   [KeyframeEffectModel][]s are [sampled][Sample()] every frame (or as
-     necessary) for a stack of [Interpolation][]s to
-     [apply][ApplyAnimatedStandardProperties()] to the associated [Element][]
-     and stashed away in the [Element][]'s [ElementAnimations][]'
-     [EffectStack][]'s [SampledEffect][]s.
-3.   During [style resolution][styleForElement()] on the target [Element][] all
-     the [Interpolation][]s are [collected and organised by
-     category][AdoptActiveInterpolations] according to whether it's a transition
-     or not (transitions in Blink are
-     [suppressed][CalculateTransitionUpdateForProperty()] in the presence of
-     non-transition animations on the same property) and whether it affects
-     custom properties or not (animated custom properties are
-     [animation-tainted](https://www.w3.org/TR/css-variables-1/#animation-tainted)
-     and affect the [processing of animation
-     properties][animation-tainted-processing].
-4.   TODO(alancutter): Describe what happens in processing a stack of
-     interpolations.
-
-[AdoptActiveInterpolations]: https://cs.chromium.org/search/?q=AdoptActiveInterpolations%5Cw%2B
-[animation-tainted-processing]: https://cs.chromium.org/search/?q=function:blink::StyleBuilder::ApplyProperty+animation_tainted
-[CalculateTransitionUpdateForProperty()]: https://cs.chromium.org/search/?q=function:blink::CSSAnimations::CalculateTransitionUpdateForProperty
-[ElementAnimations]: https://cs.chromium.org/search/?q=class:blink::ElementAnimations
-[EnsureInterpolationEffectPopulated()]: https://cs.chromium.org/search/?q=function:KeyframeEffectModelBase::EnsureInterpolationEffectPopulated
-[Interpolation]: https://cs.chromium.org/search/?q=class:blink::Interpolation$
-[InterpolationEffect]: https://cs.chromium.org/search/?q=class:blink::InterpolationEffect
-[Sample()]: https://cs.chromium.org/search/?q=function:KeyframeEffectModelBase::Sample
+TODO: Describe how interpolations interact with the effect stack.
 
 ## Testing pointers
 

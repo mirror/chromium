@@ -34,7 +34,7 @@
 #include "net/http/http_network_layer.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/http_stream_factory.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/ssl/ssl_config_service_defaults.h"
@@ -246,7 +246,7 @@ void URLRequestContextFactory::InitializeSystemContextDependencies() {
   http_server_properties_.reset(new net::HttpServerPropertiesImpl);
 
   DCHECK(proxy_config_service_);
-  proxy_resolution_service_ = net::ProxyResolutionService::CreateUsingSystemProxyResolver(
+  proxy_service_ = net::ProxyService::CreateUsingSystemProxyResolver(
       std::move(proxy_config_service_), NULL);
   system_dependencies_initialized_ = true;
 }
@@ -342,7 +342,7 @@ net::URLRequestContext* URLRequestContextFactory::CreateSystemRequestContext() {
   system_context->set_cert_transparency_verifier(
       cert_transparency_verifier_.get());
   system_context->set_ct_policy_enforcer(ct_policy_enforcer_.get());
-  system_context->set_proxy_resolution_service(proxy_resolution_service_.get());
+  system_context->set_proxy_service(proxy_service_.get());
   system_context->set_ssl_config_service(ssl_config_service_.get());
   system_context->set_transport_security_state(
       transport_security_state_.get());
@@ -409,7 +409,7 @@ net::URLRequestContext* URLRequestContextFactory::CreateMainRequestContext(
   main_context->set_cert_transparency_verifier(
       cert_transparency_verifier_.get());
   main_context->set_ct_policy_enforcer(ct_policy_enforcer_.get());
-  main_context->set_proxy_resolution_service(proxy_resolution_service_.get());
+  main_context->set_proxy_service(proxy_service_.get());
   main_context->set_ssl_config_service(ssl_config_service_.get());
   main_context->set_transport_security_state(transport_security_state_.get());
   main_context->set_http_auth_handler_factory(

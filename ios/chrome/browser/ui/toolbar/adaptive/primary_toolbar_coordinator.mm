@@ -14,7 +14,7 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+subclassing.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+protected.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
@@ -64,26 +64,27 @@
 #pragma mark - PrimaryToolbarCoordinator
 
 - (id<VoiceSearchControllerDelegate>)voiceSearchDelegate {
-  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  // TODO(crbug.com/799438): Implement that.
   return nil;
 }
 
 - (id<QRScannerResultLoading>)QRScannerResultLoader {
-  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  // TODO(crbug.com/799438): Implement that.
   return nil;
 }
 
 - (id<TabHistoryUIUpdater>)tabHistoryUIUpdater {
-  // TODO(crbug.com/803373): Implement that.
+  // TODO(crbug.com/799438): Implement that.
   return nil;
 }
 
 - (id<ActivityServicePositioner>)activityServicePositioner {
-  return self.viewController;
+  // TODO(crbug.com/799438): Implement that.
+  return nil;
 }
 
 - (void)showPrerenderingAnimation {
-  [self.viewController showPrerenderingAnimation];
+  // TODO(crbug.com/799438): Implement that.
 }
 
 - (BOOL)isOmniboxFirstResponder {
@@ -100,9 +101,19 @@
 #pragma mark - ToolbarCoordinating
 
 - (void)updateToolbarState {
-  // TODO(crbug.com/803383): This should be done inside the location bar.
-  [self.locationBarCoordinator updateOmniboxState];
-  [super updateToolbarState];
+}
+
+- (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
+}
+
+#pragma mark - ToolbarCommands
+
+- (void)contractToolbar {
+  // TODO(crbug.com/801082): Implement that.
+}
+
+- (void)triggerToolsMenuButtonAnimation {
+  // TODO(crbug.com/801083): Implement that.
 }
 
 #pragma mark - OmniboxFocuser
@@ -119,15 +130,15 @@
 }
 
 - (void)focusFakebox {
-  // TODO(crbug.com/803372): Implement that.
+  // TODO(crbug.com/799438): Implement that.
 }
 
 - (void)onFakeboxBlur {
-  // TODO(crbug.com/803372): Implement that.
+  // TODO(crbug.com/799438): Implement that.
 }
 
 - (void)onFakeboxAnimationComplete {
-  // TODO(crbug.com/803372): Implement that.
+  // TODO(crbug.com/799438): Implement that.
 }
 
 #pragma mark - LocationBarDelegate
@@ -203,7 +214,7 @@
 }
 
 - (UIImage*)toolbarSideSwipeSnapshotForTab:(Tab*)tab {
-  // TODO(crbug.com/803371): Implement that.
+  // TODO(crbug.com/799438): Implement that.
   return nil;
 }
 

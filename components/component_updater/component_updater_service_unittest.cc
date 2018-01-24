@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
@@ -202,14 +203,14 @@ void OnDemandTester::OnDemandComplete(update_client::Error error) {
 std::unique_ptr<ComponentUpdateService> TestComponentUpdateServiceFactory(
     const scoped_refptr<Configurator>& config) {
   DCHECK(config);
-  return std::make_unique<CrxUpdateService>(
+  return base::MakeUnique<CrxUpdateService>(
       config, base::MakeRefCounted<MockUpdateClient>());
 }
 
 ComponentUpdaterTest::ComponentUpdaterTest() {
   EXPECT_CALL(update_client(), AddObserver(_)).Times(1);
   component_updater_ =
-      std::make_unique<CrxUpdateService>(config_, update_client_);
+      base::MakeUnique<CrxUpdateService>(config_, update_client_);
 }
 
 ComponentUpdaterTest::~ComponentUpdaterTest() {

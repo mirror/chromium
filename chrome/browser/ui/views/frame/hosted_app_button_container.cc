@@ -112,7 +112,7 @@ void HostedAppButtonContainer::RefreshContentSettingViews() {
 
 void HostedAppButtonContainer::ChildVisibilityChanged(views::View* child) {
   // Changes to layout need to be taken into account by the frame view.
-  PreferredSizeChanged();
+  browser_view_->frame()->GetFrameView()->Layout();
 }
 
 void HostedAppButtonContainer::SetPaintAsActive(bool active) {

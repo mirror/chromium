@@ -8,9 +8,8 @@
 #include <stdexcept>
 #include <utility>
 
-#include <memory>
-
 #include "base/base64url.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/cryptauth/cryptauth_client.h"
 #include "components/cryptauth/pref_names.h"
@@ -317,7 +316,7 @@ bool DictionaryToUnlockKey(const base::DictionaryValue& dictionary,
 
 std::unique_ptr<SyncSchedulerImpl> CreateSyncScheduler(
     SyncScheduler::Delegate* delegate) {
-  return std::make_unique<SyncSchedulerImpl>(
+  return base::MakeUnique<SyncSchedulerImpl>(
       delegate, base::TimeDelta::FromHours(kRefreshPeriodHours),
       base::TimeDelta::FromMinutes(kDeviceSyncBaseRecoveryPeriodMinutes),
       kDeviceSyncMaxJitterRatio, "CryptAuth DeviceSync");

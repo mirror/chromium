@@ -75,7 +75,8 @@ DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
 void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
                                         ModuleScriptFetcher::Client* client) {
   SetClient(client);
-  ScriptResource::Fetch(fetch_params, fetcher_, this);
+  if (!ScriptResource::Fetch(fetch_params, fetcher_, this))
+    NotifyFinished(nullptr /* resource */);
 }
 
 void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {

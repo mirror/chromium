@@ -24,8 +24,6 @@ public class PasswordReauthenticationFragment extends Fragment {
 
     protected static final int CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE = 2;
 
-    protected static final String HAS_BEEN_SUSPENDED_KEY = "has_been_suspended";
-
     private static boolean sPreventLockDevice = false;
 
     private FragmentManager mFragmentManager;
@@ -38,15 +36,6 @@ public class PasswordReauthenticationFragment extends Fragment {
         if (!sPreventLockDevice && isFirstTime) {
             lockDevice();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // On Android L, an empty |outState| would degrade to null in |onCreate|, making Chrome
-        // unable to distinguish the first time launch. Insert a value into |outState| to prevent
-        // that.
-        outState.putBoolean(HAS_BEEN_SUSPENDED_KEY, true);
     }
 
     @Override

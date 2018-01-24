@@ -262,7 +262,7 @@ def main():
       nargs='*',
       help='optional paths to filter what files the tool is run on')
   parser.add_argument(
-      '--tool-arg', nargs='?', action='append',
+      '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
   parser.add_argument(
       '--tool-path', nargs='?',
@@ -304,7 +304,7 @@ def main():
         shard_number, shard_count, len(source_filenames), total_length)
 
   dispatcher = _CompilerDispatcher(os.path.join(tool_path, args.tool),
-                                   args.tool_arg,
+                                   args.tool_args,
                                    args.p,
                                    source_filenames)
   dispatcher.Run()

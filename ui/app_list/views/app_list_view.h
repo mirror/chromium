@@ -17,8 +17,8 @@
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/display/display_observer.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/widget/widget.h"
-#include "ui/views/widget/widget_delegate.h"
 
 namespace aura {
 class Window;
@@ -37,7 +37,6 @@ class AnimationMetricsReporter;
 }
 
 namespace app_list {
-class AppsContainerView;
 class ApplicationDragAndDropHost;
 class AppListMainView;
 class AppListModel;
@@ -54,7 +53,7 @@ class AppListViewTestApi;
 
 // AppListView is the top-level view and controller of app list UI. It creates
 // and hosts a AppsGridView and passes AppListModel to it for display.
-class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
+class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
                                     public display::DisplayObserver,
                                     public AppListViewDelegateObserver {
  public:
@@ -105,6 +104,10 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // fullscreen app list feature is set.
   void Initialize(const InitParams& params);
 
+  void SetBubbleArrow(views::BubbleBorder::Arrow arrow);
+
+  void MaybeSetAnchorPoint(const gfx::Point& anchor_point);
+
   // If |drag_and_drop_host| is not NULL it will be called upon drag and drop
   // operations outside the application list. This has to be called after
   // Initialize was called since the app list object needs to exist so that
@@ -118,6 +121,8 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
 
   // Dismisses the UI, cleans up and sets the state to CLOSED.
   void Dismiss();
+
+  void UpdateBounds();
 
   // Enables/disables a semi-transparent overlay over the app list (good for
   // hiding the app list when a modal dialog is being shown).
@@ -135,6 +140,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // Overridden from views::View:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   void Layout() override;
+  void SchedulePaintInRect(const gfx::Rect& rect) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void OnKeyEvent(ui::KeyEvent* event) override;
 
@@ -179,7 +185,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   }
 
   // Gets the PaginationModel owned by this view's apps grid.
-  PaginationModel* GetAppsPaginationModel();
+  PaginationModel* GetAppsPaginationModel() const;
 
   // Gets the content bounds of the app info dialog of the app list in the
   // screen coordinates.
@@ -191,8 +197,6 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   views::Widget* get_fullscreen_widget_for_test() const {
     return fullscreen_widget_;
   }
-
-  gfx::NativeView parent_window() const { return parent_window_; }
 
   AppListViewState app_list_state() const { return app_list_state_; }
 
@@ -231,6 +235,9 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
 
   // Initializes the widget for fullscreen mode.
   void InitializeFullscreen(gfx::NativeView parent, int parent_container_id);
+
+  // Initializes the widget as a bubble.
+  void InitializeBubble();
 
   // Closes the AppListView when a click or tap event propogates to the
   // AppListView.
@@ -272,14 +279,8 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // Gets the display nearest to the parent window.
   display::Display GetDisplayNearestView() const;
 
-  // Gets the apps container view owned by this view.
-  AppsContainerView* GetAppsContainerView();
-
-  // Gets the root apps grid view owned by this view.
-  AppsGridView* GetRootAppsGridView();
-
-  // Gets the apps grid view within the folder view owned by this view.
-  AppsGridView* GetFolderAppsGridView();
+  // Gets the apps grid view owned by this view.
+  AppsGridView* GetAppsGridView() const;
 
   // Gets the AppListStateTransitionSource for |app_list_state_| to
   // |target_state|. If we are not interested in recording a state transition
@@ -288,8 +289,19 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   AppListStateTransitionSource GetAppListStateTransitionSource(
       AppListViewState target_state) const;
 
+  // Overridden from views::BubbleDialogDelegateView:
+  void OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
+                                views::Widget* widget) const override;
+  int GetDialogButtons() const override;
+
   // Overridden from views::WidgetDelegateView:
   views::View* GetInitiallyFocusedView() override;
+  bool WidgetHasHitTestMask() const override;
+  void GetWidgetHitTestMask(gfx::Path* mask) const override;
+
+  // Overridden from views::WidgetObserver:
+  void OnWidgetDestroying(views::Widget* widget) override;
+  void OnWidgetVisibilityChanged(views::Widget* widget, bool visible) override;
 
   // Overridden from DisplayObserver:
   void OnDisplayMetricsChanged(const display::Display& display,
@@ -314,7 +326,6 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
 
   AppListMainView* app_list_main_view_ = nullptr;
   views::Widget* fullscreen_widget_ = nullptr;  // Owned by AppListView.
-  gfx::NativeView parent_window_ = nullptr;
 
   views::View* search_box_focus_host_ =
       nullptr;  // Owned by the views hierarchy.
@@ -350,6 +361,8 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
 
   // The velocity of the gesture event.
   float last_fling_velocity_ = 0;
+  // Whether the fullscreen app list feature is enabled.
+  const bool is_fullscreen_app_list_enabled_;
   // Whether the background blur is enabled.
   const bool is_background_blur_enabled_;
   // The state of the app list, controlled via SetState().

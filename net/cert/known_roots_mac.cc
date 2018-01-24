@@ -6,8 +6,7 @@
 
 #include <Security/Security.h>
 
-#include <algorithm>
-#include <vector>
+#include <set>
 
 #include "base/lazy_instance.h"
 #include "crypto/mac_security_services_lock.h"
@@ -33,9 +32,8 @@ class OSXKnownRootHelper {
     if (known_roots_.empty())
       return true;
 
-    HashValue hash(x509_util::CalculateFingerprint256(cert));
-    return IsSHA256HashInSortedArray(hash, &known_roots_[0],
-                                     known_roots_.size());
+    SHA256HashValue hash = x509_util::CalculateFingerprint256(cert);
+    return known_roots_.find(hash) != known_roots_.end();
   }
 
  private:
@@ -53,19 +51,16 @@ class OSXKnownRootHelper {
       return;
     }
     base::ScopedCFTypeRef<CFArrayRef> scoped_array(cert_array);
-
-    known_roots_.reserve(CFArrayGetCount(cert_array));
     for (CFIndex i = 0, size = CFArrayGetCount(cert_array); i < size; ++i) {
       SecCertificateRef cert = reinterpret_cast<SecCertificateRef>(
           const_cast<void*>(CFArrayGetValueAtIndex(cert_array, i)));
-      known_roots_.push_back(x509_util::CalculateFingerprint256(cert));
+      known_roots_.insert(x509_util::CalculateFingerprint256(cert));
     }
-    std::sort(known_roots_.begin(), known_roots_.end());
   }
 
   ~OSXKnownRootHelper() {}
 
-  std::vector<SHA256HashValue> known_roots_;
+  std::set<SHA256HashValue> known_roots_;
 };
 
 base::LazyInstance<OSXKnownRootHelper>::Leaky g_known_roots =

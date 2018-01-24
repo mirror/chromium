@@ -64,7 +64,7 @@ public class BackgroundSyncLauncherTest {
             // Wait on the callback to be called.
             semaphore.acquire();
         } catch (InterruptedException e) {
-            throw new AssertionError("Failed to acquire semaphore", e);
+            Assert.fail("Failed to acquire semaphore");
         }
         return mShouldLaunchResult;
     }
@@ -73,9 +73,9 @@ public class BackgroundSyncLauncherTest {
         try {
             mLauncher.mLaunchBrowserIfStoppedTask.get();
         } catch (InterruptedException e) {
-            throw new AssertionError("Launch task was interrupted", e);
+            Assert.fail("Launch task was interrupted");
         } catch (ExecutionException e) {
-            throw new AssertionError("Launch task had execution exception", e);
+            Assert.fail("Launch task had execution exception");
         }
     }
 

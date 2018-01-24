@@ -478,13 +478,8 @@ class GFX_EXPORT RenderText {
   // chosen.
   virtual std::vector<FontSpan> GetFontSpansForTesting() = 0;
 
-  // Get the visual bounds containing the logical substring within the |range|.
-  // If |range| is empty, the result is empty. These bounds could be visually
-  // discontinuous if the substring is split by a LTR/RTL level change.
-  // These bounds are in local coordinates, but may be outside the visible
-  // region if the text is longer than the textfield. Subsequent text, cursor,
-  // or bounds changes may invalidate returned values.
-  virtual std::vector<Rect> GetSubstringBounds(const Range& range) = 0;
+  // Helper function to be used in tests for retrieving the substring bounds.
+  std::vector<Rect> GetSubstringBoundsForTesting(const gfx::Range& range);
 
   // Gets the horizontal span (relative to the left of the text, not the view)
   // of the sequence of glyphs in |text_range|, over which the cursor will
@@ -589,6 +584,14 @@ class GFX_EXPORT RenderText {
 
   // Sets the selection model, |model| is assumed to be valid.
   void SetSelectionModel(const SelectionModel& model);
+
+  // Get the visual bounds containing the logical substring within the |range|.
+  // If |range| is empty, the result is empty. These bounds could be visually
+  // discontinuous if the substring is split by a LTR/RTL level change.
+  // These bounds are in local coordinates, but may be outside the visible
+  // region if the text is longer than the textfield. Subsequent text, cursor,
+  // or bounds changes may invalidate returned values.
+  virtual std::vector<Rect> GetSubstringBounds(const Range& range) = 0;
 
   // Convert between indices into |text_| and indices into
   // GetDisplayText(), which differ when the text is obscured,

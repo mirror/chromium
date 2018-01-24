@@ -28,7 +28,7 @@ bool DisableSigninRecallPromo() {
 bool DisableUpdateService() {
   return false;
 }
-bool ForceUIRefreshPhase1() {
+bool ForceAdaptiveToolbar() {
   return false;
 }
 void SetUpTestsIfPresent() {}

@@ -335,7 +335,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   }
 
  private:
-  class ScheduledResourceRequestAdapter;
   friend class ResourceDispatcherHostTest;
 
   FRIEND_TEST_ALL_PREFIXES(ResourceDispatcherHostTest,

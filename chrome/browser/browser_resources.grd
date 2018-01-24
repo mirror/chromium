@@ -8,6 +8,11 @@
   </outputs>
   <release seq="1">
     <structures>
+      <if expr="enable_app_list">
+        <structure name="IDR_APP_LIST_START_PAGE_CSS" file="resources\app_list\start_page.css" flattenhtml="true" type="chrome_html" />
+        <structure name="IDR_APP_LIST_START_PAGE_HTML" file="resources\app_list\start_page.html" flattenhtml="true" type="chrome_html" />
+        <structure name="IDR_APP_LIST_START_PAGE_JS" file="resources\app_list\start_page.js" flattenhtml="true" type="chrome_html" />
+      </if>
       <if expr="enable_extensions">
         <structure name="IDR_EXTENSIONS_HTML" file="resources\extensions\extensions.html" flattenhtml="true" type="chrome_html" />
       </if>
@@ -130,7 +135,6 @@
         <include name="IDR_CLOUDPRINT_MANIFEST" file="resources\cloud_print_app\manifest.json" type="BINDATA" />
         <include name="IDR_PDF_COMPOSITOR_MANIFEST" file="..\..\components\printing\service\pdf_compositor_manifest.json" type="BINDATA" />
       </if>
-      <include name="IDR_CHROME_RENDERER_SERVICE_MANIFEST" file="..\app\chrome_renderer_manifest.json" type="BINDATA" />
       <include name="IDR_DEVTOOLS_DISCOVERY_PAGE_HTML" file="devtools\frontend\devtools_discovery_page.html" type="BINDATA"/>
       <include name="IDR_DOMAIN_RELIABILITY_INTERNALS_HTML" file="resources\domain_reliability_internals.html" compress="gzip" type="BINDATA" />
       <include name="IDR_DOMAIN_RELIABILITY_INTERNALS_CSS" file="resources\domain_reliability_internals.css" compress="gzip" type="BINDATA" />
@@ -404,6 +408,8 @@
                  file="resources\print_preview\images\google_doc.png" type="BINDATA" />
         <include name="IDR_PRINT_PREVIEW_IMAGES_PDF"
                  file="resources\print_preview\images\pdf.png" type="BINDATA" />
+        <include name="IDR_PRINT_PREVIEW_IMAGES_THIRD_PARTY"
+                 file="resources\print_preview\images\third_party.png" type="BINDATA" />
         <include name="IDR_PRINT_PREVIEW_IMAGES_MOBILE"
                  file="resources\print_preview\images\mobile.png" type="BINDATA" />
         <include name="IDR_PRINT_PREVIEW_IMAGES_MOBILE_SHARED"

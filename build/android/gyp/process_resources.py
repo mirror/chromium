@@ -751,9 +751,7 @@ def _ConvertToWebP(webp_binary, png_files):
     subprocess.check_call(args)
     os.remove(png_path)
   # Android requires pngs for 9-patch images.
-  # Daydream (*.dd) requires pngs for icon files.
-  pool.map(convert_image, [f for f in png_files if not (f.endswith('.9.png') or
-                           f.endswith('.dd.png'))])
+  pool.map(convert_image, [f for f in png_files if not f.endswith('.9.png')])
   pool.close()
   pool.join()
 

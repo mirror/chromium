@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
@@ -93,7 +94,7 @@ class CryptAuthBackgroundEidGeneratorTest : public testing::Test {
     SetTestTime(kCurrentTimeMs);
 
     eid_generator_.reset(new BackgroundEidGenerator(
-        std::make_unique<TestRawEidGenerator>(), &test_clock_));
+        base::MakeUnique<TestRawEidGenerator>(), &test_clock_));
   }
 
   void SetTestTime(int64_t timestamp_ms) {

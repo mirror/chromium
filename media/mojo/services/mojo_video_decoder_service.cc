@@ -154,23 +154,30 @@ void MojoVideoDecoderService::Initialize(const VideoDecoderConfig& config,
   }
 
   // Get CdmContext from cdm_id if the stream is encrypted.
+  // TODO(xhwang): This code is duplicated in mojo_audio_decoder_service.
+  // crbug.com/786736 .
   CdmContext* cdm_context = nullptr;
+  scoped_refptr<ContentDecryptionModule> cdm;
   if (config.is_encrypted()) {
-    cdm_context_ref_ = mojo_cdm_service_context_->GetCdmContextRef(cdm_id);
-    if (!cdm_context_ref_) {
-      DVLOG(1) << "CdmContextRef not found for CDM id: " << cdm_id;
+    cdm = mojo_cdm_service_context_->GetCdm(cdm_id);
+    if (!cdm) {
+      DVLOG(1) << "CDM not found for CDM id: " << cdm_id;
       std::move(callback).Run(false, false, 1);
       return;
     }
 
-    cdm_context = cdm_context_ref_->GetCdmContext();
-    DCHECK(cdm_context);
+    cdm_context = cdm->GetCdmContext();
+    if (!cdm_context) {
+      DVLOG(1) << "CDM context not available for CDM id: " << cdm_id;
+      std::move(callback).Run(false, false, 1);
+      return;
+    }
   }
 
   decoder_->Initialize(
       config, low_delay, cdm_context,
       base::Bind(&MojoVideoDecoderService::OnDecoderInitialized, weak_this_,
-                 base::Passed(&callback)),
+                 base::Passed(&callback), cdm),
       base::BindRepeating(&MojoVideoDecoderService::OnDecoderOutput,
                           weak_this_));
 }
@@ -205,12 +212,13 @@ void MojoVideoDecoderService::Reset(ResetCallback callback) {
 
 void MojoVideoDecoderService::OnDecoderInitialized(
     InitializeCallback callback,
+    scoped_refptr<ContentDecryptionModule> cdm,
     bool success) {
   DVLOG(1) << __func__;
   DCHECK(decoder_);
 
-  if (!success)
-    cdm_context_ref_.reset();
+  if (success)
+    cdm_ = std::move(cdm);
 
   std::move(callback).Run(success, decoder_->NeedsBitstreamConversion(),
                           decoder_->GetMaxDecodeRequests());

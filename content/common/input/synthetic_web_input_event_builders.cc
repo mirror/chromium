@@ -199,8 +199,7 @@ int SyntheticWebTouchEvent::PressPoint(float x, float y) {
   point.SetPositionInWidget(x, y);
   point.SetPositionInScreen(x, y);
   point.state = WebTouchPoint::kStatePressed;
-  // Use radius != default(25.f) to test the value is propagated correctly
-  point.radius_x = point.radius_y = 20.f;
+  point.radius_x = point.radius_y = 1.f;
   point.rotation_angle = 1.f;
   point.force = 1.f;
   point.tilt_x = point.tilt_y = 0;

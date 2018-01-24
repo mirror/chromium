@@ -80,15 +80,6 @@ class TransferCacheTest : public testing::Test {
   const ClientRawMemoryTransferCacheEntry& test_client_entry() const {
     return test_client_entry_;
   }
-  void CreateEntry(const ClientTransferCacheEntry& entry) {
-    auto* context_support = ContextSupport();
-    size_t size = entry.SerializedSize();
-    void* data = context_support->MapTransferCacheEntry(size);
-    ASSERT_TRUE(data);
-    entry.Serialize(base::make_span(static_cast<uint8_t*>(data), size));
-    context_support->UnmapAndCreateTransferCacheEntry(entry.UnsafeType(),
-                                                      entry.Id());
-  }
 
  private:
   viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
@@ -105,24 +96,23 @@ TEST_F(TransferCacheTest, Basic) {
 
   // Create an entry.
   const auto& entry = test_client_entry();
-  CreateEntry(entry);
+  context_support->CreateTransferCacheEntry(entry);
   gl->Finish();
 
   // Validate service-side state.
   EXPECT_NE(nullptr, service_cache->GetEntry(entry.Type(), entry.Id()));
 
   // Unlock on client side and flush to service.
-  context_support->UnlockTransferCacheEntries(
-      {{entry.UnsafeType(), entry.Id()}});
+  context_support->UnlockTransferCacheEntries({{entry.Type(), entry.Id()}});
   gl->Finish();
 
   // Re-lock on client side and validate state. No need to flush as lock is
   // local.
-  EXPECT_TRUE(context_support->ThreadsafeLockTransferCacheEntry(
-      entry.UnsafeType(), entry.Id()));
+  EXPECT_TRUE(context_support->ThreadsafeLockTransferCacheEntry(entry.Type(),
+                                                                entry.Id()));
 
   // Delete on client side, flush, and validate that deletion reaches service.
-  context_support->DeleteTransferCacheEntry(entry.UnsafeType(), entry.Id());
+  context_support->DeleteTransferCacheEntry(entry.Type(), entry.Id());
   gl->Finish();
   EXPECT_EQ(nullptr, service_cache->GetEntry(entry.Type(), entry.Id()));
 }
@@ -134,15 +124,14 @@ TEST_F(TransferCacheTest, Eviction) {
 
   const auto& entry = test_client_entry();
   // Create an entry.
-  CreateEntry(entry);
+  context_support->CreateTransferCacheEntry(entry);
   gl->Finish();
 
   // Validate service-side state.
   EXPECT_NE(nullptr, service_cache->GetEntry(entry.Type(), entry.Id()));
 
   // Unlock on client side and flush to service.
-  context_support->UnlockTransferCacheEntries(
-      {{entry.UnsafeType(), entry.Id()}});
+  context_support->UnlockTransferCacheEntries({{entry.Type(), entry.Id()}});
   gl->Finish();
 
   // Evict on the service side.
@@ -150,13 +139,14 @@ TEST_F(TransferCacheTest, Eviction) {
   EXPECT_EQ(nullptr, service_cache->GetEntry(entry.Type(), entry.Id()));
 
   // Try to re-lock on the client side. This should fail.
-  EXPECT_FALSE(context_support->ThreadsafeLockTransferCacheEntry(
-      entry.UnsafeType(), entry.Id()));
+  EXPECT_FALSE(context_support->ThreadsafeLockTransferCacheEntry(entry.Type(),
+                                                                 entry.Id()));
 }
 
 TEST_F(TransferCacheTest, RawMemoryTransfer) {
   auto* service_cache = ServiceTransferCache();
   auto* gl = Gl();
+  auto* context_support = ContextSupport();
 
   // Create an entry with some initialized data.
   std::vector<uint8_t> data;
@@ -167,7 +157,7 @@ TEST_F(TransferCacheTest, RawMemoryTransfer) {
 
   // Add the entry to the transfer cache
   ClientRawMemoryTransferCacheEntry client_entry(data);
-  CreateEntry(client_entry);
+  context_support->CreateTransferCacheEntry(client_entry);
   gl->Finish();
 
   // Validate service-side data matches.
@@ -187,6 +177,7 @@ TEST_F(TransferCacheTest, ImageMemoryTransfer) {
 
   auto* service_cache = ServiceTransferCache();
   auto* gl = Gl();
+  auto* context_support = ContextSupport();
 
   // Create a 10x10 image.
   SkImageInfo info = SkImageInfo::MakeN32Premul(10, 10);
@@ -199,7 +190,7 @@ TEST_F(TransferCacheTest, ImageMemoryTransfer) {
 
   // Add the entry to the transfer cache
   ClientImageTransferCacheEntry client_entry(&pixmap, nullptr);
-  CreateEntry(client_entry);
+  context_support->CreateTransferCacheEntry(client_entry);
   gl->Finish();
 
   // Validate service-side data matches.

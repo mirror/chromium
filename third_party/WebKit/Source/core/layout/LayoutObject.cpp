@@ -78,7 +78,6 @@
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/layout_ng_table_cell.h"
-#include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
@@ -111,48 +110,12 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
-inline bool ShouldUseNewLayout(const ComputedStyle& style) {
-  return RuntimeEnabledFeatures::LayoutNGEnabled() &&
-         !style.ForceLegacyLayout() &&
-         style.UserModify() == EUserModify::kReadOnly;
-}
-
-template <typename Predicate>
-LayoutObject* FindAncestorByPredicate(const LayoutObject* descendant,
-                                      LayoutObject::AncestorSkipInfo* skip_info,
-                                      Predicate predicate) {
-  for (auto* object = descendant->Parent(); object; object = object->Parent()) {
-    if (predicate(object))
-      return object;
-    if (skip_info)
-      skip_info->Update(*object);
-  }
-  return nullptr;
-}
-
-LayoutBlock* FindContainingBlock(LayoutObject* container,
-                                 LayoutObject::AncestorSkipInfo* skip_info) {
-  // For inlines, we return the nearest non-anonymous enclosing
-  // block. We don't try to return the inline itself. This allows us to avoid
-  // having a positioned objects list in all LayoutInlines and lets us return a
-  // strongly-typed LayoutBlock* result from this method. The
-  // LayoutObject::Container() method can actually be used to obtain the inline
-  // directly.
-  if (container && container->IsInline() && !container->IsAtomicInlineLevel()) {
-    DCHECK(container->Style()->HasInFlowPosition());
-    container = container->ContainingBlock(skip_info);
-  }
-
-  if (container && !container->IsLayoutBlock())
-    container = container->ContainingBlock(skip_info);
-
-  while (container && container->IsAnonymousBlock())
-    container = container->ContainingBlock(skip_info);
-
-  if (!container || !container->IsLayoutBlock())
-    return nullptr;  // This can still happen in case of an orphaned tree
-
-  return ToLayoutBlock(container);
+bool ShouldUseNewLayout(const ComputedStyle& style) {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+  // TODO(layout-dev): Remove user-modify style check once editing handles
+  // LayoutNG.
+  return style.UserModify() == EUserModify::kReadOnly;
 }
 
 }  // namespace
@@ -260,7 +223,7 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
-      if (ShouldUseNewLayout(style))
+      if (RuntimeEnabledFeatures::LayoutNGEnabled())
         return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
@@ -740,7 +703,7 @@ LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
     return nullptr;
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
-  return NGBlockNode::CanUseNewLayout(*box) ? ToLayoutBlockFlow(box) : nullptr;
+  return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
 }
 
 const NGPhysicalBoxFragment* LayoutObject::EnclosingBlockFlowFragment() const {
@@ -984,29 +947,56 @@ inline void LayoutObject::InvalidateContainerPreferredLogicalWidths() {
 
 LayoutObject* LayoutObject::ContainerForAbsolutePosition(
     AncestorSkipInfo* skip_info) const {
-  return FindAncestorByPredicate(this, skip_info, [](LayoutObject* candidate) {
-    return candidate->CanContainAbsolutePositionObjects();
-  });
+  // We technically just want our containing block, but we may not have one if
+  // we're part of an uninstalled subtree. We'll climb as high as we can though.
+  for (LayoutObject* object = Parent(); object; object = object->Parent()) {
+    if (object->CanContainAbsolutePositionObjects())
+      return object;
+    if (skip_info)
+      skip_info->Update(*object);
+  }
+  return nullptr;
 }
 
-LayoutObject* LayoutObject::ContainerForFixedPosition(
+LayoutBlock* LayoutObject::ContainerForFixedPosition(
     AncestorSkipInfo* skip_info) const {
   DCHECK(!IsText());
-  return FindAncestorByPredicate(this, skip_info, [](LayoutObject* candidate) {
-    return candidate->CanContainFixedPositionObjects();
-  });
+
+  LayoutObject* object = Parent();
+  for (; object && !object->CanContainFixedPositionObjects();
+       object = object->Parent()) {
+    if (skip_info)
+      skip_info->Update(*object);
+  }
+
+  DCHECK(!object || !object->IsAnonymousBlock());
+  return ToLayoutBlock(object);
 }
 
 LayoutBlock* LayoutObject::ContainingBlockForAbsolutePosition(
     AncestorSkipInfo* skip_info) const {
-  auto* container = ContainerForAbsolutePosition(skip_info);
-  return FindContainingBlock(container, skip_info);
-}
+  LayoutObject* object = ContainerForAbsolutePosition(skip_info);
 
-LayoutBlock* LayoutObject::ContainingBlockForFixedPosition(
-    AncestorSkipInfo* skip_info) const {
-  auto* container = ContainerForFixedPosition(skip_info);
-  return FindContainingBlock(container, skip_info);
+  // For relpositioned inlines, we return the nearest non-anonymous enclosing
+  // block. We don't try to return the inline itself. This allows us to avoid
+  // having a positioned objects list in all LayoutInlines and lets us return a
+  // strongly-typed LayoutBlock* result from this method. The container() method
+  // can actually be used to obtain the inline directly.
+  if (object && object->IsInline() && !object->IsAtomicInlineLevel()) {
+    DCHECK(object->Style()->HasInFlowPosition());
+    object = object->ContainingBlock(skip_info);
+  }
+
+  if (object && !object->IsLayoutBlock())
+    object = object->ContainingBlock(skip_info);
+
+  while (object && object->IsAnonymousBlock())
+    object = object->ContainingBlock(skip_info);
+
+  if (!object || !object->IsLayoutBlock())
+    return nullptr;  // This can still happen in case of an orphaned tree
+
+  return ToLayoutBlock(object);
 }
 
 LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
@@ -1015,7 +1005,7 @@ LayoutBlock* LayoutObject::ContainingBlock(AncestorSkipInfo* skip_info) const {
     object = ToLayoutScrollbarPart(this)->ScrollbarStyleSource();
   if (!IsTextOrSVGChild()) {
     if (style_->GetPosition() == EPosition::kFixed)
-      return ContainingBlockForFixedPosition(skip_info);
+      return ContainerForFixedPosition(skip_info);
     if (style_->GetPosition() == EPosition::kAbsolute)
       return ContainingBlockForAbsolutePosition(skip_info);
   }
@@ -1634,8 +1624,16 @@ void LayoutObject::SetNeedsOverflowRecalcAfterStyleChange() {
 DISABLE_CFI_PERF
 void LayoutObject::SetStyle(scoped_refptr<ComputedStyle> style) {
   DCHECK(style);
-  if (style_ == style)
+
+  if (style_ == style) {
+    // We need to run through adjustStyleDifference() for iframes, plugins, and
+    // canvas so style sharing is disabled for them. That should ensure that we
+    // never hit this code path.
+    DCHECK(!IsLayoutIFrame());
+    DCHECK(!IsEmbeddedObject());
+    DCHECK(!IsCanvas());
     return;
+  }
 
   StyleDifference diff;
   if (style_)

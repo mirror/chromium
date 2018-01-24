@@ -76,9 +76,6 @@ class CORE_EXPORT PointerEventFactory {
   // Otherwise it returns WebPointerProperties::PointerType::Unknown.
   WebPointerProperties::PointerType GetPointerType(int pointer_id) const;
 
-  // Returns whether a WebPoinerProperties is primary pointer.
-  bool IsPrimary(const WebPointerProperties&) const;
-
   static const int kMouseId;
 
  private:

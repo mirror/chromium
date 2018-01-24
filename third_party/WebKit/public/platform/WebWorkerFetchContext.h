@@ -12,6 +12,10 @@
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURL.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace blink {
 
 class WebURLLoaderFactory;
@@ -27,7 +31,8 @@ class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() = default;
 
-  virtual void InitializeOnWorkerThread() = 0;
+  virtual void InitializeOnWorkerThread(
+      scoped_refptr<base::SingleThreadTaskRunner>) = 0;
 
   // Returns a new WebURLLoaderFactory which is associated with the worker
   // context. It can be called only once.

@@ -131,7 +131,6 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
-#include "services/network/public/cpp/network_switches.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "ui/base/idle/idle.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -529,11 +528,9 @@ BrowserProcessImpl::GetMetricsServicesManager() {
   if (!metrics_services_manager_) {
     auto client =
         base::MakeUnique<ChromeMetricsServicesManagerClient>(local_state());
-    ChromeMetricsServicesManagerClient* client_ptr = client.get();
     metrics_services_manager_ =
         base::MakeUnique<metrics_services_manager::MetricsServicesManager>(
             std::move(client));
-    client_ptr->OnMetricsServiceManagerCreated(metrics_services_manager_.get());
   }
   return metrics_services_manager_.get();
 }
@@ -969,6 +966,7 @@ BrowserProcessImpl::component_updater() {
   component_updater_ = component_updater::ComponentUpdateServiceFactory(
       component_updater::MakeChromeComponentUpdaterConfigurator(
           base::CommandLine::ForCurrentProcess(),
+          io_thread()->system_url_request_context_getter(),
           g_browser_process->local_state()));
 
   return component_updater_.get();
@@ -1080,9 +1078,9 @@ void BrowserProcessImpl::PreCreateThreads(
       extensions::kExtensionScheme, true);
 #endif
 
-  if (command_line.HasSwitch(network::switches::kLogNetLog)) {
+  if (command_line.HasSwitch(switches::kLogNetLog)) {
     base::FilePath log_file =
-        command_line.GetSwitchValuePath(network::switches::kLogNetLog);
+        command_line.GetSwitchValuePath(switches::kLogNetLog);
     if (log_file.empty()) {
       base::FilePath user_data_dir;
       bool success =
@@ -1239,14 +1237,7 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
     return;
   }
 
-  // Runner for tasks critical for user experience.
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
-           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
-
-  // Runner for tasks that do not influence user experience.
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
@@ -1261,7 +1252,7 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
           blocking_task_runner);
   subresource_filter_ruleset_service_->set_ruleset_service(
       base::MakeUnique<subresource_filter::RulesetService>(
-          local_state(), blocking_task_runner, background_task_runner,
+          local_state(), blocking_task_runner,
           subresource_filter_ruleset_service_.get(), indexed_ruleset_base_dir));
 }
 
@@ -1345,8 +1336,7 @@ void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
       FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
-              local_state())));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
 }
 #endif
 

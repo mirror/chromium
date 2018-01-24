@@ -24,11 +24,11 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
-#include "net/base/proxy_server.h"
 #include "net/cert/cert_database.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_stream_factory.h"
 #include "net/log/net_log_with_source.h"
+#include "net/proxy/proxy_server.h"
 #include "net/quic/chromium/network_connection.h"
 #include "net/quic/chromium/quic_chromium_client_session.h"
 #include "net/quic/chromium/quic_clock_skew_detector.h"
@@ -82,10 +82,9 @@ enum QuicConnectionMigrationStatus {
   MIGRATION_STATUS_TOO_MANY_CHANGES,
   MIGRATION_STATUS_SUCCESS,
   MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
-  MIGRATION_STATUS_NOT_ENABLED,
+  MIGRATION_STATUS_DISABLED,
   MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
   MIGRATION_STATUS_ON_PATH_DEGRADING_DISABLED,
-  MIGRATION_STATUS_DISABLED_BY_CONFIG,
   MIGRATION_STATUS_MAX
 };
 

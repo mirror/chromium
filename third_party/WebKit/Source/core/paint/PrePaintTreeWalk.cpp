@@ -136,7 +136,7 @@ static void UpdateAuxiliaryObjectProperties(const LayoutObject& object,
   if (!object.HasLayer())
     return;
 
-  PaintLayer* paint_layer = ToLayoutBoxModelObject(object).Layer();
+  PaintLayer* paint_layer = object.EnclosingLayer();
   paint_layer->UpdateAncestorOverflowLayer(
       context.ancestor_overflow_paint_layer);
 

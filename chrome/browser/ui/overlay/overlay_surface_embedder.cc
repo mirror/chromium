@@ -4,6 +4,9 @@
 
 #include "chrome/browser/ui/overlay/overlay_surface_embedder.h"
 
+#include <memory>
+
+#include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "ui/compositor/layer.h"
 
 OverlaySurfaceEmbedder::OverlaySurfaceEmbedder(OverlayWindow* window)
@@ -15,6 +18,7 @@ OverlaySurfaceEmbedder::OverlaySurfaceEmbedder(OverlayWindow* window)
   // the surface layer.
   surface_layer_->SetFillsBoundsOpaquely(false);
   window_->GetLayer()->Add(surface_layer_.get());
+  ref_factory_ = new viz::StubSurfaceReferenceFactory();
 }
 
 OverlaySurfaceEmbedder::~OverlaySurfaceEmbedder() = default;
@@ -23,5 +27,5 @@ void OverlaySurfaceEmbedder::SetPrimarySurfaceId(
     const viz::SurfaceId& surface_id) {
   // SurfaceInfo has information about the embedded surface.
   surface_layer_->SetShowPrimarySurface(surface_id, window_->GetBounds().size(),
-                                        SK_ColorBLACK);
+                                        SK_ColorBLACK, ref_factory_);
 }

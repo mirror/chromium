@@ -9,7 +9,6 @@
 #include "tools/gn/runtime_deps.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/target.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
 namespace {
@@ -41,10 +40,8 @@ std::string GetVectorDescription(
 
 }  // namespace
 
-using RuntimeDeps = TestWithScheduler;
-
 // Tests an exe depending on different types of libraries.
-TEST_F(RuntimeDeps, Libs) {
+TEST(RuntimeDeps, Libs) {
   TestWithScope setup;
   Err err;
 
@@ -116,7 +113,7 @@ TEST_F(RuntimeDeps, Libs) {
 
 // Tests that executables that aren't listed as data deps aren't included in
 // the output, but executables that are data deps are included.
-TEST_F(RuntimeDeps, ExeDataDep) {
+TEST(RuntimeDeps, ExeDataDep) {
   TestWithScope setup;
   Err err;
 
@@ -168,7 +165,7 @@ TEST_F(RuntimeDeps, ExeDataDep) {
       << GetVectorDescription(result);
 }
 
-TEST_F(RuntimeDeps, ActionSharedLib) {
+TEST(RuntimeDeps, ActionSharedLib) {
   TestWithScope setup;
   Err err;
 
@@ -211,7 +208,7 @@ TEST_F(RuntimeDeps, ActionSharedLib) {
 // Tests that action and copy outputs are considered if they're data deps, but
 // not if they're regular deps. Action and copy "data" files are always
 // included.
-TEST_F(RuntimeDeps, ActionOutputs) {
+TEST(RuntimeDeps, ActionOutputs) {
   TestWithScope setup;
   Err err;
 
@@ -297,7 +294,7 @@ TEST_F(RuntimeDeps, ActionOutputs) {
 // Tests that the search for dependencies terminates at a bundle target,
 // ignoring any shared libraries or loadable modules that get copied into the
 // bundle.
-TEST_F(RuntimeDeps, CreateBundle) {
+TEST(RuntimeDeps, CreateBundle) {
   TestWithScope setup;
   Err err;
 
@@ -396,7 +393,7 @@ TEST_F(RuntimeDeps, CreateBundle) {
 
 // Tests that a dependency duplicated in regular and data deps is processed
 // as a data dep.
-TEST_F(RuntimeDeps, Dupe) {
+TEST(RuntimeDeps, Dupe) {
   TestWithScope setup;
   Err err;
 
@@ -421,7 +418,8 @@ TEST_F(RuntimeDeps, Dupe) {
 }
 
 // Tests that actions can't have output substitutions.
-TEST_F(RuntimeDeps, WriteRuntimeDepsVariable) {
+TEST(RuntimeDeps, WriteRuntimeDepsVariable) {
+  Scheduler scheduler;
   TestWithScope setup;
   Err err;
 
@@ -444,5 +442,5 @@ TEST_F(RuntimeDeps, WriteRuntimeDepsVariable) {
       "  group(\"bar\") { write_runtime_deps = \"//out/Debug/bar.txt\" }\n"
       "}", &err));
   EXPECT_EQ(1U, setup.items().size());
-  EXPECT_EQ(1U, scheduler().GetWriteRuntimeDepsTargets().size());
+  EXPECT_EQ(1U, scheduler.GetWriteRuntimeDepsTargets().size());
 }

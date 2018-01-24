@@ -68,14 +68,14 @@ MediaDevices* MediaDevices::Create(ExecutionContext* context) {
 
 MediaDevices::MediaDevices(ExecutionContext* context)
     : PausableObject(context),
+      observing_(false),
       stopped_(false),
       dispatch_scheduled_event_runner_(
           context ? AsyncMethodRunner<MediaDevices>::Create(
                         this,
                         &MediaDevices::DispatchScheduledEvent,
                         context->GetTaskRunner(TaskType::kMediaElementEvent))
-                  : nullptr),
-      binding_(this) {}
+                  : nullptr) {}
 
 MediaDevices::~MediaDevices() = default;
 
@@ -140,6 +140,14 @@ ScriptPromise MediaDevices::getUserMedia(ScriptState* script_state,
   return promise;
 }
 
+void MediaDevices::DidChangeMediaDevices() {
+  Document* document = ToDocument(GetExecutionContext());
+  DCHECK(document);
+
+  if (RuntimeEnabledFeatures::OnDeviceChangeEnabled())
+    ScheduleDispatchEvent(Event::Create(EventTypeNames::devicechange));
+}
+
 const AtomicString& MediaDevices::InterfaceName() const {
   return EventTargetNames::MediaDevices;
 }
@@ -172,8 +180,8 @@ void MediaDevices::RemovedEventListener(
 }
 
 bool MediaDevices::HasPendingActivity() const {
-  DCHECK(stopped_ || binding_.is_bound() == HasEventListeners());
-  return binding_.is_bound();
+  DCHECK(stopped_ || observing_ == HasEventListeners());
+  return observing_;
 }
 
 void MediaDevices::ContextDestroyed(ExecutionContext*) {
@@ -196,19 +204,6 @@ void MediaDevices::Unpause() {
   dispatch_scheduled_event_runner_->Unpause();
 }
 
-void MediaDevices::OnDevicesChanged(
-    MediaDeviceType type,
-    Vector<mojom::blink::MediaDeviceInfoPtr> device_infos) {
-  Document* document = ToDocument(GetExecutionContext());
-  DCHECK(document);
-
-  if (RuntimeEnabledFeatures::OnDeviceChangeEnabled())
-    ScheduleDispatchEvent(Event::Create(EventTypeNames::devicechange));
-
-  if (device_change_test_callback_)
-    std::move(device_change_test_callback_).Run();
-}
-
 void MediaDevices::ScheduleDispatchEvent(Event* event) {
   scheduled_events_.push_back(event);
   DCHECK(dispatch_scheduled_event_runner_);
@@ -224,25 +219,35 @@ void MediaDevices::DispatchScheduledEvent() {
 }
 
 void MediaDevices::StartObserving() {
-  if (binding_.is_bound() || stopped_)
+  if (observing_ || stopped_)
     return;
 
-  Document* document = ToDocument(GetExecutionContext());
-  if (!document || !document->GetFrame())
+  UserMediaController* user_media = GetUserMediaController();
+  if (!user_media)
     return;
 
-  mojom::blink::MediaDevicesListenerPtr listener;
-  binding_.Bind(mojo::MakeRequest(&listener));
-  GetDispatcherHost(document->GetFrame())
-      ->AddMediaDevicesListener(true /* audio input */, true /* video input */,
-                                true /* audio output */, std::move(listener));
+  user_media->SetMediaDeviceChangeObserver(this);
+  observing_ = true;
 }
 
 void MediaDevices::StopObserving() {
-  if (!binding_.is_bound())
+  if (!observing_)
     return;
 
-  binding_.Close();
+  UserMediaController* user_media = GetUserMediaController();
+  if (!user_media)
+    return;
+
+  user_media->SetMediaDeviceChangeObserver(nullptr);
+  observing_ = false;
+}
+
+UserMediaController* MediaDevices::GetUserMediaController() {
+  Document* document = ToDocument(GetExecutionContext());
+  if (!document)
+    return nullptr;
+
+  return UserMediaController::From(document->GetFrame());
 }
 
 void MediaDevices::Dispose() {

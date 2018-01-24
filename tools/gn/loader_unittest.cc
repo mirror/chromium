@@ -16,7 +16,6 @@
 #include "tools/gn/parse_tree.h"
 #include "tools/gn/parser.h"
 #include "tools/gn/scheduler.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/tokenizer.h"
 
 namespace {
@@ -140,13 +139,14 @@ void MockInputFileManager::IssueAllPending() {
 
 // LoaderTest ------------------------------------------------------------------
 
-class LoaderTest : public TestWithScheduler {
+class LoaderTest : public testing::Test {
  public:
   LoaderTest() {
     build_settings_.SetBuildDir(SourceDir("//out/Debug/"));
   }
 
  protected:
+  Scheduler scheduler_;
   BuildSettings build_settings_;
   MockBuilder mock_builder_;
   MockInputFileManager mock_ifm_;
@@ -212,7 +212,7 @@ TEST_F(LoaderTest, Foo) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(mock_ifm_.HasTwoPending(second_file, third_file));
 
-  EXPECT_FALSE(scheduler().is_failed());
+  EXPECT_FALSE(scheduler_.is_failed());
 }
 
 TEST_F(LoaderTest, BuildDependencyFilesAreCollected) {
@@ -260,5 +260,5 @@ TEST_F(LoaderTest, BuildDependencyFilesAreCollected) {
   EXPECT_TRUE(items[3]->AsPool());
   EXPECT_TRUE(ItemContainsBuildDependencyFile(items[3], root_build));
 
-  EXPECT_FALSE(scheduler().is_failed());
+  EXPECT_FALSE(scheduler_.is_failed());
 }

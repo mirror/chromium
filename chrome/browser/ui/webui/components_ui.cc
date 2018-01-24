@@ -214,8 +214,6 @@ base::string16 ComponentsUI::ComponentEventToString(Events event) {
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_UPDATED);
     case Events::COMPONENT_NOT_UPDATED:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_NOTUPDATED);
-    case Events::COMPONENT_UPDATE_ERROR:
-      return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_UPDATE_ERROR);
     case Events::COMPONENT_UPDATE_DOWNLOADING:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_EVT_STATUS_DOWNLOADING);
   }
@@ -247,7 +245,7 @@ base::string16 ComponentsUI::ServiceStatusToString(
     case update_client::ComponentState::kUpToDate:
       return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_UPTODATE);
     case update_client::ComponentState::kUpdateError:
-      return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_UPDATE_ERROR);
+      return l10n_util::GetStringUTF16(IDS_COMPONENTS_SVC_STATUS_NOUPDATE);
     case update_client::ComponentState::kUninstalled:  // Fall through.
     case update_client::ComponentState::kRun:
     case update_client::ComponentState::kLastStatus:

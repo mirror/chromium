@@ -29,7 +29,6 @@
 namespace blink {
 
 class ComputedStyle;
-class Element;
 class LayoutObject;
 class LayoutSVGResourceClipper;
 class LayoutSVGResourceContainer;
@@ -48,10 +47,6 @@ class SVGResources {
 
   static std::unique_ptr<SVGResources> BuildResources(const LayoutObject*,
                                                       const ComputedStyle&);
-
-  static void RemoveWatchesForElement(Element&);
-  static void RemoveUnreferencedResources(const LayoutObject&);
-
   void LayoutIfNeeded();
 
   static bool SupportsMarkers(const SVGElement&);

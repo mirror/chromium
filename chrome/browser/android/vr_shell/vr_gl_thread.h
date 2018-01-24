@@ -48,8 +48,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   base::WeakPtr<VrShellGl> GetVrShellGl();
 
   // GlBrowserInterface implementation (GL calling to VrShell).
-  void ContentSurfaceCreated(jobject surface) override;
-  void ContentOverlaySurfaceCreated(jobject surface) override;
+  void ContentSurfaceChanged(jobject surface) override;
   void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) override;
@@ -90,7 +89,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccessEnabled(bool enabled) override;
+  void SetLocationAccess(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;

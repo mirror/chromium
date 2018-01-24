@@ -6,7 +6,6 @@
 #define COMPONENTS_CBOR_CBOR_VALUES_H_
 
 #include <stdint.h>
-
 #include <string>
 #include <tuple>
 #include <vector>
@@ -97,10 +96,6 @@ class CBOR_EXPORT CBORValue {
   CBORValue() noexcept;  // A NONE value.
 
   explicit CBORValue(Type type);
-
-  explicit CBORValue(SimpleValue in_simple);
-  explicit CBORValue(bool boolean_value);
-
   explicit CBORValue(int integer_value);
   explicit CBORValue(int64_t integer_value);
   explicit CBORValue(uint64_t integer_value) = delete;
@@ -118,6 +113,8 @@ class CBOR_EXPORT CBORValue {
   explicit CBORValue(const MapValue& in_map);
   explicit CBORValue(MapValue&& in_map) noexcept;
 
+  explicit CBORValue(SimpleValue in_simple);
+
   CBORValue& operator=(CBORValue&& that) noexcept;
 
   ~CBORValue();
@@ -132,11 +129,6 @@ class CBOR_EXPORT CBORValue {
   // Returns true if the current object represents a given type.
   bool is_type(Type type) const { return type == type_; }
   bool is_none() const { return type() == Type::NONE; }
-  bool is_simple() const { return type() == Type::SIMPLE_VALUE; }
-  bool is_bool() const {
-    return is_simple() && (simple_value_ == SimpleValue::TRUE_VALUE ||
-                           simple_value_ == SimpleValue::FALSE_VALUE);
-  }
   bool is_unsigned() const { return type() == Type::UNSIGNED; }
   bool is_negative() const { return type() == Type::NEGATIVE; }
   bool is_integer() const { return is_unsigned() || is_negative(); }
@@ -144,10 +136,10 @@ class CBOR_EXPORT CBORValue {
   bool is_string() const { return type() == Type::STRING; }
   bool is_array() const { return type() == Type::ARRAY; }
   bool is_map() const { return type() == Type::MAP; }
+  bool is_simple() const { return type() == Type::SIMPLE_VALUE; }
 
   // These will all fatally assert if the type doesn't match.
   SimpleValue GetSimpleValue() const;
-  bool GetBool() const;
   const int64_t& GetInteger() const;
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;

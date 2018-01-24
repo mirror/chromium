@@ -61,10 +61,14 @@ V8PerIsolateData::V8PerIsolateData(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     V8ContextSnapshotMode v8_context_snapshot_mode)
     : v8_context_snapshot_mode_(v8_context_snapshot_mode),
-      isolate_holder_(task_runner,
-                      gin::IsolateHolder::kSingleThread,
-                      IsMainThread() ? gin::IsolateHolder::kDisallowAtomicsWait
-                                     : gin::IsolateHolder::kAllowAtomicsWait),
+      isolate_holder_(
+          task_runner,
+          gin::IsolateHolder::kSingleThread,
+          IsMainThread() ? gin::IsolateHolder::kDisallowAtomicsWait
+                         : gin::IsolateHolder::kAllowAtomicsWait,
+          v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot
+              ? &startup_data_
+              : nullptr),
       interface_template_map_for_v8_context_snapshot_(GetIsolate()),
       string_cache_(WTF::WrapUnique(new StringCache(GetIsolate()))),
       private_property_(V8PrivateProperty::Create()),
@@ -73,6 +77,13 @@ V8PerIsolateData::V8PerIsolateData(
       is_handling_recursion_level_error_(false),
       is_reporting_exception_(false),
       runtime_call_stats_(base::DefaultTickClock::GetInstance()) {
+  // If it fails to load the snapshot file, falls back to kDontUseSnapshot mode.
+  // TODO(peria): Remove this fallback routine.
+  if (v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot &&
+      !startup_data_.data) {
+    v8_context_snapshot_mode_ = V8ContextSnapshotMode::kDontUseSnapshot;
+  }
+
   // FIXME: Remove once all v8::Isolate::GetCurrent() calls are gone.
   GetIsolate()->Enter();
   GetIsolate()->AddBeforeCallEnteredCallback(&BeforeCallEnteredCallback);
@@ -81,15 +92,13 @@ V8PerIsolateData::V8PerIsolateData(
     g_main_thread_per_isolate_data = this;
 }
 
-// This constructor is used for creating a V8 context snapshot. It must run on
-// the main thread.
+// This constructor is used for taking a V8 context snapshot. It must run on the
+// main thread.
 V8PerIsolateData::V8PerIsolateData()
     : v8_context_snapshot_mode_(V8ContextSnapshotMode::kTakeSnapshot),
       isolate_holder_(
           Platform::Current()->MainThread()->GetSingleThreadTaskRunner(),
-          gin::IsolateHolder::kSingleThread,
-          gin::IsolateHolder::kAllowAtomicsWait,
-          gin::IsolateHolder::IsolateCreationMode::kCreateSnapshot),
+          &startup_data_),
       interface_template_map_for_v8_context_snapshot_(GetIsolate()),
       string_cache_(WTF::WrapUnique(new StringCache(GetIsolate()))),
       private_property_(V8PrivateProperty::Create()),
@@ -358,10 +367,10 @@ void V8PerIsolateData::AddActiveScriptWrappable(
 
 void V8PerIsolateData::TemporaryScriptWrappableVisitorScope::
     SwapWithV8PerIsolateDataVisitor(
-        std::unique_ptr<ScriptWrappableMarkingVisitor>& visitor) {
-  ScriptWrappableMarkingVisitor* current = CurrentVisitor();
+        std::unique_ptr<ScriptWrappableVisitor>& visitor) {
+  ScriptWrappableVisitor* current = CurrentVisitor();
   if (current)
-    ScriptWrappableMarkingVisitor::PerformCleanup(isolate_);
+    ScriptWrappableVisitor::PerformCleanup(isolate_);
 
   V8PerIsolateData::From(isolate_)->script_wrappable_visitor_.swap(
       saved_visitor_);

@@ -208,8 +208,7 @@ class ChloValidator : public ChloAlpnExtractor {
       : helper_(helper),
         self_address_(self_address),
         rejector_(rejector),
-        can_accept_(false),
-        error_details_("CHLO not processed") {}
+        can_accept_(false) {}
 
   // ChloExtractor::Delegate implementation.
   void OnChlo(QuicTransportVersion version,
@@ -908,7 +907,6 @@ void QuicDispatcher::MaybeRejectStatelessly(QuicConnectionId connection_id,
     ChloAlpnExtractor alpn_extractor;
     if (FLAGS_quic_allow_chlo_buffering &&
         !ChloExtractor::Extract(*current_packet_, GetSupportedVersions(),
-                                config_.create_session_tag_indicators(),
                                 &alpn_extractor)) {
       // Buffer non-CHLO packets.
       ProcessUnauthenticatedHeaderFate(kFateBuffer, connection_id);
@@ -927,7 +925,6 @@ void QuicDispatcher::MaybeRejectStatelessly(QuicConnectionId connection_id,
   ChloValidator validator(session_helper_.get(), current_server_address_,
                           rejector.get());
   if (!ChloExtractor::Extract(*current_packet_, GetSupportedVersions(),
-                              config_.create_session_tag_indicators(),
                               &validator)) {
     ProcessUnauthenticatedHeaderFate(kFateBuffer, connection_id);
     return;

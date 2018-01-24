@@ -6,11 +6,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <memory>
-
 #include "base/callback.h"
 #import "base/mac/bind_objc_block.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/task_scheduler/post_task.h"
 #import "components/image_fetcher/ios/webp_decoder.h"
@@ -104,7 +103,7 @@ void IOSImageDecoderImpl::CreateUIImageAndRunCallback(
 }
 
 std::unique_ptr<ImageDecoder> CreateIOSImageDecoder() {
-  return std::make_unique<IOSImageDecoderImpl>();
+  return base::MakeUnique<IOSImageDecoderImpl>();
 }
 
 }  // namespace image_fetcher

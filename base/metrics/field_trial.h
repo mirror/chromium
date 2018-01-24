@@ -650,7 +650,6 @@ class BASE_EXPORT FieldTrialList {
   FRIEND_TEST_ALL_PREFIXES(FieldTrialListTest, ClearParamsFromSharedMemory);
   FRIEND_TEST_ALL_PREFIXES(FieldTrialListTest,
                            SerializeSharedMemoryHandleMetadata);
-  FRIEND_TEST_ALL_PREFIXES(FieldTrialListTest, CheckReadOnlySharedMemoryHandle);
 
   // Serialization is used to pass information about the handle to child
   // processes. It passes a reference to the relevant OS resource, and it passes

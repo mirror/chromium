@@ -113,7 +113,8 @@ class URLResponseBodyConsumerTest : public ::testing::Test {
     std::vector<network::mojom::URLLoaderClientPtr> clients_;
   };
 
-  URLResponseBodyConsumerTest() : dispatcher_(new ResourceDispatcher()) {}
+  URLResponseBodyConsumerTest()
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {}
 
   ~URLResponseBodyConsumerTest() override {
     dispatcher_.reset();

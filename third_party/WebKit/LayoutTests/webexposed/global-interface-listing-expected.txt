@@ -2405,7 +2405,6 @@ interface HTMLDocument : Document
 interface HTMLElement : Element
     attribute @@toStringTag
     getter accessKey
-    getter autocapitalize
     getter contentEditable
     getter dataset
     getter dir
@@ -2507,7 +2506,6 @@ interface HTMLElement : Element
     method constructor
     method focus
     setter accessKey
-    setter autocapitalize
     setter contentEditable
     setter dir
     setter draggable
@@ -2864,6 +2862,7 @@ interface HTMLInputElement : HTMLElement
     getter accept
     getter align
     getter alt
+    getter autocapitalize
     getter autocomplete
     getter autofocus
     getter checked
@@ -2922,6 +2921,7 @@ interface HTMLInputElement : HTMLElement
     setter accept
     setter align
     setter alt
+    setter autocapitalize
     setter autocomplete
     setter autofocus
     setter checked
@@ -3536,6 +3536,7 @@ interface HTMLTemplateElement : HTMLElement
     method constructor
 interface HTMLTextAreaElement : HTMLElement
     attribute @@toStringTag
+    getter autocapitalize
     getter autofocus
     getter cols
     getter defaultValue
@@ -3567,6 +3568,7 @@ interface HTMLTextAreaElement : HTMLElement
     method setCustomValidity
     method setRangeText
     method setSelectionRange
+    setter autocapitalize
     setter autofocus
     setter cols
     setter defaultValue
@@ -3895,6 +3897,7 @@ interface ImageCapture
     method getPhotoCapabilities
     method getPhotoSettings
     method grabFrame
+    method setOptions
     method takePhoto
 interface ImageData
     attribute @@toStringTag

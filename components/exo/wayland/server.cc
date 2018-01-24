@@ -30,7 +30,6 @@
 #include <cstdlib>
 #include <iterator>
 #include <map>
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -1554,7 +1553,6 @@ class WaylandToplevel : public aura::WindowObserver {
       AddState(&states, ZXDG_TOPLEVEL_V6_STATE_ACTIVATED);
     zxdg_toplevel_v6_send_configure(resource_, size.width(), size.height(),
                                     &states);
-    wl_array_release(&states);
   }
 
   wl_resource* const resource_;
@@ -4352,7 +4350,7 @@ void pointer_gestures_get_pinch_gesture(wl_client* client,
       client, &zwp_pointer_gesture_pinch_v1_interface, 1, id);
   SetImplementation(pointer_gesture_pinch_resource,
                     &pointer_gesture_pinch_implementation,
-                    std::make_unique<WaylandPointerGesturePinchDelegate>(
+                    base::MakeUnique<WaylandPointerGesturePinchDelegate>(
                         pointer_gesture_pinch_resource, pointer));
 }
 

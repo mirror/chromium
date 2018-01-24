@@ -32,7 +32,7 @@
 #include "media/base/media_switches.h"
 #include "media/capture/video/fake_video_capture_device_factory.h"
 #include "media/capture/video/video_capture_system_impl.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/origin.h"
@@ -65,19 +65,19 @@ void PhysicalDevicesEnumerated(base::Closure quit_closure,
 
 class MockMediaDevicesListener : public blink::mojom::MediaDevicesListener {
  public:
-  MockMediaDevicesListener() {}
+  MockMediaDevicesListener() : binding_(this) {}
 
-  MOCK_METHOD2(OnDevicesChanged,
-               void(MediaDeviceType, const MediaDeviceInfoArray&));
+  MOCK_METHOD3(OnDevicesChanged,
+               void(MediaDeviceType, uint32_t, const MediaDeviceInfoArray&));
 
   blink::mojom::MediaDevicesListenerPtr CreateInterfacePtrAndBind() {
     blink::mojom::MediaDevicesListenerPtr listener;
-    bindings_.AddBinding(this, mojo::MakeRequest(&listener));
+    binding_.Bind(mojo::MakeRequest(&listener));
     return listener;
   }
 
  private:
-  mojo::BindingSet<blink::mojom::MediaDevicesListener> bindings_;
+  mojo::Binding<blink::mojom::MediaDevicesListener> binding_;
 };
 
 }  // namespace
@@ -114,10 +114,9 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
         std::move(video_capture_provider));
     host_ = std::make_unique<MediaDevicesDispatcherHost>(
         kProcessId, kRenderId, media_stream_manager_.get());
-    media_stream_manager_->media_devices_manager()
-        ->set_salt_and_origin_callback_for_testing(base::BindRepeating(
-            &MediaDevicesDispatcherHostTest::GetSaltAndOrigin,
-            base::Unretained(this)));
+    host_->set_salt_and_origin_callback_for_testing(
+        base::Bind(&MediaDevicesDispatcherHostTest::GetSaltAndOrigin,
+                   base::Unretained(this)));
   }
   ~MediaDevicesDispatcherHostTest() override { audio_manager_->Shutdown(); }
 
@@ -346,24 +345,24 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
   void SubscribeAndWaitForResult(bool has_permission) {
     media_stream_manager_->media_devices_manager()->SetPermissionChecker(
         std::make_unique<MediaDevicesPermissionChecker>(has_permission));
-    MockMediaDevicesListener device_change_listener;
+    uint32_t subscription_id = 0u;
     for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
       MediaDeviceType type = static_cast<MediaDeviceType>(i);
-      host_->AddMediaDevicesListener(
-          type == MEDIA_DEVICE_TYPE_AUDIO_INPUT,
-          type == MEDIA_DEVICE_TYPE_VIDEO_INPUT,
-          type == MEDIA_DEVICE_TYPE_AUDIO_OUTPUT,
+      host_->SubscribeDeviceChangeNotifications(type, subscription_id);
+      MockMediaDevicesListener device_change_listener;
+      host_->SetDeviceChangeListenerForTesting(
           device_change_listener.CreateInterfacePtrAndBind());
       MediaDeviceInfoArray changed_devices;
-      EXPECT_CALL(device_change_listener, OnDevicesChanged(type, _))
-          .WillRepeatedly(SaveArg<1>(&changed_devices));
+      EXPECT_CALL(device_change_listener,
+                  OnDevicesChanged(type, subscription_id, testing::_))
+          .WillRepeatedly(SaveArg<2>(&changed_devices));
 
       // Simulate device-change notification
-      media_stream_manager_->media_devices_manager()->OnDevicesChanged(
-          base::SystemMonitor::DEVTYPE_AUDIO);
-      media_stream_manager_->media_devices_manager()->OnDevicesChanged(
-          base::SystemMonitor::DEVTYPE_VIDEO_CAPTURE);
+      MediaDeviceInfoArray updated_devices = {
+          {"fake_device_id", "fake_label", "fake_group"}};
+      host_->OnDevicesChanged(type, updated_devices);
       base::RunLoop().RunUntilIdle();
+      host_->UnsubscribeDeviceChangeNotifications(type, subscription_id);
 
       if (has_permission)
         EXPECT_TRUE(DoesContainLabels(changed_devices));

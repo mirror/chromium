@@ -47,6 +47,9 @@ class APP_LIST_PRESENTER_EXPORT AppListPresenterDelegate {
   // Called when app list is dismissed
   virtual void OnDismissed() = 0;
 
+  // Update app list bounds if necessary.
+  virtual void UpdateBounds() = 0;
+
   // Returns the offset vector by which the app list window should animate
   // when it gets shown or hidden.
   virtual gfx::Vector2d GetVisibilityAnimationOffset(

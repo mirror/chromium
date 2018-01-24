@@ -5,46 +5,40 @@
 #ifndef CHROME_BROWSER_CHROME_SERVICE_H_
 #define CHROME_BROWSER_CHROME_SERVICE_H_
 
-#include "mojo/public/cpp/system/message_pipe.h"
-#include "services/service_manager/embedder/embedded_service_info.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/service.h"
 
-namespace service_manager {
-class Connector;
-class Service;
-}  // namespace service_manager
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/launchable.h"
+#if defined(USE_OZONE)
+#include "services/ui/public/cpp/input_devices/input_device_controller.h"
+#endif
+#endif
 
-class ChromeBrowserMainExtraParts;
-
-// Provides access to a service for the "chrome" content embedder. Actual
-// service_manager::Service implementation lives on IO thread (IOThreadContext).
-class ChromeService {
+class ChromeService : public service_manager::Service {
  public:
-  static ChromeService* GetInstance();
+  ChromeService();
+  ~ChromeService() override;
 
-  // ChromeBrowserMain takes ownership of the returned parts.
-  ChromeBrowserMainExtraParts* CreateExtraParts();
-
-  service_manager::EmbeddedServiceInfo::ServiceFactory
-  CreateChromeServiceFactory();
-
-  // This is available after the content::ServiceManagerConnection is
-  // initialized.
-  service_manager::Connector* connector() { return connector_.get(); }
+  static std::unique_ptr<service_manager::Service> Create();
 
  private:
-  class ExtraParts;
-  class IOThreadContext;
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
+                       const std::string& name,
+                       mojo::ScopedMessagePipeHandle handle) override;
 
-  ChromeService();
-  ~ChromeService();
+  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistryWithArgs<
+      const service_manager::BindSourceInfo&>
+      registry_with_source_info_;
 
-  void InitConnector();
-
-  std::unique_ptr<service_manager::Service> CreateChromeServiceWrapper();
-
-  std::unique_ptr<service_manager::Connector> connector_;
-
-  std::unique_ptr<IOThreadContext> io_thread_context_;
+#if defined(OS_CHROMEOS)
+  chromeos::Launchable launchable_;
+#if defined(USE_OZONE)
+  ui::InputDeviceController input_device_controller_;
+#endif
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeService);
 };

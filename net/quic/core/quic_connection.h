@@ -152,9 +152,6 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   // to be added.
   virtual void OnAckNeedsRetransmittableFrame() = 0;
 
-  // Called when a ping needs to be sent.
-  virtual void SendPing() = 0;
-
   // Called to ask if the visitor wants to schedule write resumption as it both
   // has pending data to write, and is able to write (e.g. based on flow control
   // limits).
@@ -366,17 +363,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
                                           QuicStreamOffset offset,
                                           StreamSendingState state);
 
-  // Send |frame| to the peer. Returns true if frame is consumed, false
-  // otherwise.
-  virtual bool SendControlFrame(const QuicFrame& frame);
-
   // Send a RST_STREAM frame to the peer.
   virtual void SendRstStream(QuicStreamId id,
                              QuicRstStreamErrorCode error,
                              QuicStreamOffset bytes_written);
-
-  // Called when stream |id| is reset because of |error|.
-  virtual void OnStreamReset(QuicStreamId id, QuicRstStreamErrorCode error);
 
   // Send a BLOCKED frame to the peer.
   virtual void SendBlocked(QuicStreamId id);
@@ -392,7 +382,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
       const std::string& details,
       ConnectionCloseBehavior connection_close_behavior);
 
-  // Sends a GOAWAY frame.
+  // Sends a GOAWAY frame. Does nothing if a GOAWAY frame has already been sent.
   virtual void SendGoAway(QuicErrorCode error,
                           QuicStreamId last_good_stream_id,
                           const std::string& reason);
@@ -529,6 +519,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   size_t mtu_probe_count() const { return mtu_probe_count_; }
 
   bool connected() const { return connected_; }
+
+  bool goaway_sent() const { return goaway_sent_; }
+
+  bool goaway_received() const { return goaway_received_; }
 
   // Must only be called on client connections.
   const ParsedQuicVersionVector& server_supported_versions() const {
@@ -734,8 +728,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   void set_defer_send_in_response_to_packets(bool defer) {
     defer_send_in_response_to_packets_ = defer;
   }
-
-  bool use_control_frame_manager() const { return use_control_frame_manager_; }
 
  protected:
   // Calls cancel() on all the alarms owned by this connection.
@@ -1144,6 +1136,12 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // The size of the largest packet received from peer.
   QuicByteCount largest_received_packet_size_;
 
+  // Whether a GoAway has been sent.
+  bool goaway_sent_;
+
+  // Whether a GoAway has been received.
+  bool goaway_received_;
+
   // Indicates whether a write error is encountered currently. This is used to
   // avoid infinite write errors.
   bool write_error_occurred_;
@@ -1168,9 +1166,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Id of latest sent control frame. 0 if no control frame has been sent.
   QuicControlFrameId last_control_frame_id_;
-
-  // Latched value of quic_reloadable_flag_quic_use_control_frame_manager.
-  const bool use_control_frame_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicConnection);
 };

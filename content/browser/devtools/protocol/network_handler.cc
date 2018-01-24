@@ -694,8 +694,7 @@ void ConfigureServiceWorkerContextOnIO() {
 
 NetworkHandler::NetworkHandler(const std::string& host_id)
     : DevToolsDomainHandler(Network::Metainfo::domainName),
-      browser_context_(nullptr),
-      storage_partition_(nullptr),
+      process_(nullptr),
       host_(nullptr),
       enabled_(false),
       host_id_(host_id),
@@ -725,17 +724,9 @@ void NetworkHandler::Wire(UberDispatcher* dispatcher) {
   Network::Dispatcher::wire(dispatcher, this);
 }
 
-void NetworkHandler::SetRenderer(int render_process_host_id,
+void NetworkHandler::SetRenderer(RenderProcessHost* process_host,
                                  RenderFrameHostImpl* frame_host) {
-  RenderProcessHost* process_host =
-      RenderProcessHost::FromID(render_process_host_id);
-  if (process_host) {
-    storage_partition_ = process_host->GetStoragePartition();
-    browser_context_ = process_host->GetBrowserContext();
-  } else {
-    storage_partition_ = nullptr;
-    browser_context_ = nullptr;
-  }
+  process_ = process_host;
   host_ = frame_host;
 }
 
@@ -784,12 +775,13 @@ class DevtoolsClearCacheObserver
 
 void NetworkHandler::ClearBrowserCache(
     std::unique_ptr<ClearBrowserCacheCallback> callback) {
-  if (!browser_context_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
   content::BrowsingDataRemover* remover =
-      content::BrowserContext::GetBrowsingDataRemover(browser_context_);
+      content::BrowserContext::GetBrowsingDataRemover(
+          process_->GetBrowserContext());
   remover->RemoveAndReply(
       base::Time(), base::Time::Max(),
       content::BrowsingDataRemover::DATA_TYPE_CACHE,
@@ -799,7 +791,7 @@ void NetworkHandler::ClearBrowserCache(
 
 void NetworkHandler::ClearBrowserCookies(
     std::unique_ptr<ClearBrowserCookiesCallback> callback) {
-  if (!storage_partition_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -808,7 +800,8 @@ void NetworkHandler::ClearBrowserCookies(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &ClearCookiesOnIO,
-          base::Unretained(storage_partition_->GetURLRequestContext()),
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext()),
           std::move(callback)));
 }
 
@@ -827,12 +820,14 @@ void NetworkHandler::GetCookies(Maybe<Array<String>> protocol_urls,
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &CookieRetriever::RetrieveCookiesOnIO, retriever,
-          base::Unretained(storage_partition_->GetURLRequestContext()), urls));
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext()),
+          urls));
 }
 
 void NetworkHandler::GetAllCookies(
     std::unique_ptr<GetAllCookiesCallback> callback) {
-  if (!storage_partition_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -844,7 +839,8 @@ void NetworkHandler::GetAllCookies(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &CookieRetriever::RetrieveAllCookiesOnIO, retriever,
-          base::Unretained(storage_partition_->GetURLRequestContext())));
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext())));
 }
 
 void NetworkHandler::SetCookie(const std::string& name,
@@ -857,7 +853,7 @@ void NetworkHandler::SetCookie(const std::string& name,
                                Maybe<std::string> same_site,
                                Maybe<double> expires,
                                std::unique_ptr<SetCookieCallback> callback) {
-  if (!storage_partition_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -871,17 +867,19 @@ void NetworkHandler::SetCookie(const std::string& name,
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &SetCookieOnIO,
-          base::Unretained(storage_partition_->GetURLRequestContext()), name,
-          value, url.fromMaybe(""), domain.fromMaybe(""), path.fromMaybe(""),
-          secure.fromMaybe(false), http_only.fromMaybe(false),
-          same_site.fromMaybe(""), expires.fromMaybe(-1),
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext()),
+          name, value, url.fromMaybe(""), domain.fromMaybe(""),
+          path.fromMaybe(""), secure.fromMaybe(false),
+          http_only.fromMaybe(false), same_site.fromMaybe(""),
+          expires.fromMaybe(-1),
           base::BindOnce(&CookieSetOnIO, std::move(callback))));
 }
 
 void NetworkHandler::SetCookies(
     std::unique_ptr<protocol::Array<Network::CookieParam>> cookies,
     std::unique_ptr<SetCookiesCallback> callback) {
-  if (!storage_partition_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -890,7 +888,8 @@ void NetworkHandler::SetCookies(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &SetCookiesOnIO,
-          base::Unretained(storage_partition_->GetURLRequestContext()),
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext()),
           std::move(cookies),
           base::BindOnce(&CookiesSetOnIO, std::move(callback))));
 }
@@ -901,7 +900,7 @@ void NetworkHandler::DeleteCookies(
     Maybe<std::string> domain,
     Maybe<std::string> path,
     std::unique_ptr<DeleteCookiesCallback> callback) {
-  if (!storage_partition_) {
+  if (!process_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -914,8 +913,9 @@ void NetworkHandler::DeleteCookies(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &DeleteCookiesOnIO,
-          base::Unretained(storage_partition_->GetURLRequestContext()), name,
-          url.fromMaybe(""), domain.fromMaybe(""), path.fromMaybe(""),
+          base::Unretained(
+              process_->GetStoragePartition()->GetURLRequestContext()),
+          name, url.fromMaybe(""), domain.fromMaybe(""), path.fromMaybe(""),
           base::BindOnce(&DeleteCookiesCallback::sendSuccess,
                          std::move(callback))));
 }
@@ -1217,7 +1217,8 @@ void NetworkHandler::ContinueInterceptedRequest(
     Maybe<protocol::Network::AuthChallengeResponse> auth_challenge_response,
     std::unique_ptr<ContinueInterceptedRequestCallback> callback) {
   DevToolsInterceptorController* interceptor =
-      DevToolsInterceptorController::FromBrowserContext(browser_context_);
+      DevToolsInterceptorController::FromBrowserContext(
+          process_->GetBrowserContext());
   if (!interceptor) {
     callback->sendFailure(Response::InternalError());
     return;
@@ -1259,7 +1260,9 @@ void NetworkHandler::GetResponseBodyForInterception(
     const String& interception_id,
     std::unique_ptr<GetResponseBodyForInterceptionCallback> callback) {
   DevToolsInterceptorController* interceptor =
-      DevToolsInterceptorController::FromBrowserContext(browser_context_);
+      DevToolsInterceptorController::FromBrowserContext(
+          process_->GetBrowserContext());
+
   if (!interceptor) {
     callback->sendFailure(Response::InternalError());
     return;
@@ -1283,10 +1286,6 @@ std::unique_ptr<Network::Request> NetworkHandler::CreateRequestFromURLRequest(
   for (net::HttpRequestHeaders::Iterator it(request->extra_request_headers());
        it.GetNext();) {
     headers_dict->setString(it.name(), it.value());
-  }
-  if (!request->referrer().empty()) {
-    headers_dict->setString(net::HttpRequestHeaders::kReferer,
-                            request->referrer());
   }
   std::unique_ptr<protocol::Network::Request> request_object =
       Network::Request::Create()
@@ -1397,10 +1396,10 @@ void NetworkHandler::RequestIntercepted(
 
 void NetworkHandler::SetNetworkConditions(
     network::mojom::NetworkConditionsPtr conditions) {
-  if (!storage_partition_)
+  if (!process_)
     return;
-  network::mojom::NetworkContext* context =
-      storage_partition_->GetNetworkContext();
+  StoragePartition* partition = process_->GetStoragePartition();
+  network::mojom::NetworkContext* context = partition->GetNetworkContext();
   context->SetNetworkConditions(host_id_, std::move(conditions));
 }
 

@@ -17,17 +17,17 @@ namespace content {
 // since we want it to actually acquire the real webcam on the system (if there
 // is one). For that, it removes the |kUseFakeDeviceForMediaStream| flag from
 // the command line in SetUpCommandLine().
-class UsingRealWebcam_WebRtcWebcamBrowserTest : public ContentBrowserTest {
+class WebRtcWebcamBrowserTest : public ContentBrowserTest {
  public:
-  UsingRealWebcam_WebRtcWebcamBrowserTest() = default;
-  ~UsingRealWebcam_WebRtcWebcamBrowserTest() override = default;
+  WebRtcWebcamBrowserTest() = default;
+  ~WebRtcWebcamBrowserTest() override = default;
 
   // ContentBrowserTest implementation.
   void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUp() override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(UsingRealWebcam_WebRtcWebcamBrowserTest);
+  DISALLOW_COPY_AND_ASSIGN(WebRtcWebcamBrowserTest);
 };
 
 }  // namespace content

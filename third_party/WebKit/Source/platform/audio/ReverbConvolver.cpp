@@ -139,7 +139,7 @@ ReverbConvolver::ReverbConvolver(AudioChannel* impulse_response,
   // be real-time, but higher than the default...
   if (use_background_threads && background_stages_.size() > 0) {
     background_thread_ = Platform::Current()->CreateThread(
-        WebThreadCreationParams("Reverb convolution background thread"));
+        "Reverb convolution background thread");
   }
 }
 

@@ -5,7 +5,6 @@
 #include "components/cryptauth/foreground_eid_generator.h"
 
 #include <cstring>
-#include <memory>
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
@@ -59,7 +58,7 @@ std::string ForegroundEidGenerator::EidData::DataInHex() const {
 }
 
 ForegroundEidGenerator::ForegroundEidGenerator()
-    : ForegroundEidGenerator(std::make_unique<RawEidGeneratorImpl>(),
+    : ForegroundEidGenerator(base::MakeUnique<RawEidGeneratorImpl>(),
                              base::DefaultClock::GetInstance()) {}
 
 ForegroundEidGenerator::ForegroundEidGenerator(

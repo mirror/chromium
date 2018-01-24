@@ -37,6 +37,7 @@ class Message;
 
 namespace content {
 
+class ServiceWorkerHandleReference;
 class ThreadSafeSender;
 class WebServiceWorkerImpl;
 
@@ -53,9 +54,9 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   void OnMessageReceived(const IPC::Message& msg);
 
   // Returns the existing service worker or a newly created one with the given
-  // object info. Returns nullptr if the given object info is invalid.
+  // handle reference. Returns nullptr if the given reference is invalid.
   scoped_refptr<WebServiceWorkerImpl> GetOrCreateServiceWorker(
-      blink::mojom::ServiceWorkerObjectInfoPtr info);
+      std::unique_ptr<ServiceWorkerHandleReference> handle_ref);
 
   static ServiceWorkerDispatcher* GetOrCreateThreadSpecificInstance(
       scoped_refptr<ThreadSafeSender> thread_safe_sender,
@@ -67,6 +68,10 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
 
   base::SingleThreadTaskRunner* main_thread_task_runner() {
     return main_thread_task_runner_.get();
+  }
+
+  scoped_refptr<ThreadSafeSender> thread_safe_sender() {
+    return thread_safe_sender_;
   }
 
  private:

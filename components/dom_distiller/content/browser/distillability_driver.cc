@@ -4,8 +4,7 @@
 
 #include "components/dom_distiller/content/browser/distillability_driver.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -58,7 +57,7 @@ DistillabilityDriver::~DistillabilityDriver() {
 void DistillabilityDriver::CreateDistillabilityService(
     mojom::DistillabilityServiceRequest request) {
   mojo::MakeStrongBinding(
-      std::make_unique<DistillabilityServiceImpl>(weak_factory_.GetWeakPtr()),
+      base::MakeUnique<DistillabilityServiceImpl>(weak_factory_.GetWeakPtr()),
       std::move(request));
 }
 

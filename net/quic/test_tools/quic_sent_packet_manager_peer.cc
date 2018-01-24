@@ -119,7 +119,7 @@ size_t QuicSentPacketManagerPeer::GetNumRetransmittablePackets(
   for (QuicUnackedPacketMap::const_iterator it =
            sent_packet_manager->unacked_packets_.begin();
        it != sent_packet_manager->unacked_packets_.end(); ++it) {
-    if (sent_packet_manager->unacked_packets_.HasRetransmittableFrames(*it)) {
+    if (!it->retransmittable_frames.empty()) {
       ++num_unacked_packets;
     }
   }

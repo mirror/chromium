@@ -110,8 +110,6 @@ class Internals final : public ScriptWrappable {
                                bool shrinks_layout);
   void setBrowserControlsShownRatio(float);
 
-  Node* effectiveRootScroller(Document*);
-
   ShadowRoot* createUserAgentShadowRoot(Element* host);
 
   ShadowRoot* shadowRoot(Element* host);
@@ -498,10 +496,12 @@ class Internals final : public ScriptWrappable {
 
   void setNetworkConnectionInfoOverride(bool,
                                         const String&,
-                                        const String&,
-                                        unsigned long http_rtt_msec,
                                         double downlink_max_mbps,
                                         ExceptionState&);
+  void setNetworkQualityInfoOverride(const String&,
+                                     unsigned long transport_rtt_msec,
+                                     double downlink_throughput_mbps,
+                                     ExceptionState&);
   void setSaveDataEnabled(bool);
 
   void clearNetworkConnectionInfoOverride();

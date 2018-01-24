@@ -92,7 +92,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proximity_auth/screenlock_bridge.h"
-#include "components/strings/grit/components_strings.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
@@ -419,7 +418,7 @@ void SigninScreenHandler::DeclareLocalizedValues(
                IDS_LOGIN_PUBLIC_ACCOUNT_ENTER_ACCESSIBLE_NAME);
   builder->Add("publicAccountMonitoringWarning",
                IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_WARNING);
-  builder->Add("publicAccountLearnMore", IDS_LEARN_MORE);
+  builder->Add("publicAccountLearnMore", IDS_LOGIN_PUBLIC_ACCOUNT_LEARN_MORE);
   builder->Add("publicAccountMonitoringInfo",
                IDS_LOGIN_PUBLIC_ACCOUNT_MONITORING_INFO);
   builder->Add("publicAccountMonitoringInfoItem1",
@@ -1183,13 +1182,6 @@ void SigninScreenHandler::HandleAuthenticateUser(const AccountId& account_id,
 
   UserContext user_context(account_id);
   user_context.SetKey(Key(password));
-  // Only save the password for enterprise users. See https://crbug.com/386606.
-  const bool is_enterprise_managed = g_browser_process->platform_part()
-                                         ->browser_policy_connector_chromeos()
-                                         ->IsEnterpriseManaged();
-  if (is_enterprise_managed) {
-    user_context.SetPasswordKey(Key(password));
-  }
   user_context.SetIsUsingPin(authenticated_by_pin);
   const user_manager::User* user =
       user_manager::UserManager::Get()->FindUser(account_id);
@@ -1441,7 +1433,7 @@ void SigninScreenHandler::HandleLoginUIStateChanged(const std::string& source,
     // On slow devices, the wallpaper animation is not shown initially, so we
     // must explicitly load the wallpaper. This is also the case for the
     // account-picker and gaia-signin UI states.
-    LoginDisplayHost::default_host()->LoadSigninWallpaper();
+    delegate_->LoadSigninWallpaper();
     HandleToggleKioskAutolaunchScreen();
     return;
   }
@@ -1486,7 +1478,7 @@ void SigninScreenHandler::HandleFocusPod(const AccountId& account_id,
                                           ime_state_.get());
     lock_screen_utils::SetKeyboardSettings(account_id);
     if (delegate_ && load_wallpaper)
-      LoginDisplayHost::default_host()->LoadWallpaper(account_id);
+      delegate_->LoadWallpaper(account_id);
 
     bool use_24hour_clock = false;
     if (user_manager::known_user::GetBooleanPref(

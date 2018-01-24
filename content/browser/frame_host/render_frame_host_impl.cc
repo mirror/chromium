@@ -578,9 +578,9 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
-  // Destroying |navigation_request_| may call into delegates/observers,
+  // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
-  navigation_request_.reset();
+  navigation_handle_.reset();
 
   // Release the WebUI instances before all else as the WebUI may accesses the
   // RenderFrameHost during cleanup.
@@ -1061,8 +1061,8 @@ void RenderFrameHostImpl::RenderProcessGone(SiteInstanceImpl* site_instance) {
   DCHECK_EQ(site_instance_.get(), site_instance);
 
   // The renderer process is gone, so this frame can no longer be loading.
-  if (GetNavigationHandle())
-    GetNavigationHandle()->set_net_error_code(net::ERR_ABORTED);
+  if (navigation_handle_)
+    navigation_handle_->set_net_error_code(net::ERR_ABORTED);
   ResetLoadingState();
 
   // The renderer process is gone, so the |stream_handle_| will no longer be
@@ -1496,8 +1496,8 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
   // happening in practice. See https://crbug.com/605289.
 
   // Update the error code in the NavigationHandle of the navigation.
-  if (GetNavigationHandle()) {
-    GetNavigationHandle()->set_net_error_code(
+  if (navigation_handle_) {
+    navigation_handle_->set_net_error_code(
         static_cast<net::Error>(params.error_code));
   }
 
@@ -1678,7 +1678,7 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
     return;
   }
 
-  if (!navigation_request_) {
+  if (!navigation_handle_) {
     // The browser has not been notified about the start of the load in this
     // renderer yet (e.g., for same-document navigations that start in the
     // renderer). Do it now.
@@ -1759,14 +1759,9 @@ GlobalFrameRoutingId RenderFrameHostImpl::GetGlobalFrameRoutingId() {
   return GlobalFrameRoutingId(GetProcess()->GetID(), GetRoutingID());
 }
 
-NavigationHandleImpl* RenderFrameHostImpl::GetNavigationHandle() {
-  return navigation_request() ? navigation_request()->navigation_handle()
-                              : nullptr;
-}
-
-void RenderFrameHostImpl::SetNavigationRequest(
-    std::unique_ptr<NavigationRequest> navigation_request) {
-  navigation_request_ = std::move(navigation_request);
+void RenderFrameHostImpl::SetNavigationHandle(
+    std::unique_ptr<NavigationHandleImpl> navigation_handle) {
+  navigation_handle_ = std::move(navigation_handle);
 }
 
 void RenderFrameHostImpl::SwapOut(
@@ -2739,7 +2734,7 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   }
 
   is_loading_ = false;
-  navigation_request_.reset();
+  navigation_handle_.reset();
 
   // Only inform the FrameTreeNode of a change in load state if the load state
   // of this RenderFrameHost is being tracked.
@@ -3310,8 +3305,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
-      false /* started_from_context_menu */, false /* has_user_gesture */,
-      base::nullopt /* suggested_filename */);
+      false /* started_from_context_menu */, false /* has_user_gesture */);
   CommitNavigation(nullptr, network::mojom::URLLoaderClientEndpointsPtr(),
                    std::unique_ptr<StreamHandle>(), common_params,
                    RequestNavigationParams(), false, base::nullopt,
@@ -3487,7 +3481,7 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         network::ResourceResponseHead(), GURL(), common_params, request_params,
         network::mojom::URLLoaderClientEndpointsPtr(),
-        /*subresource_loader_factories=*/nullptr,
+        /*subresource_loader_factories=*/base::nullopt,
         /*controller_service_worker=*/nullptr, devtools_navigation_token);
     return;
   }
@@ -3511,17 +3505,16 @@ void RenderFrameHostImpl::CommitNavigation(
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
-  std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories;
+  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
   mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
-    subresource_loader_factories =
-        std::make_unique<URLLoaderFactoryBundleInfo>();
+    subresource_loader_factories.emplace();
     // NOTE: On Network Service navigations, we want to ensure that a frame is
     // given everything it will need to load any accessible subresources. We
     // however only do this for cross-document navigations, because the
     // alternative would be redundant effort.
-    network::mojom::URLLoaderFactoryPtrInfo default_factory_info;
+    network::mojom::URLLoaderFactoryPtr default_factory;
     StoragePartitionImpl* storage_partition =
         static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
             GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
@@ -3529,8 +3522,8 @@ void RenderFrameHostImpl::CommitNavigation(
         subresource_loader_params->loader_factory_info.is_valid()) {
       // If the caller has supplied a default URLLoaderFactory override (for
       // e.g. appcache, Service Worker, etc.), use that.
-      default_factory_info =
-          std::move(subresource_loader_params->loader_factory_info);
+      default_factory.Bind(
+          std::move(subresource_loader_params->loader_factory_info));
     } else {
       std::string scheme = common_params.url.scheme();
       const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
@@ -3540,41 +3533,41 @@ void RenderFrameHostImpl::CommitNavigation(
         if (enabled_bindings_ & BINDINGS_POLICY_WEB_UI) {
           // If the renderer has webui bindings, then don't give it access to
           // network loader for security reasons.
-          default_factory_info = factory_for_webui.PassInterface();
+          default_factory = std::move(factory_for_webui);
         } else {
           // This is a webui scheme that doesn't have webui bindings. Give it
           // access to the network loader as it might require it.
-          subresource_loader_factories->factories_info().emplace(
-              scheme, factory_for_webui.PassInterface());
+          subresource_loader_factories->RegisterFactory(
+              scheme, std::move(factory_for_webui));
         }
       }
     }
 
-    if (!default_factory_info) {
+    if (!default_factory.is_bound()) {
       // Otherwise default to a Network Service-backed loader from the
       // appropriate NetworkContext.
       if (g_url_loader_factory_callback_for_test.Get().is_null()) {
         storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
-            mojo::MakeRequest(&default_factory_info), GetProcess()->GetID());
+            mojo::MakeRequest(&default_factory), GetProcess()->GetID());
       } else {
         network::mojom::URLLoaderFactoryPtr original_factory;
         storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
             mojo::MakeRequest(&original_factory), GetProcess()->GetID());
         g_url_loader_factory_callback_for_test.Get().Run(
-            mojo::MakeRequest(&default_factory_info), GetProcess()->GetID(),
+            mojo::MakeRequest(&default_factory), GetProcess()->GetID(),
             original_factory.PassInterface());
       }
     }
 
-    DCHECK(default_factory_info);
-    subresource_loader_factories->default_factory_info() =
-        std::move(default_factory_info);
+    DCHECK(default_factory.is_bound());
+    subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
+
     // Everyone gets a blob loader.
-    network::mojom::URLLoaderFactoryPtrInfo blob_factory_info;
+    network::mojom::URLLoaderFactoryPtr blob_factory;
     storage_partition->GetBlobURLLoaderFactory()->HandleRequest(
-        mojo::MakeRequest(&blob_factory_info));
-    subresource_loader_factories->factories_info().emplace(
-        url::kBlobScheme, std::move(blob_factory_info));
+        mojo::MakeRequest(&blob_factory));
+    subresource_loader_factories->RegisterFactory(url::kBlobScheme,
+                                                  std::move(blob_factory));
 
     non_network_url_loader_factories_.clear();
 
@@ -3595,10 +3588,10 @@ void RenderFrameHostImpl::CommitNavigation(
             this, common_params.url, &non_network_url_loader_factories_);
 
     for (auto& factory : non_network_url_loader_factories_) {
-      network::mojom::URLLoaderFactoryPtrInfo factory_proxy_info;
-      factory.second->Clone(mojo::MakeRequest(&factory_proxy_info));
-      subresource_loader_factories->factories_info().emplace(
-          factory.first, std::move(factory_proxy_info));
+      network::mojom::URLLoaderFactoryPtr factory_proxy;
+      factory.second->Clone(mojo::MakeRequest(&factory_proxy));
+      subresource_loader_factories->RegisterFactory(factory.first,
+                                                    std::move(factory_proxy));
     }
 
     // Pass the controller service worker info if we have one.
@@ -3612,7 +3605,7 @@ void RenderFrameHostImpl::CommitNavigation(
   // subresource ULFs when the Network Service is enabled.
   DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService) ||
          is_same_document || !is_first_navigation ||
-         subresource_loader_factories);
+         subresource_loader_factories.has_value());
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params,
@@ -3663,23 +3656,22 @@ void RenderFrameHostImpl::FailedNavigation(
       static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
           GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
 
-  network::mojom::URLLoaderFactoryPtrInfo default_factory_info;
+  network::mojom::URLLoaderFactoryPtr default_factory;
   if (g_url_loader_factory_callback_for_test.Get().is_null()) {
     storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
-        mojo::MakeRequest(&default_factory_info), GetProcess()->GetID());
+        mojo::MakeRequest(&default_factory), GetProcess()->GetID());
   } else {
     network::mojom::URLLoaderFactoryPtr original_factory;
     storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
         mojo::MakeRequest(&original_factory), GetProcess()->GetID());
     g_url_loader_factory_callback_for_test.Get().Run(
-        mojo::MakeRequest(&default_factory_info), GetProcess()->GetID(),
+        mojo::MakeRequest(&default_factory), GetProcess()->GetID(),
         original_factory.PassInterface());
   }
 
-  auto subresource_loader_factories =
-      std::make_unique<URLLoaderFactoryBundleInfo>(
-          std::move(default_factory_info),
-          std::map<std::string, network::mojom::URLLoaderFactoryPtrInfo>());
+  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  subresource_loader_factories.emplace();
+  subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
 
   GetNavigationControl()->CommitFailedNavigation(
       common_params, request_params, has_stale_copy_in_cache, error_code,
@@ -3687,8 +3679,9 @@ void RenderFrameHostImpl::FailedNavigation(
 
   // An error page is expected to commit, hence why is_loading_ is set to true.
   is_loading_ = true;
-  DCHECK(GetNavigationHandle() &&
-         GetNavigationHandle()->GetNetErrorCode() != net::OK);
+  if (navigation_handle_)
+    DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
+  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 void RenderFrameHostImpl::SetUpMojoIfNeeded() {
@@ -4375,19 +4368,14 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
   bool is_browser_initiated = (params.nav_entry_id != 0);
 
-  NavigationHandleImpl* navigation_handle = GetNavigationHandle();
-
   if (params.was_within_same_document) {
     // A NavigationHandle is created for browser-initiated same-document
     // navigation. Try to take it if it's still available and matches the
     // current navigation.
-    if (is_browser_initiated && navigation_handle &&
-        navigation_handle->IsSameDocument() &&
-        navigation_handle->GetURL() == params.url) {
-      std::unique_ptr<NavigationHandleImpl> result_navigation_handle =
-          navigation_request()->TakeNavigationHandle();
-      navigation_request_.reset();
-      return result_navigation_handle;
+    if (is_browser_initiated && navigation_handle_ &&
+        navigation_handle_->IsSameDocument() &&
+        navigation_handle_->GetURL() == params.url) {
+      return std::move(navigation_handle_);
     }
 
     // No existing NavigationHandle has been found. Create a new one, but don't
@@ -4418,11 +4406,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   }
 
   // Determine if the current NavigationHandle can be used.
-  if (navigation_handle && navigation_handle->GetURL() == params.url) {
-    std::unique_ptr<NavigationHandleImpl> result_navigation_handle =
-        navigation_request()->TakeNavigationHandle();
-    navigation_request_.reset();
-    return result_navigation_handle;
+  if (navigation_handle_ && navigation_handle_->GetURL() == params.url) {
+    return std::move(navigation_handle_);
   }
 
   // If the URL does not match what the NavigationHandle expects, treat the
@@ -4441,22 +4426,26 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   // and that it matches this handle.  TODO(csharrison): The pending entry's
   // base url should equal |params.base_url|. This is not the case for loads
   // with invalid base urls.
-  if (navigation_handle) {
+  if (navigation_handle_) {
     NavigationEntryImpl* pending_entry =
         NavigationEntryImpl::FromNavigationEntry(
             frame_tree_node()->navigator()->GetController()->GetPendingEntry());
     bool pending_entry_matches_handle =
-        pending_entry && pending_entry->GetUniqueID() ==
-                             navigation_handle->pending_nav_entry_id();
+        pending_entry &&
+        pending_entry->GetUniqueID() ==
+            navigation_handle_->pending_nav_entry_id();
     // TODO(csharrison): The pending entry's base url should equal
     // |validated_params.base_url|. This is not the case for loads with invalid
     // base urls.
-    if (navigation_handle->GetURL() == params.base_url &&
+    if (navigation_handle_->GetURL() == params.base_url &&
         pending_entry_matches_handle &&
         !pending_entry->GetBaseURLForDataURL().is_empty()) {
-      entry_id_for_data_nav = navigation_handle->pending_nav_entry_id();
+      entry_id_for_data_nav = navigation_handle_->pending_nav_entry_id();
       is_renderer_initiated = pending_entry->is_renderer_initiated();
     }
+
+    // Reset any existing NavigationHandle.
+    navigation_handle_.reset();
   }
 
   // There is no pending NavigationEntry in these cases, so pass 0 as the

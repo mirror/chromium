@@ -57,7 +57,8 @@ static constexpr char kTestPageContents[] =
 class ResourceDispatcherTest : public testing::Test,
                                public network::mojom::URLLoaderFactory {
  public:
-  ResourceDispatcherTest() : dispatcher_(new ResourceDispatcher()) {}
+  ResourceDispatcherTest()
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {}
 
   ~ResourceDispatcherTest() override {
     dispatcher_.reset();

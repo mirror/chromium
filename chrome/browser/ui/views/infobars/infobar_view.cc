@@ -79,7 +79,8 @@ InfoBarView::InfoBarView(std::unique_ptr<infobars::InfoBarDelegate> delegate)
       icon_(nullptr),
       close_button_(nullptr) {
   set_owned_by_client();  // InfoBar deletes itself at the appropriate time.
-  SetBackground(std::make_unique<InfoBarBackground>());
+  SetBackground(std::make_unique<InfoBarBackground>(
+      infobars::InfoBar::delegate()->GetInfoBarType()));
   SetEventTargeter(std::make_unique<views::ViewTargeter>(this));
 
   AddChildView(child_container_);
@@ -90,7 +91,8 @@ InfoBarView::InfoBarView(std::unique_ptr<infobars::InfoBarDelegate> delegate)
   child_container_->SetPaintToLayer();
   child_container_->layer()->SetMasksToBounds(true);
   child_container_->SetBackground(
-      views::CreateSolidBackground(infobars::InfoBar::kBackgroundColor));
+      views::CreateSolidBackground(infobars::InfoBar::GetBackgroundColor(
+          infobars::InfoBar::delegate()->GetInfoBarType())));
 }
 
 const infobars::InfoBarContainer::Delegate* InfoBarView::container_delegate()
@@ -302,7 +304,10 @@ void InfoBarView::PlatformSpecificOnHeightsRecalculated() {
 }
 
 void InfoBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_INFOBAR));
+  node_data->SetName(l10n_util::GetStringUTF8(
+      (delegate()->GetInfoBarType() == infobars::InfoBarDelegate::WARNING_TYPE)
+          ? IDS_ACCNAME_INFOBAR_WARNING
+          : IDS_ACCNAME_INFOBAR_PAGE_ACTION));
   node_data->role = ui::AX_ROLE_ALERT;
   node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, "Alt+Shift+A");
 }

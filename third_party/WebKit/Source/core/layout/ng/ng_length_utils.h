@@ -104,8 +104,7 @@ CORE_EXPORT LayoutUnit ResolveUsedColumnInlineSize(int computed_count,
 CORE_EXPORT LayoutUnit ResolveUsedColumnInlineSize(LayoutUnit available_size,
                                                    const ComputedStyle&);
 
-CORE_EXPORT LayoutUnit ResolveUsedColumnGap(LayoutUnit available_size,
-                                            const ComputedStyle&);
+CORE_EXPORT LayoutUnit ResolveUsedColumnGap(const ComputedStyle&);
 
 // Compute physical margins.
 CORE_EXPORT NGPhysicalBoxStrut ComputePhysicalMargins(const NGConstraintSpace&,

@@ -95,6 +95,7 @@ class TracedValue;
 class TransformState;
 class WebPluginContainerImpl;
 struct AnnotatedRegionValue;
+struct CompositedSelection;
 struct IntrinsicSizingInfo;
 struct WebScrollIntoViewParams;
 
@@ -154,7 +155,6 @@ class CORE_EXPORT LocalFrameView final
 
   void UpdateLayout();
   bool DidFirstLayout() const;
-  bool LifecycleUpdatesActive() const;
   void ScheduleRelayout();
   void ScheduleRelayoutOfSubtree(LayoutObject*);
   bool LayoutPending() const;
@@ -697,13 +697,10 @@ class CORE_EXPORT LocalFrameView final
   // coordinates". https://crbug.com/417782.
   IntRect AbsoluteToRootFrame(const IntRect&) const;
   IntPoint AbsoluteToRootFrame(const IntPoint&) const;
-  LayoutRect AbsoluteToRootFrame(const LayoutRect&) const;
   IntRect RootFrameToDocument(const IntRect&);
   FloatPoint RootFrameToDocument(const FloatPoint&);
   DoublePoint DocumentToAbsolute(const DoublePoint&) const;
   FloatPoint DocumentToAbsolute(const FloatPoint&) const;
-  LayoutPoint DocumentToAbsolute(const LayoutPoint&) const;
-  LayoutRect DocumentToAbsolute(const LayoutRect&) const;
 
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&,
@@ -1102,6 +1099,7 @@ class CORE_EXPORT LocalFrameView final
 
   void UpdateLayersAndCompositingAfterScrollIfNeeded();
 
+  static bool ComputeCompositedSelection(LocalFrame&, CompositedSelection&);
   void UpdateCompositedSelectionIfNeeded();
   void SetNeedsCompositingUpdate(CompositingUpdateType);
 
@@ -1252,9 +1250,6 @@ class CORE_EXPORT LocalFrameView final
 
   ScrollOffset pending_scroll_delta_;
   ScrollOffset scroll_offset_;
-
-  // TODO(bokan): This is unneeded when root-layer-scrolls is turned on.
-  // crbug.com/417782.
   IntSize layout_overflow_size_;
 
   bool scrollbars_suppressed_;

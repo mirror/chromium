@@ -91,7 +91,6 @@ group("gn_all") {
 
   if (!is_ios && !is_android && !is_chromecast && !is_fuchsia) {
     deps += [
-      ":webui_closure_compile",
       "//chrome",
       "//chrome/installer/zucchini:zucchini",
       "//chrome/installer/zucchini:zucchini_unittests",
@@ -644,7 +643,7 @@ group("gn_all") {
     }
   }
 
-  if (is_mac || is_linux || is_android) {
+  if (is_mac || is_linux) {
     deps += [ "//third_party/perfetto:all" ]
   }
 
@@ -854,10 +853,10 @@ group("gn_visibility") {
   ]
 
   if (!is_ios) {
-    deps += [ "//v8:postmortem-metadata" ]
-    if (v8_use_snapshot) {
-      deps += [ "//v8:v8_snapshot" ]
-    }
+    deps += [
+      "//v8:postmortem-metadata",
+      "//v8:v8_snapshot",
+    ]
   }
 }
 
@@ -948,10 +947,7 @@ if (!is_ios) {
     }
 
     if (is_fuchsia) {
-      data_deps += [
-        "//content/shell:content_shell_fuchsia",
-        "//build/fuchsia/layout_test_proxy:layout_test_proxy_runner",
-      ]
+      data_deps += [ "//content/shell:content_shell_fuchsia" ]
     }
 
     data = [
@@ -1150,10 +1146,13 @@ template("assert_valid_out_dir") {
       "Do not use a platform name in your output directory (found \"$root_build_dir\"). http://crbug.com/548283")
 }
 
-group("webui_closure_compile") {
-  data_deps = []
-  if (is_chromeos) {
-    data_deps += [ "//chrome/browser/resources/chromeos/login:closure_compile" ]
+if (!is_win || !is_clang) {
+  group("webui_closure_compile") {
+    data_deps = []
+    if (is_chromeos) {
+      data_deps +=
+          [ "//chrome/browser/resources/chromeos/login:closure_compile" ]
+    }
   }
 }
 

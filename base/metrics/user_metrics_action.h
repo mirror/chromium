@@ -19,7 +19,7 @@ namespace base {
 // Please see tools/metrics/actions/extract_actions.py for details.
 struct UserMetricsAction {
   const char* str_;
-  explicit constexpr UserMetricsAction(const char* str) noexcept : str_(str) {}
+  explicit UserMetricsAction(const char* str) : str_(str) {}
 };
 
 }  // namespace base

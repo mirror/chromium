@@ -89,8 +89,7 @@ scoped_refptr<NGLayoutResult> NGColumnLayoutAlgorithm::Layout() {
   WritingMode writing_mode = ConstraintSpace().GetWritingMode();
   LayoutUnit column_block_offset(border_scrollbar_padding.block_start);
   LayoutUnit column_inline_progression =
-      column_size.inline_size +
-      ResolveUsedColumnGap(content_box_size.inline_size, Style());
+      column_size.inline_size + ResolveUsedColumnGap(Style());
   int used_column_count =
       ResolveUsedColumnCount(content_box_size.inline_size, Style());
 
@@ -188,7 +187,6 @@ scoped_refptr<NGLayoutResult> NGColumnLayoutAlgorithm::Layout() {
   }
   container_builder_.SetInlineSize(border_box_size.inline_size);
   container_builder_.SetBlockSize(border_box_size.block_size);
-  container_builder_.SetPadding(ComputePadding(ConstraintSpace(), Style()));
 
   return container_builder_.ToBoxFragment();
 }
@@ -214,7 +212,7 @@ Optional<MinMaxSize> NGColumnLayoutAlgorithm::ComputeMinMaxSize() const {
   DCHECK_GE(column_count, 1);
   sizes.min_size *= column_count;
   sizes.max_size *= column_count;
-  LayoutUnit column_gap = ResolveUsedColumnGap(LayoutUnit(), Style());
+  LayoutUnit column_gap = ResolveUsedColumnGap(Style());
   LayoutUnit gap_extra = column_gap * (column_count - 1);
   sizes.min_size += gap_extra;
   sizes.max_size += gap_extra;

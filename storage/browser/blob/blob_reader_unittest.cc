@@ -353,9 +353,8 @@ class BlobReaderTest : public ::testing::Test {
   }
 
  protected:
-  void InitializeReader(std::unique_ptr<BlobDataBuilder> builder) {
-    blob_handle_ =
-        builder ? context_.AddFinishedBlob(std::move(builder)) : nullptr;
+  void InitializeReader(BlobDataBuilder* builder) {
+    blob_handle_ = builder ? context_.AddFinishedBlob(builder) : nullptr;
     provider_ = new MockFileStreamReaderProvider();
     reader_.reset(new BlobReader(blob_handle_.get()));
     reader_->SetFileStreamProviderForTesting(base::WrapUnique(provider_));
@@ -426,11 +425,11 @@ class BlobReaderTest : public ::testing::Test {
 };
 
 TEST_F(BlobReaderTest, BasicMemory) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData("Hello!!!");
   const size_t kDataSize = 8ul;
-  b->AppendData(kData);
-  this->InitializeReader(std::move(b));
+  b.AppendData(kData);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -453,12 +452,12 @@ TEST_F(BlobReaderTest, BasicMemory) {
 }
 
 TEST_F(BlobReaderTest, BasicFile) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const FilePath kPath = FilePath::FromUTF8Unsafe("/fake/file.txt");
   const std::string kData = "FileData!!!";
   const base::Time kTime = base::Time::Now();
-  b->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(b));
+  b.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&b);
 
   // Non-async reader.
   ExpectLocalFileCall(kPath, kTime, 0, new FakeFileStreamReader(kData));
@@ -484,12 +483,12 @@ TEST_F(BlobReaderTest, BasicFile) {
 }
 
 TEST_F(BlobReaderTest, BasicFileSystem) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const GURL kURL("file://test_file/here.txt");
   const std::string kData = "FileData!!!";
   const base::Time kTime = base::Time::Now();
-  b->AppendFileSystemFile(kURL, 0, kData.size(), kTime, nullptr);
-  this->InitializeReader(std::move(b));
+  b.AppendFileSystemFile(kURL, 0, kData.size(), kTime, nullptr);
+  this->InitializeReader(&b);
   // Non-async reader.
   ExpectFileSystemCall(kURL, 0, kData.size(), kTime,
                        new FakeFileStreamReader(kData));
@@ -519,14 +518,14 @@ TEST_F(BlobReaderTest, BasicDiskCache) {
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();
   ASSERT_TRUE(cache);
 
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData = "Test Blob Data";
   scoped_refptr<BlobDataBuilder::DataHandle> data_handle =
       new EmptyDataHandle();
   disk_cache::ScopedEntryPtr entry =
       CreateDiskCacheEntry(cache.get(), "test entry", kData);
-  b->AppendDiskCacheEntry(data_handle, entry.get(), kTestDiskCacheStreamIndex);
-  this->InitializeReader(std::move(b));
+  b.AppendDiskCacheEntry(data_handle, entry.get(), kTestDiskCacheStreamIndex);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -553,17 +552,17 @@ TEST_F(BlobReaderTest, DiskCacheWithSideData) {
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();
   ASSERT_TRUE(cache);
 
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData = "Test Blob Data";
   const std::string kSideData = "Test side data";
   scoped_refptr<BlobDataBuilder::DataHandle> data_handle =
       new EmptyDataHandle();
   disk_cache::ScopedEntryPtr entry = CreateDiskCacheEntryWithSideData(
       cache.get(), "test entry", kData, kSideData);
-  b->AppendDiskCacheEntryWithSideData(data_handle, entry.get(),
-                                      kTestDiskCacheStreamIndex,
-                                      kTestDiskCacheSideStreamIndex);
-  this->InitializeReader(std::move(b));
+  b.AppendDiskCacheEntryWithSideData(data_handle, entry.get(),
+                                     kTestDiskCacheStreamIndex,
+                                     kTestDiskCacheSideStreamIndex);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -584,12 +583,12 @@ TEST_F(BlobReaderTest, DiskCacheWithSideData) {
 }
 
 TEST_F(BlobReaderTest, BufferLargerThanMemory) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData("Hello!!!");
   const size_t kDataSize = 8ul;
   const size_t kBufferSize = 10ul;
-  b->AppendData(kData);
-  this->InitializeReader(std::move(b));
+  b.AppendData(kData);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -611,13 +610,13 @@ TEST_F(BlobReaderTest, BufferLargerThanMemory) {
 }
 
 TEST_F(BlobReaderTest, MemoryRange) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData("Hello!!!");
   const size_t kDataSize = 8ul;
   const size_t kSeekOffset = 2ul;
   const uint64_t kReadLength = 4ull;
-  b->AppendData(kData);
-  this->InitializeReader(std::move(b));
+  b.AppendData(kData);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -640,11 +639,11 @@ TEST_F(BlobReaderTest, MemoryRange) {
 }
 
 TEST_F(BlobReaderTest, BufferSmallerThanMemory) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData("Hello!!!");
   const size_t kBufferSize = 4ul;
-  b->AppendData(kData);
-  this->InitializeReader(std::move(b));
+  b.AppendData(kData);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -675,7 +674,7 @@ TEST_F(BlobReaderTest, BufferSmallerThanMemory) {
 }
 
 TEST_F(BlobReaderTest, SegmentedBufferAndMemory) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const size_t kNumItems = 10;
   const size_t kItemSize = 6;
   const size_t kBufferSize = 10;
@@ -686,9 +685,9 @@ TEST_F(BlobReaderTest, SegmentedBufferAndMemory) {
     for (size_t j = 0; j < kItemSize; j++) {
       buf[j] = current_value++;
     }
-    b->AppendData(buf, kItemSize);
+    b.AppendData(buf, kItemSize);
   }
-  this->InitializeReader(std::move(b));
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -716,12 +715,12 @@ TEST_F(BlobReaderTest, SegmentedBufferAndMemory) {
 }
 
 TEST_F(BlobReaderTest, FileAsync) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const FilePath kPath = FilePath::FromUTF8Unsafe("/fake/file.txt");
   const std::string kData = "FileData!!!";
   const base::Time kTime = base::Time::Now();
-  b->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(b));
+  b.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
   reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
@@ -752,12 +751,12 @@ TEST_F(BlobReaderTest, FileAsync) {
 }
 
 TEST_F(BlobReaderTest, FileSystemAsync) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const GURL kURL("file://test_file/here.txt");
   const std::string kData = "FileData!!!";
   const base::Time kTime = base::Time::Now();
-  b->AppendFileSystemFile(kURL, 0, kData.size(), kTime, nullptr);
-  this->InitializeReader(std::move(b));
+  b.AppendFileSystemFile(kURL, 0, kData.size(), kTime, nullptr);
+  this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
   reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
@@ -791,15 +790,15 @@ TEST_F(BlobReaderTest, DiskCacheAsync) {
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();
   ASSERT_TRUE(cache);
 
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData = "Test Blob Data";
   scoped_refptr<BlobDataBuilder::DataHandle> data_handle =
       new EmptyDataHandle();
   std::unique_ptr<DelayedReadEntry> delayed_read_entry(new DelayedReadEntry(
       CreateDiskCacheEntry(cache.get(), "test entry", kData)));
-  b->AppendDiskCacheEntry(data_handle, delayed_read_entry.get(),
-                          kTestDiskCacheStreamIndex);
-  this->InitializeReader(std::move(b));
+  b.AppendDiskCacheEntry(data_handle, delayed_read_entry.get(),
+                         kTestDiskCacheStreamIndex);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_FALSE(IsReaderTotalSizeCalculated());
@@ -823,7 +822,7 @@ TEST_F(BlobReaderTest, DiskCacheAsync) {
 }
 
 TEST_F(BlobReaderTest, FileRange) {
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const FilePath kPath = FilePath::FromUTF8Unsafe("/fake/file.txt");
   // We check the offset in the ExpectLocalFileCall mock.
   const std::string kRangeData = "leD";
@@ -831,8 +830,8 @@ TEST_F(BlobReaderTest, FileRange) {
   const uint64_t kOffset = 2;
   const uint64_t kReadLength = 3;
   const base::Time kTime = base::Time::Now();
-  b->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(b));
+  b.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(new FakeFileStreamReader(kData));
   reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
@@ -868,7 +867,7 @@ TEST_F(BlobReaderTest, DiskCacheRange) {
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();
   ASSERT_TRUE(cache);
 
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData = "Test Blob Data";
   const uint64_t kOffset = 2;
   const uint64_t kReadLength = 3;
@@ -876,8 +875,8 @@ TEST_F(BlobReaderTest, DiskCacheRange) {
       new EmptyDataHandle();
   disk_cache::ScopedEntryPtr entry =
       CreateDiskCacheEntry(cache.get(), "test entry", kData);
-  b->AppendDiskCacheEntry(data_handle, entry.get(), kTestDiskCacheStreamIndex);
-  this->InitializeReader(std::move(b));
+  b.AppendDiskCacheEntry(data_handle, entry.get(), kTestDiskCacheStreamIndex);
+  this->InitializeReader(&b);
 
   int size_result = -1;
   EXPECT_EQ(BlobReader::Status::DONE,
@@ -903,7 +902,7 @@ TEST_F(BlobReaderTest, FileSomeAsyncSegmentedOffsetsUnknownSizes) {
   // * Unknown file sizes (item length of uint64_t::max) for every other item.
   // * Offsets for every 3rd file item.
   // * Non-async reader for every 4th file item.
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const FilePath kPathBase = FilePath::FromUTF8Unsafe("/fake/file.txt");
   const base::Time kTime = base::Time::Now();
   const size_t kNumItems = 10;
@@ -918,9 +917,9 @@ TEST_F(BlobReaderTest, FileSomeAsyncSegmentedOffsetsUnknownSizes) {
         FilePath::FromUTF8Unsafe(base::StringPrintf("%d", current_value)));
     uint64_t offset = i % 3 == 0 ? 1 : 0;
     uint64_t size = kItemSize;
-    b->AppendFile(path, offset, size, kTime);
+    b.AppendFile(path, offset, size, kTime);
   }
-  this->InitializeReader(std::move(b));
+  this->InitializeReader(&b);
 
   // Set expectations.
   current_value = 0;
@@ -976,7 +975,7 @@ TEST_F(BlobReaderTest, MixedContent) {
   std::unique_ptr<disk_cache::Backend> cache = CreateInMemoryDiskCache();
   ASSERT_TRUE(cache);
 
-  auto b = std::make_unique<BlobDataBuilder>("uuid");
+  BlobDataBuilder b("uuid");
   const std::string kData1("Hello ");
   const std::string kData2("there. ");
   const std::string kData3("This ");
@@ -989,14 +988,14 @@ TEST_F(BlobReaderTest, MixedContent) {
   disk_cache::ScopedEntryPtr entry3 =
       CreateDiskCacheEntry(cache.get(), "test entry", kData3);
 
-  b->AppendFile(kData1Path, 0, kData1.size(), kTime);
-  b->AppendData(kData2);
-  b->AppendDiskCacheEntry(
+  b.AppendFile(kData1Path, 0, kData1.size(), kTime);
+  b.AppendData(kData2);
+  b.AppendDiskCacheEntry(
       scoped_refptr<BlobDataBuilder::DataHandle>(new EmptyDataHandle()),
       entry3.get(), kTestDiskCacheStreamIndex);
-  b->AppendData(kData4);
+  b.AppendData(kData4);
 
-  this->InitializeReader(std::move(b));
+  this->InitializeReader(&b);
 
   std::unique_ptr<FakeFileStreamReader> reader(
       new FakeFileStreamReader(kData1));
@@ -1048,9 +1047,9 @@ TEST_F(BlobReaderTest, StateErrors) {
   EXPECT_EQ(net::ERR_FILE_NOT_FOUND, reader_->net_error());
 
   // Case: Not calling CalculateSize before SetReadRange.
-  auto builder1 = std::make_unique<BlobDataBuilder>("uuid1");
-  builder1->AppendData(kData);
-  InitializeReader(std::move(builder1));
+  BlobDataBuilder builder1("uuid1");
+  builder1.AppendData(kData);
+  InitializeReader(&builder1);
   EXPECT_EQ(BlobReader::Status::NET_ERROR, reader_->SetReadRange(0, 10));
   EXPECT_EQ(net::ERR_FAILED, reader_->net_error());
   EXPECT_EQ(BlobReader::Status::NET_ERROR,
@@ -1058,9 +1057,9 @@ TEST_F(BlobReaderTest, StateErrors) {
                           base::Bind(&SetValue<int>, &async_bytes_read)));
 
   // Case: Not calling CalculateSize before Read.
-  auto builder2 = std::make_unique<BlobDataBuilder>("uuid2");
-  builder2->AppendData(kData);
-  InitializeReader(std::move(builder2));
+  BlobDataBuilder builder2("uuid2");
+  builder2.AppendData(kData);
+  InitializeReader(&builder2);
   EXPECT_EQ(BlobReader::Status::NET_ERROR,
             reader_->Read(buffer.get(), 10, &bytes_read,
                           base::Bind(&SetValue<int>, &async_bytes_read)));
@@ -1073,9 +1072,9 @@ TEST_F(BlobReaderTest, FileErrorsSync) {
   const base::Time kTime = base::Time::Now();
 
   // Case: Error on length query.
-  auto builder1 = std::make_unique<BlobDataBuilder>("uuid1");
-  builder1->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(builder1));
+  BlobDataBuilder builder1("uuid1");
+  builder1.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&builder1);
   FakeFileStreamReader* reader = new FakeFileStreamReader(kData);
   reader->SetReturnError(net::ERR_FILE_NOT_FOUND);
   ExpectLocalFileCall(kPath, kTime, 0, reader);
@@ -1085,9 +1084,9 @@ TEST_F(BlobReaderTest, FileErrorsSync) {
   EXPECT_EQ(net::ERR_FILE_NOT_FOUND, reader_->net_error());
 
   // Case: Error on read.
-  auto builder2 = std::make_unique<BlobDataBuilder>("uuid2");
-  builder2->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(builder2));
+  BlobDataBuilder builder2("uuid2");
+  builder2.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&builder2);
   reader = new FakeFileStreamReader(kData);
   ExpectLocalFileCall(kPath, kTime, 0, reader);
   EXPECT_EQ(BlobReader::Status::DONE,
@@ -1110,9 +1109,9 @@ TEST_F(BlobReaderTest, FileErrorsAsync) {
   const base::Time kTime = base::Time::Now();
 
   // Case: Error on length query.
-  auto builder1 = std::make_unique<BlobDataBuilder>("uuid1");
-  builder1->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(builder1));
+  BlobDataBuilder builder1("uuid1");
+  builder1.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&builder1);
   FakeFileStreamReader* reader = new FakeFileStreamReader(kData);
   reader->SetAsyncRunner(base::ThreadTaskRunnerHandle::Get().get());
   reader->SetReturnError(net::ERR_FILE_NOT_FOUND);
@@ -1126,9 +1125,9 @@ TEST_F(BlobReaderTest, FileErrorsAsync) {
   EXPECT_EQ(net::ERR_FILE_NOT_FOUND, reader_->net_error());
 
   // Case: Error on read.
-  auto builder2 = std::make_unique<BlobDataBuilder>("uuid2");
-  builder2->AppendFile(kPath, 0, kData.size(), kTime);
-  this->InitializeReader(std::move(builder2));
+  BlobDataBuilder builder2("uuid2");
+  builder2.AppendFile(kPath, 0, kData.size(), kTime);
+  this->InitializeReader(&builder2);
   reader = new FakeFileStreamReader(kData);
   ExpectLocalFileCall(kPath, kTime, 0, reader);
   EXPECT_EQ(BlobReader::Status::DONE,
@@ -1154,9 +1153,9 @@ TEST_F(BlobReaderTest, RangeError) {
   const uint64_t kReadLength = 4ull;
 
   // Case: offset too high.
-  auto b = std::make_unique<BlobDataBuilder>("uuid1");
-  b->AppendData(kData);
-  this->InitializeReader(std::move(b));
+  BlobDataBuilder b("uuid1");
+  b.AppendData(kData);
+  this->InitializeReader(&b);
   int size_result = -1;
   EXPECT_EQ(BlobReader::Status::DONE,
             reader_->CalculateSize(base::Bind(&SetValue<int>, &size_result)));
@@ -1166,9 +1165,9 @@ TEST_F(BlobReaderTest, RangeError) {
   EXPECT_EQ(net::ERR_FILE_NOT_FOUND, reader_->net_error());
 
   // Case: length too long.
-  auto b2 = std::make_unique<BlobDataBuilder>("uuid2");
-  b2->AppendData(kData);
-  this->InitializeReader(std::move(b2));
+  BlobDataBuilder b2("uuid2");
+  b2.AppendData(kData);
+  this->InitializeReader(&b2);
   size_result = -1;
   EXPECT_EQ(BlobReader::Status::DONE,
             reader_->CalculateSize(base::Bind(&SetValue<int>, &size_result)));
@@ -1184,13 +1183,12 @@ TEST_F(BlobReaderTest, HandleBeforeAsyncCancel) {
   const size_t kDataSize = 8ul;
   std::vector<FileCreationInfo> files;
 
-  auto b = std::make_unique<BlobDataBuilder>(kUuid);
-  b->AppendFutureData(kDataSize);
+  BlobDataBuilder b(kUuid);
+  b.AppendFutureData(kDataSize);
   BlobStatus can_populate_status =
       BlobStatus::ERR_INVALID_CONSTRUCTION_ARGUMENTS;
   blob_handle_ = context_.BuildBlob(
-      std::move(b),
-      base::BindOnce(&SaveBlobStatusAndFiles, &can_populate_status, &files));
+      b, base::Bind(&SaveBlobStatusAndFiles, &can_populate_status, &files));
   EXPECT_EQ(BlobStatus::PENDING_TRANSPORT, can_populate_status);
   provider_ = new MockFileStreamReaderProvider();
   reader_.reset(new BlobReader(blob_handle_.get()));
@@ -1211,13 +1209,12 @@ TEST_F(BlobReaderTest, ReadFromIncompleteBlob) {
   const size_t kDataSize = 8ul;
   std::vector<FileCreationInfo> files;
 
-  auto b = std::make_unique<BlobDataBuilder>(kUuid);
-  BlobDataBuilder::FutureData future_data = b->AppendFutureData(kDataSize);
+  BlobDataBuilder b(kUuid);
+  BlobDataBuilder::FutureData future_data = b.AppendFutureData(kDataSize);
   BlobStatus can_populate_status =
       BlobStatus::ERR_INVALID_CONSTRUCTION_ARGUMENTS;
   blob_handle_ = context_.BuildBlob(
-      std::move(b),
-      base::BindOnce(&SaveBlobStatusAndFiles, &can_populate_status, &files));
+      b, base::Bind(&SaveBlobStatusAndFiles, &can_populate_status, &files));
   EXPECT_EQ(BlobStatus::PENDING_TRANSPORT, can_populate_status);
   provider_ = new MockFileStreamReaderProvider();
   reader_.reset(new BlobReader(blob_handle_.get()));

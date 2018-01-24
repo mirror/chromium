@@ -4,8 +4,7 @@
 
 #include "components/zoom/zoom_event_manager.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/zoom/zoom_event_manager_observer.h"
 #include "content/public/browser/browser_context.h"
 
@@ -19,7 +18,7 @@ ZoomEventManager* ZoomEventManager::GetForBrowserContext(
     content::BrowserContext* context) {
   if (!context->GetUserData(kBrowserZoomEventManager)) {
     context->SetUserData(kBrowserZoomEventManager,
-                         std::make_unique<ZoomEventManager>());
+                         base::MakeUnique<ZoomEventManager>());
   }
   return static_cast<ZoomEventManager*>(
       context->GetUserData(kBrowserZoomEventManager));

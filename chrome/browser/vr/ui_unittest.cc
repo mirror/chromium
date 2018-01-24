@@ -263,19 +263,6 @@ TEST_F(UiTest, VoiceSearchHiddenWhenCantAskForPermission) {
   EXPECT_FALSE(IsVisible(kVoiceSearchButton));
 }
 
-TEST_F(UiTest, VoiceSearchHiddenWhenContentCapturingAudio) {
-  CreateScene(kNotInCct, kNotInWebVr);
-
-  model_->speech.has_or_can_request_audio_permission = true;
-  model_->capturing_state.audio_capture_enabled = false;
-  EXPECT_TRUE(OnBeginFrame());
-  EXPECT_TRUE(IsVisible(kVoiceSearchButton));
-
-  model_->capturing_state.audio_capture_enabled = true;
-  EXPECT_TRUE(OnBeginFrame());
-  EXPECT_FALSE(IsVisible(kVoiceSearchButton));
-}
-
 TEST_F(UiTest, UiModeWebVr) {
   CreateScene(kNotInCct, kNotInWebVr);
 
@@ -384,12 +371,11 @@ TEST_F(UiTest, WebVrAutopresented) {
 
   // Enter WebVR with autopresentation.
   ui_->SetWebVrMode(true, false);
+  ui_->OnWebVrFrameAvailable();
 
   // The splash screen should go away.
   RunFor(
       MsToDelta(1000 * (kSplashScreenMinDurationSeconds + kSmallDelaySeconds)));
-  ui_->OnWebVrFrameAvailable();
-  EXPECT_TRUE(RunFor(MsToDelta(10)));
   VerifyOnlyElementsVisible("Autopresented", {kWebVrUrlToast});
 
   // Make sure the transient URL bar times out.
@@ -410,11 +396,10 @@ TEST_F(UiTest, WebVrSplashScreenHiddenWhenTimeoutImminent) {
   VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
 
   ui_->SetWebVrMode(true, false);
+  ui_->OnWebVrTimeoutImminent();
+
   EXPECT_TRUE(RunFor(MsToDelta(
       1000 * (kSplashScreenMinDurationSeconds + kSmallDelaySeconds * 2))));
-
-  ui_->OnWebVrTimeoutImminent();
-  EXPECT_TRUE(RunFor(MsToDelta(10)));
 
   VerifyOnlyElementsVisible("Timeout imminent",
                             {kWebVrTimeoutSpinner, kWebVrBackground});
@@ -592,11 +577,11 @@ TEST_F(UiTest, SecondaryButtonClickTriggersOnExitPrompt) {
 TEST_F(UiTest, UiUpdatesForWebVR) {
   CreateScene(kNotInCct, kInWebVr);
 
-  model_->capturing_state.audio_capture_enabled = true;
-  model_->capturing_state.video_capture_enabled = true;
-  model_->capturing_state.screen_capture_enabled = true;
-  model_->capturing_state.location_access_enabled = true;
-  model_->capturing_state.bluetooth_connected = true;
+  model_->permissions.audio_capture_enabled = true;
+  model_->permissions.video_capture_enabled = true;
+  model_->permissions.screen_capture_enabled = true;
+  model_->permissions.location_access = true;
+  model_->permissions.bluetooth_connected = true;
 
   VerifyOnlyElementsVisible("Elements hidden",
                             std::set<UiElementName>{kWebVrBackground});
@@ -621,11 +606,11 @@ TEST_F(UiTest, WebVrFramesIgnoredWhenUnexpected) {
 
 TEST_F(UiTest, UiUpdateTransitionToWebVR) {
   CreateScene(kNotInCct, kNotInWebVr);
-  model_->capturing_state.audio_capture_enabled = true;
-  model_->capturing_state.video_capture_enabled = true;
-  model_->capturing_state.screen_capture_enabled = true;
-  model_->capturing_state.location_access_enabled = true;
-  model_->capturing_state.bluetooth_connected = true;
+  model_->permissions.audio_capture_enabled = true;
+  model_->permissions.video_capture_enabled = true;
+  model_->permissions.screen_capture_enabled = true;
+  model_->permissions.location_access = true;
+  model_->permissions.bluetooth_connected = true;
 
   // Transition to WebVR mode
   ui_->SetWebVrMode(true, false);
@@ -646,11 +631,11 @@ TEST_F(UiTest, CaptureIndicatorsVisibility) {
   EXPECT_TRUE(VerifyVisibility(indicators, false));
   EXPECT_TRUE(VerifyRequiresLayout(indicators, false));
 
-  model_->capturing_state.audio_capture_enabled = true;
-  model_->capturing_state.video_capture_enabled = true;
-  model_->capturing_state.screen_capture_enabled = true;
-  model_->capturing_state.location_access_enabled = true;
-  model_->capturing_state.bluetooth_connected = true;
+  model_->permissions.audio_capture_enabled = true;
+  model_->permissions.video_capture_enabled = true;
+  model_->permissions.screen_capture_enabled = true;
+  model_->permissions.location_access = true;
+  model_->permissions.bluetooth_connected = true;
   EXPECT_TRUE(VerifyVisibility(indicators, true));
   EXPECT_TRUE(VerifyRequiresLayout(indicators, true));
 
@@ -667,11 +652,11 @@ TEST_F(UiTest, CaptureIndicatorsVisibility) {
   EXPECT_TRUE(VerifyRequiresLayout(indicators, true));
 
   // Ensure they can be turned off.
-  model_->capturing_state.audio_capture_enabled = false;
-  model_->capturing_state.video_capture_enabled = false;
-  model_->capturing_state.screen_capture_enabled = false;
-  model_->capturing_state.location_access_enabled = false;
-  model_->capturing_state.bluetooth_connected = false;
+  model_->permissions.audio_capture_enabled = false;
+  model_->permissions.video_capture_enabled = false;
+  model_->permissions.screen_capture_enabled = false;
+  model_->permissions.location_access = false;
+  model_->permissions.bluetooth_connected = false;
   EXPECT_TRUE(VerifyRequiresLayout(indicators, false));
 }
 
@@ -1038,10 +1023,7 @@ TEST_F(UiTest, TransientToastsWithDelayedFirstFrame) {
   VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
   // Enter WebVR with autopresentation.
   ui_->SetWebVrMode(true, false);
-  EXPECT_TRUE(RunFor(MsToDelta(1000 * kSplashScreenMinDurationSeconds)));
-  VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
-
-  EXPECT_FALSE(RunFor(MsToDelta(2000)));
+  EXPECT_TRUE(RunFor(MsToDelta(2000)));
   ui_->OnWebVrTimeoutImminent();
   EXPECT_TRUE(RunFor(MsToDelta(3000)));
   ui_->OnWebVrTimedOut();
@@ -1081,49 +1063,6 @@ TEST_F(UiTest, TextureBackgroundAfterAssetLoaded) {
   EXPECT_TRUE(IsVisible(k2dBrowsingTexturedBackground));
   EXPECT_TRUE(IsVisible(kContentQuad));
   EXPECT_FALSE(IsVisible(k2dBrowsingDefaultBackground));
-}
-
-TEST_F(UiTest, ControllerLabels) {
-  CreateScene(kNotInCct, kNotInWebVr);
-
-  EXPECT_FALSE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
-
-  model_->controller.resting_in_viewport = true;
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
-
-  model_->push_mode(kModeFullscreen);
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_TRUE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
-
-  model_->pop_mode(kModeFullscreen);
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
-
-  model_->push_mode(kModeEditingOmnibox);
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_TRUE(IsVisible(kControllerBackButtonLabel));
-
-  model_->pop_mode(kModeEditingOmnibox);
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
-
-  model_->push_mode(kModeVoiceSearch);
-  EXPECT_TRUE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_TRUE(IsVisible(kControllerBackButtonLabel));
-
-  model_->controller.resting_in_viewport = false;
-  EXPECT_FALSE(IsVisible(kControllerTrackpadLabel));
-  EXPECT_FALSE(IsVisible(kControllerExitButtonLabel));
-  EXPECT_FALSE(IsVisible(kControllerBackButtonLabel));
 }
 
 }  // namespace vr

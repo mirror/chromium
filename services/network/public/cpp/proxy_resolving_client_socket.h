@@ -17,8 +17,8 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy_resolution/proxy_info.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_info.h"
+#include "net/proxy/proxy_service.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/stream_socket.h"
 #include "net/ssl/ssl_config_service.h"
@@ -51,8 +51,8 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   // will be only used for proxy resolution. Caller doesn't need to explicitly
   // sanitize the url, any sensitive data (like embedded usernames and
   // passwords), and local data (i.e. reference fragment) will be sanitized by
-  // net::ProxyResolutionService::ResolveProxyHelper() before the url is
-  // disclosed to the proxy.
+  // net::ProxyService::ResolveProxyHelper() before the url is disclosed to the
+  // proxy.
   ProxyResolvingClientSocket(
       net::ClientSocketFactory* socket_factory,
       const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
@@ -107,7 +107,7 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   std::unique_ptr<net::ClientSocketHandle> transport_;
 
   const net::SSLConfig ssl_config_;
-  net::ProxyResolutionService::Request* proxy_resolve_request_;
+  net::ProxyService::Request* proxy_resolve_request_;
   net::ProxyInfo proxy_info_;
   const GURL url_;
   net::NetLogWithSource net_log_;

@@ -5,5 +5,3 @@
 module chrome.mojom;
 
 const string kServiceName = "chrome";
-
-const string kRendererServiceName = "chrome_renderer";

@@ -53,7 +53,6 @@
     '_transferSize': 'formatAsTypeName',
     '_error': 'skip'
   };
-  var har = await NetworkLog.HAREntry.build(testRequest);
-  TestRunner.addObject(har, stillNondeterministic, '', 'HAR:');
+  TestRunner.addObject(new NetworkLog.HAREntry(testRequest).build(), stillNondeterministic, '', 'HAR:');
   TestRunner.completeTest();
 })();

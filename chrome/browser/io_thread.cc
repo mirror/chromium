@@ -88,16 +88,15 @@
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
 #include "net/nqe/network_quality_estimator_params.h"
-#include "net/proxy_resolution/pac_file_fetcher_impl.h"
-#include "net/proxy_resolution/proxy_config_service.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_config_service.h"
+#include "net/proxy/proxy_script_fetcher_impl.h"
+#include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/quic_utils_chromium.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "services/network/public/cpp/network_switches.h"
 #include "url/url_constants.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -121,7 +120,7 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/net/cert_verify_proc_chromeos.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
-#include "chromeos/network/dhcp_pac_file_fetcher_factory_chromeos.h"
+#include "chromeos/network/dhcp_proxy_script_fetcher_factory_chromeos.h"
 #include "chromeos/network/host_resolver_impl_chromeos.h"
 #endif
 
@@ -191,13 +190,13 @@ std::unique_ptr<net::HostResolver> CreateGlobalHostResolver(
   // through a designated test server.
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch(network::switches::kHostResolverRules))
+  if (!command_line.HasSwitch(switches::kHostResolverRules))
     return global_host_resolver;
 
   auto remapped_resolver = std::make_unique<net::MappedHostResolver>(
       std::move(global_host_resolver));
   remapped_resolver->SetRulesFromString(
-      command_line.GetSwitchValueASCII(network::switches::kHostResolverRules));
+      command_line.GetSwitchValueASCII(switches::kHostResolverRules));
   return std::move(remapped_resolver);
 }
 
@@ -568,7 +567,7 @@ void IOThread::CleanUp() {
   UnregisterSTHObserver(ct_tree_tracker_.get());
   ct_tree_tracker_.reset();
 
-  globals_->system_request_context->proxy_resolution_service()->OnShutdown();
+  globals_->system_request_context->proxy_service()->OnShutdown();
 
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(nullptr);
@@ -735,8 +734,8 @@ void IOThread::SetUpProxyService(
   builder->set_pac_quick_check_enabled(WpadQuickCheckEnabled());
   builder->set_pac_sanitize_url_policy(
       PacHttpsUrlStrippingEnabled()
-          ? net::ProxyResolutionService::SanitizeUrlPolicy::SAFE
-          : net::ProxyResolutionService::SanitizeUrlPolicy::UNSAFE);
+          ? net::ProxyService::SanitizeUrlPolicy::SAFE
+          : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
 }
 
 certificate_transparency::TreeStateTracker* IOThread::ct_tree_tracker() const {

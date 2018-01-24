@@ -36,7 +36,6 @@
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
-#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "public/platform/WebFocusType.h"
 
@@ -498,7 +497,7 @@ class CORE_EXPORT Element : public ContainerNode {
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot& CreateShadowRootInternal();
-  ShadowRoot& CreateUserAgentShadowRoot();
+  ShadowRoot& CreateUserAgentShadowRootV1();
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 
@@ -511,7 +510,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   ShadowRoot* ShadowRootIfV1() const;
 
-  ShadowRoot& EnsureUserAgentShadowRoot();
+  ShadowRoot& EnsureUserAgentShadowRootV1();
 
   bool IsInDescendantTreeOf(const Element* shadow_host) const;
 
@@ -756,8 +755,6 @@ class CORE_EXPORT Element : public ContainerNode {
   // sent at all.
   virtual bool IsDisabledFormControl() const { return false; }
 
-  virtual bool ShouldForceLegacyLayout() const { return false; }
-
   bool HasPendingResources() const {
     return HasElementFlag(kHasPendingResources);
   }
@@ -842,9 +839,6 @@ class CORE_EXPORT Element : public ContainerNode {
   EnsureResizeObserverData();
   void SetNeedsResizeObserverUpdate();
 
-  void WillBeginCustomizedScrollPhase(ScrollCustomization::ScrollDirection);
-  void DidEndCustomizedScrollPhase();
-
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
@@ -861,9 +855,10 @@ class CORE_EXPORT Element : public ContainerNode {
   void AddPropertyToPresentationAttributeStyle(MutableCSSPropertyValueSet*,
                                                CSSPropertyID,
                                                const String& value);
+  // TODO(sashab): Make this take a const CSSValue&.
   void AddPropertyToPresentationAttributeStyle(MutableCSSPropertyValueSet*,
                                                CSSPropertyID,
-                                               const CSSValue&);
+                                               const CSSValue*);
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;

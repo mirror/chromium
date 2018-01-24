@@ -155,9 +155,7 @@ NSString* const kRemindersSharingServiceName =
 - (void)saveTransitionDataFromBrowser:(Browser*)browser {
   windowForShare_ = browser->window()->GetNativeWindow();
 
-  TabWindowController* tabWindowController =
-      [TabWindowController tabWindowControllerForWindow:windowForShare_];
-  NSView* contentsView = [tabWindowController tabContentArea];
+  NSView* contentsView = [[windowForShare_ windowController] tabContentArea];
   NSRect rectInWindow =
       [[contentsView superview] convertRect:[contentsView frame] toView:nil];
   rectForShare_ = [windowForShare_ convertRectToScreen:rectInWindow];

@@ -509,13 +509,7 @@ IN_PROC_BROWSER_TEST_F(FindInPageTest, MAYBE_PasteWithoutTextChange) {
   EXPECT_TRUE(details.number_of_matches() > 0);
 }
 
-// Slow flakiness on Linux. crbug.com/803743
-#if defined(OS_LINUX)
-#define MAYBE_CtrlEnter DISABLED_CtrlEnter
-#else
-#define MAYBE_CtrlEnter CtrlEnter
-#endif
-IN_PROC_BROWSER_TEST_F(FindInPageTest, MAYBE_CtrlEnter) {
+IN_PROC_BROWSER_TEST_F(FindInPageTest, CtrlEnter) {
   ui_test_utils::NavigateToURL(browser(),
                                GURL("data:text/html,This is some text with a "
                                     "<a href=\"about:blank\">link</a>."));

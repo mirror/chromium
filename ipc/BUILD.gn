@@ -36,6 +36,7 @@ component("ipc") {
     "ipc_channel_proxy.h",
     "ipc_channel_reader.cc",
     "ipc_channel_reader.h",
+    "ipc_export.h",
     "ipc_listener.h",
     "ipc_logging.cc",
     "ipc_logging.h",
@@ -79,7 +80,7 @@ component("ipc") {
     ]
   }
 
-  defines = [ "IS_IPC_IMPL" ]
+  defines = [ "IPC_IMPLEMENTATION" ]
 
   public_deps = [
     ":ipc_features",

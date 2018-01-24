@@ -42,9 +42,6 @@ public final class ReauthenticationManager {
     // This allows the tests to be independent of a particular device configuration.
     private static OverrideState sApiOverride = OverrideState.NOT_OVERRIDDEN;
 
-    // Used in tests to avoid displaying the OS reauth dialog.
-    private static boolean sSkipSystemReauth = false;
-
     /**
      * Stores the timestamp of last reauthentication of the user.
      */
@@ -65,11 +62,6 @@ public final class ReauthenticationManager {
         }
 
         sApiOverride = apiOverride;
-    }
-
-    @VisibleForTesting
-    public static void setSkipSystemReauth(boolean skipSystemReauth) {
-        sSkipSystemReauth = skipSystemReauth;
     }
 
     /**
@@ -101,8 +93,6 @@ public final class ReauthenticationManager {
      */
     public static void displayReauthenticationFragment(
             int descriptionId, int containerViewId, FragmentManager fragmentManager) {
-        if (sSkipSystemReauth) return;
-
         Fragment passwordReauthentication = new PasswordReauthenticationFragment();
         Bundle args = new Bundle();
         args.putInt(PasswordReauthenticationFragment.DESCRIPTION_ID, descriptionId);

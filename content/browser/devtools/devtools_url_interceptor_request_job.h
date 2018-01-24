@@ -91,8 +91,6 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob {
                    const std::string& method,
                    std::unique_ptr<net::UploadDataStream> post_data,
                    const net::HttpRequestHeaders& extra_request_headers,
-                   const std::string& referrer,
-                   net::URLRequest::ReferrerPolicy referrer_policy,
                    const net::RequestPriority& priority,
                    const net::URLRequestContext* url_request_context);
     ~RequestDetails();
@@ -101,8 +99,6 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob {
     std::string method;
     std::unique_ptr<net::UploadDataStream> post_data;
     net::HttpRequestHeaders extra_request_headers;
-    std::string referrer;
-    net::URLRequest::ReferrerPolicy referrer_policy;
     net::RequestPriority priority;
     const net::URLRequestContext* url_request_context;
   };

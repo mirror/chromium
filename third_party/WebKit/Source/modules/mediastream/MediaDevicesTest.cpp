@@ -32,7 +32,7 @@ class MockMediaDevicesDispatcherHost
                         bool request_video_input,
                         bool request_audio_output,
                         EnumerateDevicesCallback callback) override {
-    Vector<Vector<MediaDeviceInfoPtr>> enumeration(
+    Vector<Vector<mojom::blink::MediaDeviceInfoPtr>> enumeration(
         static_cast<size_t>(MediaDeviceType::NUM_MEDIA_DEVICE_TYPES));
     MediaDeviceInfoPtr device_info;
     if (request_audio_input) {
@@ -96,13 +96,10 @@ class MockMediaDevicesDispatcherHost
     NOTREACHED();
   }
 
-  void AddMediaDevicesListener(
-      bool subscribe_audio_input,
-      bool subscribe_video_input,
-      bool subscribe_audio_output,
-      mojom::blink::MediaDevicesListenerPtr listener) override {
-    listener_ = std::move(listener);
-  };
+  MOCK_METHOD2(SubscribeDeviceChangeNotifications,
+               void(MediaDeviceType type, uint32_t subscription_id));
+  MOCK_METHOD2(UnsubscribeDeviceChangeNotifications,
+               void(MediaDeviceType type, uint32_t subscription_id));
 
   mojom::blink::MediaDevicesDispatcherHostPtr CreateInterfacePtrAndBind() {
     mojom::blink::MediaDevicesDispatcherHostPtr ptr;
@@ -112,10 +109,7 @@ class MockMediaDevicesDispatcherHost
 
   void CloseBinding() { binding_.Close(); }
 
-  mojom::blink::MediaDevicesListenerPtr& listener() { return listener_; }
-
  private:
-  mojom::blink::MediaDevicesListenerPtr listener_;
   mojo::Binding<mojom::blink::MediaDevicesDispatcherHost> binding_;
 };
 
@@ -172,25 +166,15 @@ class MediaDevicesTest : public ::testing::Test {
  public:
   using MediaDeviceInfos = PersistentHeapVector<Member<MediaDeviceInfo>>;
 
-  MediaDevicesTest() {
-    dispatcher_host_ = std::make_unique<MockMediaDevicesDispatcherHost>();
-  }
+  MediaDevicesTest() = default;
 
   MediaDevices* GetMediaDevices(ExecutionContext* context) {
     if (!media_devices_) {
       media_devices_ = MediaDevices::Create(context);
       media_devices_->SetDispatcherHostForTesting(
-          dispatcher_host_->CreateInterfacePtrAndBind());
+          dispatcher_host_.CreateInterfacePtrAndBind());
     }
     return media_devices_;
-  }
-
-  void CloseBinding() { dispatcher_host_->CloseBinding(); }
-
-  void SimulateDeviceChange() {
-    DCHECK(listener());
-    listener()->OnDevicesChanged(MediaDeviceType::MEDIA_AUDIO_INPUT,
-                                 Vector<MediaDeviceInfoPtr>());
   }
 
   void DevicesEnumerated(const MediaDeviceInfoVector& device_infos) {
@@ -202,32 +186,15 @@ class MediaDevicesTest : public ::testing::Test {
     }
   }
 
-  void OnDispatcherHostConnectionError() {
-    dispatcher_host_connection_error_ = true;
-  }
+  void OnDispatcherHostConnectionError() { connection_error_ = true; }
 
-  void OnDevicesChanged() { device_changed_ = true; }
-
-  void OnListenerConnectionError() {
-    listener_connection_error_ = true;
-    device_changed_ = false;
-  }
-
-  mojom::blink::MediaDevicesListenerPtr& listener() {
-    return dispatcher_host_->listener();
-  }
-
-  bool listener_connection_error() const { return listener_connection_error_; }
+  void CloseBinding() { dispatcher_host_.CloseBinding(); }
 
   const MediaDeviceInfos& device_infos() const { return device_infos_; }
 
   bool devices_enumerated() const { return devices_enumerated_; }
 
-  bool dispatcher_host_connection_error() const {
-    return dispatcher_host_connection_error_;
-  }
-
-  bool device_changed() const { return device_changed_; }
+  bool connection_error() const { return connection_error_; }
 
   ScopedTestingPlatformSupport<TestingPlatformSupport>& platform() {
     return platform_;
@@ -235,12 +202,10 @@ class MediaDevicesTest : public ::testing::Test {
 
  private:
   ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
-  std::unique_ptr<MockMediaDevicesDispatcherHost> dispatcher_host_;
+  MockMediaDevicesDispatcherHost dispatcher_host_;
   MediaDeviceInfos device_infos_;
   bool devices_enumerated_ = false;
-  bool dispatcher_host_connection_error_ = false;
-  bool device_changed_ = false;
-  bool listener_connection_error_ = false;
+  bool connection_error_ = false;
   Persistent<MediaDevices> media_devices_;
 };
 
@@ -331,7 +296,7 @@ TEST_F(MediaDevicesTest, EnumerateDevicesAfterConnectionError) {
   media_devices->SetConnectionErrorCallbackForTesting(
       WTF::Bind(&MediaDevicesTest::OnDispatcherHostConnectionError,
                 WTF::Unretained(this)));
-  EXPECT_FALSE(dispatcher_host_connection_error());
+  EXPECT_FALSE(connection_error());
 
   // Simulate a connection error by closing the binding.
   CloseBinding();
@@ -341,7 +306,7 @@ TEST_F(MediaDevicesTest, EnumerateDevicesAfterConnectionError) {
       media_devices->enumerateDevices(scope.GetScriptState());
   platform()->RunUntilIdle();
   ASSERT_FALSE(promise.IsEmpty());
-  EXPECT_TRUE(dispatcher_host_connection_error());
+  EXPECT_TRUE(connection_error());
   EXPECT_FALSE(devices_enumerated());
 }
 
@@ -353,7 +318,7 @@ TEST_F(MediaDevicesTest, EnumerateDevicesBeforeConnectionError) {
   media_devices->SetConnectionErrorCallbackForTesting(
       WTF::Bind(&MediaDevicesTest::OnDispatcherHostConnectionError,
                 WTF::Unretained(this)));
-  EXPECT_FALSE(dispatcher_host_connection_error());
+  EXPECT_FALSE(connection_error());
 
   ScriptPromise promise =
       media_devices->enumerateDevices(scope.GetScriptState());
@@ -363,38 +328,9 @@ TEST_F(MediaDevicesTest, EnumerateDevicesBeforeConnectionError) {
   // Simulate a connection error by closing the binding.
   CloseBinding();
   platform()->RunUntilIdle();
-  EXPECT_TRUE(dispatcher_host_connection_error());
+
+  EXPECT_TRUE(connection_error());
   EXPECT_TRUE(devices_enumerated());
-}
-
-TEST_F(MediaDevicesTest, ObserveDeviceChangeEvent) {
-  V8TestingScope scope;
-  auto media_devices = GetMediaDevices(scope.GetExecutionContext());
-  media_devices->SetDeviceChangeCallbackForTesting(
-      WTF::Bind(&MediaDevicesTest::OnDevicesChanged, WTF::Unretained(this)));
-  EXPECT_FALSE(listener());
-
-  // Subscribe for device change event.
-  media_devices->StartObserving();
-  platform()->RunUntilIdle();
-  EXPECT_TRUE(listener());
-  listener().set_connection_error_handler(WTF::Bind(
-      &MediaDevicesTest::OnListenerConnectionError, WTF::Unretained(this)));
-
-  // Simulate a device change.
-  SimulateDeviceChange();
-  platform()->RunUntilIdle();
-  EXPECT_TRUE(device_changed());
-
-  // Unsubscribe.
-  media_devices->StopObserving();
-  platform()->RunUntilIdle();
-  EXPECT_TRUE(listener_connection_error());
-
-  // Simulate another device change.
-  SimulateDeviceChange();
-  platform()->RunUntilIdle();
-  EXPECT_FALSE(device_changed());
 }
 
 }  // namespace blink

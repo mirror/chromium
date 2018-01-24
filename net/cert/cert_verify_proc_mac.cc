@@ -8,7 +8,6 @@
 #include <CoreServices/CoreServices.h>
 #include <Security/Security.h>
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -30,7 +29,6 @@
 #include "net/cert/ev_root_ca_metadata.h"
 #include "net/cert/internal/certificate_policies.h"
 #include "net/cert/internal/parsed_certificate.h"
-#include "net/cert/known_roots.h"
 #include "net/cert/known_roots_mac.h"
 #include "net/cert/test_keychain_search_list_mac.h"
 #include "net/cert/test_root_certs.h"
@@ -365,13 +363,12 @@ bool CheckCertChainEV(const X509Certificate* cert,
   return true;
 }
 
-void AppendPublicKeyHashesAndUpdateKnownRoot(CFArrayRef chain,
-                                             HashValueVector* hashes,
-                                             bool* known_root) {
-  // Walk the chain in reverse, to optimize for IsKnownRoot checks.
-  for (CFIndex i = CFArrayGetCount(chain); i > 0; i--) {
+void AppendPublicKeyHashes(CFArrayRef chain,
+                           HashValueVector* hashes) {
+  const CFIndex n = CFArrayGetCount(chain);
+  for (CFIndex i = 0; i < n; i++) {
     SecCertificateRef cert = reinterpret_cast<SecCertificateRef>(
-        const_cast<void*>(CFArrayGetValueAtIndex(chain, i - 1)));
+        const_cast<void*>(CFArrayGetValueAtIndex(chain, i)));
 
     CSSM_DATA cert_data;
     OSStatus err = SecCertificateGetData(cert, &cert_data);
@@ -385,14 +382,7 @@ void AppendPublicKeyHashesAndUpdateKnownRoot(CFArrayRef chain,
     HashValue sha256(HASH_VALUE_SHA256);
     CC_SHA256(spki_bytes.data(), spki_bytes.size(), sha256.data());
     hashes->push_back(sha256);
-
-    if (!*known_root) {
-      *known_root =
-          GetNetTrustAnchorHistogramIdForSPKI(sha256) != 0 || IsKnownRoot(cert);
-    }
   }
-  // Reverse the hash array, to maintain the leaf-first ordering.
-  std::reverse(hashes->begin(), hashes->end());
 }
 
 enum CRLSetResult {
@@ -428,9 +418,9 @@ CRLSetResult CheckRevocationWithCRLSet(CFArrayRef chain, CRLSet* crl_set) {
   // We iterate from the root certificate down to the leaf, keeping track of
   // the issuer's SPKI at each step.
   std::string issuer_spki_hash;
-  for (CFIndex i = CFArrayGetCount(chain); i > 0; i--) {
+  for (CFIndex i = CFArrayGetCount(chain) - 1; i >= 0; i--) {
     SecCertificateRef cert = reinterpret_cast<SecCertificateRef>(
-        const_cast<void*>(CFArrayGetValueAtIndex(chain, i - 1)));
+        const_cast<void*>(CFArrayGetValueAtIndex(chain, i)));
 
     CSSM_DATA cert_data;
     OSStatus err = SecCertificateGetData(cert, &cert_data);
@@ -602,6 +592,17 @@ int BuildAndEvaluateSecTrustRef(CFArrayRef cert_array,
   *chain_info = tmp_chain_info;
 
   return OK;
+}
+
+// IsIssuedByKnownRoot returns true if the given chain is rooted at a root CA
+// that we recognise as a standard root.
+bool IsIssuedByKnownRoot(CFArrayRef chain) {
+  CFIndex n = CFArrayGetCount(chain);
+  if (n < 1)
+    return false;
+  SecCertificateRef root_ref = reinterpret_cast<SecCertificateRef>(
+      const_cast<void*>(CFArrayGetValueAtIndex(chain, n - 1)));
+  return IsKnownRoot(root_ref);
 }
 
 // Runs path building & verification loop for |cert|, given |flags|. This is
@@ -965,9 +966,8 @@ int VerifyWithGivenFlags(X509Certificate* cert,
   // compatible with WinHTTP, which doesn't report this error (bug 3004).
   verify_result->cert_status &= ~CERT_STATUS_NO_REVOCATION_MECHANISM;
 
-  AppendPublicKeyHashesAndUpdateKnownRoot(
-      completed_chain, &verify_result->public_key_hashes,
-      &verify_result->is_issued_by_known_root);
+  AppendPublicKeyHashes(completed_chain, &verify_result->public_key_hashes);
+  verify_result->is_issued_by_known_root = IsIssuedByKnownRoot(completed_chain);
 
   if (IsCertStatusError(verify_result->cert_status))
     return MapCertStatusToNetError(verify_result->cert_status);

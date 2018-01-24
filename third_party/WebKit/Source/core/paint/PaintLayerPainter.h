@@ -140,8 +140,6 @@ class CORE_EXPORT PaintLayerPainter {
                            const ClipRect&,
                            const DisplayItemClient&);
 
-  void PaintEmptyContentForFilters(GraphicsContext&);
-
   static bool NeedsToClip(const PaintLayerPaintingInfo& local_painting_info,
                           const ClipRect&,
                           const PaintLayerFlags&,

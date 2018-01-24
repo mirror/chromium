@@ -12,6 +12,7 @@
 #include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/cryptauth/background_eid_generator.h"
@@ -42,7 +43,7 @@ BluetoothLowEnergyConnectionFinder::BluetoothLowEnergyConnectionFinder(
     : BluetoothLowEnergyConnectionFinder(
           remote_device,
           kBLEGattServiceUUID,
-          std::make_unique<cryptauth::BackgroundEidGenerator>()) {}
+          base::MakeUnique<cryptauth::BackgroundEidGenerator>()) {}
 
 BluetoothLowEnergyConnectionFinder::BluetoothLowEnergyConnectionFinder(
     const cryptauth::RemoteDevice remote_device,

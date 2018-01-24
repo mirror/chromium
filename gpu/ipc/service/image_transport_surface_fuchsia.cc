@@ -6,8 +6,8 @@
 
 #include "base/logging.h"
 #include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_surface_osmesa.h"
 #include "ui/gl/gl_surface_stub.h"
-#include "ui/gl/init/gl_factory.h"
 
 namespace gpu {
 
@@ -16,12 +16,14 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     base::WeakPtr<ImageTransportSurfaceDelegate> delegate,
     SurfaceHandle surface_handle,
     gl::GLSurfaceFormat format) {
-  if (gl::GetGLImplementation() == gl::kGLImplementationMockGL ||
-      gl::GetGLImplementation() == gl::kGLImplementationStubGL) {
-    return new gl::GLSurfaceStub;
+  if (gl::GetGLImplementation() == gl::kGLImplementationOSMesaGL) {
+    return gl::InitializeGLSurfaceWithFormat(
+        new gl::GLSurfaceOSMesa(format, gfx::Size(1, 1)), format);
   }
 
-  return gl::init::CreateViewGLSurface(surface_handle);
+  DCHECK(gl::GetGLImplementation() == gl::kGLImplementationMockGL ||
+         gl::GetGLImplementation() == gl::kGLImplementationStubGL);
+  return new gl::GLSurfaceStub;
 }
 
 }  // namespace gpu

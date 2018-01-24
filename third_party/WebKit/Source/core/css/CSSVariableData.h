@@ -21,9 +21,6 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
   USING_FAST_MALLOC(CSSVariableData);
 
  public:
-  static scoped_refptr<CSSVariableData> Create() {
-    return base::AdoptRef(new CSSVariableData());
-  }
   static scoped_refptr<CSSVariableData> Create(const CSSParserTokenRange& range,
                                                bool is_animation_tainted,
                                                bool needs_variable_resolution) {
@@ -54,9 +51,6 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
                                  SecureContextMode) const;
 
  private:
-  CSSVariableData()
-      : is_animation_tainted_(false), needs_variable_resolution_(false){};
-
   CSSVariableData(const CSSParserTokenRange&,
                   bool is_animation_tainted,
                   bool needs_variable_resolution);

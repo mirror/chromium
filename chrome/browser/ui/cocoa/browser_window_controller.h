@@ -9,9 +9,6 @@
 // object. Handles interactions between Cocoa and the cross-platform
 // code. Each window has a single toolbar and, by virtue of being a
 // TabWindowController, a tab strip along the top.
-// Note that under the hood the BrowserWindowController is neither an
-// NSWindowController nor its window's delegate, though it receives all
-// NSWindowDelegate methods as if it were.
 
 #import <Cocoa/Cocoa.h>
 
@@ -640,5 +637,6 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (void)setBrowserWindowTouchBar:(BrowserWindowTouchBar*)touchBar;
 
 @end  // @interface BrowserWindowController (TestingAPI)
+
 
 #endif  // CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_CONTROLLER_H_

@@ -19,6 +19,10 @@
 // <include src="chromeos/kiosk_apps.js">
 // </if>
 
+// Used for observing function of the backend datasource for this page by
+// tests.
+var webuiResponded = false;
+
 cr.define('extensions', function() {
   var ExtensionList = extensions.ExtensionList;
 
@@ -181,6 +185,7 @@ cr.define('extensions', function() {
       // don't need to display the interstitial spinner.
       if (!this.hasLoaded_)
         this.setLoading_(true);
+      webuiResponded = true;
 
       /** @const */
       var supervised = profileInfo.isSupervised;

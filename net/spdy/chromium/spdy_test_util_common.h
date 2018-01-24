@@ -18,7 +18,6 @@
 #include "crypto/ec_signature_creator.h"
 #include "net/base/completion_callback.h"
 #include "net/base/proxy_delegate.h"
-#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/cert/cert_verifier.h"
@@ -28,7 +27,8 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/transport_security_state.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_server.h"
+#include "net/proxy/proxy_service.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -179,8 +179,7 @@ struct SpdySessionDependencies {
   SpdySessionDependencies();
 
   // Custom proxy service dependency.
-  explicit SpdySessionDependencies(
-      std::unique_ptr<ProxyResolutionService> proxy_resolution_service);
+  explicit SpdySessionDependencies(std::unique_ptr<ProxyService> proxy_service);
 
   ~SpdySessionDependencies();
 
@@ -204,7 +203,7 @@ struct SpdySessionDependencies {
   std::unique_ptr<TransportSecurityState> transport_security_state;
   std::unique_ptr<CTVerifier> cert_transparency_verifier;
   std::unique_ptr<CTPolicyEnforcer> ct_policy_enforcer;
-  std::unique_ptr<ProxyResolutionService> proxy_resolution_service;
+  std::unique_ptr<ProxyService> proxy_service;
   scoped_refptr<SSLConfigService> ssl_config_service;
   std::unique_ptr<MockClientSocketFactory> socket_factory;
   std::unique_ptr<HttpAuthHandlerFactory> http_auth_handler_factory;

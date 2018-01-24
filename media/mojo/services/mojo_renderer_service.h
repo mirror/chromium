@@ -26,8 +26,8 @@
 namespace media {
 
 class AudioRendererSink;
-class CdmContextRef;
 class MediaResourceShim;
+class ContentDecryptionModule;
 class MojoCdmServiceContext;
 class Renderer;
 class VideoRendererSink;
@@ -119,7 +119,9 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
   void OnFlushCompleted(FlushCallback callback);
 
   // Callback executed once SetCdm() completes.
-  void OnCdmAttached(base::OnceCallback<void(bool)> callback, bool success);
+  void OnCdmAttached(scoped_refptr<ContentDecryptionModule> cdm,
+                     base::OnceCallback<void(bool)> callback,
+                     bool success);
 
   MojoCdmServiceContext* const mojo_cdm_service_context_ = nullptr;
 
@@ -133,9 +135,9 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
 
   mojom::RendererClientAssociatedPtr client_;
 
-  // Holds the CdmContextRef to keep the CdmContext alive for the lifetime of
-  // the |renderer_|.
-  std::unique_ptr<CdmContextRef> cdm_context_ref_;
+  // Hold a reference to the CDM set on the |renderer_| so that the CDM won't be
+  // destructed while the |renderer_| is still using it.
+  scoped_refptr<ContentDecryptionModule> cdm_;
 
   // Audio and Video sinks.
   // May be null if underlying |renderer_| does not use them.

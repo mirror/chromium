@@ -34,7 +34,7 @@ bool DisableUpdateService() {
   return true;
 }
 
-bool ForceUIRefreshPhase1() {
+bool ForceAdaptiveToolbar() {
   return false;
 }
 

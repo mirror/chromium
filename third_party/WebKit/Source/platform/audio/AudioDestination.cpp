@@ -115,8 +115,7 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
   // (crbug.com/692423)
   if (!fifo_ || fifo_->length() < number_of_frames) {
     TRACE_EVENT_INSTANT1(
-        "webaudio",
-        "AudioDestination::Render - FIFO not ready or the size is too small",
+        "webaudio", "AudioDestination::Render - not enough data in fifo",
         TRACE_EVENT_SCOPE_THREAD, "fifo length", fifo_ ? fifo_->length() : 0);
     TRACE_EVENT_END2("webaudio", "AudioDestination::Render", "timestamp (s)",
                      delay_timestamp, "delay (s)", delay);

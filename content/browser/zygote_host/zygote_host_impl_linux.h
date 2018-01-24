@@ -12,7 +12,6 @@
 
 #include "base/command_line.h"
 #include "base/files/scoped_file.h"
-#include "base/process/launch.h"
 #include "base/process/process_handle.h"
 #include "base/synchronization/lock.h"
 #include "content/public/browser/zygote_host_linux.h"
@@ -37,10 +36,7 @@ class CONTENT_EXPORT ZygoteHostImpl : public ZygoteHost {
   void SetRendererSandboxStatus(int status);
   int GetRendererSandboxStatus() const override;
 
-  pid_t LaunchZygote(base::CommandLine* cmd_line,
-                     base::ScopedFD* control_fd,
-                     base::FileHandleMappingVector additional_remapped_fds);
-
+  pid_t LaunchZygote(base::CommandLine* cmd_line, base::ScopedFD* control_fd);
   void AdjustRendererOOMScore(base::ProcessHandle process_handle,
                               int score) override;
 

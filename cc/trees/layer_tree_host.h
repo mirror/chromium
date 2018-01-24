@@ -44,6 +44,8 @@
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/target_property.h"
 #include "components/viz/common/resources/resource_format.h"
+#include "components/viz/common/surfaces/surface_reference_owner.h"
+#include "components/viz/common/surfaces/surface_sequence_generator.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
@@ -67,7 +69,8 @@ class UkmRecorderFactory;
 struct RenderingStats;
 struct ScrollAndScaleSet;
 
-class CC_EXPORT LayerTreeHost : public MutatorHostClient {
+class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
+                                public MutatorHostClient {
  public:
   struct CC_EXPORT InitParams {
     LayerTreeHostClient* client = nullptr;
@@ -95,7 +98,7 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
       LayerTreeHostSingleThreadClient* single_thread_client,
       InitParams* params);
 
-  virtual ~LayerTreeHost();
+  ~LayerTreeHost() override;
 
   // Returns the process global unique identifier for this LayerTreeHost.
   int GetId() const;
@@ -114,6 +117,10 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
 
   // Returns the settings used by this host.
   const LayerTreeSettings& GetSettings() const;
+
+  // Sets the client id used to generate the viz::SurfaceId that uniquely
+  // identifies the Surfaces produced by this compositor.
+  void SetFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 
   // Sets the LayerTreeMutator interface used to directly mutate the compositor
   // state on the compositor thread. (Compositor-Worker)
@@ -474,6 +481,9 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
   // are always already built and so cc doesn't have to build them.
   bool IsUsingLayerLists() const;
 
+  // viz::SurfaceReferenceOwner implementation.
+  viz::SurfaceSequenceGenerator* GetSurfaceSequenceGenerator() override;
+
   // MutatorHostClient implementation.
   bool IsElementInList(ElementId element_id,
                        ElementListType list_type) const override;
@@ -605,6 +615,7 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
 
   TaskGraphRunner* task_graph_runner_;
 
+  viz::SurfaceSequenceGenerator surface_sequence_generator_;
   uint32_t num_consecutive_frames_without_slow_paths_ = 0;
 
   scoped_refptr<Layer> root_layer_;

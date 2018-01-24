@@ -104,6 +104,13 @@ void LatencyTracker::OnGpuSwapBuffersCompleted(const LatencyInfo& latency) {
   }
 }
 
+void LatencyTracker::ReportRapporScrollLatency(
+    const std::string& name,
+    const LatencyInfo::LatencyComponent& start_component,
+    const LatencyInfo::LatencyComponent& end_component) {
+  // Only supported by RenderWidgetHostLatencyTracker.
+}
+
 void LatencyTracker::ReportUkmScrollLatency(
     const InputMetricEvent& metric_event,
     const LatencyInfo::LatencyComponent& start_component,
@@ -186,6 +193,10 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
           original_component, gpu_swap_begin_component);
     }
 
+    ReportRapporScrollLatency("Event.Latency.ScrollBegin." + input_modality +
+                                  ".TimeToScrollUpdateSwapBegin2",
+                              original_component, gpu_swap_begin_component);
+
   } else if (latency.FindLatency(
                  ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT,
                  &original_component)) {
@@ -203,6 +214,10 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
       RecordUmaEventLatencyScrollWheelTimeToScrollUpdateSwapBegin2Histogram(
           original_component, gpu_swap_begin_component);
     }
+
+    ReportRapporScrollLatency("Event.Latency.ScrollUpdate." + input_modality +
+                                  ".TimeToScrollUpdateSwapBegin2",
+                              original_component, gpu_swap_begin_component);
 
   } else if (latency.FindLatency(ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,
                                  &original_component)) {

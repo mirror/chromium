@@ -751,7 +751,13 @@
   },
 
   "EnableCommonNameFallbackForLocalAnchors": {
-    "note": "This policy is deprecated and removed since Chrome 66."
+    "os": ["win", "linux", "mac", "chromeos", "android"],
+    "test_policy": { "EnableCommonNameFallbackForLocalAnchors": true },
+    "pref_mappings": [
+      { "pref": "ssl.common_name_fallback_enabled_for_local_anchors",
+        "local_state": true
+      }
+    ]
   },
 
   "AuthSchemes": {

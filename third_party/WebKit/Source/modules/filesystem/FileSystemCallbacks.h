@@ -42,21 +42,19 @@
 
 namespace blink {
 
-class DOMFileSystem;
 class DOMFileSystemBase;
 class DirectoryReaderBase;
 class DirectoryReaderOnDidReadCallback;
 class Entry;
 class ExecutionContext;
-class File;
+class FileCallback;
 class FileMetadata;
+class FileSystemCallback;
 class FileWriterBase;
 class FileWriterBaseCallback;
 class MetadataCallback;
 class V8EntryCallback;
 class V8ErrorCallback;
-class V8FileCallback;
-class V8FileSystemCallback;
 class VoidCallback;
 
 // Passed to DOMFileSystem implementations that may report errors. Subclasses
@@ -195,45 +193,18 @@ class EntriesCallbacks final : public FileSystemCallbacksBase {
 
 class FileSystemCallbacks final : public FileSystemCallbacksBase {
  public:
-  class OnDidOpenFileSystemCallback
-      : public GarbageCollectedFinalized<OnDidOpenFileSystemCallback> {
-   public:
-    virtual ~OnDidOpenFileSystemCallback() = default;
-    virtual void Trace(blink::Visitor*) {}
-    virtual void OnSuccess(DOMFileSystem*) = 0;
-
-   protected:
-    OnDidOpenFileSystemCallback() = default;
-  };
-
-  class OnDidOpenFileSystemV8Impl : public OnDidOpenFileSystemCallback {
-   public:
-    static OnDidOpenFileSystemV8Impl* Create(V8FileSystemCallback* callback) {
-      return callback ? new OnDidOpenFileSystemV8Impl(callback) : nullptr;
-    }
-    void Trace(blink::Visitor*) override;
-    void OnSuccess(DOMFileSystem*) override;
-
-   private:
-    OnDidOpenFileSystemV8Impl(V8FileSystemCallback* callback)
-        : callback_(callback) {}
-
-    Member<V8FileSystemCallback> callback_;
-  };
-
-  static std::unique_ptr<AsyncFileSystemCallbacks> Create(
-      OnDidOpenFileSystemCallback*,
-      ErrorCallbackBase*,
-      ExecutionContext*,
-      FileSystemType);
+  static std::unique_ptr<AsyncFileSystemCallbacks> Create(FileSystemCallback*,
+                                                          ErrorCallbackBase*,
+                                                          ExecutionContext*,
+                                                          FileSystemType);
   void DidOpenFileSystem(const String& name, const KURL& root_url) override;
 
  private:
-  FileSystemCallbacks(OnDidOpenFileSystemCallback*,
+  FileSystemCallbacks(FileSystemCallback*,
                       ErrorCallbackBase*,
                       ExecutionContext*,
                       FileSystemType);
-  Persistent<OnDidOpenFileSystemCallback> success_callback_;
+  Persistent<FileSystemCallback> success_callback_;
   FileSystemType type_;
 };
 
@@ -294,39 +265,12 @@ class FileWriterBaseCallbacks final : public FileSystemCallbacksBase {
 
 class SnapshotFileCallback final : public FileSystemCallbacksBase {
  public:
-  class OnDidCreateSnapshotFileCallback
-      : public GarbageCollectedFinalized<OnDidCreateSnapshotFileCallback> {
-   public:
-    virtual ~OnDidCreateSnapshotFileCallback() = default;
-    virtual void Trace(blink::Visitor*) {}
-    virtual void OnSuccess(File*) = 0;
-
-   protected:
-    OnDidCreateSnapshotFileCallback() = default;
-  };
-
-  class OnDidCreateSnapshotFileV8Impl : public OnDidCreateSnapshotFileCallback {
-   public:
-    static OnDidCreateSnapshotFileV8Impl* Create(V8FileCallback* callback) {
-      return callback ? new OnDidCreateSnapshotFileV8Impl(callback) : nullptr;
-    }
-    void Trace(blink::Visitor*) override;
-    void OnSuccess(File*) override;
-
-   private:
-    OnDidCreateSnapshotFileV8Impl(V8FileCallback* callback)
-        : callback_(callback) {}
-
-    Member<V8FileCallback> callback_;
-  };
-
-  static std::unique_ptr<AsyncFileSystemCallbacks> Create(
-      DOMFileSystemBase*,
-      const String& name,
-      const KURL&,
-      OnDidCreateSnapshotFileCallback*,
-      ErrorCallbackBase*,
-      ExecutionContext*);
+  static std::unique_ptr<AsyncFileSystemCallbacks> Create(DOMFileSystemBase*,
+                                                          const String& name,
+                                                          const KURL&,
+                                                          FileCallback*,
+                                                          ErrorCallbackBase*,
+                                                          ExecutionContext*);
   void DidCreateSnapshotFile(const FileMetadata&,
                              scoped_refptr<BlobDataHandle> snapshot) override;
 
@@ -334,12 +278,12 @@ class SnapshotFileCallback final : public FileSystemCallbacksBase {
   SnapshotFileCallback(DOMFileSystemBase*,
                        const String& name,
                        const KURL&,
-                       OnDidCreateSnapshotFileCallback*,
+                       FileCallback*,
                        ErrorCallbackBase*,
                        ExecutionContext*);
   String name_;
   KURL url_;
-  Persistent<OnDidCreateSnapshotFileCallback> success_callback_;
+  Persistent<FileCallback> success_callback_;
 };
 
 class VoidCallbacks final : public FileSystemCallbacksBase {

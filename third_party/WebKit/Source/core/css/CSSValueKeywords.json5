@@ -1172,15 +1172,5 @@
     // auto,
     // contain
     // none
-
-    //scroll-customization
-    // auto
-    // pan-x,
-    // pan-left,
-    // pan-right,
-    // pan-y,
-    // pan-up,
-    // pan-down
-    // none
   ],
 }

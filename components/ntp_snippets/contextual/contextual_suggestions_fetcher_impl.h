@@ -21,10 +21,11 @@
 #include "components/ntp_snippets/status.h"
 #include "net/url_request/url_request_context_getter.h"
 
+class OAuth2TokenService;
 class PrefService;
+class SigninManagerBase;
 
 namespace identity {
-class IdentityManager;
 class PrimaryAccountAccessTokenFetcher;
 }
 
@@ -35,7 +36,8 @@ namespace ntp_snippets {
 class ContextualSuggestionsFetcherImpl : public ContextualSuggestionsFetcher {
  public:
   ContextualSuggestionsFetcherImpl(
-      identity::IdentityManager* identity_manager,
+      SigninManagerBase* signin_manager,
+      OAuth2TokenService* token_service,
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       PrefService* pref_service,
       const ParseJSONCallback& parse_json_callback);
@@ -75,7 +77,8 @@ class ContextualSuggestionsFetcherImpl : public ContextualSuggestionsFetcher {
                          ContextualSuggestion::PtrVector* suggestions);
 
   // Authentication for signed-in users.
-  identity::IdentityManager* identity_manager_;
+  SigninManagerBase* signin_manager_;
+  OAuth2TokenService* token_service_;
 
   std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher> token_fetcher_;
 

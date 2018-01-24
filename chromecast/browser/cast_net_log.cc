@@ -16,7 +16,6 @@
 #include "content/public/common/content_switches.h"
 #include "net/log/file_net_log_observer.h"
 #include "net/log/net_log_util.h"
-#include "services/network/public/cpp/network_switches.h"
 
 namespace chromecast {
 
@@ -45,9 +44,9 @@ CastNetLog::CastNetLog() {
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
-  if (command_line->HasSwitch(network::switches::kLogNetLog)) {
+  if (command_line->HasSwitch(switches::kLogNetLog)) {
     base::FilePath log_path =
-        command_line->GetSwitchValuePath(network::switches::kLogNetLog);
+        command_line->GetSwitchValuePath(switches::kLogNetLog);
     net::NetLogCaptureMode capture_mode = net::NetLogCaptureMode::Default();
 
     file_net_log_observer_ =

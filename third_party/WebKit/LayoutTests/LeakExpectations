@@ -11,7 +11,6 @@
 
 # FIXME: scroll customization leaks memory. See
 # codereview.chromium.org/1236913004/ for context.
-crbug.com/410974 virtual/scroll_customization/fast/scroll-behavior/scroll-customization/scroll-customization-property.html [ Leak ]
 crbug.com/410974 virtual/scroll_customization/fast/scroll-behavior/scroll-customization/touch-scroll-customization.html [ Leak ]
 crbug.com/410974 virtual/scroll_customization/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html [ Leak ]
 

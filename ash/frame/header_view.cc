@@ -151,12 +151,13 @@ void HeaderView::OnPaint(gfx::Canvas* canvas) {
 }
 
 void HeaderView::ChildPreferredSizeChanged(views::View* child) {
+  // FrameCaptionButtonContainerView animates the visibility changes in
+  // UpdateSizeButtonVisibility(false). Due to this a new size is not available
+  // until the completion of the animation. Layout in response to the preferred
+  // size changes.
   if (child != caption_button_container_)
     return;
-
-  // May be null during view initialization.
-  if (parent())
-    parent()->Layout();
+  parent()->Layout();
 }
 
 void HeaderView::OnTabletModeStarted() {

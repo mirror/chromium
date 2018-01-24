@@ -1381,6 +1381,7 @@ function painterTestCertVerifyResult() {
         'has_md4': true,
         'is_issued_by_known_root': true,
         'is_issued_by_additional_trust_anchor': false,
+        'common_name_fallback_used': true,
         'cert_status': 5,
         'verified_cert': {
           'certificates': [
@@ -1431,7 +1432,7 @@ function painterTestCertVerifyResult() {
     '                         --> has_md4 = true\n' +
     '                         --> is_issued_by_known_root = true\n' +
     '                         --> is_issued_by_additional_trust_anchor =' +
-    ' false\n' +
+    ' false\n                         --> common_name_fallback_used = true\n' +
     '                         --> public_key_hashes = ["hash1","hash2"]';
 
   return testCase;

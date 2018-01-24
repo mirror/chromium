@@ -433,9 +433,9 @@ Extensions.ExtensionServer = class extends Common.Object {
         message.expression, true, true, message.evaluateOptions, port._extensionOrigin, callback.bind(this));
   }
 
-  async _onGetHAR() {
+  _onGetHAR() {
     var requests = NetworkLog.networkLog.requests();
-    var harLog = await NetworkLog.HARLog.build(requests);
+    var harLog = (new NetworkLog.HARLog(requests)).build();
     for (var i = 0; i < harLog.entries.length; ++i)
       harLog.entries[i]._requestId = this._requestId(requests[i]);
     return harLog;
@@ -638,10 +638,11 @@ Extensions.ExtensionServer = class extends Common.Object {
         Extensions.extensionAPI.Events.ResourceContentCommitted, this._makeResource(uiSourceCode), content);
   }
 
-  async _notifyRequestFinished(event) {
+  _notifyRequestFinished(event) {
     var request = /** @type {!SDK.NetworkRequest} */ (event.data);
-    var entry = await NetworkLog.HAREntry.build(request);
-    this._postNotification(Extensions.extensionAPI.Events.NetworkRequestFinished, this._requestId(request), entry);
+    this._postNotification(
+        Extensions.extensionAPI.Events.NetworkRequestFinished, this._requestId(request),
+        (new NetworkLog.HAREntry(request)).build());
   }
 
   _notifyElementsSelectionChanged() {
@@ -734,12 +735,12 @@ Extensions.ExtensionServer = class extends Common.Object {
       this._registerExtension(event.origin, event.ports[0]);
   }
 
-  async _onmessage(event) {
+  _onmessage(event) {
     var message = event.data;
     var result;
 
     if (message.command in this._handlers)
-      result = await this._handlers[message.command](message, event.target);
+      result = this._handlers[message.command](message, event.target);
     else
       result = this._status.E_NOTSUPPORTED(message.command);
 

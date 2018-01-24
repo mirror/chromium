@@ -22,12 +22,6 @@ void RenderingWindowManager::RegisterParent(HWND parent) {
   info_.emplace(parent, EmeddingInfo());
 }
 
-void SetParentAndMoveToBottom(HWND child, HWND parent) {
-  ::SetParent(child, parent);
-  // Move D3D window behind Chrome's window to avoid losing some messages.
-  ::SetWindowPos(child, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-}
-
 bool RenderingWindowManager::RegisterChild(HWND parent, HWND child) {
   if (!child)
     return false;
@@ -50,7 +44,7 @@ bool RenderingWindowManager::RegisterChild(HWND parent, HWND child) {
   if (info.call_set_parent) {
     base::PostTaskWithTraits(
         FROM_HERE, {base::TaskPriority::USER_BLOCKING},
-        base::BindOnce(&SetParentAndMoveToBottom, child, parent));
+        base::BindOnce(base::IgnoreResult(&::SetParent), child, parent));
   }
 
   return true;
@@ -70,14 +64,14 @@ void RenderingWindowManager::DoSetParentOnChild(HWND parent) {
     DCHECK(!info.call_set_parent);
     info.call_set_parent = true;
 
-    // Call SetParentAndMoveToBottom() once RegisterChild() is called.
+    // Call ::SetParent() once RegisterChild() is called.
     if (!info.child)
       return;
 
     child = info.child;
   }
 
-  SetParentAndMoveToBottom(child, parent);
+  ::SetParent(child, parent);
 }
 
 void RenderingWindowManager::UnregisterParent(HWND parent) {

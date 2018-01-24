@@ -698,10 +698,10 @@ StyleSelfAlignmentData StyleBuilderConverter::ConvertSelfOrDefaultAlignmentData(
                CSSValueLast) {
       alignment_data.SetPosition(ItemPosition::kLastBaseline);
     } else {
-      alignment_data.SetOverflow(
-          ToCSSIdentifierValue(pair.First()).ConvertTo<OverflowAlignment>());
       alignment_data.SetPosition(
-          ToCSSIdentifierValue(pair.Second()).ConvertTo<ItemPosition>());
+          ToCSSIdentifierValue(pair.First()).ConvertTo<ItemPosition>());
+      alignment_data.SetOverflow(
+          ToCSSIdentifierValue(pair.Second()).ConvertTo<OverflowAlignment>());
     }
   } else {
     alignment_data.SetPosition(
@@ -999,15 +999,6 @@ float StyleBuilderConverter::ConvertBorderWidth(StyleResolverState& state,
   return clampTo<float>(RoundForImpreciseConversion<float>(result),
                         defaultMinimumForClamp<float>(),
                         defaultMaximumForClamp<float>());
-}
-
-GapLength StyleBuilderConverter::ConvertGapLength(StyleResolverState& state,
-                                                  const CSSValue& value) {
-  if (value.IsIdentifierValue() &&
-      ToCSSIdentifierValue(value).GetValueID() == CSSValueNormal)
-    return GapLength();
-
-  return GapLength(ConvertLength(state, value));
 }
 
 Length StyleBuilderConverter::ConvertLength(const StyleResolverState& state,

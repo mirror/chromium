@@ -17,7 +17,6 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_source_type.h"
-#include "net/quic/chromium/quic_http_utils.h"
 #include "net/quic/chromium/quic_proxy_client_socket.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/socket_tag.h"
@@ -471,8 +470,7 @@ int HttpProxyClientSocketWrapper::DoSSLConnect() {
     SpdySessionKey key(ssl_params_->GetDirectConnectionParams()
                            ->destination()
                            .host_port_pair(),
-                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED,
-                       initial_socket_tag_);
+                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
     if (spdy_session_pool_->FindAvailableSession(
             key, /* enable_ip_based_pooling = */ true, net_log_)) {
       using_spdy_ = true;
@@ -585,7 +583,7 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStream() {
   DCHECK(ssl_params_);
   SpdySessionKey key(
       ssl_params_->GetDirectConnectionParams()->destination().host_port_pair(),
-      ProxyServer::Direct(), PRIVACY_MODE_DISABLED, initial_socket_tag_);
+      ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool_->FindAvailableSession(
           key, /* enable_ip_based_pooling = */ true, net_log_);
@@ -659,10 +657,6 @@ int HttpProxyClientSocketWrapper::DoQuicProxyCreateStreamComplete(int result) {
   next_state_ = STATE_HTTP_PROXY_CONNECT_COMPLETE;
   std::unique_ptr<QuicChromiumClientStream::Handle> quic_stream =
       quic_session_->ReleaseStream();
-
-  SpdyPriority spdy_priority = ConvertRequestPriorityToQuicPriority(priority_);
-  quic_stream->SetPriority(spdy_priority);
-
   transport_socket_.reset(new QuicProxyClientSocket(
       std::move(quic_stream), std::move(quic_session_), user_agent_, endpoint_,
       net_log_, http_auth_controller_.get()));

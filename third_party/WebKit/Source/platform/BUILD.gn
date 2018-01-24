@@ -202,6 +202,7 @@ group("blink_platform_public_deps") {
     "//cc/animation",
     "//cc/paint",
     "//gpu/command_buffer/client:client",
+    "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/command_buffer/common:common",
     "//media",
@@ -270,18 +271,6 @@ config("blink_platform_pch") {
           "//third_party/WebKit/Source/platform/Precompile-platform.h"
     }
   }
-}
-
-source_set("platform_export") {
-  sources = [
-    "PlatformExport.h",
-  ]
-
-  visibility = []  # Allow re-assignment of list.
-  visibility = [
-    ":platform",
-    "//mojo/public/cpp/bindings:wtf_support",
-  ]
 }
 
 jumbo_component("platform") {
@@ -369,6 +358,7 @@ jumbo_component("platform") {
     "PartitionAllocMemoryDumpProvider.h",
     "PasteMode.h",
     "PlatformChromeClient.h",
+    "PlatformExport.h",
     "PlatformFrameView.h",
     "Prerender.cpp",
     "Prerender.h",
@@ -564,8 +554,6 @@ jumbo_component("platform") {
     "bindings/ScriptState.h",
     "bindings/ScriptWrappable.cpp",
     "bindings/ScriptWrappable.h",
-    "bindings/ScriptWrappableMarkingVisitor.cpp",
-    "bindings/ScriptWrappableMarkingVisitor.h",
     "bindings/ScriptWrappableVisitor.cpp",
     "bindings/ScriptWrappableVisitor.h",
     "bindings/ScriptWrappableVisitorVerifier.h",
@@ -897,6 +885,7 @@ jumbo_component("platform") {
     "geometry/LayoutRectOutsets.h",
     "geometry/LayoutSize.cpp",
     "geometry/LayoutSize.h",
+    "geometry/LayoutSizeHash.h",
     "geometry/Region.cpp",
     "geometry/Region.h",
     "geometry/TransformState.cpp",
@@ -1300,8 +1289,6 @@ jumbo_component("platform") {
     "mediastream/MediaStreamSource.h",
     "mediastream/MediaStreamWebAudioSource.cpp",
     "mediastream/MediaStreamWebAudioSource.h",
-    "memory_profiler/SamplingNativeHeapProfiler.cpp",
-    "memory_profiler/SamplingNativeHeapProfiler.h",
     "mhtml/ArchiveResource.cpp",
     "mhtml/ArchiveResource.h",
     "mhtml/MHTMLArchive.cpp",
@@ -1343,8 +1330,6 @@ jumbo_component("platform") {
     "scroll/ScrollAnimatorBase.h",
     "scroll/ScrollAnimatorCompositorCoordinator.cpp",
     "scroll/ScrollAnimatorCompositorCoordinator.h",
-    "scroll/ScrollCustomization.cpp",
-    "scroll/ScrollCustomization.h",
     "scroll/ScrollSnapData.h",
     "scroll/ScrollStateData.h",
     "scroll/ScrollTypes.h",
@@ -1544,8 +1529,6 @@ jumbo_component("platform") {
     "//third_party/WebKit/Source/platform/scheduler",
   ]
   deps = [
-    ":platform_export",
-    "//base/allocator:features",
     "//components/viz/service",
     "//device/base/synchronization",
     "//device/vr:mojo_bindings_blink",

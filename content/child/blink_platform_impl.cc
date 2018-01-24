@@ -224,8 +224,6 @@ static int ToMessageID(WebLocalizedString::Name name) {
       return IDS_MEDIA_OVERFLOW_MENU_DOWNLOAD;
     case WebLocalizedString::kOverflowMenuPictureInPicture:
       return IDS_MEDIA_OVERFLOW_MENU_PICTURE_IN_PICTURE;
-    case WebLocalizedString::kPictureInPictureInterstitialText:
-      return IDS_MEDIA_PICTURE_IN_PICTURE_INTERSTITIAL_TEXT;
     case WebLocalizedString::kPlaceholderForDayOfMonthField:
       return IDS_FORM_PLACEHOLDER_FOR_DAY_OF_MONTH_FIELD;
     case WebLocalizedString::kPlaceholderForMonthField:
@@ -369,10 +367,10 @@ WebString BlinkPlatformImpl::UserAgent() {
 }
 
 std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateThread(
-    const blink::WebThreadCreationParams& params) {
+    const char* name) {
   std::unique_ptr<blink::scheduler::WebThreadBase> thread =
       blink::scheduler::WebThreadBase::CreateWorkerThread(
-          params.name, base::Thread::Options());
+          name, base::Thread::Options());
   thread->Init();
   WaitUntilWebThreadTLSUpdate(thread.get());
   return std::move(thread);

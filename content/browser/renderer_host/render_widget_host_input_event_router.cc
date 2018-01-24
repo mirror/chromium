@@ -19,7 +19,6 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/common/frame_messages.h"
-#include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 
 namespace {
@@ -309,8 +308,6 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
     } else {
       *transformed_point = point;
     }
-    if (target.flags & viz::mojom::kHitTestAsk)
-      query_renderer = true;
   } else {
     // Short circuit if owner_map has only one RenderWidgetHostView, no need for
     // hit testing.
@@ -346,8 +343,7 @@ void RenderWidgetHostInputEventRouter::DispatchMouseEvent(
     RenderWidgetHostViewBase* root_view,
     RenderWidgetHostViewBase* target,
     const blink::WebMouseEvent& mouse_event,
-    const ui::LatencyInfo& latency,
-    const base::Optional<gfx::PointF>& target_location) {
+    const ui::LatencyInfo& latency) {
   // TODO(wjmaclean): Should we be sending a no-consumer ack to the root_view
   // if there is no target?
   if (!target)
@@ -358,23 +354,19 @@ void RenderWidgetHostInputEventRouter::DispatchMouseEvent(
   else if (mouse_event.GetType() == blink::WebInputEvent::kMouseDown)
     mouse_capture_target_.target = target;
 
-  DCHECK(target_location.has_value());
-  blink::WebMouseEvent event = mouse_event;
-  event.SetPositionInWidget(target_location->x(), target_location->y());
-
   // SendMouseEnterOrLeaveEvents is called with the original event
   // coordinates, which are transformed independently for each view that will
   // receive an event. Also, since the view under the mouse has changed,
   // notify the CursorManager that it might need to change the cursor.
-  if ((event.GetType() == blink::WebInputEvent::kMouseLeave ||
-       event.GetType() == blink::WebInputEvent::kMouseMove) &&
+  if ((mouse_event.GetType() == blink::WebInputEvent::kMouseLeave ||
+       mouse_event.GetType() == blink::WebInputEvent::kMouseMove) &&
       target != last_mouse_move_target_) {
-    SendMouseEnterOrLeaveEvents(event, target, root_view);
+    SendMouseEnterOrLeaveEvents(mouse_event, target, root_view);
     if (root_view->GetCursorManager())
       root_view->GetCursorManager()->UpdateViewUnderCursor(target);
   }
 
-  target->ProcessMouseEvent(event, latency);
+  target->ProcessMouseEvent(mouse_event, latency);
 }
 
 void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
@@ -1246,8 +1238,8 @@ void RenderWidgetHostInputEventRouter::DispatchEventToTarget(
     const base::Optional<gfx::PointF>& target_location) {
   if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
     DispatchMouseEvent(root_view, target,
-                       static_cast<const blink::WebMouseEvent&>(event), latency,
-                       target_location);
+                       static_cast<const blink::WebMouseEvent&>(event),
+                       latency);
     return;
   }
   if (event.GetType() == blink::WebInputEvent::kMouseWheel) {

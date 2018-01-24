@@ -11,9 +11,9 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "ipc/ipc_test_sink.h"
 #include "net/base/net_errors.h"
-#include "net/proxy_resolution/mock_proxy_resolver.h"
-#include "net/proxy_resolution/proxy_config_service.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/mock_proxy_resolver.h"
+#include "net/proxy/proxy_config_service.h"
+#include "net/proxy/proxy_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -31,9 +31,11 @@ class MockProxyConfigService : public net::ProxyConfigService {
 
 class TestResolveProxyMsgHelper : public ResolveProxyMsgHelper {
  public:
-  TestResolveProxyMsgHelper(net::ProxyResolutionService* proxy_resolution_service,
-                            IPC::Listener* listener)
-      : ResolveProxyMsgHelper(proxy_resolution_service), listener_(listener) {}
+  TestResolveProxyMsgHelper(
+      net::ProxyService* proxy_service,
+      IPC::Listener* listener)
+      : ResolveProxyMsgHelper(proxy_service),
+        listener_(listener) {}
   bool Send(IPC::Message* message) override {
     listener_->OnMessageReceived(*message);
     delete message;
@@ -60,10 +62,10 @@ class ResolveProxyMsgHelperTest : public testing::Test, public IPC::Listener {
 
   ResolveProxyMsgHelperTest()
       : resolver_factory_(new net::MockAsyncProxyResolverFactory(false)),
-        service_(new net::ProxyResolutionService(
-            base::WrapUnique(new MockProxyConfigService),
-            base::WrapUnique(resolver_factory_),
-            nullptr)),
+        service_(
+            new net::ProxyService(base::WrapUnique(new MockProxyConfigService),
+                                  base::WrapUnique(resolver_factory_),
+                                  nullptr)),
         helper_(new TestResolveProxyMsgHelper(service_.get(), this)) {
     test_sink_.AddFilter(this);
   }
@@ -84,7 +86,7 @@ class ResolveProxyMsgHelperTest : public testing::Test, public IPC::Listener {
 
   net::MockAsyncProxyResolverFactory* resolver_factory_;
   net::MockAsyncProxyResolver resolver_;
-  std::unique_ptr<net::ProxyResolutionService> service_;
+  std::unique_ptr<net::ProxyService> service_;
   scoped_refptr<ResolveProxyMsgHelper> helper_;
   std::unique_ptr<PendingResult> pending_result_;
 
@@ -119,7 +121,7 @@ TEST_F(ResolveProxyMsgHelperTest, Sequential) {
 
   helper_->OnResolveProxy(url1, msg1);
 
-  // Finish ProxyResolutionService's initialization.
+  // Finish ProxyService's initialization.
   ASSERT_EQ(1u, resolver_factory_->pending_requests().size());
   resolver_factory_->pending_requests()[0]->CompleteNowWithForwarder(
       net::OK, &resolver_);
@@ -174,7 +176,7 @@ TEST_F(ResolveProxyMsgHelperTest, QueueRequests) {
 
   helper_->OnResolveProxy(url1, msg1);
 
-  // Finish ProxyResolutionService's initialization.
+  // Finish ProxyService's initialization.
   ASSERT_EQ(1u, resolver_factory_->pending_requests().size());
   resolver_factory_->pending_requests()[0]->CompleteNowWithForwarder(
       net::OK, &resolver_);
@@ -182,8 +184,8 @@ TEST_F(ResolveProxyMsgHelperTest, QueueRequests) {
   helper_->OnResolveProxy(url2, msg2);
   helper_->OnResolveProxy(url3, msg3);
 
-  // ResolveProxyHelper only keeps 1 request outstanding in
-  // ProxyResolutionService at a time.
+  // ResolveProxyHelper only keeps 1 request outstanding in ProxyService
+  // at a time.
   ASSERT_EQ(1u, resolver_.pending_jobs().size());
   EXPECT_EQ(url1, resolver_.pending_jobs()[0]->url());
 
@@ -234,7 +236,7 @@ TEST_F(ResolveProxyMsgHelperTest, CancelPendingRequests) {
 
   helper_->OnResolveProxy(url1, msg1);
 
-  // Finish ProxyResolutionService's initialization.
+  // Finish ProxyService's initialization.
   ASSERT_EQ(1u, resolver_factory_->pending_requests().size());
   resolver_factory_->pending_requests()[0]->CompleteNowWithForwarder(
       net::OK, &resolver_);
@@ -242,8 +244,8 @@ TEST_F(ResolveProxyMsgHelperTest, CancelPendingRequests) {
   helper_->OnResolveProxy(url2, msg2);
   helper_->OnResolveProxy(url3, msg3);
 
-  // ResolveProxyHelper only keeps 1 request outstanding in
-  // ProxyResolutionService at a time.
+  // ResolveProxyHelper only keeps 1 request outstanding in ProxyService
+  // at a time.
   ASSERT_EQ(1u, resolver_.pending_jobs().size());
   EXPECT_EQ(url1, resolver_.pending_jobs()[0]->url());
 

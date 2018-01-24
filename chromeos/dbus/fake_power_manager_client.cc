@@ -178,9 +178,9 @@ void FakePowerManagerClient::GetInactivityDelays(
       FROM_HERE, base::BindOnce(std::move(callback), inactivity_delays_));
 }
 
-base::Closure FakePowerManagerClient::GetSuspendReadinessCallback(
-    const base::Location& from_where) {
+base::Closure FakePowerManagerClient::GetSuspendReadinessCallback() {
   ++num_pending_suspend_readiness_callbacks_;
+
   return base::Bind(&FakePowerManagerClient::HandleSuspendReadiness,
                     base::Unretained(this));
 }

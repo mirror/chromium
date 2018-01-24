@@ -14,6 +14,7 @@ namespace content {
 
 class SharedWorkerInstance;
 class SharedWorkerHost;
+class RenderProcessHost;
 
 class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
  public:
@@ -35,7 +36,7 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   // DevToolsAgentHostImpl overrides.
   void AttachSession(DevToolsSession* session) override;
   void DetachSession(DevToolsSession* session) override;
-  void DispatchProtocolMessage(DevToolsSession* session,
+  bool DispatchProtocolMessage(DevToolsSession* session,
                                const std::string& message) override;
 
   bool Matches(SharedWorkerHost* worker_host);
@@ -49,6 +50,7 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
 
  private:
   ~SharedWorkerDevToolsAgentHost() override;
+  RenderProcessHost* GetProcess();
   const blink::mojom::DevToolsAgentAssociatedPtr& EnsureAgent();
 
   enum WorkerState {

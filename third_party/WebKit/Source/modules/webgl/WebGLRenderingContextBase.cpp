@@ -7604,14 +7604,17 @@ String WebGLRenderingContextBase::EnsureNotNull(const String& text) const {
 }
 
 WebGLRenderingContextBase::LRUCanvasResourceProviderCache::
-    LRUCanvasResourceProviderCache(size_t capacity)
-    : resource_providers_(capacity) {}
+    LRUCanvasResourceProviderCache(int capacity)
+    : resource_providers_(
+          std::make_unique<std::unique_ptr<CanvasResourceProvider>[]>(
+              capacity)),
+      capacity_(capacity) {}
 
 CanvasResourceProvider* WebGLRenderingContextBase::
     LRUCanvasResourceProviderCache::GetCanvasResourceProvider(
         const IntSize& size) {
-  size_t i;
-  for (i = 0; i < resource_providers_.size(); ++i) {
+  int i;
+  for (i = 0; i < capacity_; ++i) {
     CanvasResourceProvider* resource_provider = resource_providers_[i].get();
     if (!resource_provider)
       break;
@@ -7625,7 +7628,7 @@ CanvasResourceProvider* WebGLRenderingContextBase::
       size, CanvasResourceProvider::kSoftwareResourceUsage));
   if (!temp)
     return nullptr;
-  i = std::min(resource_providers_.size() - 1, i);
+  i = std::min(capacity_ - 1, i);
   resource_providers_[i] = std::move(temp);
 
   CanvasResourceProvider* resource_provider = resource_providers_[i].get();
@@ -7634,8 +7637,8 @@ CanvasResourceProvider* WebGLRenderingContextBase::
 }
 
 void WebGLRenderingContextBase::LRUCanvasResourceProviderCache::BubbleToFront(
-    size_t idx) {
-  for (size_t i = idx; i > 0; --i)
+    int idx) {
+  for (int i = idx; i > 0; --i)
     resource_providers_[i].swap(resource_providers_[i - 1]);
 }
 

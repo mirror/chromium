@@ -1275,10 +1275,11 @@ public class LocationBarLayout extends FrameLayout
     /**
      * @param provider The {@link ToolbarDataProvider}.
      * @param resources The Resources for the Context.
+     * @param isChromeHomeEnabled Whether Chrome Home is enabled.
      * @return The {@link ColorStateList} to use to tint the security state icon.
      */
     public static ColorStateList getColorStateList(
-            ToolbarDataProvider provider, Resources resources) {
+            ToolbarDataProvider provider, Resources resources, boolean isChromeHomeEnabled) {
         int securityLevel = provider.getSecurityLevel();
 
         ColorStateList list = null;
@@ -1321,7 +1322,8 @@ public class LocationBarLayout extends FrameLayout
         } else {
             // ImageView#setImageResource is no-op if given resource is the current one.
             mSecurityButton.setImageResource(id);
-            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources()));
+            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources(),
+                    mBottomSheet != null));
         }
 
         updateVerboseStatusVisibility();
@@ -1535,11 +1537,6 @@ public class LocationBarLayout extends FrameLayout
         return mSuggestionList;
     }
 
-    @Override
-    public boolean useModernDesign() {
-        return FeatureUtilities.isChromeModernDesignEnabled();
-    }
-
     /**
      * Initiates the mSuggestionListPopup.  Done on demand to not slow down
      * the initial inflation of the location bar.
@@ -1550,7 +1547,7 @@ public class LocationBarLayout extends FrameLayout
         assert mNativeInitialized || mShowCachedZeroSuggestResults
                 : "Trying to initialize native suggestions list before native init";
         if (mSuggestionList != null) return;
-        mSuggestionListAdapter.setUseModernDesign(useModernDesign());
+        mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
 
         OnLayoutChangeListener suggestionListResizer = new OnLayoutChangeListener() {
             @Override
@@ -1675,7 +1672,7 @@ public class LocationBarLayout extends FrameLayout
     protected Drawable getSuggestionPopupBackground() {
         int omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_BG_COLOR;
         int omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_BG_COLOR;
-        if (FeatureUtilities.isChromeModernDesignEnabled()) {
+        if (mBottomSheet != null) {
             omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
             omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
         }

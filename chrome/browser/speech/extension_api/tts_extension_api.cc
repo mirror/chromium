@@ -351,7 +351,6 @@ ExtensionFunction::ResponseAction TtsGetVoicesFunction::Run() {
 TtsAPI::TtsAPI(content::BrowserContext* context) {
   ExtensionFunctionRegistry* registry =
       ExtensionFunctionRegistry::GetInstance();
-  registry->RegisterFunction<ExtensionTtsEngineUpdateVoicesFunction>();
   registry->RegisterFunction<ExtensionTtsEngineSendTtsEventFunction>();
   registry->RegisterFunction<TtsGetVoicesFunction>();
   registry->RegisterFunction<TtsIsSpeakingFunction>();

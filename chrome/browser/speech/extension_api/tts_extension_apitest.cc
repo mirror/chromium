@@ -465,8 +465,4 @@ IN_PROC_BROWSER_TEST_F(TtsApiTest, EngineApi) {
   ASSERT_TRUE(RunExtensionTest("tts_engine/engine_api")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(TtsApiTest, UpdateVoicesApi) {
-  ASSERT_TRUE(RunExtensionTest("tts_engine/update_voices_api")) << message_;
-}
-
 }  // namespace extensions

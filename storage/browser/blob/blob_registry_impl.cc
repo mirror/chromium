@@ -33,12 +33,11 @@ class BlobRegistryImpl::BlobUnderConstruction {
                         std::vector<blink::mojom::DataElementPtr> elements,
                         mojo::ReportBadMessageCallback bad_message_callback)
       : blob_registry_(blob_registry),
-        uuid_(uuid),
-        builder_(std::make_unique<BlobDataBuilder>(uuid)),
+        builder_(uuid),
         bad_message_callback_(std::move(bad_message_callback)),
         weak_ptr_factory_(this) {
-    builder_->set_content_type(content_type);
-    builder_->set_content_disposition(content_disposition);
+    builder_.set_content_type(content_type);
+    builder_.set_content_disposition(content_disposition);
     for (auto& element : elements)
       elements_.emplace_back(std::move(element));
   }
@@ -51,7 +50,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
 
   ~BlobUnderConstruction() = default;
 
-  const std::string& uuid() const { return uuid_; }
+  const std::string& uuid() const { return builder_.uuid(); }
 
  private:
   // Holds onto a blink::mojom::DataElement struct and optionally a bound
@@ -169,13 +168,10 @@ class BlobRegistryImpl::BlobUnderConstruction {
   // BlobRegistryImpl we belong to.
   BlobRegistryImpl* blob_registry_;
 
-  // UUID of the blob being built.
-  std::string uuid_;
-
   // BlobDataBuilder for the blob under construction. Is created in the
   // constructor, but not filled until all referenced blob UUIDs have been
   // resolved.
-  std::unique_ptr<BlobDataBuilder> builder_;
+  BlobDataBuilder builder_;
 
   // Elements as passed in to Register.
   std::vector<ElementEntry> elements_;
@@ -253,7 +249,7 @@ void BlobRegistryImpl::BlobUnderConstruction::StartTransportation() {
   }
 
   transport_strategy_ = BlobTransportStrategy::Create(
-      memory_strategy, builder_.get(),
+      memory_strategy, &builder_,
       base::BindOnce(&BlobUnderConstruction::TransportComplete,
                      weak_ptr_factory_.GetWeakPtr()),
       memory_controller.limits());
@@ -362,20 +358,19 @@ void BlobRegistryImpl::BlobUnderConstruction::ResolvedAllBlobDependencies() {
                                            entry.bytes_provider);
     } else if (element->is_file()) {
       const auto& f = element->get_file();
-      builder_->AppendFile(
-          f->path, f->offset, f->length,
-          f->expected_modification_time.value_or(base::Time()));
+      builder_.AppendFile(f->path, f->offset, f->length,
+                          f->expected_modification_time.value_or(base::Time()));
     } else if (element->is_file_filesystem()) {
       const auto& f = element->get_file_filesystem();
-      builder_->AppendFileSystemFile(
+      builder_.AppendFileSystemFile(
           f->url, f->offset, f->length,
           f->expected_modification_time.value_or(base::Time()),
           blob_registry_->file_system_context_);
     } else if (element->is_blob()) {
       DCHECK(blob_uuid_it != referenced_blob_uuids_.end());
       const std::string& blob_uuid = *blob_uuid_it++;
-      builder_->AppendBlob(blob_uuid, element->get_blob()->offset,
-                           element->get_blob()->length, context()->registry());
+      builder_.AppendBlob(blob_uuid, element->get_blob()->offset,
+                          element->get_blob()->length);
     }
   }
 
@@ -387,7 +382,7 @@ void BlobRegistryImpl::BlobUnderConstruction::ResolvedAllBlobDependencies() {
   // MarkAsFinishedAndDeleteSelf synchronously, so don't access any members
   // after this call.
   std::unique_ptr<BlobDataHandle> new_handle =
-      context()->BuildPreregisteredBlob(std::move(builder_), callback);
+      context()->BuildPreregisteredBlob(builder_, callback);
 
   // TODO(mek): Update BlobImpl with new BlobDataHandle. Although handles
   // only differ in their size() attribute, which is currently not used by

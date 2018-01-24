@@ -4,8 +4,6 @@
 
 #include "chrome/browser/permissions/permission_request_manager.h"
 
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
@@ -139,7 +137,7 @@ PermissionRequest* PermissionDialogTest::MakePermissionRequest(
   bool user_gesture = true;
   auto decided = [](ContentSetting) {};
   auto cleanup = [] {};  // Leave cleanup to test harness destructor.
-  owned_requests_.push_back(std::make_unique<PermissionRequestImpl>(
+  owned_requests_.push_back(base::MakeUnique<PermissionRequestImpl>(
       GetUrl(), permission, user_gesture, base::Bind(decided),
       base::Bind(cleanup)));
   return owned_requests_.back().get();
@@ -335,7 +333,7 @@ IN_PROC_BROWSER_TEST_F(PermissionRequestManagerBrowserTest, MultipleTabs) {
   // SetUp() only creates a mock prompt factory for the first tab.
   MockPermissionPromptFactory* bubble_factory_0 = bubble_factory();
   std::unique_ptr<MockPermissionPromptFactory> bubble_factory_1(
-      std::make_unique<MockPermissionPromptFactory>(
+      base::MakeUnique<MockPermissionPromptFactory>(
           GetPermissionRequestManager()));
 
   TabStripModel* tab_strip_model = browser()->tab_strip_model();

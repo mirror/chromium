@@ -22,7 +22,7 @@ class DOMHandler : public DevToolsDomainHandler,
   ~DOMHandler() override;
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(int process_host_id,
+  void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host) override;
   Response Disable() override;
 

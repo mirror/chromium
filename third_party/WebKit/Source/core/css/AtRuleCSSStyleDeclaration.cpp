@@ -51,11 +51,7 @@ String AtRuleCSSStyleDeclaration::getPropertyValue(
   if (id == AtRuleDescriptorID::Invalid)
     return g_empty_string;
 
-  const CSSValue* value = descriptor_value_set_->GetPropertyCSSValue(id);
-  if (value)
-    return value->CssText();
-
-  return g_empty_string;
+  return descriptor_value_set_->GetPropertyCSSValue(id)->CssText();
 }
 
 String AtRuleCSSStyleDeclaration::getPropertyPriority(

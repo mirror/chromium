@@ -72,7 +72,7 @@
 #include "net/log/net_log_capture_mode.h"
 #include "net/log/net_log_entry.h"
 #include "net/log/net_log_util.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -683,7 +683,7 @@ void NetInternalsMessageHandler::IOThreadImpl::OnGetNetInfo(
 void NetInternalsMessageHandler::IOThreadImpl::OnReloadProxySettings(
     const base::ListValue* list) {
   DCHECK(!list);
-  GetMainContext()->proxy_resolution_service()->ForceReloadProxyConfig();
+  GetMainContext()->proxy_service()->ForceReloadProxyConfig();
 
   // Cause the renderer to be notified of the new values.
   SendNetInfo(net::NET_INFO_PROXY_SETTINGS);
@@ -692,7 +692,7 @@ void NetInternalsMessageHandler::IOThreadImpl::OnReloadProxySettings(
 void NetInternalsMessageHandler::IOThreadImpl::OnClearBadProxies(
     const base::ListValue* list) {
   DCHECK(!list);
-  GetMainContext()->proxy_resolution_service()->ClearBadProxiesCache();
+  GetMainContext()->proxy_service()->ClearBadProxiesCache();
 
   // Cause the renderer to be notified of the new values.
   SendNetInfo(net::NET_INFO_BAD_PROXIES);

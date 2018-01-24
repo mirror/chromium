@@ -887,10 +887,9 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
 TEST_F(FrameFetchContextTest, ModifyPriorityForLowPriorityIframes) {
   Settings* settings = document->GetSettings();
   FrameFetchContext* childFetchContext = CreateChildFrame();
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
-      true, WebConnectionType::kWebConnectionTypeCellular3G,
-      WebEffectiveConnectionType::kType3G, 1 /* http_rtt_msec */,
-      10.0 /* max_bandwidth_mbps */);
+  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
+      WebEffectiveConnectionType::kType3G, 1 /* transport_rtt_msec */,
+      10000 /* downlink_throughput_mbps */);
 
   // Experiment is not enabled, expect default values.
   EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
@@ -918,10 +917,9 @@ TEST_F(FrameFetchContextTest, ModifyPriorityForLowPriorityIframes) {
 
   // Low priority iframes enabled and network is slow, main frame request's
   // priorities should not change.
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
-      true, WebConnectionType::kWebConnectionTypeCellular3G,
-      WebEffectiveConnectionType::kType2G, 1 /* http_rtt_msec */,
-      10.0 /* max_bandwidth_mbps */);
+  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
+      WebEffectiveConnectionType::kType2G, 1 /* transport_rtt_msec */,
+      10000 /* downlink_throughput_mbps */);
   EXPECT_EQ(ResourceLoadPriority::kVeryHigh,
             fetch_context->ModifyPriorityForExperiments(
                 ResourceLoadPriority::kVeryHigh));
@@ -1348,12 +1346,6 @@ TEST_F(FrameFetchContextTest, IsLoadCompleteWhenDetached_2) {
   EXPECT_TRUE(fetch_context->IsLoadComplete());
 }
 
-TEST_F(FrameFetchContextTest, PageDismissalEventBeingDispatchedWhenDetached) {
-  dummy_page_holder = nullptr;
-
-  EXPECT_FALSE(fetch_context->PageDismissalEventBeingDispatched());
-}
-
 TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
   scoped_refptr<ResourceTimingInfo> info =
       ResourceTimingInfo::Create("type", 0.3, false);
@@ -1362,15 +1354,6 @@ TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
 
   fetch_context->UpdateTimingInfoForIFrameNavigation(info.get());
   // Should not crash.
-}
-
-TEST_F(FrameFetchContextTest, SendImagePingWhenDetached) {
-  const KURL url("https://www.example.com/");
-
-  dummy_page_holder = nullptr;
-
-  fetch_context->SendImagePing(url);
-  // Should not crash. Nothing should be sent.
 }
 
 TEST_F(FrameFetchContextTest, AddConsoleMessageWhenDetached) {

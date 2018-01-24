@@ -63,6 +63,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SelectionTemplate.h"
+#include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -113,7 +114,6 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PrintContext.h"
-#include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
@@ -735,7 +735,7 @@ CSSStyleDeclaration* Internals::computedStyleIncludingVisitedInfo(
 
 ShadowRoot* Internals::createUserAgentShadowRoot(Element* host) {
   DCHECK(host);
-  return &host->EnsureUserAgentShadowRoot();
+  return &host->EnsureUserAgentShadowRootV1();
 }
 
 void Internals::setBrowserControlsState(float top_height,
@@ -747,13 +747,6 @@ void Internals::setBrowserControlsState(float top_height,
 
 void Internals::setBrowserControlsShownRatio(float ratio) {
   document_->GetPage()->GetChromeClient().SetBrowserControlsShownRatio(ratio);
-}
-
-Node* Internals::effectiveRootScroller(Document* document) {
-  if (!document)
-    document = document_;
-
-  return &document->GetRootScrollerController().EffectiveRootScroller();
 }
 
 ShadowRoot* Internals::shadowRoot(Element* host) {
@@ -799,7 +792,7 @@ String Internals::shadowRootType(const Node* root,
   }
 
   switch (ToShadowRoot(root)->GetType()) {
-    case ShadowRootType::kUserAgent:
+    case ShadowRootType::kUserAgentV1:
       return String("UserAgentShadowRoot");
     case ShadowRootType::V0:
       return String("V0ShadowRoot");
@@ -922,13 +915,13 @@ DOMRectReadOnly* Internals::absoluteCaretBounds(
 }
 
 String Internals::textAffinity() {
-  if (GetFrame() && GetFrame()
-                            ->GetPage()
-                            ->GetFocusController()
-                            .FocusedFrame()
-                            ->Selection()
-                            .GetSelectionInDOMTree()
-                            .Affinity() == TextAffinity::kUpstream) {
+  if (GetFrame()
+          ->GetPage()
+          ->GetFocusController()
+          .FocusedFrame()
+          ->Selection()
+          .GetSelectionInDOMTree()
+          .Affinity() == TextAffinity::kUpstream) {
     return "Upstream";
   }
   return "Downstream";
@@ -3190,8 +3183,6 @@ bool Internals::ignoreLayoutWithPendingStylesheets(Document* document) {
 void Internals::setNetworkConnectionInfoOverride(
     bool on_line,
     const String& type,
-    const String& effective_type,
-    unsigned long http_rtt_msec,
     double downlink_max_mbps,
     ExceptionState& exception_state) {
   WebConnectionType webtype;
@@ -3221,6 +3212,14 @@ void Internals::setNetworkConnectionInfoOverride(
         ExceptionMessages::FailedToEnumerate("connection type", type));
     return;
   }
+  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(on_line, webtype,
+                                                             downlink_max_mbps);
+}
+
+void Internals::setNetworkQualityInfoOverride(const String& effective_type,
+                                              unsigned long transport_rtt_msec,
+                                              double downlink_throughput_mbps,
+                                              ExceptionState& exception_state) {
   WebEffectiveConnectionType web_effective_type =
       WebEffectiveConnectionType::kTypeUnknown;
   if (effective_type == "offline") {
@@ -3239,8 +3238,10 @@ void Internals::setNetworkConnectionInfoOverride(
                             "effective connection type", effective_type));
     return;
   }
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
-      on_line, webtype, web_effective_type, http_rtt_msec, downlink_max_mbps);
+
+  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
+      web_effective_type, transport_rtt_msec, downlink_throughput_mbps);
+
   GetFrame()->Client()->SetEffectiveConnectionTypeForTesting(
       web_effective_type);
 }

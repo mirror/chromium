@@ -960,6 +960,9 @@ test("content_browsertests") {
     ]
   }
 
+  if (is_win || is_linux || is_android) {
+  }
+
   if (is_win) {
     sources += [ "../browser/accessibility/accessibility_win_browsertest.cc" ]
 
@@ -1120,7 +1123,6 @@ test("content_browsertests") {
       "//ui/touch_selection:test_support",
       "//ui/touch_selection:touch_selection",
     ]
-    data_deps += [ "//services/ui" ]
   } else {
     sources -= [
       "../browser/accessibility/touch_accessibility_aura_browsertest.cc",
@@ -1306,6 +1308,7 @@ test("content_unittests") {
     "../browser/loader/resource_buffer_unittest.cc",
     "../browser/loader/resource_dispatcher_host_unittest.cc",
     "../browser/loader/resource_loader_unittest.cc",
+    "../browser/loader/resource_scheduler_unittest.cc",
     "../browser/loader/temporary_file_stream_unittest.cc",
     "../browser/loader/test_resource_handler.cc",
     "../browser/loader/test_resource_handler.h",
@@ -1519,7 +1522,6 @@ test("content_unittests") {
     "../network/network_context_unittest.cc",
     "../network/network_service_unittest.cc",
     "../network/proxy_resolver_factory_mojo_unittest.cc",
-    "../network/resource_scheduler_unittest.cc",
     "../network/restricted_cookie_manager_unittest.cc",
     "../network/throttling/throttling_controller_unittest.cc",
     "../network/upload_progress_tracker_unittest.cc",
@@ -1544,6 +1546,7 @@ test("content_unittests") {
     "../renderer/dom_storage/mock_leveldb_wrapper.cc",
     "../renderer/dom_storage/mock_leveldb_wrapper.h",
     "../renderer/fileapi/webfilewriter_base_unittest.cc",
+    "../renderer/gpu/compositor_forwarding_message_filter_unittest.cc",
     "../renderer/gpu/frame_swap_message_queue_unittest.cc",
     "../renderer/gpu/queue_message_swap_promise_unittest.cc",
     "../renderer/gpu/render_widget_compositor_unittest.cc",
@@ -1709,7 +1712,6 @@ test("content_unittests") {
     "//services/file:lib",
     "//services/file/public/interfaces",
     "//services/metrics/public/interfaces",
-    "//services/network:test_support",
     "//services/network/public/cpp",
     "//services/network/public/interfaces:interfaces",
     "//services/proxy_resolver/:lib",
@@ -1806,6 +1808,7 @@ test("content_unittests") {
       "../browser/webrtc/webrtc_internals_unittest.cc",
       "../renderer/media/gpu/rtc_video_decoder_unittest.cc",
       "../renderer/media/gpu/rtc_video_encoder_unittest.cc",
+      "../renderer/media/media_devices_event_dispatcher_unittest.cc",
       "../renderer/media/media_stream_audio_processor_unittest.cc",
       "../renderer/media/media_stream_audio_unittest.cc",
       "../renderer/media/media_stream_constraints_util_audio_unittest.cc",
@@ -1999,7 +2002,6 @@ test("content_unittests") {
       "//ui/aura_extra",
       "//ui/wm",
     ]
-    data_deps += [ "//services/ui" ]
   } else {
     sources -= [
       "../browser/renderer_host/render_widget_host_view_aura_unittest.cc",

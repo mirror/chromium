@@ -54,7 +54,6 @@ bool AllowedOnReload(PreviewsType type) {
     case PreviewsType::OFFLINE:
       return false;
     case PreviewsType::NONE:
-    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }
@@ -73,7 +72,6 @@ bool IsServerWhitelistedType(PreviewsType type) {
     case PreviewsType::AMP_REDIRECTION:
       return false;
     case PreviewsType::NONE:
-    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }

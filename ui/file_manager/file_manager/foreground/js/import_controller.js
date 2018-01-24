@@ -805,13 +805,11 @@ importer.RuntimeCommandWidget.prototype.updateTabindexOfAnchors_ =
 importer.RuntimeCommandWidget.prototype.update = function(
     activityState, opt_scan, opt_destinationSizeBytes) {
   if (opt_scan) {
-    const detectedFilesCount = opt_scan.getFileEntries().length;
-    if (detectedFilesCount) {
-      var photosText = detectedFilesCount == 1 ?
-          strf('CLOUD_IMPORT_ONE_FILE') :
-          strf('CLOUD_IMPORT_MULTIPLE_FILES', detectedFilesCount);
+    if (opt_scan.getFileEntries().length) {
+      var photosText = strf('CLOUD_IMPORT_ONE_FILE');
     } else {
-      var photosText = '';
+      var photosText =
+          strf('CLOUD_IMPORT_ONE_FILE', opt_scan.getFileEntries().length);
     }
   }
   switch(activityState) {

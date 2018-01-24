@@ -76,6 +76,7 @@ android_library("content_java") {
 
   java_files = [
     "java/src/org/chromium/content/app/ChromiumLinkerParams.java",
+    "java/src/org/chromium/content/app/ContentApplication.java",
     "java/src/org/chromium/content/app/ContentChildProcessService.java",
     "java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
     "java/src/org/chromium/content/app/ContentMain.java",
@@ -151,7 +152,6 @@ android_library("content_java") {
     "java/src/org/chromium/content/browser/ViewPositionObserver.java",
     "java/src/org/chromium/content/browser/WindowAndroidProvider.java",
     "java/src/org/chromium/content/browser/WindowAndroidChangedObserver.java",
-    "java/src/org/chromium/content/browser/WindowEventObserver.java",
     "java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
     "java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
     "java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
@@ -207,7 +207,6 @@ android_library("content_java") {
     "java/src/org/chromium/content/browser/picker/TwoFieldDatePickerDialog.java",
     "java/src/org/chromium/content/browser/picker/WeekPicker.java",
     "java/src/org/chromium/content/browser/picker/WeekPickerDialog.java",
-    "java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
     "java/src/org/chromium/content/browser/selection/FloatingActionModeCallback.java",
     "java/src/org/chromium/content/browser/selection/FloatingPastePopupMenu.java",
     "java/src/org/chromium/content/browser/selection/HandleViewResources.java",
@@ -264,7 +263,6 @@ android_library("content_java") {
     "java/src/org/chromium/content_public/common/Referrer.java",
     "java/src/org/chromium/content_public/common/ResourceRequestBody.java",
     "java/src/org/chromium/content_public/common/ScreenOrientationConstants.java",
-    "java/src/org/chromium/content_public/common/UseZoomForDSFPolicy.java",
   ]
 }
 
@@ -392,7 +390,6 @@ generate_jni("content_jni_headers") {
     "java/src/org/chromium/content_public/common/BrowserSideNavigationPolicy.java",
     "java/src/org/chromium/content_public/common/MediaMetadata.java",
     "java/src/org/chromium/content_public/common/ResourceRequestBody.java",
-    "java/src/org/chromium/content_public/common/UseZoomForDSFPolicy.java",
   ]
   jni_package = "content"
 }
@@ -492,7 +489,6 @@ android_library("content_javatests") {
     "javatests/src/org/chromium/content/browser/input/ImeLollipopTest.java",
     "javatests/src/org/chromium/content/browser/input/ImeTest.java",
     "javatests/src/org/chromium/content/browser/input/ImeActivityTestRule.java",
-    "javatests/src/org/chromium/content/browser/input/ImeAutocapitalizeTest.java",
     "javatests/src/org/chromium/content/browser/input/ImePasswordTest.java",
     "javatests/src/org/chromium/content/browser/input/ImeTestUtils.java",
     "javatests/src/org/chromium/content/browser/input/InputDialogContainerTest.java",
@@ -522,7 +518,6 @@ junit_binary("content_junit_tests") {
     "junit/src/org/chromium/content/browser/input/ThreadedInputConnectionFactoryTest.java",
     "junit/src/org/chromium/content/browser/input/ThreadedInputConnectionTest.java",
     "junit/src/org/chromium/content/browser/picker/DateDialogNormalizerTest.java",
-    "junit/src/org/chromium/content/browser/remoteobjects/RemoteObjectImplTest.java",
     "junit/src/org/chromium/content/browser/selection/MenuDescriptorTest.java",
     "junit/src/org/chromium/content/browser/selection/SelectionPopupControllerTest.java",
     "junit/src/org/chromium/content/browser/selection/SmartSelectionMetricsLoggerTest.java",

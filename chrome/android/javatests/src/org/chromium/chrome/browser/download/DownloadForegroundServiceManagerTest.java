@@ -212,8 +212,6 @@ public final class DownloadForegroundServiceManagerTest {
                 mContext, DownloadStatus.PAUSE, FAKE_DOWNLOAD_1, mNotification);
         assertFalse(mDownloadServiceManager.mIsServiceBound);
 
-        // In the case that the phone is pre-Lollipop, make sure the paused notification gets killed
-        // so that it will no longer be an "on-going" notification.
         assertEquals(mDownloadServiceManager.isPreLollipop(),
                 mDownloadServiceManager.mIsNotificationKilled);
         assertTrue(mDownloadServiceManager.mIsNotificationDetached);
@@ -240,10 +238,7 @@ public final class DownloadForegroundServiceManagerTest {
                 mContext, DownloadStatus.COMPLETE, FAKE_DOWNLOAD_2, mNotification);
         assertFalse(mDownloadServiceManager.mIsServiceBound);
         assertTrue(mDownloadServiceManager.mIsNotificationKilled);
-        // In the case that the phone is pre-Marshmallow, make sure the notification no longer needs
-        // to be detached, rather, is just killed.
-        assertEquals(!mDownloadServiceManager.isPreMarshmallow(),
-                mDownloadServiceManager.mIsNotificationDetached);
+        assertTrue(mDownloadServiceManager.mIsNotificationDetached);
     }
 
     @Test

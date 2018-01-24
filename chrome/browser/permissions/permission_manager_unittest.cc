@@ -4,8 +4,6 @@
 
 #include "chrome/browser/permissions/permission_manager.h"
 
-#include <memory>
-
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
@@ -454,7 +452,7 @@ TEST_F(PermissionManagerTest, PermissionIgnoredCleanup) {
   PermissionRequestManager::CreateForWebContents(contents);
   PermissionRequestManager* manager =
       PermissionRequestManager::FromWebContents(contents);
-  auto prompt_factory = std::make_unique<MockPermissionPromptFactory>(manager);
+  auto prompt_factory = base::MakeUnique<MockPermissionPromptFactory>(manager);
 
   NavigateAndCommit(url());
 

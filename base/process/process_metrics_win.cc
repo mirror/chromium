@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/process/process_metrics.h"
+// Must be included before process_metrics.h to get full IoCounters definition
+#include <windows.h>
 
-#include <windows.h>  // Must be in front of other Windows header files.
+#include "base/process/process_metrics.h"
 
 #include <psapi.h>
 #include <stddef.h>
@@ -16,8 +17,11 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/memory.h"
-#include "base/process/process_metrics_iocounters.h"
 #include "base/sys_info.h"
+
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
 
 namespace base {
 namespace {

@@ -131,7 +131,7 @@ class SaveCardBubbleViewTest : public CocoaProfileTest {
   }
 
   void TearDown() override {
-    [[browser_window_controller_ nsWindowController] close];
+    [browser_window_controller_ close];
     CocoaProfileTest::TearDown();
   }
 

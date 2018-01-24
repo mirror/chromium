@@ -124,10 +124,10 @@ class BlobRegistryImplTest : public testing::Test {
   std::unique_ptr<BlobDataHandle> CreateBlobFromString(
       const std::string& uuid,
       const std::string& contents) {
-    auto builder = std::make_unique<BlobDataBuilder>(uuid);
-    builder->set_content_type("text/plain");
-    builder->AppendData(contents);
-    return context_->AddFinishedBlob(std::move(builder));
+    BlobDataBuilder builder(uuid);
+    builder.set_content_type("text/plain");
+    builder.AppendData(contents);
+    return context_->AddFinishedBlob(builder);
   }
 
   std::string UUIDFromBlob(blink::mojom::Blob* blob) {
@@ -839,7 +839,7 @@ TEST_F(BlobRegistryImplTest, Register_ValidBytesAsFile) {
   EXPECT_EQ(expected_file_count, snapshot->items().size());
   size_t remaining_size = kData.size();
   for (const auto& item : snapshot->items()) {
-    EXPECT_EQ(BlobDataItem::Type::kFile, item->type());
+    EXPECT_EQ(network::DataElement::TYPE_FILE, item->type());
     EXPECT_EQ(0u, item->offset());
     if (remaining_size > kTestBlobStorageMaxFileSizeBytes)
       EXPECT_EQ(kTestBlobStorageMaxFileSizeBytes, item->length());
@@ -943,10 +943,10 @@ TEST_F(BlobRegistryImplTest,
   EXPECT_FALSE(context_->registry().HasEntry(kId));
 
   // Now cause construction to complete, if it would still be going on.
-  auto builder = std::make_unique<BlobDataBuilder>(kDepId);
-  builder->AppendData(kData);
+  BlobDataBuilder builder(kDepId);
+  builder.AppendData(kData);
   context_->BuildPreregisteredBlob(
-      std::move(builder), BlobStorageContext::TransportAllowedCallback());
+      builder, BlobStorageContext::TransportAllowedCallback());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, BlobsUnderConstruction());
 }

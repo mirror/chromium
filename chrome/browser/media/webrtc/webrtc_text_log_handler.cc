@@ -119,10 +119,10 @@ void WebRtcLogBuffer::Log(const std::string& message) {
   circular_.Write(&eol, 1);
 }
 
-webrtc_logging::PartialCircularBuffer WebRtcLogBuffer::Read() {
+PartialCircularBuffer WebRtcLogBuffer::Read() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(read_only_);
-  return webrtc_logging::PartialCircularBuffer(&buffer_[0], sizeof(buffer_));
+  return PartialCircularBuffer(&buffer_[0], sizeof(buffer_));
 }
 
 void WebRtcLogBuffer::SetComplete() {

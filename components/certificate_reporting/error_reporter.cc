@@ -9,9 +9,8 @@
 #include <set>
 #include <utility>
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_piece.h"
 #include "components/encrypted_messages/encrypted_message.pb.h"
 #include "components/encrypted_messages/message_encrypter.h"
@@ -77,7 +76,7 @@ ErrorReporter::ErrorReporter(net::URLRequestContext* request_context,
     : ErrorReporter(upload_url,
                     kServerPublicKey,
                     kServerPublicKeyVersion,
-                    std::make_unique<net::ReportSender>(request_context,
+                    base::MakeUnique<net::ReportSender>(request_context,
                                                         kTrafficAnnotation)) {}
 
 ErrorReporter::ErrorReporter(

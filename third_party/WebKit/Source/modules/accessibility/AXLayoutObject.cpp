@@ -431,31 +431,29 @@ bool AXLayoutObject::IsFocused() const {
   return false;
 }
 
-AccessibilitySelectedState AXLayoutObject::IsSelected() const {
+bool AXLayoutObject::IsSelected() const {
   if (!GetLayoutObject() || !GetNode() || !CanSetSelectedAttribute())
-    return kSelectedStateUndefined;
+    return false;
 
   // aria-selected overrides automatic behaviors
   bool is_selected;
   if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kSelected, is_selected))
-    return is_selected ? kSelectedStateTrue : kSelectedStateFalse;
+    return is_selected;
 
   // Tab item with focus in the associated tab
   if (IsTabItem() && IsTabItemSelected())
-    return kSelectedStateTrue;
+    return true;
 
   // Selection follows focus, but ONLY in single selection containers,
   // and only if aria-selected was not present to override
 
   AXObject* container = ContainerWidget();
   if (!container || container->IsMultiSelectable())
-    return kSelectedStateFalse;
+    return false;
 
   AXObject* focused_object = AXObjectCache().FocusedObject();
-  return (focused_object == this ||
-          (focused_object && focused_object->ActiveDescendant() == this))
-             ? kSelectedStateTrue
-             : kSelectedStateFalse;
+  return focused_object == this ||
+         (focused_object && focused_object->ActiveDescendant() == this);
 }
 
 //
@@ -659,10 +657,6 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
 
   if (RoleValue() == kTimeRole)
     return false;
-
-  if (RoleValue() == kProgressIndicatorRole) {
-    return false;
-  }
 
   // if this element has aria attributes on it, it should not be ignored.
   if (SupportsARIAAttributes())

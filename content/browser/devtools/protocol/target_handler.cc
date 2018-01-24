@@ -185,13 +185,12 @@ void TargetHandler::Throttle::Clear() {
   }
 }
 
-TargetHandler::TargetHandler(bool browser_only)
+TargetHandler::TargetHandler()
     : DevToolsDomainHandler(Target::Metainfo::domainName),
       auto_attacher_(
           base::Bind(&TargetHandler::AutoAttach, base::Unretained(this)),
           base::Bind(&TargetHandler::AutoDetach, base::Unretained(this))),
       discover_(false),
-      browser_only_(browser_only),
       weak_factory_(this) {}
 
 TargetHandler::~TargetHandler() {
@@ -209,7 +208,7 @@ void TargetHandler::Wire(UberDispatcher* dispatcher) {
   Target::Dispatcher::wire(dispatcher, this);
 }
 
-void TargetHandler::SetRenderer(int process_host_id,
+void TargetHandler::SetRenderer(RenderProcessHost* process_host,
                                 RenderFrameHostImpl* frame_host) {
   auto_attacher_.SetRenderFrameHost(frame_host);
 }
@@ -263,7 +262,6 @@ Response TargetHandler::FindSession(Maybe<std::string> session_id,
                                     Session** session,
                                     bool fall_through) {
   *session = nullptr;
-  fall_through &= !browser_only_;
   if (session_id.isJust()) {
     auto it = attached_sessions_.find(session_id.fromJust());
     if (it == attached_sessions_.end()) {
@@ -314,7 +312,7 @@ Response TargetHandler::SetAutoAttach(
   auto_attacher_.SetAutoAttach(auto_attach, wait_for_debugger_on_start);
   if (!auto_attacher_.ShouldThrottleFramesNavigation())
     ClearThrottles();
-  return browser_only_ ? Response::OK() : Response::FallThrough();
+  return Response::FallThrough();
 }
 
 Response TargetHandler::SetAttachToFrames(bool value) {

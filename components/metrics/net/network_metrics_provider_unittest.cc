@@ -4,8 +4,6 @@
 
 #include "components/metrics/net/network_metrics_provider.h"
 
-#include <memory>
-
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -197,7 +195,7 @@ TEST_F(NetworkMetricsProviderTest, ECTNotAmbiguousOnOffline) {
        {net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
         net::EFFECTIVE_CONNECTION_TYPE_OFFLINE}) {
     std::unique_ptr<net::NetworkQualityEstimatorParams> params =
-        std::make_unique<net::NetworkQualityEstimatorParams>(
+        base::MakeUnique<net::NetworkQualityEstimatorParams>(
             std::map<std::string, std::string>());
     net::NetworkQualityEstimatorParams* params_ptr = params.get();
     net::TestNetworkQualityEstimator estimator(std::move(params));

@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  while (true) {
+  while (1) {
     server.WaitForEvents();
   }
 }

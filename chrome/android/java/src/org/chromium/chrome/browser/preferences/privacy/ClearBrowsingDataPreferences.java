@@ -404,7 +404,7 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
         if (MultiWindowUtils.isActivityVisible(getActivity())
                 && getSelectedOptions().contains(DialogOption.CLEAR_HISTORY)
                 && mIsDialogAboutOtherFormsOfBrowsingHistoryEnabled
-                && !OtherFormsOfHistoryDialogFragment.wasDialogShown()) {
+                && !OtherFormsOfHistoryDialogFragment.wasDialogShown(getActivity())) {
             mDialogAboutOtherFormsOfBrowsingHistory = new OtherFormsOfHistoryDialogFragment();
             mDialogAboutOtherFormsOfBrowsingHistory.show(getActivity());
             dismissProgressDialog();
@@ -500,8 +500,7 @@ public abstract class ClearBrowsingDataPreferences extends PreferenceFragment
 
         mDialogOpened = SystemClock.elapsedRealtime();
         mMaxImportantSites = BrowsingDataBridge.getMaxImportantSites();
-        if (!OtherFormsOfHistoryDialogFragment.wasDialogShown())
-            BrowsingDataBridge.getInstance().requestInfoAboutOtherFormsOfBrowsingHistory(this);
+        BrowsingDataBridge.getInstance().requestInfoAboutOtherFormsOfBrowsingHistory(this);
         getActivity().setTitle(R.string.clear_browsing_data_title);
         PreferenceUtils.addPreferencesFromResource(this, getPreferenceXmlId());
         DialogOption[] options = getDialogOptions();

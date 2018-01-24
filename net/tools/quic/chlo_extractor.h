@@ -24,15 +24,11 @@ class ChloExtractor {
                         const CryptoHandshakeMessage& chlo) = 0;
   };
 
-  // Extracts a CHLO message from |packet| and invokes the OnChlo
-  // method of |delegate|. Return true if a CHLO message was found,
-  // and false otherwise. If non-empty,
-  // |create_session_tag_indicators| contains a list of QUIC tags that
-  // if found will result in the session being created early, to
-  // enable support for multi-packet CHLOs.
+  // Extracts a CHLO message from |packet| and invokes the OnChlo method
+  // of |delegate|. Return true if a CHLO message was found, and false
+  // otherwise.
   static bool Extract(const QuicEncryptedPacket& packet,
                       const ParsedQuicVersionVector& versions,
-                      const QuicTagVector& create_session_tag_indicators,
                       Delegate* delegate);
 
   ChloExtractor(const ChloExtractor&) = delete;

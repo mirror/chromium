@@ -1376,6 +1376,12 @@
   },
   'cronet_test_instrumentation_apk': {
     'modifications': {
+      'Android Cronet ARMv6 Builder chromium.android.fyi': {
+        'swarming': {
+          'hard_timeout': 1200,
+          'shards': 2,
+        },
+      },
       'Android Cronet Builder (dbg) chromium.android.fyi': {
         'swarming': {
           'hard_timeout': 1200,
@@ -3148,6 +3154,18 @@
         ],
       },
       # chromium.android.fyi
+      'Android Cronet ARMv6 Builder': {
+        'args': [
+          '--platform',
+          'android-cronet',
+          '--perf-id',
+          'android_cronet_armv6_builder',
+          'cronet-armv6/sizes',
+        ],
+        'override_compile_targets': [
+          'cronet',
+        ],
+      },
       'Android Cronet KitKat Builder': {
         'args': [
           '--platform',
@@ -3684,8 +3702,6 @@
       # chromium.fyi
       'Chromium Win 10 GCE Tests',
       'Out of Process Profiling Android',
-      # chromium.sandbox
-      'Linux Tests SANDBOX',
       # chromium.win
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',
@@ -3739,8 +3755,6 @@
       'Chromium Win 10 GCE Tests',
       'Out of Process Profiling Android',
       'VR Linux',
-      # chromium.sandbox
-      'Linux Tests SANDBOX',
       # chromium.win
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',

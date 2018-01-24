@@ -34,9 +34,10 @@
 -DiceBrowserTest.SignoutSecondaryAccount
 -DiceFixAuthErrorsBrowserTest.ReauthFixAuthError
 -DiceFixAuthErrorsBrowserTest.SigninAccountMismatch
--DicePrepareMigrationBrowserTest.EnableSyncAfterToken
--DicePrepareMigrationBrowserTest.EnableSyncBeforeToken
+-DicePrepareMigrationBrowserTest.Signin
 -DicePrepareMigrationBrowserTest.Signout
+-DicePrepareMigrationChromeSynEndpointBrowserTest.EnableSyncAfterToken
+-DicePrepareMigrationChromeSynEndpointBrowserTest.EnableSyncBeforeToken
 -DisabledSignInIsolationBrowserTest.SyntheticTrial
 # DnsProbeBrowserTests that are flaky.
 -DnsProbeBrowserTest.CorrectionsLoadStopped
@@ -95,6 +96,7 @@
 -NewlibPackagedAppTest.NoSocketPermissions
 -NewlibPackagedAppTest.SocketPermissions
 -NewlibPackagedAppTest.SuccessfulLoad
+-PageLoadMetricsBrowserTest.ChromeErrorPage
 -PageLoadMetricsBrowserTest.LoadingMetrics
 -PageLoadMetricsBrowserTest.LoadingMetricsFailed
 -PageLoadMetricsBrowserTest.PayloadSize
@@ -178,16 +180,13 @@
 -WebViewTests/WebViewTest.WebViewInBackgroundPage/0
 -WebViewTests/WebViewTest.WebViewInBackgroundPage/1
 
-# Need support for blocking cookies via content settings:
-# https://crbug.com/803452.
+# crbug.com/776589 Intercepting requests with net::URLRequestFilter.
+-ClientHintsBrowserTest.ClientHintsLifetimeNotAttachedCookiesBlocked
 -ContentSettingsTest.AllowCookiesForASessionUsingExceptions
 -ContentSettingsTest.BasicCookies
 -ContentSettingsTest.BasicCookiesHttps
 -ContentSettingsTest.RedirectCrossOrigin
 -ContentSettingsTest.RedirectLoopCookies
-
-# crbug.com/776589 Intercepting requests with net::URLRequestFilter.
--ClientHintsBrowserTest.ClientHintsLifetimeNotAttachedCookiesBlocked
 -ContinueWhereILeftOffTest.CookiesClearedOnExit
 -DevToolsSanityTest.TestNetworkPushTime
 -DnsProbeBrowserTest.NxdomainProbeResultWithWorkingCorrections
@@ -478,6 +477,15 @@
 # URLLoaderFactory via SetNetworkFactoryForTesting.
 -ErrorPageSniffTest.SniffSmallHttpErrorResponseAsDownload
 -DNSErrorPageTest.StaleCacheStatus
+
+# Switch test from using a net::URLRequestFileJob that adds load timing to
+# to using a test URLLoaderFactory via SetNetworkFactoryForTesting.
+-LoadTimingBrowserTest.Basic
+-LoadTimingBrowserTest.EverythingAtOnce
+-LoadTimingBrowserTest.Preconnect
+-LoadTimingBrowserTest.PreconnectProxySsl
+-LoadTimingBrowserTest.ReuseSocket
+-LoadTimingBrowserTest.Ssl
 
 # Switch test from using a net::URLRequestInterceptor to using a test
 # URLLoaderFactory via SetNetworkFactoryForTesting.

@@ -55,7 +55,7 @@ constexpr float kMaxViewScaleFactor = 5.0f;
 constexpr float kViewScaleAdjustmentFactor = 0.2f;
 constexpr float kPageLoadTimeMilliseconds = 500;
 
-constexpr gfx::Point3F kDefaultLaserOrigin = {0.5f, -0.5f, 0.f};
+constexpr gfx::Point3F kLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
 constexpr float kControllerScaleFactor = 1.5f;
 
@@ -111,8 +111,9 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   ui_->SetLoadProgress(0.4);
   ui_->SetVideoCaptureEnabled(true);
   ui_->SetScreenCaptureEnabled(true);
+  ui_->SetAudioCaptureEnabled(true);
   ui_->SetBluetoothConnected(true);
-  ui_->SetLocationAccessEnabled(true);
+  ui_->SetLocationAccess(true);
   ui_->input_manager()->set_hit_test_strategy(
       UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
 }
@@ -122,9 +123,15 @@ VrTestContext::~VrTestContext() = default;
 void VrTestContext::DrawFrame() {
   base::TimeTicks current_time = base::TimeTicks::Now();
 
-  RenderInfo render_info = GetRenderInfo();
+  RenderInfo render_info;
+  render_info.head_pose = head_pose_;
+  render_info.surface_texture_size = window_size_;
+  render_info.left_eye_model.viewport = gfx::Rect(window_size_);
+  render_info.left_eye_model.view_matrix = head_pose_;
+  render_info.left_eye_model.proj_matrix = ProjectionMatrix();
+  render_info.left_eye_model.view_proj_matrix = ViewProjectionMatrix();
 
-  UpdateController(render_info);
+  UpdateController();
 
   // Update the render position of all UI elements (including desktop).
   ui_->scene()->OnBeginFrame(current_time, head_pose_);
@@ -160,11 +167,6 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_F:
         fullscreen_ = !fullscreen_;
         ui_->SetFullscreen(fullscreen_);
-        break;
-      case ui::DomCode::US_H:
-        handedness_ = handedness_ == PlatformController::kRightHanded
-                          ? PlatformController::kLeftHanded
-                          : PlatformController::kRightHanded;
         break;
       case ui::DomCode::US_I:
         incognito_ = !incognito_;
@@ -232,12 +234,6 @@ void VrTestContext::HandleInput(ui::Event* event) {
 
   const ui::MouseEvent* mouse_event = event->AsMouseEvent();
 
-  if (mouse_event->IsMiddleMouseButton()) {
-    if (mouse_event->type() == ui::ET_MOUSE_RELEASED) {
-      ui_->OnAppButtonClicked();
-    }
-  }
-
   // TODO(cjgrant): Figure out why, quite regularly, mouse click events do not
   // make it into this method and are missed.
   if (mouse_event->IsLeftMouseButton()) {
@@ -274,10 +270,10 @@ void VrTestContext::HandleInput(ui::Event* event) {
   head_pose_.RotateAboutYAxis(-head_angle_y_degrees_);
 
   last_mouse_point_ = gfx::Point(mouse_event->x(), mouse_event->y());
-  last_controller_model_ = UpdateController(GetRenderInfo());
+  last_controller_model_ = UpdateController();
 }
 
-ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
+ControllerModel VrTestContext::UpdateController() {
   // We could map mouse position to controller position, and skip this logic,
   // but it will make targeting elements with a mouse feel strange and not
   // mouse-like. Instead, we make the reticle track the mouse position linearly
@@ -312,10 +308,8 @@ ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
   CHECK(controller_model.laser_direction.GetNormalized(
       &controller_model.laser_direction));
 
-  gfx::Point3F laser_origin = LaserOrigin();
-
-  controller_model.transform.Translate3d(laser_origin.x(), laser_origin.y(),
-                                         laser_origin.z());
+  controller_model.transform.Translate3d(kLaserOrigin.x(), kLaserOrigin.y(),
+                                         kLaserOrigin.z());
   controller_model.transform.Scale3d(
       kControllerScaleFactor, kControllerScaleFactor, kControllerScaleFactor);
   RotateToward(controller_model.laser_direction, &controller_model.transform);
@@ -323,25 +317,23 @@ ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
   // Hit testing is done in terms of this synthesized controller model.
   GestureList gesture_list;
   ReticleModel reticle_model;
-  ui_->input_manager()->HandleInput(base::TimeTicks::Now(), render_info,
-                                    controller_model, &reticle_model,
-                                    &gesture_list);
+  ui_->input_manager()->HandleInput(base::TimeTicks::Now(), controller_model,
+                                    &reticle_model, &gesture_list);
 
   // Now that we have accurate hit information, we use this to construct a
   // controller model for display.
-  controller_model.laser_direction = reticle_model.target_point - laser_origin;
+  controller_model.laser_direction = reticle_model.target_point - kLaserOrigin;
 
   controller_model.transform.MakeIdentity();
-  controller_model.transform.Translate3d(laser_origin.x(), laser_origin.y(),
-                                         laser_origin.z());
+  controller_model.transform.Translate3d(kLaserOrigin.x(), kLaserOrigin.y(),
+                                         kLaserOrigin.z());
   controller_model.transform.Scale3d(
       kControllerScaleFactor, kControllerScaleFactor, kControllerScaleFactor);
   RotateToward(controller_model.laser_direction, &controller_model.transform);
 
   gfx::Vector3dF local_offset = kLaserLocalOffset;
   controller_model.transform.TransformVector(&local_offset);
-  controller_model.laser_origin = laser_origin + local_offset;
-  controller_model.handedness = handedness_;
+  controller_model.laser_origin = kLaserOrigin + local_offset;
 
   ui_->OnControllerUpdated(controller_model, reticle_model);
 
@@ -351,9 +343,8 @@ ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
 void VrTestContext::OnGlInitialized() {
   unsigned int content_texture_id = CreateFakeContentTexture();
 
-  ui_->OnGlInitialized(
-      content_texture_id, UiElementRenderer::kTextureLocationLocal,
-      content_texture_id, UiElementRenderer::kTextureLocationLocal, false);
+  ui_->OnGlInitialized(content_texture_id,
+                       UiElementRenderer::kTextureLocationLocal, false);
 
   keyboard_delegate_->Initialize(ui_->scene()->SurfaceProviderForTesting(),
                                  ui_->ui_element_renderer());
@@ -414,8 +405,6 @@ void VrTestContext::CycleWebVrModes() {
   switch (model_->web_vr.state) {
     case kWebVrNoTimeoutPending:
       ui_->SetWebVrMode(true, false);
-      break;
-    case kWebVrAwaitingMinSplashScreenDuration:
       break;
     case kWebVrAwaitingFirstFrame:
       ui_->OnWebVrTimeoutImminent();
@@ -539,31 +528,10 @@ void VrTestContext::StopAutocomplete() {
 
 void VrTestContext::CycleOrigin() {
   const std::vector<ToolbarState> states = {
-      {GURL("http://domain.com"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domaaaaaaaaaaain.com"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domain.com/a/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domain.com/aaaaaaa/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domaaaaaaaaaaaaaaaaain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com/aaaaaaaaaa/"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
       {GURL("http://www.domain.com/path/segment/directory/file.html"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://www.domain.com/"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
       {GURL("http://subdomain.domain.com/"),
@@ -578,12 +546,6 @@ void VrTestContext::CycleOrigin() {
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING,
        &toolbar::kOfflinePinIcon, base::UTF8ToUTF16("Offline"), true, true},
-      {GURL("file:///C:/path/filename"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
-      {GURL("file:///C:/path/path/path/path/path/path/path/path"),
-       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
-       base::string16(), true, false},
   };
 
   static int state = 0;
@@ -611,26 +573,6 @@ void VrTestContext::LoadAssets() {
   ui_->OnAssetsLoaded(AssetsLoadStatus::kNotFound, nullptr,
                       assets_component_version);
 #endif  // defined(GOOGLE_CHROME_BUILD)
-}
-
-RenderInfo VrTestContext::GetRenderInfo() const {
-  RenderInfo render_info;
-  render_info.head_pose = head_pose_;
-  render_info.surface_texture_size = window_size_;
-  render_info.left_eye_model.viewport = gfx::Rect(window_size_);
-  render_info.left_eye_model.view_matrix = head_pose_;
-  render_info.left_eye_model.proj_matrix = ProjectionMatrix();
-  render_info.left_eye_model.view_proj_matrix = ViewProjectionMatrix();
-  render_info.right_eye_model = render_info.left_eye_model;
-  return render_info;
-}
-
-gfx::Point3F VrTestContext::LaserOrigin() const {
-  gfx::Point3F origin = kDefaultLaserOrigin;
-  if (handedness_ == PlatformController::kLeftHanded) {
-    origin.set_x(-origin.x());
-  }
-  return origin;
 }
 
 }  // namespace vr

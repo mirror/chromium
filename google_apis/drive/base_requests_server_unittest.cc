@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "google_apis/drive/dummy_auth_service.h"
@@ -77,7 +78,7 @@ TEST_F(BaseRequestsServerTest, DownloadFileRequest_ValidFile) {
   {
     base::RunLoop run_loop;
     std::unique_ptr<DownloadFileRequestBase> request =
-        std::make_unique<DownloadFileRequestBase>(
+        base::MakeUnique<DownloadFileRequestBase>(
             request_sender_.get(),
             test_util::CreateQuitCallback(
                 &run_loop,
@@ -111,7 +112,7 @@ TEST_F(BaseRequestsServerTest, DownloadFileRequest_NonExistentFile) {
   {
     base::RunLoop run_loop;
     std::unique_ptr<DownloadFileRequestBase> request =
-        std::make_unique<DownloadFileRequestBase>(
+        base::MakeUnique<DownloadFileRequestBase>(
             request_sender_.get(),
             test_util::CreateQuitCallback(
                 &run_loop,

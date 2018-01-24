@@ -64,7 +64,7 @@ class TestRenderFrameHost::NavigationInterceptor
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories,
+      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker,
       const base::UnguessableToken& devtools_navigation_token) override {
     frame_host_->GetProcess()->set_did_frame_commit_navigation(true);
@@ -81,8 +81,8 @@ class TestRenderFrameHost::NavigationInterceptor
       bool has_stale_copy_in_cache,
       int32_t error_code,
       const base::Optional<std::string>& error_page_content,
-      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories)
-      override {}
+      base::Optional<content::URLLoaderFactoryBundle>
+          subresource_loader_factories) override {}
 
  private:
   TestRenderFrameHost* const frame_host_;
@@ -188,12 +188,12 @@ void TestRenderFrameHost::SimulateRedirect(const GURL& new_url) {
     return;
   }
 
-  GetNavigationHandle()->CallWillRedirectRequestForTesting(new_url, false,
-                                                           GURL(), false);
+  navigation_handle()->CallWillRedirectRequestForTesting(new_url, false, GURL(),
+                                                         false);
 }
 
 void TestRenderFrameHost::SimulateNavigationCommit(const GURL& url) {
-  if (frame_tree_node_->navigation_request())
+  if (frame_tree_node()->navigation_request())
     PrepareForCommit();
 
   bool is_auto_subframe =
@@ -267,20 +267,20 @@ void TestRenderFrameHost::SimulateNavigationError(const GURL& url,
 }
 
 void TestRenderFrameHost::SimulateNavigationErrorPageCommit() {
-  CHECK(GetNavigationHandle());
+  CHECK(navigation_handle());
   GURL error_url = GURL(kUnreachableWebDataURL);
   OnDidStartProvisionalLoad(error_url, std::vector<GURL>(),
                             base::TimeTicks::Now());
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
   params.did_create_new_entry = true;
-  params.url = GetNavigationHandle()->GetURL();
+  params.url = navigation_handle()->GetURL();
   params.transition = GetParent() ? ui::PAGE_TRANSITION_MANUAL_SUBFRAME
                                   : ui::PAGE_TRANSITION_LINK;
   params.was_within_same_document = false;
   params.url_is_unreachable = true;
-  params.page_state = PageState::CreateForTesting(
-      GetNavigationHandle()->GetURL(), false, nullptr, nullptr);
+  params.page_state = PageState::CreateForTesting(navigation_handle()->GetURL(),
+                                                  false, nullptr, nullptr);
   SendNavigateWithParams(&params);
 }
 
@@ -472,12 +472,12 @@ void TestRenderFrameHost::SendNavigateWithParams(
 void TestRenderFrameHost::SendNavigateWithParamsAndInterfaceProvider(
     FrameHostMsg_DidCommitProvisionalLoad_Params* params,
     service_manager::mojom::InterfaceProviderRequest request) {
-  if (GetNavigationHandle()) {
+  if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
     response_headers->AddHeader(std::string("Content-Type: ") +
                                 contents_mime_type_);
-    GetNavigationHandle()->set_response_headers_for_testing(response_headers);
+    navigation_handle()->set_response_headers_for_testing(response_headers);
   }
   DidCommitProvisionalLoad(
       std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
@@ -501,7 +501,8 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
             blink::WebMixedContentContextType::kBlockable,
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */, url::Origin(),
-            GURL() /* client_side_redirect_url */);
+            GURL() /* client_side_redirect_url */,
+            base::nullopt /* suggested_filename */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);

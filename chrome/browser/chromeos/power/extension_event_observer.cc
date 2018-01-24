@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/bind.h"
-#include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -246,7 +245,7 @@ void ExtensionEventObserver::OnSuspendImminent(bool dark_suspend) {
   suspend_is_pending_ = true;
   power_manager_callback_ = DBusThreadManager::Get()
                                 ->GetPowerManagerClient()
-                                ->GetSuspendReadinessCallback(FROM_HERE);
+                                ->GetSuspendReadinessCallback();
 
   suspend_readiness_callback_.Reset(
       base::Bind(&ExtensionEventObserver::MaybeReportSuspendReadiness,

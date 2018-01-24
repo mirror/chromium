@@ -77,7 +77,7 @@ SerializedPacket QuicPacketCreatorPeer::SerializeAllFrames(
 }
 
 // static
-OwningSerializedPacketPointer
+std::unique_ptr<QuicEncryptedPacket>
 QuicPacketCreatorPeer::SerializeConnectivityProbingPacket(
     QuicPacketCreator* creator) {
   return creator->SerializeConnectivityProbingPacket();

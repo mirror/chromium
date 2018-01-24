@@ -29,13 +29,7 @@ class VIEWS_EXPORT TabbedPane : public View {
   // Internal class name.
   static const char kViewClassName[];
 
-  // The orientation of the tab alignment.
-  enum class Orientation {
-    kHorizontal,
-    kVertical,
-  };
-
-  explicit TabbedPane(Orientation orientation = Orientation::kHorizontal);
+  TabbedPane();
   ~TabbedPane() override;
 
   TabbedPaneListener* listener() const { return listener_; }
@@ -67,9 +61,6 @@ class VIEWS_EXPORT TabbedPane : public View {
   // Overridden from View:
   gfx::Size CalculatePreferredSize() const override;
   const char* GetClassName() const override;
-
-  // Returns true if the tab alignment is horizontal.
-  bool IsHorizontal() const;
 
  private:
   friend class FocusTraversalTest;
@@ -163,13 +154,13 @@ class Tab : public View {
   DISALLOW_COPY_AND_ASSIGN(Tab);
 };
 
-// The tab strip shown above/left of the tab contents.
+// The tab strip shown above the tab contents.
 class TabStrip : public View {
  public:
   // Internal class name.
   static const char kViewClassName[];
 
-  explicit TabStrip(TabbedPane::Orientation orientation);
+  TabStrip();
   ~TabStrip() override;
 
   // Called by TabStrip when the selected tab changes. This function is only
@@ -186,15 +177,7 @@ class TabStrip : public View {
   Tab* GetTabAtIndex(int index) const;
   int GetSelectedTabIndex() const;
 
-  // Returns true if the tab alignment is horizontal.
-  bool IsHorizontal() const {
-    return orientation_ == TabbedPane::Orientation::kHorizontal;
-  }
-
  private:
-  // The orientation of the tab alignment.
-  const TabbedPane::Orientation orientation_;
-
   DISALLOW_COPY_AND_ASSIGN(TabStrip);
 };
 

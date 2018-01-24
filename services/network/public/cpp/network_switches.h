@@ -9,11 +9,8 @@ namespace network {
 
 namespace switches {
 
-extern const char kHostResolverRules[];
-extern const char kLogNetLog[];
 extern const char kNoReferrers[];
-
-}  // namespace switches
+}
 
 }  // namespace network
 

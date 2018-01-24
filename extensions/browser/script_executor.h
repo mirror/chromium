@@ -7,8 +7,6 @@
 
 #include "base/callback_forward.h"
 #include "base/observer_list.h"
-#include "base/optional.h"
-#include "extensions/common/constants.h"
 #include "extensions/common/user_script.h"
 
 class GURL;
@@ -103,7 +101,6 @@ class ScriptExecutor {
                      const GURL& webview_src,
                      const GURL& file_url,
                      bool user_gesture,
-                     base::Optional<CSSOrigin> css_origin,
                      ResultType result_type,
                      const ExecuteScriptCallback& callback);
 

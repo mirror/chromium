@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
@@ -64,12 +63,6 @@ KeyedService* AccountReconcilorFactory::BuildServiceInstanceFor(
 // static
 std::unique_ptr<signin::AccountReconcilorDelegate>
 AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
-  if (AccountConsistencyModeManager::IsMirrorEnabledForProfile(profile)) {
-    return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
-        SigninManagerFactory::GetForProfile(profile));
-  }
-  // TODO(droger): Remove this switch case. |AccountConsistencyModeManager| is
-  // the source of truth.
   switch (signin::GetAccountConsistencyMethod()) {
     case signin::AccountConsistencyMethod::kMirror:
       return std::make_unique<signin::MirrorAccountReconcilorDelegate>(
@@ -78,6 +71,8 @@ AccountReconcilorFactory::CreateAccountReconcilorDelegate(Profile* profile) {
     case signin::AccountConsistencyMethod::kDiceFixAuthErrors:
       return std::make_unique<signin::AccountReconcilorDelegate>();
     case signin::AccountConsistencyMethod::kDicePrepareMigration:
+    case signin::AccountConsistencyMethod::
+        kDicePrepareMigrationChromeSyncEndpoint:
     case signin::AccountConsistencyMethod::kDiceMigration:
     case signin::AccountConsistencyMethod::kDice:
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)

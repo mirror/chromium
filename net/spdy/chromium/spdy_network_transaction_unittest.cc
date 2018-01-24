@@ -18,7 +18,6 @@
 #include "net/base/chunked_upload_data_stream.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/proxy_delegate.h"
-#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_proxy_delegate.h"
 #include "net/base/upload_bytes_element_reader.h"
@@ -35,9 +34,9 @@
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
+#include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/next_proto.h"
-#include "net/socket/socket_tag.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
 #include "net/spdy/chromium/spdy_http_stream.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
@@ -388,8 +387,7 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
     // session.  Once we have the session, we verify that the streams are
     // all closed and not leaked at this point.
     SpdySessionKey key(HostPortPair::FromURL(request_.url),
-                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED,
-                       SocketTag());
+                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
     HttpNetworkSession* session = helper.session();
     base::WeakPtr<SpdySession> spdy_session =
         session->spdy_session_pool()->FindAvailableSession(
@@ -3215,7 +3213,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerCancelsPush) {
 
   SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
   SpdySessionKey key(host_port_pair_, ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED, SocketTag());
+                     PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool->FindAvailableSession(
           key, /* enable_ip_based_pooling = */ true, log_);
@@ -3327,7 +3325,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerCancelsCrossOriginPush) {
 
   SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
   SpdySessionKey key1(HostPortPair::FromURL(GURL(kUrl1)), ProxyServer::Direct(),
-                      PRIVACY_MODE_DISABLED, SocketTag());
+                      PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session1 =
       spdy_session_pool->FindAvailableSession(
           key1, /* enable_ip_based_pooling = */ true, log_);
@@ -3337,7 +3335,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerCancelsCrossOriginPush) {
   // a client-initiated request would not pool to this connection,
   // because the IP address does not match.
   SpdySessionKey key2(HostPortPair::FromURL(GURL(kUrl2)), ProxyServer::Direct(),
-                      PRIVACY_MODE_DISABLED, SocketTag());
+                      PRIVACY_MODE_DISABLED);
   EXPECT_FALSE(spdy_session_pool->FindAvailableSession(
       key2, /* enable_ip_based_pooling = */ true, log_));
 
@@ -4356,7 +4354,7 @@ TEST_F(SpdyNetworkTransactionTest, GracefulGoaway) {
   // GOAWAY frame has not yet been received, SpdySession should be available.
   SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
   SpdySessionKey key(host_port_pair_, ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED, SocketTag());
+                     PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool->FindAvailableSession(
           key, /* enable_ip_based_pooling = */ true, log_);
@@ -4525,7 +4523,7 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredRetry) {
 TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
   request_.method = "GET";
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyResolutionService::CreateFixedFromPacResult("HTTPS myproxy:70"));
+      ProxyService::CreateFixedFromPacResult("HTTPS myproxy:70"));
   // Do not force SPDY so that second socket can negotiate HTTP/1.1.
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
@@ -4612,7 +4610,7 @@ TEST_F(SpdyNetworkTransactionTest, HTTP11RequiredProxyRetry) {
 // Test to make sure we can correctly connect through a proxy.
 TEST_F(SpdyNetworkTransactionTest, ProxyConnect) {
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyResolutionService::CreateFixedFromPacResult("PROXY myproxy:70"));
+      ProxyService::CreateFixedFromPacResult("PROXY myproxy:70"));
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
   helper.RunPreTestSetup();
@@ -4669,8 +4667,7 @@ TEST_F(SpdyNetworkTransactionTest, DirectConnectProxyReconnect) {
   // to simply DIRECT. The reason for appending the second proxy is to verify
   // that the session pool key used does is just "DIRECT".
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyResolutionService::CreateFixedFromPacResult(
-          "DIRECT; PROXY myproxy:70"));
+      ProxyService::CreateFixedFromPacResult("DIRECT; PROXY myproxy:70"));
   // When setting up the first transaction, we store the SpdySessionPool so that
   // we can use the same pool in the second transaction.
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
@@ -4715,12 +4712,12 @@ TEST_F(SpdyNetworkTransactionTest, DirectConnectProxyReconnect) {
 
   // Check that the SpdySession is still in the SpdySessionPool.
   SpdySessionKey session_pool_key_direct(host_port_pair_, ProxyServer::Direct(),
-                                         PRIVACY_MODE_DISABLED, SocketTag());
+                                         PRIVACY_MODE_DISABLED);
   EXPECT_TRUE(HasSpdySession(spdy_session_pool, session_pool_key_direct));
   SpdySessionKey session_pool_key_proxy(
       host_port_pair_,
       ProxyServer::FromURI("www.foo.com", ProxyServer::SCHEME_HTTP),
-      PRIVACY_MODE_DISABLED, SocketTag());
+      PRIVACY_MODE_DISABLED);
   EXPECT_FALSE(HasSpdySession(spdy_session_pool, session_pool_key_proxy));
 
   // New SpdyTestUtil instance for the session that will be used for the
@@ -4755,7 +4752,7 @@ TEST_F(SpdyNetworkTransactionTest, DirectConnectProxyReconnect) {
   request_.method = "GET";
   request_.url = GURL(GetDefaultUrlWithPath("/foo.dat"));
   auto session_deps_proxy = std::make_unique<SpdySessionDependencies>(
-      ProxyResolutionService::CreateFixedFromPacResult("PROXY myproxy:70"));
+      ProxyService::CreateFixedFromPacResult("PROXY myproxy:70"));
   NormalSpdyTransactionHelper helper_proxy(request_, DEFAULT_PRIORITY, log_,
                                            std::move(session_deps_proxy));
 
@@ -5330,7 +5327,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOrigin) {
 
   SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
   SpdySessionKey key(host_port_pair_, ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED, SocketTag());
+                     PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool->FindAvailableSession(
           key, /* enable_ip_based_pooling = */ true, log_);
@@ -5470,7 +5467,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
   SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
   HostPortPair host_port_pair0("mail.example.org", 443);
   SpdySessionKey key0(host_port_pair0, ProxyServer::Direct(),
-                      PRIVACY_MODE_DISABLED, SocketTag());
+                      PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session0 =
       spdy_session_pool->FindAvailableSession(
           key0, /* enable_ip_based_pooling = */ true, log_);
@@ -5479,7 +5476,7 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
 
   HostPortPair host_port_pair1("docs.example.org", 443);
   SpdySessionKey key1(host_port_pair1, ProxyServer::Direct(),
-                      PRIVACY_MODE_DISABLED, SocketTag());
+                      PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session1 =
       spdy_session_pool->FindAvailableSession(
           key1, /* enable_ip_based_pooling = */ true, log_);
@@ -6881,7 +6878,7 @@ TEST_F(SpdyNetworkTransactionTest, InsecureUrlCreatesSecureSpdySession) {
 
   // Need secure proxy so that insecure URL can use HTTP/2.
   auto session_deps = std::make_unique<SpdySessionDependencies>(
-      ProxyResolutionService::CreateFixedFromPacResult("HTTPS myproxy:70"));
+      ProxyService::CreateFixedFromPacResult("HTTPS myproxy:70"));
   NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
                                      std::move(session_deps));
 
@@ -6972,7 +6969,7 @@ TEST_F(SpdyNetworkTransactionTest, PushCanceledByServerAfterClaimed) {
 
   // Get a SpdySession.
   SpdySessionKey key(HostPortPair::FromURL(request_.url), ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED, SocketTag());
+                     PRIVACY_MODE_DISABLED);
   HttpNetworkSession* session = helper.session();
   base::WeakPtr<SpdySession> spdy_session =
       session->spdy_session_pool()->FindAvailableSession(

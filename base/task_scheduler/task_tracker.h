@@ -85,10 +85,10 @@ namespace internal {
 // TaskPriority::USER_BLOCKING.
 class BASE_EXPORT TaskTracker {
  public:
-  // |histogram_label| is used as a suffix for histograms, it must not be empty.
+  // |histogram_label| is used as a suffix for histograms (optional)
   // |max_num_scheduled_background_sequences| is the maximum number of
   // background sequences that can be scheduled concurrently (default to max())
-  TaskTracker(StringPiece histogram_label,
+  TaskTracker(StringPiece histogram_label = StringPiece(),
               int max_num_scheduled_background_sequences =
                   std::numeric_limits<int>::max());
   virtual ~TaskTracker();

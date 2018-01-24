@@ -26,7 +26,6 @@ class ChromeNewWindowClient : public ash::mojom::NewWindowClient {
   void OpenGetHelp() override;
   void RestoreTab() override;
   void ShowKeyboardOverlay() override;
-  void ShowKeyboardShortcutViewer() override;
   void ShowTaskManager() override;
   void OpenFeedbackPage() override;
 

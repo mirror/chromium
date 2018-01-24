@@ -276,7 +276,8 @@ ApplicationContextImpl::GetComponentUpdateService() {
     // be registered and Start() needs to be called.
     component_updater_ = component_updater::ComponentUpdateServiceFactory(
         component_updater::MakeIOSComponentUpdaterConfigurator(
-            base::CommandLine::ForCurrentProcess()));
+            base::CommandLine::ForCurrentProcess(),
+            GetSystemURLRequestContext()));
   }
   return component_updater_.get();
 }

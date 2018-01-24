@@ -46,6 +46,8 @@ class SVGClipPathElement final : public SVGGraphicsElement {
  private:
   explicit SVGClipPathElement(Document&);
 
+  bool NeedsPendingResourceHandling() const override { return false; }
+
   void SvgAttributeChanged(const QualifiedName&) override;
   void ChildrenChanged(const ChildrenChange&) override;
 

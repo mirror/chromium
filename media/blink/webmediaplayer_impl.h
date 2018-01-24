@@ -74,8 +74,8 @@ class GLES2Interface;
 }
 
 namespace media {
-class CdmContextRef;
 class ChunkDemuxer;
+class ContentDecryptionModule;
 class VideoDecodeStatsReporter;
 class MediaLog;
 class UrlIndex;
@@ -132,7 +132,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
-  void PictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -692,13 +691,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   std::unique_ptr<blink::WebContentDecryptionModuleResult> set_cdm_result_;
 
-  // If a CdmContext is attached keep a reference to the CdmContextRef, so that
-  // it is not destroyed until after the pipeline is done with it.
-  std::unique_ptr<CdmContextRef> cdm_context_ref_;
+  // If a CDM is attached keep a reference to it, so that it is not destroyed
+  // until after the pipeline is done with it.
+  scoped_refptr<ContentDecryptionModule> cdm_;
 
-  // Keep track of the CdmContextRef while it is in the process of attaching to
-  // the pipeline.
-  std::unique_ptr<CdmContextRef> pending_cdm_context_ref_;
+  // Keep track of the CDM while it is in the process of attaching to the
+  // pipeline.
+  scoped_refptr<ContentDecryptionModule> pending_cdm_;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   WebMediaPlayerCast cast_impl_;

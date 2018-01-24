@@ -1480,7 +1480,6 @@ if (enable_java_templates) {
   # Currently supports:
   #   * AndroidManifest.xml
   #   * classes.jar
-  #   * jni/
   #   * res/
   #   * R.txt
   #   * proguard.txt
@@ -1488,13 +1487,13 @@ if (enable_java_templates) {
   #   * public.txt
   #   * annotations.zip
   #   * assets/
+  #   * jni/
   # See: https://developer.android.com/studio/projects/android-library.html#aar-contents
   #
   # Variables:
   #   output: Path to the output .aar.
   #   proguard_configs: List of proguard configs (optional).
   #   android_manifest: Path to AndroidManifest.xml (optional).
-  #   native_libraries: list of native libraries (optional).
   #
   # Example
   #   dist_aar("my_aar") {
@@ -1553,16 +1552,6 @@ if (enable_java_templates) {
         args += [
           "--android-manifest",
           rebase_path(invoker.android_manifest, root_build_dir),
-        ]
-      }
-      if (defined(invoker.native_libraries) && invoker.native_libraries != []) {
-        inputs += invoker.native_libraries
-        _rebased_native_libraries =
-            rebase_path(invoker.native_libraries, root_build_dir)
-
-        args += [
-          "--native-libraries=$_rebased_native_libraries",
-          "--abi=$android_app_abi",
         ]
       }
     }
@@ -2015,6 +2004,8 @@ if (enable_java_templates) {
       version_name = _version_name
       if (defined(invoker.post_process_package_resources_script)) {
         post_process_script = invoker.post_process_package_resources_script
+        post_process_deps = invoker.post_process_package_resources_deps
+        post_process_args = invoker.post_process_package_resources_args
       }
       srcjar_path = "${target_gen_dir}/${target_name}.srcjar"
       r_text_out_path = "${target_gen_dir}/${target_name}_R.txt"

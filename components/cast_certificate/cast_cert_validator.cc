@@ -11,6 +11,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/stl_util.h"
 #include "components/cast_certificate/cast_crl.h"
@@ -331,7 +332,7 @@ std::unique_ptr<CertVerificationContext> CertVerificationContextImplForTest(
     const base::StringPiece& spki) {
   // Use a bogus CommonName, since this is just exposed for testing signature
   // verification by unittests.
-  return std::make_unique<CertVerificationContextImpl>(net::der::Input(spki),
+  return base::MakeUnique<CertVerificationContextImpl>(net::der::Input(spki),
                                                        "CommonName");
 }
 

@@ -13,6 +13,7 @@
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "components/cloud_devices/common/cloud_device_description_consts.h"
@@ -774,9 +775,9 @@ class PageRangeTraits : public ItemsTraits<kOptionPageRange> {
 
   static void Save(const PageRange& option, base::DictionaryValue* dict) {
     if (!option.empty()) {
-      auto list = std::make_unique<base::ListValue>();
+      auto list = base::MakeUnique<base::ListValue>();
       for (size_t i = 0; i < option.size(); ++i) {
-        auto interval = std::make_unique<base::DictionaryValue>();
+        auto interval = base::MakeUnique<base::DictionaryValue>();
         interval->SetInteger(kPageRangeStart, option[i].start);
         if (option[i].end < kMaxPageNumber)
           interval->SetInteger(kPageRangeEnd, option[i].end);

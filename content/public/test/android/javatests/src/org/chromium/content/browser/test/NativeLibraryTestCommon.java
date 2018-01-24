@@ -15,6 +15,7 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.content.browser.BrowserStartupController;
+import org.chromium.content.browser.test.util.ApplicationUtils;
 
 class NativeLibraryTestCommon {
     private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "content";
@@ -24,6 +25,8 @@ class NativeLibraryTestCommon {
         Assert.assertFalse(ThreadUtils.runningOnUiThread());
 
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
+
+        ApplicationUtils.waitForLibraryDependencies(instrumentation);
 
         // LibraryLoader is not in general multithreaded; as other InstrumentationTestCase code
         // (specifically, ChromeBrowserProvider) uses it from the main thread we must do

@@ -66,7 +66,7 @@ class OAuth2TokenServiceTest : public testing::Test {
  public:
   void SetUp() override {
     oauth2_service_.reset(new TestOAuth2TokenService(
-        std::make_unique<FakeOAuth2TokenServiceDelegate>(
+        base::MakeUnique<FakeOAuth2TokenServiceDelegate>(
             new net::TestURLRequestContextGetter(
                 message_loop_.task_runner()))));
     account_id_ = "test_user@gmail.com";

@@ -46,20 +46,11 @@ class PLATFORM_EXPORT MetricsHelper {
 
   void SetThreadType(ThreadType thread_type);
 
- protected:
+ private:
   ThreadType thread_type_;
 
- private:
   TaskDurationMetricReporter<ThreadType> thread_task_duration_reporter_;
   TaskDurationMetricReporter<ThreadType> thread_task_cpu_duration_reporter_;
-  TaskDurationMetricReporter<ThreadType>
-      foreground_thread_task_duration_reporter_;
-  TaskDurationMetricReporter<ThreadType>
-      foreground_thread_task_cpu_duration_reporter_;
-  TaskDurationMetricReporter<ThreadType>
-      background_thread_task_duration_reporter_;
-  TaskDurationMetricReporter<ThreadType>
-      background_thread_task_cpu_duration_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(MetricsHelper);
 };

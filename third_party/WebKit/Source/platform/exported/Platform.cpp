@@ -163,8 +163,7 @@ void Platform::Initialize(Platform* platform) {
 
   // Pre-create the File thread so multiple threads can call FileTaskRunner() in
   // a non racy way later.
-  g_platform->file_thread_ =
-      g_platform->CreateThread(WebThreadCreationParams("File"));
+  g_platform->file_thread_ = g_platform->CreateThread("File");
 
   if (BlinkResourceCoordinatorBase::IsEnabled())
     RendererResourceCoordinator::Initialize();
@@ -221,8 +220,7 @@ std::unique_ptr<WebServiceWorkerCacheStorage> Platform::CreateCacheStorage(
   return nullptr;
 }
 
-std::unique_ptr<WebThread> Platform::CreateThread(
-    const WebThreadCreationParams& params) {
+std::unique_ptr<WebThread> Platform::CreateThread(const char* name) {
   return nullptr;
 }
 

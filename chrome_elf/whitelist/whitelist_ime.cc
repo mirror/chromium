@@ -9,7 +9,6 @@
 
 #include <algorithm>
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "chrome_elf/nt_registry/nt_registry.h"

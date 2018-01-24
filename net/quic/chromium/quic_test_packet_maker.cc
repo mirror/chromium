@@ -65,52 +65,6 @@ std::unique_ptr<QuicReceivedPacket> QuicTestPacketMaker::MakePingPacket(
       MakePacket(header, QuicFrame(ping)));
 }
 
-std::unique_ptr<QuicReceivedPacket> QuicTestPacketMaker::MakeAckAndPingPacket(
-    QuicPacketNumber num,
-    bool include_version,
-    QuicPacketNumber largest_received,
-    QuicPacketNumber smallest_received,
-    QuicPacketNumber least_unacked) {
-  QuicPacketHeader header;
-  header.connection_id = connection_id_;
-  header.reset_flag = false;
-  header.version_flag = include_version;
-  header.packet_number_length = PACKET_1BYTE_PACKET_NUMBER;
-  header.packet_number = num;
-
-  QuicAckFrame ack(MakeAckFrame(largest_received));
-  ack.ack_delay_time = QuicTime::Delta::Zero();
-  for (QuicPacketNumber i = smallest_received; i <= largest_received; ++i) {
-    ack.received_packet_times.push_back(std::make_pair(i, clock_->Now()));
-  }
-  if (largest_received > 0) {
-    ack.packets.AddRange(1, largest_received + 1);
-  }
-  QuicFrames frames;
-  frames.push_back(QuicFrame(&ack));
-  DVLOG(1) << "Adding frame: " << frames[0];
-
-  QuicStopWaitingFrame stop_waiting;
-  stop_waiting.least_unacked = least_unacked;
-  frames.push_back(QuicFrame(&stop_waiting));
-  DVLOG(1) << "Adding frame: " << frames[1];
-
-  frames.push_back(QuicFrame(QuicPingFrame()));
-  DVLOG(1) << "Adding frame: " << frames[2];
-
-  QuicFramer framer(
-      SupportedVersions(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, version_)),
-      clock_->Now(), perspective_);
-  std::unique_ptr<QuicPacket> packet(
-      BuildUnsizedDataPacket(&framer, header, frames));
-  char buffer[kMaxPacketSize];
-  size_t encrypted_size = framer.EncryptPayload(
-      ENCRYPTION_NONE, header.packet_number, *packet, buffer, kMaxPacketSize);
-  EXPECT_NE(0u, encrypted_size);
-  QuicReceivedPacket encrypted(buffer, encrypted_size, QuicTime::Zero(), false);
-  return std::unique_ptr<QuicReceivedPacket>(encrypted.Clone());
-}
-
 std::unique_ptr<QuicReceivedPacket> QuicTestPacketMaker::MakeRstPacket(
     QuicPacketNumber num,
     bool include_version,
@@ -259,21 +213,17 @@ QuicTestPacketMaker::MakeAckAndConnectionClosePacket(
 }
 
 std::unique_ptr<QuicReceivedPacket>
-QuicTestPacketMaker::MakeConnectionClosePacket(
-    QuicPacketNumber num,
-    bool include_version,
-    QuicErrorCode quic_error,
-    const std::string& quic_error_details) {
+QuicTestPacketMaker::MakeConnectionClosePacket(QuicPacketNumber num) {
   QuicPacketHeader header;
   header.connection_id = connection_id_;
   header.reset_flag = false;
-  header.version_flag = include_version;
+  header.version_flag = false;
   header.packet_number_length = PACKET_1BYTE_PACKET_NUMBER;
   header.packet_number = num;
 
   QuicConnectionCloseFrame close;
-  close.error_code = quic_error;
-  close.error_details = quic_error_details;
+  close.error_code = QUIC_CRYPTO_VERSION_NOT_SUPPORTED;
+  close.error_details = "Time to panic!";
   return std::unique_ptr<QuicReceivedPacket>(
       MakePacket(header, QuicFrame(&close)));
 }
@@ -704,14 +654,6 @@ SpdyHeaderBlock QuicTestPacketMaker::GetRequestHeaders(
   headers[":authority"] = host_;
   headers[":scheme"] = scheme;
   headers[":path"] = path;
-  return headers;
-}
-
-SpdyHeaderBlock QuicTestPacketMaker::ConnectRequestHeaders(
-    const std::string& host_port) {
-  SpdyHeaderBlock headers;
-  headers[":method"] = "CONNECT";
-  headers[":authority"] = host_port;
   return headers;
 }
 

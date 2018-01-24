@@ -313,8 +313,7 @@ content::BrowserMainParts* CastContentBrowserClient::CreateBrowserMainParts(
 }
 
 void CastContentBrowserClient::RenderProcessWillLaunch(
-    content::RenderProcessHost* host,
-    service_manager::mojom::ServiceRequest* service_request) {
+    content::RenderProcessHost* host) {
   // Forcibly trigger I/O-thread URLRequestContext initialization before
   // getting HostResolver.
   content::BrowserThread::PostTaskAndReplyWithResult(

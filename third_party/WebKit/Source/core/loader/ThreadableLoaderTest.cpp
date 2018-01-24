@@ -234,7 +234,8 @@ class WebWorkerFetchContextForTest : public WebWorkerFetchContext {
  public:
   WebWorkerFetchContextForTest(KURL site_for_cookies)
       : site_for_cookies_(site_for_cookies.Copy()) {}
-  void InitializeOnWorkerThread() override {}
+  void InitializeOnWorkerThread(
+      scoped_refptr<base::SingleThreadTaskRunner>) override {}
 
   std::unique_ptr<WebURLLoaderFactory> CreateURLLoaderFactory() override {
     return std::make_unique<WebURLLoaderFactoryWithMock>(

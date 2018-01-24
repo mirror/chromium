@@ -171,8 +171,13 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // NavigationRequest for the FrameTreeNode has been destroyed.
   void CreateNavigationHandle();
 
-  // Returns ownership of the navigation handle.
-  std::unique_ptr<NavigationHandleImpl> TakeNavigationHandle();
+  // Transfers the ownership of the NavigationHandle to |render_frame_host|.
+  // This should be called when the navigation is ready to commit, because the
+  // NavigationHandle outlives the NavigationRequest. The NavigationHandle's
+  // lifetime is the entire navigation, while the NavigationRequest is
+  // destroyed when a navigation is ready for commit.
+  void TransferNavigationHandleOwnership(
+      RenderFrameHostImpl* render_frame_host);
 
   void set_on_start_checks_complete_closure_for_testing(
       const base::Closure& closure) {

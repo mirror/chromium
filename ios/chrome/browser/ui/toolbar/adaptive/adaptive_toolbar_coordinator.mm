@@ -6,7 +6,7 @@
 
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+subclassing.h"
+#import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+protected.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
@@ -61,12 +61,11 @@
 #pragma mark - ToolbarCoordinating
 
 - (void)updateToolbarState {
-  // TODO(crbug.com/803386): This call is needed for interstitials. Check if it
-  // is possible to remove it.
+  // TODO(crbug.com/801082): Implement that.
 }
 
 - (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
-  // TODO(crbug.com/803379): Implement that.
+  // TODO(crbug.com/801082): Implement that.
 }
 
 #pragma mark - ToolbarCommands

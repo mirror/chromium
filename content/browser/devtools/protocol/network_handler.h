@@ -28,14 +28,13 @@ struct URLLoaderCompletionStatus;
 }  // namespace network
 
 namespace content {
-class BrowserContext;
 class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
+struct GlobalRequestID;
 class InterceptionHandle;
 class NavigationHandle;
 class NavigationRequest;
 class NavigationThrottle;
-class StoragePartition;
 struct GlobalRequestID;
 struct InterceptedRequestInfo;
 struct ResourceRequest;
@@ -51,7 +50,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   static std::vector<NetworkHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(int render_process_id,
+  void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host) override;
 
   Response Enable(Maybe<int> max_total_size,
@@ -151,8 +150,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   void SetNetworkConditions(network::mojom::NetworkConditionsPtr conditions);
 
   std::unique_ptr<Network::Frontend> frontend_;
-  BrowserContext* browser_context_;
-  StoragePartition* storage_partition_;
+  RenderProcessHost* process_;
   RenderFrameHostImpl* host_;
   bool enabled_;
   std::string user_agent_;

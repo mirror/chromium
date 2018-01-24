@@ -67,8 +67,7 @@ class U2fHidDiscoveryTest : public testing::Test {
     connector_ = service_manager::Connector::Create(&request);
     service_manager::Connector::TestApi test_api(connector_.get());
     test_api.OverrideBinderForTesting(
-        service_manager::Identity(device::mojom::kServiceName),
-        device::mojom::HidManager::Name_,
+        device::mojom::kServiceName, device::mojom::HidManager::Name_,
         base::Bind(&FakeHidManager::AddBinding,
                    base::Unretained(fake_hid_manager_.get())));
   }

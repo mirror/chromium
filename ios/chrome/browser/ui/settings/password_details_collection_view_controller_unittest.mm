@@ -12,7 +12,6 @@
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
 #import "ios/chrome/browser/web/chrome_web_test.h"
 #include "ios/chrome/grit/ios_strings.h"
-#include "ios/chrome/test/app/password_test_util.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
@@ -22,6 +21,30 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+@interface MockReauthenticationModule : NSObject<ReauthenticationProtocol>
+
+@property(nonatomic, copy) NSString* localizedReasonForAuthentication;
+
+@end
+
+@implementation MockReauthenticationModule
+
+@synthesize localizedReasonForAuthentication =
+    _localizedReasonForAuthentication;
+
+- (BOOL)canAttemptReauth {
+  return YES;
+}
+
+- (void)attemptReauthWithLocalizedReason:(NSString*)localizedReason
+                                 handler:(void (^)(BOOL success))
+                                             showCopyPasswordsHandler {
+  self.localizedReasonForAuthentication = localizedReason;
+  showCopyPasswordsHandler(YES);
+}
+
+@end
 
 @interface MockSavePasswordsCollectionViewController
     : NSObject<PasswordDetailsCollectionViewControllerDelegate>
@@ -74,20 +97,19 @@ class PasswordDetailsCollectionViewControllerTest
   void SetUp() override {
     CollectionViewControllerTest::SetUp();
     delegate_ = [[MockSavePasswordsCollectionViewController alloc] init];
-    reauthentication_module_ = [[MockReauthenticationModule alloc] init];
-    reauthentication_module_.shouldSucceed = YES;
+    reauthenticationModule_ = [[MockReauthenticationModule alloc] init];
   }
 
   CollectionViewController* InstantiateController() override {
     return [[PasswordDetailsCollectionViewController alloc]
           initWithPasswordForm:form_
                       delegate:delegate_
-        reauthenticationModule:reauthentication_module_];
+        reauthenticationModule:reauthenticationModule_];
   }
 
   web::TestWebThreadBundle thread_bundle_;
   MockSavePasswordsCollectionViewController* delegate_;
-  MockReauthenticationModule* reauthentication_module_;
+  MockReauthenticationModule* reauthenticationModule_;
   NSString* origin_;
   autofill::PasswordForm form_;
 };
@@ -279,7 +301,7 @@ TEST_F(PasswordDetailsCollectionViewControllerTest, ShowPassword) {
   EXPECT_TRUE(passwordItem.showingText);
   EXPECT_NSEQ(
       l10n_util::GetNSString(IDS_IOS_SETTINGS_PASSWORD_REAUTH_REASON_SHOW),
-      reauthentication_module_.localizedReasonForAuthentication);
+      reauthenticationModule_.localizedReasonForAuthentication);
   CheckTextCellTitleWithId(IDS_IOS_SETTINGS_PASSWORD_HIDE_BUTTON,
                            kPasswordSection, kShowHideButtonItem);
 }
@@ -312,7 +334,7 @@ TEST_F(PasswordDetailsCollectionViewControllerTest, CopyPassword) {
   EXPECT_NSEQ(kPassword, generalPasteboard.string);
   EXPECT_NSEQ(
       l10n_util::GetNSString(IDS_IOS_SETTINGS_PASSWORD_REAUTH_REASON_COPY),
-      reauthentication_module_.localizedReasonForAuthentication);
+      reauthenticationModule_.localizedReasonForAuthentication);
 }
 
 }  // namespace

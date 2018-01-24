@@ -9,7 +9,6 @@
 
 namespace views {
 class View;
-class Widget;
 }
 
 namespace ash {
@@ -20,8 +19,6 @@ namespace login_layout_util {
 // size, regardless of the view's parent's layout manager.
 ASH_EXPORT views::View* WrapViewForPreferredSize(views::View* view);
 
-// Returns true if landscape constants should be used for UI shown in |widget|.
-ASH_EXPORT bool ShouldShowLandscape(const views::Widget* widget);
 }  // namespace login_layout_util
 
 }  // namespace ash

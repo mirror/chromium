@@ -97,6 +97,10 @@ bool DefaultAccessibilityDelegate::ShouldShowAccessibilityMenu() const {
          controller->IsHighContrastEnabled();
 }
 
+bool DefaultAccessibilityDelegate::IsBrailleDisplayConnected() const {
+  return false;
+}
+
 void DefaultAccessibilityDelegate::SilenceSpokenFeedback() const {}
 
 void DefaultAccessibilityDelegate::SaveScreenMagnifierScale(double scale) {}

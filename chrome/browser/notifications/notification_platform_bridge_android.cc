@@ -108,6 +108,31 @@ ScopedJavaLocalRef<jobjectArray> ConvertToJavaActionInfos(
   return ScopedJavaLocalRef<jobjectArray>(env, actions);
 }
 
+// Callback to run once the profile has been loaded in order to perform a
+// given |operation| in a notification.
+// TODO(miguelg) move it to notification_common?
+void ProfileLoadedCallback(NotificationCommon::Operation operation,
+                           NotificationHandler::Type notification_type,
+                           const GURL& origin,
+                           const std::string& notification_id,
+                           const base::Optional<int>& action_index,
+                           const base::Optional<base::string16>& reply,
+                           const base::Optional<bool>& by_user,
+                           Profile* profile) {
+  if (!profile) {
+    // TODO(miguelg): Add UMA for this condition.
+    // Perhaps propagate this through PersistentNotificationStatus.
+    LOG(WARNING) << "Profile not loaded correctly";
+    return;
+  }
+
+  NotificationDisplayServiceImpl* display_service =
+      NotificationDisplayServiceImpl::GetForProfile(profile);
+  display_service->ProcessNotificationOperation(operation, notification_type,
+                                                origin, notification_id,
+                                                action_index, reply, by_user);
+}
+
 }  // namespace
 
 // Called by the Java side when a notification event has been received, but the
@@ -176,8 +201,7 @@ void NotificationPlatformBridgeAndroid::OnNotificationClicked(
 
   profile_manager->LoadProfile(
       profile_id, incognito,
-      base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
-                 NotificationCommon::CLICK,
+      base::Bind(&ProfileLoadedCallback, NotificationCommon::CLICK,
                  NotificationHandler::Type::WEB_PERSISTENT, origin,
                  notification_id, std::move(action_index), std::move(reply),
                  base::nullopt /* by_user */));
@@ -223,8 +247,7 @@ void NotificationPlatformBridgeAndroid::OnNotificationClosed(
 
   profile_manager->LoadProfile(
       profile_id, incognito,
-      base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
-                 NotificationCommon::CLOSE,
+      base::Bind(&ProfileLoadedCallback, NotificationCommon::CLOSE,
                  NotificationHandler::Type::WEB_PERSISTENT,
                  GURL(ConvertJavaStringToUTF8(env, java_origin)),
                  notification_id, base::nullopt /* action index */,

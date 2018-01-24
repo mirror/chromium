@@ -10,8 +10,6 @@
 #include <sched.h>
 #endif
 
-#include "base/threading/platform_thread.h"
-
 // The YIELD_PROCESSOR macro wraps an architecture specific-instruction that
 // informs the processor we're in a busy wait, so it can handle the branch more
 // intelligently and e.g. reduce power to our core or give more resources to the
@@ -64,17 +62,11 @@
 namespace base {
 namespace subtle {
 
-SpinLock::SpinLock() = default;
-SpinLock::~SpinLock() = default;
-
 void SpinLock::LockSlow() {
   // The value of |kYieldProcessorTries| is cargo culted from TCMalloc, Windows
   // critical section defaults, and various other recommendations.
   // TODO(jschuh): Further tuning may be warranted.
   static const int kYieldProcessorTries = 1000;
-  // The value of |kYieldThreadTries| is completely made up.
-  static const int kYieldThreadTries = 10;
-  int yield_thread_count = 0;
   do {
     do {
       for (int count = 0; count < kYieldProcessorTries; ++count) {
@@ -85,17 +77,8 @@ void SpinLock::LockSlow() {
           return;
       }
 
-      if (yield_thread_count < kYieldThreadTries) {
-        ++yield_thread_count;
-        // Give the OS a chance to schedule something on this core.
-        YIELD_THREAD;
-      } else {
-        // At this point, it's likely that the lock is held by a lower priority
-        // thread that is unavailable to finish its work because of higher
-        // priority threads spinning here. Sleeping should ensure that they make
-        // progress.
-        PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(1));
-      }
+      // Give the OS a chance to schedule something on this core.
+      YIELD_THREAD;
     } while (lock_.load(std::memory_order_relaxed));
   } while (UNLIKELY(lock_.exchange(true, std::memory_order_acquire)));
 }

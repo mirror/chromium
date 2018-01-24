@@ -269,14 +269,14 @@ QuicConnection::QuicConnection(
       packets_between_mtu_probes_(kPacketsBetweenMtuProbesBase),
       next_mtu_probe_at_(kPacketsBetweenMtuProbesBase),
       largest_received_packet_size_(0),
+      goaway_sent_(false),
+      goaway_received_(false),
       write_error_occurred_(false),
       no_stop_waiting_frames_(false),
       consecutive_num_packets_with_no_retransmittable_frames_(0),
       fill_up_link_during_probing_(false),
       probing_retransmission_pending_(false),
-      last_control_frame_id_(kInvalidControlFrameId),
-      use_control_frame_manager_(
-          GetQuicReloadableFlag(quic_use_control_frame_manager)) {
+      last_control_frame_id_(kInvalidControlFrameId) {
   QUIC_DLOG(INFO) << ENDPOINT
                   << "Created connection with connection_id: " << connection_id;
   framer_.set_visitor(this);
@@ -956,6 +956,7 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
                   << " and error: " << QuicErrorCodeToString(frame.error_code)
                   << " and reason: " << frame.reason_phrase;
 
+  goaway_received_ = true;
   visitor_->OnGoAway(frame);
   visitor_->PostProcessAfterData();
   should_last_packet_instigate_acks_ = true;
@@ -1204,42 +1205,14 @@ QuicConsumedData QuicConnection::SendStreamData(QuicStreamId id,
   return packet_generator_.ConsumeData(id, write_length, offset, state);
 }
 
-bool QuicConnection::SendControlFrame(const QuicFrame& frame) {
-  DCHECK(use_control_frame_manager_);
-  if (!CanWrite(HAS_RETRANSMITTABLE_DATA) && frame.type != PING_FRAME) {
-    QUIC_DVLOG(1) << "Failed to send control frame: " << frame;
-    // Do not check congestion window for ping.
-    return false;
-  }
-  ScopedPacketFlusher flusher(this, SEND_ACK_IF_PENDING);
-  packet_generator_.AddControlFrame(frame);
-  if (frame.type == PING_FRAME) {
-    // Flush PING frame immediately.
-    packet_generator_.FlushAllQueuedFrames();
-    if (debug_visitor_ != nullptr) {
-      debug_visitor_->OnPingSent();
-    }
-  }
-  if (frame.type == BLOCKED_FRAME) {
-    stats_.blocked_frames_sent++;
-  }
-  return true;
-}
-
 void QuicConnection::SendRstStream(QuicStreamId id,
                                    QuicRstStreamErrorCode error,
                                    QuicStreamOffset bytes_written) {
-  DCHECK(!use_control_frame_manager_);
   // Opportunistically bundle an ack with this outgoing packet.
   ScopedPacketFlusher flusher(this, SEND_ACK_IF_PENDING);
   packet_generator_.AddControlFrame(QuicFrame(new QuicRstStreamFrame(
       ++last_control_frame_id_, id, error, bytes_written)));
 
-  OnStreamReset(id, error);
-}
-
-void QuicConnection::OnStreamReset(QuicStreamId id,
-                                   QuicRstStreamErrorCode error) {
   if (error == QUIC_STREAM_NO_ERROR) {
     // All data for streams which are reset with QUIC_STREAM_NO_ERROR must
     // be received by the peer.
@@ -1247,13 +1220,11 @@ void QuicConnection::OnStreamReset(QuicStreamId id,
   }
   // Flush stream frames of reset stream.
   if (packet_generator_.HasPendingStreamFramesOfStream(id)) {
-    ScopedPacketFlusher flusher(this, SEND_ACK_IF_PENDING);
     packet_generator_.FlushAllQueuedFrames();
   }
 
   sent_packet_manager_.CancelRetransmissionsForStream(id);
   // Remove all queued packets which only contain data for the reset stream.
-  // TODO(fayang): consider removing this because it should be rarely executed.
   QueuedPacketList::iterator packet_iterator = queued_packets_.begin();
   while (packet_iterator != queued_packets_.end()) {
     QuicFrames* retransmittable_frames =
@@ -1277,7 +1248,6 @@ void QuicConnection::OnStreamReset(QuicStreamId id,
 
 void QuicConnection::SendWindowUpdate(QuicStreamId id,
                                       QuicStreamOffset byte_offset) {
-  DCHECK(!use_control_frame_manager_);
   // Opportunistically bundle an ack with this outgoing packet.
   ScopedPacketFlusher flusher(this, SEND_ACK_IF_PENDING);
   packet_generator_.AddControlFrame(QuicFrame(
@@ -1285,7 +1255,6 @@ void QuicConnection::SendWindowUpdate(QuicStreamId id,
 }
 
 void QuicConnection::SendBlocked(QuicStreamId id) {
-  DCHECK(!use_control_frame_manager_);
   // Opportunistically bundle an ack with this outgoing packet.
   ScopedPacketFlusher flusher(this, SEND_ACK_IF_PENDING);
   packet_generator_.AddControlFrame(
@@ -1442,7 +1411,8 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     if (self_address_.port() != last_packet_destination_address_.port() ||
         self_address_.host().Normalized() !=
             last_packet_destination_address_.host().Normalized()) {
-      if (!visitor_->AllowSelfAddressChange()) {
+      if (!GetQuicReloadableFlag(quic_allow_address_change_for_udp_proxy) ||
+          !visitor_->AllowSelfAddressChange()) {
         CloseConnection(
             QUIC_ERROR_MIGRATING_ADDRESS,
             "Self address migration is not supported at the server.",
@@ -1946,16 +1916,11 @@ void QuicConnection::SendOrQueuePacket(SerializedPacket* packet) {
 
 void QuicConnection::OnPingTimeout() {
   if (!retransmission_alarm_->IsSet()) {
-    if (use_control_frame_manager_) {
-      visitor_->SendPing();
-    } else {
-      SendPing();
-    }
+    SendPing();
   }
 }
 
 void QuicConnection::SendPing() {
-  DCHECK(!use_control_frame_manager_);
   ScopedPacketFlusher flusher(this, SEND_ACK_IF_QUEUED);
   packet_generator_.AddControlFrame(
       QuicFrame(QuicPingFrame(++last_control_frame_id_)));
@@ -1986,12 +1951,10 @@ void QuicConnection::SendAck() {
   }
 
   visitor_->OnAckNeedsRetransmittableFrame();
-  if (!use_control_frame_manager_) {
-    if (!packet_generator_.HasRetransmittableFrames()) {
-      // Visitor did not add a retransmittable frame, add a ping frame.
-      packet_generator_.AddControlFrame(
-          QuicFrame(QuicPingFrame(++last_control_frame_id_)));
-    }
+  if (!packet_generator_.HasRetransmittableFrames()) {
+    // Visitor did not add a retransmittable frame, add a ping frame.
+    packet_generator_.AddControlFrame(
+        QuicFrame(QuicPingFrame(++last_control_frame_id_)));
   }
 }
 
@@ -2205,7 +2168,11 @@ void QuicConnection::CancelAllAlarms() {
 void QuicConnection::SendGoAway(QuicErrorCode error,
                                 QuicStreamId last_good_stream_id,
                                 const string& reason) {
-  DCHECK(!use_control_frame_manager_);
+  if (goaway_sent_) {
+    return;
+  }
+  goaway_sent_ = true;
+
   QUIC_DLOG(INFO) << ENDPOINT << "Going away with error "
                   << QuicErrorCodeToString(error) << " (" << error << ")";
 
@@ -2285,9 +2252,11 @@ void QuicConnection::CheckForTimeout() {
   if (idle_duration >= idle_network_timeout_) {
     const string error_details = "No recent network activity.";
     QUIC_DVLOG(1) << ENDPOINT << error_details;
-    if ((sent_packet_manager_.GetConsecutiveTlpCount() > 0 ||
+    if (GetQuicReloadableFlag(quic_explicit_close_after_tlp) &&
+        (sent_packet_manager_.GetConsecutiveTlpCount() > 0 ||
          sent_packet_manager_.GetConsecutiveRtoCount() > 0 ||
          visitor_->HasOpenDynamicStreams())) {
+      QUIC_FLAG_COUNT(quic_reloadable_flag_quic_explicit_close_after_tlp);
       CloseConnection(QUIC_NETWORK_IDLE_TIMEOUT, error_details,
                       ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     } else {
@@ -2551,32 +2520,17 @@ bool QuicConnection::SendConnectivityProbingPacket(
   QUIC_DLOG(INFO) << ENDPOINT << "Sending connectivity probing packet for "
                   << "connection_id = " << connection_id_;
 
-  OwningSerializedPacketPointer probing_packet(
+  std::unique_ptr<QuicEncryptedPacket> probing_packet(
       packet_generator_.SerializeConnectivityProbingPacket());
-  DCHECK_EQ(IsRetransmittable(*probing_packet), NO_RETRANSMITTABLE_DATA);
 
   WriteResult result = probing_writer->WritePacket(
-      probing_packet->encrypted_buffer, probing_packet->encrypted_length,
-      self_address().host(), peer_address, per_packet_options_);
+      probing_packet->data(), probing_packet->length(), self_address().host(),
+      peer_address, per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
     QUIC_DLOG(INFO) << "Write probing packet not finished with error = "
                     << result.error_code;
     return false;
-  }
-
-  // Call OnPacketSent regardless of the write result. This treats a blocked
-  // write the same as a packet loss.
-  sent_packet_manager_.OnPacketSent(
-      probing_packet.get(), probing_packet->original_packet_number,
-      clock_->Now(), probing_packet->transmission_type,
-      NO_RETRANSMITTABLE_DATA);
-
-  if (result.status == WRITE_STATUS_BLOCKED) {
-    visitor_->OnWriteBlocked();
-    if (probing_writer->IsWriteBlockedDataBuffered()) {
-      QUIC_BUG << "Write probing packet blocked";
-    }
   }
 
   return true;

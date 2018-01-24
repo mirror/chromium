@@ -140,7 +140,8 @@ SyncedSession* SyncedSessionTracker::GetSession(
   if (synced_session_map_.find(session_tag) != synced_session_map_.end())
     return synced_session_map_[session_tag].get();
 
-  auto synced_session = std::make_unique<SyncedSession>();
+  std::unique_ptr<SyncedSession> synced_session =
+      std::make_unique<SyncedSession>();
   DVLOG(1) << "Creating new session with tag " << session_tag << " at "
            << synced_session.get();
   synced_session->session_tag = session_tag;
@@ -334,7 +335,8 @@ sessions::SessionTab* SyncedSessionTracker::GetTab(
                << "'s seen tab " << tab_id << " at " << tab_ptr << " " << title;
     }
   } else {
-    auto tab = std::make_unique<sessions::SessionTab>();
+    std::unique_ptr<sessions::SessionTab> tab =
+        std::make_unique<sessions::SessionTab>();
     tab_ptr = tab.get();
     tab->tab_id.set_id(tab_id);
     synced_tab_map_[session_tag][tab_id] = tab_ptr;

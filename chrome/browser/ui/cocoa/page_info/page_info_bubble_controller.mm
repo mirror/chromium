@@ -298,8 +298,7 @@ bool IsInternalURL(const GURL& url) {
 }
 
 - (void)showWindow:(id)sender {
-  BrowserWindowController* controller = [BrowserWindowController
-      browserWindowControllerForWindow:[self parentWindow]];
+  BrowserWindowController* controller = [[self parentWindow] windowController];
   LocationBarViewMac* locationBar = [controller locationBarBridge];
   if (locationBar) {
     decoration_ = locationBar->page_info_decoration();
@@ -1229,8 +1228,8 @@ bool IsInternalURL(const GURL& url) {
       [label setFrameOrigin:point];
     }
 
-    label.textColor =
-        skia::SkColorToSRGBNSColor(PageInfoUI::GetSecondaryTextColor());
+    label.textColor = skia::SkColorToSRGBNSColor(
+        PageInfoUI::GetPermissionDecisionTextColor());
     point.y += NSHeight(label.frame);
   }
 

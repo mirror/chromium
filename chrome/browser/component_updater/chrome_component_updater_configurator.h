@@ -15,6 +15,10 @@ namespace base {
 class CommandLine;
 }
 
+namespace net {
+class URLRequestContextGetter;
+}
+
 namespace component_updater {
 
 // Registers preferences associated with the component updater configurator
@@ -27,6 +31,7 @@ void RegisterPrefsForChromeComponentUpdaterConfigurator(
 scoped_refptr<update_client::Configurator>
 MakeChromeComponentUpdaterConfigurator(
     const base::CommandLine* cmdline,
+    net::URLRequestContextGetter* context_getter,
     PrefService* pref_service);
 
 }  // namespace component_updater

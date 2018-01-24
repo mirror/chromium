@@ -6,8 +6,8 @@
 #define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_RULESET_MATCHER_H_
 
 #include <memory>
-#include <string>
 
+#include "base/files/memory_mapped_file.h"
 #include "components/url_pattern_index/url_pattern_index.h"
 
 namespace base {
@@ -29,10 +29,11 @@ struct UrlRuleMetadata;
 }  // namespace flat
 
 // RulesetMatcher encapsulates the Declarative Net Request API ruleset
-// corresponding to a single extension. This uses the url_pattern_index
-// component to achieve fast matching of network requests against declarative
-// rules. Since this class is immutable, it is thread-safe. In practice it is
-// accessed on the IO thread but created on a sequence where file IO is allowed.
+// corresponding to a single extension. The ruleset file is memory mapped. This
+// uses the url_pattern_index component to achieve fast matching of network
+// requests against declarative rules. Since this class is immutable, it is
+// thread-safe. In practice it is accessed on the IO thread but created on a
+// sequence where file IO is allowed.
 class RulesetMatcher {
  public:
   // Describes the result of creating a RulesetMatcher instance.
@@ -41,7 +42,7 @@ class RulesetMatcher {
   enum LoadRulesetResult {
     kLoadSuccess = 0,
     kLoadErrorInvalidPath = 1,
-    kLoadErrorFileRead = 2,
+    kLoadErrorMemoryMap = 2,
     kLoadErrorRulesetVerification = 3,
     kLoadResultMax
   };
@@ -78,9 +79,10 @@ class RulesetMatcher {
   using ExtensionMetadataList =
       flatbuffers::Vector<flatbuffers::Offset<flat::UrlRuleMetadata>>;
 
-  explicit RulesetMatcher(std::string ruleset_data);
+  explicit RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset_file);
 
-  const std::string ruleset_data_;
+  // The memory mapped ruleset file.
+  std::unique_ptr<base::MemoryMappedFile> ruleset_;
 
   const flat::ExtensionIndexedRuleset* const root_;
   const UrlPatternIndexMatcher blacklist_matcher_;

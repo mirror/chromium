@@ -157,15 +157,12 @@ template <typename ContainerType>
 ContainerType* AttachToResource(SVGTreeScopeResources& tree_scope_resources,
                                 const AtomicString& id,
                                 SVGElement& element) {
-  SVGTreeScopeResources::Resource* resource =
-      tree_scope_resources.ResourceForId(id);
-  if (!resource)
-    return nullptr;
-  if (LayoutSVGResourceContainer* container = resource->ResourceContainer()) {
+  if (LayoutSVGResourceContainer* container =
+          tree_scope_resources.ResourceById(id)) {
     if (IsResourceOfType<ContainerType>(container))
       return static_cast<ContainerType*>(container);
   }
-  resource->AddWatch(element);
+  tree_scope_resources.AddPendingResource(id, element);
   return nullptr;
 }
 }
@@ -280,22 +277,6 @@ std::unique_ptr<SVGResources> SVGResources::BuildResources(
 
   return (!resources || !resources->HasResourceData()) ? nullptr
                                                        : std::move(resources);
-}
-
-void SVGResources::RemoveUnreferencedResources(const LayoutObject& object) {
-  SVGTreeScopeResources& tree_scope_resources =
-      ToSVGElement(*object.GetNode())
-          .TreeScopeForIdResolution()
-          .EnsureSVGTreeScopedResources();
-  tree_scope_resources.RemoveUnreferencedResources();
-}
-
-void SVGResources::RemoveWatchesForElement(Element& element) {
-  SECURITY_DCHECK(element.IsSVGElement());
-  SVGElement& svg_element = ToSVGElement(element);
-  SVGTreeScopeResources& tree_scope_resources =
-      svg_element.TreeScopeForIdResolution().EnsureSVGTreeScopedResources();
-  tree_scope_resources.RemoveWatchesForElement(svg_element);
 }
 
 void SVGResources::LayoutIfNeeded() {

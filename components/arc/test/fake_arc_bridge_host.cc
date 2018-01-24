@@ -90,9 +90,6 @@ void FakeArcBridgeHost::OnProcessInstanceReady(
 void FakeArcBridgeHost::OnRotationLockInstanceReady(
     mojom::RotationLockInstancePtr rotation_lock_ptr) {}
 
-void FakeArcBridgeHost::OnScreenCaptureInstanceReady(
-    mojom::ScreenCaptureInstancePtr screen_capture_ptr) {}
-
 void FakeArcBridgeHost::OnStorageManagerInstanceReady(
     mojom::StorageManagerInstancePtr storage_manager_ptr) {}
 

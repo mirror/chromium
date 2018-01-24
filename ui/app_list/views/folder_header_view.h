@@ -68,6 +68,7 @@ class APP_LIST_EXPORT FolderHeaderView : public views::View,
   // views::View overrides:
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
   // views::TextfieldController overrides:
   void ContentsChanged(views::Textfield* sender,
@@ -90,6 +91,7 @@ class APP_LIST_EXPORT FolderHeaderView : public views::View,
   FolderHeaderViewDelegate* delegate_;
 
   bool folder_name_visible_;
+  bool is_fullscreen_app_list_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(FolderHeaderView);
 };

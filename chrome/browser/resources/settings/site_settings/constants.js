@@ -33,7 +33,6 @@ settings.ContentSettingsTypes = {
   PROTECTED_CONTENT: 'protectedContent',
   ADS: 'ads',
   CLIPBOARD: 'clipboard',
-  SENSORS: 'sensors',
 };
 
 /**

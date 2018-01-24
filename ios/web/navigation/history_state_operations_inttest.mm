@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/compiler_specific.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
@@ -71,15 +70,15 @@ class HistoryStateOperationsTest : public web::WebIntTest {
     // Load the history state test page.
     state_operations_url_ =
         web::test::HttpServer::MakeUrl(kHistoryStateOperationsTestUrl);
-    ASSERT_TRUE(LoadUrl(state_operations_url()));
+    LoadUrl(state_operations_url());
   }
 
   // The URL of the window.location test page.
   const GURL& state_operations_url() { return state_operations_url_; }
 
   // Reloads the page and waits for the load to finish.
-  bool Reload() WARN_UNUSED_RESULT {
-    return ExecuteBlockAndWaitForLoad(GetLastCommittedItem()->GetURL(), ^{
+  void Reload() {
+    ExecuteBlockAndWaitForLoad(GetLastCommittedItem()->GetURL(), ^{
       // TODO(crbug.com/677364): Use NavigationManager::Reload() once it no
       // longer requires a web delegate.
       web_state()->ExecuteJavaScript(ASCIIToUTF16("window.location.reload()"));
@@ -244,11 +243,11 @@ TEST_F(HistoryStateOperationsTest, DISABLED_TitleReplacement) {
   // NavigationItem can be used later to verify that the title is replaced
   // rather than pushed.
   GURL about_blank("about:blank");
-  ASSERT_TRUE(LoadUrl(about_blank));
+  LoadUrl(about_blank);
   web::NavigationItem* about_blank_item = GetLastCommittedItem();
-  EXPECT_TRUE(ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
+  ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
     navigation_manager()->GoBack();
-  }));
+  });
   EXPECT_EQ(state_operations_url(), GetLastCommittedItem()->GetURL());
   // Set up the state parameters and tap the replace state button.
   std::string empty_state;
@@ -274,11 +273,11 @@ TEST_F(HistoryStateOperationsTest, StateReplacement) {
   // NavigationItem can be used later to verify that the state is replaced
   // rather than pushed.
   GURL about_blank("about:blank");
-  ASSERT_TRUE(LoadUrl(about_blank));
+  LoadUrl(about_blank);
   web::NavigationItem* about_blank_item = GetLastCommittedItem();
-  EXPECT_TRUE(ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
+  ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
     navigation_manager()->GoBack();
-  }));
+  });
   ASSERT_EQ(state_operations_url(), GetLastCommittedItem()->GetURL());
   // Set up the state parameters and tap the replace state button.
   std::string new_state("STATE OBJECT");
@@ -327,7 +326,7 @@ TEST_F(HistoryStateOperationsTest, MAYBE_StateReplacementReload) {
   SetStateParams(new_state, empty_title, empty_url);
   ASSERT_TRUE(web::test::TapWebViewElementWithId(web_state(), kReplaceStateId));
   // Reload the page and check that the state object is present.
-  EXPECT_TRUE(Reload());
+  Reload();
   ASSERT_TRUE(IsOnLoadTextVisible());
   BOOL completed = testing::WaitUntilConditionOrTimeout(
       testing::kWaitForJSCompletionTimeout, ^{
@@ -343,10 +342,10 @@ TEST_F(HistoryStateOperationsTest, StateReplacementBackForward) {
   // NavigationItem can be used later to verify that the state is replaced
   // rather than pushed.
   GURL about_blank("about:blank");
-  ASSERT_TRUE(LoadUrl(about_blank));
-  ASSERT_TRUE(ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
+  LoadUrl(about_blank);
+  ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
     navigation_manager()->GoBack();
-  }));
+  });
   ASSERT_EQ(state_operations_url(), GetLastCommittedItem()->GetURL());
   // Set up the state parameters and tap the replace state button.
   std::string new_state("STATE OBJECT");
@@ -355,12 +354,12 @@ TEST_F(HistoryStateOperationsTest, StateReplacementBackForward) {
   SetStateParams(new_state, empty_title, empty_url);
   ASSERT_TRUE(web::test::TapWebViewElementWithId(web_state(), kReplaceStateId));
   // Go forward and back, then check that the state object is present.
-  ASSERT_TRUE(ExecuteBlockAndWaitForLoad(about_blank, ^{
+  ExecuteBlockAndWaitForLoad(about_blank, ^{
     navigation_manager()->GoForward();
-  }));
-  ASSERT_TRUE(ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
+  });
+  ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
     navigation_manager()->GoBack();
-  }));
+  });
   ASSERT_TRUE(IsOnLoadTextVisible());
   BOOL completed = testing::WaitUntilConditionOrTimeout(
       testing::kWaitForJSCompletionTimeout, ^{
@@ -376,11 +375,11 @@ TEST_F(HistoryStateOperationsTest, PushState) {
   // NavigationItem can be used later to verify that the state is replaced
   // rather than pushed.
   GURL about_blank("about:blank");
-  ASSERT_TRUE(LoadUrl(about_blank));
+  LoadUrl(about_blank);
   web::NavigationItem* about_blank_item = GetLastCommittedItem();
-  ASSERT_TRUE(ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
+  ExecuteBlockAndWaitForLoad(state_operations_url(), ^{
     navigation_manager()->GoBack();
-  }));
+  });
   ASSERT_EQ(state_operations_url(), GetLastCommittedItem()->GetURL());
   web::NavigationItem* non_pushed_item = GetLastCommittedItem();
   // Set up the state parameters and tap the replace state button.
@@ -451,7 +450,7 @@ TEST_F(HistoryStateOperationsTest, ReplaceStateThenReload) {
   GURL url = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/"
       "onload_replacestate_reload.html");
-  ASSERT_TRUE(LoadUrl(url));
+  LoadUrl(url);
   GURL new_url = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/pony.html");
   BOOL completed =

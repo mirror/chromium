@@ -7,7 +7,7 @@
   await TestRunner.loadModule('sources_test_runner');
   await TestRunner.showPanel('sources');
 
-  var sourcesNavigator = new Sources.NetworkNavigatorView();
+  var sourcesNavigator = new Sources.SourcesNavigatorView();
   sourcesNavigator.show(UI.inspectorView.element);
 
   Common.moduleSetting('jsSourceMapsEnabled').set(true);

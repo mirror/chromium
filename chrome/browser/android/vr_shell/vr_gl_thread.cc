@@ -46,8 +46,7 @@ base::WeakPtr<VrShellGl> VrGLThread::GetVrShellGl() {
 
 void VrGLThread::Init() {
   bool keyboard_enabled =
-      base::FeatureList::IsEnabled(features::kVrBrowserKeyboard) &&
-      !ui_initial_state_.web_vr_autopresentation_expected;
+      base::FeatureList::IsEnabled(features::kVrBrowserKeyboard);
   if (keyboard_enabled) {
     keyboard_delegate_ = GvrKeyboardDelegate::Create();
     text_input_delegate_ = std::make_unique<vr::TextInputDelegate>();
@@ -87,17 +86,11 @@ void VrGLThread::CleanUp() {
   vr_shell_gl_.reset();
 }
 
-void VrGLThread::ContentSurfaceCreated(jobject surface) {
+void VrGLThread::ContentSurfaceChanged(jobject surface) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&VrShell::ContentSurfaceCreated, weak_vr_shell_, surface));
-}
-
-void VrGLThread::ContentOverlaySurfaceCreated(jobject surface) {
-  main_thread_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&VrShell::ContentOverlaySurfaceCreated,
-                                weak_vr_shell_, surface));
+      base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
 }
 
 void VrGLThread::GvrDelegateReady(
@@ -279,11 +272,11 @@ void VrGLThread::SetAudioCaptureEnabled(bool enabled) {
                             browser_ui_, enabled));
 }
 
-void VrGLThread::SetLocationAccessEnabled(bool enabled) {
+void VrGLThread::SetLocationAccess(bool enabled) {
   DCHECK(OnMainThread());
-  task_runner()->PostTask(
-      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetLocationAccessEnabled,
-                            browser_ui_, enabled));
+  task_runner()->PostTask(FROM_HERE,
+                          base::Bind(&vr::BrowserUiInterface::SetLocationAccess,
+                                     browser_ui_, enabled));
 }
 
 void VrGLThread::SetVideoCaptureEnabled(bool enabled) {

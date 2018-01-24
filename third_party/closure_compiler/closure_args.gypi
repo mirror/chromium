@@ -42,6 +42,8 @@
     'checks_only',
     'chrome_pass',
     'polymer_pass',
+
+    'source_map_format=V3',
   ],
 
   'default_disabled_closure_args': [

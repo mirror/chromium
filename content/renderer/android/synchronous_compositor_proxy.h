@@ -56,7 +56,6 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
   void Invalidate() override;
   void SubmitCompositorFrame(uint32_t layer_tree_frame_sink_id,
                              viz::CompositorFrame frame) override;
-  void SetNeedsBeginFrames(bool needs_begin_frames) override;
 
   void SetLayerTreeFrameSink(
       SynchronousLayerTreeFrameSink* layer_tree_frame_sink);
@@ -69,8 +68,6 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
 
   // IPC handlers.
   void OnComputeScroll(base::TimeTicks animation_time);
-  void OnSetBeginFrameSourcePaused(bool paused);
-  void OnBeginFrame(const viz::BeginFrameArgs& args);
   void DemandDrawHwAsync(const SyncCompositorDemandDrawHwParams& params);
   void DemandDrawHw(const SyncCompositorDemandDrawHwParams& params,
                     IPC::Message* reply_message);
@@ -114,7 +111,6 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
   IPC::Message* hardware_draw_reply_;
   IPC::Message* software_draw_reply_;
   bool hardware_draw_reply_async_;
-  bool begin_frame_paused_ = false;
 
   // From browser.
   std::unique_ptr<SharedMemoryWithSize> software_draw_shm_;

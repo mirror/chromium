@@ -36,25 +36,14 @@ using ConsumeAnimationItemValue = CSSValue* (*)(CSSPropertyID,
                                                 CSSParserTokenRange&,
                                                 const CSSParserContext&,
                                                 bool use_legacy_parsing);
-using IsPositionKeyword = bool (*)(CSSValueID);
-using ConsumePlaceAlignmentValue = CSSValue* (*)(CSSParserTokenRange&,
-                                                 IsPositionKeyword);
+using ConsumePlaceAlignmentValue = CSSValue* (*)(CSSParserTokenRange&);
 
 constexpr size_t kMaxNumAnimationLonghands = 8;
 
-bool IsSelfPositionKeyword(CSSValueID);
-bool IsSelfPositionOrLeftOrRightKeyword(CSSValueID);
-bool IsContentPositionKeyword(CSSValueID);
-bool IsContentPositionOrLeftOrRightKeyword(CSSValueID);
-
-CSSValue* ConsumeSelfPositionOverflowPosition(CSSParserTokenRange&,
-                                              IsPositionKeyword);
-CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange&,
-                                        IsPositionKeyword);
-CSSValue* ConsumeContentDistributionOverflowPosition(CSSParserTokenRange&,
-                                                     IsPositionKeyword);
-CSSValue* ConsumeSimplifiedContentPosition(CSSParserTokenRange&,
-                                           IsPositionKeyword);
+CSSValue* ConsumeSelfPositionOverflowPosition(CSSParserTokenRange&);
+CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange&);
+CSSValue* ConsumeContentDistributionOverflowPosition(CSSParserTokenRange&);
+CSSValue* ConsumeSimplifiedContentPosition(CSSParserTokenRange&);
 
 CSSValue* ConsumeAnimationIterationCount(CSSParserTokenRange&);
 CSSValue* ConsumeAnimationName(CSSParserTokenRange&,

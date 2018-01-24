@@ -161,11 +161,11 @@ class ContainerURLRequestContext final : public URLRequestContext {
     storage_.set_reporting_service(nullptr);
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
-    // Shut down the ProxyResolutionService, as it may have pending URLRequests
-    // using this context. Since this cancels requests, it's not safe to
-    // subclass this, as some parts of the URLRequestContext may then be torn
-    // down before this cancels the ProxyResolutionService's URLRequests.
-    proxy_resolution_service()->OnShutdown();
+    // Shut down the ProxyService, as it may have pending URLRequests using this
+    // context. Since this cancels requests, it's not safe to subclass this, as
+    // some parts of the URLRequestContext may then be torn down before this
+    // cancels the ProxyService's URLRequests.
+    proxy_service()->OnShutdown();
 
     AssertNoURLRequests();
   }
@@ -211,7 +211,7 @@ URLRequestContextBuilder::URLRequestContextBuilder()
       net_log_(nullptr),
       shared_host_resolver_(nullptr),
       pac_quick_check_enabled_(true),
-      pac_sanitize_url_policy_(ProxyResolutionService::SanitizeUrlPolicy::SAFE),
+      pac_sanitize_url_policy_(ProxyService::SanitizeUrlPolicy::SAFE),
       shared_proxy_delegate_(nullptr),
 #if BUILDFLAG(ENABLE_REPORTING)
       shared_http_auth_handler_factory_(nullptr),
@@ -233,8 +233,7 @@ void URLRequestContextBuilder::SetHttpNetworkSessionComponents(
   session_context->cert_transparency_verifier =
       request_context->cert_transparency_verifier();
   session_context->ct_policy_enforcer = request_context->ct_policy_enforcer();
-  session_context->proxy_resolution_service =
-      request_context->proxy_resolution_service();
+  session_context->proxy_service = request_context->proxy_service();
   session_context->ssl_config_service = request_context->ssl_config_service();
   session_context->http_auth_handler_factory =
       request_context->http_auth_handler_factory();
@@ -506,25 +505,23 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
         std::make_unique<URLRequestThrottlerManager>());
   }
 
-  if (!proxy_resolution_service_) {
+  if (!proxy_service_) {
 #if !defined(OS_LINUX) && !defined(OS_ANDROID)
     // TODO(willchan): Switch to using this code when
-    // ProxyResolutionService::CreateSystemProxyConfigService()'s signature
-    // doesn't suck.
+    // ProxyService::CreateSystemProxyConfigService()'s signature doesn't suck.
     if (!proxy_config_service_) {
-      proxy_config_service_ =
-          ProxyResolutionService::CreateSystemProxyConfigService(
-              base::ThreadTaskRunnerHandle::Get().get());
+      proxy_config_service_ = ProxyService::CreateSystemProxyConfigService(
+          base::ThreadTaskRunnerHandle::Get().get());
     }
 #endif  // !defined(OS_LINUX) && !defined(OS_ANDROID)
-    proxy_resolution_service_ =
+    proxy_service_ =
         CreateProxyService(std::move(proxy_config_service_), context.get(),
                            context->host_resolver(),
                            context->network_delegate(), context->net_log());
-    proxy_resolution_service_->set_quick_check_enabled(pac_quick_check_enabled_);
-    proxy_resolution_service_->set_sanitize_url_policy(pac_sanitize_url_policy_);
+    proxy_service_->set_quick_check_enabled(pac_quick_check_enabled_);
+    proxy_service_->set_sanitize_url_policy(pac_sanitize_url_policy_);
   }
-  storage->set_proxy_resolution_service(std::move(proxy_resolution_service_));
+  storage->set_proxy_service(std::move(proxy_service_));
 
   HttpNetworkSession::Context network_session_context;
   SetHttpNetworkSessionComponents(context.get(), &network_session_context);
@@ -658,14 +655,13 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
   return std::move(context);
 }
 
-std::unique_ptr<ProxyResolutionService>
-URLRequestContextBuilder::CreateProxyService(
+std::unique_ptr<ProxyService> URLRequestContextBuilder::CreateProxyService(
     std::unique_ptr<ProxyConfigService> proxy_config_service,
     URLRequestContext* url_request_context,
     HostResolver* host_resolver,
     NetworkDelegate* network_delegate,
     NetLog* net_log) {
-  return ProxyResolutionService::CreateUsingSystemProxyResolver(
+  return ProxyService::CreateUsingSystemProxyResolver(
       std::move(proxy_config_service), net_log);
 }
 

@@ -22,7 +22,6 @@
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
-#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
 #include "net/spdy/chromium/http2_push_promise_index.h"
@@ -77,7 +76,7 @@ class SpdyStreamTest : public ::testing::Test {
 
   base::WeakPtr<SpdySession> CreateDefaultSpdySession() {
     SpdySessionKey key(HostPortPair::FromURL(url_), ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED, SocketTag());
+                       PRIVACY_MODE_DISABLED);
     return CreateSpdySession(session_.get(), key, NetLogWithSource());
   }
 
@@ -357,7 +356,7 @@ TEST_F(SpdyStreamTest, PushedStream) {
   data.RunUntilPaused();
 
   const SpdySessionKey key(HostPortPair::FromURL(url_), ProxyServer::Direct(),
-                           PRIVACY_MODE_DISABLED, SocketTag());
+                           PRIVACY_MODE_DISABLED);
   const GURL pushed_url(kPushUrl);
   HttpRequestInfo push_request;
   push_request.url = pushed_url;

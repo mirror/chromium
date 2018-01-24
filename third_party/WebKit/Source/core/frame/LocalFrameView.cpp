@@ -540,10 +540,6 @@ bool LocalFrameView::DidFirstLayout() const {
   return !first_layout_;
 }
 
-bool LocalFrameView::LifecycleUpdatesActive() const {
-  return !lifecycle_updates_throttled_;
-}
-
 void LocalFrameView::InvalidateRect(const IntRect& rect) {
   auto* layout_object = frame_->OwnerLayoutObject();
   if (!layout_object)
@@ -2058,11 +2054,14 @@ void LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
   }
 }
 
-static CompositedSelection ComputeCompositedSelection(LocalFrame& frame) {
+bool LocalFrameView::ComputeCompositedSelection(
+    LocalFrame& frame,
+    CompositedSelection& selection) {
   if (!frame.View() || frame.View()->ShouldThrottleRendering())
-    return {};
+    return false;
 
-  return RenderedPosition::ComputeCompositedSelection(frame.Selection());
+  selection = RenderedPosition::ComputeCompositedSelection(frame.Selection());
+  return selection.type != kNoSelection;
 }
 
 void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
@@ -2074,6 +2073,7 @@ void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
   Page* page = GetFrame().GetPage();
   DCHECK(page);
 
+  CompositedSelection selection;
   LocalFrame* focused_frame = page->GetFocusController().FocusedFrame();
   LocalFrame* local_frame =
       (focused_frame &&
@@ -2081,26 +2081,22 @@ void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
           ? focused_frame
           : nullptr;
 
-  if (local_frame) {
-    const CompositedSelection& selection =
-        ComputeCompositedSelection(*local_frame);
-    if (selection.type != kNoSelection) {
-      page->GetChromeClient().UpdateCompositedSelection(local_frame, selection);
-      return;
+  if (local_frame && ComputeCompositedSelection(*local_frame, selection)) {
+    page->GetChromeClient().UpdateCompositedSelection(local_frame, selection);
+  } else {
+    if (!local_frame) {
+      // Clearing the mainframe when there is no focused frame (and hence
+      // no localFrame) is legacy behaviour, and implemented here to
+      // satisfy ParameterizedWebFrameTest.CompositedSelectionBoundsCleared's
+      // first check that the composited selection has been cleared even
+      // though no frame has focus yet. If this is not desired, then the
+      // expectation needs to be removed from the test.
+      local_frame = &frame_->LocalFrameRoot();
     }
-  }
 
-  if (!local_frame) {
-    // Clearing the mainframe when there is no focused frame (and hence
-    // no localFrame) is legacy behaviour, and implemented here to
-    // satisfy ParameterizedWebFrameTest.CompositedSelectionBoundsCleared's
-    // first check that the composited selection has been cleared even
-    // though no frame has focus yet. If this is not desired, then the
-    // expectation needs to be removed from the test.
-    local_frame = &frame_->LocalFrameRoot();
+    if (local_frame)
+      page->GetChromeClient().ClearCompositedSelection(local_frame);
   }
-  DCHECK(local_frame);
-  page->GetChromeClient().ClearCompositedSelection(local_frame);
 }
 
 void LocalFrameView::SetNeedsCompositingUpdate(
@@ -3176,8 +3172,9 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
       if (target_state >= DocumentLifecycle::kCompositingClean) {
         ScrollContentsIfNeededRecursive();
 
-        frame_->GetPage()->GlobalRootScrollerController().DidUpdateCompositing(
-            *this);
+        frame_->GetPage()
+            ->GlobalRootScrollerController()
+            .DidUpdateCompositing();
       }
 
       if (target_state >= DocumentLifecycle::kPrePaintClean) {
@@ -3675,15 +3672,6 @@ IntPoint LocalFrameView::AbsoluteToRootFrame(
   return ConvertToRootFrame(point_in_frame);
 }
 
-LayoutRect LocalFrameView::AbsoluteToRootFrame(
-    const LayoutRect& layout_rect) const {
-  LayoutPoint point_in_frame(layout_rect.Location());
-  // With RLS turned on, this will be a no-op.
-  point_in_frame -= LayoutSize(ScrollOffsetInt());
-  LayoutRect rect_in_root_frame(point_in_frame, layout_rect.Size());
-  return rect_in_root_frame;
-}
-
 IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
   IntPoint offset =
       FlooredIntPoint(RootFrameToDocument(rect_in_root_frame.Location()));
@@ -3707,19 +3695,6 @@ DoublePoint LocalFrameView::DocumentToAbsolute(
 FloatPoint LocalFrameView::DocumentToAbsolute(
     const FloatPoint& point_in_document) const {
   return FloatPoint(DocumentToAbsolute(DoublePoint(point_in_document)));
-}
-
-LayoutPoint LocalFrameView::DocumentToAbsolute(
-    const LayoutPoint& point_in_document) const {
-  return point_in_document -
-         LayoutSize(GetLayoutView()->GetScrollableArea()->GetScrollOffset());
-}
-
-LayoutRect LocalFrameView::DocumentToAbsolute(
-    const LayoutRect& rect_in_document) const {
-  // With RLS turned off, this will be a no-op.
-  return LayoutRect(DocumentToAbsolute(rect_in_document.Location()),
-                    rect_in_document.Size());
 }
 
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(

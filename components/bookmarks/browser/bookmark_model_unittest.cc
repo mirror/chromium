@@ -10,8 +10,6 @@
 #include <string>
 #include <utility>
 
-#include <memory>
-
 #include "base/base_paths.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"

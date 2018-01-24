@@ -98,7 +98,6 @@ class ASH_EXPORT FrameCaptionButtonContainerView
   // views::View:
   void Layout() override;
   const char* GetClassName() const override;
-  void ChildPreferredSizeChanged(View* child) override;
 
   // gfx::AnimationDelegate:
   void AnimationEnded(const gfx::Animation* animation) override;

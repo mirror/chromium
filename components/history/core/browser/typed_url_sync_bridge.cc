@@ -4,10 +4,9 @@
 
 #include "components/history/core/browser/typed_url_sync_bridge.h"
 
-#include <memory>
-
 #include "base/auto_reset.h"
 #include "base/big_endian.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/history/core/browser/history_backend.h"
@@ -99,7 +98,7 @@ TypedURLSyncBridge::~TypedURLSyncBridge() {
 std::unique_ptr<MetadataChangeList>
 TypedURLSyncBridge::CreateMetadataChangeList() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  return std::make_unique<syncer::SyncMetadataStoreChangeList>(
+  return base::MakeUnique<syncer::SyncMetadataStoreChangeList>(
       sync_metadata_database_, syncer::TYPED_URLS);
 }
 
@@ -263,7 +262,7 @@ void TypedURLSyncBridge::GetData(StorageKeyList storage_keys,
                                  DataCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
-  auto batch = std::make_unique<MutableDataBatch>();
+  auto batch = base::MakeUnique<MutableDataBatch>();
   for (const std::string& key : storage_keys) {
     URLRow url_row;
     URLID url_id = TypedURLSyncMetadataDatabase::StorageKeyToURLID(key);
@@ -303,7 +302,7 @@ void TypedURLSyncBridge::GetAllData(DataCallback callback) {
     return;
   }
 
-  auto batch = std::make_unique<MutableDataBatch>();
+  auto batch = base::MakeUnique<MutableDataBatch>();
   for (URLRow& url : typed_urls) {
     VisitVector visits_vector;
     if (!FixupURLAndGetVisits(&url, &visits_vector))
@@ -416,7 +415,7 @@ void TypedURLSyncBridge::OnURLsDeleted(HistoryBackend* history_backend,
       CreateMetadataChangeList();
 
   if (all_history) {
-    auto batch = std::make_unique<syncer::MetadataBatch>();
+    auto batch = base::MakeUnique<syncer::MetadataBatch>();
     if (!sync_metadata_database_->GetAllSyncMetadata(batch.get())) {
       change_processor()->ReportError(FROM_HERE,
                                       "Failed reading typed url metadata from "
@@ -732,7 +731,7 @@ void TypedURLSyncBridge::LoadMetadata() {
     return;
   }
 
-  auto batch = std::make_unique<syncer::MetadataBatch>();
+  auto batch = base::MakeUnique<syncer::MetadataBatch>();
   if (!sync_metadata_database_->GetAllSyncMetadata(batch.get())) {
     change_processor()->ReportError(
         FROM_HERE,
@@ -1137,7 +1136,7 @@ bool TypedURLSyncBridge::FixupURLAndGetVisits(URLRow* url,
 std::unique_ptr<EntityData> TypedURLSyncBridge::CreateEntityData(
     const URLRow& row,
     const VisitVector& visits) {
-  auto entity_data = std::make_unique<EntityData>();
+  auto entity_data = base::MakeUnique<EntityData>();
   TypedUrlSpecifics* specifics = entity_data->specifics.mutable_typed_url();
 
   if (!WriteToTypedUrlSpecifics(row, visits, specifics)) {

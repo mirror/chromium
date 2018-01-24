@@ -8,12 +8,10 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/fullscreen/DocumentFullscreen.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
-#include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
@@ -48,7 +46,7 @@ bool FillsViewport(const Element& element) {
   LayoutRect bounding_box(quads[0].BoundingBox());
 
   return bounding_box.Location() == LayoutPoint::Zero() &&
-         bounding_box.Size() == top_document.GetLayoutView()->GetLayoutSize();
+         bounding_box.Size() == top_document.GetLayoutView()->Size();
 }
 
 }  // namespace
@@ -61,15 +59,12 @@ RootScrollerController* RootScrollerController::Create(Document& document) {
 RootScrollerController::RootScrollerController(Document& document)
     : document_(&document),
       effective_root_scroller_(&document),
-      document_has_document_element_(false),
-      needs_apply_properties_(false) {}
+      document_has_document_element_(false) {}
 
 void RootScrollerController::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_);
   visitor->Trace(root_scroller_);
   visitor->Trace(effective_root_scroller_);
-  visitor->Trace(implicit_candidates_);
-  visitor->Trace(implicit_root_scroller_);
 }
 
 void RootScrollerController::Set(Element* new_root_scroller) {
@@ -109,31 +104,13 @@ void RootScrollerController::DidResizeFrameView() {
   }
 }
 
-void RootScrollerController::DidUpdateIFrameFrameView(
-    HTMLFrameOwnerElement& element) {
-  if (&element != effective_root_scroller_.Get())
-    return;
-
-  // Make sure we do a layout so we try to recalculate the effective root
-  // scroller. Ensure properties are applied even if the effective root
-  // scroller doesn't change.
-  needs_apply_properties_ = true;
-  document_->GetFrame()->View()->SetNeedsLayout();
-}
-
 void RootScrollerController::RecomputeEffectiveRootScroller() {
-  ProcessImplicitCandidates();
+  bool root_scroller_valid =
+      root_scroller_ && IsValidRootScroller(*root_scroller_);
 
   Node* new_effective_root_scroller = document_;
-
-  if (!DocumentFullscreen::fullscreenElement(*document_)) {
-    bool root_scroller_valid =
-        root_scroller_ && IsValidRootScroller(*root_scroller_);
-    if (root_scroller_valid)
-      new_effective_root_scroller = root_scroller_;
-    else if (implicit_root_scroller_)
-      new_effective_root_scroller = implicit_root_scroller_;
-  }
+  if (root_scroller_valid)
+    new_effective_root_scroller = root_scroller_;
 
   // TODO(bokan): This is a terrible hack but required because the viewport
   // apply scroll works on Elements rather than Nodes. If we're going from
@@ -146,12 +123,8 @@ void RootScrollerController::RecomputeEffectiveRootScroller() {
   document_has_document_element_ = document_->documentElement();
 
   if (old_has_document_element || !document_has_document_element_) {
-    if (effective_root_scroller_ == new_effective_root_scroller) {
-      if (needs_apply_properties_)
-        ApplyRootScrollerProperties(*effective_root_scroller_);
-
+    if (effective_root_scroller_ == new_effective_root_scroller)
       return;
-    }
   }
 
   Node* old_effective_root_scroller = effective_root_scroller_;
@@ -171,16 +144,8 @@ bool RootScrollerController::IsValidRootScroller(const Element& element) const {
   if (!element.GetLayoutObject())
     return false;
 
-  // Ignore anything inside a FlowThread (multi-col, paginated, etc.).
-  if (element.GetLayoutObject()->IsInsideFlowThread())
-    return false;
-
   if (!element.GetLayoutObject()->HasOverflowClip() &&
       !element.IsFrameOwnerElement())
-    return false;
-
-  if (element.IsFrameOwnerElement() &&
-      !ToHTMLFrameOwnerElement(&element)->OwnedEmbeddedContentView())
     return false;
 
   if (!FillsViewport(element))
@@ -189,32 +154,9 @@ bool RootScrollerController::IsValidRootScroller(const Element& element) const {
   return true;
 }
 
-bool RootScrollerController::IsValidImplicit(const Element& element) const {
-  // Valid implicit root scroller are a subset of valid root scrollers.
-  if (!IsValidRootScroller(element))
-    return false;
-
-  // Valid iframes can always be implicitly promoted.
-  if (element.IsFrameOwnerElement())
-    return true;
-
-  const ComputedStyle* style = element.GetLayoutObject()->Style();
-  if (!style)
-    return false;
-
-  // Regular Elements must have overflow: auto or scroll.
-  return style->OverflowX() == EOverflow::kAuto ||
-         style->OverflowX() == EOverflow::kScroll ||
-         style->OverflowY() == EOverflow::kAuto ||
-         style->OverflowY() == EOverflow::kScroll;
-}
-
-void RootScrollerController::ApplyRootScrollerProperties(Node& node) {
+void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
   DCHECK(document_->GetFrame());
   DCHECK(document_->GetFrame()->View());
-
-  if (&node == effective_root_scroller_)
-    needs_apply_properties_ = false;
 
   // If the node has been removed from the Document, we shouldn't be touching
   // anything related to the Frame- or Layout- hierarchies.
@@ -227,7 +169,7 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) {
 
     if (frame_owner->ContentFrame()->IsLocalFrame()) {
       LocalFrameView* frame_view =
-          ToLocalFrameView(frame_owner->OwnedEmbeddedContentView());
+          ToLocalFrame(frame_owner->ContentFrame())->View();
 
       bool is_root_scroller = &EffectiveRootScroller() == &node;
 
@@ -265,41 +207,6 @@ void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
     child_view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
 }
 
-void RootScrollerController::ProcessImplicitCandidates() {
-  if (!RuntimeEnabledFeatures::ImplicitRootScrollerEnabled())
-    return;
-
-  Element* highest_z_element = nullptr;
-  bool highest_is_ambiguous = false;
-
-  HeapHashSet<WeakMember<Element>> copy(implicit_candidates_);
-  for (auto& element : copy) {
-    if (!IsValidImplicit(*element)) {
-      implicit_candidates_.erase(element);
-      continue;
-    }
-
-    if (!highest_z_element) {
-      highest_z_element = element;
-    } else {
-      int element_z = element->GetLayoutObject()->Style()->ZIndex();
-      int highest_z = highest_z_element->GetLayoutObject()->Style()->ZIndex();
-
-      if (element_z > highest_z) {
-        highest_z_element = element;
-        highest_is_ambiguous = false;
-      } else if (element_z == highest_z) {
-        highest_is_ambiguous = true;
-      }
-    }
-  }
-
-  if (highest_is_ambiguous)
-    implicit_root_scroller_ = nullptr;
-  else
-    implicit_root_scroller_ = highest_z_element;
-}
-
 PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {
   return RootScrollerUtil::PaintLayerForRootScroller(effective_root_scroller_);
 }
@@ -318,21 +225,6 @@ void RootScrollerController::ElementRemoved(const Element& element) {
   effective_root_scroller_ = document_;
   if (Page* page = document_->GetPage())
     page->GlobalRootScrollerController().DidChangeRootScroller();
-}
-
-void RootScrollerController::ConsiderForImplicit(Node& node) {
-  DCHECK(RuntimeEnabledFeatures::ImplicitRootScrollerEnabled());
-
-  if (!node.IsElementNode())
-    return;
-
-  if (!IsValidImplicit(ToElement(node)))
-    return;
-
-  if (document_->GetPage()->GetChromeClient().IsPopup())
-    return;
-
-  implicit_candidates_.insert(&ToElement(node));
 }
 
 }  // namespace blink

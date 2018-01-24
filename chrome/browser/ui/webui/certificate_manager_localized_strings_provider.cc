@@ -39,6 +39,7 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_CERTIFICATE_MANAGER_IMPORT_AND_BIND},
       {"certificateManagerExport", IDS_SETTINGS_CERTIFICATE_MANAGER_EXPORT},
       {"certificateManagerDelete", IDS_SETTINGS_CERTIFICATE_MANAGER_DELETE},
+      {"certificateManagerDone", IDS_SETTINGS_CERTIFICATE_MANAGER_DONE},
       {"certificateManagerUntrusted",
        IDS_SETTINGS_CERTIFICATE_MANAGER_UNTRUSTED},
       // CA trust edit dialog.

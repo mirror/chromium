@@ -190,8 +190,7 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
                  origin_url_.SchemeIs(url::kWssScheme)),
       using_quic_(
           alternative_protocol == kProtoQUIC ||
-          (ShouldForceQuic(session, destination, origin_url, proxy_info) &&
-           !(proxy_info.is_quic() && using_ssl_))),
+          ShouldForceQuic(session, destination, origin_url, proxy_info)),
       quic_version_(quic_version),
       expect_spdy_(alternative_protocol == kProtoHTTP2 && !using_quic_),
       using_spdy_(false),
@@ -211,8 +210,7 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
                             : GetSpdySessionKey(spdy_session_direct_,
                                                 proxy_info_.proxy_server(),
                                                 origin_url_,
-                                                request_info_.privacy_mode,
-                                                request_info_.socket_tag)),
+                                                request_info_.privacy_mode)),
       stream_type_(HttpStreamRequest::BIDIRECTIONAL_STREAM),
       init_connection_already_resumed_(false),
       ptr_factory_(this) {
@@ -406,17 +404,16 @@ SpdySessionKey HttpStreamFactoryImpl::Job::GetSpdySessionKey(
     bool spdy_session_direct,
     const ProxyServer& proxy_server,
     const GURL& origin_url,
-    PrivacyMode privacy_mode,
-    const SocketTag& socket_tag) {
+    PrivacyMode privacy_mode) {
   // In the case that we're using an HTTPS proxy for an HTTP url,
   // we look for a SPDY session *to* the proxy, instead of to the
   // origin server.
   if (!spdy_session_direct) {
     return SpdySessionKey(proxy_server.host_port_pair(), ProxyServer::Direct(),
-                          PRIVACY_MODE_DISABLED, socket_tag);
+                          PRIVACY_MODE_DISABLED);
   }
   return SpdySessionKey(HostPortPair::FromURL(origin_url), proxy_server,
-                        privacy_mode, socket_tag);
+                        privacy_mode);
 }
 
 bool HttpStreamFactoryImpl::Job::CanUseExistingSpdySession() const {
@@ -869,6 +866,12 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
   }
 
   if (using_quic_) {
+    if (proxy_info_.is_quic() &&
+        !request_info_.url.SchemeIs(url::kHttpScheme)) {
+      NOTREACHED();
+      // TODO(rch): support QUIC proxies for HTTPS urls.
+      return ERR_NOT_IMPLEMENTED;
+    }
     HostPortPair destination;
     SSLConfig* ssl_config;
     GURL url(request_info_.url);
@@ -936,7 +939,7 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
     }
   }
 
-  if (proxy_info_.is_http() || proxy_info_.is_https() || proxy_info_.is_quic())
+  if (proxy_info_.is_http() || proxy_info_.is_https())
     establishing_tunnel_ = using_ssl_;
 
   HttpServerProperties* http_server_properties =
@@ -1165,7 +1168,7 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 }
 
 int HttpStreamFactoryImpl::Job::DoCreateStream() {
-  DCHECK(connection_->socket() || existing_spdy_session_.get());
+  DCHECK(connection_->socket() || existing_spdy_session_.get() || using_quic_);
   DCHECK(!using_quic_);
 
   next_state_ = STATE_CREATE_STREAM_COMPLETE;
@@ -1180,8 +1183,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   if (!using_spdy_) {
     DCHECK(!expect_spdy_);
     // We may get ftp scheme when fetching ftp resources through proxy.
-    bool using_proxy = (proxy_info_.is_http() || proxy_info_.is_https() ||
-                        proxy_info_.is_quic()) &&
+    bool using_proxy = (proxy_info_.is_http() || proxy_info_.is_https()) &&
                        (request_info_.url.SchemeIs(url::kHttpScheme) ||
                         request_info_.url.SchemeIs(url::kFtpScheme));
     if (is_websocket_) {
@@ -1265,9 +1267,8 @@ int HttpStreamFactoryImpl::Job::DoCreateStreamComplete(int result) {
   if (result < 0)
     return result;
 
-  session_->proxy_resolution_service()->ReportSuccess(
-      proxy_info_,
-      session_->context().proxy_delegate);
+  session_->proxy_service()->ReportSuccess(proxy_info_,
+                                           session_->context().proxy_delegate);
   next_state_ = STATE_NONE;
   return OK;
 }

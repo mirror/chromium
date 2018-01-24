@@ -146,13 +146,7 @@ bool WebrtcFrameSchedulerSimple::OnFrameCaptured(
     }
   }
 
-  // Encoder uses frame duration to calculate portion of the target bitrate it
-  // can use for this frame. Higher values normally will cause bigger encoded
-  // frames that will take longer to be delivered to the client. To keep
-  // end-to-end latency low always pass the target frame duration. The actual
-  // interval between frames can be longer than the target value, depending on
-  // the size of the encoded frames.
-  params_out->duration = kTargetFrameInterval;
+  params_out->duration = (now - latest_frame_encode_start_time_);
   params_out->fps = processing_time_estimator_.EstimatedFrameRate();
 
   latest_frame_encode_start_time_ = now;

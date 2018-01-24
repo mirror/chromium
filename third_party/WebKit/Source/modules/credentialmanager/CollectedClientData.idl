@@ -8,6 +8,7 @@ dictionary CollectedClientData {
     required DOMString type;
     required DOMString challenge;
     required DOMString origin;
+    required DOMString hashAlgorithm;
     DOMString tokenBindingId;
     // TODO(crbug.com/733033): Add extension support
 };

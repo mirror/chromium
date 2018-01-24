@@ -15,8 +15,7 @@ const CSSValue* AlignSelf::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
-  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(
-      range, CSSParsingUtils::IsSelfPositionKeyword);
+  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(range);
 }
 
 const CSSValue* AlignSelf::CSSValueFromComputedStyleInternal(

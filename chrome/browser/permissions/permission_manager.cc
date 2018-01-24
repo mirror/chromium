@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/accessibility/accessibility_permission_context.h"
 #include "chrome/browser/background_sync/background_sync_permission_context.h"
@@ -258,44 +259,44 @@ PermissionManager* PermissionManager::Get(Profile* profile) {
 
 PermissionManager::PermissionManager(Profile* profile) : profile_(profile) {
   permission_contexts_[CONTENT_SETTINGS_TYPE_MIDI_SYSEX] =
-      std::make_unique<MidiSysexPermissionContext>(profile);
+      base::MakeUnique<MidiSysexPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_MIDI] =
-      std::make_unique<MidiPermissionContext>(profile);
+      base::MakeUnique<MidiPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_NOTIFICATIONS] =
-      std::make_unique<NotificationPermissionContext>(profile);
+      base::MakeUnique<NotificationPermissionContext>(profile);
 #if !defined(OS_ANDROID)
   permission_contexts_[CONTENT_SETTINGS_TYPE_GEOLOCATION] =
-      std::make_unique<GeolocationPermissionContext>(profile);
+      base::MakeUnique<GeolocationPermissionContext>(profile);
 #else
   permission_contexts_[CONTENT_SETTINGS_TYPE_GEOLOCATION] =
-      std::make_unique<GeolocationPermissionContextAndroid>(profile);
+      base::MakeUnique<GeolocationPermissionContextAndroid>(profile);
 #endif
 #if defined(OS_CHROMEOS) || defined(OS_ANDROID)
   permission_contexts_[CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER] =
-      std::make_unique<ProtectedMediaIdentifierPermissionContext>(profile);
+      base::MakeUnique<ProtectedMediaIdentifierPermissionContext>(profile);
 #endif
   permission_contexts_[CONTENT_SETTINGS_TYPE_DURABLE_STORAGE] =
-      std::make_unique<DurableStoragePermissionContext>(profile);
+      base::MakeUnique<DurableStoragePermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC] =
-      std::make_unique<MediaStreamDevicePermissionContext>(
+      base::MakeUnique<MediaStreamDevicePermissionContext>(
           profile, CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC);
   permission_contexts_[CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA] =
-      std::make_unique<MediaStreamDevicePermissionContext>(
+      base::MakeUnique<MediaStreamDevicePermissionContext>(
           profile, CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
   permission_contexts_[CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC] =
-      std::make_unique<BackgroundSyncPermissionContext>(profile);
+      base::MakeUnique<BackgroundSyncPermissionContext>(profile);
 #if BUILDFLAG(ENABLE_PLUGINS)
   permission_contexts_[CONTENT_SETTINGS_TYPE_PLUGINS] =
-      std::make_unique<FlashPermissionContext>(profile);
+      base::MakeUnique<FlashPermissionContext>(profile);
 #endif
   permission_contexts_[CONTENT_SETTINGS_TYPE_SENSORS] =
-      std::make_unique<SensorPermissionContext>(profile);
+      base::MakeUnique<SensorPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS] =
-      std::make_unique<AccessibilityPermissionContext>(profile);
+      base::MakeUnique<AccessibilityPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_CLIPBOARD_READ] =
-      std::make_unique<ClipboardReadPermissionContext>(profile);
+      base::MakeUnique<ClipboardReadPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE] =
-      std::make_unique<ClipboardWritePermissionContext>(profile);
+      base::MakeUnique<ClipboardWritePermissionContext>(profile);
 }
 
 PermissionManager::~PermissionManager() {
@@ -355,7 +356,7 @@ int PermissionManager::RequestPermissions(
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   GURL canonical_requesting_origin = GetCanonicalOrigin(requesting_origin);
 
-  int request_id = pending_requests_.Add(std::make_unique<PendingRequest>(
+  int request_id = pending_requests_.Add(base::MakeUnique<PendingRequest>(
       render_frame_host, permissions, callback));
 
   const PermissionRequestID request(render_frame_host, request_id);
@@ -366,7 +367,7 @@ int PermissionManager::RequestPermissions(
     PermissionContextBase* context = GetPermissionContext(permission);
     DCHECK(context);
     auto callback =
-        std::make_unique<PermissionResponseCallback>(this, request_id, i);
+        base::MakeUnique<PermissionResponseCallback>(this, request_id, i);
     context->RequestPermission(
         web_contents, request, canonical_requesting_origin, user_gesture,
         base::Bind(
@@ -524,7 +525,7 @@ int PermissionManager::SubscribePermissionStatusChange(
     HostContentSettingsMapFactory::GetForProfile(profile_)->AddObserver(this);
 
   ContentSettingsType content_type = PermissionTypeToContentSetting(permission);
-  auto subscription = std::make_unique<Subscription>();
+  auto subscription = base::MakeUnique<Subscription>();
   subscription->permission = content_type;
   subscription->requesting_origin = GetCanonicalOrigin(requesting_origin);
   subscription->embedding_origin = embedding_origin;

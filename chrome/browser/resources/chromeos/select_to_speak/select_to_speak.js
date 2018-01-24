@@ -611,31 +611,17 @@ SelectToSpeak.prototype = {
     let focusOffset = focusedNode.root.focusOffset || 0;
     if (anchorObject === focusObject && anchorOffset == focusOffset)
       return;
-    let anchorPosition =
-        getDeepEquivalentForSelection(anchorObject, anchorOffset);
-    let focusPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
     let firstPosition;
     let lastPosition;
-    if (anchorPosition.node === focusPosition.node) {
-      if (anchorPosition.offset < focusPosition.offset) {
-        firstPosition = anchorPosition;
-        lastPosition = focusPosition;
-      } else {
-        lastPosition = anchorPosition;
-        firstPosition = focusPosition;
-      }
+    let dir = AutomationUtil.getDirection(anchorObject, focusObject);
+    // Highlighting may be forwards or backwards. Make sure we start at the
+    // first node.
+    if (dir == constants.Dir.FORWARD) {
+      firstPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
+      lastPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
     } else {
-      let dir =
-          AutomationUtil.getDirection(anchorPosition.node, focusPosition.node);
-      // Highlighting may be forwards or backwards. Make sure we start at the
-      // first node.
-      if (dir == constants.Dir.FORWARD) {
-        firstPosition = anchorPosition;
-        lastPosition = focusPosition;
-      } else {
-        lastPosition = anchorPosition;
-        firstPosition = focusPosition;
-      }
+      lastPosition = getDeepEquivalentForSelection(anchorObject, anchorOffset);
+      firstPosition = getDeepEquivalentForSelection(focusObject, focusOffset);
     }
 
     // Adjust such that non-text types don't have offsets into their names.
@@ -644,7 +630,7 @@ SelectToSpeak.prototype = {
       firstPosition.offset = 0;
     }
     if (lastPosition.node.role != 'staticText' &&
-        lastPosition.node.role != 'inlineTextBox' && lastPosition.node.name) {
+        lastPosition.node.role != 'inlineTextBox') {
       lastPosition.offset = lastPosition.node.name.length;
     }
 

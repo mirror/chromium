@@ -21,7 +21,6 @@
 #define LayoutSVGResourceContainer_h
 
 #include "core/layout/svg/LayoutSVGHiddenContainer.h"
-#include "core/svg/SVGTreeScopeResources.h"
 
 namespace blink {
 
@@ -62,10 +61,8 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
            resource_type == kRadialGradientResourceType;
   }
 
-  // Detach all clients from this resource, and add them as watches to the tree
-  // scope's resource entry (the argument.)
-  void MakeClientsPending(SVGTreeScopeResources::Resource&);
-  bool HasClients() const { return !clients_.IsEmpty(); }
+  void IdChanged(const AtomicString& old_id, const AtomicString& new_id);
+  void DetachAllClients(const AtomicString& to_id);
 
   void InvalidateCacheAndMarkForLayout(SubtreeLayoutScope* = nullptr);
 
@@ -97,16 +94,23 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
   bool is_in_layout_;
 
  private:
+  friend class SVGTreeScopeResources;
+  // The m_registered flag is updated by SVGTreeScopeResources, and indicates
+  // that this resource is the one that is resident in the id->resource map.
+  void SetRegistered(bool registered) { registered_ = registered; }
+  bool IsRegistered() const { return registered_; }
+
   friend class SVGResourcesCache;
   void AddClient(LayoutObject*);
-  bool RemoveClient(LayoutObject*);
+  void RemoveClient(LayoutObject*);
 
-  // Track global (markAllClientsForInvalidation) invalidations to avoid
-  // redundant crawls.
+  // Track global (markAllClientsForInvalidation) invals to avoid redundant
+  // crawls.
   unsigned invalidation_mask_ : 8;
 
+  unsigned registered_ : 1;
   unsigned is_invalidating_ : 1;
-  // 23 padding bits available
+  // 22 padding bits available
 
   HashSet<LayoutObject*> clients_;
 };

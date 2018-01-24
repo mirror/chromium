@@ -112,8 +112,6 @@ blink_core_sources("editing") {
     "commands/DragAndDropCommand.h",
     "commands/EditCommand.cpp",
     "commands/EditCommand.h",
-    "commands/EditingCommandsUtilities.cpp",
-    "commands/EditingCommandsUtilities.h",
     "commands/EditingState.cpp",
     "commands/EditingState.h",
     "commands/EditorCommand.cpp",
@@ -342,7 +340,6 @@ jumbo_source_set("unit_tests") {
     "commands/CompositeEditCommandTest.cpp",
     "commands/DeleteSelectionCommandTest.cpp",
     "commands/EditingCommandTest.cpp",
-    "commands/EditingCommandsUtilitiesTest.cpp",
     "commands/InsertIncrementalTextCommandTest.cpp",
     "commands/InsertListCommandTest.cpp",
     "commands/InsertParagraphSeparatorCommandTest.cpp",
@@ -407,6 +404,6 @@ jumbo_source_set("unit_tests") {
   deps = [
     "//testing/gmock",
     "//testing/gtest",
-    "//third_party/WebKit/Source/core",
+    "//third_party/WebKit/Source/core:core",
   ]
 }

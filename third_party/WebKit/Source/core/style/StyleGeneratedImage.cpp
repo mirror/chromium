@@ -61,7 +61,7 @@ FloatSize StyleGeneratedImage::ImageSize(
 }
 
 void StyleGeneratedImage::AddClient(ImageResourceObserver* observer) {
-  image_generator_value_->AddClient(observer);
+  image_generator_value_->AddClient(observer, LayoutSize());
 }
 
 void StyleGeneratedImage::RemoveClient(ImageResourceObserver* observer) {
@@ -72,9 +72,9 @@ scoped_refptr<Image> StyleGeneratedImage::GetImage(
     const ImageResourceObserver& observer,
     const Document& document,
     const ComputedStyle& style,
-    const FloatSize& target_size) const {
+    const LayoutSize& container_size) const {
   return image_generator_value_->GetImage(observer, document, style,
-                                          target_size);
+                                          container_size);
 }
 
 bool StyleGeneratedImage::KnownToBeOpaque(const Document& document,

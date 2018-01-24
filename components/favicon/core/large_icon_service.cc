@@ -14,6 +14,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/field_trial_params.h"
@@ -333,7 +334,7 @@ LargeIconWorker::LargeIconWorker(
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
       tracker_(tracker),
       fallback_icon_style_(
-          std::make_unique<favicon_base::FallbackIconStyle>()) {}
+          base::MakeUnique<favicon_base::FallbackIconStyle>()) {}
 
 LargeIconWorker::~LargeIconWorker() {
 }

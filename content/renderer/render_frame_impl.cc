@@ -88,7 +88,6 @@
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_visitor.h"
 #include "content/public/renderer/renderer_ppapi_host.h"
-#include "content/renderer/accessibility/aom_content_ax_tree.h"
 #include "content/renderer/accessibility/render_accessibility_impl.h"
 #include "content/renderer/appcache/appcache_dispatcher.h"
 #include "content/renderer/browser_plugin/browser_plugin.h"
@@ -118,6 +117,7 @@
 #include "content/renderer/manifest/manifest_manager.h"
 #include "content/renderer/media/audio_device_factory.h"
 #include "content/renderer/media/audio_output_ipc_factory.h"
+#include "content/renderer/media/media_devices_listener_impl.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
 #include "content/renderer/media/media_stream_device_observer.h"
 #include "content/renderer/media/user_media_client_impl.h"
@@ -138,6 +138,7 @@
 #include "content/renderer/resource_timing_info_conversions.h"
 #include "content/renderer/savable_resources.h"
 #include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_network_provider.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
@@ -533,11 +534,7 @@ CommonNavigationParams MakeCommonNavigationParams(
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
       should_check_main_world_csp, false /* started_from_context_menu */,
-      info.url_request.HasUserGesture(),
-      info.url_request.GetSuggestedFilename().has_value()
-          ? base::Optional<std::string>(
-                info.url_request.GetSuggestedFilename()->Utf8())
-          : base::nullopt);
+      info.url_request.HasUserGesture());
 }
 
 WebFrameLoadType ReloadFrameLoadTypeFor(
@@ -777,12 +774,14 @@ class RenderFrameImpl::FrameURLLoaderFactory
     DCHECK(frame_);
     frame_->UpdatePeakMemoryStats();
 
+    // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
+    // pointer into SharedURLLoaderFactory.
     scoped_refptr<SharedURLLoaderFactory> factory;
     if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-      factory = frame_->GetSubresourceLoaderFactories();
+      factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          frame_->GetSubresourceLoaderFactories().GetFactoryForRequest(
+              request.Url()));
     } else {
-      // TODO(crbug.com/796425): Temporarily wrap the raw
-      // mojom::URLLoaderFactory pointer into SharedURLLoaderFactory.
       factory = base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
           frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
               request.Url(), frame_->custom_url_loader_factory()));
@@ -3070,7 +3069,7 @@ void RenderFrameImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-    std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories,
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
     const base::UnguessableToken& devtools_navigation_token) {
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
@@ -3163,19 +3162,16 @@ void RenderFrameImpl::CommitNavigation(
   DCHECK(is_same_document ||
          common_params.url.SchemeIs(url::kJavaScriptScheme) ||
          !base::FeatureList::IsEnabled(features::kNetworkService) ||
-         subresource_loader_factories);
+         subresource_loader_factories.has_value());
 
-  if (subresource_loader_factories) {
-    subresource_loader_factories_ =
-        base::MakeRefCounted<URLLoaderFactoryBundle>(
-            std::move(subresource_loader_factories));
-  }
+  if (subresource_loader_factories)
+    subresource_loader_factories_ = std::move(subresource_loader_factories);
 
   // If the Network Service is enabled, by this point the frame should always
   // have subresource loader factories, even if they're from a previous (but
   // same-document) commit.
   DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService) ||
-         subresource_loader_factories_);
+         subresource_loader_factories_.has_value());
 
   // Used to determine whether this frame is actually loading a request as part
   // of a history navigation.
@@ -3323,7 +3319,7 @@ void RenderFrameImpl::CommitFailedNavigation(
     bool has_stale_copy_in_cache,
     int error_code,
     const base::Optional<std::string>& error_page_content,
-    std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories) {
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   RenderFrameImpl::PrepareRenderViewForNavigation(common_params.url,
@@ -3332,11 +3328,8 @@ void RenderFrameImpl::CommitFailedNavigation(
   GetContentClient()->SetActiveURL(
       common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
 
-  if (subresource_loader_factories) {
-    subresource_loader_factories_ =
-        base::MakeRefCounted<URLLoaderFactoryBundle>(
-            std::move(subresource_loader_factories));
-  }
+  if (subresource_loader_factories)
+    subresource_loader_factories_ = std::move(subresource_loader_factories);
 
   pending_navigation_params_.reset(
       new NavigationParams(common_params, request_params));
@@ -6513,19 +6506,16 @@ WebURLRequest RenderFrameImpl::CreateURLRequestForCommit(
   return request;
 }
 
-URLLoaderFactoryBundle* RenderFrameImpl::GetSubresourceLoaderFactories() {
+URLLoaderFactoryBundle& RenderFrameImpl::GetSubresourceLoaderFactories() {
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
   if (!subresource_loader_factories_) {
     RenderFrameImpl* creator = RenderFrameImpl::FromWebFrame(
         frame_->Parent() ? frame_->Parent() : frame_->Opener());
     DCHECK(creator);
-    auto bundle_info =
-        base::WrapUnique(static_cast<URLLoaderFactoryBundleInfo*>(
-            creator->GetSubresourceLoaderFactories()->Clone().release()));
     subresource_loader_factories_ =
-        base::MakeRefCounted<URLLoaderFactoryBundle>(std::move(bundle_info));
+        creator->GetSubresourceLoaderFactories().Clone();
   }
-  return subresource_loader_factories_.get();
+  return *subresource_loader_factories_;
 }
 
 void RenderFrameImpl::UpdateEncoding(WebFrame* frame,
@@ -6600,7 +6590,7 @@ void RenderFrameImpl::SetCustomURLLoaderFactory(
     // When the network service is enabled, all subresource loads go through
     // a factory from |subresource_loader_factories|. In this case we simply
     // replace the existing default factory within the bundle.
-    GetSubresourceLoaderFactories()->SetDefaultFactory(std::move(factory));
+    GetSubresourceLoaderFactories().SetDefaultFactory(std::move(factory));
   } else {
     custom_url_loader_factory_ = std::move(factory);
   }
@@ -6643,6 +6633,8 @@ void RenderFrameImpl::InitializeUserMediaClient() {
   web_user_media_client_ = new UserMediaClientImpl(
       this, RenderThreadImpl::current()->GetPeerConnectionDependencyFactory(),
       std::make_unique<MediaStreamDeviceObserver>(this));
+  registry_.AddInterface(
+      base::Bind(&MediaDevicesListenerImpl::Create, GetRoutingID()));
 #endif
 }
 
@@ -6749,7 +6741,11 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           GetRequestContextTypeForWebURLRequest(info.url_request),
           GetMixedContentContextTypeForWebURLRequest(info.url_request),
           is_form_submission, searchable_form_url, searchable_form_encoding,
-          initiator_origin, client_side_redirect_url);
+          initiator_origin, client_side_redirect_url,
+          info.url_request.GetSuggestedFilename().has_value()
+              ? base::Optional<std::string>(
+                    info.url_request.GetSuggestedFilename()->Utf8())
+              : base::nullopt);
 
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
                                   std::move(begin_navigation_params));
@@ -7122,7 +7118,7 @@ void RenderFrameImpl::SetAccessibilityModeForTest(ui::AXMode new_mode) {
 network::mojom::URLLoaderFactory* RenderFrameImpl::GetURLLoaderFactory(
     const GURL& request_url) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    return GetSubresourceLoaderFactories()->GetFactoryForRequest(request_url);
+    return GetSubresourceLoaderFactories().GetFactoryForRequest(request_url);
   }
 
   return GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(request_url);
@@ -7338,12 +7334,6 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));
-}
-
-blink::WebComputedAXTree* RenderFrameImpl::GetOrCreateWebComputedAXTree() {
-  if (!computed_ax_tree_)
-    computed_ax_tree_ = std::make_unique<AomContentAxTree>(this);
-  return computed_ax_tree_.get();
 }
 
 }  // namespace content

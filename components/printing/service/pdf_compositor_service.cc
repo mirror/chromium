@@ -6,10 +6,9 @@
 
 #include <utility>
 
-#include <memory>
-
 #include "base/lazy_instance.h"
 #include "base/memory/discardable_memory.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "components/printing/service/pdf_compositor_impl.h"
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
@@ -29,7 +28,7 @@ void OnPdfCompositorRequest(
     const std::string& creator,
     service_manager::ServiceContextRefFactory* ref_factory,
     printing::mojom::PdfCompositorRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<printing::PdfCompositorImpl>(
+  mojo::MakeStrongBinding(base::MakeUnique<printing::PdfCompositorImpl>(
                               creator, ref_factory->CreateRef()),
                           std::move(request));
 }
@@ -53,7 +52,7 @@ std::unique_ptr<service_manager::Service> PdfCompositorService::Create(
   // Initialize direct write font proxy so skia can use it.
   content::InitializeDWriteFontProxy();
 #endif
-  return std::make_unique<printing::PdfCompositorService>(creator);
+  return base::MakeUnique<printing::PdfCompositorService>(creator);
 }
 
 void PdfCompositorService::PrepareToStart() {
@@ -61,7 +60,7 @@ void PdfCompositorService::PrepareToStart() {
   discardable_memory::mojom::DiscardableSharedMemoryManagerPtr manager_ptr;
   context()->connector()->BindInterface(content::mojom::kBrowserServiceName,
                                         &manager_ptr);
-  discardable_shared_memory_manager_ = std::make_unique<
+  discardable_shared_memory_manager_ = base::MakeUnique<
       discardable_memory::ClientDiscardableSharedMemoryManager>(
       std::move(manager_ptr), content::UtilityThread::Get()->GetIOTaskRunner());
   DCHECK(discardable_shared_memory_manager_);
@@ -72,7 +71,7 @@ void PdfCompositorService::PrepareToStart() {
 void PdfCompositorService::OnStart() {
   PrepareToStart();
 
-  ref_factory_ = std::make_unique<service_manager::ServiceContextRefFactory>(
+  ref_factory_ = base::MakeUnique<service_manager::ServiceContextRefFactory>(
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context())));
   registry_.AddInterface(

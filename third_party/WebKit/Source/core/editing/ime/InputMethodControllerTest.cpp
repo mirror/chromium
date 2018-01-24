@@ -13,18 +13,18 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/editing/testing/EditingTestBase.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
+#include "core/testing/PageTestBase.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class InputMethodControllerTest : public EditingTestBase {
+class InputMethodControllerTest : public PageTestBase {
  protected:
   InputMethodController& Controller() {
     return GetFrame().GetInputMethodController();
@@ -3115,15 +3115,11 @@ TEST_F(InputMethodControllerTest, AutocapitalizeTextInputFlags) {
       {"<textarea autocapitalize='words'></textarea>",
        kWebTextInputFlagAutocapitalizeWords},
 
-      {"<div contenteditable></div>", kWebTextInputFlagAutocapitalizeSentences},
-      {"<div contenteditable autocapitalize='none'></div>",
-       kWebTextInputFlagAutocapitalizeNone},
-      {"<div contenteditable autocapitalize='characters'></div>",
-       kWebTextInputFlagAutocapitalizeCharacters},
-      {"<div contenteditable autocapitalize='sentences'></div>",
-       kWebTextInputFlagAutocapitalizeSentences},
-      {"<div contenteditable autocapitalize='words'></div>",
-       kWebTextInputFlagAutocapitalizeWords},
+      {"<div contenteditable></div>", 0},
+      {"<div contenteditable autocapitalize='none'></div>", 0},
+      {"<div contenteditable autocapitalize='characters'></div>", 0},
+      {"<div contenteditable autocapitalize='sentences'></div>", 0},
+      {"<div contenteditable autocapitalize='words'></div>", 0},
   };
 
   const int autocapitalize_mask = kWebTextInputFlagAutocapitalizeNone |
@@ -3161,30 +3157,6 @@ TEST_F(InputMethodControllerTest, ExecCommandDuringComposition) {
 
   // "world" should be bold.
   EXPECT_EQ("hello<b>world</b>", div->InnerHTMLAsString());
-}
-
-TEST_F(InputMethodControllerTest, SetCompositionAfterNonEditableElement) {
-  GetFrame().Selection().SetSelectionAndEndTyping(
-      SetSelectionTextToBody("<div id='sample' contenteditable='true'>"
-                             "<span contenteditable='false'>a</span>|b</div>"));
-  Element* const div = GetDocument().getElementById("sample");
-  div->focus();
-
-  // Open a composition and insert some text.
-  Controller().SetComposition(String::FromUTF8("c"), Vector<ImeTextSpan>(), 1,
-                              1);
-
-  // Add some more text to the composition.
-  Controller().SetComposition(String::FromUTF8("cd"), Vector<ImeTextSpan>(), 2,
-                              2);
-
-  EXPECT_EQ(
-      "<div contenteditable=\"true\" id=\"sample\">"
-      "<span contenteditable=\"false\">a</span>^cd|b</div>",
-      GetSelectionTextFromBody(
-          SelectionInDOMTree::Builder()
-              .SetBaseAndExtent(Controller().CompositionEphemeralRange())
-              .Build()));
 }
 
 }  // namespace blink

@@ -91,6 +91,21 @@
           'cast_shell_apk',
         ],
       },
+      'Android Cronet ARMv6 Builder': {
+        'test_suites': {
+          'gtest_tests': 'cronet_gtests',
+        },
+        'swarming': {
+          'dimension_sets': [
+            {
+              'device_os': 'KTU84P',
+              'device_type': 'hammerhead',
+            },
+          ],
+        },
+        'os_type': 'android',
+        'skip_merge_script': True,
+      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -312,6 +327,21 @@
   {
     'name': 'chromium.android.fyi',
     'machines': {
+      'Android Cronet ARMv6 Builder': {
+        'test_suites': {
+          'gtest_tests': 'cronet_gtests',
+          'scripts': 'cronet_scripts',
+        },
+        'swarming': {
+          'dimension_sets': [
+            {
+              'device_os': 'KTU84P',
+              'device_type': 'hammerhead',
+            },
+          ],
+        },
+        'os_type': 'android',
+      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -1159,6 +1189,14 @@
           'gtest_tests': 'chromium_win_clang_gtests',
         },
       },
+      'Ozone Linux': {
+        'additional_compile_targets': [
+          'chrome',
+        ],
+        'test_suites': {
+          'gtest_tests': 'ozone_linux_gtests',
+        },
+      },
       'Site Isolation Android': {
         'swarming': {
           'dimension_sets': [
@@ -1410,14 +1448,6 @@
           'isolated_scripts': 'chromium_linux_isolated_scripts',
         },
       },
-      'Ozone Linux': {
-        'additional_compile_targets': [
-          'chrome',
-        ],
-        'test_suites': {
-          'gtest_tests': 'ozone_linux_gtests',
-        },
-      },
     },
   },
   {
@@ -1568,10 +1598,6 @@
         'test_suites': {
           'gtest_tests': 'chromium_memory_linux_asan_gtests',
         },
-        'args': [
-          '--test-launcher-batch-limit=1',
-          '--test-launcher-print-test-stdio=always',
-        ],
       },
       'Linux ASan Tests (sandboxed)': {
         'test_suites': {

@@ -717,10 +717,7 @@ TEST_F(APIBindingUnittest, TestDisposedContext) {
       FunctionFromString(context, "(function(obj) { obj.oneString('foo'); })");
   v8::Local<v8::Value> argv[] = {binding_object};
   DisposeContext(context);
-
-  RunFunctionAndExpectError(func, context, arraysize(argv), argv,
-                            "Uncaught Error: Extension context invalidated.");
-
+  RunFunction(func, context, arraysize(argv), argv);
   EXPECT_FALSE(HandlerWasInvoked());
   // This test passes if this does not crash, even under AddressSanitizer
   // builds.
@@ -739,10 +736,7 @@ TEST_F(APIBindingUnittest, TestInvalidatedContext) {
       FunctionFromString(context, "(function(obj) { obj.oneString('foo'); })");
   v8::Local<v8::Value> argv[] = {binding_object};
   binding::InvalidateContext(context);
-
-  RunFunctionAndExpectError(func, context, arraysize(argv), argv,
-                            "Uncaught Error: Extension context invalidated.");
-
+  RunFunction(func, context, arraysize(argv), argv);
   EXPECT_FALSE(HandlerWasInvoked());
   // This test passes if this does not crash, even under AddressSanitizer
   // builds.
@@ -1578,24 +1572,6 @@ TEST_F(APIBindingUnittest, TestHooksWithCustomCallback) {
 
   EXPECT_EQ("true", GetStringPropertyFromObject(context->Global(), context,
                                                 "calledCustomCallback"));
-}
-
-TEST_F(APIBindingUnittest, AccessAPIMethodsAndEventsAfterInvalidation) {
-  SetEvents(R"([{"name": "onFoo"}])");
-  InitializeBinding();
-
-  v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = MainContext();
-
-  v8::Local<v8::Object> binding_object = binding()->CreateInstance(context);
-
-  v8::Local<v8::Function> function = FunctionFromString(
-      context, "(function(obj) { obj.onFoo.addListener(function() {}); })");
-  binding::InvalidateContext(context);
-
-  v8::Local<v8::Value> argv[] = {binding_object};
-  RunFunctionAndExpectError(function, context, arraysize(argv), argv,
-                            "Uncaught Error: Extension context invalidated.");
 }
 
 }  // namespace extensions

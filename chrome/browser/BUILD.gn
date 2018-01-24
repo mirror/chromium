@@ -681,6 +681,10 @@ split_static_library("browser") {
     "media/webrtc/native_desktop_media_list.h",
     "media/webrtc/permission_bubble_media_access_handler.cc",
     "media/webrtc/permission_bubble_media_access_handler.h",
+
+    # TODO(brettw) should this go with the webrtc sources?
+    "media/webrtc/webrtc_log_list.cc",
+    "media/webrtc/webrtc_log_list.h",
     "media/webrtc/window_icon_util.h",
     "media/webrtc/window_icon_util_chromeos.cc",
     "media/webrtc/window_icon_util_mac.mm",
@@ -1635,7 +1639,7 @@ split_static_library("browser") {
     "//components/domain_reliability",
     "//components/download/content/factory",
     "//components/download/downloader/in_progress",
-    "//components/download/public/background_service:public",
+    "//components/download/public",
     "//components/error_page/common",
     "//components/favicon/content",
     "//components/favicon/core",
@@ -1969,8 +1973,6 @@ split_static_library("browser") {
       "android/download/download_controller.h",
       "android/download/download_controller_base.cc",
       "android/download/download_controller_base.h",
-      "android/download/download_location_dialog_bridge.cc",
-      "android/download/download_location_dialog_bridge.h",
       "android/download/download_manager_service.cc",
       "android/download/download_manager_service.h",
       "android/download/duplicate_download_infobar_delegate.cc",
@@ -2142,7 +2144,6 @@ split_static_library("browser") {
       "android/signin/signin_manager_android.h",
       "android/signin/signin_promo_util_android.cc",
       "android/signin/signin_promo_util_android.h",
-      "android/subresource_filter/test_subresource_filter_publisher.cc",
       "android/tab_android.cc",
       "android/tab_android.h",
       "android/tab_state.cc",
@@ -4106,6 +4107,8 @@ split_static_library("browser") {
     sources += [
       "media/webrtc/audio_debug_recordings_handler.cc",
       "media/webrtc/audio_debug_recordings_handler.h",
+
+      # TODO(brettw) should webrtc_log_list.cc go here?
       "media/webrtc/webrtc_log_uploader.cc",
       "media/webrtc/webrtc_log_uploader.h",
       "media/webrtc/webrtc_log_util.cc",
@@ -4120,8 +4123,6 @@ split_static_library("browser") {
       "media/webrtc/webrtc_text_log_handler.h",
     ]
     deps += [
-      "//components/webrtc_logging/browser",
-      "//components/webrtc_logging/common",
       "//third_party/webrtc/modules/desktop_capture",
       "//third_party/webrtc_overrides",
       "//third_party/webrtc_overrides:init_webrtc",
@@ -4184,6 +4185,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/IntentHelper.java",
       "../android/java/src/org/chromium/chrome/browser/JavascriptAppModalDialog.java",
       "../android/java/src/org/chromium/chrome/browser/NearOomMonitor.java",
+      "../android/java/src/org/chromium/chrome/browser/PasswordUIView.java",
       "../android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java",
       "../android/java/src/org/chromium/chrome/browser/SearchGeolocationDisclosureTabHelper.java",
       "../android/java/src/org/chromium/chrome/browser/ServiceTabLauncher.java",
@@ -4243,7 +4245,6 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/download/DownloadController.java",
       "../android/java/src/org/chromium/chrome/browser/download/DownloadInfo.java",
       "../android/java/src/org/chromium/chrome/browser/download/DownloadItem.java",
-      "../android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogBridge.java",
       "../android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
       "../android/java/src/org/chromium/chrome/browser/download/items/OfflineContentAggregatorFactory.java",
       "../android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
@@ -4353,7 +4354,6 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/PreferencesLauncher.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileBridge.java",
-      "../android/java/src/org/chromium/chrome/browser/preferences/password/PasswordUIView.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/privacy/BrowsingDataBridge.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/privacy/BrowsingDataCounterBridge.java",
       "../android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePreferenceBridge.java",
@@ -4377,7 +4377,6 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/snackbar/smartlockautosignin/AutoSigninSnackbarController.java",
       "../android/java/src/org/chromium/chrome/browser/ssl/CaptivePortalHelper.java",
       "../android/java/src/org/chromium/chrome/browser/ssl/SecurityStateModel.java",
-      "../android/java/src/org/chromium/chrome/browser/subresource_filter/TestSubresourceFilterPublisher.java",
       "../android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
       "../android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
       "../android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsEventReporterBridge.java",

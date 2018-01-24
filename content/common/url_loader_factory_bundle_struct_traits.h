@@ -13,21 +13,15 @@ namespace mojo {
 
 template <>
 struct StructTraits<content::mojom::URLLoaderFactoryBundleDataView,
-                    std::unique_ptr<content::URLLoaderFactoryBundleInfo>> {
-  using BundleInfoType = std::unique_ptr<content::URLLoaderFactoryBundleInfo>;
+                    content::URLLoaderFactoryBundle> {
+  static network::mojom::URLLoaderFactoryPtr default_factory(
+      content::URLLoaderFactoryBundle& bundle);
 
-  static bool IsNull(const BundleInfoType& bundle) { return !bundle; }
-
-  static void SetToNull(BundleInfoType* bundle) { bundle->reset(); }
-
-  static network::mojom::URLLoaderFactoryPtrInfo default_factory(
-      BundleInfoType& bundle);
-
-  static std::map<std::string, network::mojom::URLLoaderFactoryPtrInfo>
-  factories(BundleInfoType& bundle);
+  static std::map<std::string, network::mojom::URLLoaderFactoryPtr> factories(
+      content::URLLoaderFactoryBundle& bundle);
 
   static bool Read(content::mojom::URLLoaderFactoryBundleDataView data,
-                   BundleInfoType* out_bundle);
+                   content::URLLoaderFactoryBundle* out_bundle);
 };
 
 }  // namespace mojo

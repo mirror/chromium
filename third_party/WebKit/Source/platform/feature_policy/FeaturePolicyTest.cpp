@@ -51,8 +51,7 @@ const char* const kInvalidPolicies[] = {
     "vibrate https://bad;origin",
     "vibrate https:/bad,origin",
     "vibrate https://example.com, https://a.com",
-    "vibrate *, payment data://badorigin",
-    "vibrate ws://xn--fd\xbcwsw3taaaaaBaa333aBBBBBBJBBJBBBt"};
+    "vibrate *, payment data://badorigin"};
 
 }  // namespace
 

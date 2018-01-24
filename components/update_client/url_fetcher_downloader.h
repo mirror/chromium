@@ -27,9 +27,8 @@ namespace update_client {
 // Implements a CRX downloader in top of the URLFetcher.
 class UrlFetcherDownloader : public CrxDownloader {
  public:
-  UrlFetcherDownloader(
-      std::unique_ptr<CrxDownloader> successor,
-      scoped_refptr<net::URLRequestContextGetter> context_getter);
+  UrlFetcherDownloader(std::unique_ptr<CrxDownloader> successor,
+                       net::URLRequestContextGetter* context_getter);
   ~UrlFetcherDownloader() override;
 
  private:
@@ -66,7 +65,7 @@ class UrlFetcherDownloader : public CrxDownloader {
   std::unique_ptr<URLFetcherDelegate> delegate_;
 
   std::unique_ptr<net::URLFetcher> url_fetcher_;
-  scoped_refptr<net::URLRequestContextGetter> context_getter_;
+  net::URLRequestContextGetter* context_getter_ = nullptr;
 
   // Contains a temporary download directory for the downloaded file.
   base::FilePath download_dir_;

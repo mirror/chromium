@@ -248,10 +248,10 @@ void ViewBlobInternalsJob::GenerateHTMLForBlobData(
     const BlobDataItem& item = *(blob_data.items().at(i)->item());
 
     switch (item.type()) {
-      case BlobDataItem::Type::kBytes:
+      case network::DataElement::TYPE_BYTES:
         AddHTMLListItem(kType, "data", out);
         break;
-      case BlobDataItem::Type::kFile:
+      case network::DataElement::TYPE_FILE:
         AddHTMLListItem(kType, "file", out);
         AddHTMLListItem(kPath,
                  net::EscapeForHTML(item.path().AsUTF8Unsafe()),
@@ -262,7 +262,10 @@ void ViewBlobInternalsJob::GenerateHTMLForBlobData(
               out);
         }
         break;
-      case BlobDataItem::Type::kFileFilesystem:
+      case network::DataElement::TYPE_BLOB:
+        NOTREACHED();   // Should be flattened in the storage context.
+        break;
+      case network::DataElement::TYPE_FILE_FILESYSTEM:
         AddHTMLListItem(kType, "filesystem", out);
         AddHTMLListItem(kURL, item.filesystem_url().spec(), out);
         if (!item.expected_modification_time().is_null()) {
@@ -271,12 +274,19 @@ void ViewBlobInternalsJob::GenerateHTMLForBlobData(
               out);
         }
         break;
-      case BlobDataItem::Type::kDiskCacheEntry:
+      case network::DataElement::TYPE_DISK_CACHE_ENTRY:
         AddHTMLListItem(kType, "disk cache entry", out);
         AddHTMLListItem(kURL, item.disk_cache_entry()->GetKey(), out);
         break;
-      case BlobDataItem::Type::kBytesDescription:
+      case network::DataElement::TYPE_BYTES_DESCRIPTION:
         AddHTMLListItem(kType, "pending data", out);
+        break;
+      case network::DataElement::TYPE_DATA_PIPE:
+        AddHTMLListItem(kType, "data pipe", out);
+        break;
+      case network::DataElement::TYPE_RAW_FILE:
+      case network::DataElement::TYPE_UNKNOWN:
+        NOTREACHED();
         break;
     }
     if (item.offset()) {

@@ -35,6 +35,7 @@ namespace ash {
 class ASH_EXPORT AppListPresenterDelegate
     : public app_list::AppListPresenterDelegate,
       public ui::EventHandler,
+      public keyboard::KeyboardControllerObserver,
       public ShellObserver,
       public TabletModeObserver {
  public:
@@ -50,6 +51,7 @@ class ASH_EXPORT AppListPresenterDelegate
             int current_apps_page) override;
   void OnShown(int64_t display_id) override;
   void OnDismissed() override;
+  void UpdateBounds() override;
   gfx::Vector2d GetVisibilityAnimationOffset(
       aura::Window* root_window) override;
   base::TimeDelta GetVisibilityAnimationDuration(aura::Window* root_window,
@@ -61,6 +63,10 @@ class ASH_EXPORT AppListPresenterDelegate
   // ui::EventHandler overrides:
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
+
+  // KeyboardControllerObserver overrides:
+  void OnKeyboardWorkspaceOccludedBoundsChanging(
+      const gfx::Rect& new_bounds) override;
 
   // ShellObserver overrides:
   void OnOverviewModeStarting() override;

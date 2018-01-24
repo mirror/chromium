@@ -1694,13 +1694,6 @@ domain DOM
   # Undoes the last performed action.
   experimental command undo
 
-  # Returns iframe node that owns iframe with the given domain.
-  experimental command getFrameOwner
-    parameters
-      Page.FrameId frameId
-    returns
-      NodeId nodeId
-
   # Fired when `Element`'s attribute is modified.
   event attributeModified
     parameters
@@ -1988,8 +1981,6 @@ experimental domain DOMSnapshot
       optional boolean isClickable
       # Details of the node's event listeners, if any.
       optional array of DOMDebugger.EventListener eventListeners
-      # The selected url for nodes with a srcset attribute.
-      optional string currentSourceURL
 
   # Details of post layout rendered text positions. The exact layout should not be regarded as
   # stable and may change between versions.
@@ -2764,14 +2755,14 @@ domain Input
       integer x
       # Y coordinate of the mouse pointer in DIP.
       integer y
+      # Time at which the event occurred.
+      TimeSinceEpoch timestamp
       # Mouse button.
       enum button
         none
         left
         middle
         right
-      # Time at which the event occurred (default: current time).
-      optional TimeSinceEpoch timestamp
       # X delta in DIP for mouse wheel event (default: 0).
       optional number deltaX
       # Y delta in DIP for mouse wheel event (default: 0).
@@ -3150,37 +3141,6 @@ experimental domain Memory
     parameters
       # Memory pressure level of the notification.
       PressureLevel level
-
-  # Start collecting native memory profile.
-  command startSampling
-    parameters
-      # Average number of bytes between samples.
-      optional integer samplingInterval
-      # Do not randomize intervals between samples.
-      optional boolean suppressRandomness
-
-  # Stop collecting native memory profile.
-  command stopSampling
-
-  # Retrieve collected native memory profile.
-  command getSamplingProfile
-    returns
-      SamplingProfile profile
-
-  # Heap profile sample.
-  type SamplingProfileNode extends object
-    properties
-      # Size of the sampled allocation.
-      number size
-      # Number of sampled allocations of that size.
-      number count
-      # Execution stack at the point of allocation.
-      array of string stack
-
-  # Array of heap profile samples.
-  type SamplingProfile extends object
-    properties
-      array of SamplingProfileNode samples
 
 # Network domain allows tracking network activities of the page. It exposes information about http,
 # file, data and other requests and responses, their headers, bodies, timing, etc.

@@ -11,7 +11,6 @@
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_user_view.h"
-#include "ash/login/ui/scrollable_users_list_view.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "base/strings/utf_string_conversions.h"
@@ -34,22 +33,21 @@ TEST_F(LockContentsViewUnitTest, DisplayMode) {
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
   // Verify user list and secondary auth are not shown for one user.
-  LockContentsView::TestApi lock_contents(contents);
-  EXPECT_EQ(nullptr, lock_contents.users_list());
-  EXPECT_FALSE(lock_contents.opt_secondary_auth());
+  LockContentsView::TestApi test_api(contents);
+  EXPECT_EQ(0u, test_api.user_views().size());
+  EXPECT_FALSE(test_api.opt_secondary_auth());
 
   // Verify user list is not shown for two users, but secondary auth is.
   SetUserCount(2);
-  EXPECT_EQ(nullptr, lock_contents.users_list());
-  EXPECT_TRUE(lock_contents.opt_secondary_auth());
+  EXPECT_EQ(0u, test_api.user_views().size());
+  EXPECT_TRUE(test_api.opt_secondary_auth());
 
   // Verify user names and pod style is set correctly for 3-25 users. This also
   // sanity checks that LockContentsView can respond to a multiple user change
   // events fired from the data dispatcher, which is needed for the debug UI.
   for (size_t user_count = 3; user_count < 25; ++user_count) {
     SetUserCount(user_count);
-    ScrollableUsersListView::TestApi users_list(lock_contents.users_list());
-    EXPECT_EQ(user_count - 1, users_list.user_views().size());
+    EXPECT_EQ(user_count - 1, test_api.user_views().size());
 
     // 1 extra user gets large style.
     LoginDisplayStyle expected_style = LoginDisplayStyle::kLarge;
@@ -60,8 +58,8 @@ TEST_F(LockContentsViewUnitTest, DisplayMode) {
     if (user_count >= 7)
       expected_style = LoginDisplayStyle::kExtraSmall;
 
-    for (size_t i = 0; i < users_list.user_views().size(); ++i) {
-      LoginUserView::TestApi user_test_api(users_list.user_views()[i]);
+    for (size_t i = 0; i < test_api.user_views().size(); ++i) {
+      LoginUserView::TestApi user_test_api(test_api.user_views()[i]);
       EXPECT_EQ(expected_style, user_test_api.display_style());
 
       const mojom::LoginUserInfoPtr& user = users()[i + 1];
@@ -119,19 +117,18 @@ TEST_F(LockContentsViewUnitTest, AutoLayoutAfterRotation) {
   // Build lock screen with three users.
   auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
                                         data_dispatcher());
-  LockContentsView::TestApi lock_contents(contents);
+  LockContentsView::TestApi test_api(contents);
   SetUserCount(3);
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
   // Returns the distance between the auth user view and the user view.
   auto calculate_distance = [&]() {
-    if (lock_contents.opt_secondary_auth()) {
-      return lock_contents.opt_secondary_auth()->GetBoundsInScreen().x() -
-             lock_contents.primary_auth()->GetBoundsInScreen().x();
+    if (test_api.opt_secondary_auth()) {
+      return test_api.opt_secondary_auth()->GetBoundsInScreen().x() -
+             test_api.primary_auth()->GetBoundsInScreen().x();
     }
-    ScrollableUsersListView::TestApi users_list(lock_contents.users_list());
-    return users_list.user_views()[0]->GetBoundsInScreen().x() -
-           lock_contents.primary_auth()->GetBoundsInScreen().x();
+    return test_api.user_views()[0]->GetBoundsInScreen().x() -
+           test_api.primary_auth()->GetBoundsInScreen().x();
   };
 
   const display::Display& display =
@@ -214,15 +211,14 @@ TEST_F(LockContentsViewUnitTest, SwapUserListToPrimaryAuthUser) {
   // Build lock screen with five users.
   auto* contents = new LockContentsView(mojom::TrayActionState::kNotAvailable,
                                         data_dispatcher());
-  LockContentsView::TestApi lock_contents(contents);
+  LockContentsView::TestApi test_api(contents);
   SetUserCount(5);
-  ScrollableUsersListView::TestApi users_list(lock_contents.users_list());
-  EXPECT_EQ(users().size() - 1, users_list.user_views().size());
+  EXPECT_EQ(users().size() - 1, test_api.user_views().size());
   std::unique_ptr<views::Widget> widget = CreateWidgetWithContent(contents);
 
-  LoginAuthUserView* auth_view = lock_contents.primary_auth();
+  LoginAuthUserView* auth_view = test_api.primary_auth();
 
-  for (const LoginUserView* const list_user_view : users_list.user_views()) {
+  for (const LoginUserView* const list_user_view : test_api.user_views()) {
     // Capture user info to validate it did not change during the swap.
     AccountId auth_id = auth_view->current_user()->basic_user_info->account_id;
     AccountId list_user_id =
@@ -242,7 +238,7 @@ TEST_F(LockContentsViewUnitTest, SwapUserListToPrimaryAuthUser) {
 
     // Validate that every user is still unique.
     std::unordered_set<std::string> emails;
-    for (const LoginUserView* const view : users_list.user_views()) {
+    for (const LoginUserView* const view : test_api.user_views()) {
       std::string email =
           view->current_user()->basic_user_info->account_id.GetUserEmail();
       EXPECT_TRUE(emails.insert(email).second);

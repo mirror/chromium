@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
@@ -65,7 +66,7 @@ std::unique_ptr<base::DictionaryValue> GetOriginDict(
           origin_url, GURL(), CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
           std::string(), nullptr));
   if (!dict)
-    return std::make_unique<base::DictionaryValue>();
+    return base::MakeUnique<base::DictionaryValue>();
 
   return dict;
 }

@@ -245,14 +245,6 @@ enum WebAXExpanded {
   kWebAXExpandedExpanded
 };
 
-// Selected State.
-// These values must match blink::AccessibilitySelectedState values.
-enum WebAXSelectedState {
-  kWebAXSelectedStateUndefined = 0,
-  kWebAXSelectedStateFalse,
-  kWebAXSelectedStateTrue
-};
-
 // These values must match blink::AccessibilityOrientation values.
 // Enforced in AssertMatchingEnums.cpp.
 enum WebAXOrientation {

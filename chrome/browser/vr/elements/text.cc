@@ -10,7 +10,6 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/render_text.h"
 
@@ -20,7 +19,6 @@ namespace {
 
 constexpr float kCursorWidthRatio = 0.07f;
 constexpr int kTextPixelPerDmm = 1100;
-constexpr float kTextShadowScaleFactor = 1000.0f;
 
 int DmmToPixel(float dmm) {
   return static_cast<int>(dmm * kTextPixelPerDmm);
@@ -121,10 +119,6 @@ class TextTexture : public UiTexture {
     SetAndDirty(&cursor_position_, position);
   }
 
-  void SetShadowsEnabled(bool enabled) {
-    SetAndDirty(&shadows_enabled_, enabled);
-  }
-
   void SetTextWidth(float width) { SetAndDirty(&text_width_, width); }
 
   gfx::SizeF GetDrawnSize() const override { return size_; }
@@ -151,7 +145,6 @@ class TextTexture : public UiTexture {
   void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override;
 
   gfx::SizeF size_;
-  gfx::Vector2d texture_offset_;
   base::string16 text_;
   float font_height_dmms_ = 0;
   float text_width_ = 0;
@@ -162,7 +155,6 @@ class TextTexture : public UiTexture {
   bool cursor_enabled_ = false;
   int cursor_position_ = 0;
   gfx::Rect cursor_bounds_;
-  bool shadows_enabled_ = false;
   std::vector<std::unique_ptr<gfx::RenderText>> lines_;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
@@ -223,10 +215,6 @@ gfx::RectF Text::GetCursorBounds() const {
       bounds.height() * scale * kCursorWidthRatio, bounds.height() * scale);
 }
 
-void Text::SetShadowsEnabled(bool enabled) {
-  texture_->SetShadowsEnabled(enabled);
-}
-
 void Text::OnSetSize(const gfx::SizeF& size) {
   if (IsFixedWidthLayout(text_layout_mode_))
     texture_->SetTextWidth(size.width());
@@ -275,8 +263,6 @@ void TextTexture::LayOutText() {
                                      : kWrappingBehaviorNoWrap;
   parameters.cursor_enabled = cursor_enabled_;
   parameters.cursor_position = cursor_position_;
-  parameters.shadows_enabled = shadows_enabled_;
-  parameters.shadow_size = kTextShadowScaleFactor * font_height_dmms_;
 
   lines_ =
       // TODO(vollick): if this subsumes all text, then we should probably move
@@ -297,17 +283,12 @@ void TextTexture::LayOutText() {
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
-  if (parameters.shadows_enabled) {
-    texture_offset_ = gfx::Vector2d(gfx::ToFlooredInt(parameters.shadow_size),
-                                    gfx::ToFlooredInt(parameters.shadow_size));
-  }
 }
 
 void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   cc::SkiaPaintCanvas paint_canvas(sk_canvas);
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
   gfx::Canvas* canvas = &gfx_canvas;
-  canvas->Translate(texture_offset_);
 
   for (auto& render_text : lines_)
     render_text->Draw(canvas);

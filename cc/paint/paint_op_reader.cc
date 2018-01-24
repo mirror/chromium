@@ -648,8 +648,8 @@ void PaintOpReader::ReadBlurPaintFilter(
   BlurPaintFilter::TileMode tile_mode = SkBlurImageFilter::kClamp_TileMode;
   sk_sp<PaintFilter> input;
 
-  Read(&sigma_x);
-  Read(&sigma_y);
+  ReadSimple(&sigma_x);
+  ReadSimple(&sigma_y);
   ReadSimple(&tile_mode);
   Read(&input);
   if (!valid_)
@@ -671,11 +671,11 @@ void PaintOpReader::ReadDropShadowPaintFilter(
       SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode;
   sk_sp<PaintFilter> input;
 
-  Read(&dx);
-  Read(&dy);
-  Read(&sigma_x);
-  Read(&sigma_y);
-  Read(&color);
+  ReadSimple(&dx);
+  ReadSimple(&dy);
+  ReadSimple(&sigma_x);
+  ReadSimple(&sigma_y);
+  ReadSimple(&color);
   ReadSimple(&shadow_mode);
   Read(&input);
 
@@ -695,8 +695,8 @@ void PaintOpReader::ReadMagnifierPaintFilter(
   SkScalar inset = 0.f;
   sk_sp<PaintFilter> input;
 
-  Read(&src_rect);
-  Read(&inset);
+  ReadSimple(&src_rect);
+  ReadSimple(&inset);
   Read(&input);
   if (!valid_)
     return;
@@ -743,7 +743,7 @@ void PaintOpReader::ReadXfermodePaintFilter(
   sk_sp<PaintFilter> background;
   sk_sp<PaintFilter> foreground;
 
-  Read(&blend_mode_int);
+  ReadSimple(&blend_mode_int);
   Read(&background);
   Read(&foreground);
   SkBlendMode blend_mode = SkBlendMode::kClear;
@@ -768,11 +768,11 @@ void PaintOpReader::ReadArithmeticPaintFilter(
   bool enforce_pm_color = false;
   sk_sp<PaintFilter> background;
   sk_sp<PaintFilter> foreground;
-  Read(&k1);
-  Read(&k2);
-  Read(&k3);
-  Read(&k4);
-  Read(&enforce_pm_color);
+  ReadSimple(&k1);
+  ReadSimple(&k2);
+  ReadSimple(&k3);
+  ReadSimple(&k4);
+  ReadSimple(&enforce_pm_color);
   Read(&background);
   Read(&foreground);
   if (!valid_)
@@ -804,12 +804,12 @@ void PaintOpReader::ReadMatrixConvolutionPaintFilter(
   }
   std::vector<SkScalar> kernel(size);
   for (size_t i = 0; i < size; ++i)
-    Read(&kernel[i]);
-  Read(&gain);
-  Read(&bias);
+    ReadSimple(&kernel[i]);
+  ReadSimple(&gain);
+  ReadSimple(&bias);
   ReadSimple(&kernel_offset);
-  Read(&tile_mode_int);
-  Read(&convolve_alpha);
+  ReadSimple(&tile_mode_int);
+  ReadSimple(&convolve_alpha);
   Read(&input);
   if (tile_mode_int > SkMatrixConvolutionImageFilter::kMax_TileMode)
     SetInvalid();
@@ -834,9 +834,9 @@ void PaintOpReader::ReadDisplacementMapEffectPaintFilter(
   sk_sp<PaintFilter> displacement;
   sk_sp<PaintFilter> color;
 
-  Read(&channel_x_int);
-  Read(&channel_y_int);
-  Read(&scale);
+  ReadSimple(&channel_x_int);
+  ReadSimple(&channel_y_int);
+  ReadSimple(&scale);
   Read(&displacement);
   Read(&color);
 
@@ -885,7 +885,7 @@ void PaintOpReader::ReadRecordPaintFilter(
     const base::Optional<PaintFilter::CropRect>& crop_rect) {
   SkRect record_bounds;
   sk_sp<PaintRecord> record;
-  Read(&record_bounds);
+  ReadSimple(&record_bounds);
   Read(&record);
   if (!valid_)
     return;
@@ -918,9 +918,9 @@ void PaintOpReader::ReadMorphologyPaintFilter(
   int radius_x = 0;
   int radius_y = 0;
   sk_sp<PaintFilter> input;
-  Read(&morph_type_int);
-  Read(&radius_x);
-  Read(&radius_y);
+  ReadSimple(&morph_type_int);
+  ReadSimple(&radius_x);
+  ReadSimple(&radius_y);
   Read(&input);
   if (morph_type_int >
       static_cast<uint32_t>(MorphologyPaintFilter::MorphType::kMaxMorphType)) {
@@ -942,8 +942,8 @@ void PaintOpReader::ReadOffsetPaintFilter(
   SkScalar dy = 0.f;
   sk_sp<PaintFilter> input;
 
-  Read(&dx);
-  Read(&dy);
+  ReadSimple(&dx);
+  ReadSimple(&dy);
   Read(&input);
   if (!valid_)
     return;
@@ -958,8 +958,8 @@ void PaintOpReader::ReadTilePaintFilter(
   SkRect dst = SkRect::MakeEmpty();
   sk_sp<PaintFilter> input;
 
-  Read(&src);
-  Read(&dst);
+  ReadSimple(&src);
+  ReadSimple(&dst);
   Read(&input);
   if (!valid_)
     return;
@@ -976,11 +976,11 @@ void PaintOpReader::ReadTurbulencePaintFilter(
   SkScalar seed = 0.f;
   SkISize tile_size = SkISize::MakeEmpty();
 
-  Read(&turbulence_type_int);
-  Read(&base_frequency_x);
-  Read(&base_frequency_y);
-  Read(&num_octaves);
-  Read(&seed);
+  ReadSimple(&turbulence_type_int);
+  ReadSimple(&base_frequency_x);
+  ReadSimple(&base_frequency_y);
+  ReadSimple(&num_octaves);
+  ReadSimple(&seed);
   ReadSimple(&tile_size);
   if (turbulence_type_int >
       static_cast<uint32_t>(
@@ -1015,7 +1015,7 @@ void PaintOpReader::ReadMatrixPaintFilter(
   SkFilterQuality filter_quality = kNone_SkFilterQuality;
   sk_sp<PaintFilter> input;
 
-  Read(&matrix);
+  ReadSimple(&matrix);
   ReadSimple(&filter_quality);
   Read(&input);
   if (filter_quality > kLast_SkFilterQuality)
@@ -1037,12 +1037,12 @@ void PaintOpReader::ReadLightingDistantPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  Read(&lighting_type_int);
+  ReadSimple(&lighting_type_int);
   ReadSimple(&direction);
-  Read(&light_color);
-  Read(&surface_scale);
-  Read(&kconstant);
-  Read(&shininess);
+  ReadSimple(&light_color);
+  ReadSimple(&surface_scale);
+  ReadSimple(&kconstant);
+  ReadSimple(&shininess);
   Read(&input);
   if (lighting_type_int >
       static_cast<uint32_t>(PaintFilter::LightingType::kMaxLightingType)) {
@@ -1068,12 +1068,12 @@ void PaintOpReader::ReadLightingPointPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  Read(&lighting_type_int);
+  ReadSimple(&lighting_type_int);
   ReadSimple(&location);
-  Read(&light_color);
-  Read(&surface_scale);
-  Read(&kconstant);
-  Read(&shininess);
+  ReadSimple(&light_color);
+  ReadSimple(&surface_scale);
+  ReadSimple(&kconstant);
+  ReadSimple(&shininess);
   Read(&input);
   if (lighting_type_int >
       static_cast<uint32_t>(PaintFilter::LightingType::kMaxLightingType)) {
@@ -1102,15 +1102,15 @@ void PaintOpReader::ReadLightingSpotPaintFilter(
   SkScalar shininess = 0.f;
   sk_sp<PaintFilter> input;
 
-  Read(&lighting_type_int);
+  ReadSimple(&lighting_type_int);
   ReadSimple(&location);
   ReadSimple(&target);
-  Read(&specular_exponent);
-  Read(&cutoff_angle);
-  Read(&light_color);
-  Read(&surface_scale);
-  Read(&kconstant);
-  Read(&shininess);
+  ReadSimple(&specular_exponent);
+  ReadSimple(&cutoff_angle);
+  ReadSimple(&light_color);
+  ReadSimple(&surface_scale);
+  ReadSimple(&kconstant);
+  ReadSimple(&shininess);
   Read(&input);
 
   if (lighting_type_int >

@@ -22,6 +22,7 @@
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/profiles/profile_info_cache.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -94,7 +95,9 @@ ProfileInfoCache* ProfileNameVerifierObserver::GetCache() {
 
 ProfileInfoCacheTest::ProfileInfoCacheTest()
     : testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
-      name_observer_(&testing_profile_manager_) {}
+      name_observer_(&testing_profile_manager_),
+      user_data_dir_override_(chrome::DIR_USER_DATA) {
+}
 
 ProfileInfoCacheTest::~ProfileInfoCacheTest() {
 }

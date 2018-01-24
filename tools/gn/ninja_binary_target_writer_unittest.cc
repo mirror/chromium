@@ -12,12 +12,9 @@
 #include "tools/gn/config.h"
 #include "tools/gn/scheduler.h"
 #include "tools/gn/target.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
-using NinjaBinaryTargetWriterTest = TestWithScheduler;
-
-TEST_F(NinjaBinaryTargetWriterTest, SourceSet) {
+TEST(NinjaBinaryTargetWriter, SourceSet) {
   Err err;
   TestWithScope setup;
 
@@ -150,7 +147,7 @@ TEST_F(NinjaBinaryTargetWriterTest, SourceSet) {
   }
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, StaticLibrary) {
+TEST(NinjaBinaryTargetWriter, StaticLibrary) {
   TestWithScope setup;
   Err err;
 
@@ -182,7 +179,7 @@ TEST_F(NinjaBinaryTargetWriterTest, StaticLibrary) {
   EXPECT_EQ(expected, out_str);
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, CompleteStaticLibrary) {
+TEST(NinjaBinaryTargetWriter, CompleteStaticLibrary) {
   TestWithScope setup;
   Err err;
 
@@ -259,7 +256,7 @@ TEST_F(NinjaBinaryTargetWriterTest, CompleteStaticLibrary) {
 
 // This tests that output extension and output dir overrides apply, and input
 // dependencies are applied.
-TEST_F(NinjaBinaryTargetWriterTest, OutputExtensionAndInputDeps) {
+TEST(NinjaBinaryTargetWriter, OutputExtensionAndInputDeps) {
   Err err;
   TestWithScope setup;
 
@@ -314,7 +311,7 @@ TEST_F(NinjaBinaryTargetWriterTest, OutputExtensionAndInputDeps) {
 }
 
 // Tests libs are applied.
-TEST_F(NinjaBinaryTargetWriterTest, LibsAndLibDirs) {
+TEST(NinjaBinaryTargetWriter, LibsAndLibDirs) {
   Err err;
   TestWithScope setup;
 
@@ -349,7 +346,7 @@ TEST_F(NinjaBinaryTargetWriterTest, LibsAndLibDirs) {
   EXPECT_EQ(expected, out_str);
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, EmptyOutputExtension) {
+TEST(NinjaBinaryTargetWriter, EmptyOutputExtension) {
   Err err;
   TestWithScope setup;
 
@@ -393,7 +390,7 @@ TEST_F(NinjaBinaryTargetWriterTest, EmptyOutputExtension) {
   EXPECT_EQ(expected, out_str);
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, SourceSetDataDeps) {
+TEST(NinjaBinaryTargetWriter, SourceSetDataDeps) {
   Err err;
   TestWithScope setup;
 
@@ -473,7 +470,7 @@ TEST_F(NinjaBinaryTargetWriterTest, SourceSetDataDeps) {
   EXPECT_EQ(final_expected, final_out.str());
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, SharedLibraryModuleDefinitionFile) {
+TEST(NinjaBinaryTargetWriter, SharedLibraryModuleDefinitionFile) {
   Err err;
   TestWithScope setup;
 
@@ -507,7 +504,7 @@ TEST_F(NinjaBinaryTargetWriterTest, SharedLibraryModuleDefinitionFile) {
   EXPECT_EQ(expected, out.str());
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, LoadableModule) {
+TEST(NinjaBinaryTargetWriter, LoadableModule) {
   Err err;
   TestWithScope setup;
 
@@ -573,7 +570,7 @@ TEST_F(NinjaBinaryTargetWriterTest, LoadableModule) {
   EXPECT_EQ(final_expected, final_out.str());
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, WinPrecompiledHeaders) {
+TEST(NinjaBinaryTargetWriter, WinPrecompiledHeaders) {
   Err err;
 
   // This setup's toolchain does not have precompiled headers defined.
@@ -700,7 +697,7 @@ TEST_F(NinjaBinaryTargetWriterTest, WinPrecompiledHeaders) {
   }
 }
 
-TEST_F(NinjaBinaryTargetWriterTest, GCCPrecompiledHeaders) {
+TEST(NinjaBinaryTargetWriter, GCCPrecompiledHeaders) {
   Err err;
 
   // This setup's toolchain does not have precompiled headers defined.
@@ -825,25 +822,27 @@ TEST_F(NinjaBinaryTargetWriterTest, GCCPrecompiledHeaders) {
 
 // Should throw an error with the scheduler if a duplicate object file exists.
 // This is dependent on the toolchain's object file mapping.
-TEST_F(NinjaBinaryTargetWriterTest, DupeObjFileError) {
+TEST(NinjaBinaryTargetWriter, DupeObjFileError) {
+  Scheduler scheduler;
+
   TestWithScope setup;
   TestTarget target(setup, "//foo:bar", Target::EXECUTABLE);
   target.sources().push_back(SourceFile("//a.cc"));
   target.sources().push_back(SourceFile("//a.cc"));
 
-  EXPECT_FALSE(scheduler().is_failed());
+  EXPECT_FALSE(scheduler.is_failed());
 
   std::ostringstream out;
   NinjaBinaryTargetWriter writer(&target, out);
   writer.Run();
 
   // Should have issued an error.
-  EXPECT_TRUE(scheduler().is_failed());
+  EXPECT_TRUE(scheduler.is_failed());
 }
 
 // This tests that output extension and output dir overrides apply, and input
 // dependencies are applied.
-TEST_F(NinjaBinaryTargetWriterTest, InputFiles) {
+TEST(NinjaBinaryTargetWriter, InputFiles) {
   Err err;
   TestWithScope setup;
 

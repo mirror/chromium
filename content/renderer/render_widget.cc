@@ -1885,24 +1885,29 @@ void RenderWidget::OnUpdateWindowScreenRect(
 
 void RenderWidget::OnSetViewportIntersection(
     const gfx::Rect& viewport_intersection) {
-  if (auto* frame_widget = GetFrameWidget()) {
+  if (GetWebWidget()) {
+    DCHECK(GetWebWidget()->IsWebFrameWidget());
     DCHECK_EQ(popup_type_, WebPopupType::kWebPopupTypeNone);
-    frame_widget->SetRemoteViewportIntersection(viewport_intersection);
+    static_cast<WebFrameWidget*>(GetWebWidget())
+        ->SetRemoteViewportIntersection(viewport_intersection);
   }
 }
 
 void RenderWidget::OnSetIsInert(bool inert) {
-  if (auto* frame_widget = GetFrameWidget()) {
+  if (GetWebWidget()) {
+    DCHECK(GetWebWidget()->IsWebFrameWidget());
     DCHECK_EQ(popup_type_, WebPopupType::kWebPopupTypeNone);
-    frame_widget->SetIsInert(inert);
+    static_cast<WebFrameWidget*>(GetWebWidget())->SetIsInert(inert);
   }
 }
 
 void RenderWidget::OnUpdateRenderThrottlingStatus(bool is_throttled,
                                                   bool subtree_throttled) {
-  if (auto* frame_widget = GetFrameWidget()) {
+  if (GetWebWidget()) {
+    DCHECK(GetWebWidget()->IsWebFrameWidget());
     DCHECK_EQ(popup_type_, WebPopupType::kWebPopupTypeNone);
-    frame_widget->UpdateRenderThrottlingStatus(is_throttled, subtree_throttled);
+    static_cast<WebFrameWidget*>(GetWebWidget())
+        ->UpdateRenderThrottlingStatus(is_throttled, subtree_throttled);
   }
 }
 
@@ -1912,13 +1917,14 @@ void RenderWidget::OnDragTargetDragEnter(
     const gfx::PointF& screen_point,
     WebDragOperationsMask ops,
     int key_modifiers) {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget())
     return;
 
-  WebDragOperation operation = frame_widget->DragTargetDragEnter(
-      DropMetaDataToWebDragData(drop_meta_data), client_point, screen_point,
-      ops, key_modifiers);
+  DCHECK(GetWebWidget()->IsWebFrameWidget());
+  WebDragOperation operation =
+      static_cast<WebFrameWidget*>(GetWebWidget())
+          ->DragTargetDragEnter(DropMetaDataToWebDragData(drop_meta_data),
+                                client_point, screen_point, ops, key_modifiers);
 
   Send(new DragHostMsg_UpdateDragCursor(routing_id(), operation));
 }
@@ -1927,25 +1933,24 @@ void RenderWidget::OnDragTargetDragOver(const gfx::PointF& client_point,
                                         const gfx::PointF& screen_point,
                                         WebDragOperationsMask ops,
                                         int key_modifiers) {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget())
     return;
 
-  WebDragOperation operation = frame_widget->DragTargetDragOver(
-      ConvertWindowPointToViewport(client_point), screen_point, ops,
-      key_modifiers);
+  DCHECK(GetWebWidget()->IsWebFrameWidget());
+  WebDragOperation operation =
+      static_cast<WebFrameWidget*>(GetWebWidget())
+          ->DragTargetDragOver(ConvertWindowPointToViewport(client_point),
+                               screen_point, ops, key_modifiers);
 
   Send(new DragHostMsg_UpdateDragCursor(routing_id(), operation));
 }
 
 void RenderWidget::OnDragTargetDragLeave(const gfx::PointF& client_point,
                                          const gfx::PointF& screen_point) {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget())
     return;
-
-  frame_widget
-
+  DCHECK(GetWebWidget()->IsWebFrameWidget());
+  static_cast<WebFrameWidget*>(GetWebWidget())
       ->DragTargetDragLeave(ConvertWindowPointToViewport(client_point),
                             screen_point);
 }
@@ -1954,24 +1959,25 @@ void RenderWidget::OnDragTargetDrop(const DropData& drop_data,
                                     const gfx::PointF& client_point,
                                     const gfx::PointF& screen_point,
                                     int key_modifiers) {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget())
     return;
 
-  frame_widget->DragTargetDrop(DropDataToWebDragData(drop_data),
-                               ConvertWindowPointToViewport(client_point),
-                               screen_point, key_modifiers);
+  DCHECK(GetWebWidget()->IsWebFrameWidget());
+  static_cast<WebFrameWidget*>(GetWebWidget())
+      ->DragTargetDrop(DropDataToWebDragData(drop_data),
+                       ConvertWindowPointToViewport(client_point), screen_point,
+                       key_modifiers);
 }
 
 void RenderWidget::OnDragSourceEnded(const gfx::PointF& client_point,
                                      const gfx::PointF& screen_point,
                                      WebDragOperation op) {
-  blink::WebFrameWidget* frame_widget = GetFrameWidget();
-  if (!frame_widget)
+  if (!GetWebWidget())
     return;
 
-  frame_widget->DragSourceEndedAt(ConvertWindowPointToViewport(client_point),
-                                  screen_point, op);
+  static_cast<WebFrameWidget*>(GetWebWidget())
+      ->DragSourceEndedAt(ConvertWindowPointToViewport(client_point),
+                          screen_point, op);
 }
 
 void RenderWidget::OnDragSourceSystemDragEnded() {

@@ -41,7 +41,6 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.content.R;
 import org.chromium.content.browser.ContentClassFactory;
-import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
@@ -62,7 +61,7 @@ import java.util.List;
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.M)
 public class SelectionPopupControllerImpl
-        extends ActionModeCallbackHelper implements SelectionPopupController, WindowEventObserver {
+        extends ActionModeCallbackHelper implements SelectionPopupController {
     private static final String TAG = "SelectionPopupCtlr"; // 20 char limit
 
     /**
@@ -525,12 +524,12 @@ public class SelectionPopupControllerImpl
         }
     }
 
-    // WindowEventObserver
-
-    @Override
-    public void onWindowFocusChanged(boolean gainFocus) {
+    /**
+     * @see ActionMode#onWindowFocusChanged()
+     */
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
         if (supportsFloatingActionMode() && isActionModeValid()) {
-            mActionMode.onWindowFocusChanged(gainFocus);
+            mActionMode.onWindowFocusChanged(hasWindowFocus);
         }
     }
 

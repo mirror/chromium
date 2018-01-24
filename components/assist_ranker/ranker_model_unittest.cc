@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/assist_ranker/proto/ranker_model.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -23,7 +24,7 @@ int64_t InSeconds(const base::Time t) {
 std::unique_ptr<RankerModel> NewModel(const std::string& model_url,
                                       base::Time last_modified,
                                       base::TimeDelta cache_duration) {
-  std::unique_ptr<RankerModel> model = std::make_unique<RankerModel>();
+  std::unique_ptr<RankerModel> model = base::MakeUnique<RankerModel>();
   auto* metadata = model->mutable_proto()->mutable_metadata();
   if (!model_url.empty())
     metadata->set_source(model_url);

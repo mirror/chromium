@@ -390,8 +390,7 @@ class QuicStreamFactoryTestBase {
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientConnectionClosePacket(
       QuicPacketNumber num) {
-    return client_maker_.MakeConnectionClosePacket(
-        num, false, QUIC_CRYPTO_VERSION_NOT_SUPPORTED, "Time to panic!");
+    return client_maker_.MakeConnectionClosePacket(num);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructClientRstPacket(
@@ -2048,13 +2047,8 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
-  if (async_write_before) {
-    if (session->use_control_frame_manager()) {
-      session->SendPing();
-    } else {
-      session->connection()->SendPing();
-    }
-  }
+  if (async_write_before)
+    session->connection()->SendPing();
 
   // Set up second socket data provider that is used after migration.
   // The response to the earlier request is read on this new socket.
@@ -2185,13 +2179,8 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
-  if (async_write_before) {
-    if (session->use_control_frame_manager()) {
-      session->SendPing();
-    } else {
-      session->connection()->SendPing();
-    }
-  }
+  if (async_write_before)
+    session->connection()->SendPing();
 
   // Set up second socket data provider that is used after migration.
   // The response to the earlier request is read on this new socket.
@@ -5482,8 +5471,8 @@ TEST_P(QuicStreamFactoryWithDestinationTest, InvalidCertificate) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_FALSE(cert->VerifyNameMatch(origin1_.host()));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
+  ASSERT_FALSE(cert->VerifyNameMatch(origin1_.host(), false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -5517,9 +5506,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, SharedCertificate) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host()));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
-  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host(), false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
+  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -5582,9 +5571,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DifferentPrivacyMode) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host()));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host()));
-  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin1_.host(), false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_.host(), false));
+  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details1;
   verify_details1.cert_verify_result.verified_cert = cert;
@@ -5662,9 +5651,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
 
   scoped_refptr<X509Certificate> cert1(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_.host()));
-  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_.host()));
-  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname));
+  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_.host(), false));
+  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_.host(), false));
+  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details1;
   verify_details1.cert_verify_result.verified_cert = cert1;
@@ -5673,8 +5662,8 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
 
   scoped_refptr<X509Certificate> cert2(
       ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem"));
-  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_.host()));
-  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname));
+  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_.host(), false));
+  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details2;
   verify_details2.cert_verify_result.verified_cert = cert2;

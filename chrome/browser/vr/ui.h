@@ -84,7 +84,7 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccessEnabled(bool enabled) override;
+  void SetLocationAccess(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
@@ -97,21 +97,10 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
                       const base::Version& component_version);
 
   void OnAssetsLoading();
-  // TODO(ymalik): We expose this to stop sending VSync to the WebVR page until
-  // the splash screen has been visible for its minimum duration. The visibility
-  // logic currently lives in the UI, and it'd be much cleaner if the UI didn't
-  // have to worry about this, and if it were told to hide the splash screen
-  // like other WebVR phases (e.g. OnWebVrFrameAvailable below).
-  bool CanSendWebVrVSync();
   bool ShouldRenderWebVr();
-
-  void OnGlInitialized(
-      unsigned int content_texture_id,
-      UiElementRenderer::TextureLocation content_location,
-      unsigned int content_overlay_texture_id,
-      UiElementRenderer::TextureLocation content_overlay_location,
-      bool use_ganesh);
-
+  void OnGlInitialized(unsigned int content_texture_id,
+                       UiElementRenderer::TextureLocation content_location,
+                       bool use_ganesh);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);

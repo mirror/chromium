@@ -91,9 +91,6 @@ android_resources("chrome_java_resources") {
     "java/res",
     "//chrome/android/java/res_chromium",
   ]
-  if (enable_vr) {
-    resource_dirs += [ "//chrome/android/java/res_vr" ]
-  }
   deps = [
     ":chrome_strings_grd",
     "//chrome/app:java_strings_grd",
@@ -204,8 +201,8 @@ android_library("chrome_java") {
     "//components/crash/android:java",
     "//components/dom_distiller/content/browser/android:dom_distiller_content_java",
     "//components/dom_distiller/core/android:dom_distiller_core_java",
-    "//components/download/internal/background_service:internal_java",
-    "//components/download/public/background_service:public_java",
+    "//components/download/internal:internal_java",
+    "//components/download/public:public_java",
     "//components/feature_engagement:feature_engagement_java",
     "//components/gcm_driver/android:gcm_driver_java",
     "//components/gcm_driver/instance_id/android:instance_id_driver_java",
@@ -502,6 +499,7 @@ android_library("chrome_test_java") {
     "//chrome/android/third_party/widget_bottomsheet_base:widget_bottomsheet_base_java",
     "//chrome/android/webapk/libs/client:client_java",
     "//chrome/android/webapk/libs/common:common_java",
+    "//chrome/android/webapk/libs/runtime_library:webapk_service_aidl_java",
     "//chrome/test/android:chrome_java_test_support",
     "//components/autofill/android:autofill_java",
     "//components/background_task_scheduler:background_task_scheduler_java",
@@ -617,13 +615,10 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/rules/VrTestRule.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/rules/WebappActivityVrTestRule.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/NfcSimUtils.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/util/TransitionUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrShellDelegateUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTestRuleUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/util/XrTransitionUtils.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/TestFramework.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/TestVrShellDelegate.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrInstallUpdateInfoBarTest.java",
@@ -637,9 +632,6 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTabTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/WebXrInputTest.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/XrTestFramework.java",
       "javatests/src/org/chromium/chrome/browser/webapps/TestFetchStorageCallback.java",
       "javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
     ]

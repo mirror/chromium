@@ -27,6 +27,4 @@ try echo -n "hello world" > data
 try openssl rsautl -inkey "${net_certs_dir}/client_1.key" -sign -in \
    data -pkcs -out signature_nohash_pkcs
 try openssl dgst -sha1 -sign "${net_certs_dir}/client_1.key" -out \
-   signature_client1_sha1_pkcs data
-try openssl dgst -sha1 -sign "${net_certs_dir}/client_2.key" -out \
-   signature_client2_sha1_pkcs data
+   signature_sha1_pkcs data

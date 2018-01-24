@@ -25,7 +25,7 @@
 #include "net/http/http_response_body_drainer.h"
 #include "net/http/http_stream_factory_impl.h"
 #include "net/http/url_security_manager.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/quic_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_stream_factory.h"
 #include "net/quic/core/crypto/quic_random.h"
@@ -154,7 +154,7 @@ HttpNetworkSession::Context::Context()
       transport_security_state(nullptr),
       cert_transparency_verifier(nullptr),
       ct_policy_enforcer(nullptr),
-      proxy_resolution_service(nullptr),
+      proxy_service(nullptr),
       ssl_config_service(nullptr),
       http_auth_handler_factory(nullptr),
       net_log(nullptr),
@@ -177,7 +177,7 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
       http_server_properties_(context.http_server_properties),
       cert_verifier_(context.cert_verifier),
       http_auth_handler_factory_(context.http_auth_handler_factory),
-      proxy_resolution_service_(context.proxy_resolution_service),
+      proxy_service_(context.proxy_service),
       ssl_config_service_(context.ssl_config_service),
       push_delegate_(nullptr),
       quic_stream_factory_(
@@ -236,7 +236,7 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
       network_stream_throttler_(std::make_unique<NetworkThrottleManagerImpl>()),
       params_(params),
       context_(context) {
-  DCHECK(proxy_resolution_service_);
+  DCHECK(proxy_service_);
   DCHECK(ssl_config_service_.get());
   CHECK(http_server_properties_);
 

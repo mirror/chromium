@@ -28,7 +28,8 @@ class MODULES_EXPORT BarcodeDetector final : public ShapeDetector {
   explicit BarcodeDetector(ExecutionContext*);
   ~BarcodeDetector() override = default;
 
-  ScriptPromise DoDetect(ScriptPromiseResolver*, SkBitmap) override;
+  ScriptPromise DoDetect(ScriptPromiseResolver*,
+                         skia::mojom::blink::BitmapPtr) override;
   void OnDetectBarcodes(
       ScriptPromiseResolver*,
       Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>);

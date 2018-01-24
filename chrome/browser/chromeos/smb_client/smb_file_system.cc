@@ -270,34 +270,16 @@ AbortCallback SmbFileSystem::CreateDirectory(
 AbortCallback SmbFileSystem::CreateFile(
     const base::FilePath& file_path,
     const storage::AsyncFileUtil::StatusCallback& callback) {
-  GetSmbProviderClient()->CreateFile(
-      GetMountId(), file_path,
-      base::BindOnce(&SmbFileSystem::HandleRequestCreateFileCallback,
-                     weak_ptr_factory_.GetWeakPtr(), callback));
+  NOTIMPLEMENTED();
   return CreateAbortCallback();
-}
-
-void SmbFileSystem::HandleRequestCreateFileCallback(
-    const storage::AsyncFileUtil::StatusCallback& callback,
-    smbprovider::ErrorType error) const {
-  callback.Run(TranslateError(error));
 }
 
 AbortCallback SmbFileSystem::DeleteEntry(
     const base::FilePath& entry_path,
     bool recursive,
     const storage::AsyncFileUtil::StatusCallback& callback) {
-  GetSmbProviderClient()->DeleteEntry(
-      GetMountId(), entry_path, recursive,
-      base::BindOnce(&SmbFileSystem::HandleRequestDeleteEntryCallback,
-                     weak_ptr_factory_.GetWeakPtr(), callback));
+  NOTIMPLEMENTED();
   return CreateAbortCallback();
-}
-
-void SmbFileSystem::HandleRequestDeleteEntryCallback(
-    const storage::AsyncFileUtil::StatusCallback& callback,
-    smbprovider::ErrorType error) const {
-  callback.Run(TranslateError(error));
 }
 
 AbortCallback SmbFileSystem::CopyEntry(

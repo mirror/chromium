@@ -105,13 +105,6 @@ bool IsGlobal(const PaintLayer& layer) {
   return &layer == root_scroller_layer;
 }
 
-bool IsGlobal(const Element* element) {
-  return element->GetDocument()
-             .GetPage()
-             ->GlobalRootScrollerController()
-             .GlobalRootScroller() == element;
-}
-
 }  // namespace RootScrollerUtil
 
 }  // namespace blink

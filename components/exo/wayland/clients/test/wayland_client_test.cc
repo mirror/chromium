@@ -6,8 +6,6 @@
 
 #include <stdlib.h>
 
-#include <memory>
-
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -36,7 +34,7 @@ class AshTestEnvironmentWayland : public ash::AshTestEnvironment {
 
   // Overriden from ash::AshTestEnvironment:
   std::unique_ptr<ash::AshTestViewsDelegate> CreateViewsDelegate() override {
-    return std::make_unique<ash::AshTestViewsDelegate>();
+    return base::MakeUnique<ash::AshTestViewsDelegate>();
   }
 
  private:
@@ -143,12 +141,12 @@ void WaylandClientTest::SetUpOnUIThread(base::WaitableEvent* event) {
   gesture_config->set_long_press_time_in_ms(1000);
   gesture_config->set_max_touch_move_in_pixels_for_click(5);
 
-  wm_helper_ = std::make_unique<WMHelper>();
+  wm_helper_ = base::MakeUnique<WMHelper>();
   WMHelper::SetInstance(wm_helper_.get());
-  display_ = std::make_unique<Display>(nullptr, nullptr);
+  display_ = base::MakeUnique<Display>(nullptr, nullptr);
   wayland_server_ = exo::wayland::Server::Create(display_.get());
   DCHECK(wayland_server_);
-  wayland_watcher_ = std::make_unique<WaylandWatcher>(wayland_server_.get());
+  wayland_watcher_ = base::MakeUnique<WaylandWatcher>(wayland_server_.get());
   event->Signal();
 }
 

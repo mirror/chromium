@@ -49,9 +49,17 @@ namespace blink {
 namespace CSSParsingUtils {
 namespace {
 
-bool IsLeftOrRightKeyword(CSSValueID id) {
-  return CSSPropertyParserHelpers::IdentMatches<CSSValueLeft, CSSValueRight>(
-      id);
+bool IsSelfPositionKeyword(CSSValueID id) {
+  return CSSPropertyParserHelpers::IdentMatches<
+      CSSValueStart, CSSValueEnd, CSSValueCenter, CSSValueSelfStart,
+      CSSValueSelfEnd, CSSValueFlexStart, CSSValueFlexEnd, CSSValueLeft,
+      CSSValueRight>(id);
+}
+
+CSSIdentifierValue* ConsumeSelfPositionKeyword(CSSParserTokenRange& range) {
+  return IsSelfPositionKeyword(range.Peek().Id())
+             ? CSSPropertyParserHelpers::ConsumeIdent(range)
+             : nullptr;
 }
 
 bool IsAutoOrNormalOrStretch(CSSValueID id) {
@@ -65,15 +73,15 @@ bool IsContentDistributionKeyword(CSSValueID id) {
       CSSValueStretch>(id);
 }
 
+bool IsContentPositionKeyword(CSSValueID id) {
+  return CSSPropertyParserHelpers::IdentMatches<
+      CSSValueStart, CSSValueEnd, CSSValueCenter, CSSValueFlexStart,
+      CSSValueFlexEnd, CSSValueLeft, CSSValueRight>(id);
+}
+
 bool IsOverflowKeyword(CSSValueID id) {
   return CSSPropertyParserHelpers::IdentMatches<CSSValueUnsafe, CSSValueSafe>(
       id);
-}
-
-CSSIdentifierValue* ConsumeOverflowPositionKeyword(CSSParserTokenRange& range) {
-  return IsOverflowKeyword(range.Peek().Id())
-             ? CSSPropertyParserHelpers::ConsumeIdent(range)
-             : nullptr;
 }
 
 bool IsBaselineKeyword(CSSValueID id) {
@@ -526,29 +534,7 @@ CSSValue* ConsumeTransformValue(CSSParserTokenRange& range,
 
 }  // namespace
 
-bool IsSelfPositionKeyword(CSSValueID id) {
-  return CSSPropertyParserHelpers::IdentMatches<
-      CSSValueStart, CSSValueEnd, CSSValueCenter, CSSValueSelfStart,
-      CSSValueSelfEnd, CSSValueFlexStart, CSSValueFlexEnd>(id);
-}
-
-bool IsSelfPositionOrLeftOrRightKeyword(CSSValueID id) {
-  return IsSelfPositionKeyword(id) || IsLeftOrRightKeyword(id);
-}
-
-bool IsContentPositionKeyword(CSSValueID id) {
-  return CSSPropertyParserHelpers::IdentMatches<
-      CSSValueStart, CSSValueEnd, CSSValueCenter, CSSValueFlexStart,
-      CSSValueFlexEnd>(id);
-}
-
-bool IsContentPositionOrLeftOrRightKeyword(CSSValueID id) {
-  return IsContentPositionKeyword(id) || IsLeftOrRightKeyword(id);
-}
-
-CSSValue* ConsumeSelfPositionOverflowPosition(
-    CSSParserTokenRange& range,
-    IsPositionKeyword is_position_keyword) {
+CSSValue* ConsumeSelfPositionOverflowPosition(CSSParserTokenRange& range) {
   CSSValueID id = range.Peek().Id();
   if (IsAutoOrNormalOrStretch(id))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
@@ -556,33 +542,37 @@ CSSValue* ConsumeSelfPositionOverflowPosition(
   if (IsBaselineKeyword(id))
     return ConsumeBaselineKeyword(range);
 
-  CSSIdentifierValue* overflow_position = ConsumeOverflowPositionKeyword(range);
-  if (!is_position_keyword(range.Peek().Id()))
+  CSSIdentifierValue* overflow_position =
+      CSSPropertyParserHelpers::ConsumeIdent<CSSValueUnsafe, CSSValueSafe>(
+          range);
+  CSSIdentifierValue* self_position = ConsumeSelfPositionKeyword(range);
+  if (!self_position)
     return nullptr;
-  CSSIdentifierValue* self_position =
-      CSSPropertyParserHelpers::ConsumeIdent(range);
+  if (!overflow_position) {
+    overflow_position =
+        CSSPropertyParserHelpers::ConsumeIdent<CSSValueUnsafe, CSSValueSafe>(
+            range);
+  }
   if (overflow_position) {
-    return CSSValuePair::Create(overflow_position, self_position,
+    return CSSValuePair::Create(self_position, overflow_position,
                                 CSSValuePair::kDropIdenticalValues);
   }
   return self_position;
 }
 
-CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange& range,
-                                        IsPositionKeyword is_position_keyword) {
+CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange& range) {
   CSSValueID id = range.Peek().Id();
-  if (IsAutoOrNormalOrStretch(id) || is_position_keyword(id))
+  if (IsAutoOrNormalOrStretch(id))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
 
   if (IsBaselineKeyword(id))
     return ConsumeBaselineKeyword(range);
 
-  return nullptr;
+  return ConsumeSelfPositionKeyword(range);
 }
 
 CSSValue* ConsumeContentDistributionOverflowPosition(
-    CSSParserTokenRange& range,
-    IsPositionKeyword is_position_keyword) {
+    CSSParserTokenRange& range) {
   CSSValueID id = range.Peek().Id();
   if (CSSPropertyParserHelpers::IdentMatches<CSSValueNormal>(id)) {
     return CSSContentDistributionValue::Create(
@@ -598,29 +588,46 @@ CSSValue* ConsumeContentDistributionOverflowPosition(
         CSSValueInvalid, GetBaselineKeyword(*baseline), CSSValueInvalid);
   }
 
-  if (IsContentDistributionKeyword(id)) {
-    return CSSContentDistributionValue::Create(
-        range.ConsumeIncludingWhitespace().Id(), CSSValueInvalid,
-        CSSValueInvalid);
-  }
+  CSSValueID distribution = CSSValueInvalid;
+  CSSValueID position = CSSValueInvalid;
+  CSSValueID overflow = CSSValueInvalid;
+  do {
+    if (IsContentDistributionKeyword(id)) {
+      if (distribution != CSSValueInvalid)
+        return nullptr;
+      distribution = id;
+    } else if (IsContentPositionKeyword(id)) {
+      if (position != CSSValueInvalid)
+        return nullptr;
+      position = id;
+    } else if (IsOverflowKeyword(id)) {
+      if (overflow != CSSValueInvalid)
+        return nullptr;
+      overflow = id;
+    } else {
+      return nullptr;
+    }
+    range.ConsumeIncludingWhitespace();
+    id = range.Peek().Id();
+  } while (!range.AtEnd());
 
-  CSSValueID overflow = IsOverflowKeyword(id)
-                            ? range.ConsumeIncludingWhitespace().Id()
-                            : CSSValueInvalid;
-  if (is_position_keyword(range.Peek().Id())) {
-    return CSSContentDistributionValue::Create(
-        CSSValueInvalid, range.ConsumeIncludingWhitespace().Id(), overflow);
-  }
+  // The grammar states that we should have at least <content-distribution> or
+  // <content-position>.
+  if (position == CSSValueInvalid && distribution == CSSValueInvalid)
+    return nullptr;
 
-  return nullptr;
+  // The grammar states that <overflow-position> must be associated to
+  // <content-position>.
+  if (overflow != CSSValueInvalid && position == CSSValueInvalid)
+    return nullptr;
+
+  return CSSContentDistributionValue::Create(distribution, position, overflow);
 }
 
-CSSValue* ConsumeSimplifiedContentPosition(
-    CSSParserTokenRange& range,
-    IsPositionKeyword is_position_keyword) {
+CSSValue* ConsumeSimplifiedContentPosition(CSSParserTokenRange& range) {
   CSSValueID id = range.Peek().Id();
   if (CSSPropertyParserHelpers::IdentMatches<CSSValueNormal>(id) ||
-      is_position_keyword(id)) {
+      IsContentPositionKeyword(id)) {
     return CSSContentDistributionValue::Create(
         CSSValueInvalid, range.ConsumeIncludingWhitespace().Id(),
         CSSValueInvalid);
@@ -639,7 +646,6 @@ CSSValue* ConsumeSimplifiedContentPosition(
         range.ConsumeIncludingWhitespace().Id(), CSSValueInvalid,
         CSSValueInvalid);
   }
-
   return nullptr;
 }
 
@@ -2380,14 +2386,11 @@ bool ConsumePlaceAlignment(CSSParserTokenRange& range,
   DCHECK(!align_value);
   DCHECK(!justify_value);
 
-  align_value = consume_alignment_value(range, IsSelfPositionKeyword);
+  align_value = consume_alignment_value(range);
   if (!align_value)
     return false;
 
-  justify_value =
-      range.AtEnd()
-          ? align_value
-          : consume_alignment_value(range, IsSelfPositionOrLeftOrRightKeyword);
+  justify_value = range.AtEnd() ? align_value : consume_alignment_value(range);
 
   return justify_value && range.AtEnd();
 }

@@ -107,13 +107,7 @@ Element* TopDocumentRootScrollerController::FindGlobalRootScrollerElement() {
   return element;
 }
 
-void SetNeedsCompositingUpdateOnAncestors(Element* element) {
-  if (!element || !element->GetDocument().IsActive())
-    return;
-
-  ScrollableArea* area =
-      RootScrollerUtil::ScrollableAreaForRootScroller(element);
-
+void SetNeedsCompositingUpdateOnAncestors(ScrollableArea* area) {
   if (!area || !area->Layer())
     return;
 
@@ -123,6 +117,7 @@ void SetNeedsCompositingUpdateOnAncestors(Element* element) {
       continue;
 
     LayoutView* layout_view = ToLocalFrame(frame)->View()->GetLayoutView();
+
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
       PaintLayer* frame_root_layer = layout_view->Layer();
       DCHECK(frame_root_layer);
@@ -158,7 +153,8 @@ void TopDocumentRootScrollerController::RecomputeGlobalRootScroller() {
   // scrolling the element so it will apply scroll to the element itself.
   target->setApplyScroll(viewport_apply_scroll_, "disable-native-scroll");
 
-  Element* old_root_scroller = global_root_scroller_;
+  ScrollableArea* old_root_scroller_area =
+      RootScrollerUtil::ScrollableAreaForRootScroller(global_root_scroller_);
 
   global_root_scroller_ = target;
 
@@ -169,14 +165,11 @@ void TopDocumentRootScrollerController::RecomputeGlobalRootScroller() {
   // in RootFrameViewport.
   viewport_apply_scroll_->SetScroller(target_scroller);
 
-  SetNeedsCompositingUpdateOnAncestors(old_root_scroller);
-  SetNeedsCompositingUpdateOnAncestors(target);
+  SetNeedsCompositingUpdateOnAncestors(old_root_scroller_area);
+  SetNeedsCompositingUpdateOnAncestors(target_scroller);
 
-  if (ScrollableArea* area =
-          RootScrollerUtil::ScrollableAreaForRootScroller(old_root_scroller)) {
-    if (old_root_scroller->GetDocument().IsActive())
-      area->DidChangeGlobalRootScroller();
-  }
+  if (old_root_scroller_area)
+    old_root_scroller_area->DidChangeGlobalRootScroller();
 
   target_scroller->DidChangeGlobalRootScroller();
 }
@@ -188,14 +181,8 @@ Document* TopDocumentRootScrollerController::TopDocument() const {
   return ToLocalFrame(page_->MainFrame())->GetDocument();
 }
 
-void TopDocumentRootScrollerController::DidUpdateCompositing(
-    const LocalFrameView& frame_view) {
+void TopDocumentRootScrollerController::DidUpdateCompositing() {
   if (!page_)
-    return;
-
-  // The only other way to get here is from a local root OOPIF but we ignore
-  // that case since the global root can't cross remote frames today.
-  if (!frame_view.GetFrame().IsMainFrame())
     return;
 
   // Let the compositor-side counterpart know about this change.

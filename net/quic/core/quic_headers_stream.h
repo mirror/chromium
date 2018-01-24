@@ -38,7 +38,7 @@ class QUIC_EXPORT_PRIVATE QuicHeadersStream : public QuicStream {
   // Release underlying buffer if allowed.
   void MaybeReleaseSequencerBuffer();
 
-  bool OnStreamFrameAcked(QuicStreamOffset offset,
+  void OnStreamFrameAcked(QuicStreamOffset offset,
                           QuicByteCount data_length,
                           bool fin_acked,
                           QuicTime::Delta ack_delay_time) override;

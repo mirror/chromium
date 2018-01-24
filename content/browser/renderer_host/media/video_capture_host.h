@@ -28,29 +28,17 @@ class CONTENT_EXPORT VideoCaptureHost
     : public VideoCaptureControllerEventHandler,
       public mojom::VideoCaptureHost {
  public:
-  VideoCaptureHost(uint32_t render_process_id,
+  VideoCaptureHost(int render_process_id,
                    MediaStreamManager* media_stream_manager);
-  class RenderProcessHostDelegate;
-  VideoCaptureHost(std::unique_ptr<RenderProcessHostDelegate> delegate,
-                   MediaStreamManager* media_stream_manager);
-  ~VideoCaptureHost() override;
 
-  static void Create(uint32_t render_process_id,
+  static void Create(int render_process_id,
                      MediaStreamManager* media_stream_manager,
                      mojom::VideoCaptureHostRequest request);
 
-  // Interface for notifying RenderProcessHost instance about active video
-  // capture stream changes.
-  class CONTENT_EXPORT RenderProcessHostDelegate {
-   public:
-    virtual ~RenderProcessHostDelegate();
-    virtual void NotifyStreamAdded() = 0;
-    virtual void NotifyStreamRemoved() = 0;
-  };
+  ~VideoCaptureHost() override;
 
  private:
   friend class VideoCaptureTest;
-  FRIEND_TEST_ALL_PREFIXES(VideoCaptureTest, IncrementMatchesDecrementCalls);
 
   // VideoCaptureControllerEventHandler implementation.
   void OnError(VideoCaptureControllerID id) override;
@@ -104,13 +92,8 @@ class CONTENT_EXPORT VideoCaptureHost
   void DeleteVideoCaptureController(VideoCaptureControllerID controller_id,
                                     bool on_error);
 
-  void NotifyStreamAdded();
-  void NotifyStreamRemoved();
-  void NotifyAllStreamsRemoved();
-
-  class RenderProcessHostDelegateImpl;
+  class RenderProcessHostDelegate;
   std::unique_ptr<RenderProcessHostDelegate> render_process_host_delegate_;
-  uint32_t number_of_active_streams_ = 0;
 
   MediaStreamManager* const media_stream_manager_;
 

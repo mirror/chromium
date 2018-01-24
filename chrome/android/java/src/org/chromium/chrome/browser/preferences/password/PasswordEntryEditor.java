@@ -33,6 +33,8 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.PasswordManagerHandler.PasswordListObserver;
+import org.chromium.chrome.browser.PasswordUIView;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.components.sync.AndroidSyncSettings;
@@ -205,8 +207,7 @@ public class PasswordEntryEditor extends Fragment {
 
     // Delete was clicked.
     private void removeItem() {
-        final PasswordManagerHandler.PasswordListObserver
-                passwordDeleter = new PasswordManagerHandler.PasswordListObserver() {
+        final PasswordListObserver passwordDeleter = new PasswordListObserver() {
             @Override
             public void passwordListAvailable(int count) {
                 if (!mException) {

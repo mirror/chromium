@@ -492,13 +492,12 @@ PositionWithAffinity LayoutMultiColumnSet::PositionForPoint(
 LayoutUnit LayoutMultiColumnSet::ColumnGap() const {
   LayoutBlockFlow* parent_block = MultiColumnBlockFlow();
 
-  if (parent_block->Style()->ColumnGap().IsNormal()) {
+  if (parent_block->Style()->HasNormalColumnGap()) {
     // "1em" is recommended as the normal gap setting. Matches <p> margins.
     return LayoutUnit(
         parent_block->Style()->GetFontDescription().ComputedPixelSize());
   }
-  return ValueForLength(parent_block->Style()->ColumnGap().GetLength(),
-                        AvailableLogicalWidth());
+  return LayoutUnit(parent_block->Style()->ColumnGap());
 }
 
 unsigned LayoutMultiColumnSet::ActualColumnCount() const {

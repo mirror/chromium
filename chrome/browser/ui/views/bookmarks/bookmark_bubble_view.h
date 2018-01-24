@@ -67,6 +67,7 @@ class BookmarkBubbleView : public LocationBarBubbleDelegateView,
   ~BookmarkBubbleView() override;
 
   // LocationBarBubbleDelegateView:
+  int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   View* GetInitiallyFocusedView() override;
   base::string16 GetWindowTitle() const override;

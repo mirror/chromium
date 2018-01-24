@@ -218,34 +218,20 @@ var gatt_errors_tests = [{
       'NotSupportedError')
 }];
 
-// Waits until the document has finished loading.
-function waitForDocumentReady() {
-  return new Promise(resolve => {
-    if (document.readyState === 'complete') {
-      resolve();
-    }
-
-    window.addEventListener('load', () => {
-      resolve();
-    }, {once: true});
-  });
-}
-
 function callWithTrustedClick(callback) {
-  return waitForDocumentReady()
-    .then(() => new Promise(resolve => {
-      let button = document.createElement('button');
-      button.textContent = 'click to continue test';
-      button.style.display = 'block';
-      button.style.fontSize = '20px';
-      button.style.padding = '10px';
-      button.onclick = () => {
-        document.body.removeChild(button);
-        resolve(callback());
-      };
-      document.body.appendChild(button);
-      test_driver.click(button);
-    }));
+  return new Promise(resolve => {
+    let button = document.createElement('button');
+    button.textContent = 'click to continue test';
+    button.style.display = 'block';
+    button.style.fontSize = '20px';
+    button.style.padding = '10px';
+    button.onclick = () => {
+      document.body.removeChild(button);
+      resolve(callback());
+    };
+    document.body.appendChild(button);
+    test_driver.click(button);
+  });
 }
 
 // Calls requestDevice() in a context that's 'allowed to show a popup'.

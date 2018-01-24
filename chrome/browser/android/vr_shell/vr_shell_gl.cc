@@ -245,36 +245,19 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 
-  unsigned int textures[3];
-  glGenTextures(3, textures);
-  webvr_texture_id_ = textures[0];
-  unsigned int content_texture_id = textures[1];
-  unsigned int content_overlay_texture_id = textures[2];
-
+  unsigned int textures[2];
+  glGenTextures(2, textures);
+  unsigned int content_texture_id = textures[0];
+  webvr_texture_id_ = textures[1];
   content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id);
-  content_overlay_surface_texture_ =
-      gl::SurfaceTexture::Create(content_overlay_texture_id);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
-
-  content_surface_ =
-      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
-  browser_->ContentSurfaceCreated(content_surface_->j_surface().obj());
-  content_overlay_surface_ = base::MakeUnique<gl::ScopedJavaSurface>(
-      content_overlay_surface_texture_.get());
-  browser_->ContentOverlaySurfaceCreated(
-      content_overlay_surface_->j_surface().obj());
-
+  CreateContentSurface();
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnContentFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
-  content_overlay_surface_texture_->SetFrameAvailableCallback(
-      base::BindRepeating(&VrShellGl::OnContentOverlayFrameAvailable,
-                          weak_ptr_factory_.GetWeakPtr()));
-  webvr_surface_texture_->SetFrameAvailableCallback(base::BindRepeating(
+  webvr_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnWebVRFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
   content_surface_texture_->SetDefaultBufferSize(
-      content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
-  content_overlay_surface_texture_->SetDefaultBufferSize(
-      content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
+      content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -301,8 +284,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
     InitializeRenderer();
 
   ui_->OnGlInitialized(content_texture_id,
-                       vr::UiElementRenderer::kTextureLocationExternal,
-                       content_overlay_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
@@ -322,6 +303,12 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   ready_to_draw_ = true;
   if (!paused_ && !reinitializing)
     OnVSync(base::TimeTicks::Now());
+}
+
+void VrShellGl::CreateContentSurface() {
+  content_surface_ =
+      std::make_unique<gl::ScopedJavaSurface>(content_surface_texture_.get());
+  browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
 }
 
 void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
@@ -453,10 +440,6 @@ void VrShellGl::OnContentFrameAvailable() {
   content_frame_available_ = true;
 }
 
-void VrShellGl::OnContentOverlayFrameAvailable() {
-  content_overlay_surface_texture_->UpdateTexImage();
-}
-
 void VrShellGl::OnWebVRFrameAvailable() {
   // A "while" loop here is a bad idea. It's legal to call
   // UpdateTexImage repeatedly even if no frames are available, but
@@ -487,24 +470,20 @@ void VrShellGl::ScheduleOrCancelWebVrFrameTimeout() {
   // bad experiences, but we have to be careful to handle things like splash
   // screens correctly. For now just ensure we receive a first frame.
   if (!web_vr_mode_ || webvr_frames_received_ > 0) {
-    if (!webvr_frame_timeout_.IsCancelled())
-      webvr_frame_timeout_.Cancel();
-    if (!webvr_spinner_timeout_.IsCancelled())
-      webvr_spinner_timeout_.Cancel();
+    webvr_frame_timeout_.Cancel();
+    webvr_spinner_timeout_.Cancel();
     return;
   }
-  if (ui_->CanSendWebVrVSync() && submit_client_) {
-    webvr_spinner_timeout_.Reset(base::BindRepeating(
-        &VrShellGl::OnWebVrTimeoutImminent, base::Unretained(this)));
-    task_runner_->PostDelayedTask(
-        FROM_HERE, webvr_spinner_timeout_.callback(),
-        base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
-    webvr_frame_timeout_.Reset(base::BindRepeating(
-        &VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
-    task_runner_->PostDelayedTask(
-        FROM_HERE, webvr_frame_timeout_.callback(),
-        base::TimeDelta::FromSeconds(kWebVrInitialFrameTimeoutSeconds));
-  }
+  webvr_spinner_timeout_.Reset(
+      base::Bind(&VrShellGl::OnWebVrTimeoutImminent, base::Unretained(this)));
+  task_runner_->PostDelayedTask(
+      FROM_HERE, webvr_spinner_timeout_.callback(),
+      base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
+  webvr_frame_timeout_.Reset(
+      base::Bind(&VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
+  task_runner_->PostDelayedTask(
+      FROM_HERE, webvr_frame_timeout_.callback(),
+      base::TimeDelta::FromSeconds(kWebVrInitialFrameTimeoutSeconds));
 }
 
 void VrShellGl::OnWebVrFrameTimedOut() {
@@ -632,11 +611,11 @@ void VrShellGl::InitializeRenderer() {
                              GetWebVrFrameTransportOptions());
 }
 
-void VrShellGl::UpdateController(const vr::RenderInfo& render_info,
+void VrShellGl::UpdateController(const gfx::Transform& head_pose,
                                  base::TimeTicks current_time) {
   TRACE_EVENT0("gpu", "VrShellGl::UpdateController");
   gvr::Mat4f gvr_head_pose;
-  TransformToGvrMat(render_info.head_pose, &gvr_head_pose);
+  TransformToGvrMat(head_pose, &gvr_head_pose);
   controller_->UpdateState(gvr_head_pose);
   gfx::Point3F laser_origin = controller_->GetPointerStart();
 
@@ -645,13 +624,13 @@ void VrShellGl::UpdateController(const vr::RenderInfo& render_info,
     controller_data.connected = false;
   browser_->UpdateGamepadData(controller_data);
 
-  HandleControllerInput(laser_origin, render_info, current_time);
+  HandleControllerInput(laser_origin, vr::GetForwardVector(head_pose),
+                        current_time);
 }
 
 void VrShellGl::HandleControllerInput(const gfx::Point3F& laser_origin,
-                                      const vr::RenderInfo& render_info,
+                                      const gfx::Vector3dF& head_direction,
                                       base::TimeTicks current_time) {
-  gfx::Vector3dF head_direction = vr::GetForwardVector(render_info.head_pose);
   if (is_exiting_) {
     // When we're exiting, we don't show the reticle and the only input
     // processing we do is to handle immediate exits.
@@ -703,11 +682,10 @@ void VrShellGl::HandleControllerInput(const gfx::Point3F& laser_origin,
   controller_model.opacity = controller_->GetOpacity();
   controller_model.laser_direction = controller_direction;
   controller_model.laser_origin = laser_origin;
-  controller_model.handedness = controller_->GetHandedness();
   controller_model_ = controller_model;
 
   vr::ReticleModel reticle_model;
-  ui_->input_manager()->HandleInput(current_time, render_info, controller_model,
+  ui_->input_manager()->HandleInput(current_time, controller_model,
                                     &reticle_model, &gesture_list);
   ui_->OnControllerUpdated(controller_model, reticle_model);
 }
@@ -919,7 +897,7 @@ void VrShellGl::DrawFrame(int16_t frame_index, base::TimeTicks current_time) {
 
   // WebVR handles controller input in OnVsync.
   if (!ShouldDrawWebVr())
-    UpdateController(render_info_primary_, current_time);
+    UpdateController(render_info_primary_.head_pose, current_time);
 
   bool textures_changed = ui_->scene()->UpdateTextures();
 
@@ -1212,7 +1190,7 @@ void VrShellGl::OnResume() {
     return;
   vsync_helper_.CancelVSyncRequest();
   OnVSync(base::TimeTicks::Now());
-  if (web_vr_mode_)
+  if (web_vr_mode_ && submit_client_)
     ScheduleOrCancelWebVrFrameTimeout();
 }
 
@@ -1243,17 +1221,11 @@ void VrShellGl::ContentBoundsChanged(int width, int height) {
   ui_->OnContentBoundsChanged(width, height);
 }
 
-void VrShellGl::BufferBoundsChanged(const gfx::Size& content_buffer_size,
-                                    const gfx::Size& overlay_buffer_size) {
-  if (content_surface_texture_.get()) {
-    content_surface_texture_->SetDefaultBufferSize(
-        content_buffer_size.width(), content_buffer_size.height());
-  }
-  if (content_overlay_surface_texture_.get()) {
-    content_overlay_surface_texture_->SetDefaultBufferSize(
-        overlay_buffer_size.width(), overlay_buffer_size.height());
-  }
-  content_tex_buffer_size_ = content_buffer_size;
+void VrShellGl::ContentPhysicalBoundsChanged(int width, int height) {
+  if (content_surface_texture_.get())
+    content_surface_texture_->SetDefaultBufferSize(width, height);
+  content_tex_physical_size_.set_width(width);
+  content_tex_physical_size_.set_height(height);
 }
 
 base::WeakPtr<VrShellGl> VrShellGl::GetWeakPtr() {
@@ -1292,10 +1264,8 @@ void VrShellGl::OnVSync(base::TimeTicks frame_time) {
   vsync_helper_.RequestVSync(
       base::Bind(&VrShellGl::OnVSync, base::Unretained(this)));
 
-  ScheduleOrCancelWebVrFrameTimeout();
-
   // Process WebVR presenting VSync (VRDisplay rAF).
-  if (!callback_.is_null() && ui_->CanSendWebVrVSync()) {
+  if (!callback_.is_null()) {
     // A callback was stored by GetVSync. Use it now for sending a VSync.
     SendVSync(frame_time, base::ResetAndReturn(&callback_));
   } else {
@@ -1310,9 +1280,9 @@ void VrShellGl::OnVSync(base::TimeTicks frame_time) {
     // rendering as WebVR uses the gamepad api. To ensure we always handle input
     // like app button presses, update the controller here, but not in
     // DrawFrame.
-    device::GvrDelegate::GetGvrPoseWithNeckModel(
-        gvr_api_.get(), &render_info_primary_.head_pose);
-    UpdateController(render_info_primary_, frame_time);
+    gfx::Transform head_pose;
+    device::GvrDelegate::GetGvrPoseWithNeckModel(gvr_api_.get(), &head_pose);
+    UpdateController(head_pose, frame_time);
   } else {
     DrawFrame(-1, frame_time);
   }
@@ -1322,8 +1292,7 @@ void VrShellGl::GetVSync(GetVSyncCallback callback) {
   // In surfaceless (reprojecting) rendering, stay locked
   // to vsync intervals. Otherwise, for legacy Cardboard mode,
   // run requested animation frames now if it missed a vsync.
-  if ((surfaceless_rendering_ && webvr_vsync_align_) || !pending_vsync_ ||
-      !ui_->CanSendWebVrVSync()) {
+  if ((surfaceless_rendering_ && webvr_vsync_align_) || !pending_vsync_) {
     if (!callback_.is_null()) {
       mojo::ReportBadMessage(
           "Requested VSync before waiting for response to previous request.");

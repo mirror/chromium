@@ -43,8 +43,7 @@ class DEVICE_VR_EXPORT VROrientationDevice : public VRDeviceBase,
   void SensorReadingChanged() override {}
 
   // Sensor event reaction functions.
-  void SensorReady(device::mojom::SensorCreationResult result,
-                   device::mojom::SensorInitParamsPtr params);
+  void SensorReady(device::mojom::SensorInitParamsPtr params);
   void HandleSensorError();
   void OnSensorAddConfiguration(bool success);
 

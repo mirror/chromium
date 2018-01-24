@@ -88,6 +88,7 @@ class Local;
 namespace blink {
 
 class InterfaceProvider;
+class ComputedAXTree;
 class WebAudioBus;
 class WebAudioLatencyHint;
 class WebBlobRegistry;
@@ -135,7 +136,6 @@ struct WebFloatPoint;
 class WebTaskRunner;
 class WebThemeEngine;
 class WebThread;
-struct WebThreadCreationParams;
 class WebTrialTokenValidator;
 class WebURLLoaderMockFactory;
 class WebURLResponse;
@@ -406,8 +406,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Threads -------------------------------------------------------
 
   // Creates an embedder-defined thread.
-  virtual std::unique_ptr<WebThread> CreateThread(
-      const WebThreadCreationParams&);
+  virtual std::unique_ptr<WebThread> CreateThread(const char* name);
 
   // Creates a WebAudio-specific thread with the elevated priority. Do NOT use
   // for any other purpose.
@@ -524,9 +523,6 @@ class BLINK_PLATFORM_EXPORT Platform {
     bool support_depth = false;
     bool support_antialias = false;
     bool support_stencil = false;
-
-    // Offscreen contexts created for WebGL should not need the RasterInterface.
-    bool enable_raster_interface = false;
   };
   struct GraphicsInfo {
     unsigned vendor_id = 0;
@@ -752,6 +748,12 @@ class BLINK_PLATFORM_EXPORT Platform {
   // tools/v8_context_snapshot/v8_context_snapshot_generator is running (which
   // runs during Chromium's build step).
   virtual bool IsTakingV8ContextSnapshot() { return false; }
+
+  // Accessibility Object Model
+
+  // This method is used to expose the AX Tree stored in content/renderer to the
+  // DOM as part of AOM Phase 4.
+  virtual ComputedAXTree* GetOrCreateComputedAXTree() { return nullptr; }
 
  protected:
   Platform();

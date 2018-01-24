@@ -15,6 +15,7 @@
 #include "cc/paint/scoped_raster_flags.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
 #include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "third_party/skia/include/core/SkSerialProcs.h"
 
@@ -2262,10 +2263,9 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
 
     if (op->IsPaintOpWithFlags()) {
       const auto* flags_op = static_cast<const PaintOpWithFlags*>(op);
-      const bool create_skia_shaders = true;
       const ScopedRasterFlags scoped_flags(
           &flags_op->flags, new_params.image_provider, canvas->getTotalMatrix(),
-          iter.alpha(), create_skia_shaders);
+          iter.alpha());
       if (const auto* raster_flags = scoped_flags.flags())
         flags_op->RasterWithFlags(canvas, raster_flags, new_params);
       continue;

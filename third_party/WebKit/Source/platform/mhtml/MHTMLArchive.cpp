@@ -51,6 +51,7 @@ namespace blink {
 namespace {
 
 const size_t kMaximumLineLength = 76;
+const char kCrlfLineEnding[] = "\r\n";
 
 const char kRFC2047EncodingPrefix[] = "=?utf-8?Q?";
 const size_t kRFC2047EncodingPrefixLength = 10;
@@ -85,7 +86,7 @@ class QuotedPrintableEncodeBodyDelegate : public QuotedPrintableEncodeDelegate {
   void DidFinishLine(bool last_line, Vector<char>& out) override {
     if (!last_line) {
       out.push_back('=');
-      out.Append("\r\n", 2);
+      out.Append(kCrlfLineEnding, strlen(kCrlfLineEnding));
     }
   }
 };
@@ -114,7 +115,7 @@ class QuotedPrintableEncodeHeaderDelegate
   void DidFinishLine(bool last_line, Vector<char>& out) override {
     out.Append(kRFC2047EncodingSuffix, kRFC2047EncodingSuffixLength);
     if (!last_line) {
-      out.Append("\r\n", 2);
+      out.Append(kCrlfLineEnding, strlen(kCrlfLineEnding));
       out.push_back(' ');
     }
   }

@@ -326,10 +326,8 @@ class QuicStreamFactory::Job {
   int DoResolveHostComplete(int rv);
   int DoConnect();
   int DoConnectComplete(int rv);
-  int DoConfirmConnection(int rv);
 
-  void OnResolveHostComplete(int rv);
-  void OnConnectComplete(int rv);
+  void OnIOComplete(int rv);
 
   const QuicSessionKey& key() const { return key_; }
 
@@ -371,7 +369,6 @@ class QuicStreamFactory::Job {
     STATE_RESOLVE_HOST_COMPLETE,
     STATE_CONNECT,
     STATE_CONNECT_COMPLETE,
-    STATE_CONFIRM_CONNECTION,
   };
 
   IoState io_state_;
@@ -471,9 +468,6 @@ int QuicStreamFactory::Job::DoLoop(int rv) {
       case STATE_CONNECT_COMPLETE:
         rv = DoConnectComplete(rv);
         break;
-      case STATE_CONFIRM_CONNECTION:
-        rv = DoConfirmConnection(rv);
-        break;
       default:
         NOTREACHED() << "io_state_: " << io_state_;
         break;
@@ -482,21 +476,16 @@ int QuicStreamFactory::Job::DoLoop(int rv) {
   return rv;
 }
 
-void QuicStreamFactory::Job::OnResolveHostComplete(int rv) {
-  DCHECK_EQ(STATE_RESOLVE_HOST_COMPLETE, io_state_);
-
+void QuicStreamFactory::Job::OnIOComplete(int rv) {
+  IoState start_state = io_state_;
   rv = DoLoop(rv);
-  if (!host_resolution_callback_.is_null())
+  if (start_state == STATE_RESOLVE_HOST_COMPLETE &&
+      !host_resolution_callback_.is_null()) {
     base::ResetAndReturn(&host_resolution_callback_).Run(rv);
-
-  if (rv != ERR_IO_PENDING && !callback_.is_null())
+  }
+  if (rv != ERR_IO_PENDING && !callback_.is_null()) {
     base::ResetAndReturn(&callback_).Run(rv);
-}
-
-void QuicStreamFactory::Job::OnConnectComplete(int rv) {
-  rv = DoLoop(rv);
-  if (rv != ERR_IO_PENDING && !callback_.is_null())
-    base::ResetAndReturn(&callback_).Run(rv);
+  }
 }
 
 void QuicStreamFactory::Job::PopulateNetErrorDetails(
@@ -518,7 +507,7 @@ int QuicStreamFactory::Job::DoResolveHost() {
   io_state_ = STATE_RESOLVE_HOST_COMPLETE;
   return host_resolver_->Resolve(
       HostResolver::RequestInfo(key_.destination()), priority_, &address_list_,
-      base::Bind(&QuicStreamFactory::Job::OnResolveHostComplete, GetWeakPtr()),
+      base::Bind(&QuicStreamFactory::Job::OnIOComplete, GetWeakPtr()),
       &request_, net_log_);
 }
 
@@ -565,7 +554,7 @@ int QuicStreamFactory::Job::DoConnect() {
     return ERR_QUIC_PROTOCOL_ERROR;
 
   rv = session_->CryptoConnect(
-      base::Bind(&QuicStreamFactory::Job::OnConnectComplete, GetWeakPtr()));
+      base::Bind(&QuicStreamFactory::Job::OnIOComplete, GetWeakPtr()));
 
   if (!session_->connection()->connected() &&
       session_->error() == QUIC_PROOF_INVALID) {
@@ -576,11 +565,6 @@ int QuicStreamFactory::Job::DoConnect() {
 }
 
 int QuicStreamFactory::Job::DoConnectComplete(int rv) {
-  io_state_ = STATE_CONFIRM_CONNECTION;
-  return rv;
-}
-
-int QuicStreamFactory::Job::DoConfirmConnection(int rv) {
   net_log_.EndEvent(NetLogEventType::QUIC_STREAM_FACTORY_JOB_CONNECT);
   if (session_ && session_->error() == QUIC_CRYPTO_HANDSHAKE_STATELESS_REJECT) {
     num_sent_client_hellos_ += session_->GetNumSentClientHellos();

@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "components/feedback/feedback_report.h"
@@ -43,7 +44,7 @@ class MockUploader : public FeedbackUploader {
 };
 
 std::unique_ptr<std::string> MakeScoped(const char* str) {
-  return std::make_unique<std::string>(str);
+  return base::MakeUnique<std::string>(str);
 }
 
 }  // namespace

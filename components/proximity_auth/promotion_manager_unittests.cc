@@ -6,9 +6,8 @@
 
 #include <string>
 
-#include <memory>
-
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/test/simple_test_clock.h"
 #include "base/test/test_simple_task_runner.h"
@@ -95,7 +94,7 @@ class ProximityAuthPromotionManagerTest
                                  task_runner_)) {
     client_factory_->AddObserver(this);
     local_device_data_provider_->SetPublicKey(
-        std::make_unique<std::string>(kPublicKey));
+        base::MakeUnique<std::string>(kPublicKey));
 
     unlock_key_.set_public_key(kPublicKey1);
     unlock_key_.set_friendly_device_name(kDeviceName1);

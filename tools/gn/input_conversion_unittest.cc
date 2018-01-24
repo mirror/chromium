@@ -2,21 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "tools/gn/input_conversion.h"
-
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/err.h"
+#include "tools/gn/input_conversion.h"
 #include "tools/gn/input_file.h"
 #include "tools/gn/parse_tree.h"
 #include "tools/gn/scheduler.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/test_with_scope.h"
 #include "tools/gn/value.h"
 
 namespace {
 
 // InputConversion needs a global scheduler object.
-class InputConversionTest : public TestWithScheduler {
+class InputConversionTest : public testing::Test {
  public:
   InputConversionTest() = default;
 
@@ -24,6 +22,8 @@ class InputConversionTest : public TestWithScheduler {
 
  private:
   TestWithScope setup_;
+
+  Scheduler scheduler_;
 };
 
 }  // namespace

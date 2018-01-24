@@ -19,7 +19,6 @@
 #include "net/tools/quic/quic_spdy_client_session.h"
 
 using std::string;
-using testing::_;
 using testing::StrictMock;
 
 namespace net {
@@ -135,14 +134,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseCleanupAlarm) {
   ASSERT_NE(promised, nullptr);
 
   // Fire the alarm that will cancel the promised stream.
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_PUSH_STREAM_TIMED_OUT));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_PUSH_STREAM_TIMED_OUT, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_PUSH_STREAM_TIMED_OUT, 0));
   alarm_factory_.FireAlarm(QuicClientPromisedInfoPeer::GetAlarm(promised));
 
   // Verify that the promise is gone after the alarm fires.
@@ -154,14 +147,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseInvalidMethod) {
   // Promise with an unsafe method
   push_promise_[":method"] = "PUT";
 
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_INVALID_PROMISE_METHOD));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_INVALID_PROMISE_METHOD, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_INVALID_PROMISE_METHOD, 0));
   ReceivePromise(promise_id_);
 
   // Verify that the promise headers were ignored
@@ -173,14 +160,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseMissingMethod) {
   // Promise with a missing method
   push_promise_.erase(":method");
 
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_INVALID_PROMISE_METHOD));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_INVALID_PROMISE_METHOD, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_INVALID_PROMISE_METHOD, 0));
   ReceivePromise(promise_id_);
 
   // Verify that the promise headers were ignored
@@ -192,14 +173,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseInvalidUrl) {
   // Remove required header field to make URL invalid
   push_promise_.erase(":authority");
 
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_INVALID_PROMISE_URL));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_INVALID_PROMISE_URL, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_INVALID_PROMISE_URL, 0));
   ReceivePromise(promise_id_);
 
   // Verify that the promise headers were ignored
@@ -210,14 +185,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseInvalidUrl) {
 TEST_F(QuicClientPromisedInfoTest, PushPromiseUnauthorizedUrl) {
   session_.set_authorized(false);
 
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_UNAUTHORIZED_PROMISE_URL));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_UNAUTHORIZED_PROMISE_URL, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_UNAUTHORIZED_PROMISE_URL, 0));
 
   ReceivePromise(promise_id_);
 
@@ -240,14 +209,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseMismatch) {
                                      headers);
 
   TestPushPromiseDelegate delegate(/*match=*/false);
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_PROMISE_VARY_MISMATCH));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_PROMISE_VARY_MISMATCH, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_PROMISE_VARY_MISMATCH, 0));
   EXPECT_CALL(session_, CloseStream(promise_id_));
 
   promised->HandleClientRequest(client_request_, &delegate);
@@ -325,14 +288,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseWaitCancels) {
 
   // Cancel the promised stream.
   EXPECT_CALL(session_, CloseStream(promise_id_));
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_STREAM_CANCELLED));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_STREAM_CANCELLED, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_STREAM_CANCELLED, 0));
   promised->Cancel();
 
   // Promise is gone
@@ -355,14 +312,8 @@ TEST_F(QuicClientPromisedInfoTest, PushPromiseDataClosed) {
                                      headers);
 
   EXPECT_CALL(session_, CloseStream(promise_id_));
-  if (session_.use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_));
-    EXPECT_CALL(*connection_,
-                OnStreamReset(promise_id_, QUIC_STREAM_PEER_GOING_AWAY));
-  } else {
-    EXPECT_CALL(*connection_,
-                SendRstStream(promise_id_, QUIC_STREAM_PEER_GOING_AWAY, 0));
-  }
+  EXPECT_CALL(*connection_,
+              SendRstStream(promise_id_, QUIC_STREAM_PEER_GOING_AWAY, 0));
   session_.SendRstStream(promise_id_, QUIC_STREAM_PEER_GOING_AWAY, 0);
 
   // Now initiate rendezvous.

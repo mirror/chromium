@@ -5,7 +5,6 @@
 #ifndef ANDROID_WEBVIEW_RENDERER_AW_PRINT_RENDER_FRAME_HELPER_DELEGATE_H_
 #define ANDROID_WEBVIEW_RENDERER_AW_PRINT_RENDER_FRAME_HELPER_DELEGATE_H_
 
-#include "base/macros.h"
 #include "components/printing/renderer/print_render_frame_helper.h"
 
 namespace android_webview {
@@ -13,7 +12,6 @@ namespace android_webview {
 class AwPrintRenderFrameHelperDelegate
     : public printing::PrintRenderFrameHelper::Delegate {
  public:
-  AwPrintRenderFrameHelperDelegate();
   ~AwPrintRenderFrameHelperDelegate() override;
 
  private:
@@ -23,8 +21,6 @@ class AwPrintRenderFrameHelperDelegate
   bool IsPrintPreviewEnabled() override;
   bool IsScriptedPrintEnabled() override;
   bool OverridePrint(blink::WebLocalFrame* frame) override;
-
-  DISALLOW_COPY_AND_ASSIGN(AwPrintRenderFrameHelperDelegate);
 };
 
 }  // namespace android_webview

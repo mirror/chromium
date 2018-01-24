@@ -34,7 +34,6 @@ class ASH_EXPORT NewWindowController : public mojom::NewWindowController {
   void OpenCrosh();
   void OpenGetHelp();
   void RestoreTab();
-  void ShowKeyboardShortcutViewer();
   void ShowTaskManager();
   void OpenFeedbackPage();
 

@@ -34,8 +34,7 @@ namespace content {
 // It must be constructed on the render thread.
 class CONTENT_EXPORT RenderMediaLog : public media::MediaLog {
  public:
-  RenderMediaLog(const GURL& security_origin,
-                 scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+  explicit RenderMediaLog(const GURL& security_origin);
   ~RenderMediaLog() override;
 
   // MediaLog implementation.

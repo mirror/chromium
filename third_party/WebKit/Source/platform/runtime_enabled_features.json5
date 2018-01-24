@@ -502,11 +502,6 @@
       status: "test",
     },
     {
-      name: "ImplicitRootScroller",
-      status: "experimental",
-      settable_from_internals: true,
-    },
-    {
       name: "IncrementalShadowDOM",
     },
     {
@@ -823,7 +818,6 @@
     },
     {
       name: "PictureInPicture",
-      settable_from_internals: true,
     },
     {
       name: "PreciseMemoryInfo",
@@ -1084,10 +1078,6 @@
     },
     {
       name: "UnclosedFormControlIsInvalid",
-      status: "experimental",
-    },
-    {
-      name: "UnifiedTouchAdjustment",
       status: "experimental",
     },
     {

@@ -8,7 +8,6 @@
 
 #include "net/quic/core/quic_connection.h"
 #include "net/quic/core/quic_packets.h"
-#include "net/quic/core/quic_session.h"
 #include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
@@ -21,7 +20,6 @@ namespace net {
   (perspective_ == Perspective::IS_SERVER ? "Server: " : "Client: ")
 
 QuicFlowController::QuicFlowController(
-    QuicSession* session,
     QuicConnection* connection,
     QuicStreamId id,
     Perspective perspective,
@@ -29,8 +27,7 @@ QuicFlowController::QuicFlowController(
     QuicStreamOffset receive_window_offset,
     bool should_auto_tune_receive_window,
     QuicFlowControllerInterface* session_flow_controller)
-    : session_(session),
-      connection_(connection),
+    : connection_(connection),
       id_(id),
       perspective_(perspective),
       bytes_sent_(0),
@@ -231,11 +228,7 @@ void QuicFlowController::MaybeSendBlocked() {
                     << ", send limit: " << send_window_offset_;
     // The entire send_window has been consumed, we are now flow control
     // blocked.
-    if (session_->use_control_frame_manager()) {
-      session_->SendBlocked(id_);
-    } else {
-      connection_->SendBlocked(id_);
-    }
+    connection_->SendBlocked(id_);
 
     // Keep track of when we last sent a BLOCKED frame so that we only send one
     // at a given send offset.
@@ -298,10 +291,6 @@ void QuicFlowController::UpdateReceiveWindowSize(QuicStreamOffset size) {
 }
 
 void QuicFlowController::SendWindowUpdate() {
-  if (session_->use_control_frame_manager()) {
-    session_->SendWindowUpdate(id_, receive_window_offset_);
-    return;
-  }
   connection_->SendWindowUpdate(id_, receive_window_offset_);
 }
 

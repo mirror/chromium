@@ -57,6 +57,11 @@
 
 namespace blink {
 
+static inline bool PageIsBeingDismissed(Document* document) {
+  return document->PageDismissalEventBeingDispatched() !=
+         Document::kNoDismissal;
+}
+
 static ImageLoader::BypassMainWorldBehavior ShouldBypassMainWorldCSP(
     ImageLoader* loader) {
   DCHECK(loader);
@@ -395,6 +400,15 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
         !GetElement()->FastGetAttribute(HTMLNames::srcsetAttr).IsNull())
       resource_request.SetRequestContext(
           WebURLRequest::kRequestContextImageSet);
+
+    if (document.PageDismissalEventBeingDispatched() !=
+        Document::kNoDismissal) {
+      resource_request.SetHTTPHeaderField(HTTPNames::Cache_Control,
+                                          "max-age=0");
+      resource_request.SetKeepalive(true);
+      resource_request.SetRequestContext(WebURLRequest::kRequestContextPing);
+    }
+
     FetchParameters params(resource_request, resource_loader_options);
     ConfigureRequest(params, bypass_behavior, *element_,
                      document.GetClientHintsPreferences());
@@ -403,7 +417,13 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
     new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());
-    ClearFailedLoadURL();
+
+    if (!new_image_content && !PageIsBeingDismissed(&document)) {
+      CrossSiteOrCSPViolationOccurred(image_source_url);
+      DispatchErrorEvent();
+    } else {
+      ClearFailedLoadURL();
+    }
   } else {
     if (!image_source_url.IsNull()) {
       // Fire an error event if the url string is not empty, but the KURL is.
@@ -629,8 +649,9 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
     pending_load_event_.Cancel();
 
     Optional<ResourceError> error = resource->GetResourceError();
-    if (error && error->IsAccessCheck())
+    if (error && error->IsAccessCheck()) {
       CrossSiteOrCSPViolationOccurred(AtomicString(error->FailingURL()));
+    }
 
     // The error event should not fire if the image data update is a result of
     // environment change.
@@ -739,8 +760,6 @@ ScriptPromise ImageLoader::Decode(ScriptState* script_state,
                                       "The source image cannot be decoded.");
     return ScriptPromise();
   }
-
-  UseCounter::Count(GetElement()->GetDocument(), WebFeature::kImageDecodeAPI);
 
   auto* request =
       new DecodeRequest(this, ScriptPromiseResolver::Create(script_state));

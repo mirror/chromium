@@ -25,7 +25,7 @@ test(function(t) {
     assert_equals(axNode.isAtomic, true);
     assert_equals(node.accessibleNode.atomic, null);
     node.accessibleNode.atomic = false;
-    assert_equals(axNode.isAtomic, false);
+    assert_equals(axNode.isAtomic, true);
     node.accessibleNode.atomic = null;
     assert_equals(axNode.isAtomic, true);
     assert_equals(node.accessibleNode.atomic, null);

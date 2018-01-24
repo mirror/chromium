@@ -11,7 +11,6 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "media/base/cdm_context.h"
 #include "media/base/cdm_promise.h"
 #include "media/base/content_decryption_module.h"
 #include "media/base/key_systems.h"
@@ -152,9 +151,9 @@ void WebContentDecryptionModuleImpl::GetStatusForPolicy(
                                 result, std::string())));
 }
 
-std::unique_ptr<CdmContextRef>
-WebContentDecryptionModuleImpl::GetCdmContextRef() {
-  return adapter_->GetCdmContextRef();
+scoped_refptr<ContentDecryptionModule>
+WebContentDecryptionModuleImpl::GetCdm() {
+  return adapter_->GetCdm();
 }
 
 }  // namespace media

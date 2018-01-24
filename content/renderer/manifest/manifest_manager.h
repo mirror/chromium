@@ -35,8 +35,6 @@ class ManifestFetcher;
 class ManifestManager : public RenderFrameObserver,
                         public blink::mojom::ManifestManager {
  public:
-  static bool CanFetchManifest(RenderFrame* render_frame);
-
   explicit ManifestManager(RenderFrame* render_frame);
   ~ManifestManager() override;
 

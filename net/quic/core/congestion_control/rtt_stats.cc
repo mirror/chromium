@@ -6,8 +6,6 @@
 
 #include <cstdlib>  // std::abs
 
-#include "net/quic/platform/api/quic_flag_utils.h"
-#include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
 
 namespace net {
@@ -29,8 +27,7 @@ RttStats::RttStats()
       smoothed_rtt_(QuicTime::Delta::Zero()),
       previous_srtt_(QuicTime::Delta::Zero()),
       mean_deviation_(QuicTime::Delta::Zero()),
-      initial_rtt_us_(kInitialRttMs * kNumMicrosPerMilli),
-      max_ack_delay_(QuicTime::Delta::Zero()) {}
+      initial_rtt_us_(kInitialRttMs * kNumMicrosPerMilli) {}
 
 void RttStats::ExpireSmoothedMetrics() {
   mean_deviation_ = std::max(
@@ -59,22 +56,14 @@ void RttStats::UpdateRtt(QuicTime::Delta send_delta,
     min_rtt_ = send_delta;
   }
 
+  // Correct for ack_delay if information received from the peer results in a
+  // positive RTT sample. Otherwise, we use the send_delta as a reasonable
+  // measure for smoothed_rtt.
   QuicTime::Delta rtt_sample(send_delta);
   previous_srtt_ = smoothed_rtt_;
 
-  // Correct for ack_delay if information received from the peer results in a
-  // an RTT sample at least as large as min_rtt. Otherwise, only use the
-  // send_delta.
   if (rtt_sample > ack_delay) {
-    if (GetQuicReloadableFlag(quic_min_rtt_ack_delay)) {
-      QUIC_FLAG_COUNT(quic_reloadable_flag_quic_min_rtt_ack_delay);
-      if (rtt_sample - min_rtt_ >= ack_delay) {
-        max_ack_delay_ = std::max(max_ack_delay_, ack_delay);
-        rtt_sample = rtt_sample - ack_delay;
-      }
-    } else {
-      rtt_sample = rtt_sample - ack_delay;
-    }
+    rtt_sample = rtt_sample - ack_delay;
   }
   latest_rtt_ = rtt_sample;
   // First time call.
@@ -98,7 +87,6 @@ void RttStats::OnConnectionMigration() {
   smoothed_rtt_ = QuicTime::Delta::Zero();
   mean_deviation_ = QuicTime::Delta::Zero();
   initial_rtt_us_ = kInitialRttMs * kNumMicrosPerMilli;
-  max_ack_delay_ = QuicTime::Delta::Zero();
 }
 
 }  // namespace net

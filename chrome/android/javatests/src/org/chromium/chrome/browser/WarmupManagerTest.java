@@ -35,7 +35,6 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,13 +55,13 @@ public class WarmupManagerTest {
         mContext = InstrumentationRegistry.getInstrumentation()
                            .getTargetContext()
                            .getApplicationContext();
-        ThreadUtils.runOnUiThreadBlocking(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            try {
                 ChromeBrowserInitializer.getInstance(mContext).handleSynchronousStartup();
-                mWarmupManager = WarmupManager.getInstance();
-                return null;
+            } catch (Exception e) {
+                Assert.fail();
             }
+            mWarmupManager = WarmupManager.getInstance();
         });
     }
 

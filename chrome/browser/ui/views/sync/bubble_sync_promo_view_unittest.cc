@@ -21,18 +21,14 @@
 class BubbleSyncPromoViewTest : public views::ViewsTestBase,
                                 public BubbleSyncPromoDelegate {
  public:
-  BubbleSyncPromoViewTest() {}
+  BubbleSyncPromoViewTest() : sign_in_clicked_count_(0) {}
 
  protected:
   // BubbleSyncPromoDelegate:
-  void ShowBrowserSignin() override { ++show_browser_signin_count_; }
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  void EnableSync(const AccountInfo& account_info) override { NOTREACHED(); }
-#endif
+  void OnSignInLinkClicked() override { ++sign_in_clicked_count_; }
 
   // Number of times that OnSignInLinkClicked has been called.
-  int show_browser_signin_count_ = 0;
+  int sign_in_clicked_count_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BubbleSyncPromoViewTest);
@@ -48,5 +44,5 @@ TEST_F(BubbleSyncPromoViewTest, SignInLink) {
   views::StyledLabelListener* listener = sync_promo.get();
   listener->StyledLabelLinkClicked(&styled_label, gfx::Range(), ui::EF_NONE);
 
-  EXPECT_EQ(1, show_browser_signin_count_);
+  EXPECT_EQ(1, sign_in_clicked_count_);
 }

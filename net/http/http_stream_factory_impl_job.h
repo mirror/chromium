@@ -14,7 +14,6 @@
 #include "base/time/time.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
-#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/http/bidirectional_stream_impl.h"
 #include "net/http/http_auth.h"
@@ -22,7 +21,8 @@
 #include "net/http/http_request_info.h"
 #include "net/http/http_stream_factory_impl.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_server.h"
+#include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/quic_stream_factory.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/client_socket_pool_manager.h"
@@ -172,11 +172,11 @@ class HttpStreamFactoryImpl::Job {
   // HttpNetworkSession::Params::origins_to_force_quic_on.
   //
   // If |alternative_proxy_server| is a valid proxy server, then the Job will
-  // use that instead of using ProxyResolutionService for proxy resolution.
-  // Further, if |alternative_proxy_server| is a valid but bad proxy, then
-  // fallback proxies are not used. It is illegal to call this constructor with
-  // a valid |alternative_proxy_server| and an |alternate_protocol| different
-  // from kProtoUnknown.
+  // use that instead of using ProxyService for proxy resolution.  Further, if
+  // |alternative_proxy_server| is a valid but bad proxy, then fallback proxies
+  // are not used. It is illegal to call this constructor with a valid
+  // |alternative_proxy_server| and an |alternate_protocol| different from
+  // kProtoUnknown.
   Job(Delegate* delegate,
       JobType job_type,
       HttpNetworkSession* session,
@@ -366,8 +366,7 @@ class HttpStreamFactoryImpl::Job {
   static SpdySessionKey GetSpdySessionKey(bool spdy_session_direct,
                                           const ProxyServer& proxy_server,
                                           const GURL& origin_url,
-                                          PrivacyMode privacy_mode,
-                                          const SocketTag& socket_tag);
+                                          PrivacyMode privacy_mode);
 
   // Returns true if the current request can use an existing spdy session.
   bool CanUseExistingSpdySession() const;

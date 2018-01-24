@@ -44,6 +44,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLAreaElement.h"
+#include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLShadowElement.h"
 #include "core/html/HTMLSlotElement.h"
@@ -1344,11 +1346,7 @@ void FocusController::FindFocusCandidateInContainer(
     Node& container,
     const LayoutRect& starting_rect,
     WebFocusType type,
-    FocusCandidate& closest,
-    const SkipList& already_checked) {
-  if (already_checked.Contains(&container))
-    return;
-
+    FocusCandidate& closest) {
   Element* focused_element =
       (FocusedFrame() && FocusedFrame()->GetDocument())
           ? FocusedFrame()->GetDocument()->FocusedElement()
@@ -1371,9 +1369,6 @@ void FocusController::FindFocusCandidateInContainer(
     if (!element->IsKeyboardFocusable() && !IsNavigableContainer(element, type))
       continue;
 
-    if (already_checked.Contains(element))
-      continue;
-
     FocusCandidate candidate = FocusCandidate(element, type);
     if (candidate.IsNull())
       continue;
@@ -1384,103 +1379,130 @@ void FocusController::FindFocusCandidateInContainer(
 }
 
 bool FocusController::AdvanceFocusDirectionallyInContainer(
-    Node* start_container,
+    Node* container,
     const LayoutRect& starting_rect,
-    WebFocusType type,
-    Node* pruned_sub_tree_root) {
-  if (!start_container)
+    WebFocusType type) {
+  if (!container)
     return false;
 
-  HeapVector<Member<Node>> stack;
-  stack.push_back(start_container);
+  LayoutRect new_starting_rect = starting_rect;
 
-  SkipList already_checked;
-  if (pruned_sub_tree_root)
-    already_checked.insert(pruned_sub_tree_root);
+  if (starting_rect.IsEmpty())
+    new_starting_rect =
+        VirtualRectForDirection(type, NodeRectInAbsoluteCoordinates(container));
 
-  while (!stack.IsEmpty()) {
-    Node* container = stack.back();
+  // Find the closest node within current container in the direction of the
+  // navigation.
+  FocusCandidate focus_candidate;
+  FindFocusCandidateInContainer(*container, new_starting_rect, type,
+                                focus_candidate);
 
-    FocusCandidate candidate;
-    FindFocusCandidateInContainer(*container, starting_rect, type, candidate,
-                                  already_checked);
+  if (focus_candidate.IsNull()) {
+    // Nothing to focus, scroll if possible.
+    // NOTE: If no scrolling is performed (i.e. scrollInDirection returns
+    // false), the spatial navigation algorithm will skip this container.
+    return ScrollInDirection(container, type);
+  }
 
-    if (candidate.IsNull()) {
-      // Nothing to focus in this container, scroll if possible.
-      // NOTE: If no scrolling is performed (i.e. ScrollInDirection returns
-      // false), the spatial navigation algorithm will skip this container.
-      if (ScrollInDirection(container, type))
-        return true;
-
-      stack.pop_back();
-      continue;
-    }
-
-    if (!IsNavigableContainer(candidate.visible_node, type)) {
-      // We found a new focus node, navigate to it.
-      Element* element = ToElement(candidate.focusable_node);
-      DCHECK(element);
-      element->focus(
-          FocusParams(SelectionBehaviorOnFocus::kReset, type, nullptr));
-      return true;
-    }
-
-    // We now dig into a navigable container.
-
-    HTMLFrameOwnerElement* frame_element = FrameOwnerElement(candidate);
+  if (IsNavigableContainer(focus_candidate.visible_node, type)) {
+    HTMLFrameOwnerElement* frame_element = FrameOwnerElement(focus_candidate);
     if (frame_element && frame_element->ContentFrame()->IsLocalFrame()) {
-      // Navigate into a discovered frame.
+      if (focus_candidate.is_offscreen_after_scrolling) {
+        ScrollInDirection(&focus_candidate.visible_node->GetDocument(), type);
+        return true;
+      }
+      // Navigate into a new frame.
+      LayoutRect rect;
+      Element* focused_element =
+          ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
+      if (focused_element && !HasOffscreenRect(focused_element)) {
+        rect = NodeRectInAbsoluteCoordinates(focused_element,
+                                             true /* ignore border */);
+      }
       ToLocalFrame(frame_element->ContentFrame())
           ->GetDocument()
           ->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-      // Mark this |already_checked| so we can skip this subtree in case
-      // FindFocusCandidateInContainer() returns it again.
-      already_checked.insert(candidate.visible_node);
-
-      stack.push_back(
-          ToLocalFrame(frame_element->ContentFrame())->GetDocument());
-      continue;
+      if (!AdvanceFocusDirectionallyInContainer(
+              ToLocalFrame(frame_element->ContentFrame())->GetDocument(), rect,
+              type)) {
+        // The new frame had nothing interesting, need to find another
+        // candidate.
+        return AdvanceFocusDirectionallyInContainer(
+            container,
+            NodeRectInAbsoluteCoordinates(focus_candidate.visible_node, true),
+            type);
+      }
+      return true;
     }
 
-    // Search sub-container.
-    stack.push_back(candidate.visible_node);
+    if (focus_candidate.is_offscreen_after_scrolling) {
+      ScrollInDirection(focus_candidate.visible_node, type);
+      return true;
+    }
+    // Navigate into a new scrollable container.
+    LayoutRect starting_rect;
+    Element* focused_element =
+        ToLocalFrame(FocusedOrMainFrame())->GetDocument()->FocusedElement();
+    if (focused_element && !HasOffscreenRect(focused_element))
+      starting_rect = NodeRectInAbsoluteCoordinates(focused_element, true);
+    return AdvanceFocusDirectionallyInContainer(focus_candidate.visible_node,
+                                                starting_rect, type);
   }
 
-  return ScrollInDirection(start_container, type);
+  if (focus_candidate.is_offscreen_after_scrolling) {
+    Node* container = focus_candidate.enclosing_scrollable_box;
+    ScrollInDirection(container, type);
+    return true;
+  }
+
+  // We found a new focus node, navigate to it.
+  Element* element = ToElement(focus_candidate.focusable_node);
+  DCHECK(element);
+  element->focus(FocusParams(SelectionBehaviorOnFocus::kReset, type, nullptr));
+  return true;
 }
 
 bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   // FIXME: Directional focus changes don't yet work with RemoteFrames.
   if (!FocusedOrMainFrame()->IsLocalFrame())
     return false;
-  const LocalFrame* current_frame = ToLocalFrame(FocusedOrMainFrame());
-  DCHECK(current_frame);
+  LocalFrame* cur_frame = ToLocalFrame(FocusedOrMainFrame());
+  DCHECK(cur_frame);
 
-  Document* focused_document = current_frame->GetDocument();
+  Document* focused_document = cur_frame->GetDocument();
   if (!focused_document)
     return false;
 
   Element* focused_element = focused_document->FocusedElement();
   Node* container = focused_document;
+
   if (container->IsDocumentNode())
     ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (focused_element)
+
+  // Figure out the starting rect.
+  LayoutRect starting_rect;
+  if (focused_element) {
+    if (!HasOffscreenRect(focused_element)) {
+      starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
+                                                    true /* ignore border */);
+    } else if (auto* area = ToHTMLAreaElementOrNull(*focused_element)) {
+      if (area->ImageElement()) {
+        focused_element = area->ImageElement();
+        starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
+      }
+    }
     container = ScrollableAreaOrDocumentOf(focused_element);
+  }
 
-  const LayoutRect starting_rect = FindSearchStartPoint(current_frame, type);
-  Node* pruned_sub_tree_root = nullptr;
   bool consumed = false;
-
   while (!consumed && container) {
-    consumed = AdvanceFocusDirectionallyInContainer(container, starting_rect,
-                                                    type, pruned_sub_tree_root);
+    consumed =
+        AdvanceFocusDirectionallyInContainer(container, starting_rect, type);
     if (consumed)
       break;
 
-    // Nothing found in |container| so search the parent container.
-    pruned_sub_tree_root = container;
     container = ScrollableAreaOrDocumentOf(container);
+
     if (container && container->IsDocumentNode())
       ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
   }

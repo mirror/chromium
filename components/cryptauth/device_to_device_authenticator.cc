@@ -4,7 +4,6 @@
 
 #include "components/cryptauth/device_to_device_authenticator.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/memory/ptr_util.h"
@@ -69,7 +68,7 @@ DeviceToDeviceAuthenticator::DeviceToDeviceAuthenticator(
     : connection_(connection),
       account_id_(account_id),
       secure_message_delegate_(std::move(secure_message_delegate)),
-      helper_(std::make_unique<DeviceToDeviceInitiatorHelper>()),
+      helper_(base::MakeUnique<DeviceToDeviceInitiatorHelper>()),
       state_(State::NOT_STARTED),
       weak_ptr_factory_(this) {
   DCHECK(connection_);
@@ -123,7 +122,7 @@ void DeviceToDeviceAuthenticator::OnKeyPairGenerated(
 }
 
 std::unique_ptr<base::Timer> DeviceToDeviceAuthenticator::CreateTimer() {
-  return std::make_unique<base::OneShotTimer>();
+  return base::MakeUnique<base::OneShotTimer>();
 }
 
 void DeviceToDeviceAuthenticator::OnHelloMessageCreated(
@@ -146,7 +145,7 @@ void DeviceToDeviceAuthenticator::OnHelloMessageCreated(
   // Send the [Initiator Hello] message to the remote device.
   state_ = State::SENT_HELLO;
   hello_message_ = message;
-  connection_->SendMessage(std::make_unique<WireMessage>(
+  connection_->SendMessage(base::MakeUnique<WireMessage>(
       hello_message_, std::string(Authenticator::kAuthenticationFeature)));
 }
 
@@ -185,7 +184,7 @@ void DeviceToDeviceAuthenticator::OnInitiatorAuthCreated(
   }
 
   state_ = State::SENT_INITIATOR_AUTH;
-  connection_->SendMessage(std::make_unique<WireMessage>(
+  connection_->SendMessage(base::MakeUnique<WireMessage>(
       message, std::string(Authenticator::kAuthenticationFeature)));
 }
 
@@ -214,7 +213,7 @@ void DeviceToDeviceAuthenticator::Succeed() {
   connection_->RemoveObserver(this);
   callback_.Run(
       Result::SUCCESS,
-      std::make_unique<DeviceToDeviceSecureContext>(
+      base::MakeUnique<DeviceToDeviceSecureContext>(
           std::move(secure_message_delegate_), session_keys_,
           responder_auth_message_, SecureContext::PROTOCOL_VERSION_THREE_ONE));
 }

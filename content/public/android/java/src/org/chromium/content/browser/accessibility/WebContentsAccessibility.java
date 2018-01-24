@@ -30,7 +30,6 @@ import android.view.accessibility.AccessibilityNodeProvider;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.RenderCoordinates;
-import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
@@ -46,8 +45,8 @@ import java.util.Locale;
  *{@link AccessibilityNodeProvider}, and shares the lifetime with {@link WebContents}.
  */
 @JNINamespace("content")
-public class WebContentsAccessibility extends AccessibilityNodeProvider
-        implements AccessibilityStateChangeListener, WindowEventObserver {
+public class WebContentsAccessibility
+        extends AccessibilityNodeProvider implements AccessibilityStateChangeListener {
     // Constants from AccessibilityNodeInfo defined in the K SDK.
     private static final int ACTION_COLLAPSE = 0x00080000;
     private static final int ACTION_EXPAND = 0x00040000;
@@ -1399,14 +1398,16 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider
         viewNode.asyncCommit();
     }
 
-    // WindowEventObserver
-
-    @Override
+    /**
+     * @see View#onDetachedFromWindow()
+     */
     public void onDetachedFromWindow() {
         mAccessibilityManager.removeAccessibilityStateChangeListener(this);
     }
 
-    @Override
+    /**
+     * @see View#onAttachedToWindow()
+     */
     public void onAttachedToWindow() {
         mAccessibilityManager.addAccessibilityStateChangeListener(this);
         refreshState();

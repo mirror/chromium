@@ -73,10 +73,8 @@ cr.define('print_preview', function() {
     /** @override */
     getPrinters(type) {
       this.methodCalled('getPrinters', type);
-      if (type == print_preview.PrinterType.LOCAL_PRINTER) {
-        cr.webUIListenerCallback(
-            'printers-added', type, this.localDestinationInfos_);
-      }
+      cr.webUIListenerCallback(
+          'printers-added', type, this.localDestinationInfos_);
       return Promise.resolve();
     }
 
@@ -124,8 +122,6 @@ cr.define('print_preview', function() {
     /** @override */
     getPrinterCapabilities(printerId, type) {
       this.methodCalled('getPrinterCapabilities', printerId, type);
-      if (type != print_preview.PrinterType.LOCAL_PRINTER)
-        return Promise.reject();
       return this.localDestinationCapabilities_.get(printerId);
     }
 

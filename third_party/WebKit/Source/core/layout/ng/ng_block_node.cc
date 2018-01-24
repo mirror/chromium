@@ -295,16 +295,11 @@ NGLayoutInputNode NGBlockNode::FirstChild() const {
   return NGBlockNode(ToLayoutBox(child));
 }
 
-bool NGBlockNode::CanUseNewLayout(const LayoutBox& box) {
-  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
-
-  // When the style has |ForceLegacyLayout|, it's usually not LayoutNGMixin,
-  // but anonymous block can be.
-  return box.IsLayoutNGMixin() && !box.StyleRef().ForceLegacyLayout();
-}
-
 bool NGBlockNode::CanUseNewLayout() const {
-  return CanUseNewLayout(*box_);
+  if (!box_->IsLayoutNGMixin())
+    return false;
+
+  return RuntimeEnabledFeatures::LayoutNGEnabled();
 }
 
 String NGBlockNode::ToString() const {
@@ -568,7 +563,6 @@ scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
   builder.SetIsOldLayoutRoot();
   builder.SetInlineSize(box_size.inline_size);
   builder.SetBlockSize(box_size.block_size);
-  builder.SetPadding(ComputePadding(constraint_space, box_->StyleRef()));
 
   // For now we copy the exclusion space straight through, this is incorrect
   // but needed as not all elements which participate in a BFC are switched

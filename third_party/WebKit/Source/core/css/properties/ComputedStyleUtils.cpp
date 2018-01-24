@@ -640,11 +640,11 @@ CSSValueList* ComputedStyleUtils::ValueForItemPositionWithOverflowAlignment(
                               CSSIdentifierValue::Create(CSSValueBaseline),
                               CSSValuePair::kDropIdenticalValues));
   } else {
-    if (data.GetPosition() >= ItemPosition::kCenter &&
-        data.Overflow() != OverflowAlignment::kDefault)
-      result->Append(*CSSIdentifierValue::Create(data.Overflow()));
     result->Append(*CSSIdentifierValue::Create(data.GetPosition()));
   }
+  if (data.GetPosition() >= ItemPosition::kCenter &&
+      data.Overflow() != OverflowAlignment::kDefault)
+    result->Append(*CSSIdentifierValue::Create(data.Overflow()));
   DCHECK_LE(result->length(), 2u);
   return result;
 }
@@ -672,14 +672,14 @@ ComputedStyleUtils::ValueForContentPositionAndDistributionWithOverflowAlignment(
                                 CSSValuePair::kDropIdenticalValues));
       break;
     default:
-      // Handle overflow-alignment (only allowed for content-position values)
-      if ((data.GetPosition() >= ContentPosition::kCenter ||
-           data.Distribution() != ContentDistributionType::kDefault) &&
-          data.Overflow() != OverflowAlignment::kDefault)
-        result->Append(*CSSIdentifierValue::Create(data.Overflow()));
       result->Append(*CSSIdentifierValue::Create(data.GetPosition()));
   }
 
+  // Handle overflow-alignment (only allowed for content-position values)
+  if ((data.GetPosition() >= ContentPosition::kCenter ||
+       data.Distribution() != ContentDistributionType::kDefault) &&
+      data.Overflow() != OverflowAlignment::kDefault)
+    result->Append(*CSSIdentifierValue::Create(data.Overflow()));
   DCHECK_GT(result->length(), 0u);
   DCHECK_LE(result->length(), 3u);
   return result;
@@ -2274,40 +2274,6 @@ CSSValue* ComputedStyleUtils::ValuesForFontVariantProperty(
       NOTREACHED();
       return nullptr;
   }
-}
-
-// Returns up to two values for 'scroll-customization' property. The values
-// correspond to the customization values for 'x' and 'y' axes.
-CSSValue* ComputedStyleUtils::ScrollCustomizationFlagsToCSSValue(
-    ScrollCustomization::ScrollDirection scroll_customization) {
-  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  if (scroll_customization == ScrollCustomization::kScrollDirectionAuto) {
-    list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
-  } else if (scroll_customization ==
-             ScrollCustomization::kScrollDirectionNone) {
-    list->Append(*CSSIdentifierValue::Create(CSSValueNone));
-  } else {
-    if ((scroll_customization & ScrollCustomization::kScrollDirectionPanX) ==
-        ScrollCustomization::kScrollDirectionPanX)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanX));
-    else if (scroll_customization &
-             ScrollCustomization::kScrollDirectionPanLeft)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanLeft));
-    else if (scroll_customization &
-             ScrollCustomization::kScrollDirectionPanRight)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanRight));
-    if ((scroll_customization & ScrollCustomization::kScrollDirectionPanY) ==
-        ScrollCustomization::kScrollDirectionPanY)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanY));
-    else if (scroll_customization & ScrollCustomization::kScrollDirectionPanUp)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanUp));
-    else if (scroll_customization &
-             ScrollCustomization::kScrollDirectionPanDown)
-      list->Append(*CSSIdentifierValue::Create(CSSValuePanDown));
-  }
-
-  DCHECK(list->length());
-  return list;
 }
 
 }  // namespace blink

@@ -31,7 +31,7 @@ BarcodeDetector::BarcodeDetector(ExecutionContext* context) : ShapeDetector() {
 }
 
 ScriptPromise BarcodeDetector::DoDetect(ScriptPromiseResolver* resolver,
-                                        SkBitmap bitmap) {
+                                        skia::mojom::blink::BitmapPtr bitmap) {
   ScriptPromise promise = resolver->Promise();
   if (!barcode_service_) {
     resolver->Reject(DOMException::Create(

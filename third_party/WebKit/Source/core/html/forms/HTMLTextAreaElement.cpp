@@ -79,7 +79,7 @@ HTMLTextAreaElement::HTMLTextAreaElement(Document& document)
 
 HTMLTextAreaElement* HTMLTextAreaElement::Create(Document& document) {
   HTMLTextAreaElement* text_area = new HTMLTextAreaElement(document);
-  text_area->EnsureUserAgentShadowRoot();
+  text_area->EnsureUserAgentShadowRootV1();
   return text_area;
 }
 
@@ -621,6 +621,11 @@ bool HTMLTextAreaElement::IsInteractiveContent() const {
 
 bool HTMLTextAreaElement::SupportsAutofocus() const {
   return true;
+}
+
+const AtomicString& HTMLTextAreaElement::DefaultAutocapitalize() const {
+  DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
+  return sentences;
 }
 
 void HTMLTextAreaElement::CopyNonAttributePropertiesFromElement(

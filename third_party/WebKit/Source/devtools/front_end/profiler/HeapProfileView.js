@@ -47,10 +47,11 @@ Profiler.HeapProfileView = class extends Profiler.ProfileView {
 /**
  * @unrestricted
  */
-Profiler.SamplingHeapProfileTypeBase = class extends Profiler.ProfileType {
-  constructor(typeId, description) {
-    super(typeId, description);
+Profiler.SamplingHeapProfileType = class extends Profiler.ProfileType {
+  constructor() {
+    super(Profiler.SamplingHeapProfileType.TypeId, Common.UIString('Record allocation profile'));
     this._recording = false;
+    Profiler.SamplingHeapProfileType.instance = this;
   }
 
   /**
@@ -94,6 +95,14 @@ Profiler.SamplingHeapProfileTypeBase = class extends Profiler.ProfileType {
     return !wasRecording;
   }
 
+  get treeItemTitle() {
+    return Common.UIString('ALLOCATION PROFILES');
+  }
+
+  get description() {
+    return Common.UIString('Allocation profiles show memory allocations from your JavaScript functions.');
+  }
+
   startRecordingProfile() {
     var heapProfilerModel = UI.context.flavor(SDK.HeapProfilerModel);
     if (this.profileBeingRecorded() || !heapProfilerModel)
@@ -104,7 +113,7 @@ Profiler.SamplingHeapProfileTypeBase = class extends Profiler.ProfileType {
     this.addProfile(profile);
     profile.updateStatus(Common.UIString('Recording\u2026'));
     this._recording = true;
-    this._startSampling();
+    heapProfilerModel.startSampling();
   }
 
   async stopRecordingProfile() {
@@ -112,8 +121,7 @@ Profiler.SamplingHeapProfileTypeBase = class extends Profiler.ProfileType {
     if (!this.profileBeingRecorded() || !this.profileBeingRecorded()._heapProfilerModel)
       return;
 
-    this.profileBeingRecorded().updateStatus(Common.UIString('Stopping\u2026'));
-    var profile = await this._stopSampling();
+    var profile = await this.profileBeingRecorded()._heapProfilerModel.stopSampling();
     var recordedProfile = this.profileBeingRecorded();
     if (recordedProfile) {
       console.assert(profile);
@@ -141,51 +149,6 @@ Profiler.SamplingHeapProfileTypeBase = class extends Profiler.ProfileType {
   profileBeingRecordedRemoved() {
     this.stopRecordingProfile();
   }
-
-  _startSampling() {
-    throw 'Not implemented';
-  }
-
-  /**
-   * return {!Promise<!Protocol.HeapProfiler.SamplingHeapProfile>}
-   */
-  _stopSampling() {
-    throw 'Not implemented';
-  }
-};
-
-
-/**
- * @unrestricted
- */
-Profiler.SamplingHeapProfileType = class extends Profiler.SamplingHeapProfileTypeBase {
-  constructor() {
-    super(Profiler.SamplingHeapProfileType.TypeId, Common.UIString('Record allocation profile'));
-    Profiler.SamplingHeapProfileType.instance = this;
-  }
-
-  get treeItemTitle() {
-    return Common.UIString('ALLOCATION PROFILES');
-  }
-
-  get description() {
-    return Common.UIString('Allocation profiles show memory allocations from your JavaScript functions.');
-  }
-
-  /**
-   * @override
-   */
-  _startSampling() {
-    this.profileBeingRecorded()._heapProfilerModel.startSampling();
-  }
-
-  /**
-   * @override
-   * return {!Promise<!Protocol.HeapProfiler.SamplingHeapProfile>}
-   */
-  _stopSampling() {
-    return this.profileBeingRecorded()._heapProfilerModel.stopSampling();
-  }
 };
 
 Profiler.SamplingHeapProfileType.TypeId = 'SamplingHeap';
@@ -193,45 +156,10 @@ Profiler.SamplingHeapProfileType.TypeId = 'SamplingHeap';
 /**
  * @unrestricted
  */
-Profiler.SamplingNativeHeapProfileType = class extends Profiler.SamplingHeapProfileTypeBase {
-  constructor() {
-    super(Profiler.SamplingNativeHeapProfileType.TypeId, Common.UIString('Record native memory allocation profile'));
-    Profiler.SamplingNativeHeapProfileType.instance = this;
-  }
-
-  get treeItemTitle() {
-    return Common.UIString('NATIVE ALLOCATION PROFILES');
-  }
-
-  get description() {
-    return Common.UIString('Allocation profiles show sampled native memory allocations from the renderer process.');
-  }
-
-  /**
-   * @override
-   */
-  _startSampling() {
-    this.profileBeingRecorded()._heapProfilerModel.startNativeSampling();
-  }
-
-  /**
-   * @override
-   * return {!Promise<!Protocol.HeapProfiler.SamplingHeapProfile>}
-   */
-  _stopSampling() {
-    return this.profileBeingRecorded()._heapProfilerModel.stopNativeSampling();
-  }
-};
-
-Profiler.SamplingNativeHeapProfileType.TypeId = 'SamplingNativeHeap';
-
-/**
- * @unrestricted
- */
 Profiler.SamplingHeapProfileHeader = class extends Profiler.WritableProfileHeader {
   /**
    * @param {?SDK.HeapProfilerModel} heapProfilerModel
-   * @param {!Profiler.SamplingHeapProfileTypeBase} type
+   * @param {!Profiler.SamplingHeapProfileType} type
    * @param {string=} title
    */
   constructor(heapProfilerModel, type, title) {

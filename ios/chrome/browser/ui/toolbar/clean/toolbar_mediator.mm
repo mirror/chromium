@@ -119,11 +119,6 @@
   [self.consumer setLoadingProgressFraction:progress];
 }
 
-- (void)webStateDidChangeVisibleSecurityState:(web::WebState*)webState {
-  DCHECK_EQ(_webState, webState);
-  [self updateConsumer];
-}
-
 - (void)webStateDestroyed:(web::WebState*)webState {
   DCHECK_EQ(_webState, webState);
   _webState->RemoveObserver(_webStateObserver.get());

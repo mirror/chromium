@@ -49,7 +49,8 @@ SyncLoadContext::SyncLoadContext(
       SharedURLLoaderFactory::Create(std::move(url_loader_factory));
 
   // Constructs a new ResourceDispatcher specifically for this request.
-  resource_dispatcher_ = std::make_unique<ResourceDispatcher>();
+  resource_dispatcher_ =
+      std::make_unique<ResourceDispatcher>(base::ThreadTaskRunnerHandle::Get());
 
   // Initialize the final URL with the original request URL. It will be
   // overwritten on redirects.

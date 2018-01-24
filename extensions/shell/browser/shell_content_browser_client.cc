@@ -93,8 +93,7 @@ content::BrowserMainParts* ShellContentBrowserClient::CreateBrowserMainParts(
 }
 
 void ShellContentBrowserClient::RenderProcessWillLaunch(
-    content::RenderProcessHost* host,
-    service_manager::mojom::ServiceRequest* service_request) {
+    content::RenderProcessHost* host) {
   int render_process_id = host->GetID();
   BrowserContext* browser_context = browser_main_parts_->browser_context();
   host->AddFilter(

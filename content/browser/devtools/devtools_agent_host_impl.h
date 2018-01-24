@@ -65,12 +65,13 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
 
   virtual void AttachSession(DevToolsSession* session) = 0;
   virtual void DetachSession(DevToolsSession* session) = 0;
-  virtual void DispatchProtocolMessage(DevToolsSession* session,
-                                       const std::string& message) = 0;
+  virtual bool DispatchProtocolMessage(
+      DevToolsSession* session,
+      const std::string& message) = 0;
   virtual void InspectElement(DevToolsSession* session, int x, int y);
 
   void NotifyCreated();
-  void NotifyNavigated(DevToolsAgentHostImpl* host);
+  void NotifyNavigated();
   void ForceDetachAllClients();
   void ForceDetachSession(DevToolsSession* session);
   DevToolsIOContext* GetIOContext() { return &io_context_; }

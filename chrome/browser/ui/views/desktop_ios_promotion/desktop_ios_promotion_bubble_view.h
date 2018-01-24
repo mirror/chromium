@@ -15,11 +15,13 @@
 class DesktopIOSPromotionBubbleController;
 class Profile;
 
-// The DesktopIOSPromotionBubbleView is the main view for the desktop-to-ios
-// promotion view. It proxies DialogClientView functionality to provide
-// replacement button labels, actions and icon when activated.
+// The DesktopIOSPromotionBubbleView has the basic layout for the
+// desktop to ios promotion view.
+// This view will always be created as a subview of an existing
+// bubble (ie. Password Bubble, Bookmark Bubble).
 class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
-                                      public views::View {
+                                      public views::View,
+                                      public views::ButtonListener {
  public:
   DesktopIOSPromotionBubbleView(
       Profile* profile,
@@ -29,12 +31,12 @@ class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
   // DesktopIOSPromotionView:
   void UpdateRecoveryPhoneLabel() override;
 
-  bool Accept();
-  bool Cancel();
-  base::string16 GetDialogButtonLabel(ui::DialogButton button) const;
-  gfx::ImageSkia GetWindowIcon();
-
  private:
+  // ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  views::Button* send_sms_button_ = nullptr;
+  views::Button* no_button_ = nullptr;
   // The text that will appear on the promotion body.
   views::Label* promotion_text_label_;
   std::unique_ptr<DesktopIOSPromotionBubbleController> promotion_controller_;

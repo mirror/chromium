@@ -84,7 +84,6 @@ class VrController : public vr::PlatformController {
   base::TimeTicks GetLastOrientationTimestamp() const override;
   base::TimeTicks GetLastTouchTimestamp() const override;
   base::TimeTicks GetLastButtonTimestamp() const override;
-  vr::PlatformController::Handedness GetHandedness() const override;
 
  private:
   enum GestureDetectorState {

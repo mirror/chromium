@@ -67,15 +67,6 @@ Polymer({
       }
     },
 
-    /** @private */
-    enableSensorsContentSetting_: {
-      type: Boolean,
-      readOnly: true,
-      value: function() {
-        return loadTimeData.getBoolean('enableSensorsContentSetting');
-      }
-    },
-
     /** @type {!Map<string, string>} */
     focusConfig: {
       type: Object,
@@ -114,7 +105,6 @@ Polymer({
      [R.SITE_SETTINGS_PDF_DOCUMENTS, 'pdf-documents'],
      [R.SITE_SETTINGS_PROTECTED_CONTENT, 'protected-content'],
      [R.SITE_SETTINGS_CLIPBOARD, 'clipboard'],
-     [R.SITE_SETTINGS_SENSORS, 'sensors'],
     ].forEach(pair => {
       const route = pair[0];
       const id = pair[1];

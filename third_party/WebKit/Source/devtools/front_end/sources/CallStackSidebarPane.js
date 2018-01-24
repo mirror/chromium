@@ -160,10 +160,10 @@ Sources.CallStackSidebarPane = class extends UI.SimpleView {
     } else {
       if (hiddenCallFramesCount === 1) {
         this._blackboxedMessageElement.firstChild.textContent =
-            Common.UIString('1 stack frame is hidden (blackboxed).');
+            Common.UIString('1 stack frame is hidden (black-boxed).');
       } else {
         this._blackboxedMessageElement.firstChild.textContent =
-            Common.UIString('%d stack frames are hidden (blackboxed).', hiddenCallFramesCount);
+            Common.UIString('%d stack frames are hidden (black-boxed).', hiddenCallFramesCount);
       }
       this._blackboxedMessageElement.classList.remove('hidden');
     }

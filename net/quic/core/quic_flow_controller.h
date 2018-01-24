@@ -16,7 +16,6 @@ class QuicFlowControllerPeer;
 }  // namespace test
 
 class QuicConnection;
-class QuicSession;
 
 const QuicStreamId kConnectionLevelId = 0;
 
@@ -40,12 +39,11 @@ class QUIC_EXPORT_PRIVATE QuicFlowControllerInterface {
 class QUIC_EXPORT_PRIVATE QuicFlowController
     : public QuicFlowControllerInterface {
  public:
-  QuicFlowController(QuicSession* session,
-                     QuicConnection* connection,
+  QuicFlowController(QuicConnection* connection,
                      QuicStreamId id,
                      Perspective perspective,
-                     QuicStreamOffset send_window_offset,
-                     QuicStreamOffset receive_window_offset,
+                     QuicStreamOffset send_window_size,
+                     QuicStreamOffset receive_window_size,
                      bool should_auto_tune_receive_window,
                      QuicFlowControllerInterface* session_flow_controller);
 
@@ -120,10 +118,9 @@ class QUIC_EXPORT_PRIVATE QuicFlowController
   // Double the window size as long as we haven't hit the max window size.
   void IncreaseWindowSize();
 
-  // The parent session/connection, used to send connection close on flow
-  // control violation, and WINDOW_UPDATE and BLOCKED frames when appropriate.
+  // The parent connection, used to send connection close on flow control
+  // violation, and WINDOW_UPDATE and BLOCKED frames when appropriate.
   // Not owned.
-  QuicSession* session_;
   QuicConnection* connection_;
 
   // ID of stream this flow controller belongs to. This can be 0 if this is a

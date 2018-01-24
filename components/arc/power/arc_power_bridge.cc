@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "ash/shell.h"
-#include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/singleton.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -176,9 +175,9 @@ void ArcPowerBridge::SuspendImminent(
   if (!power_instance)
     return;
 
-  power_instance->Suspend(chromeos::DBusThreadManager::Get()
-                              ->GetPowerManagerClient()
-                              ->GetSuspendReadinessCallback(FROM_HERE));
+  power_instance->Suspend(
+      chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->
+        GetSuspendReadinessCallback());
 }
 
 void ArcPowerBridge::SuspendDone(const base::TimeDelta& sleep_duration) {

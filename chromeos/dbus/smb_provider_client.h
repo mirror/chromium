@@ -89,19 +89,6 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
                         int32_t length,
                         ReadFileCallback callback) = 0;
 
-  // Calls DeleteEntry. This deletes the file or directory at |entry_path|.
-  // Subsequent operations on the entry at this path will fail.
-  virtual void DeleteEntry(int32_t mount_id,
-                           const base::FilePath& entry_path,
-                           bool recursive,
-                           StatusCallback callback) = 0;
-
-  // Calls CreateFile. Using the corresponding mount |mount_id|, this creates
-  // the file in the specified |file_path|.
-  virtual void CreateFile(int32_t mount_id,
-                          const base::FilePath& file_path,
-                          StatusCallback callback) = 0;
-
  protected:
   // Create() should be used instead.
   SmbProviderClient();

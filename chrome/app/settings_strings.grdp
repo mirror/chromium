@@ -560,6 +560,9 @@
   <message name="IDS_SETTINGS_PASSWORDS_DELETE_EXCEPTION" desc="The alt text for a button that deletes a site for which passwords would not be saved.">
     Delete this item
   </message>
+  <message name="IDS_SETTINGS_PASSWORD_DONE" desc="Label for a button that dismisses the password details dialog.">
+    Done
+  </message>
   <message name="IDS_SETTINGS_PASSWORD_REMOVE" desc="Label for a context menu item that removes the selected password." meaning="Remove selected password.">
     Remove
   </message>
@@ -789,6 +792,9 @@
     </message>
     <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_DELETE" desc="Label for delete button in certificate manager.">
       Delete
+    </message>
+    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_DONE" desc="Label for done button in certificate manager.">
+      Done
     </message>
     <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_OTHERS" desc="Label for the others tab in certificate manager.">
       Others
@@ -1400,6 +1406,9 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_GOOGLE" desc="Settings > Internet > Network details: Label for setting Google name servers.">
       Google name servers
+    </message>
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_LEARN_MORE" desc="Settings > Internet > Network details: Text for the learn more link for the Google name servers option.">
+      Learn more
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_PROXY_WPAD" desc="Settings > Internet > Network details: Web Proxy Auto Discovery (WPAD) label.">
       Web Proxy Auto Discovery URL:
@@ -2462,9 +2471,6 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND" desc="Label for the sound site settings.">
     Sound
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS" desc="Label for the sensors permission in Site Settings. Sensors are motion and light sensors, specifically accelerometers, gyroscope, magnetometers, and ambient-light sensors">
-    Motion or Light Sensors
-  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_USB_DEVICES" desc="Label for the USB devices in site settings.">
     USB devices
   </message>
@@ -2551,12 +2557,6 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND_BLOCK" desc="The block label for sound in site settings.">
     Mute sites that play sound
-  </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS_ALLOW" desc="The allow label for sensors feature in site settings.">
-    Allow sites to use motion and light sensors
-  </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SENSORS_BLOCK" desc="The block label for sensors feature in site settings.">
-    Block sites from using motion and light sensors
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_AUTOMATIC_DOWNLOAD_ASK" desc="The allow label for automatic download in site settings.">
     Ask when a site tries to download files automatically after the first file
@@ -2708,6 +2708,9 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_ADOBE_FLASH_SETTINGS" desc="The text for the link that points the user to the Adobe Flash Player Storage settings on the web">
     Adobe Flash Player Storage settings
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_LEARN_MORE" desc="The text for the link to learn more about how managing exceptions work for Site Settings categories">
+    Learn more
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_HANDLER_IS_DEFAULT" desc="A label showing that a certain handler for a given protocol is the default.">
     Default
@@ -2977,6 +2980,9 @@
     </message>
     <message name="IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_IMMOBILE" desc="Warning text in the add fingerprint dialog to tell users they should move their finger slightly to capture different parts of the fingerprint.">
       Move slightly to capture a different part of the fingerprint
+    </message>
+    <message name="IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_DONE_BUTTON" desc="Text on the button in the fingerprint setup dialog which allows users to exit once a fingerprint has been setup.">
+      Done
     </message>
     <message name="IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_TITLE" desc="Title of the password prompt dialog popup.">
       Confirm your password
@@ -3356,6 +3362,9 @@
     </message>
     <message name="IDS_SETTINGS_TRADITIONAL_SCROLL_LABEL" desc="In Device Settings, the text next to the radio button that enables traditional scrolling.">
       Traditional
+    </message>
+    <message name="IDS_SETTINGS_NATURAL_SCROLL_LEARN_MORE" desc="In Device Settings, the text for the link next to the Australian (natural) scrolling option; opens a page to learn more about natural scrolling.">
+      Learn more
     </message>
     <!-- Mouse -->
     <message name="IDS_SETTINGS_MOUSE_SPEED_LABEL" desc="In Device Settings, the text next to the slider that sets the speed (sensitivity) of the mouse.">
@@ -3756,6 +3765,9 @@
       {NUM_DOWNLOAD, plural,
         =1 {1 more}
         other {# more}}
+    </message>
+    <message name="IDS_SETTINGS_RESET_CLEANUP_DONE_BUTTON_LABEL" desc="A button on the web page for Chrome Cleanup. Clicking this button causes the card on the settings page to be dismissed.">
+      Done
     </message>
     <message name="IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_CLEANUP_ERROR" desc="Body of a generic error message that could appear during the cleanup of harmful software. Multiple causes for the error are possible.">
       An error occurred while Chrome was removing harmful software.

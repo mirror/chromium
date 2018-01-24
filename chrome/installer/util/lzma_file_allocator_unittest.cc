@@ -11,6 +11,7 @@
 
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/memory/ptr_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #include <windows.h>
@@ -65,7 +66,7 @@ TEST_F(LzmaFileAllocatorTest, SizeIsZeroTest) {
 
 TEST_F(LzmaFileAllocatorTest, DeleteAfterCloseTest) {
   std::unique_ptr<LzmaFileAllocator> allocator =
-      std::make_unique<LzmaFileAllocator>(temp_dir_.GetPath());
+      base::MakeUnique<LzmaFileAllocator>(temp_dir_.GetPath());
   base::FilePath file_path = allocator->mapped_file_path_;
   ASSERT_TRUE(base::PathExists(file_path));
   allocator.reset();

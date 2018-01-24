@@ -14,7 +14,7 @@
         {
           "object": "LayoutSVGText text",
           "rect": [33, 21, 618, 197],
-          "reason": "full"
+          "reason": "style change"
         }
       ]
     }
@@ -22,11 +22,11 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutSVGText text",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "RootInlineBox",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "LayoutSVGInlineText #text",

@@ -209,10 +209,8 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
 
   std::unique_ptr<crypto::SymmetricKey> encryption_key(
       GetEncryptionKey(version));
-  if (!encryption_key) {
-    VLOG(1) << "Decryption failed: could not get the key";
+  if (!encryption_key)
     return false;
-  }
 
   std::string iv(kIVBlockSizeAES128, ' ');
   crypto::Encryptor encryptor;
@@ -223,10 +221,8 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
   std::string raw_ciphertext =
       ciphertext.substr(strlen(kObfuscationPrefix[version]));
 
-  if (!encryptor.Decrypt(raw_ciphertext, plaintext)) {
-    VLOG(1) << "Decryption failed";
+  if (!encryptor.Decrypt(raw_ciphertext, plaintext))
     return false;
-  }
 
   return true;
 }

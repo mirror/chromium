@@ -181,13 +181,6 @@ void OpenNewRegularTab() {
   [ChromeEarlGrey waitForMainTabCount:(tab_count + 1)];
 }
 
-// Grant/revoke metrics consent and update MetricsServicesManager.
-void UpdateMetricsConsent(bool new_state) {
-  g_metrics_enabled = new_state;
-  GetApplicationContext()->GetMetricsServicesManager()->UpdateUploadPermissions(
-      true);
-}
-
 // Signs in to sync.
 void SignIn() {
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
@@ -294,9 +287,6 @@ void SignOut() {
   [super tearDown];
 }
 
-// The tests in this file should correspond with the ones in
-// //chrome/browser/metrics/ukm_browsertest.cc
-
 // Make sure that UKM is disabled while an incognito tab is open.
 - (void)testRegularPlusIncognito {
   uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();
@@ -322,41 +312,28 @@ void SignOut() {
              @"Client ID was reset.");
 }
 
-// TODO(crbug.com/792933): Implement testIncognitoPlusRegular
-
-// testOpenNonSync not needed, since there can't be multiple profiles.
-
-// Make sure that UKM is disabled when metrics consent is revoked.
-- (void)testMetricsConsent {
+// Make sure that UKM is disabled when sync is not enabled.
+- (void)testNoSync {
   uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();
 
-  UpdateMetricsConsent(false);
+  SignOut();
 
   AssertUKMEnabled(false);
-
-  UpdateMetricsConsent(true);
-
-  AssertUKMEnabled(true);
-  // Client ID should have been reset.
+  // Client ID should have been reset by signout.
   GREYAssert(original_client_id != metrics::UkmEGTestHelper::client_id(),
              @"Client ID was not reset.");
-}
 
-// Make sure that providing metrics consent doesn't enable UKM w/o sync.
-- (void)testConsentAddedButNoSync {
-  SignOut();
-  UpdateMetricsConsent(false);
-  AssertUKMEnabled(false);
-
-  UpdateMetricsConsent(true);
-  AssertUKMEnabled(false);
-
+  original_client_id = metrics::UkmEGTestHelper::client_id();
   SignInWithPromo();
+
   AssertUKMEnabled(true);
+  // Client ID should not have been reset.
+  GREYAssert(original_client_id == metrics::UkmEGTestHelper::client_id(),
+             @"Client ID was reset.");
 }
 
 // Make sure that UKM is disabled when sync is disabled.
-- (void)testSingleDisableSync {
+- (void)testDisableSync {
   uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();
 
   [ChromeEarlGreyUI openSettingsMenu];
@@ -400,33 +377,27 @@ void SignOut() {
       performAction:grey_tap()];
 }
 
-// testMultiDisableSync not needed, since there can't be multiple profiles.
-
-// TODO(crbug.com/793082): Implement testSecondaryPassphrase.
-
-// Make sure that UKM is disabled when sync is not enabled.
-- (void)testSingleSyncSignout {
+// Make sure that UKM is disabled when metrics consent is revoked.
+- (void)testNoConsent {
   uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();
 
-  SignOut();
+  // Revoke metrics consent and update MetricsServicesManager.
+  g_metrics_enabled = false;
+  GetApplicationContext()->GetMetricsServicesManager()->UpdateUploadPermissions(
+      true);
 
   AssertUKMEnabled(false);
-  // Client ID should have been reset by signout.
-  GREYAssert(original_client_id != metrics::UkmEGTestHelper::client_id(),
-             @"Client ID was not reset.");
 
-  original_client_id = metrics::UkmEGTestHelper::client_id();
-  SignInWithPromo();
+  // Grant metrics consent and update MetricsServicesManager.
+  g_metrics_enabled = true;
+  GetApplicationContext()->GetMetricsServicesManager()->UpdateUploadPermissions(
+      true);
 
   AssertUKMEnabled(true);
-  // Client ID should not have been reset.
-  GREYAssert(original_client_id == metrics::UkmEGTestHelper::client_id(),
-             @"Client ID was reset.");
+  // Client ID should have been reset.
+  GREYAssert(original_client_id != metrics::UkmEGTestHelper::client_id(),
+             @"Client ID was not reset.");
 }
-
-// testMultiSyncSignout not needed, since there can't be multiple profiles.
-
-// testMetricsReporting not needed, since iOS doesn't use sampling.
 
 - (void)testHistoryDelete {
   uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();

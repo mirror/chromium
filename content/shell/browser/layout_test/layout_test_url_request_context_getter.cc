@@ -14,7 +14,7 @@
 #include "content/shell/browser/shell_network_delegate.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
 #include "net/cert/cert_verifier.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_service.h"
 
 namespace content {
 
@@ -58,9 +58,9 @@ LayoutTestURLRequestContextGetter::GetProxyConfigService() {
   return nullptr;
 }
 
-std::unique_ptr<net::ProxyResolutionService>
+std::unique_ptr<net::ProxyService>
 LayoutTestURLRequestContextGetter::GetProxyService() {
-  return net::ProxyResolutionService::CreateDirect();
+  return net::ProxyService::CreateDirect();
 }
 
 }  // namespace content

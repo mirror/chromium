@@ -40,6 +40,7 @@ namespace {
 class ChromeConfigurator : public update_client::Configurator {
  public:
   ChromeConfigurator(const base::CommandLine* cmdline,
+                     net::URLRequestContextGetter* url_request_getter,
                      PrefService* pref_service);
 
   // update_client::Configurator overrides.
@@ -57,7 +58,7 @@ class ChromeConfigurator : public update_client::Configurator {
   std::string GetOSLongName() const override;
   std::string ExtraRequestParams() const override;
   std::string GetDownloadPreference() const override;
-  scoped_refptr<net::URLRequestContextGetter> RequestContext() const override;
+  net::URLRequestContextGetter* RequestContext() const override;
   std::unique_ptr<service_manager::Connector> CreateServiceManagerConnector()
       const override;
   bool EnabledDeltas() const override;
@@ -81,9 +82,12 @@ class ChromeConfigurator : public update_client::Configurator {
 // Allows the component updater to use non-encrypted communication with the
 // update backend. The security of the update checks is enforced using
 // a custom message signing protocol and it does not depend on using HTTPS.
-ChromeConfigurator::ChromeConfigurator(const base::CommandLine* cmdline,
-                                       PrefService* pref_service)
-    : configurator_impl_(cmdline, false), pref_service_(pref_service) {
+ChromeConfigurator::ChromeConfigurator(
+    const base::CommandLine* cmdline,
+    net::URLRequestContextGetter* url_request_getter,
+    PrefService* pref_service)
+    : configurator_impl_(cmdline, url_request_getter, false),
+      pref_service_(pref_service) {
   DCHECK(pref_service_);
 }
 
@@ -154,9 +158,8 @@ std::string ChromeConfigurator::GetDownloadPreference() const {
 #endif
 }
 
-scoped_refptr<net::URLRequestContextGetter> ChromeConfigurator::RequestContext()
-    const {
-  return g_browser_process->system_request_context();
+net::URLRequestContextGetter* ChromeConfigurator::RequestContext() const {
+  return configurator_impl_.RequestContext();
 }
 
 std::unique_ptr<service_manager::Connector>
@@ -211,8 +214,10 @@ void RegisterPrefsForChromeComponentUpdaterConfigurator(
 scoped_refptr<update_client::Configurator>
 MakeChromeComponentUpdaterConfigurator(
     const base::CommandLine* cmdline,
+    net::URLRequestContextGetter* context_getter,
     PrefService* pref_service) {
-  return base::MakeRefCounted<ChromeConfigurator>(cmdline, pref_service);
+  return base::MakeRefCounted<ChromeConfigurator>(cmdline, context_getter,
+                                                  pref_service);
 }
 
 }  // namespace component_updater

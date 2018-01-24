@@ -64,10 +64,7 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   void OnComputeScroll(base::TimeTicks animation_time) override;
 
   void DidOverscroll(const ui::DidOverscrollParams& over_scroll_params);
-  void SendBeginFrame(ui::WindowAndroid* window_android,
-                      const viz::BeginFrameArgs& args);
-  void SetBeginFramePaused(bool paused);
-  void SetNeedsBeginFrames(bool needs_begin_frames);
+  void DidSendBeginFrame(ui::WindowAndroid* window_android);
   bool OnMessageReceived(const IPC::Message& message);
 
   // Called by SynchronousCompositorBrowserFilter.

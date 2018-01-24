@@ -791,7 +791,7 @@ bool NavigationSimulator::SimulateBrowserInitiatedStart() {
   request =
       web_contents_->GetMainFrame()->frame_tree_node()->navigation_request();
   if (!request) {
-    if (web_contents_->GetMainFrame()->GetNavigationHandle() == handle_) {
+    if (web_contents_->GetMainFrame()->navigation_handle() == handle_) {
       DCHECK(handle_->IsSameDocument() ||
              !IsURLHandledByNetworkStack(handle_->GetURL()));
       same_document_ = handle_->IsSameDocument();
@@ -800,7 +800,7 @@ bool NavigationSimulator::SimulateBrowserInitiatedStart() {
       // There is no DidStartNavigation for renderer-debug URLs and the
       // NavigationHandle has already been passed to the main frame for commit.
       // Register it now.
-      handle_ = web_contents_->GetMainFrame()->GetNavigationHandle();
+      handle_ = web_contents_->GetMainFrame()->navigation_handle();
 
       // A navigation to a renderer-debug URL cannot commit. Simulate the
       // renderer process aborting it.
@@ -825,7 +825,8 @@ bool NavigationSimulator::SimulateRendererInitiatedStart() {
           blink::WebMixedContentContextType::kBlockable,
           false /* is_form_submission */, GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, url::Origin(),
-          GURL() /* client_side_redirect_url */);
+          GURL() /* client_side_redirect_url */,
+          base::nullopt /* suggested_filename */);
   CommonNavigationParams common_params;
   common_params.url = navigation_url_;
   common_params.method = initial_method_;

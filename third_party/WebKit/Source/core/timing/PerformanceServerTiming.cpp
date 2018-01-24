@@ -27,7 +27,8 @@ ScriptValue PerformanceServerTiming::toJSONForBinding(
 }
 
 WebVector<WebServerTimingInfo> PerformanceServerTiming::ParseServerTiming(
-    const ResourceTimingInfo& info) {
+    const ResourceTimingInfo& info,
+    ShouldAllowTimingDetails should_allow_timing_details) {
   WebVector<WebServerTimingInfo> result;
   if (RuntimeEnabledFeatures::ServerTimingEnabled()) {
     const ResourceResponse& response = info.FinalResponse();
@@ -35,8 +36,12 @@ WebVector<WebServerTimingInfo> PerformanceServerTiming::ParseServerTiming(
         response.HttpHeaderField(HTTPNames::Server_Timing));
     result.reserve(headers->size());
     for (const auto& header : *headers) {
-      result.emplace_back(header->Name(), header->Duration(),
-                          header->Description());
+      if (should_allow_timing_details == ShouldAllowTimingDetails::Yes) {
+        result.emplace_back(header->Name(), header->Duration(),
+                            header->Description());
+      } else {
+        result.emplace_back(header->Name(), 0.0, String());
+      }
     }
   }
   return result;

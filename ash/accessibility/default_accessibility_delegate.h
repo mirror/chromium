@@ -36,6 +36,7 @@ class ASH_EXPORT DefaultAccessibilityDelegate : public AccessibilityDelegate {
   void SetSwitchAccessEnabled(bool enabled) override;
   bool IsSwitchAccessEnabled() const override;
   bool ShouldShowAccessibilityMenu() const override;
+  bool IsBrailleDisplayConnected() const override;
   void SilenceSpokenFeedback() const override;
   void SaveScreenMagnifierScale(double scale) override;
   double GetSavedScreenMagnifierScale() override;

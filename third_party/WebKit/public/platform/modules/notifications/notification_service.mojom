@@ -17,7 +17,6 @@ interface NotificationService {
   [Sync] GetPermissionStatus() => (PermissionStatus status);
 
   // Shows a notification that is not associated with a service worker.
-  DisplayNonPersistentNotification(
-        NotificationData notification_data,
-        NotificationResources notification_resources);
+  // TODO(crbug.com/595685): Pass the notification resources through too.
+  DisplayNonPersistentNotification(NotificationData notification_data);
 };

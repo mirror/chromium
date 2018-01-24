@@ -55,6 +55,7 @@
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/net/url_request_mock_util.h"
+#include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest_util.h"
@@ -2040,7 +2041,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadHistoryDangerCheck) {
 // after download of a file while viewing another chrome://.
 IN_PROC_BROWSER_TEST_F(DownloadTest, ChromeURLAfterDownload) {
   GURL flags_url(chrome::kChromeUIFlagsURL);
-  GURL extensions_url(chrome::kChromeUIExtensionsURL);
+  GURL extensions_url(chrome::kChromeUIExtensionsFrameURL);
 
   embedded_test_server()->ServeFilesFromDirectory(GetTestDataDirectory());
   ASSERT_TRUE(embedded_test_server()->Start());
@@ -2056,9 +2057,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, ChromeURLAfterDownload) {
   bool webui_responded = false;
   EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
       contents,
-      R"(chrome.developerPrivate.getExtensionsInfo(function(info) {
-           domAutomationController.send(!!info && !chrome.runtime.lastError);
-         });)",
+      "window.domAutomationController.send(window.webuiResponded);",
       &webui_responded));
   EXPECT_TRUE(webui_responded);
 }
@@ -2085,6 +2084,9 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, BrowserCloseAfterDownload) {
   EXPECT_TRUE(result);
 
   DownloadAndWait(browser(), download_url);
+
+  // Close the notifications as they would prevent the browser from quitting.
+  g_browser_process->notification_ui_manager()->CancelAll();
 
   content::WindowedNotificationObserver signal(
       chrome::NOTIFICATION_BROWSER_CLOSED,
@@ -3071,6 +3073,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, TestMultipleDownloadsRequests) {
       DownloadItem::COMPLETE));
 
   browser()->tab_strip_model()->GetActiveWebContents()->Close();
+  g_browser_process->notification_ui_manager()->CancelAll();
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadTest_Renaming) {

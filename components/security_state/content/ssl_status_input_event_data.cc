@@ -7,6 +7,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
+
 namespace security_state {
 
 SSLStatusInputEventData::SSLStatusInputEventData() {}
@@ -21,7 +23,7 @@ InsecureInputEventData* SSLStatusInputEventData::input_events() {
 }
 
 std::unique_ptr<SSLStatus::UserData> SSLStatusInputEventData::Clone() {
-  return std::make_unique<SSLStatusInputEventData>(data_);
+  return base::MakeUnique<SSLStatusInputEventData>(data_);
 }
 
 }  // namespace security_state

@@ -59,6 +59,8 @@
   [self.recentTabsViewController dismissViewControllerAnimated:YES
                                                     completion:self.completion];
   self.completion = nil;
+  [self.tableCoordinator dismissKeyboard];
+  [self.tableCoordinator dismissModals];
   [self.tableCoordinator stop];
   self.tableCoordinator = nil;
   self.recentTabsViewController = nil;

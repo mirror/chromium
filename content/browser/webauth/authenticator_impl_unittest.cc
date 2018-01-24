@@ -63,12 +63,14 @@ constexpr uint8_t kTestChallengeBytes[] = {
     0xB8, 0x8C, 0x25, 0xDB, 0x9E, 0x60, 0x26, 0x45, 0xF1, 0x41};
 
 constexpr char kTestRegisterClientDataJsonString[] =
-    R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE","origin":)"
-    R"("google.com","tokenBinding":"unused","type":"webauthn.create"})";
+    R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE",)"
+    R"("hashAlgorithm":"SHA-256","origin":"google.com","tokenBinding":)"
+    R"("unused","type":"webauthn.create"})";
 
 constexpr char kTestSignClientDataJsonString[] =
-    R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE","origin":)"
-    R"("google.com","tokenBinding":"unused","type":"webauthn.get"})";
+    R"({"challenge":"aHE0loIi7BcgLkJQX47SsWriLxa7BbiMJdueYCZF8UE",)"
+    R"("hashAlgorithm":"SHA-256","origin":"google.com","tokenBinding":)"
+    R"("unused","type":"webauthn.get"})";
 
 constexpr OriginRelyingPartyIdPair kValidRelyingPartyTestCases[] = {
     {"http://localhost", "localhost"},
@@ -396,8 +398,7 @@ TEST_F(AuthenticatorImplTest, TestMakeCredentialTimeout) {
   auto connector = service_manager::Connector::Create(&request);
   service_manager::Connector::TestApi test_api(connector.get());
   test_api.OverrideBinderForTesting(
-      service_manager::Identity(device::mojom::kServiceName),
-      device::mojom::HidManager::Name_,
+      device::mojom::kServiceName, device::mojom::HidManager::Name_,
       base::Bind(&device::FakeHidManager::AddBinding,
                  base::Unretained(fake_hid_manager.get())));
 
@@ -452,8 +453,7 @@ TEST_F(AuthenticatorImplTest, TestGetAssertionTimeout) {
   auto connector = service_manager::Connector::Create(&request);
   service_manager::Connector::TestApi test_api(connector.get());
   test_api.OverrideBinderForTesting(
-      service_manager::Identity(device::mojom::kServiceName),
-      device::mojom::HidManager::Name_,
+      device::mojom::kServiceName, device::mojom::HidManager::Name_,
       base::Bind(&device::FakeHidManager::AddBinding,
                  base::Unretained(fake_hid_manager.get())));
 

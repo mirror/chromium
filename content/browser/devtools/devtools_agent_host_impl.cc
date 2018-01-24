@@ -219,8 +219,7 @@ bool DevToolsAgentHostImpl::DispatchProtocolMessage(
   DevToolsSession* session = SessionByClient(client);
   if (!session)
     return false;
-  DispatchProtocolMessage(session, message);
-  return true;
+  return DispatchProtocolMessage(session, message);
 }
 
 void DevToolsAgentHostImpl::InnerDetachClient(DevToolsAgentHostClient* client) {
@@ -372,11 +371,9 @@ void DevToolsAgentHostImpl::NotifyCreated() {
     observer.DevToolsAgentHostCreated(this);
 }
 
-void DevToolsAgentHostImpl::NotifyNavigated(DevToolsAgentHostImpl* host) {
-  if (!host)
-    return;
+void DevToolsAgentHostImpl::NotifyNavigated() {
   for (auto& observer : g_devtools_observers.Get())
-    observer.DevToolsAgentHostNavigated(host);
+    observer.DevToolsAgentHostNavigated(this);
 }
 
 void DevToolsAgentHostImpl::NotifyAttached() {

@@ -1273,6 +1273,7 @@ void RenderWidgetCompositor::DidLoseLayerTreeFrameSink() {}
 void RenderWidgetCompositor::SetFrameSinkId(
     const viz::FrameSinkId& frame_sink_id) {
   frame_sink_id_ = frame_sink_id;
+  layer_tree_host_->SetFrameSinkId(frame_sink_id);
 }
 
 void RenderWidgetCompositor::SetPaintedDeviceScaleFactor(float device_scale) {

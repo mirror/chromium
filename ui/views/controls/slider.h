@@ -53,6 +53,8 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   float value() const { return value_; }
   void SetValue(float value);
 
+  void SetAccessibleName(const base::string16& name);
+
   void set_enable_accessibility_events(bool enabled) {
     accessibility_events_enabled_ = enabled;
   }
@@ -122,6 +124,7 @@ class VIEWS_EXPORT Slider : public View, public gfx::AnimationDelegate {
   float keyboard_increment_ = 0.1f;
   float initial_animating_value_ = 0.f;
   bool value_is_valid_ = false;
+  base::string16 accessible_name_;
   bool accessibility_events_enabled_ = true;
 
   // Relative position of the mouse cursor (or the touch point) on the slider's

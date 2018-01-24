@@ -195,8 +195,9 @@ void OmniboxViewViews::OnTabChanged(const content::WebContents* web_contents) {
   UpdateSecurityLevel();
   const OmniboxState* state = static_cast<OmniboxState*>(
       web_contents->GetUserData(&OmniboxState::kKey));
-  model()->RestoreState(controller()->GetToolbarModel()->GetFormattedFullURL(),
-                        state ? &state->model_state : NULL);
+  model()->RestoreState(
+      controller()->GetToolbarModel()->GetFormattedURL(nullptr),
+      state ? &state->model_state : NULL);
   if (state) {
     // This assumes that the omnibox has already been focused or blurred as
     // appropriate; otherwise, a subsequent OnFocus() or OnBlur() call could
@@ -218,7 +219,7 @@ void OmniboxViewViews::Update() {
   const security_state::SecurityLevel old_security_level = security_level_;
   UpdateSecurityLevel();
   if (model()->SetPermanentText(
-          controller()->GetToolbarModel()->GetFormattedFullURL())) {
+          controller()->GetToolbarModel()->GetFormattedURL(nullptr))) {
     RevertAll();
 
     // Only select all when we have focus.  If we don't have focus, selecting
@@ -830,7 +831,7 @@ bool OmniboxViewViews::HandleAccessibleAction(
 void OmniboxViewViews::OnFocus() {
   views::Textfield::OnFocus();
   model()->SetPermanentText(
-      controller()->GetToolbarModel()->GetFormattedFullURL());
+      controller()->GetToolbarModel()->GetFormattedURL(nullptr));
   // TODO(oshima): Get control key state.
   model()->OnSetFocus(false);
   // Don't call controller()->OnSetFocus, this view has already acquired focus.
@@ -1149,26 +1150,30 @@ int OmniboxViewViews::OnDrop(const ui::OSExchangeData& data) {
   if (HasTextBeingDragged())
     return ui::DragDropTypes::DRAG_NONE;
 
-  base::string16 text;
   if (data.HasURL(ui::OSExchangeData::CONVERT_FILENAMES)) {
     GURL url;
     base::string16 title;
     if (data.GetURLAndTitle(
             ui::OSExchangeData::CONVERT_FILENAMES, &url, &title)) {
-      text = StripJavascriptSchemas(base::UTF8ToUTF16(url.spec()));
+      base::string16 text(
+          StripJavascriptSchemas(base::UTF8ToUTF16(url.spec())));
+      if (model()->CanPasteAndGo(text)) {
+        model()->PasteAndGo(text);
+        return ui::DragDropTypes::DRAG_COPY;
+      }
     }
-  } else if (data.HasString() && data.GetString(&text)) {
-    text = StripJavascriptSchemas(base::CollapseWhitespace(text, true));
+  } else if (data.HasString()) {
+    base::string16 text;
+    if (data.GetString(&text)) {
+      base::string16 collapsed_text(
+          StripJavascriptSchemas(base::CollapseWhitespace(text, true)));
+      if (model()->CanPasteAndGo(collapsed_text))
+        model()->PasteAndGo(collapsed_text);
+      return ui::DragDropTypes::DRAG_COPY;
+    }
   }
 
-  if (text.empty())
-    return ui::DragDropTypes::DRAG_NONE;
-
-  SetUserText(text);
-  if (!HasFocus())
-    RequestFocus();
-  SelectAll(false);
-  return ui::DragDropTypes::DRAG_COPY;
+  return ui::DragDropTypes::DRAG_NONE;
 }
 
 void OmniboxViewViews::UpdateContextMenu(ui::SimpleMenuModel* menu_contents) {

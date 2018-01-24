@@ -203,10 +203,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   }
 }
 
-- (void)clearOverscroll {
-  [self.overscrollActionsController clear];
-}
-
 + (NSString*)collectionAccessibilityIdentifier {
   return @"ContentSuggestionsCollectionIdentifier";
 }

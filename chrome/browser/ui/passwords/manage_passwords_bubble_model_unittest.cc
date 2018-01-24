@@ -223,9 +223,8 @@ void ManagePasswordsBubbleModelTest::PretendManagingPasswords() {
 void ManagePasswordsBubbleModelTest::
     DestroyModelAndVerifyControllerExpectations() {
   EXPECT_CALL(*controller(), OnBubbleHidden());
-  model_->OnBubbleClosing();
-  ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
   model_.reset();
+  ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
 }
 
 void ManagePasswordsBubbleModelTest::DestroyModelExpectReason(

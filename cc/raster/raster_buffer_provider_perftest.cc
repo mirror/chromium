@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/time/time.h"
-#include "build/build_config.h"
 #include "cc/base/lap_timer.h"
 #include "cc/raster/bitmap_raster_buffer_provider.h"
 #include "cc/raster/gpu_raster_buffer_provider.h"
@@ -221,13 +220,8 @@ class PerfRasterTaskImpl : public PerfTileTask {
 
   // Overridden from TileTask:
   void OnTaskCompleted() override {
-    // Note: Perf tests will Reset() the PerfTileTask, causing it to be
-    // completed multiple times. We can only do the work of completion once
-    // though.
-    if (raster_buffer_) {
-      raster_buffer_ = nullptr;
-      pool_->ReleaseResource(std::move(resource_));
-    }
+    raster_buffer_ = nullptr;
+    pool_->ReleaseResource(std::move(resource_));
   }
 
  protected:
@@ -403,7 +397,6 @@ class RasterBufferProviderPerfTest
     tile_task_manager_->CheckForCompletedTasks();
 
     raster_buffer_provider_->Shutdown();
-    resource_pool_.reset();
   }
 
   // Overridden from PerfRasterBufferProviderHelper:
@@ -598,10 +591,6 @@ class RasterBufferProviderCommonPerfTest
   void SetUp() override {
     resource_provider_ = FakeResourceProvider::CreateLayerTreeResourceProvider(
         compositor_context_provider_.get(), nullptr);
-    resource_pool_ = std::make_unique<ResourcePool>(
-        resource_provider_.get(), task_runner_,
-        viz::ResourceTextureHint::kFramebuffer,
-        ResourcePool::kDefaultExpirationDelay, false);
   }
 
   void RunBuildTileTaskGraphTest(const std::string& test_name,
@@ -624,9 +613,6 @@ class RasterBufferProviderCommonPerfTest
     } while (!timer_.HasTimeLimitExpired());
 
     CancelRasterTasks(raster_tasks);
-
-    for (auto& task : raster_tasks)
-      task->OnTaskCompleted();
 
     perf_test::PrintResult("build_raster_task_graph", "", test_name,
                            timer_.LapsPerSecond(), "runs/s", true);

@@ -86,9 +86,8 @@ class CrxDownloader {
   // bytes is not guaranteed to monotonically increment over time.
   using ProgressCallback = base::Callback<void(const Result& result)>;
 
-  using Factory = std::unique_ptr<CrxDownloader> (*)(
-      bool,
-      scoped_refptr<net::URLRequestContextGetter>);
+  using Factory =
+      std::unique_ptr<CrxDownloader> (*)(bool, net::URLRequestContextGetter*);
 
   // Factory method to create an instance of this class and build the
   // chain of responsibility. |is_background_download| specifies that a
@@ -97,7 +96,7 @@ class CrxDownloader {
   // code such as file IO operations.
   static std::unique_ptr<CrxDownloader> Create(
       bool is_background_download,
-      scoped_refptr<net::URLRequestContextGetter> context_getter);
+      net::URLRequestContextGetter* context_getter);
   virtual ~CrxDownloader();
 
   void set_progress_callback(const ProgressCallback& progress_callback);

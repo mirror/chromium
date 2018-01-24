@@ -47,6 +47,10 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
                     const AuthorizationRequest& auth,
                     const UpdateKeyRequest& request,
                     const Callback& callback));
+  MOCK_METHOD3(RenameCryptohome,
+               void(const Identification& id_from,
+                    const Identification& id_to,
+                    const Callback& callback));
   MOCK_METHOD2(GetAccountDiskUsage,
                void(const Identification& id,
                     const GetAccountDiskUsageCallback& callback));

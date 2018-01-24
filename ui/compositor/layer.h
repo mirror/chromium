@@ -22,6 +22,7 @@
 #include "cc/layers/surface_layer.h"
 #include "cc/layers/texture_layer_client.h"
 #include "components/viz/common/resources/transferable_resource.h"
+#include "components/viz/common/surfaces/sequence_surface_reference_factory.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_animation_delegate.h"
@@ -302,11 +303,12 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   void SetTextureFlipped(bool flipped);
   bool TextureFlipped() const;
 
-  // TODO(fsamuel): Update this comment.
   // Begins showing content from a surface with a particular ID.
-  void SetShowPrimarySurface(const viz::SurfaceId& surface_id,
-                             const gfx::Size& frame_size_in_dip,
-                             SkColor default_background_color);
+  void SetShowPrimarySurface(
+      const viz::SurfaceId& surface_id,
+      const gfx::Size& frame_size_in_dip,
+      SkColor default_background_color,
+      scoped_refptr<viz::SurfaceReferenceFactory> surface_ref);
 
   // In the event that the primary surface is not yet available in the
   // display compositor, the fallback surface will be used.

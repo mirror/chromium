@@ -10,6 +10,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_handler_callbacks.h"
@@ -222,7 +223,7 @@ TEST_F(WifiConfigDelegateChromeOsTest,
   if (!create_configuration_error_callback().is_null()) {
     create_configuration_error_callback().Run(
         "Config.CreateConfiguration Failed",
-        std::make_unique<base::DictionaryValue>());
+        base::MakeUnique<base::DictionaryValue>());
   }
 }
 

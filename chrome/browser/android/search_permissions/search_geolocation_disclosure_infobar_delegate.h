@@ -63,6 +63,7 @@ class SearchGeolocationDisclosureInfoBarDelegate
 
   // InfoBarDelegate:
   void InfoBarDismissed() override;
+  Type GetInfoBarType() const override;
   infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override;
   int GetIconId() const override;
 

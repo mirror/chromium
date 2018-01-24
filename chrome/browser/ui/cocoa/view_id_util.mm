@@ -63,8 +63,7 @@ NSView* GetView(NSWindow* window, ViewID viewID) {
   // As tabs can be created, destroyed or rearranged dynamically, we handle them
   // here specially.
   if (viewID >= VIEW_ID_TAB_0 && viewID <= VIEW_ID_TAB_LAST) {
-    BrowserWindowController* windowController =
-        [BrowserWindowController browserWindowControllerForWindow:window];
+    BrowserWindowController* windowController = [window windowController];
     DCHECK([windowController isKindOfClass:[BrowserWindowController class]]);
     TabStripController* tabStripController =
         [windowController tabStripController];

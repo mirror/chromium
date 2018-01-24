@@ -37,11 +37,6 @@ source_set("chrome_dll_resources") {
   sources = [
     "chrome_dll_resource.h",
   ]
-
-  deps = [
-    ":command_ids",
-  ]
-
   if (is_win) {
     sources += [ "chrome_dll.rc" ]
     if (enable_basic_printing) {
@@ -50,7 +45,9 @@ source_set("chrome_dll_resources") {
       # toggle off of the enable-basic-printing flag in the .rc file.
       defines = [ "ENABLE_BASIC_PRINTING_FOR_RC" ]
     }
-    deps += [ "//printing/features" ]
+    deps = [
+      "//printing/features",
+    ]
   }
 }
 
@@ -431,10 +428,6 @@ service_manifest("chrome_manifest") {
   source = "chrome_manifest.json"
 }
 
-service_manifest("chrome_renderer_manifest") {
-  source = "chrome_renderer_manifest.json"
-}
-
 service_manifest("chrome_content_packaged_services_manifest_overlay") {
   source =
       "//chrome/browser/chrome_content_packaged_services_manifest_overlay.json"
@@ -549,7 +542,6 @@ if (use_aura) {
     ":chrome_content_plugin_manifest",
     ":chrome_content_renderer_manifest",
     ":chrome_content_utility_manifest",
-    ":chrome_renderer_manifest",
   ]
 
   catalog("catalog") {

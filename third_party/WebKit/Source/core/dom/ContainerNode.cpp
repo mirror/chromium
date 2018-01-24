@@ -1049,13 +1049,8 @@ bool ContainerNode::GetUpperLeftCorner(FloatPoint& point) const {
   // calculate the scroll position, we must be at the end of the
   // document. Scroll to the bottom.
   // FIXME: who said anything about scrolling?
-  if (!runner && GetDocument().View() &&
-      GetDocument().View()->LayoutViewportScrollableArea()) {
-    point = FloatPoint(0, GetDocument()
-                              .View()
-                              ->LayoutViewportScrollableArea()
-                              ->ContentsSize()
-                              .Height());
+  if (!runner && GetDocument().View()) {
+    point = FloatPoint(0, GetDocument().View()->ContentsHeight());
     return true;
   }
   return false;
@@ -1659,7 +1654,8 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   if (!GetDocument().ShouldInvalidateNodeListCaches(attr_name))
     return;
 
-  GetDocument().InvalidateNodeListCaches(attr_name);
+  if (isConnected())
+    GetDocument().InvalidateNodeListCaches(attr_name);
 
   for (ContainerNode* node = this; node; node = node->parentNode()) {
     if (NodeListsNodeData* lists = node->NodeLists())

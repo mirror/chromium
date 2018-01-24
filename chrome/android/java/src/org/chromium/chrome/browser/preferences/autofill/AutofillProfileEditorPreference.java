@@ -48,7 +48,7 @@ public class AutofillProfileEditorPreference extends Preference {
     }
 
     private void prepareAddressEditor() {
-        AddressEditor addressEditor = new AddressEditor(/*emailFieldIncluded=*/true);
+        AddressEditor addressEditor = new AddressEditor(/*emailIncluded=*/true);
         addressEditor.setEditorDialog(mEditorDialog);
 
         addressEditor.edit(mAutofillAddress, new Callback<AutofillAddress>() {

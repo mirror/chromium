@@ -8,7 +8,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #import "base/test/ios/wait_util.h"
-#import "ios/testing/wait_util.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #import "ios/web/public/test/js_test_util.h"
 #include "ios/web/public/web_state/web_state_observer.h"
@@ -17,8 +16,6 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
-
-using testing::WaitUntilConditionOrTimeout;
 
 namespace web {
 
@@ -94,7 +91,7 @@ id WebIntTest::ExecuteJavaScript(NSString* script) {
   return web::ExecuteJavaScript(web_state()->GetJSInjectionReceiver(), script);
 }
 
-bool WebIntTest::ExecuteBlockAndWaitForLoad(const GURL& url,
+void WebIntTest::ExecuteBlockAndWaitForLoad(const GURL& url,
                                             ProceduralBlock block) {
   DCHECK(block);
 
@@ -107,21 +104,21 @@ bool WebIntTest::ExecuteBlockAndWaitForLoad(const GURL& url,
   // Need to use a pointer to |observer| as the block wants to capture it by
   // value (even if marked with __block) which would not work.
   IntTestWebStateObserver* observer_ptr = &observer;
-  return WaitUntilConditionOrTimeout(testing::kWaitForPageLoadTimeout, ^{
+  base::test::ios::WaitUntilCondition(^bool {
     return observer_ptr->IsExpectedPageLoaded();
   });
 }
 
-bool WebIntTest::LoadUrl(const GURL& url) {
+void WebIntTest::LoadUrl(const GURL& url) {
   web::NavigationManager::WebLoadParams params(url);
   params.transition_type = ui::PageTransition::PAGE_TRANSITION_TYPED;
-  return LoadWithParams(params);
+  LoadWithParams(params);
 }
 
-bool WebIntTest::LoadWithParams(
+void WebIntTest::LoadWithParams(
     const NavigationManager::WebLoadParams& params) {
   NavigationManager::WebLoadParams block_params(params);
-  return ExecuteBlockAndWaitForLoad(params.url, ^{
+  ExecuteBlockAndWaitForLoad(params.url, ^{
     navigation_manager()->LoadURLWithParams(block_params);
   });
 }

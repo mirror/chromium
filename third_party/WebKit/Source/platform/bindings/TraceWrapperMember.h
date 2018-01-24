@@ -5,7 +5,7 @@
 #ifndef TraceWrapperMember_h
 #define TraceWrapperMember_h
 
-#include "platform/bindings/ScriptWrappableMarkingVisitor.h"
+#include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/bindings/TraceWrapperBase.h"
 #include "platform/heap/HeapAllocator.h"
 
@@ -31,7 +31,7 @@ class TraceWrapperMember : public Member<T> {
   TraceWrapperMember(T* raw) : Member<T>(raw) {
     // We have to use a write barrier here because of in-place construction
     // in containers, such as HeapVector::push_back.
-    ScriptWrappableMarkingVisitor::WriteBarrier(raw);
+    ScriptWrappableVisitor::WriteBarrier(raw);
   }
 
   TraceWrapperMember(WTF::HashTableDeletedValueType x) : Member<T>(x) {}
@@ -41,21 +41,21 @@ class TraceWrapperMember : public Member<T> {
   TraceWrapperMember& operator=(const TraceWrapperMember& other) {
     Member<T>::operator=(other);
     DCHECK_EQ(other.Get(), this->Get());
-    ScriptWrappableMarkingVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(this->Get());
     return *this;
   }
 
   TraceWrapperMember& operator=(const Member<T>& other) {
     Member<T>::operator=(other);
     DCHECK_EQ(other.Get(), this->Get());
-    ScriptWrappableMarkingVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(this->Get());
     return *this;
   }
 
   TraceWrapperMember& operator=(T* other) {
     Member<T>::operator=(other);
     DCHECK_EQ(other, this->Get());
-    ScriptWrappableMarkingVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(this->Get());
     return *this;
   }
 
@@ -81,10 +81,10 @@ void swap(HeapVector<TraceWrapperMember<T>>& a,
     // If incremental marking is enabled we need to emit the write barrier since
     // the swap was performed on HeapVector<Member<T>>.
     for (auto item : a) {
-      ScriptWrappableMarkingVisitor::WriteBarrier(item.Get());
+      ScriptWrappableVisitor::WriteBarrier(item.Get());
     }
     for (auto item : b) {
-      ScriptWrappableMarkingVisitor::WriteBarrier(item.Get());
+      ScriptWrappableVisitor::WriteBarrier(item.Get());
     }
   }
 }
@@ -102,7 +102,7 @@ void swap(HeapVector<TraceWrapperMember<T>>& a, HeapVector<Member<T>>& b) {
     // If incremental marking is enabled we need to emit the write barrier since
     // the swap was performed on HeapVector<Member<T>>.
     for (auto item : a) {
-      ScriptWrappableMarkingVisitor::WriteBarrier(item.Get());
+      ScriptWrappableVisitor::WriteBarrier(item.Get());
     }
   }
 }

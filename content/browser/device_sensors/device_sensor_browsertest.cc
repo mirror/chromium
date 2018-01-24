@@ -48,15 +48,6 @@ class FakeSensor : public device::mojom::Sensor {
     shared_buffer_handle_ = mojo::SharedBufferHandle::Create(
         sizeof(device::SensorReadingSharedBuffer) *
         static_cast<uint64_t>(device::mojom::SensorType::LAST));
-
-    if (!shared_buffer_handle_.is_valid())
-      return;
-
-    // Create read/write mapping now, to ensure it is kept writable
-    // after the region is sealed read-only on Android.
-    shared_buffer_mapping_ = shared_buffer_handle_->MapAtOffset(
-        device::mojom::SensorInitParams::kReadBufferSizeForTests,
-        GetBufferOffset());
   }
 
   ~FakeSensor() override = default;
@@ -113,13 +104,16 @@ class FakeSensor : public device::mojom::Sensor {
   void set_reading(device::SensorReading reading) { reading_ = reading; }
 
   void SensorReadingChanged() {
-    if (!shared_buffer_mapping_.get())
+    if (!shared_buffer_handle_.is_valid())
       return;
 
-    device::SensorReadingSharedBuffer* buffer =
-        static_cast<device::SensorReadingSharedBuffer*>(
-            shared_buffer_mapping_.get());
+    mojo::ScopedSharedBufferMapping shared_buffer =
+        shared_buffer_handle_->MapAtOffset(
+            device::mojom::SensorInitParams::kReadBufferSizeForTests,
+            GetBufferOffset());
 
+    device::SensorReadingSharedBuffer* buffer =
+        static_cast<device::SensorReadingSharedBuffer*>(shared_buffer.get());
     auto& seqlock = buffer->seqlock.value();
     seqlock.WriteBegin();
     buffer->reading = reading_;
@@ -133,7 +127,6 @@ class FakeSensor : public device::mojom::Sensor {
   device::mojom::SensorType sensor_type_;
   bool reading_notification_enabled_ = true;
   mojo::ScopedSharedBufferHandle shared_buffer_handle_;
-  mojo::ScopedSharedBufferMapping shared_buffer_mapping_;
   device::mojom::SensorClientPtr client_;
   device::SensorReading reading_;
 
@@ -249,11 +242,9 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
 
       mojo::MakeStrongBinding(std::move(sensor),
                               mojo::MakeRequest(&init_params->sensor));
-      std::move(callback).Run(device::mojom::SensorCreationResult::SUCCESS,
-                              std::move(init_params));
+      std::move(callback).Run(std::move(init_params));
     } else {
-      std::move(callback).Run(
-          device::mojom::SensorCreationResult::ERROR_NOT_AVAILABLE, nullptr);
+      std::move(callback).Run(nullptr);
     }
   }
 

@@ -33,7 +33,7 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/fileapi/URLRegistry.h"
+#include "core/html/URLRegistry.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 

@@ -4,12 +4,10 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/scheduler.h"
-#include "tools/gn/test_with_scheduler.h"
 #include "tools/gn/test_with_scope.h"
 
-using FunctionForwardVariablesFromTest = TestWithScheduler;
-
-TEST_F(FunctionForwardVariablesFromTest, List) {
+TEST(FunctionForwardVariablesFrom, List) {
+  Scheduler scheduler;
   Err err;
   std::string program =
       "template(\"a\") {\n"
@@ -52,7 +50,8 @@ TEST_F(FunctionForwardVariablesFromTest, List) {
   }
 }
 
-TEST_F(FunctionForwardVariablesFromTest, LiteralList) {
+TEST(FunctionForwardVariablesFrom, LiteralList) {
+  Scheduler scheduler;
   TestWithScope setup;
 
   // Forwards all variables from a literal scope into another scope definition.
@@ -73,7 +72,8 @@ TEST_F(FunctionForwardVariablesFromTest, LiteralList) {
   setup.print_output().clear();
 }
 
-TEST_F(FunctionForwardVariablesFromTest, ListWithExclusion) {
+TEST(FunctionForwardVariablesFrom, ListWithExclusion) {
+  Scheduler scheduler;
   TestWithScope setup;
 
   // Defines a template and copy the two x and y, and z values out.
@@ -100,7 +100,8 @@ TEST_F(FunctionForwardVariablesFromTest, ListWithExclusion) {
   setup.print_output().clear();
 }
 
-TEST_F(FunctionForwardVariablesFromTest, ErrorCases) {
+TEST(FunctionForwardVariablesFrom, ErrorCases) {
+  Scheduler scheduler;
   TestWithScope setup;
 
   // Type check the source scope.
@@ -189,7 +190,8 @@ TEST_F(FunctionForwardVariablesFromTest, ErrorCases) {
   EXPECT_EQ("Wrong number of arguments.", err.message());
 }
 
-TEST_F(FunctionForwardVariablesFromTest, Star) {
+TEST(FunctionForwardVariablesFrom, Star) {
+  Scheduler scheduler;
   TestWithScope setup;
 
   // Defines a template and copy the two x and y values out. The "*" behavior
@@ -215,7 +217,9 @@ TEST_F(FunctionForwardVariablesFromTest, Star) {
   setup.print_output().clear();
 }
 
-TEST_F(FunctionForwardVariablesFromTest, StarWithExclusion) {
+
+TEST(FunctionForwardVariablesFrom, StarWithExclusion) {
+  Scheduler scheduler;
   TestWithScope setup;
 
   // Defines a template and copy all values except z value. The "*" behavior

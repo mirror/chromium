@@ -204,7 +204,6 @@ if (!is_ios) {
 
     public_deps = [
       ":bindings",
-      "//third_party/WebKit/Source/platform:platform_export",
       "//third_party/WebKit/Source/platform/wtf",
     ]
 

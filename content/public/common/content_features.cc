@@ -311,11 +311,6 @@ const base::Feature kServiceWorkerScriptFullCodeCache{
 const base::Feature kSharedArrayBuffer{"SharedArrayBuffer",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Origin-Signed HTTP Exchanges (for WebPackage Loading)
-// https://www.chromestatus.com/features/5745285984681984
-const base::Feature kSignedHTTPExchange{"SignedHTTPExchange",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
-
 // An experiment to require process isolation for the sign-in origin,
 // https://accounts.google.com.  Launch bug: https://crbug.com/739418.
 const base::Feature kSignInProcessIsolation{"sign-in-process-isolation",
@@ -378,7 +373,7 @@ const base::Feature kUseFeaturePolicyForPermissions{
 // Use MojoAudioInputIPC and RenderFrameAudioInputStreamFactory rather than
 // AudioInputMessageFilter and AudioInputRendererHost.
 const base::Feature kUseMojoAudioInputStreamFactory{
-    "UseMojoAudioInputStreamFactory", base::FEATURE_ENABLED_BY_DEFAULT};
+    "UseMojoAudioInputStreamFactory", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Use MojoAudioOutputIPC and RenderFrameAudioOutputStreamFactory rather than
 // AudioMessageFilter and AudioRendererHost.

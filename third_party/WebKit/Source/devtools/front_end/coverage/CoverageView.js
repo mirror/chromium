@@ -25,12 +25,10 @@ Coverage.CoverageView = class extends UI.VBox {
     this._toggleRecordButton = UI.Toolbar.createActionButton(this._toggleRecordAction);
     toolbar.appendToolbarItem(this._toggleRecordButton);
 
-    if (!Runtime.queryParam('nodeFrontend')) {
-      var startWithReloadAction =
-          /** @type {!UI.Action }*/ (UI.actionRegistry.action('coverage.start-with-reload'));
-      this._startWithReloadButton = UI.Toolbar.createActionButton(startWithReloadAction);
-      toolbar.appendToolbarItem(this._startWithReloadButton);
-    }
+    var startWithReloadAction =
+        /** @type {!UI.Action }*/ (UI.actionRegistry.action('coverage.start-with-reload'));
+    this._startWithReloadButton = UI.Toolbar.createActionButton(startWithReloadAction);
+    toolbar.appendToolbarItem(this._startWithReloadButton);
     this._clearButton = new UI.ToolbarButton(Common.UIString('Clear all'), 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clear.bind(this));
     toolbar.appendToolbarItem(this._clearButton);
@@ -66,17 +64,12 @@ Coverage.CoverageView = class extends UI.VBox {
    */
   _buildLandingPage() {
     var recordButton = UI.createInlineButton(UI.Toolbar.createActionButton(this._toggleRecordAction));
+    var reloadButton = UI.createInlineButton(UI.Toolbar.createActionButtonForId('coverage.start-with-reload'));
     var widget = new UI.VBox();
-    var message;
-    if (this._startWithReloadButton) {
-      var reloadButton = UI.createInlineButton(UI.Toolbar.createActionButtonForId('coverage.start-with-reload'));
-      message = UI.formatLocalized(
-          'Click the record button %s to start capturing coverage.\n' +
-              'Click the reload button %s to reload and start capturing coverage.',
-          [recordButton, reloadButton]);
-    } else {
-      message = UI.formatLocalized('Click the record button %s to start capturing coverage.', [recordButton]);
-    }
+    var message = UI.formatLocalized(
+        'Click the record button %s to start capturing coverage.\n' +
+            'Click the reload button %s to reload and start capturing coverage.',
+        [recordButton, reloadButton]);
     message.classList.add('message');
     widget.contentElement.appendChild(message);
     widget.element.classList.add('landing-page');
@@ -117,26 +110,25 @@ Coverage.CoverageView = class extends UI.VBox {
     var mainTarget = SDK.targetManager.mainTarget();
     if (!mainTarget)
       return;
+    this._resourceTreeModel = /** @type {?SDK.ResourceTreeModel} */ (mainTarget.model(SDK.ResourceTreeModel));
+    if (!this._resourceTreeModel)
+      return;
     if (!this._model || reload)
       this._model = new Coverage.CoverageModel(mainTarget);
     Host.userMetrics.actionTaken(Host.UserMetrics.Action.CoverageStarted);
     if (!this._model.start())
       return;
-    this._resourceTreeModel = /** @type {?SDK.ResourceTreeModel} */ (mainTarget.model(SDK.ResourceTreeModel));
-    if (this._resourceTreeModel) {
-      this._resourceTreeModel.addEventListener(
-          SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this);
-    }
+    this._resourceTreeModel.addEventListener(
+        SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this);
     this._decorationManager = new Coverage.CoverageDecorationManager(this._model);
     this._toggleRecordAction.setToggled(true);
     this._clearButton.setEnabled(false);
-    if (this._startWithReloadButton)
-      this._startWithReloadButton.setEnabled(false);
+    this._startWithReloadButton.setEnabled(false);
     this._filterInput.setEnabled(true);
     if (this._landingPage.isShowing())
       this._landingPage.detach();
     this._listView.show(this._coverageResultsElement);
-    if (reload && this._resourceTreeModel)
+    if (reload)
       this._resourceTreeModel.reloadPage();
     else
       this._poll();
@@ -154,16 +146,13 @@ Coverage.CoverageView = class extends UI.VBox {
       clearTimeout(this._pollTimer);
       delete this._pollTimer;
     }
-    if (this._resourceTreeModel) {
-      this._resourceTreeModel.removeEventListener(
-          SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this);
-      this._resourceTreeModel = null;
-    }
+    this._resourceTreeModel.removeEventListener(
+        SDK.ResourceTreeModel.Events.MainFrameNavigated, this._onMainFrameNavigated, this);
+    this._resourceTreeModel = null;
     var updatedEntries = await this._model.stop();
     this._updateViews(updatedEntries);
     this._toggleRecordAction.setToggled(false);
-    if (this._startWithReloadButton)
-      this._startWithReloadButton.setEnabled(true);
+    this._startWithReloadButton.setEnabled(true);
     this._clearButton.setEnabled(true);
   }
 

@@ -59,7 +59,7 @@ void QuicHeadersStream::MaybeReleaseSequencerBuffer() {
   }
 }
 
-bool QuicHeadersStream::OnStreamFrameAcked(QuicStreamOffset offset,
+void QuicHeadersStream::OnStreamFrameAcked(QuicStreamOffset offset,
                                            QuicByteCount data_length,
                                            bool fin_acked,
                                            QuicTime::Delta ack_delay_time) {
@@ -91,7 +91,7 @@ bool QuicHeadersStream::OnStreamFrameAcked(QuicStreamOffset offset,
                  << header.unacked_length << " acked_length: " << header_length;
         CloseConnectionWithDetails(QUIC_INTERNAL_ERROR,
                                    "Unsent stream data is acked");
-        return false;
+        return;
       }
       if (header.ack_listener != nullptr && header_length > 0) {
         header.ack_listener->OnPacketAcked(header_length, ack_delay_time);
@@ -107,8 +107,8 @@ bool QuicHeadersStream::OnStreamFrameAcked(QuicStreamOffset offset,
          unacked_headers_.front().unacked_length == 0) {
     unacked_headers_.pop_front();
   }
-  return QuicStream::OnStreamFrameAcked(offset, data_length, fin_acked,
-                                        ack_delay_time);
+  QuicStream::OnStreamFrameAcked(offset, data_length, fin_acked,
+                                 ack_delay_time);
 }
 
 void QuicHeadersStream::OnStreamFrameRetransmitted(QuicStreamOffset offset,

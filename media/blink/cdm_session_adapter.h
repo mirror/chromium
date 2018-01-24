@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include <map>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -27,7 +26,6 @@ class Origin;
 namespace media {
 
 struct CdmConfig;
-class CdmContextRef;
 class CdmFactory;
 class WebContentDecryptionModuleSessionImpl;
 
@@ -98,9 +96,8 @@ class CdmSessionAdapter : public base::RefCounted<CdmSessionAdapter> {
   void RemoveSession(const std::string& session_id,
                      std::unique_ptr<SimpleCdmPromise> promise);
 
-  // Returns a CdmContextRef which provides access to CdmContext and by holding
-  // the CdmContextRef, makes sure the CdmContext is kept alive.
-  std::unique_ptr<CdmContextRef> GetCdmContextRef();
+  // Returns a reference to the CDM.
+  scoped_refptr<ContentDecryptionModule> GetCdm();
 
   // Returns the key system name.
   const std::string& GetKeySystem() const;

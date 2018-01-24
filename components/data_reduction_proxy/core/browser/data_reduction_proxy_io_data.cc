@@ -75,7 +75,7 @@ net::URLRequestContext*
 BasicHTTPURLRequestContextGetter::GetURLRequestContext() {
   if (!url_request_context_) {
     net::URLRequestContextBuilder builder;
-    builder.set_proxy_resolution_service(net::ProxyResolutionService::CreateDirect());
+    builder.set_proxy_service(net::ProxyService::CreateDirect());
     builder.SetSpdyAndQuicEnabled(false, false);
     url_request_context_ = builder.Build();
   }
@@ -282,7 +282,7 @@ DataReductionProxyIOData::CreateProxyDelegate() const {
 // Bug http://crbug/488190.
 void DataReductionProxyIOData::SetProxyPrefs(bool enabled, bool at_startup) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  DCHECK(url_request_context_getter_->GetURLRequestContext()->proxy_resolution_service());
+  DCHECK(url_request_context_getter_->GetURLRequestContext()->proxy_service());
   enabled_ = enabled;
   config_->SetProxyConfig(enabled, at_startup);
   if (config_client_) {
@@ -293,9 +293,9 @@ void DataReductionProxyIOData::SetProxyPrefs(bool enabled, bool at_startup) {
 
   // If Data Saver is disabled, reset data reduction proxy state.
   if (!enabled) {
-    net::ProxyResolutionService* proxy_resolution_service =
-        url_request_context_getter_->GetURLRequestContext()->proxy_resolution_service();
-    proxy_resolution_service->ClearBadProxiesCache();
+    net::ProxyService* proxy_service =
+        url_request_context_getter_->GetURLRequestContext()->proxy_service();
+    proxy_service->ClearBadProxiesCache();
     bypass_stats_->ClearRequestCounts();
     bypass_stats_->NotifyUnavailabilityIfChanged();
   }
@@ -419,11 +419,6 @@ void DataReductionProxyIOData::SetDataUseAscriber(
   DCHECK(data_use_ascriber);
   data_use_observer_.reset(
       new DataReductionProxyDataUseObserver(this, data_use_ascriber));
-
-  // Disable data use ascriber when data saver is not enabled.
-  if (!IsEnabled()) {
-    data_use_ascriber->DisableAscriber();
-  }
 }
 
 void DataReductionProxyIOData::SetPreviewsDecider(

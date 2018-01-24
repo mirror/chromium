@@ -177,6 +177,7 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
     std::unique_ptr<DownloadUrlParameters> params,
     std::unique_ptr<network::ResourceRequest> request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
+    scoped_refptr<storage::FileSystemContext> file_system_context,
     uint32_t download_id,
     base::WeakPtr<DownloadManagerImpl> download_manager,
     const GURL& site_url,
@@ -204,8 +205,8 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginResourceDownload(
   return DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
       ResourceDownloader::BeginDownload(
           download_manager, std::move(params), std::move(request),
-          url_loader_factory_getter, getter, site_url, tab_url,
-          tab_referrer_url, download_id, false)
+          url_loader_factory_getter, file_system_context, getter, site_url,
+          tab_url, tab_referrer_url, download_id, false)
           .release());
 }
 
@@ -1089,7 +1090,8 @@ void DownloadManagerImpl::BeginDownloadInternal(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
             &BeginResourceDownload, std::move(params), std::move(request),
-            storage_partition->url_loader_factory_getter(), id,
+            storage_partition->url_loader_factory_getter(),
+            base::WrapRefCounted(storage_partition->GetFileSystemContext()), id,
             weak_factory_.GetWeakPtr(), site_url, tab_url, tab_referrer_url),
         base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
                        weak_factory_.GetWeakPtr()));

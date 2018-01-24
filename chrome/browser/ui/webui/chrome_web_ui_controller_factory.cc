@@ -192,6 +192,10 @@
 #include "chrome/browser/ui/webui/local_discovery/local_discovery_ui.h"
 #endif
 
+#if BUILDFLAG(ENABLE_APP_LIST)
+#include "chrome/browser/ui/webui/app_list/start_page_ui.h"
+#endif
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/extension_web_ui.h"
 #include "chrome/browser/ui/webui/extensions/extensions_ui.h"
@@ -355,11 +359,11 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
     return &NewWebUI<PasswordManagerInternalsUI>;
   if (url.host_piece() == chrome::kChromeUIPredictorsHost)
     return &NewWebUI<PredictorsUI>;
-  if (url.host_piece() == chrome::kChromeUIQuotaInternalsHost)
+  if (url.host() == chrome::kChromeUIQuotaInternalsHost)
     return &NewWebUI<QuotaInternalsUI>;
-  if (url.host_piece() == safe_browsing::kChromeUISafeBrowsingHost)
+  if (url.host() == safe_browsing::kChromeUISafeBrowsingHost)
     return &NewWebUI<safe_browsing::SafeBrowsingUI>;
-  if (url.host_piece() == chrome::kChromeUISignInInternalsHost)
+  if (url.host() == chrome::kChromeUISignInInternalsHost)
     return &NewWebUI<SignInInternalsUI>;
   if (url.host_piece() == chrome::kChromeUISuggestionsHost)
     return &NewWebUI<suggestions::SuggestionsUI>;
@@ -542,6 +546,10 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
   }
 #endif
 
+#if BUILDFLAG(ENABLE_APP_LIST)
+  if (url.host_piece() == chrome::kChromeUIAppListStartPageHost)
+    return &NewWebUI<app_list::StartPageUI>;
+#endif
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (url.host_piece() == chrome::kChromeUIExtensionsFrameHost)
     return &NewWebUI<extensions::ExtensionsUI>;
@@ -664,7 +672,7 @@ void ChromeWebUIControllerFactory::GetFaviconForURL(
   // All extensions but the bookmark manager get their favicon from the icons
   // part of the manifest.
   if (url.SchemeIs(extensions::kExtensionScheme) &&
-      url.host_piece() != extension_misc::kBookmarkManagerId) {
+      url.host() != extension_misc::kBookmarkManagerId) {
     ExtensionWebUI::GetFaviconForURL(profile, url, callback);
     return;
   }

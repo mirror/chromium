@@ -35,8 +35,6 @@ void UiPixelTest::SetUp() {
 
   // Make content texture.
   content_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
-  content_overlay_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
-
   // TODO(tiborg): Make GL_TEXTURE_EXTERNAL_OES texture for content and fill it
   // with fake content.
   ASSERT_EQ(glGetError(), (GLenum)GL_NO_ERROR);
@@ -60,8 +58,6 @@ void UiPixelTest::MakeUi(const UiInitialState& ui_initial_state,
   ui_ = std::make_unique<Ui>(browser_.get(), nullptr, nullptr, nullptr,
                              ui_initial_state);
   ui_->OnGlInitialized(content_texture_,
-                       vr::UiElementRenderer::kTextureLocationLocal,
-                       content_overlay_texture_,
                        vr::UiElementRenderer::kTextureLocationLocal, true);
   ui_->GetBrowserUiWeakPtr()->SetToolbarState(toolbar_state);
 }
@@ -96,7 +92,7 @@ void UiPixelTest::DrawUi(const gfx::Vector3dF& laser_direction,
   ReticleModel reticle_model;
   EXPECT_TRUE(
       ui_->scene()->OnBeginFrame(base::TimeTicks(), render_info.head_pose));
-  ui_->input_manager()->HandleInput(MsToTicks(1), render_info, controller_model,
+  ui_->input_manager()->HandleInput(MsToTicks(1), controller_model,
                                     &reticle_model, &gesture_list);
   ui_->OnControllerUpdated(controller_model, reticle_model);
   ui_->ui_renderer()->Draw(render_info);

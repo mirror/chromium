@@ -27,7 +27,6 @@
 #include "net/cert/internal/revocation_checker.h"
 #include "net/cert/internal/simple_path_builder_delegate.h"
 #include "net/cert/internal/system_trust_store.h"
-#include "net/cert/known_roots.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util.h"
 #include "net/der/encode_values.h"
@@ -469,24 +468,12 @@ int AssignVerifyResult(X509Certificate* input_cert,
   const CertPathBuilderResultPath& partial_path =
       *result.paths[result.best_result_index].get();
 
-  AppendPublicKeyHashes(partial_path, &verify_result->public_key_hashes);
-
-  for (auto it = verify_result->public_key_hashes.rbegin();
-       it != verify_result->public_key_hashes.rend() &&
-       !verify_result->is_issued_by_known_root;
-       ++it) {
-    verify_result->is_issued_by_known_root =
-        GetNetTrustAnchorHistogramIdForSPKI(*it) != 0;
-  }
-
   bool path_is_valid = partial_path.IsValid();
 
   const ParsedCertificate* trusted_cert = partial_path.GetTrustedCert();
   if (trusted_cert) {
-    if (!verify_result->is_issued_by_known_root) {
-      verify_result->is_issued_by_known_root =
-          ssl_trust_store->IsKnownRoot(trusted_cert);
-    }
+    verify_result->is_issued_by_known_root =
+        ssl_trust_store->IsKnownRoot(trusted_cert);
 
     verify_result->is_issued_by_additional_trust_anchor =
         ssl_trust_store->IsAdditionalTrustAnchor(trusted_cert);
@@ -507,6 +494,7 @@ int AssignVerifyResult(X509Certificate* input_cert,
   verify_result->verified_cert =
       CreateVerifiedCertChain(input_cert, partial_path);
 
+  AppendPublicKeyHashes(partial_path, &verify_result->public_key_hashes);
   MapPathBuilderErrorsToCertStatus(partial_path.errors,
                                    &verify_result->cert_status);
 

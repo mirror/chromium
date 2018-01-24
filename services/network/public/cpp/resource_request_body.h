@@ -44,6 +44,10 @@ class ResourceRequestBody
                           const base::Time& expected_modification_time);
 
   void AppendBlob(const std::string& uuid);
+  void AppendFileSystemFileRange(const GURL& url,
+                                 uint64_t offset,
+                                 uint64_t length,
+                                 const base::Time& expected_modification_time);
   void AppendDataPipe(mojom::DataPipeGetterPtr data_pipe_getter);
 
   const std::vector<DataElement>* elements() const { return &elements_; }

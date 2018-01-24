@@ -791,7 +791,8 @@ void PageInfoBubbleView::SetPermissionInfo(
       layout_provider->GetInsetsMetric(views::INSETS_DIALOG).left();
   // A permissions row will have an icon, title, and combobox, with a padding
   // column on either side to match the dialog insets. Note the combobox can be
-  // variable widths depending on the text inside.
+  // variable widths depending on the text inside, so allow that column to
+  // expand.
   // *----------------------------------------------*
   // |++| Icon | Permission Title     | Combobox |++|
   // *----------------------------------------------*
@@ -803,12 +804,12 @@ void PageInfoBubbleView::SetPermissionInfo(
   permissions_set->AddPaddingColumn(
       kFixed, layout_provider->GetDistanceMetric(
                   views::DISTANCE_RELATED_LABEL_HORIZONTAL));
-  permissions_set->AddColumn(GridLayout::LEADING, GridLayout::CENTER, kStretchy,
+  permissions_set->AddColumn(GridLayout::LEADING, GridLayout::CENTER, kFixed,
                              GridLayout::USE_PREF, 0, 0);
   permissions_set->AddPaddingColumn(
-      kFixed, layout_provider->GetDistanceMetric(
-                  views::DISTANCE_RELATED_CONTROL_HORIZONTAL));
-  permissions_set->AddColumn(GridLayout::TRAILING, GridLayout::FILL, kFixed,
+      1, layout_provider->GetDistanceMetric(
+             views::DISTANCE_RELATED_CONTROL_HORIZONTAL));
+  permissions_set->AddColumn(GridLayout::TRAILING, GridLayout::FILL, kStretchy,
                              GridLayout::USE_PREF, 0, 0);
   permissions_set->AddPaddingColumn(kFixed, side_margin);
 

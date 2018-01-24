@@ -21,6 +21,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/disk_cache.h"
+#include "services/network/public/cpp/data_element.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_data_snapshot.h"
 #include "storage/browser/fileapi/file_stream_reader.h"
@@ -32,10 +33,10 @@ namespace storage {
 namespace {
 const char kCacheStorageRecordBytesLabel[] = "DiskCache.CacheStorage";
 
-bool IsFileType(BlobDataItem::Type type) {
+bool IsFileType(network::DataElement::Type type) {
   switch (type) {
-    case BlobDataItem::Type::kFile:
-    case BlobDataItem::Type::kFileFilesystem:
+    case network::DataElement::TYPE_FILE:
+    case network::DataElement::TYPE_FILE_FILESYSTEM:
       return true;
     default:
       return false;
@@ -111,7 +112,7 @@ bool BlobReader::has_side_data() const {
   if (items.size() != 1)
     return false;
   const BlobDataItem& item = *items.at(0);
-  if (item.type() != BlobDataItem::Type::kDiskCacheEntry)
+  if (item.type() != network::DataElement::TYPE_DISK_CACHE_ENTRY)
     return false;
   const int disk_cache_side_stream_index = item.disk_cache_side_stream_index();
   if (disk_cache_side_stream_index < 0)
@@ -244,7 +245,7 @@ bool BlobReader::IsInMemory() const {
     return true;
   }
   for (const auto& item : blob_data_->items()) {
-    if (item->type() != BlobDataItem::Type::kBytes) {
+    if (item->type() != network::DataElement::TYPE_BYTES) {
       return false;
     }
   }
@@ -454,11 +455,11 @@ BlobReader::Status BlobReader::ReadItem() {
 
   // Do the reading.
   const BlobDataItem& item = *items.at(current_item_index_);
-  if (item.type() == BlobDataItem::Type::kBytes) {
+  if (item.type() == network::DataElement::TYPE_BYTES) {
     ReadBytesItem(item, bytes_to_read);
     return Status::DONE;
   }
-  if (item.type() == BlobDataItem::Type::kDiskCacheEntry)
+  if (item.type() == network::DataElement::TYPE_DISK_CACHE_ENTRY)
     return ReadDiskCacheEntryItem(item, bytes_to_read);
   if (!IsFileType(item.type())) {
     NOTREACHED();
@@ -503,8 +504,7 @@ void BlobReader::ReadBytesItem(const BlobDataItem& item, int bytes_to_read) {
   TRACE_EVENT1("Blob", "BlobReader::ReadBytesItem", "uuid", blob_data_->uuid());
   DCHECK_GE(read_buf_->BytesRemaining(), bytes_to_read);
 
-  memcpy(read_buf_->data(),
-         item.bytes().data() + item.offset() + current_item_offset_,
+  memcpy(read_buf_->data(), item.bytes() + item.offset() + current_item_offset_,
          bytes_to_read);
 
   AdvanceBytesRead(bytes_to_read);
@@ -649,7 +649,7 @@ std::unique_ptr<FileStreamReader> BlobReader::CreateFileStreamReader(
   DCHECK(IsFileType(item.type()));
 
   switch (item.type()) {
-    case BlobDataItem::Type::kFile:
+    case network::DataElement::TYPE_FILE:
       if (file_stream_provider_for_testing_) {
         return file_stream_provider_for_testing_->CreateForLocalFile(
             file_task_runner_.get(), item.path(),
@@ -660,7 +660,7 @@ std::unique_ptr<FileStreamReader> BlobReader::CreateFileStreamReader(
           file_task_runner_.get(), item.path(),
           item.offset() + additional_offset,
           item.expected_modification_time()));
-    case BlobDataItem::Type::kFileFilesystem: {
+    case network::DataElement::TYPE_FILE_FILESYSTEM: {
       int64_t max_bytes_to_read =
           item.length() == std::numeric_limits<uint64_t>::max()
               ? storage::kMaximumLength
@@ -676,9 +676,13 @@ std::unique_ptr<FileStreamReader> BlobReader::CreateFileStreamReader(
           item.offset() + additional_offset, max_bytes_to_read,
           item.expected_modification_time());
     }
-    case BlobDataItem::Type::kBytes:
-    case BlobDataItem::Type::kBytesDescription:
-    case BlobDataItem::Type::kDiskCacheEntry:
+    case network::DataElement::TYPE_RAW_FILE:
+    case network::DataElement::TYPE_BLOB:
+    case network::DataElement::TYPE_BYTES:
+    case network::DataElement::TYPE_BYTES_DESCRIPTION:
+    case network::DataElement::TYPE_DISK_CACHE_ENTRY:
+    case network::DataElement::TYPE_DATA_PIPE:
+    case network::DataElement::TYPE_UNKNOWN:
       break;
   }
 

@@ -49,8 +49,8 @@ class CanvasTestMac : public testing::Test {
 
     float canvas_width = kReallyLargeNumber;
     float canvas_height = kReallyLargeNumber;
-    Canvas::SizeStringFloat(text16, font_list, &canvas_width, &canvas_height, 0,
-                            0, Typesetter::NATIVE);
+    Canvas::SizeStringFloat(
+        text16, font_list, &canvas_width, &canvas_height, 0, 0);
 
     EXPECT_NE(kReallyLargeNumber, mac_width) << "no width for " << text;
     EXPECT_NE(kReallyLargeNumber, mac_height) << "no height for " << text;
@@ -64,9 +64,10 @@ class CanvasTestMac : public testing::Test {
   Font font_;
 };
 
-// Tests that Canvas' SizeStringFloat yields result consistent with a native
-// implementation when using Typesetter::NATIVE.
-TEST_F(CanvasTestMac, StringSizeIdenticalForSkia) {
+ // Tests that Canvas' SizeStringFloat yields result consistent with a native
+ // implementation.
+// Disabled for the typesetter migration. http://crbug.com/803354.
+TEST_F(CanvasTestMac, DISABLED_StringSizeIdenticalForSkia) {
   CompareSizes("");
   CompareSizes("Foo");
   CompareSizes("Longword");
@@ -79,8 +80,8 @@ TEST_F(CanvasTestMac, FractionalWidth) {
   float height = kReallyLargeNumber;
 
   FontList font_list;
-  Canvas::SizeStringFloat(base::UTF8ToUTF16("Test"), font_list, &width, &height,
-                          0, 0, Typesetter::NATIVE);
+  Canvas::SizeStringFloat(
+      base::UTF8ToUTF16("Test"), font_list, &width, &height, 0, 0);
 
   EXPECT_GT(width, static_cast<int>(width));
 }

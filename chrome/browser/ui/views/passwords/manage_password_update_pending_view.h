@@ -5,46 +5,34 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PASSWORDS_MANAGE_PASSWORD_UPDATE_PENDING_VIEW_H_
 #define CHROME_BROWSER_UI_VIEWS_PASSWORDS_MANAGE_PASSWORD_UPDATE_PENDING_VIEW_H_
 
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.h"
-#include "ui/views/controls/styled_label_listener.h"
-
-namespace views {
-class StyledLabel;
-}
+#include "ui/views/controls/button/button.h"
+#include "ui/views/view.h"
 
 class CredentialsSelectionView;
+class ManagePasswordsBubbleView;
 
 // A view offering the user the ability to update credentials. Contains a
 // single credential row (in case of one credentials) or
 // CredentialsSelectionView otherwise, along with a "Update Passwords" button
 // and a rejection button.
-class ManagePasswordUpdatePendingView
-    : public ManagePasswordsBubbleDelegateViewBase,
-      public views::StyledLabelListener {
+class ManagePasswordUpdatePendingView : public views::View,
+                                        public views::ButtonListener {
  public:
-  ManagePasswordUpdatePendingView(content::WebContents* web_contents,
-                                  views::View* anchor_view,
-                                  const gfx::Point& anchor_point,
-                                  DisplayReason reason);
+  explicit ManagePasswordUpdatePendingView(ManagePasswordsBubbleView* parent);
   ~ManagePasswordUpdatePendingView() override;
 
  private:
-  // ManagePasswordsBubbleDelegateViewBase:
+  // views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+  // views::View:
   gfx::Size CalculatePreferredSize() const override;
-  base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
-  bool Accept() override;
-  bool Cancel() override;
-  bool Close() override;
-  void AddedToWidget() override;
 
-  // views::StyledLabelListener:
-  void StyledLabelLinkClicked(views::StyledLabel* label,
-                              const gfx::Range& range,
-                              int event_flags) override;
-
-  void UpdateTitleText(views::StyledLabel* title_view);
+  ManagePasswordsBubbleView* parent_;
 
   CredentialsSelectionView* selection_view_;
+
+  views::Button* update_button_;
+  views::Button* nope_button_;
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordUpdatePendingView);
 };

@@ -65,11 +65,7 @@ base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
 void Ui::SetWebVrMode(bool enabled, bool show_toast) {
   model_->web_vr.show_exit_toast = show_toast;
   if (enabled) {
-    if (!model_->web_vr_autopresentation_enabled()) {
-      // When auto-presenting, we transition into this state when the minimum
-      // splash-screen duration has passed.
-      model_->web_vr.state = kWebVrAwaitingFirstFrame;
-    }
+    model_->web_vr.state = kWebVrAwaitingFirstFrame;
     // We have this check here so that we don't set the mode to kModeWebVr when
     // it should be kModeWebVrAutopresented. The latter is set when the UI is
     // initialized.
@@ -116,23 +112,23 @@ void Ui::SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) {
 }
 
 void Ui::SetVideoCaptureEnabled(bool enabled) {
-  model_->capturing_state.video_capture_enabled = enabled;
+  model_->permissions.video_capture_enabled = enabled;
 }
 
 void Ui::SetScreenCaptureEnabled(bool enabled) {
-  model_->capturing_state.screen_capture_enabled = enabled;
+  model_->permissions.screen_capture_enabled = enabled;
 }
 
 void Ui::SetAudioCaptureEnabled(bool enabled) {
-  model_->capturing_state.audio_capture_enabled = enabled;
+  model_->permissions.audio_capture_enabled = enabled;
 }
 
 void Ui::SetBluetoothConnected(bool enabled) {
-  model_->capturing_state.bluetooth_connected = enabled;
+  model_->permissions.bluetooth_connected = enabled;
 }
 
-void Ui::SetLocationAccessEnabled(bool enabled) {
-  model_->capturing_state.location_access_enabled = enabled;
+void Ui::SetLocationAccess(bool enabled) {
+  model_->permissions.location_access = enabled;
 }
 
 void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
@@ -201,21 +197,13 @@ void Ui::OnAssetsComponentReady() {
   model_->can_apply_new_background = true;
 }
 
-bool Ui::CanSendWebVrVSync() {
-  return model_->web_vr_enabled() &&
-         !model_->web_vr.awaiting_min_splash_screen_duration();
-}
-
 bool Ui::ShouldRenderWebVr() {
   return model_->web_vr.has_produced_frames();
 }
 
-void Ui::OnGlInitialized(
-    unsigned int content_texture_id,
-    UiElementRenderer::TextureLocation content_location,
-    unsigned int content_overlay_texture_id,
-    UiElementRenderer::TextureLocation content_overlay_location,
-    bool use_ganesh) {
+void Ui::OnGlInitialized(unsigned int content_texture_id,
+                         UiElementRenderer::TextureLocation content_location,
+                         bool use_ganesh) {
   ui_element_renderer_ = std::make_unique<UiElementRenderer>();
   ui_renderer_ =
       std::make_unique<UiRenderer>(scene_.get(), ui_element_renderer_.get());
@@ -226,9 +214,7 @@ void Ui::OnGlInitialized(
   }
   scene_->OnGlInitialized(provider_.get());
   model_->content_texture_id = content_texture_id;
-  model_->content_overlay_texture_id = content_overlay_texture_id;
   model_->content_location = content_location;
-  model_->content_overlay_location = content_overlay_location;
 }
 
 void Ui::RequestFocus(int element_id) {
@@ -287,8 +273,6 @@ void Ui::OnControllerUpdated(const ControllerModel& controller_model,
   model_->controller = controller_model;
   model_->reticle = reticle_model;
   model_->controller.quiescent = input_manager_->controller_quiescent();
-  model_->controller.resting_in_viewport =
-      input_manager_->controller_resting_in_viewport();
 }
 
 void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
@@ -374,13 +358,10 @@ void Ui::InitializeModel(const UiInitialState& ui_initial_state) {
   model_->ui_modes.clear();
   model_->push_mode(kModeBrowsing);
   if (ui_initial_state.in_web_vr) {
-    auto mode = kModeWebVr;
-    if (ui_initial_state.web_vr_autopresentation_expected) {
-      mode = kModeWebVrAutopresented;
-      model_->web_vr.state = kWebVrAwaitingMinSplashScreenDuration;
-    } else {
-      model_->web_vr.state = kWebVrAwaitingFirstFrame;
-    }
+    model_->web_vr.state = kWebVrAwaitingFirstFrame;
+    auto mode = ui_initial_state.web_vr_autopresentation_expected
+                    ? kModeWebVrAutopresented
+                    : kModeWebVr;
     model_->push_mode(mode);
   }
 

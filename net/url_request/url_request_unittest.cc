@@ -56,7 +56,6 @@
 #include "net/base/load_timing_info_test_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
-#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/upload_bytes_element_reader.h"
@@ -90,7 +89,8 @@
 #include "net/log/test_net_log_util.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_server.h"
+#include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"
 #include "net/socket/socket_test_util.h"
@@ -732,8 +732,7 @@ class TestURLRequestContextWithProxy : public TestURLRequestContext {
   TestURLRequestContextWithProxy(const std::string& proxy,
                                  NetworkDelegate* delegate)
       : TestURLRequestContext(true) {
-    context_storage_.set_proxy_resolution_service(
-        ProxyResolutionService::CreateFixed(proxy));
+    context_storage_.set_proxy_service(ProxyService::CreateFixed(proxy));
     set_network_delegate(delegate);
     Init();
   }
@@ -10139,7 +10138,7 @@ TEST_F(HTTPSRequestTest, SSLSessionCacheShardTest) {
   session_context.cert_transparency_verifier =
       default_context_.cert_transparency_verifier();
   session_context.ct_policy_enforcer = default_context_.ct_policy_enforcer();
-  session_context.proxy_resolution_service = default_context_.proxy_resolution_service();
+  session_context.proxy_service = default_context_.proxy_service();
   session_context.ssl_config_service = default_context_.ssl_config_service();
   session_context.http_auth_handler_factory =
       default_context_.http_auth_handler_factory();

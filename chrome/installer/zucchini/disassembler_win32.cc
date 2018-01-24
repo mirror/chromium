@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "chrome/installer/zucchini/abs32_utils.h"
 #include "chrome/installer/zucchini/algorithm.h"
@@ -126,7 +127,7 @@ std::unique_ptr<ReferenceReader> DisassemblerWin32<Traits>::MakeReadRelocs(
   CHECK_GE(image_.size(), Traits::kVAWidth);
   offset_t offset_bound =
       base::checked_cast<offset_t>(image_.size() - Traits::kVAWidth + 1);
-  return std::make_unique<RelocReaderWin32>(std::move(reloc_rva_reader),
+  return base::MakeUnique<RelocReaderWin32>(std::move(reloc_rva_reader),
                                             Traits::kRelocType, offset_bound,
                                             translator_);
 }
@@ -138,7 +139,7 @@ std::unique_ptr<ReferenceReader> DisassemblerWin32<Traits>::MakeReadAbs32(
   ParseAndStoreAbs32();
   Abs32RvaExtractorWin32 abs_rva_extractor(
       image_, {Traits::kBitness, image_base_}, abs32_locations_, lo, hi);
-  return std::make_unique<Abs32ReaderWin32>(std::move(abs_rva_extractor),
+  return base::MakeUnique<Abs32ReaderWin32>(std::move(abs_rva_extractor),
                                             translator_);
 }
 
@@ -147,7 +148,7 @@ std::unique_ptr<ReferenceReader> DisassemblerWin32<Traits>::MakeReadRel32(
     offset_t lo,
     offset_t hi) {
   ParseAndStoreRel32();
-  return std::make_unique<Rel32ReaderX86>(image_, lo, hi, &rel32_locations_,
+  return base::MakeUnique<Rel32ReaderX86>(image_, lo, hi, &rel32_locations_,
                                           translator_);
 }
 
@@ -155,7 +156,7 @@ template <class Traits>
 std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteRelocs(
     MutableBufferView image) {
   ParseAndStoreRelocBlocks();
-  return std::make_unique<RelocWriterWin32>(Traits::kRelocType, image,
+  return base::MakeUnique<RelocWriterWin32>(Traits::kRelocType, image,
                                             reloc_region_, reloc_block_offsets_,
                                             translator_);
 }
@@ -163,14 +164,14 @@ std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteRelocs(
 template <class Traits>
 std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteAbs32(
     MutableBufferView image) {
-  return std::make_unique<Abs32WriterWin32>(
+  return base::MakeUnique<Abs32WriterWin32>(
       image, AbsoluteAddress(Traits::kBitness, image_base_), translator_);
 }
 
 template <class Traits>
 std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteRel32(
     MutableBufferView image) {
-  return std::make_unique<Rel32WriterX86>(image, translator_);
+  return base::MakeUnique<Rel32WriterX86>(image, translator_);
 }
 
 template <class Traits>

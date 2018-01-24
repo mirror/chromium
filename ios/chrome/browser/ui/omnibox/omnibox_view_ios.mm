@@ -706,7 +706,8 @@ NSAttributedString* OmniboxViewIOS::ApplyTextAttributes(
 }
 
 void OmniboxViewIOS::UpdateAppearance() {
-  base::string16 text = controller_->GetToolbarModel()->GetFormattedFullURL();
+  base::string16 text =
+      controller_->GetToolbarModel()->GetFormattedURL(nullptr);
   // If Siri is thinking, treat that as user input being in progress.  It is
   // unsafe to modify the text field while voice entry is pending.
   if (model()->SetPermanentText(text)) {

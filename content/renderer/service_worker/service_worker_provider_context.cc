@@ -19,6 +19,7 @@
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/renderer/service_worker/controller_service_worker_connector.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_subresource_loader.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
 #include "content/renderer/service_worker/web_service_worker_registration_impl.h"
@@ -42,7 +43,7 @@ struct ServiceWorkerProviderContext::ProviderStateForClient {
   ~ProviderStateForClient() = default;
 
   // |controller| will be set by SetController() and taken by TakeController().
-  blink::mojom::ServiceWorkerObjectInfoPtr controller;
+  std::unique_ptr<ServiceWorkerHandleReference> controller;
   // Keeps version id of the current controller service worker object.
   int64_t controller_version_id = blink::mojom::kInvalidServiceWorkerVersionId;
 
@@ -88,9 +89,12 @@ struct ServiceWorkerProviderContext::ProviderStateForClient {
 struct ServiceWorkerProviderContext::ProviderStateForServiceWorker {
   ProviderStateForServiceWorker() = default;
   ~ProviderStateForServiceWorker() = default;
-  // |registration| is set by SetRegistrationForServiceWorkerGlobalScope() and
-  // taken by TakeRegistrationForServiceWorkerGlobalScope().
+  // These are valid until TakeRegistrationForServiceWorkerGlobalScope() is
+  // called.
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration;
+  std::unique_ptr<ServiceWorkerHandleReference> installing;
+  std::unique_ptr<ServiceWorkerHandleReference> waiting;
+  std::unique_ptr<ServiceWorkerHandleReference> active;
 };
 
 // For service worker clients.
@@ -143,11 +147,20 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
 ServiceWorkerProviderContext::~ServiceWorkerProviderContext() = default;
 
 void ServiceWorkerProviderContext::SetRegistrationForServiceWorkerGlobalScope(
-    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration) {
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
+    scoped_refptr<ThreadSafeSender> sender) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   ProviderStateForServiceWorker* state = state_for_service_worker_.get();
   DCHECK(state);
   DCHECK(!state->registration);
+  DCHECK(!state->installing && !state->waiting && !state->active);
+
+  state->installing = ServiceWorkerHandleReference::Adopt(
+      std::move(registration->installing), sender);
+  state->waiting = ServiceWorkerHandleReference::Adopt(
+      std::move(registration->waiting), sender);
+  state->active = ServiceWorkerHandleReference::Adopt(
+      std::move(registration->active), sender);
 
   state->registration = std::move(registration);
 }
@@ -164,14 +177,24 @@ ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
   DCHECK_NE(state->registration->registration_id,
             blink::mojom::kInvalidServiceWorkerRegistrationId);
 
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  DCHECK(dispatcher);
   DCHECK(state->registration->request.is_pending());
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
       WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
           std::move(state->registration), std::move(io_task_runner));
+  registration->SetInstalling(
+      dispatcher->GetOrCreateServiceWorker(std::move(state->installing)));
+  registration->SetWaiting(
+      dispatcher->GetOrCreateServiceWorker(std::move(state->waiting)));
+  registration->SetActive(
+      dispatcher->GetOrCreateServiceWorker(std::move(state->active)));
+
   return registration;
 }
 
-blink::mojom::ServiceWorkerObjectInfoPtr
+std::unique_ptr<ServiceWorkerHandleReference>
 ServiceWorkerProviderContext::TakeController() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(state_for_client_);
@@ -255,6 +278,15 @@ ServiceWorkerProviderContext::GetOrCreateRegistrationForServiceWorkerClient(
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
+  std::unique_ptr<ServiceWorkerHandleReference> installing =
+      ServiceWorkerHandleReference::Adopt(std::move(info->installing),
+                                          dispatcher->thread_safe_sender());
+  std::unique_ptr<ServiceWorkerHandleReference> waiting =
+      ServiceWorkerHandleReference::Adopt(std::move(info->waiting),
+                                          dispatcher->thread_safe_sender());
+  std::unique_ptr<ServiceWorkerHandleReference> active =
+      ServiceWorkerHandleReference::Adopt(std::move(info->active),
+                                          dispatcher->thread_safe_sender());
 
   auto found = state_for_client_->registrations_.find(info->registration_id);
   if (found != state_for_client_->registrations_.end()) {
@@ -270,6 +302,13 @@ ServiceWorkerProviderContext::GetOrCreateRegistrationForServiceWorkerClient(
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
       WebServiceWorkerRegistrationImpl::CreateForServiceWorkerClient(
           std::move(info), weak_factory_.GetWeakPtr());
+
+  registration->SetInstalling(
+      dispatcher->GetOrCreateServiceWorker(std::move(installing)));
+  registration->SetWaiting(
+      dispatcher->GetOrCreateServiceWorker(std::move(waiting)));
+  registration->SetActive(
+      dispatcher->GetOrCreateServiceWorker(std::move(active)));
   return registration;
 }
 
@@ -297,22 +336,22 @@ void ServiceWorkerProviderContext::SetController(
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   ProviderStateForClient* state = state_for_client_.get();
   DCHECK(state);
-  DCHECK(!state->controller || state->controller->handle_id !=
+  DCHECK(!state->controller || state->controller->handle_id() !=
                                    blink::mojom::kInvalidServiceWorkerHandleId);
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
 
   auto& controller = controller_info->object_info;
   state->controller_version_id = controller->version_id;
-  state->controller =
-      controller->handle_id != blink::mojom::kInvalidServiceWorkerHandleId
-          ? std::move(controller)
-          : nullptr;
+  state->controller = ServiceWorkerHandleReference::Adopt(
+      std::move(controller), dispatcher->thread_safe_sender());
 
   // Propagate the controller to workers related to this provider.
   if (state->controller) {
     for (const auto& worker : state->worker_clients) {
       // This is a Mojo interface call to the (dedicated or shared) worker
       // thread.
-      worker->SetControllerServiceWorker(state->controller->version_id);
+      worker->SetControllerServiceWorker(state->controller->version_id());
     }
   }
   for (blink::mojom::WebFeature feature : used_features)
@@ -367,12 +406,17 @@ void ServiceWorkerProviderContext::PostMessageToClient(
     const base::string16& message,
     std::vector<mojo::ScopedMessagePipeHandle> message_pipes) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  std::unique_ptr<ServiceWorkerHandleReference> source_handle =
+      ServiceWorkerHandleReference::Adopt(std::move(source),
+                                          dispatcher->thread_safe_sender());
 
   ProviderStateForClient* state = state_for_client_.get();
   DCHECK(state);
   if (state->web_service_worker_provider) {
     state->web_service_worker_provider->PostMessageToClient(
-        std::move(source), message, std::move(message_pipes));
+        std::move(source_handle), message, std::move(message_pipes));
   }
 }
 

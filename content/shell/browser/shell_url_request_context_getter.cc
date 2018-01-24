@@ -32,8 +32,8 @@
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/http/http_network_session.h"
-#include "net/proxy_resolution/proxy_config_service.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_config_service.h"
+#include "net/proxy/proxy_service.h"
 #include "net/reporting/reporting_feature.h"
 #include "net/reporting/reporting_policy.h"
 #include "net/reporting/reporting_service.h"
@@ -41,7 +41,6 @@
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
-#include "services/network/public/cpp/network_switches.h"
 #include "url/url_constants.h"
 
 namespace content {
@@ -112,11 +111,10 @@ ShellURLRequestContextGetter::GetCertVerifier() {
 
 std::unique_ptr<net::ProxyConfigService>
 ShellURLRequestContextGetter::GetProxyConfigService() {
-  return net::ProxyResolutionService::CreateSystemProxyConfigService(
-      io_task_runner_);
+  return net::ProxyService::CreateSystemProxyConfigService(io_task_runner_);
 }
 
-std::unique_ptr<net::ProxyResolutionService>
+std::unique_ptr<net::ProxyService>
 ShellURLRequestContextGetter::GetProxyService() {
   // TODO(jam): use v8 if possible, look at chrome code.
   return nullptr;
@@ -151,10 +149,9 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
     builder.set_ct_policy_enforcer(
         base::WrapUnique(new IgnoresCTPolicyEnforcer));
 
-    std::unique_ptr<net::ProxyResolutionService> proxy_resolution_service =
-        GetProxyService();
-    if (proxy_resolution_service) {
-      builder.set_proxy_resolution_service(std::move(proxy_resolution_service));
+    std::unique_ptr<net::ProxyService> proxy_service = GetProxyService();
+    if (proxy_service) {
+      builder.set_proxy_service(std::move(proxy_service));
     } else {
       builder.set_proxy_config_service(std::move(proxy_config_service_));
     }
@@ -177,12 +174,12 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
         ignore_certificate_errors_;
     builder.set_http_network_session_params(network_session_params);
 
-    if (command_line.HasSwitch(network::switches::kHostResolverRules)) {
+    if (command_line.HasSwitch(switches::kHostResolverRules)) {
       std::unique_ptr<net::MappedHostResolver> mapped_host_resolver(
           new net::MappedHostResolver(
               net::HostResolver::CreateDefaultResolver(net_log_)));
-      mapped_host_resolver->SetRulesFromString(command_line.GetSwitchValueASCII(
-          network::switches::kHostResolverRules));
+      mapped_host_resolver->SetRulesFromString(
+          command_line.GetSwitchValueASCII(switches::kHostResolverRules));
       builder.set_host_resolver(std::move(mapped_host_resolver));
     }
 

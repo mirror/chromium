@@ -23,12 +23,8 @@ bool DrmVSyncProvider::GetVSyncParametersIfAvailable(
   return false;
 }
 
-bool DrmVSyncProvider::SupportGetVSyncParametersIfAvailable() const {
+bool DrmVSyncProvider::SupportGetVSyncParametersIfAvailable() {
   return false;
-}
-
-bool DrmVSyncProvider::IsHWClock() const {
-  return true;
 }
 
 }  // namespace ui

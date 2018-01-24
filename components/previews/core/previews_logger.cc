@@ -32,66 +32,55 @@ std::string GetDescriptionForPreviewsNavigation(PreviewsType type,
 }
 
 std::string GetReasonDescription(PreviewsEligibilityReason reason,
-                                 bool want_inverse_description) {
+                                 bool final_reason) {
   switch (reason) {
     case PreviewsEligibilityReason::ALLOWED:
-      DCHECK(!want_inverse_description);
+      DCHECK(final_reason);
       return "Allowed";
     case PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE:
-      return want_inverse_description ? "Blacklist not null"
-                                      : "Blacklist failed to be created";
+      return final_reason ? "Blacklist failed to be created"
+                          : "Blacklist not null";
     case PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED:
-      return want_inverse_description ? "Blacklist loaded from disk"
-                                      : "Blacklist not loaded from disk yet";
+      return final_reason ? "Blacklist not loaded from disk yet"
+                          : "Blacklist loaded from disk";
     case PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT:
-      return want_inverse_description ? "User did not opt out recently"
-                                      : "User recently opted out";
+      return final_reason ? "User recently opted out"
+                          : "User did not opt out recently";
     case PreviewsEligibilityReason::USER_BLACKLISTED:
-      return want_inverse_description ? "Not all previews are blacklisted"
-                                      : "All previews are blacklisted";
+      return final_reason ? "All previews are blacklisted"
+                          : "Not all previews are blacklisted";
     case PreviewsEligibilityReason::HOST_BLACKLISTED:
-      return want_inverse_description
-                 ? "Host is not blacklisted on all previews"
-                 : "All previews on this host are blacklisted";
+      return final_reason ? "All previews on this host are blacklisted"
+                          : "Host is not blacklisted on all previews";
     case PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE:
-      return want_inverse_description ? "Network quality available"
-                                      : "Network quality unavailable";
+      return final_reason ? "Network quality unavailable"
+                          : "Network quality available";
     case PreviewsEligibilityReason::NETWORK_NOT_SLOW:
-      return want_inverse_description ? "Network is slow" : "Network not slow";
+      return final_reason ? "Network not slow" : "Network is slow";
     case PreviewsEligibilityReason::RELOAD_DISALLOWED:
-      return want_inverse_description
-                 ? "Page reloads allowed"
-                 : "Page reloads do not show previews for this preview type";
+      return final_reason
+                 ? "Page reloads do not show previews for this preview type"
+                 : "Page reloads allowed";
     case PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER:
-      return want_inverse_description ? "Host not blacklisted by server rules"
-                                      : "Host blacklisted by server rules";
+      return final_reason ? "Host blacklisted by server rules"
+                          : "Host not blacklisted by server rules";
     case PreviewsEligibilityReason::HOST_NOT_WHITELISTED_BY_SERVER:
-      return want_inverse_description ? "Host whitelisted by server rules"
-                                      : "Host not whitelisted by server rules";
+      return final_reason ? "Host not whitelisted by server rules"
+                          : "Host whitelisted by server rules";
     case PreviewsEligibilityReason::ALLOWED_WITHOUT_OPTIMIZATION_HINTS:
-      return want_inverse_description
-                 ? "Not allowed (without server rule check)"
-                 : "Allowed (but without server rule check)";
-    case PreviewsEligibilityReason::COMMITTED:
-      return want_inverse_description ? "Not Committed" : "Committed";
-    case PreviewsEligibilityReason::CACHE_CONTROL_NO_TRANSFORM:
-      return want_inverse_description
-                 ? "Cache-control no-transform not received"
-                 : "Cache-control no-transform received";
-    case PreviewsEligibilityReason::LAST:
-      break;
+      return final_reason ? "Allowed (but without server rule check)"
+                          : "Not allowed (without server rule check)";
   }
   NOTREACHED();
   return "";
 }
 
-std::string GetDescriptionForPreviewsDecision(
-    PreviewsEligibilityReason reason,
-    PreviewsType type,
-    bool want_inverse_description = false) {
-  return base::StringPrintf(
-      "%s preview - %s", GetStringNameForType(type).c_str(),
-      GetReasonDescription(reason, want_inverse_description).c_str());
+std::string GetDescriptionForPreviewsDecision(PreviewsEligibilityReason reason,
+                                              PreviewsType type,
+                                              bool final_reason) {
+  return base::StringPrintf("%s preview - %s",
+                            GetStringNameForType(type).c_str(),
+                            GetReasonDescription(reason, final_reason).c_str());
 }
 
 }  // namespace
@@ -214,14 +203,15 @@ void PreviewsLogger::LogPreviewDecisionMade(
   // Logs all passed decisions messages.
   for (auto decision : passed_reasons) {
     std::string decision_description = GetDescriptionForPreviewsDecision(
-        decision, type, true /* want_inverse_description */);
+        decision, type, false /* final_reason */);
     LogMessage(kPreviewDecisionMadeEventType, decision_description, url, time,
                page_id);
     decisions_logs_.emplace_back(kPreviewDecisionMadeEventType,
                                  decision_description, url, time, page_id);
   }
 
-  std::string description = GetDescriptionForPreviewsDecision(reason, type);
+  std::string description =
+      GetDescriptionForPreviewsDecision(reason, type, true /* final_reason */);
   LogMessage(kPreviewDecisionMadeEventType, description, url, time, page_id);
 
   // Pop out the older messages when the list is full.

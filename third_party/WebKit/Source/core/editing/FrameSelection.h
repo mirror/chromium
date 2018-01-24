@@ -80,7 +80,6 @@ class CORE_EXPORT FrameSelection final
   Document& GetDocument() const;
   LocalFrame* GetFrame() const { return frame_; }
   Element* RootEditableElementOrDocumentElement() const;
-  size_t CharacterIndexForPoint(const IntPoint&) const;
 
   // An implementation of |WebFrame::moveCaretSelection()|
   void MoveCaretSelection(const IntPoint&);
@@ -98,7 +97,6 @@ class CORE_EXPORT FrameSelection final
   void SetSelectionAndEndTyping(const SelectionInDOMTree&);
   void SelectAll(SetSelectionBy);
   void SelectAll();
-  void SelectSubString(const Element&, int offset, int count);
   void Clear();
   bool IsHidden() const;
 
@@ -127,8 +125,8 @@ class CORE_EXPORT FrameSelection final
   // extent is resolved to the same position as the current base, this
   // function will do nothing.
   void MoveRangeSelectionExtent(const IntPoint&);
-  void MoveRangeSelection(const IntPoint& base_point,
-                          const IntPoint& extent_point,
+  void MoveRangeSelection(const VisiblePosition& base,
+                          const VisiblePosition& extent,
                           TextGranularity);
 
   TextGranularity Granularity() const { return granularity_; }
@@ -254,8 +252,6 @@ class CORE_EXPORT FrameSelection final
   GranularityStrategy* GetGranularityStrategy();
 
   IntRect ComputeRectToScroll(RevealExtentOption);
-
-  void MoveRangeSelectionInternal(const SelectionInDOMTree&, TextGranularity);
 
   // Implementation of |SynchronousMutationObserver| member functions.
   void ContextDestroyed(Document*) final;

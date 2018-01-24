@@ -32,6 +32,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "platform/text/TextDirection.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 
@@ -66,7 +67,13 @@ struct InlineBoxPosition {
 CORE_EXPORT InlineBoxPosition
 ComputeInlineBoxPosition(const PositionWithAffinity&);
 CORE_EXPORT InlineBoxPosition
+ComputeInlineBoxPosition(const PositionWithAffinity&,
+                         TextDirection primary_direction);
+CORE_EXPORT InlineBoxPosition
 ComputeInlineBoxPosition(const PositionInFlatTreeWithAffinity&);
+CORE_EXPORT InlineBoxPosition
+ComputeInlineBoxPosition(const PositionInFlatTreeWithAffinity&,
+                         TextDirection primary_direction);
 CORE_EXPORT InlineBoxPosition ComputeInlineBoxPosition(const VisiblePosition&);
 
 PositionWithAffinity ComputeInlineAdjustedPosition(const PositionWithAffinity&);
@@ -77,7 +84,13 @@ PositionWithAffinity ComputeInlineAdjustedPosition(const VisiblePosition&);
 InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
     const PositionWithAffinity&);
 InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
+    const PositionWithAffinity&,
+    TextDirection primary_direction);
+InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
     const PositionInFlatTreeWithAffinity&);
+InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
+    const PositionInFlatTreeWithAffinity&,
+    TextDirection primary_direction);
 
 // The print for |InlineBoxPosition| is available only for testing
 // in "webkit_unit_tests", and implemented in

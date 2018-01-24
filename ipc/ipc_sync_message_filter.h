@@ -8,7 +8,6 @@
 #include <set>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
@@ -32,8 +31,7 @@ class SyncChannel;
 // support fancy features that SyncChannel does, such as handling recursion or
 // receiving messages while waiting for a response.  Note that this object can
 // be used to send simultaneous synchronous messages from different threads.
-class COMPONENT_EXPORT(IPC) SyncMessageFilter : public MessageFilter,
-                                                public Sender {
+class IPC_EXPORT SyncMessageFilter : public MessageFilter, public Sender {
  public:
   // Sender implementation.
   bool Send(Message* message) override;

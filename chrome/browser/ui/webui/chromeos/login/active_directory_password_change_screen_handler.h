@@ -19,6 +19,7 @@ namespace chromeos {
 
 class CoreOobeView;
 class Key;
+class SigninScreenHandlerDelegate;
 
 // A class that handles WebUI hooks in Active Directory password change  screen.
 class ActiveDirectoryPasswordChangeScreenHandler : public BaseScreenHandler {
@@ -41,8 +42,10 @@ class ActiveDirectoryPasswordChangeScreenHandler : public BaseScreenHandler {
                       const std::string& new_password);
   void HandleCancel();
 
-  // Shows the password change screen for |username|.
-  void ShowScreen(const std::string& username);
+  // Shows the password change screen for |username|. Uses |delegate| to
+  // compelete authentication process.
+  void ShowScreen(const std::string& username,
+                  SigninScreenHandlerDelegate* delegate);
 
  private:
   // Shows the screen with the error message corresponding to |error|.
@@ -59,6 +62,9 @@ class ActiveDirectoryPasswordChangeScreenHandler : public BaseScreenHandler {
   // Helper to call AuthPolicyClient and cancel calls if needed. Used to change
   // password on the Active Directory server.
   std::unique_ptr<AuthPolicyLoginHelper> authpolicy_login_helper_;
+
+  // Non-owned. Used to complete authentication process.
+  SigninScreenHandlerDelegate* delegate_ = nullptr;
 
   // Non-owned. Used to display signin error.
   CoreOobeView* core_oobe_view_ = nullptr;

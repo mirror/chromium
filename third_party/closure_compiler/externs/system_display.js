@@ -128,8 +128,7 @@ chrome.system.display.DisplayLayout;
  *   workArea: !chrome.system.display.Bounds,
  *   modes: !Array<!chrome.system.display.DisplayMode>,
  *   hasTouchSupport: boolean,
- *   hasAccelerometerSupport: boolean,
- *   displayZoomFactor: number
+ *   hasAccelerometerSupport: boolean
  * }}
  * @see https://developer.chrome.com/extensions/system.display#type-DisplayUnitInfo
  */
@@ -144,8 +143,7 @@ chrome.system.display.DisplayUnitInfo;
  *   rotation: (number|undefined),
  *   boundsOriginX: (number|undefined),
  *   boundsOriginY: (number|undefined),
- *   displayMode: (!chrome.system.display.DisplayMode|undefined),
- *   displayZoomFactor: (number|undefined)
+ *   displayMode: (!chrome.system.display.DisplayMode|undefined)
  * }}
  * @see https://developer.chrome.com/extensions/system.display#type-DisplayProperties
  */

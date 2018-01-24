@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
@@ -95,7 +96,7 @@ void TranslateRankerImplTest::InitFeatures(
 
 std::unique_ptr<TranslateRankerImpl> TranslateRankerImplTest::GetRankerForTest(
     float threshold) {
-  auto model = std::make_unique<assist_ranker::RankerModel>();
+  auto model = base::MakeUnique<assist_ranker::RankerModel>();
   model->mutable_proto()->mutable_translate()->set_version(kModelVersion);
   auto* details = model->mutable_proto()
                       ->mutable_translate()
@@ -122,7 +123,7 @@ std::unique_ptr<TranslateRankerImpl> TranslateRankerImplTest::GetRankerForTest(
   country_weight["ca"] = 0.08f;
   country_weight["cn"] = 0.09f;
 
-  auto impl = std::make_unique<TranslateRankerImpl>(base::FilePath(), GURL(),
+  auto impl = base::MakeUnique<TranslateRankerImpl>(base::FilePath(), GURL(),
                                                     GetTestUkmRecorder());
   impl->OnModelAvailable(std::move(model));
   base::RunLoop().RunUntilIdle();
@@ -321,7 +322,7 @@ TEST_F(TranslateRankerImplTest, ShouldOfferTranslation_OverrideAndEnforcement) {
 
 TEST_F(TranslateRankerImplTest, ShouldOfferTranslation_NoModel) {
   auto ranker =
-      std::make_unique<TranslateRankerImpl>(base::FilePath(), GURL(), nullptr);
+      base::MakeUnique<TranslateRankerImpl>(base::FilePath(), GURL(), nullptr);
   InitFeatures({kTranslateRankerAutoBlacklistOverride,
                 kTranslateRankerPreviousLanguageMatchesOverride,
                 kTranslateRankerQuery, kTranslateRankerEnforcement},

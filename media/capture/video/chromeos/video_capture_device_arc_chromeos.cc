@@ -9,7 +9,6 @@
 #include <utility>
 
 #include "base/bind_helpers.h"
-#include "base/location.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/platform_thread.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -120,12 +119,11 @@ void VideoCaptureDeviceArcChromeOS::SuspendImminent(
     power_manager::SuspendImminent::Reason reason) {
   capture_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(
-          &VideoCaptureDeviceArcChromeOS::CloseDevice,
-          weak_ptr_factory_.GetWeakPtr(),
-          BindToCurrentLoop(chromeos::DBusThreadManager::Get()
-                                ->GetPowerManagerClient()
-                                ->GetSuspendReadinessCallback(FROM_HERE))));
+      base::BindOnce(&VideoCaptureDeviceArcChromeOS::CloseDevice,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     BindToCurrentLoop(chromeos::DBusThreadManager::Get()
+                                           ->GetPowerManagerClient()
+                                           ->GetSuspendReadinessCallback())));
 }
 
 void VideoCaptureDeviceArcChromeOS::SuspendDone(

@@ -20,12 +20,24 @@ class WaylandXkbKeyboardLayoutEngine : public XkbKeyboardLayoutEngine {
 
   // Used to sync up client side 'xkb_state' instance with modifiers status
   // update from the compositor.
+  virtual void UpdateModifiers(uint32_t depressed_mods,
+                               uint32_t latched_mods,
+                               uint32_t locked_mods,
+                               uint32_t group) = 0;
+  virtual void SetEventModifiers(EventModifiers* event_modifiers) = 0;
+};
+
+class WaylandXkbKeyboardLayoutEngineImpl
+    : public WaylandXkbKeyboardLayoutEngine {
+ public:
+  WaylandXkbKeyboardLayoutEngineImpl(const XkbKeyCodeConverter& converter);
+
   void UpdateModifiers(uint32_t depressed_mods,
                        uint32_t latched_mods,
                        uint32_t locked_mods,
-                       uint32_t group);
+                       uint32_t group) override;
 
-  void SetEventModifiers(EventModifiers* event_modifiers);
+  void SetEventModifiers(EventModifiers* event_modifiers) override;
 
  private:
   void SetKeymap(xkb_keymap* keymap) override;

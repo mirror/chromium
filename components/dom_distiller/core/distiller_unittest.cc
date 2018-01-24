@@ -17,6 +17,7 @@
 #include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -534,7 +535,7 @@ TEST_F(DistillerTest, CheckMaxPageLimitExactLimit) {
 TEST_F(DistillerTest, SinglePageDistillationFailure) {
   base::MessageLoopForUI loop;
   // To simulate failure return a null value.
-  auto null_value = std::make_unique<base::Value>();
+  auto null_value = base::MakeUnique<base::Value>();
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));
   DistillPage(kURL, CreateMockDistillerPage(null_value.get(), GURL(kURL)));
@@ -556,7 +557,7 @@ TEST_F(DistillerTest, MultiplePagesDistillationFailure) {
       distiller_data->distilled_values.begin() + failed_page_num);
   distiller_data->distilled_values.insert(
       distiller_data->distilled_values.begin() + failed_page_num,
-      std::make_unique<base::Value>());
+      base::MakeUnique<base::Value>());
   // Expect only calls till the failed page number.
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));

@@ -148,7 +148,7 @@ std::vector<PageHandler*> PageHandler::ForAgentHost(
       host, Page::Metainfo::domainName);
 }
 
-void PageHandler::SetRenderer(int process_host_id,
+void PageHandler::SetRenderer(RenderProcessHost* process_host,
                               RenderFrameHostImpl* frame_host) {
   if (host_ == frame_host)
     return;

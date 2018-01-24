@@ -7,6 +7,15 @@
 
 namespace flag_descriptions {
 
+// Title and description for the flag to enable the adaptive toolbar.
+extern const char kAdaptiveToolbarName[];
+extern const char kAdaptiveToolbarDescription[];
+
+// Title and description for the flag to enable the new bookmark edit page in
+// the new bookmark UI.
+extern const char kBookmarkNewEditPageName[];
+extern const char kBookmarkNewEditPageDescription[];
+
 // Title and description for the flag to control redirection to the task
 // scheduler.
 extern const char kBrowserTaskScheduler[];
@@ -116,10 +125,6 @@ extern const char kShowAutofillTypePredictionsDescription[];
 // BVC.
 extern const char kTabSwitcherPresentsBVCName[];
 extern const char kTabSwitcherPresentsBVCDescription[];
-
-// Title and description for the flag to enable the phase 1 UI Refresh.
-extern const char kUIRefreshPhase1Name[];
-extern const char kUIRefreshPhase1Description[];
 
 // Title and description for the flag to enable the ddljson Doodle API.
 extern const char kUseDdljsonApiName[];

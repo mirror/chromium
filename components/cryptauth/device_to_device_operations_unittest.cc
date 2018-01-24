@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <memory>
-
 #include "base/base64url.h"
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "components/cryptauth/device_to_device_initiator_helper.h"
 #include "components/cryptauth/device_to_device_responder_operations.h"
 #include "components/cryptauth/fake_secure_message_delegate.h"
@@ -95,7 +94,7 @@ class CryptAuthDeviceToDeviceOperationsTest : public testing::Test {
 
     persistent_symmetric_key_ = "persistent symmetric key";
 
-    helper_ = std::make_unique<DeviceToDeviceInitiatorHelper>();
+    helper_ = base::MakeUnique<DeviceToDeviceInitiatorHelper>();
   }
 
   // Creates the initator's [Hello] message.

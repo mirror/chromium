@@ -365,14 +365,7 @@ WebResourceTimingInfo PerformanceBase::GenerateResourceTiming(
         redirect_chain.back().GetResourceLoadTiming()->ReceiveHeadersEnd();
 
     if (!result.allow_redirect_details) {
-      // TODO(https://crbug.com/803913): There was previously a DCHECK that
-      // |final_timing| is non-null. However, it clearly can be null: removing
-      // this check caused https://crbug.com/803811. Figure out how this can
-      // happen so test coverage can be added.
-      if (ResourceLoadTiming* final_timing =
-              final_response.GetResourceLoadTiming()) {
-        result.start_time = final_timing->RequestTime();
-      }
+      result.start_time = final_response.GetResourceLoadTiming()->RequestTime();
     }
   } else {
     result.allow_redirect_details = false;
@@ -385,9 +378,10 @@ WebResourceTimingInfo PerformanceBase::GenerateResourceTiming(
   result.did_reuse_connection = final_response.ConnectionReused();
   result.allow_negative_values = info.NegativeAllowed();
 
-  if (result.allow_timing_details) {
-    result.server_timing = PerformanceServerTiming::ParseServerTiming(info);
-  }
+  result.server_timing = PerformanceServerTiming::ParseServerTiming(
+      info, result.allow_timing_details
+                ? PerformanceServerTiming::ShouldAllowTimingDetails::Yes
+                : PerformanceServerTiming::ShouldAllowTimingDetails::No);
   if (!result.server_timing.empty()) {
     UseCounter::Count(&context_for_use_counter,
                       WebFeature::kPerformanceServerTiming);

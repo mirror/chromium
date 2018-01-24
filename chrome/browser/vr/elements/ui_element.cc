@@ -552,7 +552,8 @@ gfx::Point3F UiElement::GetCenter() const {
 
 gfx::PointF UiElement::GetUnitRectangleCoordinates(
     const gfx::Point3F& world_point) const {
-  gfx::Point3F origin;
+  // TODO(acondor): Simplify the math in this function.
+  gfx::Point3F origin(0, 0, 0);
   gfx::Vector3dF x_axis(1, 0, 0);
   gfx::Vector3dF y_axis(0, 1, 0);
   world_space_transform_.TransformPoint(&origin);

@@ -8,6 +8,7 @@
 
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_reg_util_win.h"
@@ -29,7 +30,7 @@ TEST(ProductTest, ProductInstallBasic) {
   machine_state.Initialize();
 
   std::unique_ptr<Product> product =
-      std::make_unique<Product>(BrowserDistribution::GetDistribution());
+      base::MakeUnique<Product>(BrowserDistribution::GetDistribution());
   BrowserDistribution* distribution = product->distribution();
 
   base::FilePath user_data_dir;

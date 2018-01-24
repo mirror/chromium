@@ -19,7 +19,6 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -73,12 +72,7 @@ void SigninErrorUI::Initialize(Browser* browser, bool is_system_profile) {
   const base::string16 last_login_result(
       login_ui_service->GetLastLoginResult());
   const base::string16 email = login_ui_service->GetLastLoginErrorEmail();
-  const bool is_profile_blocked =
-      login_ui_service->IsDisplayingProfileBlockedErrorMessage();
-  if (is_profile_blocked) {
-    source->AddLocalizedString("signinErrorTitle",
-                               IDS_OLD_PROFILES_DISABLED_TITLE);
-  } else if (email.empty()) {
+  if (email.empty()) {
     source->AddLocalizedString("signinErrorTitle", IDS_SIGNIN_ERROR_TITLE);
   } else {
     source->AddString(
@@ -86,24 +80,12 @@ void SigninErrorUI::Initialize(Browser* browser, bool is_system_profile) {
         l10n_util::GetStringFUTF16(IDS_SIGNIN_ERROR_EMAIL_TITLE, email));
   }
 
-  source->AddString("signinErrorMessage", base::string16());
-  source->AddString("profileBlockedMessage", base::string16());
-  source->AddString("profileBlockedAddPersonSuggestion", base::string16());
-  source->AddString("profileBlockedRemoveProfileSuggestion", base::string16());
-
   // Tweak the dialog UI depending on whether the signin error is
   // username-in-use error and the error UI is shown with a browser window.
   base::string16 existing_name;
-  if (is_profile_blocked) {
-    source->AddLocalizedString("profileBlockedMessage",
-                               IDS_OLD_PROFILES_DISABLED_MESSAGE);
-    source->AddLocalizedString("profileBlockedAddPersonSuggestion",
-                               IDS_OLD_PROFILES_DISABLED_ADD_PERSON_SUGGESTION);
-    source->AddLocalizedString("profileBlockedRemoveProfileSuggestion",
-                               IDS_OLD_PROFILES_DISABLED_REMOVED_OLD_PROFILE);
-  } else if (!is_system_profile &&
-             last_login_result.compare(l10n_util::GetStringUTF16(
-                 IDS_SYNC_USER_NAME_IN_USE_ERROR)) == 0) {
+  if (!is_system_profile &&
+      last_login_result.compare(
+          l10n_util::GetStringUTF16(IDS_SYNC_USER_NAME_IN_USE_ERROR)) == 0) {
     ProfileManager* profile_manager = g_browser_process->profile_manager();
     if (profile_manager) {
       std::vector<ProfileAttributesEntry*> entries =
@@ -134,7 +116,8 @@ void SigninErrorUI::Initialize(Browser* browser, bool is_system_profile) {
   source->AddString("signinErrorSwitchLabel",
                     l10n_util::GetStringFUTF16(
                         IDS_SIGNIN_ERROR_SWITCH_BUTTON_LABEL, existing_name));
-  source->AddLocalizedString("signinErrorLearnMore", IDS_LEARN_MORE);
+  source->AddLocalizedString("signinErrorLearnMore",
+                             IDS_SIGNIN_ERROR_LEARN_MORE_LINK);
   source->AddLocalizedString("signinErrorCloseLabel",
                              IDS_SIGNIN_ERROR_CLOSE_BUTTON_LABEL);
   source->AddLocalizedString("signinErrorOkLabel",

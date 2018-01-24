@@ -75,6 +75,10 @@ void AppLaunchSigninScreen::CancelUserAdding() {
   NOTREACHED();
 }
 
+void AppLaunchSigninScreen::CompleteLogin(const UserContext& user_context) {
+  NOTREACHED();
+}
+
 void AppLaunchSigninScreen::Login(const UserContext& user_context,
                                   const SigninSpecifics& specifics) {
   // Note: CreateAuthenticator doesn't necessarily create
@@ -90,7 +94,13 @@ void AppLaunchSigninScreen::MigrateUserData(const std::string& old_password) {
   NOTREACHED();
 }
 
+void AppLaunchSigninScreen::LoadWallpaper(const AccountId& account_id) {}
+
+void AppLaunchSigninScreen::LoadSigninWallpaper() {}
+
 void AppLaunchSigninScreen::OnSigninScreenReady() {}
+
+void AppLaunchSigninScreen::OnGaiaScreenReady() {}
 
 void AppLaunchSigninScreen::RemoveUser(const AccountId& account_id) {
   NOTREACHED();
@@ -165,6 +175,16 @@ bool AppLaunchSigninScreen::IsUserSigninCompleted() const {
   return false;
 }
 
+void AppLaunchSigninScreen::SetDisplayEmail(const std::string& email) {
+  return;
+}
+
+void AppLaunchSigninScreen::SetDisplayAndGivenName(
+    const std::string& display_name,
+    const std::string& given_name) {
+  NOTREACHED();
+}
+
 void AppLaunchSigninScreen::Signout() {
   NOTREACHED();
 }
@@ -204,5 +224,10 @@ void AppLaunchSigninScreen::HandleGetUsers() {
 }
 
 void AppLaunchSigninScreen::CheckUserStatus(const AccountId& account_id) {}
+
+bool AppLaunchSigninScreen::IsUserWhitelisted(const AccountId& account_id) {
+  NOTREACHED();
+  return true;
+}
 
 }  // namespace chromeos

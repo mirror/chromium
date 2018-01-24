@@ -24,13 +24,9 @@ import java.util.List;
 public class DownloadPreferences
         extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
     private static final String PREF_LOCATION_CHANGE = "location_change";
-    private static final String PREF_LOCATION_PROMPT_ENABLED = "location_prompt_enabled";
     private static final String OPTION_PRIMARY_STORAGE = "primary";
 
     private PrefServiceBridge mPrefServiceBridge;
-    private ListPreference mLocationChangePref;
-    private ChromeSwitchPreference mLocationPromptEnabledPref;
-
     private List<File> mSecondaryDirs = new ArrayList<>();
 
     @Override
@@ -41,41 +37,24 @@ public class DownloadPreferences
         getActivity().setTitle(R.string.menu_downloads);
         PreferenceUtils.addPreferencesFromResource(this, R.xml.download_preferences);
 
-        mLocationPromptEnabledPref =
-                (ChromeSwitchPreference) findPreference(PREF_LOCATION_PROMPT_ENABLED);
-        mLocationPromptEnabledPref.setOnPreferenceChangeListener(this);
-
-        mLocationChangePref = (ListPreference) findPreference(PREF_LOCATION_CHANGE);
         getLocationOptions();
-
         updateSummaries();
     }
 
     private void updateSummaries() {
-        if (mLocationChangePref != null) {
-            mLocationChangePref.setSummary(mPrefServiceBridge.getDownloadDefaultDirectory());
-        }
-
-        if (mLocationPromptEnabledPref != null) {
-            boolean isLocationPromptEnabled =
-                    mPrefServiceBridge.getBoolean(Pref.PROMPT_FOR_DOWNLOAD_ANDROID);
-            mLocationPromptEnabledPref.setChecked(isLocationPromptEnabled);
+        Preference locationChangePref = (Preference) findPreference(PREF_LOCATION_CHANGE);
+        if (locationChangePref != null) {
+            locationChangePref.setSummary(mPrefServiceBridge.getDownloadDefaultDirectory());
         }
     }
 
     private void getLocationOptions() {
-        File[] externalDirectories = ContextCompat.getExternalFilesDirs(
+        ListPreference locationsPreference = (ListPreference) findPreference(PREF_LOCATION_CHANGE);
+
+        File[] externalDirs = ContextCompat.getExternalFilesDirs(
                 getActivity().getApplicationContext(), Environment.DIRECTORY_DOWNLOADS);
 
-        // Go through and remove all null reported directories.
-        List<File> externalDirs = new ArrayList<>();
-        for (File dir : externalDirectories) {
-            if (dir != null) {
-                externalDirs.add(dir);
-            }
-        }
-
-        int numLocations = externalDirs.size();
+        int numLocations = externalDirs.length;
         CharSequence[] values = new String[numLocations];
         CharSequence[] descriptions = new String[numLocations];
 
@@ -85,7 +64,7 @@ public class DownloadPreferences
         int selectedValueIndex = 0;
 
         // If there is only one directory option, make sure this is the selected option.
-        if (externalDirs.size() == 1) {
+        if (externalDirs.length == 1) {
             if (!getPrimaryDownloadDirectory().equals(
                         new File(mPrefServiceBridge.getDownloadDefaultDirectory()))) {
                 mPrefServiceBridge.setDownloadDefaultDirectory(
@@ -94,8 +73,6 @@ public class DownloadPreferences
         }
 
         for (File dir : externalDirs) {
-            if (dir == null) continue;
-
             // Skip directory in primary storage.
             if (dir.getAbsolutePath().contains(
                         Environment.getExternalStorageDirectory().getAbsolutePath())) {
@@ -118,10 +95,10 @@ public class DownloadPreferences
             }
         }
 
-        mLocationChangePref.setEntryValues(values);
-        mLocationChangePref.setEntries(descriptions);
-        mLocationChangePref.setValueIndex(selectedValueIndex);
-        mLocationChangePref.setOnPreferenceChangeListener(this);
+        locationsPreference.setEntryValues(values);
+        locationsPreference.setEntries(descriptions);
+        locationsPreference.setValueIndex(selectedValueIndex);
+        locationsPreference.setOnPreferenceChangeListener(this);
     }
 
     // Preference.OnPreferenceChangeListener:
@@ -130,8 +107,6 @@ public class DownloadPreferences
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (PREF_LOCATION_CHANGE.equals(preference.getKey())) {
             updateStorageLocation((String) newValue);
-        } else if (PREF_LOCATION_PROMPT_ENABLED.equals(preference.getKey())) {
-            mPrefServiceBridge.setBoolean(Pref.PROMPT_FOR_DOWNLOAD_ANDROID, (boolean) newValue);
         }
         return true;
     }

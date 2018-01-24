@@ -38,10 +38,8 @@ NSPoint GetPageInfoAnchorPointForBrowser(Browser* browser,
   NSPoint anchor;
   NSWindow* parentWindow = browser->window()->GetNativeWindow();
   if (has_location_bar) {
-    BrowserWindowController* browserWindowController =
-        [BrowserWindowController browserWindowControllerForWindow:parentWindow];
     LocationBarViewMac* location_bar =
-        [browserWindowController locationBarBridge];
+        [[parentWindow windowController] locationBarBridge];
     anchor = location_bar->GetPageInfoBubblePoint();
   } else {
     // Position the bubble on the left of the screen if there is no page info

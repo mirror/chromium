@@ -116,7 +116,7 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     int routing_id,
     uint32_t layer_tree_frame_sink_id,
-    std::unique_ptr<viz::BeginFrameSource> synthetic_begin_frame_source,
+    std::unique_ptr<viz::BeginFrameSource> begin_frame_source,
     SynchronousCompositorRegistry* registry,
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue)
     : cc::LayerTreeFrameSink(std::move(context_provider),
@@ -132,13 +132,10 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
       frame_swap_message_queue_(frame_swap_message_queue),
       parent_local_surface_id_allocator_(
           new viz::ParentLocalSurfaceIdAllocator),
-      synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)) {
+      begin_frame_source_(std::move(begin_frame_source)) {
   DCHECK(registry_);
   DCHECK(sender_);
-  if (!synthetic_begin_frame_source_) {
-    external_begin_frame_source_ =
-        std::make_unique<viz::ExternalBeginFrameSource>(this);
-  }
+  DCHECK(begin_frame_source_);
   thread_checker_.DetachFromThread();
   memory_policy_.priority_cutoff_when_visible =
       gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE;
@@ -173,9 +170,8 @@ bool SynchronousLayerTreeFrameSink::BindToClient(
 
   frame_sink_manager_ = std::make_unique<viz::FrameSinkManagerImpl>();
 
-  client_->SetBeginFrameSource(synthetic_begin_frame_source_
-                                   ? synthetic_begin_frame_source_.get()
-                                   : external_begin_frame_source_.get());
+  DCHECK(begin_frame_source_);
+  client_->SetBeginFrameSource(begin_frame_source_.get());
   client_->SetMemoryPolicy(memory_policy_);
   client_->SetTreeActivationCallback(
       base::Bind(&SynchronousLayerTreeFrameSink::DidActivatePendingTree,
@@ -219,8 +215,7 @@ void SynchronousLayerTreeFrameSink::DetachFromClient() {
   DCHECK(CalledOnValidThread());
   client_->SetBeginFrameSource(nullptr);
   // Destroy the begin frame source on the same thread it was bound on.
-  synthetic_begin_frame_source_ = nullptr;
-  external_begin_frame_source_ = nullptr;
+  begin_frame_source_ = nullptr;
   registry_->UnregisterLayerTreeFrameSink(routing_id_, this);
   client_->SetTreeActivationCallback(base::Closure());
   root_support_.reset();
@@ -522,23 +517,5 @@ void SynchronousLayerTreeFrameSink::ReclaimResources(
 }
 
 void SynchronousLayerTreeFrameSink::OnBeginFramePausedChanged(bool paused) {}
-
-void SynchronousLayerTreeFrameSink::OnNeedsBeginFrames(
-    bool needs_begin_frames) {
-  if (sync_client_) {
-    sync_client_->SetNeedsBeginFrames(needs_begin_frames);
-  }
-}
-
-void SynchronousLayerTreeFrameSink::BeginFrame(
-    const viz::BeginFrameArgs& args) {
-  if (external_begin_frame_source_)
-    external_begin_frame_source_->OnBeginFrame(args);
-}
-
-void SynchronousLayerTreeFrameSink::SetBeginFrameSourcePaused(bool paused) {
-  if (external_begin_frame_source_)
-    external_begin_frame_source_->OnSetBeginFrameSourcePaused(paused);
-}
 
 }  // namespace content

@@ -5,7 +5,6 @@
 #include "content/network/network_context.h"
 
 #include <memory>
-#include <utility>
 
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -31,6 +30,8 @@
 #include "content/network/throttling/throttling_controller.h"
 #include "content/network/throttling/throttling_network_transaction_factory.h"
 #include "content/network/url_loader.h"
+#include "content/public/common/content_client.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -43,14 +44,12 @@
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
 #include "net/http/http_transaction_factory.h"
-#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy/proxy_config.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "services/network/proxy_config_service_mojo.h"
-#include "services/network/public/cpp/network_switches.h"
-#include "services/network/udp_socket_factory.h"
 
 namespace content {
 
@@ -225,18 +224,17 @@ URLRequestContextOwner NetworkContext::MakeURLRequestContext(
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
 
-  if (command_line->HasSwitch(network::switches::kHostResolverRules)) {
+  if (command_line->HasSwitch(switches::kHostResolverRules)) {
     std::unique_ptr<net::HostResolver> host_resolver(
         net::HostResolver::CreateDefaultResolver(nullptr));
     std::unique_ptr<net::MappedHostResolver> remapped_host_resolver(
         new net::MappedHostResolver(std::move(host_resolver)));
     remapped_host_resolver->SetRulesFromString(
-        command_line->GetSwitchValueASCII(
-            network::switches::kHostResolverRules));
+        command_line->GetSwitchValueASCII(switches::kHostResolverRules));
     builder.set_host_resolver(std::move(remapped_host_resolver));
   }
   builder.set_accept_language("en-us,en");
-  builder.set_user_agent(network_context_params->user_agent);
+  builder.set_user_agent(GetContentClient()->GetUserAgent());
 
   // The cookie configuration is in this method, which is only used by the
   // network process, and not ApplyContextParamsToBuilder which is used by the
@@ -430,14 +428,6 @@ void NetworkContext::SetNetworkConditions(
   }
   ThrottlingController::SetConditions(profile_id,
                                       std::move(network_conditions));
-}
-
-void NetworkContext::CreateUDPSocket(
-    network::mojom::UDPSocketRequest request,
-    network::mojom::UDPSocketReceiverPtr receiver) {
-  if (!udp_socket_factory_)
-    udp_socket_factory_ = std::make_unique<network::UDPSocketFactory>();
-  udp_socket_factory_->CreateUDPSocket(std::move(request), std::move(receiver));
 }
 
 void NetworkContext::AddHSTSForTesting(const std::string& host,

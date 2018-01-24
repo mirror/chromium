@@ -350,18 +350,6 @@ static void AdjustStyleForDisplay(ComputedStyle& style,
       style.GetWritingMode() != layout_parent_style.GetWritingMode())
     style.SetDisplay(EDisplay::kInlineBlock);
 
-  // We do not honor position: relative or sticky for table rows, headers, and
-  // footers. This is correct for position: relative in CSS2.1 (and caused a
-  // crash in containingBlock() on some sites) and position: sticky is defined
-  // as following position: relative behavior for table elements. It is
-  // incorrect for CSS3.
-  if ((style.Display() == EDisplay::kTableHeaderGroup ||
-       style.Display() == EDisplay::kTableRowGroup ||
-       style.Display() == EDisplay::kTableFooterGroup ||
-       style.Display() == EDisplay::kTableRow) &&
-      style.HasInFlowPosition())
-    style.SetPosition(EPosition::kStatic);
-
   // Cannot support position: sticky for table columns and column groups because
   // current code is only doing background painting through columns / column
   // groups.
@@ -640,20 +628,13 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     }
   }
 
-  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
-    // Form controls are not supported yet.
-    if (!style.ForceLegacyLayout() && element &&
-        element->ShouldForceLegacyLayout()) {
-      style.SetForceLegacyLayout(true);
-    }
-
-    // TODO(layout-dev): Once LayoutNG handles inline content editable, we
-    // should get rid of following code fragment.
-    else if (style.UserModify() != EUserModify::kReadOnly &&
-             style.Display() == EDisplay::kInline &&
-             parent_style.UserModify() == EUserModify::kReadOnly) {
-      style.SetDisplay(EDisplay::kInlineBlock);
-    }
+  // TODO(layout-dev): Once LayoutnG handles inline content editable, we should
+  // get rid of following code fragment.
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() &&
+      style.UserModify() != EUserModify::kReadOnly &&
+      style.Display() == EDisplay::kInline &&
+      parent_style.UserModify() == EUserModify::kReadOnly) {
+    style.SetDisplay(EDisplay::kInlineBlock);
   }
 }
 }  // namespace blink

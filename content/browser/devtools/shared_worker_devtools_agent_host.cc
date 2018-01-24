@@ -34,10 +34,7 @@ SharedWorkerDevToolsAgentHost::~SharedWorkerDevToolsAgentHost() {
 }
 
 BrowserContext* SharedWorkerDevToolsAgentHost::GetBrowserContext() {
-  if (!worker_host_)
-    return nullptr;
-  RenderProcessHost* rph =
-      RenderProcessHost::FromID(worker_host_->process_id());
+  RenderProcessHost* rph = GetProcess();
   return rph ? rph->GetBrowserContext() : nullptr;
 }
 
@@ -67,10 +64,11 @@ bool SharedWorkerDevToolsAgentHost::Close() {
 }
 
 void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
+  session->SetFallThroughForNotFound(true);
   session->AddHandler(std::make_unique<protocol::InspectorHandler>());
   session->AddHandler(std::make_unique<protocol::NetworkHandler>(GetId()));
   session->AddHandler(std::make_unique<protocol::SchemaHandler>());
-  session->SetRenderer(worker_host_ ? worker_host_->process_id() : -1, nullptr);
+  session->SetRenderer(GetProcess(), nullptr);
   if (state_ == WORKER_READY)
     session->AttachToAgent(EnsureAgent());
 }
@@ -79,10 +77,19 @@ void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
   // Destroying session automatically detaches in renderer.
 }
 
-void SharedWorkerDevToolsAgentHost::DispatchProtocolMessage(
+bool SharedWorkerDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
     const std::string& message) {
-  session->DispatchProtocolMessage(message);
+  int call_id = 0;
+  std::string method;
+  if (session->Dispatch(message, &call_id, &method) !=
+      protocol::Response::kFallThrough) {
+    return true;
+  }
+
+  session->DispatchProtocolMessageToAgent(call_id, method, message);
+  session->waiting_messages()[call_id] = {method, message};
+  return true;
 }
 
 bool SharedWorkerDevToolsAgentHost::Matches(SharedWorkerHost* worker_host) {
@@ -93,8 +100,15 @@ void SharedWorkerDevToolsAgentHost::WorkerReadyForInspection() {
   DCHECK_EQ(WORKER_NOT_READY, state_);
   DCHECK(worker_host_);
   state_ = WORKER_READY;
-  for (DevToolsSession* session : sessions())
-    session->AttachToAgent(EnsureAgent());
+  for (DevToolsSession* session : sessions()) {
+    session->ReattachToAgent(EnsureAgent());
+    for (const auto& pair : session->waiting_messages()) {
+      int call_id = pair.first;
+      const DevToolsSession::Message& message = pair.second;
+      session->DispatchProtocolMessageToAgent(call_id, message.method,
+                                              message.message);
+    }
+  }
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerRestarted(
@@ -104,7 +118,7 @@ void SharedWorkerDevToolsAgentHost::WorkerRestarted(
   state_ = WORKER_NOT_READY;
   worker_host_ = worker_host;
   for (DevToolsSession* session : sessions())
-    session->SetRenderer(worker_host_->process_id(), nullptr);
+    session->SetRenderer(GetProcess(), nullptr);
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -114,9 +128,14 @@ void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
   for (DevToolsSession* session : sessions())
-    session->SetRenderer(-1, nullptr);
+    session->SetRenderer(nullptr, nullptr);
   worker_host_ = nullptr;
   agent_ptr_.reset();
+}
+
+RenderProcessHost* SharedWorkerDevToolsAgentHost::GetProcess() {
+  return worker_host_ ? RenderProcessHost::FromID(worker_host_->process_id())
+                      : nullptr;
 }
 
 const blink::mojom::DevToolsAgentAssociatedPtr&

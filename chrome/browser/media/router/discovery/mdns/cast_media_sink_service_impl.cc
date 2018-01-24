@@ -256,8 +256,7 @@ void CastMediaSinkServiceImpl::OnDiscoveryComplete() {
              << " [name]: " << sink_it.second.sink().name()
              << " [ip_endpoint]: "
              << sink_it.second.cast_data().ip_endpoint.ToString();
-    std::string sink_id = sink_it.second.sink().id();
-    current_sinks_.emplace(sink_id, sink_it.second);
+    current_sinks_.insert(sink_it.second);
   }
 
   MediaSinkServiceBase::OnDiscoveryComplete();

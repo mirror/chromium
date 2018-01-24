@@ -23,7 +23,7 @@
     </template>
   `);
 
-  var sourcesNavigator = new Sources.NetworkNavigatorView();
+  var sourcesNavigator = new Sources.SourcesNavigatorView();
   sourcesNavigator.show(UI.inspectorView.element);
 
   TestRunner.markStep('dumpInitialNavigator');

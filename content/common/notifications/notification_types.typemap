@@ -3,10 +3,7 @@
 # found in the LICENSE file.
 
 mojom = "//third_party/WebKit/public/platform/modules/notifications/notification.mojom"
-public_headers = [
-  "//content/public/common/notification_resources.h",
-  "//content/public/common/platform_notification_data.h",
-]
+public_headers = [ "//content/public/common/platform_notification_data.h" ]
 traits_headers =
     [ "//content/common/notifications/notification_struct_traits.h" ]
 deps = [
@@ -16,5 +13,4 @@ deps = [
 type_mappings = [
   "blink.mojom.NotificationData=content::PlatformNotificationData",
   "blink.mojom.NotificationDirection=content::PlatformNotificationData::Direction",
-  "blink.mojom.NotificationResources=content::NotificationResources",
 ]

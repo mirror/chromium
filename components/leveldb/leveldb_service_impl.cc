@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "components/leveldb/env_mojo.h"
 #include "components/leveldb/leveldb_database_impl.h"
 #include "components/leveldb/public/cpp/util.h"
@@ -63,7 +64,7 @@ void LevelDBServiceImpl::OpenWithOptions(
 
   if (s.ok()) {
     mojo::MakeStrongAssociatedBinding(
-        std::make_unique<LevelDBDatabaseImpl>(
+        base::MakeUnique<LevelDBDatabaseImpl>(
             std::move(env_mojo), std::move(db), nullptr, memory_dump_id),
         std::move(database));
   }
@@ -89,7 +90,7 @@ void LevelDBServiceImpl::OpenInMemory(
 
   if (s.ok()) {
     mojo::MakeStrongAssociatedBinding(
-        std::make_unique<LevelDBDatabaseImpl>(std::move(env), std::move(db),
+        base::MakeUnique<LevelDBDatabaseImpl>(std::move(env), std::move(db),
                                               nullptr, memory_dump_id),
         std::move(database));
   }

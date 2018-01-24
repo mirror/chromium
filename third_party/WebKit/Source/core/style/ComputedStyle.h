@@ -123,7 +123,7 @@ class WebkitTextStrokeColor;
 // In addition to storing the computed value of every CSS property,
 // ComputedStyle also contains various internal style information. Examples
 // include cached_pseudo_styles_ (for storing pseudo element styles), unique_
-// (for style caching) and has_simple_underline_ (cached indicator flag of
+// (for style sharing) and has_simple_underline_ (cached indicator flag of
 // text-decoration). These are stored on ComputedStyle for two reasons:
 //
 //  1) They share the same lifetime as ComputedStyle, so it is convenient to
@@ -517,6 +517,16 @@ class ComputedStyle : public ComputedStyleBase,
   void SetHasAutoColumnCount() {
     SetHasAutoColumnCountInternal(true);
     SetColumnCountInternal(ComputedStyleInitialValues::InitialColumnCount());
+  }
+
+  // column-gap (aka -webkit-column-gap)
+  void SetColumnGap(float f) {
+    SetHasNormalColumnGapInternal(false);
+    SetColumnGapInternal(f);
+  }
+  void SetHasNormalColumnGap() {
+    SetHasNormalColumnGapInternal(true);
+    SetColumnGapInternal(0);
   }
 
   // column-rule-color (aka -webkit-column-rule-color)

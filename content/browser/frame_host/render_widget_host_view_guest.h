@@ -52,8 +52,6 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
       RenderWidgetHost* widget,
       BrowserPluginGuest* guest,
       base::WeakPtr<RenderWidgetHostViewBase> platform_view);
-  static RenderWidgetHostViewBase* GetRootView(RenderWidgetHostViewBase* rwhv);
-
   ~RenderWidgetHostViewGuest() override;
 
   bool OnMessageReceivedFromEmbedder(const IPC::Message& message,
@@ -160,7 +158,8 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   friend class RenderWidgetHostView;
 
   void SendSurfaceInfoToEmbedderImpl(
-      const viz::SurfaceInfo& surface_info) override;
+      const viz::SurfaceInfo& surface_info,
+      const viz::SurfaceSequence& sequence) override;
 
   RenderWidgetHostViewGuest(
       RenderWidgetHost* widget,

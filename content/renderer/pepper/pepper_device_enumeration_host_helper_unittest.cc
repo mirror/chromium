@@ -48,7 +48,7 @@ std::vector<ppapi::DeviceRefData> TestEnumerationData() {
 class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
                      public base::SupportsWeakPtr<TestDelegate> {
  public:
-  TestDelegate() : last_used_id_(0u) {}
+  TestDelegate() : last_used_id_(0) {}
 
   ~TestDelegate() override { CHECK(monitoring_callbacks_.empty()); }
 
@@ -57,15 +57,15 @@ class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
     callback.Run(TestEnumerationData());
   }
 
-  size_t StartMonitoringDevices(PP_DeviceType_Dev /* type */,
-                                const DevicesCallback& callback) override {
+  uint32_t StartMonitoringDevices(PP_DeviceType_Dev /* type */,
+                                  const DevicesCallback& callback) override {
     last_used_id_++;
     monitoring_callbacks_[last_used_id_] = callback;
     return last_used_id_;
   }
 
   void StopMonitoringDevices(PP_DeviceType_Dev /* type */,
-                             size_t subscription_id) override {
+                             uint32_t subscription_id) override {
     auto iter = monitoring_callbacks_.find(subscription_id);
     CHECK(iter != monitoring_callbacks_.end());
     monitoring_callbacks_.erase(iter);
@@ -73,7 +73,7 @@ class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
 
   // Returns false if |request_id| is not found.
   bool SimulateDevicesChanged(
-      size_t subscription_id,
+      uint32_t subscription_id,
       const std::vector<ppapi::DeviceRefData>& devices) {
     auto iter = monitoring_callbacks_.find(subscription_id);
     if (iter == monitoring_callbacks_.end())
@@ -87,11 +87,11 @@ class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
     return monitoring_callbacks_.size();
   }
 
-  size_t last_used_id() const { return last_used_id_; }
+  int last_used_id() const { return last_used_id_; }
 
  private:
-  std::map<size_t, DevicesCallback> monitoring_callbacks_;
-  size_t last_used_id_;
+  std::map<uint32_t, DevicesCallback> monitoring_callbacks_;
+  int last_used_id_;
 
   DISALLOW_COPY_AND_ASSIGN(TestDelegate);
 };
@@ -188,7 +188,7 @@ TEST_F(PepperDeviceEnumerationHostHelperTest, MonitorDeviceChange) {
   SimulateMonitorDeviceChangeReceived(callback_id);
 
   EXPECT_EQ(1U, delegate_.GetRegisteredCallbackCount());
-  size_t request_id = delegate_.last_used_id();
+  int request_id = delegate_.last_used_id();
 
   std::vector<ppapi::DeviceRefData> data;
   ASSERT_TRUE(delegate_.SimulateDevicesChanged(request_id, data));
@@ -218,7 +218,7 @@ TEST_F(PepperDeviceEnumerationHostHelperTest, MonitorDeviceChange) {
 
   // StopEnumerateDevice() should have been called for the previous request.
   EXPECT_EQ(1U, delegate_.GetRegisteredCallbackCount());
-  size_t request_id2 = delegate_.last_used_id();
+  int request_id2 = delegate_.last_used_id();
 
   data_item.type = PP_DEVICETYPE_DEV_AUDIOCAPTURE;
   data_item.name = "name_3";

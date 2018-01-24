@@ -595,7 +595,7 @@ void MediaControlsImpl::UpdateCSSClassFromState() {
   if (MediaElement().IsHTMLVideoElement() &&
       !VideoElement().HasAvailableVideoFrame() &&
       VideoElement().PosterImageURL().IsEmpty() &&
-      state <= ControlsState::kLoadingMetadata) {
+      state != ControlsState::kScrubbing) {
     builder.Append(" ");
     builder.Append(kShowDefaultPosterCSSClass);
   }

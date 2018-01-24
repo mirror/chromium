@@ -336,7 +336,7 @@ BookmarkAppNavigationThrottle::ProcessNavigation(bool is_redirect) {
     // probably redirected immediately, which is a bad user experience.)
     if (last_entry && !last_entry->GetTimestamp().is_null()) {
       UMA_HISTOGRAM_MEDIUM_TIMES(
-          "Extensions.BookmarkApp.TimeBetweenOpenAppAndLastNavigation",
+          "Extensions.BookmarkApp.OpenAppDeltaSinceLastNavigation",
           base::Time::Now() - last_entry->GetTimestamp());
     }
 

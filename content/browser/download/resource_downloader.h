@@ -14,6 +14,10 @@
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 
+namespace storage {
+class FileSystemContext;
+}
+
 namespace content {
 
 // Class for handing the download of a url.
@@ -26,6 +30,7 @@ class ResourceDownloader : public UrlDownloadHandler,
       std::unique_ptr<DownloadUrlParameters> download_url_parameters,
       std::unique_ptr<network::ResourceRequest> request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
+      scoped_refptr<storage::FileSystemContext> file_system_context,
       const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
       const GURL& site_url,
       const GURL& tab_url,
@@ -65,6 +70,7 @@ class ResourceDownloader : public UrlDownloadHandler,
  private:
   // Helper method to start the network request.
   void Start(scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
+             scoped_refptr<storage::FileSystemContext> file_system_context,
              std::unique_ptr<DownloadUrlParameters> download_url_parameters,
              bool is_parallel_request);
 

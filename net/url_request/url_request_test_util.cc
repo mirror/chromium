@@ -22,7 +22,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/transport_security_state.h"
-#include "net/proxy_resolution/proxy_retry_info.h"
+#include "net/proxy/proxy_retry_info.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/static_http_user_agent_settings.h"
@@ -72,8 +72,8 @@ void TestURLRequestContext::Init() {
   if (!host_resolver())
     context_storage_.set_host_resolver(
         std::unique_ptr<HostResolver>(new MockCachingHostResolver()));
-  if (!proxy_resolution_service())
-    context_storage_.set_proxy_resolution_service(ProxyResolutionService::CreateDirect());
+  if (!proxy_service())
+    context_storage_.set_proxy_service(ProxyService::CreateDirect());
   if (!cert_verifier())
     context_storage_.set_cert_verifier(CertVerifier::CreateDefault());
   if (!transport_security_state()) {
@@ -126,7 +126,7 @@ void TestURLRequestContext::Init() {
     session_context.cert_transparency_verifier = cert_transparency_verifier();
     session_context.ct_policy_enforcer = ct_policy_enforcer();
     session_context.transport_security_state = transport_security_state();
-    session_context.proxy_resolution_service = proxy_resolution_service();
+    session_context.proxy_service = proxy_service();
     session_context.ssl_config_service = ssl_config_service();
     session_context.http_auth_handler_factory = http_auth_handler_factory();
     session_context.http_server_properties = http_server_properties();

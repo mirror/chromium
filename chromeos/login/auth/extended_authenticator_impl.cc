@@ -266,12 +266,11 @@ void ExtendedAuthenticatorImpl::OnMountComplete(
     const UserContext& user_context,
     const ResultCallback& success_callback,
     base::Optional<cryptohome::BaseReply> reply) {
-  cryptohome::MountError return_code =
-      cryptohome::MountExReplyToMountError(reply);
+  cryptohome::MountError return_code = cryptohome::BaseReplyToMountError(reply);
   RecordEndMarker(time_marker);
   if (return_code == cryptohome::MOUNT_ERROR_NONE) {
     const std::string& mount_hash =
-        cryptohome::MountExReplyToMountHash(reply.value());
+        cryptohome::BaseReplyToMountHash(reply.value());
     if (!success_callback.is_null())
       success_callback.Run(mount_hash);
     if (old_consumer_) {
@@ -281,7 +280,6 @@ void ExtendedAuthenticatorImpl::OnMountComplete(
     }
     return;
   }
-  LOG(ERROR) << "MountEx failed. Error: " << return_code;
   AuthState state = FAILED_MOUNT;
   if (return_code == cryptohome::MOUNT_ERROR_TPM_COMM_ERROR ||
       return_code == cryptohome::MOUNT_ERROR_TPM_DEFEND_LOCK ||

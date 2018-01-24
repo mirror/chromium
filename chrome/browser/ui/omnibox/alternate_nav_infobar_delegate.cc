@@ -98,6 +98,11 @@ bool AlternateNavInfoBarDelegate::LinkClicked(
   return true;
 }
 
+infobars::InfoBarDelegate::Type
+AlternateNavInfoBarDelegate::GetInfoBarType() const {
+  return PAGE_ACTION_TYPE;
+}
+
 infobars::InfoBarDelegate::InfoBarIdentifier
 AlternateNavInfoBarDelegate::GetIdentifier() const {
   return ALTERNATE_NAV_INFOBAR_DELEGATE;

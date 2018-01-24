@@ -107,7 +107,6 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
-#include "services/network/public/cpp/network_switches.h"
 #include "services/service_manager/sandbox/switches.h"
 #include "third_party/libaom/av1_features.h"
 #include "ui/app_list/app_list_features.h"
@@ -313,6 +312,12 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
     {flag_descriptions::kDefaultTileHeightVenti, switches::kDefaultTileHeight,
      "1024"}};
 
+#if !BUILDFLAG(ENABLE_MIRROR)
+
+const FeatureEntry::FeatureParam kAccountConsistencyMirror[] = {
+    {signin::kAccountConsistencyFeatureMethodParameter,
+     signin::kAccountConsistencyFeatureMethodMirror}};
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 const FeatureEntry::FeatureParam kAccountConsistencyDice[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
@@ -322,6 +327,12 @@ const FeatureEntry::FeatureParam kAccountConsistencyDicePrepareMigration[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDicePrepareMigration}};
 
+const FeatureEntry::FeatureParam
+    kAccountConsistencyDicePrepareMigrationChromeSyncEndpoint[] = {
+        {signin::kAccountConsistencyFeatureMethodParameter,
+         signin::
+             kAccountConsistencyFeatureMethodDicePrepareMigrationChromeSyncEndpoint}};
+
 const FeatureEntry::FeatureParam kAccountConsistencyDiceMigration[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDiceMigration}};
@@ -329,20 +340,31 @@ const FeatureEntry::FeatureParam kAccountConsistencyDiceMigration[] = {
 const FeatureEntry::FeatureParam kAccountConsistencyDiceFixAuthErrors[] = {
     {signin::kAccountConsistencyFeatureMethodParameter,
      signin::kAccountConsistencyFeatureMethodDiceFixAuthErrors}};
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 const FeatureEntry::FeatureVariation kAccountConsistencyFeatureVariations[] = {
+    {"Mirror", kAccountConsistencyMirror, arraysize(kAccountConsistencyMirror),
+     nullptr /* variation_id */}
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+    ,
     {"Dice", kAccountConsistencyDice, arraysize(kAccountConsistencyDice),
      nullptr /* variation_id */},
     {"Dice (migration)", kAccountConsistencyDiceMigration,
      arraysize(kAccountConsistencyDiceMigration), nullptr /* variation_id */},
-    {"Dice (prepare migration, Chrome sync endpoint)",
-     kAccountConsistencyDicePrepareMigration,
+    {"Dice (prepare migration)", kAccountConsistencyDicePrepareMigration,
      arraysize(kAccountConsistencyDicePrepareMigration),
+     nullptr /* variation_id */},
+    {"Dice (prepare migration, Chrome sync endpoint)",
+     kAccountConsistencyDicePrepareMigrationChromeSyncEndpoint,
+     arraysize(kAccountConsistencyDicePrepareMigrationChromeSyncEndpoint),
      nullptr /* variation_id */},
     {"Dice (fix auth errors)", kAccountConsistencyDiceFixAuthErrors,
      arraysize(kAccountConsistencyDiceFixAuthErrors),
-     nullptr /* variation_id */}};
+     nullptr /* variation_id */}
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+};
+
+#endif  // !BUILDFLAG(ENABLE_MIRROR)
 
 const FeatureEntry::Choice kSimpleCacheBackendChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -1584,9 +1606,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"PasswordForceSaving", flag_descriptions::kPasswordForceSavingName,
+    {"PasswordForceSaving",
+     flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(password_manager::features::kPasswordForceSaving)},
+     FEATURE_VALUE_TYPE(
+         password_manager::features::kPasswordForceSaving)},
     {"enable-manual-password-generation",
      flag_descriptions::kManualPasswordGenerationName,
      flag_descriptions::kManualPasswordGenerationDescription, kOsAll,
@@ -1756,7 +1780,7 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebglDraftExtensionsName,
      flag_descriptions::kWebglDraftExtensionsDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebGLDraftExtensions)},
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#if !BUILDFLAG(ENABLE_MIRROR)
     {"account-consistency", flag_descriptions::kAccountConsistencyName,
      flag_descriptions::kAccountConsistencyDescription, kOsAll,
      FEATURE_WITH_PARAMS_VALUE_TYPE(signin::kAccountConsistencyFeature,
@@ -1845,6 +1869,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
+    {"enable-chrome-home-promo", flag_descriptions::kChromeHomePromoName,
+     flag_descriptions::kChromeHomePromoDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomePromo)},
     {"enable-chrome-home-bottom-nav-labels",
      flag_descriptions::kChromeHomeBottomNavLabelsName,
      flag_descriptions::kChromeHomeBottomNavLabelsDescription, kOsAndroid,
@@ -1866,6 +1893,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeMenuItemsName,
      flag_descriptions::kChromeHomeMenuItemsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeMenuItemsExpandSheet)},
+    {"enable-chrome-home-opt-out-snackbar",
+     flag_descriptions::kChromeHomeOptOutSnackbarName,
+     flag_descriptions::kChromeHomeOptOutSnackbarDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeOptOutSnackbar)},
     {"enable-chrome-home-personalized-omnibox-suggestions",
      flag_descriptions::kChromeHomePersonalizedOmniboxSuggestionsName,
      flag_descriptions::kChromeHomePersonalizedOmniboxSuggestionsDescription,
@@ -1889,9 +1920,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeEnableSurveyName,
      flag_descriptions::kChromeHomeEnableSurveyDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeSurvey)},
-    {"enable-chrome-modern-design", flag_descriptions::kChromeModernDesignName,
-     flag_descriptions::kChromeModernDesignDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kChromeModernDesign)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
     {"enable-tab-modal-js-dialog-android",
@@ -2221,9 +2249,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"vr-browsing-in-custom-tab", flag_descriptions::kVrBrowsingInCustomTabName,
      flag_descriptions::kVrBrowsingInCustomTabDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kVrBrowsingInCustomTab)},
-    {"vr-icon-in-daydream-home", flag_descriptions::kVrIconInDaydreamHomeName,
-     flag_descriptions::kVrIconInDaydreamHomeDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kVrIconInDaydreamHome)},
     {"vr-launch-intents", flag_descriptions::kVrLaunchIntentsName,
      flag_descriptions::kVrLaunchIntentsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kVrLaunchIntents)},
@@ -3427,7 +3452,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-manual-password-saving",
      flag_descriptions::kManualPasswordSavingName,
      flag_descriptions::kManualPasswordSavingDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(password_manager::features::kManualSaving)},
+     FEATURE_VALUE_TYPE(password_manager::features::kEnableManualSaving)},
 
 #if !defined(OS_ANDROID)
     {"remove-deprecared-gaia-signin-endpoint",
@@ -3609,7 +3634,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-network-logging-to-file",
      flag_descriptions::kEnableNetworkLoggingToFileName,
      flag_descriptions::kEnableNetworkLoggingToFileDescription, kOsAll,
-     SINGLE_VALUE_TYPE(network::switches::kLogNetLog)},
+     SINGLE_VALUE_TYPE(switches::kLogNetLog)},
 
 #if defined(OS_CHROMEOS)
     {"enable-multi-mirroring", flag_descriptions::kDisableMultiMirroringName,
@@ -3648,12 +3673,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableWebAuthenticationAPIDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kWebAuth)},
 #endif  // !defined(OS_ANDROID)
-
-#if defined(OS_ANDROID)
-    {"enable-sole-integration", flag_descriptions::kSoleIntegrationName,
-     flag_descriptions::kSoleIntegrationDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kSoleIntegration)},
-#endif  // defined(OS_ANDROID)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

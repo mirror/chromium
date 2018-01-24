@@ -14,8 +14,9 @@
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/views/view.h"
 
-InfoBarBackground::InfoBarBackground() {
-  SetNativeControlColor(infobars::InfoBar::kBackgroundColor);
+InfoBarBackground::InfoBarBackground(
+    infobars::InfoBarDelegate::Type infobar_type) {
+  SetNativeControlColor(infobars::InfoBar::GetBackgroundColor(infobar_type));
 }
 
 InfoBarBackground::~InfoBarBackground() {

@@ -48,8 +48,6 @@ class CORE_EXPORT HTMLAudioElement final : public HTMLMediaElement {
   // WebMediaPlayerClient implementation.
   void MediaRemotingStarted(
       const WebString& remote_device_friendly_name) override {}
-  void PictureInPictureStarted() override {}
-  void PictureInPictureStopped() override {}
   void MediaRemotingStopped(WebLocalizedString::Name error_msg) override {}
 
  private:

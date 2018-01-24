@@ -112,14 +112,8 @@ IN_PROC_BROWSER_TEST_F(ServiceManagerContextBrowserTest,
   loop.Run();
 }
 
-// Flaky timeout on Linux and Chrome OS ASAN: http://crbug.com/803814,
-// crbug.com/804113.
-#if (defined(OS_CHROMEOS) || defined(OS_LINUX)) && defined(ADDRESS_SANITIZER)
-#define MAYBE_TerminateOnServiceQuit DISABLED_TerminateOnServiceQuit
-#else
-#define MAYBE_TerminateOnServiceQuit TerminateOnServiceQuit
-#endif
-TEST(ServiceManagerContextTest, MAYBE_TerminateOnServiceQuit) {
+// Verifies that if an important service quits then the browser exits.
+TEST(ServiceManagerContextTest, TerminateOnServiceQuit) {
   // Run the above test and collect the test output.
   base::CommandLine new_test =
       base::CommandLine(base::CommandLine::ForCurrentProcess()->GetProgram());

@@ -16,8 +16,8 @@
 #include "net/ftp/ftp_transaction.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_transaction.h"
-#include "net/proxy_resolution/proxy_info.h"
-#include "net/proxy_resolution/proxy_service.h"
+#include "net/proxy/proxy_info.h"
+#include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_job.h"
 
 namespace net {
@@ -79,9 +79,9 @@ class NET_EXPORT_PRIVATE URLRequestFtpJob : public URLRequestJob {
 
   RequestPriority priority_;
 
-  ProxyResolutionService* proxy_resolution_service_;
+  ProxyService* proxy_service_;
   ProxyInfo proxy_info_;
-  ProxyResolutionService::Request* proxy_resolve_request_;
+  ProxyService::Request* proxy_resolve_request_;
 
   FtpRequestInfo ftp_request_info_;
   std::unique_ptr<FtpTransaction> ftp_transaction_;

@@ -14,7 +14,7 @@
   fs.reportCreated(function() {});
   var uiSourceCode = await TestRunner.waitForUISourceCode('script.js');
 
-  var sourcesNavigator = new Sources.NetworkNavigatorView();
+  var sourcesNavigator = new Sources.SourcesNavigatorView();
   sourcesNavigator.show(UI.inspectorView.element);
   TestRunner.addResult('BEFORE:\n' + fs.dumpAsText());
   sourcesNavigator._handleContextMenuCreate(uiSourceCode.project(), '', uiSourceCode);

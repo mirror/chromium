@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -42,7 +43,7 @@ class MockFeedbackUploader : public FeedbackUploader {
   void RunMessageLoop() {
     if (ProcessingComplete())
       return;
-    run_loop_ = std::make_unique<base::RunLoop>();
+    run_loop_ = base::MakeUnique<base::RunLoop>();
     run_loop_->Run();
   }
 
@@ -93,7 +94,7 @@ class FeedbackUploaderTest : public testing::Test {
  public:
   FeedbackUploaderTest() {
     FeedbackUploader::SetMinimumRetryDelayForTesting(kRetryDelayForTest);
-    uploader_ = std::make_unique<MockFeedbackUploader>(&context_);
+    uploader_ = base::MakeUnique<MockFeedbackUploader>(&context_);
   }
 
   ~FeedbackUploaderTest() override = default;

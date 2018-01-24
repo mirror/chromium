@@ -90,8 +90,7 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   void GetInactivityDelays(
       DBusMethodCallback<power_manager::PowerManagementPolicy::Delays> callback)
       override;
-  base::Closure GetSuspendReadinessCallback(
-      const base::Location& from_where) override;
+  base::Closure GetSuspendReadinessCallback() override;
   int GetNumPendingSuspendReadinessCallbacks() override;
 
   // Pops the first report from |video_activity_reports_|, returning whether the

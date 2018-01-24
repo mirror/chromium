@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/macros.h"
+#include "base/test/scoped_path_override.h"
 #include "chrome/browser/profiles/profile_info_cache_observer.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -65,6 +66,7 @@ class ProfileInfoCacheTest : public testing::Test {
 
  private:
   ProfileNameVerifierObserver name_observer_;
+  base::ScopedPathOverride user_data_dir_override_;
 };
 
 #endif  // CHROME_BROWSER_PROFILES_PROFILE_INFO_CACHE_UNITTEST_H_

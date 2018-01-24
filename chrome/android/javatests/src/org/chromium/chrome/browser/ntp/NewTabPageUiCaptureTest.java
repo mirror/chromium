@@ -35,6 +35,8 @@ import org.chromium.chrome.test.ChromeJUnit4RunnerDelegate;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
+import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 import org.chromium.chrome.test.util.browser.compositor.layouts.DisableChromeAnimations;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
@@ -94,6 +96,7 @@ public class NewTabPageUiCaptureTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage", "UiCatalogue"})
+    @DisableFeatures({ChromeFeatureList.CHROME_HOME_PROMO})
     @ScreenShooter.Directory("New Tab Page")
     public void testCaptureNewTabPage() {
         assertThat(ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_MODERN_LAYOUT),
@@ -124,6 +127,18 @@ public class NewTabPageUiCaptureTest {
         RecyclerViewTestUtils.waitForStableRecyclerView(recyclerView);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         shoot("New Tab Page scrolled thrice");
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"NewTabPage", "UiCatalogue"})
+    @EnableFeatures({ChromeFeatureList.CHROME_HOME_PROMO})
+    @ScreenShooter.Directory("New Tab Page")
+    public void testCaptureNewTabPageWithChromeHomePromo() {
+        assertThat(ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_MODERN_LAYOUT),
+                is(mEnableNTPModernLayout));
+        Assert.assertTrue(ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO));
+        shoot("New Tab Page with Chrome Home Promo");
     }
 
     /**

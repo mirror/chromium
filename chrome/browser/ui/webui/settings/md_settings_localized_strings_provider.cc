@@ -31,7 +31,6 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/browser/web_ui_data_source.h"
-#include "services/device/public/cpp/device_features.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
@@ -542,7 +541,7 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"scrollLabel", IDS_SETTINGS_SCROLL_LABEL},
       {"traditionalScrollLabel", IDS_SETTINGS_TRADITIONAL_SCROLL_LABEL},
       {"naturalScrollLabel", IDS_SETTINGS_NATURAL_SCROLL_LABEL},
-      {"naturalScrollLearnMore", IDS_LEARN_MORE},
+      {"naturalScrollLearnMore", IDS_SETTINGS_NATURAL_SCROLL_LEARN_MORE},
   };
   AddLocalizedStringsBulk(html_source, device_strings,
                           arraysize(device_strings));
@@ -770,6 +769,8 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_RESET_CLEANUP_DETAILS_FILES_AND_PROGRAMS},
       {"chromeCleanupDetailsRegistryEntries",
        IDS_SETTINGS_RESET_CLEANUP_DETAILS_REGISTRY_ENTRIES},
+      {"chromeCleanupDoneButtonLabel",
+       IDS_SETTINGS_RESET_CLEANUP_DONE_BUTTON_LABEL},
       {"chromeCleanupExplanationCleanupError",
        IDS_SETTINGS_RESET_CLEANUP_EXPLANATION_CLEANUP_ERROR},
       {"chromeCleanupExplanationFindAndRemove",
@@ -1056,7 +1057,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       {"networkConnectNotAllowed", IDS_SETTINGS_INTERNET_CONNECT_NOT_ALLOWED},
       {"networkIPAddress", IDS_SETTINGS_INTERNET_NETWORK_IP_ADDRESS},
       {"networkIPConfigAuto", IDS_SETTINGS_INTERNET_NETWORK_IP_CONFIG_AUTO},
-      {"networkNameserversLearnMore", IDS_LEARN_MORE},
+      {"networkNameserversLearnMore",
+       IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_LEARN_MORE},
       {"networkPrefer", IDS_SETTINGS_INTERNET_NETWORK_PREFER},
       {"networkPrimaryUserControlled",
        IDS_SETTINGS_INTERNET_NETWORK_PRIMARY_USER_CONTROLLED},
@@ -1282,6 +1284,7 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
       {"savedPasswordsHeading", IDS_SETTINGS_PASSWORDS_SAVED_HEADING},
       {"passwordExceptionsHeading", IDS_SETTINGS_PASSWORDS_EXCEPTIONS_HEADING},
       {"deletePasswordException", IDS_SETTINGS_PASSWORDS_DELETE_EXCEPTION},
+      {"passwordsDone", IDS_SETTINGS_PASSWORD_DONE},
       {"removePassword", IDS_SETTINGS_PASSWORD_REMOVE},
       {"searchPasswords", IDS_SETTINGS_PASSWORD_SEARCH},
       {"showPassword", IDS_SETTINGS_PASSWORD_SHOW},
@@ -1348,6 +1351,8 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
      IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_TOO_FAST},
     {"configureFingerprintImmobile",
      IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_IMMOBILE},
+    {"configureFingerprintDoneButton",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_DONE_BUTTON},
     {"configureFingerprintAddAnotherButton",
      IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_ADD_ANOTHER_BUTTON},
     {"configurePinChoosePinTitle",
@@ -1422,7 +1427,6 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
 #else   // !defined(OS_CHROMEOS)
     {"domainManagedProfile", IDS_SETTINGS_PEOPLE_DOMAIN_MANAGED_PROFILE},
     {"editPerson", IDS_SETTINGS_EDIT_PERSON},
-    {"profileNameAndPicture", IDS_SETTINGS_PROFILE_NAME_AND_PICTURE},
     {"showShortcutLabel", IDS_SETTINGS_PROFILE_SHORTCUT_TOGGLE_LABEL},
 #endif  // defined(OS_CHROMEOS)
     {"syncOverview", IDS_SETTINGS_SYNC_OVERVIEW},
@@ -1921,9 +1925,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsSoundAllowRecommended",
      IDS_SETTINGS_SITE_SETTINGS_SOUND_ALLOW_RECOMMENDED},
     {"siteSettingsSoundBlock", IDS_SETTINGS_SITE_SETTINGS_SOUND_BLOCK},
-    {"siteSettingsSensors", IDS_SETTINGS_SITE_SETTINGS_SENSORS},
-    {"siteSettingsSensorsAllow", IDS_SETTINGS_SITE_SETTINGS_SENSORS_ALLOW},
-    {"siteSettingsSensorsBlock", IDS_SETTINGS_SITE_SETTINGS_SENSORS_BLOCK},
     {"siteSettingsFlash", IDS_SETTINGS_SITE_SETTINGS_FLASH},
     {"siteSettingsPdfDocuments", IDS_SETTINGS_SITE_SETTINGS_PDF_DOCUMENTS},
     {"siteSettingsPdfDownloadPdfs",
@@ -2079,7 +2080,7 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"handlerSetDefault", IDS_SETTINGS_SITE_SETTINGS_HANDLER_SET_DEFAULT},
     {"handlerRemove", IDS_SETTINGS_SITE_SETTINGS_REMOVE},
     {"adobeFlashStorage", IDS_SETTINGS_SITE_SETTINGS_ADOBE_FLASH_SETTINGS},
-    {"learnMore", IDS_LEARN_MORE},
+    {"learnMore", IDS_SETTINGS_SITE_SETTINGS_LEARN_MORE},
     {"incognitoSite", IDS_SETTINGS_SITE_SETTINGS_INCOGNITO},
     {"incognitoSiteOnly", IDS_SETTINGS_SITE_SETTINGS_INCOGNITO_ONLY},
     {"embeddedIncognitoSite", IDS_SETTINGS_SITE_SETTINGS_INCOGNITO_EMBEDDED},
@@ -2107,10 +2108,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
   html_source->AddBoolean(
       "enableClipboardContentSetting",
       base::FeatureList::IsEnabled(features::kClipboardContentSetting));
-
-  html_source->AddBoolean(
-      "enableSensorsContentSetting",
-      base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses));
 
   if (PluginUtils::ShouldPreferHtmlOverPlugins(
           HostContentSettingsMapFactory::GetForProfile(profile))) {

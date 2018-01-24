@@ -14,6 +14,7 @@
 #include "content/child/child_process.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
@@ -147,7 +148,6 @@ WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
                                 base::Unretained(impl.get()),
                                 std::move(impl->info_->request)));
   impl->state_ = LifecycleState::kAttachedAndBound;
-  impl->RefreshVersionAttributes();
   return impl;
 }
 
@@ -163,22 +163,13 @@ WebServiceWorkerRegistrationImpl::CreateForServiceWorkerClient(
   impl->host_for_client_.Bind(std::move(impl->info_->host_ptr_info));
   impl->BindRequest(std::move(impl->info_->request));
   impl->state_ = LifecycleState::kAttachedAndBound;
-  impl->RefreshVersionAttributes();
   return impl;
 }
 
 void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerClient(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  if (state_ == LifecycleState::kAttachedAndBound) {
-    // |update_via_cache| is handled specifically here as it is the only mutable
-    // property when the browser process sends |info| for an existing
-    // registration. The installing/waiting/active properties are changed by the
-    // SetVersionAttributes method instead.
-    if (info_->options && info->options) {
-      info_->options->update_via_cache = info->options->update_via_cache;
-    }
+  if (state_ == LifecycleState::kAttachedAndBound)
     return;
-  }
   DCHECK_EQ(LifecycleState::kDetached, state_);
   DCHECK(!info->request.is_pending());
   Attach(std::move(info));
@@ -187,7 +178,39 @@ void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerClient(
   DCHECK(!host_for_client_);
   host_for_client_.Bind(std::move(info_->host_ptr_info));
   state_ = LifecycleState::kAttachedAndBound;
-  RefreshVersionAttributes();
+}
+
+void WebServiceWorkerRegistrationImpl::SetInstalling(
+    const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (state_ == LifecycleState::kDetached)
+    return;
+  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
+  if (proxy_)
+    proxy_->SetInstalling(WebServiceWorkerImpl::CreateHandle(service_worker));
+  else
+    queued_tasks_.push_back(QueuedTask(INSTALLING, service_worker));
+}
+
+void WebServiceWorkerRegistrationImpl::SetWaiting(
+    const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (state_ == LifecycleState::kDetached)
+    return;
+  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
+  if (proxy_)
+    proxy_->SetWaiting(WebServiceWorkerImpl::CreateHandle(service_worker));
+  else
+    queued_tasks_.push_back(QueuedTask(WAITING, service_worker));
+}
+
+void WebServiceWorkerRegistrationImpl::SetActive(
+    const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (state_ == LifecycleState::kDetached)
+    return;
+  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
+  if (proxy_)
+    proxy_->SetActive(WebServiceWorkerImpl::CreateHandle(service_worker));
+  else
+    queued_tasks_.push_back(QueuedTask(ACTIVE, service_worker));
 }
 
 void WebServiceWorkerRegistrationImpl::SetProxy(
@@ -298,11 +321,6 @@ WebServiceWorkerRegistrationImpl::Proxy() {
 
 blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
   return info_->options->scope;
-}
-
-blink::mojom::ServiceWorkerUpdateViaCache
-WebServiceWorkerRegistrationImpl::UpdateViaCache() const {
-  return info_->options->update_via_cache;
 }
 
 void WebServiceWorkerRegistrationImpl::Update(
@@ -443,66 +461,6 @@ WebServiceWorkerRegistrationImpl::~WebServiceWorkerRegistrationImpl() {
         registration_id_);
 }
 
-void WebServiceWorkerRegistrationImpl::SetInstalling(
-    blink::mojom::ServiceWorkerObjectInfoPtr info) {
-  if (state_ == LifecycleState::kDetached)
-    return;
-  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
-
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  DCHECK(dispatcher);
-  scoped_refptr<WebServiceWorkerImpl> service_worker =
-      dispatcher->GetOrCreateServiceWorker(std::move(info));
-  if (proxy_)
-    proxy_->SetInstalling(WebServiceWorkerImpl::CreateHandle(service_worker));
-  else
-    queued_tasks_.push_back(QueuedTask(INSTALLING, service_worker));
-}
-
-void WebServiceWorkerRegistrationImpl::SetWaiting(
-    blink::mojom::ServiceWorkerObjectInfoPtr info) {
-  if (state_ == LifecycleState::kDetached)
-    return;
-  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
-
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  DCHECK(dispatcher);
-  scoped_refptr<WebServiceWorkerImpl> service_worker =
-      dispatcher->GetOrCreateServiceWorker(std::move(info));
-  if (proxy_)
-    proxy_->SetWaiting(WebServiceWorkerImpl::CreateHandle(service_worker));
-  else
-    queued_tasks_.push_back(QueuedTask(WAITING, service_worker));
-}
-
-void WebServiceWorkerRegistrationImpl::SetActive(
-    blink::mojom::ServiceWorkerObjectInfoPtr info) {
-  if (state_ == LifecycleState::kDetached)
-    return;
-  DCHECK_EQ(LifecycleState::kAttachedAndBound, state_);
-
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  DCHECK(dispatcher);
-  scoped_refptr<WebServiceWorkerImpl> service_worker =
-      dispatcher->GetOrCreateServiceWorker(std::move(info));
-  if (proxy_)
-    proxy_->SetActive(WebServiceWorkerImpl::CreateHandle(service_worker));
-  else
-    queued_tasks_.push_back(QueuedTask(ACTIVE, service_worker));
-}
-
-void WebServiceWorkerRegistrationImpl::RefreshVersionAttributes() {
-  DCHECK(info_->installing);
-  SetInstalling(std::move(info_->installing));
-  DCHECK(info_->waiting);
-  SetWaiting(std::move(info_->waiting));
-  DCHECK(info_->active);
-  SetActive(std::move(info_->active));
-}
-
 void WebServiceWorkerRegistrationImpl::SetVersionAttributes(
     int changed_mask,
     blink::mojom::ServiceWorkerObjectInfoPtr installing,
@@ -529,15 +487,21 @@ void WebServiceWorkerRegistrationImpl::SetVersionAttributes(
   ChangedVersionAttributesMask mask(changed_mask);
   if (mask.installing_changed()) {
     DCHECK(installing);
-    SetInstalling(std::move(installing));
+    SetInstalling(dispatcher->GetOrCreateServiceWorker(
+        ServiceWorkerHandleReference::Adopt(std::move(installing),
+                                            dispatcher->thread_safe_sender())));
   }
   if (mask.waiting_changed()) {
     DCHECK(waiting);
-    SetWaiting(std::move(waiting));
+    SetWaiting(dispatcher->GetOrCreateServiceWorker(
+        ServiceWorkerHandleReference::Adopt(std::move(waiting),
+                                            dispatcher->thread_safe_sender())));
   }
   if (mask.active_changed()) {
     DCHECK(active);
-    SetActive(std::move(active));
+    SetActive(dispatcher->GetOrCreateServiceWorker(
+        ServiceWorkerHandleReference::Adopt(std::move(active),
+                                            dispatcher->thread_safe_sender())));
   }
 }
 

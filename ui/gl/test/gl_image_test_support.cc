@@ -6,7 +6,6 @@
 
 #include <vector>
 
-#include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/half_float.h"
 #include "ui/gl/init/gl_factory.h"
 #include "ui/gl/test/gl_surface_test_support.h"
@@ -219,7 +218,7 @@ void GLImageTestSupport::SetBufferDataToColor(int width,
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::UYVY_422:
-      NOTREACHED() << gfx::BufferFormatToString(format);
+      NOTREACHED();
       return;
   }
   NOTREACHED();

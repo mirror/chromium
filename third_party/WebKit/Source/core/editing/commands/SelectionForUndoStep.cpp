@@ -18,7 +18,10 @@ SelectionForUndoStep SelectionForUndoStep::From(
   result.extent_ = selection.Extent();
   result.affinity_ = selection.Affinity();
   result.is_directional_ = selection.IsDirectional();
-  result.is_base_first_ = selection.IsBaseFirst();
+  // TODO(editing-dev): We'll use |selection.IsBaseFirst()| once the bug[1]
+  // is resolved. [1] http://crbug.com/751945
+  result.is_base_first_ =
+      result.base_.IsNull() || result.base_ <= result.extent_;
   return result;
 }
 

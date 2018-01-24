@@ -42,9 +42,8 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // Returns true if the packet |packet_number| is unacked.
   bool IsUnacked(QuicPacketNumber packet_number) const;
 
-  // Notifies session_notifier that frames have been acked. Returns true if any
-  // new data gets acked, returns false otherwise.
-  bool NotifyFramesAcked(const QuicTransmissionInfo& info,
+  // Notifies session_notifier that frames have been acked.
+  void NotifyFramesAcked(const QuicTransmissionInfo& info,
                          QuicTime::Delta ack_delay);
 
   // Marks |info| as no longer in flight.
@@ -56,15 +55,12 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // No longer retransmit data for |stream_id|.
   void CancelRetransmissionsForStream(QuicStreamId stream_id);
 
-  // Returns true if |packet_number| has retransmittable frames. This will
-  // return false if all frames of this packet are either non-retransmittable or
-  // have been acked.
+  // Returns true if the unacked packet |packet_number| has retransmittable
+  // frames.  This will return false if the packet has been acked, if a
+  // previous transmission of this packet was ACK'd, or if this packet has been
+  // retransmitted as with different packet number, or if the packet never
+  // had any retransmittable packets in the first place.
   bool HasRetransmittableFrames(QuicPacketNumber packet_number) const;
-
-  // Returns true if |info| has retransmittable frames. This will return false
-  // if all frames of this packet are either non-retransmittable or have been
-  // acked.
-  bool HasRetransmittableFrames(const QuicTransmissionInfo& info) const;
 
   // Returns true if there are any unacked packets.
   bool HasUnackedPackets() const;

@@ -12,10 +12,15 @@ namespace base {
 class CommandLine;
 }
 
+namespace net {
+class URLRequestContextGetter;
+}
+
 namespace component_updater {
 
 scoped_refptr<update_client::Configurator> MakeIOSComponentUpdaterConfigurator(
-    const base::CommandLine* cmdline);
+    const base::CommandLine* cmdline,
+    net::URLRequestContextGetter* context_getter);
 
 }  // namespace component_updater
 

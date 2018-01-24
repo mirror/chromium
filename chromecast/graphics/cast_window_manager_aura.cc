@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "chromecast/graphics/cast_focus_client_aura.h"
-#include "chromecast/graphics/cast_system_gesture_event_handler.h"
 #include "ui/aura/client/default_capture_client.h"
 #include "ui/aura/client/focus_change_observer.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -30,7 +29,10 @@ gfx::Transform GetPrimaryDisplayRotationTransform() {
     case display::Display::ROTATE_0:
       break;
     case display::Display::ROTATE_90:
-      rotation.Translate(display.bounds().height(), 0);
+      // TODO(dnicoara): Figure out why this is not correct.
+      // rotation.Translate(display.height(), 0);
+      rotation.Translate(
+          (display.bounds().height() + display.bounds().width()) / 2, 0);
       rotation.Rotate(90);
       break;
     case display::Display::ROTATE_180:
@@ -38,7 +40,10 @@ gfx::Transform GetPrimaryDisplayRotationTransform() {
       rotation.Rotate(180);
       break;
     case display::Display::ROTATE_270:
-      rotation.Translate(0, display.bounds().width());
+      // TODO(dnicoara): Figure out why this is not correct.
+      // rotation.Translate(0, display.width());
+      rotation.Translate(
+          0, (display.bounds().height() + display.bounds().width()) / 2);
       rotation.Rotate(270);
       break;
   }
@@ -227,8 +232,7 @@ void CastWindowManagerAura::Setup() {
       new CastWindowTreeHost(enable_input_, gfx::Rect(display_size)));
   window_tree_host_->InitHost();
   window_tree_host_->window()->SetLayoutManager(new CastLayoutManager());
-  window_tree_host_->window()->SetTransform(
-      GetPrimaryDisplayRotationTransform());
+  window_tree_host_->SetRootTransform(GetPrimaryDisplayRotationTransform());
 
   // Allow seeing through to the hardware video plane:
   window_tree_host_->compositor()->SetBackgroundColor(SK_ColorTRANSPARENT);
@@ -247,9 +251,6 @@ void CastWindowManagerAura::Setup() {
       screen_position_client_.get());
 
   window_tree_host_->Show();
-  system_gesture_event_handler_ =
-      std::make_unique<CastSystemGestureEventHandler>(
-          window_tree_host_->window()->GetRootWindow());
 }
 
 void CastWindowManagerAura::TearDown() {
@@ -261,7 +262,6 @@ void CastWindowManagerAura::TearDown() {
   wm::SetActivationClient(window_tree_host_->window(), nullptr);
   aura::client::SetFocusClient(window_tree_host_->window(), nullptr);
   focus_client_.reset();
-  system_gesture_event_handler_.reset();
   window_tree_host_.reset();
 }
 
@@ -296,22 +296,6 @@ void CastWindowManagerAura::AddWindow(gfx::NativeView child) {
   aura::Window* parent = window_tree_host_->window();
   if (!parent->Contains(child)) {
     parent->AddChild(child);
-  }
-}
-
-void CastWindowManagerAura::AddSideSwipeGestureHandler(
-    CastSideSwipeGestureHandlerInterface* handler) {
-  if (system_gesture_event_handler_) {
-    system_gesture_event_handler_->AddSideSwipeGestureHandler(handler);
-  }
-}
-
-// Remove the registration of a system side swipe event handler.
-void CastWindowManagerAura::CastWindowManagerAura::
-    RemoveSideSwipeGestureHandler(
-        CastSideSwipeGestureHandlerInterface* handler) {
-  if (system_gesture_event_handler_) {
-    system_gesture_event_handler_->RemoveSideSwipeGestureHandler(handler);
   }
 }
 

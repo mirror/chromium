@@ -117,6 +117,8 @@ void SerializeCachedResult(
       result.is_issued_by_known_root);
   cert_verification_result->set_is_issued_by_additional_trust_anchor(
       result.is_issued_by_additional_trust_anchor);
+  cert_verification_result->set_common_name_fallback_used(
+      result.common_name_fallback_used);
 }
 
 // Deserializes |cached_result| using the certificate database provided in
@@ -162,6 +164,8 @@ bool DeserializeCachedResult(
       cert_verification_result.is_issued_by_known_root();
   result->is_issued_by_additional_trust_anchor =
       cert_verification_result.is_issued_by_additional_trust_anchor();
+  result->common_name_fallback_used =
+      cert_verification_result.common_name_fallback_used();
   return true;
 }
 

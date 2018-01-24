@@ -175,7 +175,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
      * Detaches the previously configured {@link PersonalizedSigninPromoView}.
      */
     void detachPersonalizePromoView() {
-        if (mSigninPromoController != null) mSigninPromoController.detach();
+        mSigninPromoController.detach();
     }
 
     /**
@@ -187,7 +187,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
         sharedPreferencesEditor.putBoolean(PREF_PERSONALIZED_SIGNIN_PROMO_DECLINED, true);
         sharedPreferencesEditor.apply();
         mPromoState = calculatePromoState();
-        triggerPromoUpdate();
+        mPromoHeaderChangeAction.run();
     }
 
     /**
@@ -230,36 +230,31 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
     @Override
     public void androidSyncSettingsChanged() {
         mPromoState = calculatePromoState();
-        triggerPromoUpdate();
+        mPromoHeaderChangeAction.run();
     }
 
     // SignInStateObserver implementation.
     @Override
     public void onSignedIn() {
         mPromoState = calculatePromoState();
-        triggerPromoUpdate();
+        mPromoHeaderChangeAction.run();
     }
 
     @Override
     public void onSignedOut() {
         mPromoState = calculatePromoState();
-        triggerPromoUpdate();
+        mPromoHeaderChangeAction.run();
     }
 
     // ProfileDataCache.Observer implementation.
     @Override
     public void onProfileDataUpdated(String accountId) {
-        triggerPromoUpdate();
+        mPromoHeaderChangeAction.run();
     }
 
     // AccountsChangeObserver implementation.
     @Override
     public void onAccountsChanged() {
-        triggerPromoUpdate();
-    }
-
-    private void triggerPromoUpdate() {
-        detachPersonalizePromoView();
         mPromoHeaderChangeAction.run();
     }
 

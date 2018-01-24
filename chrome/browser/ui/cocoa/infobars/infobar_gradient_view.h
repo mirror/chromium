@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_UI_COCOA_INFOBARS_INFOBAR_GRADIENT_VIEW_H_
 
 #import "chrome/browser/ui/cocoa/vertical_gradient_view.h"
-#include "third_party/skia/include/core/SkColor.h"
+#include "components/infobars/core/infobar_delegate.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -24,8 +24,8 @@
 @property(assign, nonatomic) CGFloat arrowX;
 @property(assign, nonatomic) BOOL hasTip;
 
-// Sets the infobar background color.
-- (void)setInfobarBackgroundColor:(SkColor)color;
+// Sets the infobar type. This will change the view's gradient.
+- (void)setInfobarType:(infobars::InfoBarDelegate::Type)infobarType;
 
 @end
 

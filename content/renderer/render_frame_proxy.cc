@@ -340,7 +340,8 @@ void RenderFrameProxy::OnDidSetActiveSandboxFlags(
 }
 
 void RenderFrameProxy::SetChildFrameSurface(
-    const viz::SurfaceInfo& surface_info) {
+    const viz::SurfaceInfo& surface_info,
+    const viz::SurfaceSequence& sequence) {
   // If this WebFrame has already been detached, its parent will be null. This
   // can happen when swapping a WebRemoteFrame with a WebLocalFrame, where this
   // message may arrive after the frame was removed from the frame tree, but
@@ -353,7 +354,7 @@ void RenderFrameProxy::SetChildFrameSurface(
                                              frame_rect().size());
   }
   compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
-                                            frame_rect().size());
+                                            frame_rect().size(), sequence);
 }
 
 bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
@@ -423,8 +424,9 @@ void RenderFrameProxy::OnChildFrameProcessGone() {
 }
 
 void RenderFrameProxy::OnSetChildFrameSurface(
-    const viz::SurfaceInfo& surface_info) {
-  SetChildFrameSurface(surface_info);
+    const viz::SurfaceInfo& surface_info,
+    const viz::SurfaceSequence& sequence) {
+  SetChildFrameSurface(surface_info, sequence);
 }
 
 void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
@@ -734,7 +736,7 @@ blink::WebString RenderFrameProxy::GetDevToolsFrameToken() {
 #if defined(USE_AURA)
 void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
     const viz::SurfaceInfo& surface_info) {
-  SetChildFrameSurface(surface_info);
+  SetChildFrameSurface(surface_info, viz::SurfaceSequence());
 }
 
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(

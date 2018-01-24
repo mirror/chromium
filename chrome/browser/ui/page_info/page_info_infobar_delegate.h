@@ -26,6 +26,7 @@ class PageInfoInfoBarDelegate : public ConfirmInfoBarDelegate {
   ~PageInfoInfoBarDelegate() override;
 
   // ConfirmInfoBarDelegate:
+  Type GetInfoBarType() const override;
   infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override;
   const gfx::VectorIcon& GetVectorIcon() const override;
   base::string16 GetMessageText() const override;

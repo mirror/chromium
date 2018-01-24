@@ -19,6 +19,7 @@ class FillLayer;
 class HitTestLocation;
 class HitTestRequest;
 class HitTestResult;
+class Image;
 class LayoutRect;
 class NGPaintFragment;
 class NGPhysicalFragment;
@@ -49,9 +50,13 @@ class NGBoxFragmentPainter : public BoxPainterBase {
       const FillLayer&,
       BackgroundBleedAvoidance) const override;
 
-  void PaintTextClipMask(GraphicsContext&,
-                         const IntRect& mask_rect,
-                         const LayoutPoint& paint_offset) override;
+  void PaintFillLayerTextFillBox(GraphicsContext&,
+                                 const BoxPainterBase::FillLayerInfo&,
+                                 Image*,
+                                 SkBlendMode composite_op,
+                                 const BackgroundImageGeometry&,
+                                 const LayoutRect&,
+                                 LayoutRect scrolled_paint_rect) override;
   LayoutRect AdjustForScrolledContent(const PaintInfo&,
                                       const BoxPainterBase::FillLayerInfo&,
                                       const LayoutRect&) override;

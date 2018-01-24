@@ -272,7 +272,7 @@ public class SearchActivityTest {
                 mTestDelegate.showSearchEngineDialogIfNeededCallback.waitForCallback(0);
                 mTestDelegate.onFinishDeferredInitializationCallback.waitForCallback(0);
             } catch (InterruptedException | TimeoutException e) {
-                throw new AssertionError("Unexpected exception", e);
+                Assert.fail("Unexpected exception");
             }
         }, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
     }

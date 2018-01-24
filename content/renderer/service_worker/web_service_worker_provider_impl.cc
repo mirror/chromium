@@ -12,6 +12,7 @@
 #include "content/child/thread_safe_sender.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/web_service_worker_impl.h"
 #include "content/renderer/service_worker/web_service_worker_registration_impl.h"
@@ -63,10 +64,9 @@ void WebServiceWorkerProviderImpl::SetClient(
   if (!provider_client_)
     return;
 
-  blink::mojom::ServiceWorkerObjectInfoPtr controller =
+  std::unique_ptr<ServiceWorkerHandleReference> controller =
       context_->TakeController();
-  if (!controller ||
-      controller->handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
+  if (!controller)
     return;
   SetController(std::move(controller), context_->used_features(),
                 false /* notify_controllerchange */);
@@ -190,7 +190,7 @@ bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
 }
 
 void WebServiceWorkerProviderImpl::SetController(
-    blink::mojom::ServiceWorkerObjectInfoPtr controller,
+    std::unique_ptr<ServiceWorkerHandleReference> controller,
     const std::set<blink::mojom::WebFeature>& features,
     bool should_notify_controller_change) {
   if (!provider_client_)
@@ -205,14 +205,14 @@ void WebServiceWorkerProviderImpl::SetController(
 }
 
 void WebServiceWorkerProviderImpl::PostMessageToClient(
-    blink::mojom::ServiceWorkerObjectInfoPtr source,
+    std::unique_ptr<ServiceWorkerHandleReference> source_handle,
     const base::string16& message,
     std::vector<mojo::ScopedMessagePipeHandle> message_pipes) {
   if (!provider_client_)
     return;
 
   scoped_refptr<WebServiceWorkerImpl> source_worker =
-      GetDispatcher()->GetOrCreateServiceWorker(std::move(source));
+      GetDispatcher()->GetOrCreateServiceWorker(std::move(source_handle));
   auto message_ports =
       blink::MessagePortChannel::CreateFromHandles(std::move(message_pipes));
   provider_client_->DispatchMessageEvent(

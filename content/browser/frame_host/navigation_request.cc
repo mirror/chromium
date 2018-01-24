@@ -261,6 +261,9 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           controller->GetEntryCount());
   request_params.post_content_type = post_content_type;
 
+  // TODO(jochen): Move suggested_filename from BeginNavigationParams to
+  // CommonNavigationParams, now that it's also used here for browser initiated
+  // requests.
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params,
       mojom::BeginNavigationParams::New(
@@ -269,7 +272,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           blink::WebMixedContentContextType::kBlockable, is_form_submission,
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
-          GURL() /* client_side_redirect_url */),
+          GURL() /* client_side_redirect_url */, entry.suggested_filename()),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;
@@ -546,7 +549,7 @@ void NavigationRequest::CreateNavigationHandle() {
           common_params_.navigation_start, nav_entry_id_,
           common_params_.started_from_context_menu,
           common_params_.should_check_main_world_csp,
-          begin_params_->is_form_submission, common_params_.suggested_filename,
+          begin_params_->is_form_submission, begin_params_->suggested_filename,
           common_params_.method, common_params_.post_data,
           Referrer::SanitizeForRequest(common_params_.url,
                                        common_params_.referrer),
@@ -575,9 +578,9 @@ void NavigationRequest::CreateNavigationHandle() {
   }
 }
 
-std::unique_ptr<NavigationHandleImpl>
-NavigationRequest::TakeNavigationHandle() {
-  return std::move(navigation_handle_);
+void NavigationRequest::TransferNavigationHandleOwnership(
+    RenderFrameHostImpl* render_frame_host) {
+  render_frame_host->SetNavigationHandle(std::move(navigation_handle_));
 }
 
 void NavigationRequest::OnRequestRedirected(
@@ -1172,7 +1175,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
           BrowserContext::GetDownloadManager(browser_context));
       download_manager->InterceptNavigation(
           std::move(resource_request), navigation_handle_->GetRedirectChain(),
-          common_params_.suggested_filename, response_,
+          begin_params_->suggested_filename, response_,
           std::move(url_loader_client_endpoints_), ssl_info_.cert_status,
           frame_tree_node_->frame_tree_node_id());
 
@@ -1237,8 +1240,9 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 void NavigationRequest::CommitErrorPage(
     RenderFrameHostImpl* render_frame_host,
     const base::Optional<std::string>& error_page_content) {
-  frame_tree_node_->TransferNavigationRequestOwnership(render_frame_host);
-  navigation_handle_->ReadyToCommitNavigation(render_frame_host);
+  TransferNavigationHandleOwnership(render_frame_host);
+  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
+      render_frame_host);
   render_frame_host->FailedNavigation(common_params_, request_params_,
                                       has_stale_copy_in_cache_, net_error_,
                                       error_page_content);
@@ -1257,11 +1261,14 @@ void NavigationRequest::CommitNavigation() {
          render_frame_host ==
              frame_tree_node_->render_manager()->speculative_frame_host());
 
-  frame_tree_node_->TransferNavigationRequestOwnership(render_frame_host);
+  TransferNavigationHandleOwnership(render_frame_host);
+
   render_frame_host->CommitNavigation(
       response_.get(), std::move(url_loader_client_endpoints_),
       std::move(body_), common_params_, request_params_, is_view_source_,
       std::move(subresource_loader_params_), devtools_navigation_token_);
+
+  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult

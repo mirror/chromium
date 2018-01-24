@@ -594,11 +594,10 @@ void WebLocalFrameImpl::SetScrollOffset(const WebSize& offset) {
   }
 }
 
-WebSize WebLocalFrameImpl::DocumentSize() const {
-  if (!GetFrameView() || !GetFrameView()->GetLayoutView())
-    return WebSize();
-
-  return GetFrameView()->GetLayoutView()->DocumentRect().Size();
+WebSize WebLocalFrameImpl::ContentsSize() const {
+  if (LocalFrameView* view = GetFrameView())
+    return view->ContentsSize();
+  return WebSize();
 }
 
 bool WebLocalFrameImpl::HasVisibleContent() const {
@@ -1013,8 +1012,14 @@ size_t WebLocalFrameImpl::CharacterIndexForPoint(
   LayoutPoint point = GetFrame()->View()->ViewportToContents(point_in_viewport);
   HitTestResult result = GetFrame()->GetEventHandler().HitTestResultAtPoint(
       point, HitTestRequest::kReadOnly | HitTestRequest::kActive);
-  return GetFrame()->Selection().CharacterIndexForPoint(
-      result.RoundedPointInInnerNodeFrame());
+  const EphemeralRange range =
+      GetFrame()->RangeForPoint(result.RoundedPointInInnerNodeFrame());
+  if (range.IsNull())
+    return kNotFound;
+  Element* editable =
+      GetFrame()->Selection().RootEditableElementOrDocumentElement();
+  DCHECK(editable);
+  return PlainTextRange::Create(*editable, range).Start();
 }
 
 bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
@@ -1099,7 +1104,7 @@ bool WebLocalFrameImpl::IsSelectionAnchorFirst() const {
     return false;
   }
 
-  return selection.GetSelectionInDOMTree().IsBaseFirst();
+  return selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsBaseFirst();
 }
 
 void WebLocalFrameImpl::SetTextDirection(WebTextDirection direction) {
@@ -1307,9 +1312,8 @@ void WebLocalFrameImpl::MoveRangeSelection(
   if (granularity == WebFrame::kWordGranularity)
     blink_granularity = blink::TextGranularity::kWord;
   GetFrame()->Selection().MoveRangeSelection(
-      GetFrame()->View()->ViewportToContents(base_in_viewport),
-      GetFrame()->View()->ViewportToContents(extent_in_viewport),
-      blink_granularity);
+      VisiblePositionForViewportPoint(base_in_viewport),
+      VisiblePositionForViewportPoint(extent_in_viewport), blink_granularity);
 }
 
 void WebLocalFrameImpl::MoveCaretSelection(const WebPoint& point_in_viewport) {
@@ -2530,10 +2534,6 @@ WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
   return &input_method_controller_;
 }
 
-// TODO(editing-dev): We should move |CreateMarkupInRect()| to
-// "core/editing/serializers/Serialization.cpp".
-static String CreateMarkupInRect(LocalFrame*, const IntPoint&, const IntPoint&);
-
 void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
                                              WebString& clip_text,
                                              WebString& clip_html) {
@@ -2543,36 +2543,27 @@ void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
   WebPoint start_point(rect_in_viewport.x, rect_in_viewport.y);
   WebPoint end_point(rect_in_viewport.x + rect_in_viewport.width,
                      rect_in_viewport.y + rect_in_viewport.height);
-  clip_html = CreateMarkupInRect(
-      GetFrame(), GetFrame()->View()->ViewportToContents(start_point),
-      GetFrame()->View()->ViewportToContents(end_point));
-}
-
-// TODO(editing-dev): We should move |CreateMarkupInRect()| to
-// "core/editing/serializers/Serialization.cpp".
-static String CreateMarkupInRect(LocalFrame* frame,
-                                 const IntPoint& start_point,
-                                 const IntPoint& end_point) {
   VisiblePosition start_visible_position =
-      VisiblePositionForContentsPoint(start_point, frame);
+      VisiblePositionForViewportPoint(start_point);
   VisiblePosition end_visible_position =
-      VisiblePositionForContentsPoint(end_point, frame);
+      VisiblePositionForViewportPoint(end_point);
 
   Position start_position = start_visible_position.DeepEquivalent();
   Position end_position = end_visible_position.DeepEquivalent();
 
   // document() will return null if -webkit-user-select is set to none.
   if (!start_position.GetDocument() || !end_position.GetDocument())
-    return String();
+    return;
 
   if (start_position.CompareTo(end_position) <= 0) {
-    return CreateMarkup(start_position, end_position, kAnnotateForInterchange,
-                        ConvertBlocksToInlines::kNotConvert,
-                        kResolveNonLocalURLs);
+    clip_html =
+        CreateMarkup(start_position, end_position, kAnnotateForInterchange,
+                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
+  } else {
+    clip_html =
+        CreateMarkup(end_position, start_position, kAnnotateForInterchange,
+                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
   }
-  return CreateMarkup(end_position, start_position, kAnnotateForInterchange,
-                      ConvertBlocksToInlines::kNotConvert,
-                      kResolveNonLocalURLs);
 }
 
 void WebLocalFrameImpl::AdvanceFocusInForm(WebFocusType focus_type) {

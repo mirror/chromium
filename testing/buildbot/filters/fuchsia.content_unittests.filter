@@ -60,8 +60,6 @@
 # Flaky, https://crbug.com/784449.
 -WebContentsAudioInputStreamTest.MirroringOneStreamAfterTargetChange*
 
-# Flaky, https://crbug.com/802375 and https://crbug.com/776424.
+# Flaky, https://crbug.com/802375.
 -RenderWidgetHostViewAuraOverscrollTest.GestureScrollDebounceTimerOverscroll
 -RenderWidgetHostViewAuraOverscrollTest.TouchGestureEndDispatchedAfterOverscrollComplete
--RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest.TimerBasedWheelEventPhaseInfo
--RenderWidgetHostViewAuraAsyncWheelEventsEnabledTest.TimerBasedWheelEventPhaseInfo

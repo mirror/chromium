@@ -14,7 +14,7 @@
     return navigatorView;
   }
 
-  sourcesNavigatorView = createNavigatorView(Sources.NetworkNavigatorView);
+  sourcesNavigatorView = createNavigatorView(Sources.SourcesNavigatorView);
   contentScriptsNavigatorView = createNavigatorView(Sources.ContentScriptsNavigatorView);
 
   Bindings.NetworkProject.forTarget(TestRunner.mainTarget)._resetForTest();

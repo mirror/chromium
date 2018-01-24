@@ -4,8 +4,6 @@
 
 #include "platform/scheduler/child/metrics_helper.h"
 
-#include "platform/scheduler/child/process_state.h"
-
 namespace blink {
 namespace scheduler {
 
@@ -24,15 +22,7 @@ MetricsHelper::MetricsHelper(ThreadType thread_type)
       thread_task_duration_reporter_(
           "RendererScheduler.TaskDurationPerThreadType"),
       thread_task_cpu_duration_reporter_(
-          "RendererScheduler.TaskCPUDurationPerThreadType"),
-      foreground_thread_task_duration_reporter_(
-          "RendererScheduler.TaskDurationPerThreadType.Foreground"),
-      foreground_thread_task_cpu_duration_reporter_(
-          "RendererScheduler.TaskCPUDurationPerThreadType.Foreground"),
-      background_thread_task_duration_reporter_(
-          "RendererScheduler.TaskDurationPerThreadType.Background"),
-      background_thread_task_cpu_duration_reporter_(
-          "RendererScheduler.TaskCPUDurationPerThreadType.Background") {}
+          "RendererScheduler.TaskCPUDurationPerThreadType") {}
 
 MetricsHelper::~MetricsHelper() {}
 
@@ -53,30 +43,11 @@ void MetricsHelper::RecordCommonTaskMetrics(
     base::TimeTicks start_time,
     base::TimeTicks end_time,
     base::Optional<base::TimeDelta> thread_time) {
-  base::TimeDelta wall_time = end_time - start_time;
-
-  thread_task_duration_reporter_.RecordTask(thread_type_, wall_time);
-
-  bool backgrounded = internal::ProcessState::Get()->is_process_backgrounded;
-
-  if (backgrounded) {
-    background_thread_task_duration_reporter_.RecordTask(thread_type_,
-                                                         wall_time);
-  } else {
-    foreground_thread_task_duration_reporter_.RecordTask(thread_type_,
-                                                         wall_time);
-  }
-
-  if (!thread_time)
-    return;
-  thread_task_cpu_duration_reporter_.RecordTask(thread_type_,
-                                                thread_time.value());
-  if (backgrounded) {
-    background_thread_task_cpu_duration_reporter_.RecordTask(
-        thread_type_, thread_time.value());
-  } else {
-    foreground_thread_task_cpu_duration_reporter_.RecordTask(
-        thread_type_, thread_time.value());
+  thread_task_duration_reporter_.RecordTask(thread_type_,
+                                            end_time - start_time);
+  if (thread_time) {
+    thread_task_cpu_duration_reporter_.RecordTask(thread_type_,
+                                                  thread_time.value());
   }
 }
 

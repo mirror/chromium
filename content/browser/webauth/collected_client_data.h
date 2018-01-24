@@ -33,6 +33,7 @@ class CONTENT_EXPORT CollectedClientData {
   CollectedClientData(std::string type_,
                       std::string base64_encoded_challenge_,
                       std::string origin,
+                      std::string hash_algorithm,
                       std::string token_binding_id);
 
   // Moveable.
@@ -49,6 +50,7 @@ class CONTENT_EXPORT CollectedClientData {
   std::string type_;
   std::string base64_encoded_challenge_;
   std::string origin_;
+  std::string hash_algorithm_;
   std::string token_binding_id_;
   // TODO(kpaulhamus): Add extensions support. https://crbug/757502.
 

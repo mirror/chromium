@@ -72,6 +72,8 @@ class SVGGradientElement : public SVGElement, public SVGURIReference {
   void SvgAttributeChanged(const QualifiedName&) override;
 
  private:
+  bool NeedsPendingResourceHandling() const final { return false; }
+
   void CollectStyleForPresentationAttribute(
       const QualifiedName&,
       const AtomicString&,

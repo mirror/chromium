@@ -68,6 +68,13 @@ class CommandService : public BrowserContextKeyedAPI,
     ANY_SCOPE,  // All commands, regardless of scope (used when querying).
   };
 
+  // An enum specifying the types of commands that can be used by an extension.
+  enum ExtensionCommandType {
+    NAMED,
+    BROWSER_ACTION,
+    PAGE_ACTION
+  };
+
   class Observer {
    public:
     // Called when an extension command is added.
@@ -179,7 +186,8 @@ class CommandService : public BrowserContextKeyedAPI,
   // assigns the type to *|command_type| if non-null.
   bool GetSuggestedExtensionCommand(const std::string& extension_id,
                                     const ui::Accelerator& accelerator,
-                                    Command* command) const;
+                                    Command* command,
+                                    ExtensionCommandType* command_type) const;
 
   // Returns true if |extension| requests to override the bookmark shortcut key
   // and should be allowed to do so.
@@ -257,7 +265,7 @@ class CommandService : public BrowserContextKeyedAPI,
                                  QueryType query_type,
                                  Command* command,
                                  bool* active,
-                                 Command::Type type) const;
+                                 ExtensionCommandType action_type) const;
 
   // A weak pointer to the profile we are associated with. Not owned by us.
   Profile* profile_;

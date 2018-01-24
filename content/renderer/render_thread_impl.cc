@@ -92,6 +92,8 @@
 #include "content/renderer/effective_connection_type_helper.h"
 #include "content/renderer/fileapi/file_system_dispatcher.h"
 #include "content/renderer/fileapi/webfilesystem_impl.h"
+#include "content/renderer/gpu/compositor_external_begin_frame_source.h"
+#include "content/renderer/gpu/compositor_forwarding_message_filter.h"
 #include "content/renderer/gpu/frame_swap_message_queue.h"
 #include "content/renderer/indexed_db/indexed_db_dispatcher.h"
 #include "content/renderer/input/input_event_filter.h"
@@ -703,7 +705,8 @@ void RenderThreadImpl::Init(
       new NotificationDispatcher(thread_safe_sender());
   AddFilter(notification_dispatcher_->GetFilter());
 
-  resource_dispatcher_.reset(new ResourceDispatcher());
+  resource_dispatcher_.reset(
+      new ResourceDispatcher(message_loop()->task_runner()));
   quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
   url_loader_throttle_provider_ =
       GetContentClient()->renderer()->CreateURLLoaderThrottleProvider(
@@ -791,6 +794,8 @@ void RenderThreadImpl::Init(
   AddFilter((new CacheStorageMessageFilter(thread_safe_sender()))->GetFilter());
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
+
+// Register exported services:
 
 #if defined(USE_AURA)
   if (IsRunningWithMus())
@@ -1245,6 +1250,16 @@ void RenderThreadImpl::InitializeWebKit(
       base::Bind(base::IgnoreResult(&RenderThreadImpl::OnMessageReceived),
                  base::Unretained(this)));
 
+  scoped_refptr<base::SingleThreadTaskRunner> resource_task_queue2;
+  if (resource_task_queue) {
+    resource_task_queue2 = resource_task_queue;
+  } else {
+    resource_task_queue2 = renderer_scheduler_->LoadingTaskRunner();
+  }
+  // The ResourceDispatcher needs to use the same queue to ensure tasks are
+  // executed in the expected order.
+  resource_dispatcher_->SetThreadTaskRunner(resource_task_queue2);
+
   if (!command_line.HasSwitch(switches::kDisableThreadedCompositing))
     InitializeCompositorThread();
 
@@ -1263,6 +1278,10 @@ void RenderThreadImpl::InitializeWebKit(
     compositor_impl_side_task_runner = compositor_task_runner_;
   else
     compositor_impl_side_task_runner = base::ThreadTaskRunnerHandle::Get();
+
+  compositor_message_filter_ = new CompositorForwardingMessageFilter(
+      compositor_impl_side_task_runner.get());
+  AddFilter(compositor_message_filter_.get());
 
   RenderThreadImpl::RegisterSchemes();
 
@@ -1458,7 +1477,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
           gpu_channel_host, GetGpuMemoryBufferManager(), limits,
           support_locking, support_gles2_interface, support_raster_interface,
           support_oop_rasterization, ui::command_buffer_metrics::MEDIA_CONTEXT,
-          kGpuStreamIdMedia, kGpuStreamPriorityMedia);
+          kGpuStreamIdDefault, kGpuStreamPriorityDefault);
   auto result = media_context_provider->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess)
     return nullptr;
@@ -1511,7 +1530,7 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
 
   bool support_locking = false;
   bool support_gles2_interface = true;
-  bool support_raster_interface = true;
+  bool support_raster_interface = false;
   bool support_oop_rasterization = false;
   shared_main_thread_contexts_ = CreateOffscreenContext(
       std::move(gpu_channel_host), GetGpuMemoryBufferManager(),
@@ -1641,6 +1660,12 @@ gpu::GpuMemoryBufferManager* RenderThreadImpl::GetGpuMemoryBufferManager() {
 
 blink::scheduler::RendererScheduler* RenderThreadImpl::GetRendererScheduler() {
   return renderer_scheduler_.get();
+}
+
+std::unique_ptr<viz::BeginFrameSource>
+RenderThreadImpl::CreateExternalBeginFrameSource(int routing_id) {
+  return std::make_unique<CompositorExternalBeginFrameSource>(
+      compositor_message_filter_.get(), sync_message_filter(), routing_id);
 }
 
 std::unique_ptr<viz::SyntheticBeginFrameSource>
@@ -2088,11 +2113,14 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
 
 #if defined(OS_ANDROID)
   if (sync_compositor_message_filter_) {
+    std::unique_ptr<viz::BeginFrameSource> begin_frame_source =
+        params.synthetic_begin_frame_source
+            ? std::move(params.synthetic_begin_frame_source)
+            : CreateExternalBeginFrameSource(routing_id);
     callback.Run(std::make_unique<SynchronousLayerTreeFrameSink>(
         std::move(context_provider), std::move(worker_context_provider),
         compositor_task_runner_, GetGpuMemoryBufferManager(), routing_id,
-        g_next_layer_tree_frame_sink_id++,
-        std::move(params.synthetic_begin_frame_source),
+        g_next_layer_tree_frame_sink_id++, std::move(begin_frame_source),
         sync_compositor_message_filter_.get(),
         std::move(frame_swap_message_queue)));
     return;
@@ -2154,12 +2182,6 @@ mojom::RenderMessageFilter* RenderThreadImpl::render_message_filter() {
 
 gpu::GpuChannelHost* RenderThreadImpl::GetGpuChannel() {
   return gpu_->GetGpuChannel().get();
-}
-
-void RenderThreadImpl::CreateEmbedderRendererService(
-    service_manager::mojom::ServiceRequest service_request) {
-  GetContentClient()->renderer()->CreateRendererService(
-      std::move(service_request));
 }
 
 void RenderThreadImpl::CreateView(mojom::CreateViewParamsPtr params) {

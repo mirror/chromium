@@ -413,8 +413,6 @@ class CC_EXPORT GpuImageDecodeCache
 
   bool SupportsColorSpaces() const;
 
-  void CheckContextLockAcquiredIfNecessary();
-
   const SkColorType color_type_;
   const bool use_transfer_cache_ = false;
   viz::RasterContextProvider* context_;

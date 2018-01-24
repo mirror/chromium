@@ -28,7 +28,6 @@
 #include "crypto/ec_private_key.h"
 #include "crypto/ec_signature_creator.h"
 #include "net/base/proxy_delegate.h"
-#include "net/base/proxy_server.h"
 #include "net/cert/asn1_util.h"
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/ct_policy_status.h"
@@ -41,6 +40,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/log/net_log_with_source.h"
+#include "net/proxy/proxy_server.h"
 #include "net/quic/chromium/quic_http_utils.h"
 #include "net/socket/socket.h"
 #include "net/socket/ssl_client_socket.h"
@@ -691,7 +691,7 @@ bool SpdySession::CanPool(TransportSecurityState* transport_security_state,
     return false;
   }
 
-  if (!ssl_info.cert->VerifyNameMatch(new_hostname))
+  if (!ssl_info.cert->VerifyNameMatch(new_hostname, false))
     return false;
 
   SpdyString pinning_failure_log;

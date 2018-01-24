@@ -3,13 +3,7 @@
 # found in the LICENSE file.
 
 mojom = "//third_party/WebKit/public/platform/modules/notifications/notification.mojom"
-public_headers = [
-  "//third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h",
-  "//third_party/WebKit/public/platform/modules/notifications/WebNotificationResources.h",
-]
+public_headers = [ "//third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h" ]
 traits_headers =
     [ "//third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h" ]
-type_mappings = [
-  "blink.mojom.NotificationData=::blink::WebNotificationData",
-  "blink.mojom.NotificationResources=::blink::WebNotificationResources",
-]
+type_mappings = [ "blink.mojom.NotificationData=::blink::WebNotificationData" ]

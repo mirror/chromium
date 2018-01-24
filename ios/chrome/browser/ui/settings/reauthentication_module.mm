@@ -13,12 +13,9 @@
 #error "This file requires ARC support."
 #endif
 
-constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
-
 @implementation ReauthenticationModule {
-  // Block that creates a new |LAContext| object everytime one is required,
-  // meant to make testing with a mock object possible.
-  LAContext* (^_createLAContext)(void);
+  // Authentication context on which the authentication policy is evaluated.
+  LAContext* _context;
 
   // Accessor allowing the module to request the update of the time when the
   // successful re-authentication was performed and to get the time of the last
@@ -31,25 +28,21 @@ constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
   DCHECK(successfulReauthTimeAccessor);
   self = [super init];
   if (self) {
-    _createLAContext = ^{
-      return [[LAContext alloc] init];
-    };
+    _context = [[LAContext alloc] init];
     _successfulReauthTimeAccessor = successfulReauthTimeAccessor;
   }
   return self;
 }
 
 - (BOOL)canAttemptReauth {
-  LAContext* context = _createLAContext();
   // The authentication method is Touch ID or passcode.
   return
-      [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
+      [_context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
 }
 
 - (void)attemptReauthWithLocalizedReason:(NSString*)localizedReason
-                    canReusePreviousAuth:(BOOL)canReusePreviousAuth
                                  handler:(void (^)(BOOL success))handler {
-  if (canReusePreviousAuth && [self isPreviousAuthValid]) {
+  if ([self isPreviousAuthValid]) {
     handler(YES);
     UMA_HISTOGRAM_ENUMERATION(
         "PasswordManager.ReauthToAccessPasswordInSettings",
@@ -58,10 +51,10 @@ constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
     return;
   }
 
-  LAContext* context = _createLAContext();
+  _context = [[LAContext alloc] init];
 
   // No fallback option is provided.
-  context.localizedFallbackTitle = @"";
+  _context.localizedFallbackTitle = @"";
 
   __weak ReauthenticationModule* weakSelf = self;
   void (^replyBlock)(BOOL, NSError*) = ^(BOOL success, NSError* error) {
@@ -81,9 +74,9 @@ constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
     });
   };
 
-  [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
-          localizedReason:localizedReason
-                    reply:replyBlock];
+  [_context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
+           localizedReason:localizedReason
+                     reply:replyBlock];
 }
 
 - (BOOL)isPreviousAuthValid {
@@ -100,12 +93,6 @@ constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
     }
   }
   return previousAuthValid;
-}
-
-#pragma mark - ForTesting
-
-- (void)setCreateLAContext:(LAContext* (^)(void))createLAContext {
-  _createLAContext = createLAContext;
 }
 
 @end

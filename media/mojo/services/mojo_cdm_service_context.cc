@@ -4,9 +4,9 @@
 
 #include "media/mojo/services/mojo_cdm_service_context.h"
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "media/base/content_decryption_module.h"
-#include "media/cdm/cdm_context_ref_impl.h"
 #include "media/mojo/services/mojo_cdm_service.h"
 
 namespace media {
@@ -27,21 +27,15 @@ void MojoCdmServiceContext::UnregisterCdm(int cdm_id) {
   cdm_services_.erase(cdm_id);
 }
 
-std::unique_ptr<CdmContextRef> MojoCdmServiceContext::GetCdmContextRef(
+scoped_refptr<ContentDecryptionModule> MojoCdmServiceContext::GetCdm(
     int cdm_id) {
   auto cdm_service = cdm_services_.find(cdm_id);
   if (cdm_service == cdm_services_.end()) {
-    // This could happen when called after the actual CDM has been destroyed.
-    DVLOG(1) << "CDM service not found: " << cdm_id;
+    LOG(ERROR) << "CDM service not found: " << cdm_id;
     return nullptr;
   }
 
-  if (!cdm_service->second->GetCdm()->GetCdmContext()) {
-    NOTREACHED() << "All CDMs should support CdmContext.";
-    return nullptr;
-  }
-
-  return std::make_unique<CdmContextRefImpl>(cdm_service->second->GetCdm());
+  return cdm_service->second->GetCdm();
 }
 
 }  // namespace media

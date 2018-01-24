@@ -10,8 +10,6 @@ mojom("mojo") {
   sources = [
     "geometry.mojom",
   ]
-
-  check_includes_blink = false
 }
 
 mojom("test_interfaces") {

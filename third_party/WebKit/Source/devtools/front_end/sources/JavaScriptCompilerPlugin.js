@@ -21,8 +21,7 @@ Sources.JavaScriptCompilerPlugin = class {
     this._disposed = false;
 
     this._textEditor.addEventListener(UI.TextEditor.Events.TextChanged, this._scheduleCompile, this);
-    if (this._uiSourceCode.hasCommits() || this._uiSourceCode.isDirty())
-      this._scheduleCompile();
+    this._scheduleCompile();
   }
 
   /**
@@ -75,7 +74,7 @@ Sources.JavaScriptCompilerPlugin = class {
       return;
 
     var code = this._textEditor.text();
-    if (code.length > 1024 * 100)
+    if (code.length > 1024 * 1024)
       return;
 
     this._compiling = true;

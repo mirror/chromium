@@ -318,14 +318,18 @@ StyleableMarker::Thickness BoolIsThickToStyleableMarkerThickness(
 }
 
 int ComputeAutocapitalizeFlags(const Element* element) {
-  const HTMLElement* const html_element = ToHTMLElementOrNull(element);
-  if (!html_element)
+  const TextControlElement* const text_control =
+      ToTextControlElementOrNull(element);
+  if (!text_control)
+    return 0;
+
+  if (!text_control->SupportsAutocapitalize())
     return 0;
 
   // We set the autocapitalization flag corresponding to the "used
   // autocapitalization hint" for the focused element:
   // https://html.spec.whatwg.org/multipage/interaction.html#used-autocapitalization-hint
-  if (auto* input = ToHTMLInputElementOrNull(*html_element)) {
+  if (auto* input = ToHTMLInputElementOrNull(*element)) {
     const AtomicString& input_type = input->type();
     if (input_type == InputTypeNames::email ||
         input_type == InputTypeNames::url ||
@@ -343,23 +347,17 @@ int ComputeAutocapitalizeFlags(const Element* element) {
   DEFINE_STATIC_LOCAL(const AtomicString, words, ("words"));
   DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
 
-  const AtomicString& autocapitalize = html_element->autocapitalize();
-  if (autocapitalize == none) {
+  const AtomicString& autocapitalize = text_control->autocapitalize();
+  if (autocapitalize == none)
     flags |= kWebTextInputFlagAutocapitalizeNone;
-  } else if (autocapitalize == characters) {
+  else if (autocapitalize == characters)
     flags |= kWebTextInputFlagAutocapitalizeCharacters;
-  } else if (autocapitalize == words) {
+  else if (autocapitalize == words)
     flags |= kWebTextInputFlagAutocapitalizeWords;
-  } else if (autocapitalize == sentences || autocapitalize == "") {
-    // Note: we tell the IME to enable autocapitalization for both the default
-    // state ("") and the sentences states. We could potentially treat these
-    // differently if we had a platform that supported autocapitalization but
-    // didn't want to enable it unless explicitly requested by a web page, but
-    // this so far has not been necessary.
+  else if (autocapitalize == sentences)
     flags |= kWebTextInputFlagAutocapitalizeSentences;
-  } else {
+  else
     NOTREACHED();
-  }
 
   return flags;
 }
@@ -854,8 +852,7 @@ void InputMethodController::SetComposition(
   }
 
   // Find out what node has the composition now.
-  const Position base =
-      MostForwardCaretPosition(selection.Base(), kCanSkipOverEditingBoundary);
+  const Position base = MostForwardCaretPosition(selection.Base());
   Node* base_node = base.AnchorNode();
   if (!base_node || !base_node->IsTextNode())
     return;

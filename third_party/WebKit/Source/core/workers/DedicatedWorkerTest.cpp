@@ -30,8 +30,7 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
   DedicatedWorkerThreadForTest(DedicatedWorkerObjectProxy& worker_object_proxy)
       : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
                               worker_object_proxy) {
-    worker_backing_thread_ = WorkerBackingThread::CreateForTest(
-        WebThreadCreationParams("Test thread"));
+    worker_backing_thread_ = WorkerBackingThread::CreateForTest("Test thread");
   }
 
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(

@@ -34,6 +34,7 @@
 #include "media/audio/null_audio_sink.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/cdm_context.h"
+#include "media/base/content_decryption_module.h"
 #include "media/base/limits.h"
 #include "media/base/media_content_type.h"
 #include "media/base/media_log.h"
@@ -799,11 +800,6 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   UpdatePlayState();
 }
 
-void WebMediaPlayerImpl::PictureInPicture() {
-  if (client_)
-    client_->PictureInPictureStarted();
-}
-
 void WebMediaPlayerImpl::SetSinkId(
     const blink::WebString& sink_id,
     const blink::WebSecurityOrigin& security_origin,
@@ -1076,7 +1072,7 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
   TRACE_EVENT0("media", "WebMediaPlayerImpl:paint");
 
   // We can't copy from protected frames.
-  if (cdm_context_ref_)
+  if (cdm_)
     return;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
@@ -1159,7 +1155,7 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   TRACE_EVENT0("media", "WebMediaPlayerImpl:copyVideoTextureToPlatformTexture");
 
   // We can't copy from protected frames.
-  if (cdm_context_ref_)
+  if (cdm_)
     return false;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
@@ -1301,24 +1297,26 @@ void WebMediaPlayerImpl::OnFFmpegMediaTracksUpdated(
 void WebMediaPlayerImpl::SetCdm(blink::WebContentDecryptionModule* cdm) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   DCHECK(cdm);
-
-  auto cdm_context_ref =
-      ToWebContentDecryptionModuleImpl(cdm)->GetCdmContextRef();
-  if (!cdm_context_ref) {
+  scoped_refptr<ContentDecryptionModule> cdm_reference =
+      ToWebContentDecryptionModuleImpl(cdm)->GetCdm();
+  if (!cdm_reference) {
     NOTREACHED();
     OnCdmAttached(false);
     return;
   }
 
-  CdmContext* cdm_context = cdm_context_ref->GetCdmContext();
-  DCHECK(cdm_context);
+  CdmContext* cdm_context = cdm_reference->GetCdmContext();
+  if (!cdm_context) {
+    OnCdmAttached(false);
+    return;
+  }
 
   if (observer_)
     observer_->OnSetCdm(cdm_context);
 
   // Keep the reference to the CDM, as it shouldn't be destroyed until
   // after the pipeline is done with the |cdm_context|.
-  pending_cdm_context_ref_ = std::move(cdm_context_ref);
+  pending_cdm_ = std::move(cdm_reference);
   pipeline_controller_.SetCdm(
       cdm_context, base::Bind(&WebMediaPlayerImpl::OnCdmAttached, AsWeakPtr()));
 }
@@ -1326,7 +1324,7 @@ void WebMediaPlayerImpl::SetCdm(blink::WebContentDecryptionModule* cdm) {
 void WebMediaPlayerImpl::OnCdmAttached(bool success) {
   DVLOG(1) << __func__ << ": success = " << success;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  DCHECK(pending_cdm_context_ref_);
+  DCHECK(pending_cdm_);
 
   // If the CDM is set from the constructor there is no promise
   // (|set_cdm_result_|) to fulfill.
@@ -1334,7 +1332,7 @@ void WebMediaPlayerImpl::OnCdmAttached(bool success) {
     media_log_->SetBooleanProperty("has_cdm", true);
 
     // This will release the previously attached CDM (if any).
-    cdm_context_ref_ = std::move(pending_cdm_context_ref_);
+    cdm_ = std::move(pending_cdm_);
     if (set_cdm_result_) {
       set_cdm_result_->Complete();
       set_cdm_result_.reset();
@@ -1343,7 +1341,7 @@ void WebMediaPlayerImpl::OnCdmAttached(bool success) {
     return;
   }
 
-  pending_cdm_context_ref_.reset();
+  pending_cdm_ = nullptr;
   if (set_cdm_result_) {
     set_cdm_result_->CompleteWithError(
         blink::kWebContentDecryptionModuleExceptionNotSupportedError, 0,

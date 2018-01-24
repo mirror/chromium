@@ -39,9 +39,9 @@
 #include "net/base/load_flags.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/network_interfaces.h"
-#include "net/base/proxy_server.h"
 #include "net/log/net_log_source_type.h"
 #include "net/nqe/effective_connection_type.h"
+#include "net/proxy/proxy_server.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -274,7 +274,7 @@ bool DataReductionProxyConfig::IsBypassedByDataReductionProxyLocalRules(
     const net::ProxyConfig& data_reduction_proxy_config) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(request.context());
-  DCHECK(request.context()->proxy_resolution_service());
+  DCHECK(request.context()->proxy_service());
   net::ProxyInfo result;
   data_reduction_proxy_config.proxy_rules().Apply(
       request.url(), &result);
@@ -291,9 +291,9 @@ bool DataReductionProxyConfig::AreDataReductionProxiesBypassed(
     base::TimeDelta* min_retry_delay) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (request.context() != nullptr &&
-      request.context()->proxy_resolution_service() != nullptr) {
+      request.context()->proxy_service() != nullptr) {
     return AreProxiesBypassed(
-        request.context()->proxy_resolution_service()->proxy_retry_info(),
+        request.context()->proxy_service()->proxy_retry_info(),
         data_reduction_proxy_config.proxy_rules(),
         request.url().SchemeIsCryptographic(), min_retry_delay);
   }
@@ -306,8 +306,8 @@ bool DataReductionProxyConfig::AreProxiesBypassed(
     const net::ProxyConfig::ProxyRules& proxy_rules,
     bool is_https,
     base::TimeDelta* min_retry_delay) const {
-  // Data reduction proxy config is Type::PROXY_LIST_PER_SCHEME.
-  if (proxy_rules.type != net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME)
+  // Data reduction proxy config is TYPE_PROXY_PER_SCHEME.
+  if (proxy_rules.type != net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME)
     return false;
 
   if (is_https)
@@ -363,8 +363,8 @@ bool DataReductionProxyConfig::IsProxyBypassed(
 bool DataReductionProxyConfig::ContainsDataReductionProxy(
     const net::ProxyConfig::ProxyRules& proxy_rules) const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  // Data Reduction Proxy configurations are always Type::PROXY_LIST_PER_SCHEME.
-  if (proxy_rules.type != net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME)
+  // Data Reduction Proxy configurations are always TYPE_PROXY_PER_SCHEME.
+  if (proxy_rules.type != net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME)
     return false;
 
   const net::ProxyList* http_proxy_list =
@@ -493,37 +493,20 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(IsFetchInFlight());
 
-  // If the probe times out, then proxy server information may not have been
-  // set by the URL fetcher.
-  bool timed_out_with_no_proxy_data =
-      (success_response == WarmupURLFetcher::FetchResult::kTimedOut &&
-       !proxy_server.is_valid());
-
-  // Check the proxy server used.
-  if (!timed_out_with_no_proxy_data &&
-      !IsDataReductionProxy(proxy_server, nullptr)) {
-    // No need to do anything here since the warmup fetch did not go through
-    // the data saver proxy.
+  // Check the proxy server used, or disable all data saver proxies?
+  if (!IsDataReductionProxy(proxy_server, nullptr)) {
+    // No need to do anything here.
     return;
   }
 
-  bool is_secure_proxy = false;
-  bool is_core_proxy = false;
+  bool is_secure_proxy = proxy_server.is_https() || proxy_server.is_quic();
+  bool is_core_proxy = IsDataReductionProxyServerCore(proxy_server);
 
-  if (!timed_out_with_no_proxy_data) {
-    is_secure_proxy = proxy_server.is_https() || proxy_server.is_quic();
-    is_core_proxy = IsDataReductionProxyServerCore(proxy_server);
-    // The proxy server through which the warmup URL was fetched should match
-    // the proxy server for which the warmup URL is in-flight.
-    DCHECK(GetInFlightWarmupProxyDetails());
-    DCHECK_EQ(is_secure_proxy, GetInFlightWarmupProxyDetails()->first);
-    DCHECK_EQ(is_core_proxy, GetInFlightWarmupProxyDetails()->second);
-  } else {
-    // When the probe times out, the proxy information may not be set. Fill-in
-    // the missing data using the proxy that was being probed.
-    is_secure_proxy = warmup_url_fetch_in_flight_secure_proxy_;
-    is_core_proxy = warmup_url_fetch_in_flight_core_proxy_;
-  }
+  // The proxy server through which the warmup URL was fetched should match
+  // the proxy server for which the warmup URL is in-flight.
+  DCHECK(GetInFlightWarmupProxyDetails());
+  DCHECK_EQ(is_secure_proxy, GetInFlightWarmupProxyDetails()->first);
+  DCHECK_EQ(is_core_proxy, GetInFlightWarmupProxyDetails()->second);
 
   if (is_secure_proxy && is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(

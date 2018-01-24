@@ -21,7 +21,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "base/version.h"
-#include "build/build_config.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/update_client/component_unpacker.h"
 #include "components/update_client/crx_update_item.h"
@@ -269,7 +268,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -428,7 +427,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -660,7 +659,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -925,7 +924,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -1014,9 +1013,8 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_DOWNLOADING,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(AtLeast(1));
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
-                                  "jebgalgnebhfojomionfpkfelancnnkf"))
-        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+                                  "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
   }
   {
     InSequence seq;
@@ -1208,7 +1206,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -1476,7 +1474,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -1545,9 +1543,8 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
         .Times(AtLeast(1));
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_READY,
                                   "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
-                                  "jebgalgnebhfojomionfpkfelancnnkf"))
-        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+                                  "jebgalgnebhfojomionfpkfelancnnkf")).Times(1);
   }
 
   update_client->AddObserver(&observer);
@@ -1723,7 +1720,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -1938,7 +1935,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2081,7 +2078,7 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2241,7 +2238,7 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2326,7 +2323,7 @@ TEST_F(UpdateClientTest, EmptyIdList) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2375,7 +2372,7 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return nullptr;
     }
 
@@ -2500,7 +2497,7 @@ TEST_F(UpdateClientTest, RetryAfter) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2737,7 +2734,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2814,7 +2811,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
     EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_FOUND,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(1);
-    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
                                   "jebgalgnebhfojomionfpkfelancnnkf"))
         .Times(1);
   }
@@ -2901,7 +2898,7 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -2928,7 +2925,7 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
   EXPECT_CALL(observer, OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
                                 "jebgalgnebhfojomionfpkfelancnnkf"))
       .Times(1);
-  EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_ERROR,
+  EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
                                 "jebgalgnebhfojomionfpkfelancnnkf"))
       .Times(1)
       .WillOnce(Invoke([&update_client](Events event, const std::string& id) {
@@ -3022,7 +3019,7 @@ TEST_F(UpdateClientTest, ActionRun_Install) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 
@@ -3164,7 +3161,7 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
    public:
     static std::unique_ptr<CrxDownloader> Create(
         bool is_background_download,
-        scoped_refptr<net::URLRequestContextGetter> context_getter) {
+        net::URLRequestContextGetter* context_getter) {
       return std::make_unique<FakeCrxDownloader>();
     }
 

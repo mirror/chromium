@@ -95,9 +95,7 @@ NSString* GetTitleForViewsFullscreenMenuItem(Browser* browser) {
 // TODO(jackhou): Remove the dependency on BrowserWindowController(Private).
 NSString* GetTitleForFullscreenMenuItem(Browser* browser) {
   NSWindow* ns_window = browser->window()->GetNativeWindow();
-  BrowserWindowController* controller =
-      [BrowserWindowController browserWindowControllerForWindow:ns_window];
-  if (controller) {
+  if (BrowserWindowController* controller = [ns_window windowController]) {
     return l10n_util::GetNSString([controller isInAppKitFullscreen]
                                       ? IDS_EXIT_FULLSCREEN_MAC
                                       : IDS_ENTER_FULLSCREEN_MAC);

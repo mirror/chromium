@@ -4,12 +4,11 @@
 
 #include "components/data_use_measurement/core/data_use_user_data.h"
 
-#include <memory>
-
 #if defined(OS_ANDROID)
 #include "base/android/application_status_listener.h"
 #endif
 
+#include "base/memory/ptr_util.h"
 #include "net/url_request/url_fetcher.h"
 
 namespace data_use_measurement {
@@ -44,7 +43,7 @@ const void* const DataUseUserData::kUserDataKey =
 // static
 std::unique_ptr<base::SupportsUserData::Data> DataUseUserData::Create(
     ServiceName service_name) {
-  return std::make_unique<DataUseUserData>(service_name, GetCurrentAppState());
+  return base::MakeUnique<DataUseUserData>(service_name, GetCurrentAppState());
 }
 
 // static

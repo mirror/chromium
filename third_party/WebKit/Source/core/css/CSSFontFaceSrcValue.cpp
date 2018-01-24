@@ -79,7 +79,7 @@ bool CSSFontFaceSrcValue::HasFailedOrCanceledSubresources() const {
   return fetched_ && fetched_->GetResource()->LoadFailedOrCanceled();
 }
 
-FontResource& CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
+FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
                                          FontResourceClient* client) const {
   if (!fetched_) {
     ResourceRequest resource_request(absolute_resource_);
@@ -104,9 +104,12 @@ FontResource& CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
     if (context->IsWorkerGlobalScope()) {
       ToWorkerGlobalScope(context)->EnsureFetcher();
     }
+    FontResource* resource =
+        FontResource::Fetch(params, context->Fetcher(), client);
+    if (!resource)
+      return nullptr;
     fetched_ = FontResourceHelper::Create(
-        FontResource::Fetch(params, context->Fetcher(), client),
-        context->GetTaskRunner(TaskType::kUnspecedLoading).get());
+        resource, context->GetTaskRunner(TaskType::kUnspecedLoading).get());
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.
@@ -117,7 +120,7 @@ FontResource& CSSFontFaceSrcValue::Fetch(ExecutionContext* context,
           context->GetTaskRunner(TaskType::kUnspecedLoading).get());
     }
   }
-  return *ToFontResource(fetched_->GetResource());
+  return ToFontResource(fetched_->GetResource());
 }
 
 void CSSFontFaceSrcValue::RestoreCachedResourceIfNeeded(

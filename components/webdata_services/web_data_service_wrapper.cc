@@ -4,12 +4,11 @@
 
 #include "components/webdata_services/web_data_service_wrapper.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
@@ -100,18 +99,18 @@ WebDataServiceWrapper::WebDataServiceWrapper(
 
   // All tables objects that participate in managing the database must
   // be added here.
-  web_database_->AddTable(std::make_unique<autofill::AutofillTable>());
-  web_database_->AddTable(std::make_unique<KeywordTable>());
+  web_database_->AddTable(base::MakeUnique<autofill::AutofillTable>());
+  web_database_->AddTable(base::MakeUnique<KeywordTable>());
   // TODO(mdm): We only really need the LoginsTable on Windows for IE7 password
   // access, but for now, we still create it on all platforms since it deletes
   // the old logins table. We can remove this after a while, e.g. in M22 or so.
-  web_database_->AddTable(std::make_unique<LoginsTable>());
-  web_database_->AddTable(std::make_unique<TokenServiceTable>());
+  web_database_->AddTable(base::MakeUnique<LoginsTable>());
+  web_database_->AddTable(base::MakeUnique<TokenServiceTable>());
 #if !defined(OS_IOS)
   web_database_->AddTable(
-      std::make_unique<payments::PaymentMethodManifestTable>());
+      base::MakeUnique<payments::PaymentMethodManifestTable>());
   web_database_->AddTable(
-      std::make_unique<payments::WebAppManifestSectionTable>());
+      base::MakeUnique<payments::WebAppManifestSectionTable>());
 #endif
   web_database_->LoadDatabase();
 

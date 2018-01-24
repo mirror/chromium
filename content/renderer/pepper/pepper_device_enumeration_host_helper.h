@@ -55,13 +55,14 @@ class CONTENT_EXPORT PepperDeviceEnumerationHostHelper {
     // subscription ID that must be used to stop monitoring for the device
     // |type|. Does not invoke |callback| synchronously. |callback| is invoked
     // when device changes of the specified |type| occur.
-    virtual size_t StartMonitoringDevices(PP_DeviceType_Dev type,
-                                          const DevicesCallback& callback) = 0;
+    virtual uint32_t StartMonitoringDevices(
+        PP_DeviceType_Dev type,
+        const DevicesCallback& callback) = 0;
 
     // Stops monitoring devices of the specified |type|. The
     // |subscription_id| is the return value of StartMonitoringDevices.
     virtual void StopMonitoringDevices(PP_DeviceType_Dev type,
-                                       size_t subscription_id) = 0;
+                                       uint32_t subscription_id) = 0;
   };
 
   // |resource_host| and |delegate| must outlive this object.

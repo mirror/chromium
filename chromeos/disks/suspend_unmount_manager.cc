@@ -5,7 +5,6 @@
 #include "chromeos/disks/suspend_unmount_manager.h"
 
 #include "base/bind.h"
-#include "base/location.h"
 #include "chromeos/disks/disk_mount_manager.h"
 
 namespace chromeos {
@@ -47,7 +46,7 @@ void SuspendUnmountManager::SuspendImminent(
   for (const auto& mount_path : mount_paths) {
     if (suspend_readiness_callback_.is_null()) {
       suspend_readiness_callback_ =
-          power_manager_client_->GetSuspendReadinessCallback(FROM_HERE);
+          power_manager_client_->GetSuspendReadinessCallback();
     }
     disk_mount_manager_->UnmountPath(
         mount_path, UNMOUNT_OPTIONS_NONE,

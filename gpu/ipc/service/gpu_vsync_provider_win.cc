@@ -669,11 +669,7 @@ bool GpuVSyncProviderWin::GetVSyncParametersIfAvailable(
   return false;
 }
 
-bool GpuVSyncProviderWin::SupportGetVSyncParametersIfAvailable() const {
-  return false;
-}
-
-bool GpuVSyncProviderWin::IsHWClock() const {
+bool GpuVSyncProviderWin::SupportGetVSyncParametersIfAvailable() {
   return false;
 }
 

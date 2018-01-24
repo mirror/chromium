@@ -24,7 +24,8 @@ namespace content {
 class URLLoaderClientImplTest : public ::testing::Test,
                                 public network::mojom::URLLoaderFactory {
  protected:
-  URLLoaderClientImplTest() : dispatcher_(new ResourceDispatcher()) {
+  URLLoaderClientImplTest()
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {
     request_id_ = dispatcher_->StartAsync(
         std::make_unique<network::ResourceRequest>(), 0,
         blink::scheduler::GetSingleThreadTaskRunnerForTesting(), url::Origin(),

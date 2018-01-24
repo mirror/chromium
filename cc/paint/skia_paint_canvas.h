@@ -18,7 +18,7 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
-class ImageProvider;
+
 class PaintFlags;
 
 // A PaintCanvas derived class that passes PaintCanvas APIs through to
@@ -26,16 +26,12 @@ class PaintFlags;
 // and then playing back to an SkCanvas.
 class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
  public:
-  explicit SkiaPaintCanvas(
-      SkCanvas* canvas,
-      std::unique_ptr<ImageProvider> image_provider = nullptr);
+  explicit SkiaPaintCanvas(SkCanvas* canvas);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap, const SkSurfaceProps& props);
   // If |target_color_space| is non-nullptr, then this will wrap |canvas| in a
   // SkColorSpaceXformCanvas.
-  SkiaPaintCanvas(SkCanvas* canvas,
-                  sk_sp<SkColorSpace> target_color_space,
-                  std::unique_ptr<ImageProvider> image_provider = nullptr);
+  SkiaPaintCanvas(SkCanvas* canvas, sk_sp<SkColorSpace> target_color_space);
   ~SkiaPaintCanvas() override;
 
   SkMetaData& getMetaData() override;
@@ -131,16 +127,11 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
                    const PlaybackParams& params);
 
  private:
-  // We always need skia shaders since the ops will be played on an SkCanvas.
-  static const bool kCreateSkiaShaders = true;
-
   void WrapCanvasInColorSpaceXformCanvas(
       sk_sp<SkColorSpace> target_color_space);
-
   SkCanvas* canvas_;
   std::unique_ptr<SkCanvas> owned_;
   std::unique_ptr<SkCanvas> color_space_xform_canvas_;
-  std::unique_ptr<ImageProvider> image_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(SkiaPaintCanvas);
 };

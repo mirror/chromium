@@ -126,28 +126,6 @@ class SmbProviderClientImpl : public SmbProviderClient {
                &SmbProviderClientImpl::HandleReadFileCallback, &callback);
   }
 
-  void DeleteEntry(int32_t mount_id,
-                   const base::FilePath& entry_path,
-                   bool recursive,
-                   StatusCallback callback) override {
-    smbprovider::DeleteEntryOptions options;
-    options.set_mount_id(mount_id);
-    options.set_entry_path(entry_path.value());
-    options.set_recursive(recursive);
-    CallMethod(smbprovider::kDeleteEntryMethod, options,
-               &SmbProviderClientImpl::HandleDeleteEntryCallback, &callback);
-  }
-
-  void CreateFile(int32_t mount_id,
-                  const base::FilePath& file_path,
-                  StatusCallback callback) override {
-    smbprovider::CreateFileOptions options;
-    options.set_mount_id(mount_id);
-    options.set_file_path(file_path.value());
-    CallMethod(smbprovider::kCreateFileMethod, options,
-               &SmbProviderClientImpl::HandleCreateFileCallback, &callback);
-  }
-
  protected:
   // DBusClient override.
   void Init(dbus::Bus* bus) override {
@@ -263,28 +241,6 @@ class SmbProviderClientImpl : public SmbProviderClient {
       return;
     }
     std::move(callback).Run(smbprovider::ERROR_OK, fd);
-  }
-
-  // Handles D-Bus callback for DeleteEntry.
-  void HandleDeleteEntryCallback(StatusCallback callback,
-                                 dbus::Response* response) {
-    if (!response) {
-      DLOG(ERROR) << "DeleteEntry: failed to call smbprovider";
-      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
-    }
-    dbus::MessageReader reader(response);
-    std::move(callback).Run(GetErrorFromReader(&reader));
-  }
-
-  // Handles D-Bus callback for CreateFile.
-  void HandleCreateFileCallback(StatusCallback callback,
-                                dbus::Response* response) {
-    if (!response) {
-      DLOG(ERROR) << "CreateFile: failed to call smbprovider";
-      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
-    }
-    dbus::MessageReader reader(response);
-    std::move(callback).Run(GetErrorFromReader(&reader));
   }
 
   // Handles D-Bus responses for methods that return an error and a protobuf

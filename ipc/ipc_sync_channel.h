@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -70,7 +69,7 @@ class SyncMessage;
 // is more than this object.  If the message loop goes away while this object
 // is running and it's used to send a message, then it will use the invalid
 // message loop pointer to proxy it to the ipc thread.
-class COMPONENT_EXPORT(IPC) SyncChannel : public ChannelProxy {
+class IPC_EXPORT SyncChannel : public ChannelProxy {
  public:
   enum RestrictDispatchGroup {
     kRestrictDispatchGroup_None = 0,

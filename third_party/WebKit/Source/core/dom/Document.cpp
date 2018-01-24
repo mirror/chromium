@@ -2023,7 +2023,8 @@ void Document::PropagateStyleToViewport() {
   EOverflowAnchor overflow_anchor = EOverflowAnchor::kAuto;
   EOverflow overflow_x = EOverflow::kAuto;
   EOverflow overflow_y = EOverflow::kAuto;
-  GapLength column_gap;
+  bool column_gap_normal = true;
+  float column_gap = 0;
   if (overflow_style) {
     overflow_anchor = overflow_style->OverflowAnchor();
     overflow_x = overflow_style->OverflowX();
@@ -2039,7 +2040,10 @@ void Document::PropagateStyleToViewport() {
     // Column-gap is (ab)used by the current paged overflow implementation (in
     // lack of other ways to specify gaps between pages), so we have to
     // propagate it too.
-    column_gap = overflow_style->ColumnGap();
+    if (!overflow_style->HasNormalColumnGap()) {
+      column_gap_normal = false;
+      column_gap = overflow_style->ColumnGap();
+    }
   }
 
   ScrollSnapType snap_type = overflow_style->GetScrollSnapType();
@@ -2068,6 +2072,7 @@ void Document::PropagateStyleToViewport() {
       viewport_style->OverflowAnchor() != overflow_anchor ||
       viewport_style->OverflowX() != overflow_x ||
       viewport_style->OverflowY() != overflow_y ||
+      viewport_style->HasNormalColumnGap() != column_gap_normal ||
       viewport_style->ColumnGap() != column_gap ||
       viewport_style->GetScrollSnapType() != snap_type ||
       viewport_style->GetScrollBehavior() != scroll_behavior ||
@@ -2083,7 +2088,10 @@ void Document::PropagateStyleToViewport() {
     new_style->SetOverflowAnchor(overflow_anchor);
     new_style->SetOverflowX(overflow_x);
     new_style->SetOverflowY(overflow_y);
-    new_style->SetColumnGap(column_gap);
+    if (column_gap_normal)
+      new_style->SetHasNormalColumnGap();
+    else
+      new_style->SetColumnGap(column_gap);
     new_style->SetScrollSnapType(snap_type);
     new_style->SetScrollBehavior(scroll_behavior);
     new_style->SetOverscrollBehaviorX(overscroll_behavior_x);
@@ -4676,10 +4684,10 @@ void Document::SetCSSTarget(Element* new_target) {
 static void LiveNodeListBaseWriteBarrier(void* parent,
                                          const LiveNodeListBase* list) {
   if (IsHTMLCollectionType(list->GetType())) {
-    ScriptWrappableMarkingVisitor::WriteBarrier(
+    ScriptWrappableVisitor::WriteBarrier(
         static_cast<const HTMLCollection*>(list));
   } else {
-    ScriptWrappableMarkingVisitor::WriteBarrier(
+    ScriptWrappableVisitor::WriteBarrier(
         static_cast<const LiveNodeList*>(list));
   }
 }
@@ -5040,21 +5048,15 @@ void Document::WillChangeFrameOwnerProperties(int margin_width,
     }
   }
 
-  // body() may become null as a result of modification event listeners, so we
-  // check before each call.
-  if (margin_width != owner->MarginWidth()) {
-    if (auto* body_element = body()) {
-      body_element->SetIntegralAttribute(marginwidthAttr, margin_width);
-    }
-  }
-  if (margin_height != owner->MarginHeight()) {
-    if (auto* body_element = body()) {
-      body_element->SetIntegralAttribute(marginheightAttr, margin_height);
-    }
-  }
-  if (scrolling_mode != owner->ScrollingMode() && View()) {
+  if (!body())
+    return;
+
+  if (margin_width != owner->MarginWidth())
+    body()->SetIntegralAttribute(marginwidthAttr, margin_width);
+  if (margin_height != owner->MarginHeight())
+    body()->SetIntegralAttribute(marginheightAttr, margin_height);
+  if (scrolling_mode != owner->ScrollingMode() && View())
     View()->SetNeedsLayout();
-  }
 }
 
 bool Document::IsInInvisibleSubframe() const {

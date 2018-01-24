@@ -7,8 +7,6 @@
 
 #include <memory>
 
-#import <Foundation/Foundation.h>
-
 #include "base/macros.h"
 #include "ios/web/public/download/download_task_observer.h"
 #import "ios/web/public/web_state/web_state_observer.h"
@@ -49,9 +47,6 @@ class DownloadManagerTabHelper
 
   // web::DownloadTaskObserver overrides:
   void OnDownloadUpdated(web::DownloadTask* task) override;
-
-  // Returns key for using with NetworkActivityIndicatorManager.
-  NSString* GetNetworkActivityKey() const;
 
   web::WebState* web_state_ = nullptr;
   __weak id<DownloadManagerTabHelperDelegate> delegate_ = nil;

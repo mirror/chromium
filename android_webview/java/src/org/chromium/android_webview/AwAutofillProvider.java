@@ -236,7 +236,7 @@ public class AwAutofillProvider extends AutofillProvider {
 
     @Override
     public void autofill(final SparseArray<AutofillValue> values) {
-        if (mNativeAutofillProvider != 0 && mRequest != null && mRequest.autofill((values))) {
+        if (mNativeAutofillProvider != 0 && mRequest.autofill((values))) {
             autofill(mNativeAutofillProvider, mRequest.mFormData);
         }
     }
@@ -366,9 +366,8 @@ public class AwAutofillProvider extends AutofillProvider {
 
     @Override
     protected void reset() {
-        // We don't need to reset anything here, it should be safe to cancel
-        // current autofill session when new one starts in
-        // startAutofillSession().
+        mAutofillManager.cancel();
+        mRequest = null;
     }
 
     @Override
@@ -383,7 +382,7 @@ public class AwAutofillProvider extends AutofillProvider {
         // possible to know which case we're in, so just catch and
         // ignore the exception.
         try {
-            if (mNativeAutofillProvider != 0) mRequest = null;
+            if (mNativeAutofillProvider != 0) reset();
             mNativeAutofillProvider = nativeAutofillProvider;
             if (nativeAutofillProvider == 0) mAutofillManager.destroy();
         } catch (IllegalStateException e) {
@@ -393,7 +392,7 @@ public class AwAutofillProvider extends AutofillProvider {
     @Override
     public void setWebContents(WebContents webContents) {
         if (webContents == mWebContents) return;
-        if (mWebContents != null) mRequest = null;
+        if (mWebContents != null) reset();
         mWebContents = webContents;
     }
 

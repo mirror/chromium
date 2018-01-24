@@ -37,43 +37,28 @@ using cssvalue::ToCSSConicGradientValue;
 using cssvalue::ToCSSLinearGradientValue;
 using cssvalue::ToCSSRadialGradientValue;
 
-Image* GeneratedImageCache::GetImage(const FloatSize& size) const {
+Image* GeneratedImageCache::GetImage(const LayoutSize& size) const {
   if (size.IsEmpty())
     return nullptr;
-
-  DCHECK(sizes_.find(size) != sizes_.end());
-  GeneratedImageMap::const_iterator image_iter = images_.find(size);
-  if (image_iter == images_.end())
-    return nullptr;
-  return image_iter->second.get();
+  return images_.at(size);
 }
 
-void GeneratedImageCache::PutImage(const FloatSize& size,
+void GeneratedImageCache::PutImage(const LayoutSize& size,
                                    scoped_refptr<Image> image) {
-  DCHECK(!size.IsEmpty());
-  images_.insert(
-      std::pair<FloatSize, scoped_refptr<Image>>(size, std::move(image)));
+  images_.insert(size, std::move(image));
 }
 
-void GeneratedImageCache::AddSize(const FloatSize& size) {
-  DCHECK(!size.IsEmpty());
-  ImageSizeCountMap::iterator size_entry = sizes_.find(size);
-  if (size_entry == sizes_.end())
-    sizes_.insert(std::pair<FloatSize, unsigned>(size, 1));
-  else
-    size_entry->second++;
+void GeneratedImageCache::AddSize(const LayoutSize& size) {
+  if (size.IsEmpty())
+    return;
+  sizes_.insert(size);
 }
 
-void GeneratedImageCache::RemoveSize(const FloatSize& size) {
-  DCHECK(!size.IsEmpty());
-  SECURITY_DCHECK(sizes_.find(size) != sizes_.end());
-  unsigned& count = sizes_[size];
-  count--;
-  if (count == 0) {
-    DCHECK(images_.find(size) != images_.end());
-    sizes_.erase(sizes_.find(size));
-    images_.erase(images_.find(size));
-  }
+void GeneratedImageCache::RemoveSize(const LayoutSize& size) {
+  if (size.IsEmpty())
+    return;
+  if (sizes_.erase(size))
+    images_.erase(size);
 }
 
 CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
@@ -81,16 +66,23 @@ CSSImageGeneratorValue::CSSImageGeneratorValue(ClassType class_type)
 
 CSSImageGeneratorValue::~CSSImageGeneratorValue() = default;
 
-void CSSImageGeneratorValue::AddClient(const ImageResourceObserver* client) {
+void CSSImageGeneratorValue::AddClient(const ImageResourceObserver* client,
+                                       const LayoutSize& size) {
   DCHECK(client);
   if (clients_.IsEmpty()) {
     DCHECK(!keep_alive_);
     keep_alive_ = this;
   }
 
-  SizeAndCount& size_count =
-      clients_.insert(client, SizeAndCount()).stored_value->value;
-  size_count.count++;
+  cached_images_.AddSize(size);
+
+  ClientSizeCountMap::iterator it = clients_.find(client);
+  if (it == clients_.end()) {
+    clients_.insert(client, SizeAndCount(size, 1));
+  } else {
+    SizeAndCount& size_count = it->value;
+    ++size_count.count;
+  }
 }
 
 CSSImageGeneratorValue* CSSImageGeneratorValue::ValueWithURLsMadeAbsolute() {
@@ -105,10 +97,7 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
   SECURITY_DCHECK(it != clients_.end());
 
   SizeAndCount& size_count = it->value;
-  if (!size_count.size.IsEmpty()) {
-    cached_images_.RemoveSize(size_count.size);
-    size_count.size = FloatSize();
-  }
+  cached_images_.RemoveSize(size_count.size);
 
   if (!--size_count.count)
     clients_.erase(client);
@@ -120,27 +109,24 @@ void CSSImageGeneratorValue::RemoveClient(const ImageResourceObserver* client) {
 }
 
 Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
-                                        const FloatSize& size) {
+                                        const LayoutSize& size) {
   ClientSizeCountMap::iterator it = clients_.find(client);
   if (it != clients_.end()) {
     DCHECK(keep_alive_);
     SizeAndCount& size_count = it->value;
     if (size_count.size != size) {
-      if (!size_count.size.IsEmpty()) {
-        cached_images_.RemoveSize(size_count.size);
-        size_count.size = FloatSize();
-      }
+      cached_images_.RemoveSize(size_count.size);
+      cached_images_.AddSize(size);
 
-      if (!size.IsEmpty()) {
-        cached_images_.AddSize(size);
+      // If there's only one use for this client, then update the size.
+      if (size_count.count == 1)
         size_count.size = size;
-      }
     }
   }
   return cached_images_.GetImage(size);
 }
 
-void CSSImageGeneratorValue::PutImage(const FloatSize& size,
+void CSSImageGeneratorValue::PutImage(const LayoutSize& size,
                                       scoped_refptr<Image> image) {
   cached_images_.PutImage(size, std::move(image));
 }
@@ -149,23 +135,23 @@ scoped_refptr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const FloatSize& target_size) {
+    const LayoutSize& container_size) {
   switch (GetClassType()) {
     case kCrossfadeClass:
       return ToCSSCrossfadeValue(this)->GetImage(client, document, style,
-                                                 target_size);
+                                                 container_size);
     case kLinearGradientClass:
       return ToCSSLinearGradientValue(this)->GetImage(client, document, style,
-                                                      target_size);
+                                                      container_size);
     case kPaintClass:
       return ToCSSPaintValue(this)->GetImage(client, document, style,
-                                             target_size);
+                                             container_size);
     case kRadialGradientClass:
       return ToCSSRadialGradientValue(this)->GetImage(client, document, style,
-                                                      target_size);
+                                                      container_size);
     case kConicGradientClass:
       return ToCSSConicGradientValue(this)->GetImage(client, document, style,
-                                                     target_size);
+                                                     container_size);
     default:
       NOTREACHED();
   }

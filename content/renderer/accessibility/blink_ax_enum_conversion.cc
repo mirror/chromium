@@ -46,13 +46,13 @@ uint32_t AXStateFromBlink(const blink::WebAXObject& o) {
   if (o.IsRequired())
     state |= (1 << ui::AX_STATE_REQUIRED);
 
-  if (o.IsSelected() != blink::kWebAXSelectedStateUndefined)
+  if (o.CanSetSelectedAttribute())
     state |= (1 << ui::AX_STATE_SELECTABLE);
 
   if (o.IsEditable())
     state |= (1 << ui::AX_STATE_EDITABLE);
 
-  if (o.IsSelected() == blink::kWebAXSelectedStateTrue)
+  if (o.IsSelected())
     state |= (1 << ui::AX_STATE_SELECTED);
 
   if (o.IsRichlyEditable())

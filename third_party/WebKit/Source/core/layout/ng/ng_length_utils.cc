@@ -397,7 +397,7 @@ int ResolveUsedColumnCount(LayoutUnit available_size,
       style.HasAutoColumnWidth()
           ? NGSizeIndefinite
           : std::max(LayoutUnit(1), LayoutUnit(style.ColumnWidth()));
-  LayoutUnit gap = ResolveUsedColumnGap(available_size, style);
+  LayoutUnit gap = ResolveUsedColumnGap(style);
   int computed_count = style.ColumnCount();
   return ResolveUsedColumnCount(computed_count, computed_column_inline_size,
                                 gap, available_size);
@@ -423,16 +423,15 @@ LayoutUnit ResolveUsedColumnInlineSize(LayoutUnit available_size,
           ? NGSizeIndefinite
           : std::max(LayoutUnit(1), LayoutUnit(style.ColumnWidth()));
   int computed_count = style.HasAutoColumnCount() ? 0 : style.ColumnCount();
-  LayoutUnit used_gap = ResolveUsedColumnGap(available_size, style);
+  LayoutUnit used_gap = ResolveUsedColumnGap(style);
   return ResolveUsedColumnInlineSize(computed_count, computed_size, used_gap,
                                      available_size);
 }
 
-LayoutUnit ResolveUsedColumnGap(LayoutUnit available_size,
-                                const ComputedStyle& style) {
-  if (style.ColumnGap().IsNormal())
+LayoutUnit ResolveUsedColumnGap(const ComputedStyle& style) {
+  if (style.HasNormalColumnGap())
     return LayoutUnit(style.GetFontDescription().ComputedPixelSize());
-  return ValueForLength(style.ColumnGap().GetLength(), available_size);
+  return LayoutUnit(style.ColumnGap());
 }
 
 NGPhysicalBoxStrut ComputePhysicalMargins(

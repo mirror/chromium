@@ -636,9 +636,7 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest, SheetPosition) {
   EXPECT_FALSE([popupController hasToolbar]);
 
   // Open sheet in an application window.
-  NSWindowController* nsWindowController = [popupController nsWindowController];
-  EXPECT_TRUE(nsWindowController);
-  [nsWindowController showWindow:nil];
+  [popupController showWindow:nil];
   sheetLocation = [popupController window:popupWindow
                         willPositionSheet:sheet
                                 usingRect:defaultLocation];
@@ -646,7 +644,7 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest, SheetPosition) {
 
   // Close the application window.
   popup_browser->tab_strip_model()->CloseSelectedTabs();
-  [nsWindowController close];
+  [popupController close];
 }
 
 // Verify that the info bar tip is hidden when the toolbar is not visible.

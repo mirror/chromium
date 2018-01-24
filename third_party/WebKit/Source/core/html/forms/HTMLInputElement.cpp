@@ -128,7 +128,7 @@ HTMLInputElement* HTMLInputElement::Create(Document& document,
       new HTMLInputElement(document, created_by_parser);
   if (!created_by_parser) {
     DCHECK(input_element->input_type_view_->NeedsShadowSubtree());
-    input_element->CreateUserAgentShadowRoot();
+    input_element->CreateUserAgentShadowRootV1();
     input_element->CreateShadowSubtree();
   }
   return input_element;
@@ -381,7 +381,7 @@ void HTMLInputElement::InitializeTypeInParsing() {
   has_been_password_field_ |= new_type_name == InputTypeNames::password;
 
   if (input_type_view_->NeedsShadowSubtree()) {
-    CreateUserAgentShadowRoot();
+    CreateUserAgentShadowRootV1();
     CreateShadowSubtree();
   }
 
@@ -440,7 +440,7 @@ void HTMLInputElement::UpdateType() {
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
   if (input_type_view_->NeedsShadowSubtree()) {
-    EnsureUserAgentShadowRoot();
+    EnsureUserAgentShadowRootV1();
     CreateShadowSubtree();
   }
 
@@ -958,14 +958,6 @@ bool HTMLInputElement::HasBeenPasswordField() const {
 void HTMLInputElement::DispatchChangeEventIfNeeded() {
   if (isConnected() && input_type_->ShouldSendChangeEventAfterCheckedChanged())
     DispatchChangeEvent();
-}
-
-void HTMLInputElement::DispatchInputAndChangeEventIfNeeded() {
-  if (isConnected() &&
-      input_type_->ShouldSendChangeEventAfterCheckedChanged()) {
-    DispatchInputEvent();
-    DispatchChangeEvent();
-  }
 }
 
 bool HTMLInputElement::checked() const {
@@ -1725,6 +1717,14 @@ String HTMLInputElement::GetPlaceholderValue() const {
   return !SuggestedValue().IsEmpty() ? SuggestedValue() : StrippedPlaceholder();
 }
 
+bool HTMLInputElement::SupportsAutocapitalize() const {
+  return input_type_->SupportsAutocapitalize();
+}
+
+const AtomicString& HTMLInputElement::DefaultAutocapitalize() const {
+  return input_type_->DefaultAutocapitalize();
+}
+
 String HTMLInputElement::DefaultToolTip() const {
   return input_type_->DefaultToolTip(*input_type_view_);
 }
@@ -1949,7 +1949,7 @@ void HTMLInputElement::ChildrenChanged(const ChildrenChange& change) {
   // Some input types only need shadow roots to hide any children that may
   // have been appended by script. For such types, shadow roots are lazily
   // created when children are added for the first time.
-  EnsureUserAgentShadowRoot();
+  EnsureUserAgentShadowRootV1();
   ContainerNode::ChildrenChanged(change);
 }
 

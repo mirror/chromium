@@ -68,9 +68,6 @@ class CORE_EXPORT HTMLElement : public Element {
   // use this function in Blink.
   bool isContentEditableForBinding() const;
 
-  virtual const AtomicString& autocapitalize() const;
-  void setAutocapitalize(const AtomicString&);
-
   virtual bool draggable() const;
   void setDraggable(bool);
 

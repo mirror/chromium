@@ -297,16 +297,18 @@
   [self.NTPMediator dismissModals];
 }
 
+- (void)dismissKeyboard {
+}
+
+- (void)setScrollsToTop:(BOOL)enable {
+}
+
 - (CGPoint)scrollOffset {
   CGPoint collectionOffset =
       self.suggestionsViewController.collectionView.contentOffset;
   collectionOffset.y -=
       self.headerCollectionInteractionHandler.collectionShiftingOffset;
   return collectionOffset;
-}
-
-- (void)willUpdateSnapshot {
-  [self.suggestionsViewController clearOverscroll];
 }
 
 @end

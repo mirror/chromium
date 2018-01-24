@@ -9,13 +9,28 @@
 
 namespace blink {
 
-// This visitor should be applied on wrapper members of each marked object
-// after marking is complete. The Visit method checks that the given wrapper
-// is also marked.
 class ScriptWrappableVisitorVerifier final : public ScriptWrappableVisitor {
+ public:
+  // The verifier deque should contain all objects encountered during marking.
+  // For each object in the deque the verifier checks that all children of
+  // the object are marked.
+  ScriptWrappableVisitorVerifier(
+      v8::Isolate* isolate,
+      const WTF::Deque<WrapperMarkingData>* verifier_deque)
+      : ScriptWrappableVisitor(isolate), verifier_deque_(verifier_deque) {}
+
+  void MarkWrappersInAllWorlds(const ScriptWrappable*) const final {}
+
+  void Verify() {
+    for (auto& marking_data : *verifier_deque_) {
+      // Check that all children of this object are marked.
+      marking_data.TraceWrappers(this);
+    }
+  }
+
  protected:
   void Visit(const TraceWrapperV8Reference<v8::Value>&) const final {}
-  void Visit(const WrapperDescriptor& wrapper_descriptor) const final {
+  void Visit(const WrapperDescriptor& wrapper_descriptor) const override {
     HeapObjectHeader* header = wrapper_descriptor.heap_object_header_callback(
         wrapper_descriptor.traceable);
     if (!header->IsWrapperHeaderMarked()) {
@@ -33,8 +48,9 @@ class ScriptWrappableVisitorVerifier final : public ScriptWrappableVisitor {
       NOTREACHED();
     }
   }
-  void Visit(DOMWrapperMap<ScriptWrappable>*,
-             const ScriptWrappable* key) const final {}
+
+ private:
+  const WTF::Deque<WrapperMarkingData>* verifier_deque_;
 };
 }
 #endif

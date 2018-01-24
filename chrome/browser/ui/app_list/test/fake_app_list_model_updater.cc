@@ -104,10 +104,6 @@ FakeAppListModelUpdater::GetIdToAppListIndexMap() {
   return id_to_app_list_index;
 }
 
-size_t FakeAppListModelUpdater::BadgedItemCount() {
-  return 0u;
-}
-
 bool FakeAppListModelUpdater::SearchEngineIsGoogle() {
   return search_engine_is_google_;
 }

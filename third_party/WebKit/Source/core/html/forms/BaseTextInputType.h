@@ -54,6 +54,7 @@ class BaseTextInputType : public TextFieldInputType {
   bool PatternMismatch(const String&) const final;
   bool SupportsPlaceholder() const final;
   bool SupportsSelectionAPI() const override;
+  bool SupportsAutocapitalize() const override;
 
   // m_regexp and m_patternForRegexp are mutable because they are kinds of
   // cache.

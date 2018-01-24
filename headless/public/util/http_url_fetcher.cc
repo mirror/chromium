@@ -221,11 +221,9 @@ void HttpURLFetcher::Delegate::OnResponseCompleted(net::URLRequest* request,
   // TODO(alexclarke) apart from the headers there's a lot of stuff in
   // |request->response_info()| that we drop here.  Find a way to pipe it
   // through.
-  // TODO(jzfeng) fill in the real total received bytes from network.
   result_listener_->OnFetchComplete(
       request->url(), request->response_info().headers,
-      bytes_read_so_far_.c_str(), bytes_read_so_far_.size(), load_timing_info,
-      0);
+      bytes_read_so_far_.c_str(), bytes_read_so_far_.size(), load_timing_info);
 }
 
 HttpURLFetcher::HttpURLFetcher(

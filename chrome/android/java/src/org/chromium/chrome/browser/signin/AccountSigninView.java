@@ -152,7 +152,6 @@ public class AccountSigninView extends FrameLayout {
     private UserRecoverableErrorHandler.ModalDialog mGooglePlayServicesUpdateErrorHandler;
     private AlertDialog mGmsIsUpdatingDialog;
     private long mGmsIsUpdatingDialogShowTime;
-    private boolean mShouldShowConfirmationPageWhenAttachedToWindow;
 
     private AccountSigninConfirmationView mSigninConfirmationView;
     private ImageView mSigninAccountImage;
@@ -250,7 +249,7 @@ public class AccountSigninView extends FrameLayout {
                 String accountName = arguments.getString(ARGUMENT_ACCOUNT_NAME);
                 assert accountName != null;
                 boolean isDefaultAccount = arguments.getBoolean(ARGUMENT_IS_DEFAULT_ACCOUNT, false);
-                showConfirmationPageForAccount(accountName, isDefaultAccount);
+                showConfirmSigninPageAccountTrackerServiceCheck(accountName, isDefaultAccount);
                 triggerUpdateAccounts();
                 break;
             }
@@ -312,10 +311,6 @@ public class AccountSigninView extends FrameLayout {
         triggerUpdateAccounts();
         AccountManagerFacade.get().addObserver(mAccountsChangedObserver);
         mProfileDataCache.addObserver(mProfileDataCacheObserver);
-        if (mShouldShowConfirmationPageWhenAttachedToWindow) {
-            // Can happen if init is invoked before attaching to window (https://crbug.com/800665).
-            seedAccountsAndShowConfirmationPage();
-        }
     }
 
     @Override
@@ -439,7 +434,7 @@ public class AccountSigninView extends FrameLayout {
         }
 
         if (shouldJumpToConfirmationScreen) {
-            showConfirmationPageForSelectedAccount();
+            showConfirmSigninPageAccountTrackerServiceCheck();
         }
     }
 
@@ -563,7 +558,7 @@ public class AccountSigninView extends FrameLayout {
         triggerUpdateAccounts();
     }
 
-    private void showConfirmationPage() {
+    private void showConfirmSigninPage() {
         updateSignedInAccountInfo();
         mProfileDataCache.update(Collections.singletonList(mSelectedAccountName));
 
@@ -590,29 +585,26 @@ public class AccountSigninView extends FrameLayout {
                         new SpanInfo(SETTINGS_LINK_OPEN, SETTINGS_LINK_CLOSE, settingsSpan)));
     }
 
-    private void showConfirmationPageForSelectedAccount() {
+    private void showConfirmSigninPageAccountTrackerServiceCheck() {
         int index = mSigninChooseView.getSelectedAccountPosition();
-        showConfirmationPageForAccount(mAccountNames.get(index), index == 0);
+        showConfirmSigninPageAccountTrackerServiceCheck(mAccountNames.get(index), index == 0);
     }
 
-    private void showConfirmationPageForAccount(String accountName, boolean isDefaultAccount) {
+    private void showConfirmSigninPageAccountTrackerServiceCheck(
+            final String accountName, final boolean isDefaultAccount) {
         assert accountName != null;
-
         // Disable the buttons to prevent them being clicked again while waiting for the callbacks.
         setButtonsEnabled(false);
 
         mSelectedAccountName = accountName;
         mIsDefaultAccountSelected = isDefaultAccount;
-        seedAccountsAndShowConfirmationPage();
-    }
 
-    private void seedAccountsAndShowConfirmationPage() {
         // Ensure that the AccountTrackerService has a fully up to date GAIA id <-> email mapping,
         // as this is needed for the previous account check.
         final long seedingStartTime = SystemClock.elapsedRealtime();
         if (AccountTrackerService.get().checkAndSeedSystemAccounts()) {
             recordAccountTrackerServiceSeedingTime(seedingStartTime);
-            runStateMachineAndShowConfirmationPage();
+            showConfirmSigninPagePreviousAccountCheck();
         } else {
             AccountTrackerService.get().addSystemAccountsSeededListener(
                     new OnSystemAccountsSeededListener() {
@@ -622,9 +614,7 @@ public class AccountSigninView extends FrameLayout {
                             recordAccountTrackerServiceSeedingTime(seedingStartTime);
                             // Don't show dialogs and confirmation page if activity was destroyed.
                             if (ViewCompat.isAttachedToWindow(AccountSigninView.this)) {
-                                runStateMachineAndShowConfirmationPage();
-                            } else {
-                                mShouldShowConfirmationPageWhenAttachedToWindow = true;
+                                showConfirmSigninPagePreviousAccountCheck();
                             }
                         }
 
@@ -634,7 +624,7 @@ public class AccountSigninView extends FrameLayout {
         }
     }
 
-    private void runStateMachineAndShowConfirmationPage() {
+    private void showConfirmSigninPagePreviousAccountCheck() {
         mConfirmSyncDataStateMachine = new ConfirmSyncDataStateMachine(getContext(),
                 mDelegate.getFragmentManager(), ImportSyncType.PREVIOUS_DATA_FOUND,
                 PrefServiceBridge.getInstance().getSyncLastAccountName(), mSelectedAccountName,
@@ -643,7 +633,7 @@ public class AccountSigninView extends FrameLayout {
                     public void onConfirm(boolean wipeData) {
                         mConfirmSyncDataStateMachine = null;
                         SigninManager.wipeSyncUserDataIfRequired(wipeData).then(
-                                (Void v) -> showConfirmationPage());
+                                (Void v) -> showConfirmSigninPage());
                     }
 
                     @Override
@@ -673,7 +663,8 @@ public class AccountSigninView extends FrameLayout {
     private void setUpSigninButton(boolean hasAccounts) {
         if (hasAccounts) {
             mPositiveButton.setText(R.string.continue_sign_in);
-            mPositiveButton.setOnClickListener(view -> showConfirmationPageForSelectedAccount());
+            mPositiveButton.setOnClickListener(
+                    view -> showConfirmSigninPageAccountTrackerServiceCheck());
         } else {
             mPositiveButton.setText(R.string.choose_account_sign_in);
             mPositiveButton.setOnClickListener(view -> {

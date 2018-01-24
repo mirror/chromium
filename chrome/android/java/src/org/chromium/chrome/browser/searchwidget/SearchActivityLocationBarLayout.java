@@ -151,9 +151,4 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
             }
         });
     }
-
-    @Override
-    public boolean useModernDesign() {
-        return false;
-    }
 }

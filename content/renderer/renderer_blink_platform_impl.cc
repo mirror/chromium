@@ -41,6 +41,7 @@
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/media_stream_utils.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/renderer/accessibility/aom_content_ax_tree.h"
 #include "content/renderer/blob_storage/webblobregistry_impl.h"
 #include "content/renderer/cache_storage/webserviceworkercachestorage_impl.h"
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
@@ -398,6 +399,12 @@ void RendererBlinkPlatformImpl::SetCompositorThread(
   compositor_thread_ = compositor_thread;
   if (compositor_thread_)
     WaitUntilWebThreadTLSUpdate(compositor_thread_);
+}
+
+blink::ComputedAXTree* RendererBlinkPlatformImpl::GetOrCreateComputedAXTree() {
+  if (!computed_ax_tree_)
+    computed_ax_tree_ = std::make_unique<content::AomContentAxTree>();
+  return computed_ax_tree_.get();
 }
 
 blink::WebThread* RendererBlinkPlatformImpl::CurrentThread() {
@@ -1133,7 +1140,6 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
       web_attributes.support_stencil || web_attributes.support_antialias;
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
-  attributes.enable_raster_interface = web_attributes.enable_raster_interface;
   // Prefer discrete GPU for WebGL.
   attributes.gpu_preference = gl::PreferDiscreteGpu;
 

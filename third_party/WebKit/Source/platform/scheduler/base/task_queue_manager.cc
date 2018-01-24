@@ -849,9 +849,8 @@ base::TimeTicks TaskQueueManager::NowTicks() const {
 }
 
 bool TaskQueueManager::ShouldRecordCPUTimeForTask() {
-  return base::ThreadTicks::IsSupported() &&
-         uniform_distribution_(random_generator_) <
-             kSamplingRateForRecordingCPUTime;
+  return uniform_distribution_(random_generator_) <
+         kSamplingRateForRecordingCPUTime;
 }
 
 void TaskQueueManager::SetRandomSeed(uint64_t value) {

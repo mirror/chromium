@@ -26,9 +26,8 @@ struct WorkerBackingThreadStartupData;
 // ShutdownOnBackingThread() when it no longer needs the thread.
 class CORE_EXPORT WorkerBackingThread final {
  public:
-  static std::unique_ptr<WorkerBackingThread> Create(
-      const WebThreadCreationParams& params) {
-    return WTF::WrapUnique(new WorkerBackingThread(params, false));
+  static std::unique_ptr<WorkerBackingThread> Create(const char* name) {
+    return WTF::WrapUnique(new WorkerBackingThread(name, false));
   }
   static std::unique_ptr<WorkerBackingThread> Create(WebThread* thread) {
     return WTF::WrapUnique(new WorkerBackingThread(thread, false));
@@ -36,9 +35,8 @@ class CORE_EXPORT WorkerBackingThread final {
 
   // These are needed to suppress leak reports. See
   // https://crbug.com/590802 and https://crbug.com/v8/1428.
-  static std::unique_ptr<WorkerBackingThread> CreateForTest(
-      const WebThreadCreationParams& params) {
-    return WTF::WrapUnique(new WorkerBackingThread(params, true));
+  static std::unique_ptr<WorkerBackingThread> CreateForTest(const char* name) {
+    return WTF::WrapUnique(new WorkerBackingThread(name, true));
   }
   static std::unique_ptr<WorkerBackingThread> CreateForTest(WebThread* thread) {
     return WTF::WrapUnique(new WorkerBackingThread(thread, true));
@@ -66,8 +64,7 @@ class CORE_EXPORT WorkerBackingThread final {
   static void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode);
 
  private:
-  WorkerBackingThread(const WebThreadCreationParams&,
-                      bool should_call_gc_on_shutdown);
+  WorkerBackingThread(const char* name, bool should_call_gc_on_shutdown);
   WorkerBackingThread(WebThread*, bool should_call_gc_on_s_hutdown);
 
   std::unique_ptr<WebThreadSupportingGC> backing_thread_;

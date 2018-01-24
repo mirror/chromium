@@ -53,7 +53,7 @@ public class OfflineGroupHeaderView
         mCheckedIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
         mIconBackgroundResId = R.drawable.list_item_icon_modern_bg;
 
-        if (FeatureUtilities.isChromeModernDesignEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
             mIconForegroundColorList = ApiCompatibilityUtils.getColorStateList(
                     context.getResources(), R.color.dark_mode_tint);
         } else {
@@ -118,7 +118,7 @@ public class OfflineGroupHeaderView
 
     private void updateCheckIcon(boolean checked) {
         if (checked) {
-            if (FeatureUtilities.isChromeModernDesignEnabled()) {
+            if (FeatureUtilities.isChromeHomeEnabled()) {
                 mIconImageView.setBackgroundResource(mIconBackgroundResId);
                 mIconImageView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_selected));
@@ -130,7 +130,7 @@ public class OfflineGroupHeaderView
             mIconImageView.setTint(mCheckedIconForegroundColorList);
             mCheckDrawable.start();
         } else {
-            if (FeatureUtilities.isChromeModernDesignEnabled()) {
+            if (FeatureUtilities.isChromeHomeEnabled()) {
                 mIconImageView.setBackgroundResource(mIconBackgroundResId);
                 mIconImageView.getBackground().setLevel(
                         getResources().getInteger(R.integer.list_item_level_default));

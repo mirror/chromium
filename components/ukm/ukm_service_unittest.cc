@@ -5,7 +5,6 @@
 #include "components/ukm/ukm_service.h"
 
 #include <map>
-#include <memory>
 #include <string>
 #include <utility>
 
@@ -125,7 +124,7 @@ class UkmServiceTest : public testing::Test {
   Report GetPersistedReport() {
     EXPECT_GE(GetPersistedLogCount(), 1);
     metrics::PersistedLogs result_persisted_logs(
-        std::make_unique<ukm::PersistedLogsMetricsImpl>(), &prefs_,
+        base::MakeUnique<ukm::PersistedLogsMetricsImpl>(), &prefs_,
         prefs::kUkmPersistedLogs,
         3,     // log count limit
         1000,  // byte limit

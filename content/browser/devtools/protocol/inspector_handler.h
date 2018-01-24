@@ -26,7 +26,7 @@ class InspectorHandler : public DevToolsDomainHandler,
       DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(int process_host_id,
+  void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host) override;
 
   void TargetCrashed();

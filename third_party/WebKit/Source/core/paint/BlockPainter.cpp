@@ -96,8 +96,9 @@ void BlockPainter::PaintOverflowControlsIfNeeded(
                             PixelSnappedIntRect(clip_rect));
     }
     ScrollableAreaPainter(*layout_block_.Layer()->GetScrollableArea())
-        .PaintOverflowControls(paint_info, RoundedIntPoint(paint_offset),
-                               false /* painting_overlay_controls */);
+        .PaintOverflowControls(
+            paint_info.context, RoundedIntPoint(paint_offset),
+            paint_info.GetCullRect(), false /* paintingOverlayControls */);
   }
 }
 

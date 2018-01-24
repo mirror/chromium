@@ -28,26 +28,22 @@ suite('network-config', function() {
     networkConfig = document.createElement('network-config');
     networkConfig.networkingPrivate = api_;
     networkConfig.networkProperties = networkProperties;
-  }
-
-  function initNetworkConfig() {
     document.body.appendChild(networkConfig);
     networkConfig.init();
     Polymer.dom.flush();
-  }
+  };
 
   function flushAsync() {
     Polymer.dom.flush();
     return new Promise(resolve => {
       networkConfig.async(resolve);
     });
-  }
+  };
 
   suite('New WiFi Config', function() {
     setup(function() {
       api_.resetForTest();
       setNetworkConfig({GUID: '', Name: '', Type: 'WiFi'});
-      initNetworkConfig();
     });
 
     teardown(function() {
@@ -73,7 +69,6 @@ suite('network-config', function() {
       };
       api_.addNetworksForTest([network]);
       setNetworkConfig({GUID: 'someguid', Name: '', Type: 'WiFi'});
-      initNetworkConfig();
     });
 
     teardown(function() {
@@ -84,7 +79,7 @@ suite('network-config', function() {
       return flushAsync().then(() => {
         assertEquals('someguid', networkConfig.networkProperties.GUID);
         assertEquals('somename', networkConfig.networkProperties.Name);
-        assertFalse(!!networkConfig.$$('#share'));
+        assertTrue(!!networkConfig.$$('#share'));
         assertTrue(!!networkConfig.$$('#ssid'));
         assertTrue(!!networkConfig.$$('#security'));
         assertTrue(networkConfig.$$('#security').disabled);
@@ -105,27 +100,26 @@ suite('network-config', function() {
       // Networks must be shared.
       networkConfig.shareAllowEnable = false;
       networkConfig.shareDefault = true;
-    }
+    };
 
     function setKiosk() {
       // New networks can not be shared.
       networkConfig.shareAllowEnable = false;
       networkConfig.shareDefault = false;
-    }
+    };
 
     function setAuthenticated() {
       // Logged in users can share new networks.
       networkConfig.shareAllowEnable = true;
       // Authenticated networks default to not shared.
       networkConfig.shareDefault = false;
-    }
+    };
 
     test('New Config: Login or guest', function() {
-      // Insecure networks are always shared so test a secure config.
-      setNetworkConfig(
-          {GUID: '', Name: '', Type: 'WiFi', WiFi: {Security: 'WEP-PSK'}});
+      setNetworkConfig({GUID: '', Name: '', Type: 'WiFi'});
       setLoginOrGuest();
-      initNetworkConfig();
+      // Insecure networks are always shared so test a secure config.
+      networkConfig.security_ = 'WEP-PSK';
       return flushAsync().then(() => {
         let share = networkConfig.$$('#share');
         assertTrue(!!share);
@@ -135,11 +129,10 @@ suite('network-config', function() {
     });
 
     test('New Config: Kiosk', function() {
-      // Insecure networks are always shared so test a secure config.
-      setNetworkConfig(
-          {GUID: '', Name: '', Type: 'WiFi', WiFi: {Security: 'WEP-PSK'}});
+      setNetworkConfig({GUID: '', Name: '', Type: 'WiFi'});
       setKiosk();
-      initNetworkConfig();
+      // Insecure networks are always shared so test a secure config.
+      networkConfig.security_ = 'WEP-PSK';
       return flushAsync().then(() => {
         let share = networkConfig.$$('#share');
         assertTrue(!!share);
@@ -149,10 +142,8 @@ suite('network-config', function() {
     });
 
     test('New Config: Authenticated, Not secure', function() {
-      setNetworkConfig(
-          {GUID: '', Name: '', Type: 'WiFi', WiFi: {Security: 'None'}});
+      setNetworkConfig({GUID: '', Name: '', Type: 'WiFi'});
       setAuthenticated();
-      initNetworkConfig();
       return flushAsync().then(() => {
         let share = networkConfig.$$('#share');
         assertTrue(!!share);
@@ -162,10 +153,9 @@ suite('network-config', function() {
     });
 
     test('New Config: Authenticated, Secure', function() {
-      setNetworkConfig(
-          {GUID: '', Name: '', Type: 'WiFi', WiFi: {Security: 'WEP-PSK'}});
+      setNetworkConfig({GUID: '', Name: '', Type: 'WiFi'});
       setAuthenticated();
-      initNetworkConfig();
+      networkConfig.security_ = 'WEP-PSK';
       return flushAsync().then(() => {
         let share = networkConfig.$$('#share');
         assertTrue(!!share);
@@ -174,8 +164,28 @@ suite('network-config', function() {
       });
     });
 
-    // Existing networks hide the shared control in the config UI.
-    test('Existing Hides Shared', function() {
+    // Existing networks can not change their shared state.
+
+    test('Existing Shared', function() {
+      var network = {
+        GUID: 'someguid',
+        Name: 'somename',
+        Source: 'Device',
+        Type: 'WiFi',
+        WiFi: {SSID: 'somessid', Security: 'None'}
+      };
+      api_.addNetworksForTest([network]);
+      setNetworkConfig({GUID: 'someguid', Name: '', Type: 'WiFi'});
+      setAuthenticated();
+      return flushAsync().then(() => {
+        let share = networkConfig.$$('#share');
+        assertTrue(!!share);
+        assertTrue(share.disabled);
+        assertTrue(share.checked);
+      });
+    });
+
+    test('Existing Not Shared', function() {
       var network = {
         GUID: 'someguid',
         Name: 'somename',
@@ -186,9 +196,11 @@ suite('network-config', function() {
       api_.addNetworksForTest([network]);
       setNetworkConfig({GUID: 'someguid', Name: '', Type: 'WiFi'});
       setAuthenticated();
-      initNetworkConfig();
       return flushAsync().then(() => {
-        assertFalse(!!networkConfig.$$('#share'));
+        let share = networkConfig.$$('#share');
+        assertTrue(!!share);
+        assertTrue(share.disabled);
+        assertFalse(share.checked);
       });
     });
 
@@ -201,7 +213,6 @@ suite('network-config', function() {
       };
       api_.addNetworksForTest([ethernet]);
       setNetworkConfig({GUID: 'ethernetguid', Name: '', Type: 'Ethernet'});
-      initNetworkConfig();
       return flushAsync().then(() => {
         assertEquals('ethernetguid', networkConfig.guid);
         assertEquals('None', networkConfig.security_);
@@ -228,7 +239,6 @@ suite('network-config', function() {
       };
       api_.addNetworksForTest([ethernet, ethernetEap]);
       setNetworkConfig({GUID: 'ethernetguid', Name: '', Type: 'Ethernet'});
-      initNetworkConfig();
       return flushAsync().then(() => {
         assertEquals('eapguid', networkConfig.guid);
         assertEquals('WPA-EAP', networkConfig.security_);

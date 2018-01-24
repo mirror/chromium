@@ -129,10 +129,11 @@ class CacheStorageBlobToDiskCacheTest : public testing::Test {
   }
 
   void InitBlob() {
-    auto blob_data =
-        std::make_unique<storage::BlobDataBuilder>("blob-id:myblob");
+    std::unique_ptr<storage::BlobDataBuilder> blob_data(
+        new storage::BlobDataBuilder("blob-id:myblob"));
     blob_data->AppendData(data_);
-    blob_handle_ = blob_storage_context_->AddFinishedBlob(std::move(blob_data));
+
+    blob_handle_ = blob_storage_context_->AddFinishedBlob(blob_data.get());
   }
 
   void InitCache() {

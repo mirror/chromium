@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <iterator>
-#include <memory>
 #include <utility>
 
 #include "base/auto_reset.h"
@@ -243,7 +242,7 @@ std::unique_ptr<base::Value> PrefModelAssociator::MergePreference(
     if (client_->IsMergeableListPreference(name))
       return MergeListValues(local_value, server_value);
     if (client_->IsMergeableDictionaryPreference(name)) {
-      return std::make_unique<base::Value>(
+      return base::MakeUnique<base::Value>(
           MergeDictionaryValues(local_value, server_value));
     }
   }
@@ -428,7 +427,7 @@ void PrefModelAssociator::AddSyncedPrefObserver(const std::string& name,
   std::unique_ptr<SyncedPrefObserverList>& observers =
       synced_pref_observers_[name];
   if (!observers)
-    observers = std::make_unique<SyncedPrefObserverList>();
+    observers = base::MakeUnique<SyncedPrefObserverList>();
 
   observers->AddObserver(observer);
 }

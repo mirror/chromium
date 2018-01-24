@@ -77,7 +77,7 @@ bool IsEmptyBlock(const NGLayoutInputNode child,
   // writing mode child will be caught by the CreatesNewFormattingContext check.
   NGFragment fragment(child.Style().GetWritingMode(),
                       *layout_result.PhysicalFragment());
-  DCHECK_EQ(LayoutUnit(), fragment.BlockSize()) << child.ToString();
+  DCHECK_EQ(LayoutUnit(), fragment.BlockSize());
 #endif
 
   return true;
@@ -498,7 +498,6 @@ scoped_refptr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
 
   container_builder_.SetEndMarginStrut(end_margin_strut);
   container_builder_.SetIntrinsicBlockSize(intrinsic_block_size_);
-  container_builder_.SetPadding(ComputePadding(ConstraintSpace(), Style()));
 
   // We only finalize for fragmentation if the fragment has a BFC offset. This
   // may occur with a zero block size fragment. We need to know the BFC offset

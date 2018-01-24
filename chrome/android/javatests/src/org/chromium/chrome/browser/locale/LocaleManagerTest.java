@@ -41,7 +41,7 @@ public class LocaleManagerTest {
                     ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
                             .handleSynchronousStartup();
                 } catch (ProcessInitException e) {
-                    throw new AssertionError("Failed to load browser.", e);
+                    Assert.fail("Failed to load browser");
                 }
             }
         });

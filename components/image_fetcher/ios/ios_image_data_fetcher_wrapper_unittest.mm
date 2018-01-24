@@ -6,11 +6,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <memory>
-
 #include "base/ios/ios_util.h"
 #include "base/mac/scoped_block.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
@@ -112,7 +111,7 @@ class IOSImageDataFetcherWrapperTest : public PlatformTest {
           result_ = [UIImage imageWithData:data];
           called_ = true;
         } copy]) {
-    image_fetcher_ = std::make_unique<IOSImageDataFetcherWrapper>(
+    image_fetcher_ = base::MakeUnique<IOSImageDataFetcherWrapper>(
         new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get()));
   }

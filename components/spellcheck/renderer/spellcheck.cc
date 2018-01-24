@@ -7,7 +7,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <algorithm>
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -31,6 +30,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_visitor.h"
 #include "content/public/renderer/render_thread.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -171,16 +171,22 @@ class SpellCheck::SpellcheckRequest {
 // values.
 // TODO(groby): Simplify this.
 SpellCheck::SpellCheck(
-    service_manager::BinderRegistry* registry,
     service_manager::LocalInterfaceProvider* embedder_provider)
-    : embedder_provider_(embedder_provider),
-      spellcheck_enabled_(true),
-      weak_factory_(this) {
-  if (!registry)
+    : embedder_provider_(embedder_provider), spellcheck_enabled_(true) {
+  if (!content::ChildThread::Get())
     return;  // Can be NULL in tests.
+
+  auto* service_manager_connection =
+      content::ChildThread::Get()->GetServiceManagerConnection();
+  DCHECK(service_manager_connection);
+
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(base::BindRepeating(&SpellCheck::SpellCheckerRequest,
-                                             weak_factory_.GetWeakPtr()),
+                                             base::Unretained(this)),
                          base::ThreadTaskRunnerHandle::Get());
+
+  service_manager_connection->AddConnectionFilter(
+      base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
 }
 
 SpellCheck::~SpellCheck() {
@@ -259,7 +265,7 @@ void SpellCheck::CustomDictionaryChanged(
 void SpellCheck::AddSpellcheckLanguage(base::File file,
                                        const std::string& language) {
   languages_.push_back(
-      std::make_unique<SpellcheckLanguage>(embedder_provider_));
+      base::MakeUnique<SpellcheckLanguage>(embedder_provider_));
   languages_.back()->Init(std::move(file), language);
 }
 

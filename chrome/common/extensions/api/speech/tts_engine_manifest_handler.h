@@ -25,16 +25,6 @@ struct TtsVoice {
   std::string gender;
   bool remote;
   std::set<std::string> event_types;
-};
-
-struct TtsVoices : public Extension::ManifestData {
-  TtsVoices();
-  ~TtsVoices() override;
-  static bool Parse(const base::ListValue* tts_voices,
-                    TtsVoices* out_voices,
-                    base::string16* error);
-
-  std::vector<extensions::TtsVoice> voices;
 
   static const std::vector<TtsVoice>* GetTtsVoices(const Extension* extension);
 };

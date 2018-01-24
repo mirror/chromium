@@ -20,7 +20,6 @@
 #include "media/base/key_systems.h"
 #include "media/blink/webcontentdecryptionmodule_impl.h"
 #include "media/blink/webcontentdecryptionmodulesession_impl.h"
-#include "media/cdm/cdm_context_ref_impl.h"
 #include "url/origin.h"
 
 namespace media {
@@ -138,15 +137,8 @@ void CdmSessionAdapter::RemoveSession(
   cdm_->RemoveSession(session_id, std::move(promise));
 }
 
-std::unique_ptr<CdmContextRef> CdmSessionAdapter::GetCdmContextRef() {
-  DVLOG(2) << __func__;
-
-  if (!cdm_->GetCdmContext()) {
-    NOTREACHED() << "All CDMs should support CdmContext.";
-    return nullptr;
-  }
-
-  return std::make_unique<CdmContextRefImpl>(cdm_);
+scoped_refptr<ContentDecryptionModule> CdmSessionAdapter::GetCdm() {
+  return cdm_;
 }
 
 const std::string& CdmSessionAdapter::GetKeySystem() const {

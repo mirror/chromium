@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "components/content_settings/core/common/content_settings_pattern_parser.h"
@@ -321,7 +322,7 @@ const int ContentSettingsPattern::kContentSettingsPatternVersion = 1;
 
 // static
 std::unique_ptr<BuilderInterface> ContentSettingsPattern::CreateBuilder() {
-  return std::make_unique<Builder>();
+  return base::MakeUnique<Builder>();
 }
 
 // static

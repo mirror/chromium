@@ -530,18 +530,16 @@ cr.define('print_preview', function() {
      */
     fetchMatchingDestination_(destinationMatch) {
       this.autoSelectMatchingDestination_ = destinationMatch;
-      const types = destinationMatch.getTypes();
-      types.forEach(type => {
-        if (type != null) {  // Local, extension, or privet printer
-          this.startLoadDestinations(type);
-        } else if (
-            destinationMatch.matchOrigin(
-                print_preview.DestinationOrigin.COOKIES) ||
-            destinationMatch.matchOrigin(
-                print_preview.DestinationOrigin.DEVICE)) {
-          this.startLoadCloudDestinations();
-        }
-      });
+      const type = destinationMatch.getType();
+      if (type != null) {  // Local, Privet, or Extension.
+        this.startLoadDestinations(type);
+      } else if (
+          destinationMatch.matchOrigin(
+              print_preview.DestinationOrigin.COOKIES) ||
+          destinationMatch.matchOrigin(
+              print_preview.DestinationOrigin.DEVICE)) {
+        this.startLoadCloudDestinations();
+      }
     }
 
     /**

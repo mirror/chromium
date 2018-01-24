@@ -25,6 +25,7 @@
 #include "components/viz/common/gpu/raster_context_provider.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/raster_interface.h"
+#include "gpu_image_decode_cache.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
@@ -559,10 +560,7 @@ GpuImageDecodeCache::GpuImageDecodeCache(viz::RasterContextProvider* context,
   // Acquire the context_lock so that we can safely retrieve
   // |max_texture_size_|.
   {
-    base::Optional<viz::RasterContextProvider::ScopedRasterContextLock>
-        context_lock;
-    if (context_->GetLock())
-      context_lock.emplace(context_);
+    viz::RasterContextProvider::ScopedRasterContextLock context_lock(context_);
     max_texture_size_ = context_->GrContext()->caps()->maxTextureSize();
   }
 
@@ -705,7 +703,7 @@ DecodedDrawImage GpuImageDecodeCache::GetDecodedImageForDraw(
 
   // We are being called during raster. The context lock must already be
   // acquired by the caller.
-  CheckContextLockAcquiredIfNecessary();
+  context_->GetLock()->AssertAcquired();
 
   // If we're skipping the image, then the filter quality doesn't matter.
   if (SkipImage(draw_image))
@@ -777,7 +775,7 @@ void GpuImageDecodeCache::DrawWithImageFinished(
 
   // We are being called during raster. The context lock must already be
   // acquired by the caller.
-  CheckContextLockAcquiredIfNecessary();
+  context_->GetLock()->AssertAcquired();
 
   if (SkipImage(draw_image))
     return;
@@ -800,12 +798,10 @@ void GpuImageDecodeCache::ReduceCacheUsage() {
   // This is typically called when no tasks are running (between scheduling
   // tasks). Try to lock and run pending operations if possible, but don't
   // block on it.
-  if (context_->GetLock() && !context_->GetLock()->Try())
-    return;
-
-  RunPendingContextThreadOperations();
-  if (context_->GetLock())
+  if (context_->GetLock()->Try()) {
+    RunPendingContextThreadOperations();
     context_->GetLock()->Release();
+  }
 }
 
 void GpuImageDecodeCache::SetShouldAggressivelyFreeResources(
@@ -814,11 +810,7 @@ void GpuImageDecodeCache::SetShouldAggressivelyFreeResources(
                "GpuImageDecodeCache::SetShouldAggressivelyFreeResources",
                "agressive_free_resources", aggressively_free_resources);
   if (aggressively_free_resources) {
-    base::Optional<viz::RasterContextProvider::ScopedRasterContextLock>
-        context_lock;
-    if (context_->GetLock())
-      context_lock.emplace(context_);
-
+    viz::RasterContextProvider::ScopedRasterContextLock context_lock(context_);
     base::AutoLock lock(lock_);
     aggressively_freeing_resources_ = aggressively_free_resources;
     EnsureCapacity(0);
@@ -964,11 +956,7 @@ void GpuImageDecodeCache::DecodeImage(const DrawImage& draw_image,
 void GpuImageDecodeCache::UploadImage(const DrawImage& draw_image) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "GpuImageDecodeCache::UploadImage");
-  base::Optional<viz::RasterContextProvider::ScopedRasterContextLock>
-      context_lock;
-  if (context_->GetLock())
-    context_lock.emplace(context_);
-
+  viz::RasterContextProvider::ScopedRasterContextLock context_lock(context_);
   base::AutoLock lock(lock_);
   ImageData* image_data = GetImageDataForDrawImage(draw_image);
   DCHECK(image_data);
@@ -1215,9 +1203,9 @@ void GpuImageDecodeCache::OwnershipChanged(const DrawImage& draw_image,
 #endif
 }
 
-// Checks whether we can fit a new image of size |required_size| in our
-// working set. Also frees unreferenced entries to keep us below our preferred
-// items limit.
+// Ensures that we can fit a new image of size |required_size| in our working
+// set. In doing so, this function will free unreferenced image data as
+// necessary to create rooom.
 bool GpuImageDecodeCache::EnsureCapacity(size_t required_size) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "GpuImageDecodeCache::EnsureCapacity");
@@ -1226,10 +1214,12 @@ bool GpuImageDecodeCache::EnsureCapacity(size_t required_size) {
   lifetime_max_items_in_cache_ =
       std::max(lifetime_max_items_in_cache_, persistent_cache_.size());
 
-  // While we are over preferred item capacity, we iterate through our set of
-  // cached image data in LRU order, removing unreferenced images.
-  for (auto it = persistent_cache_.rbegin();
-       it != persistent_cache_.rend() && ExceedsPreferredCount();) {
+  if (CanFitInWorkingSet(required_size) && !ExceedsPreferredCount())
+    return true;
+
+  // While we are over memory or preferred item capacity, we iterate through
+  // our set of cached image data in LRU order, removing unreferenced images.
+  for (auto it = persistent_cache_.rbegin(); it != persistent_cache_.rend();) {
     if (it->second->decode.ref_count != 0 ||
         it->second->upload.ref_count != 0) {
       ++it;
@@ -1238,19 +1228,22 @@ bool GpuImageDecodeCache::EnsureCapacity(size_t required_size) {
 
     // Current entry has no refs. Ensure it is not locked.
     DCHECK(!it->second->decode.is_locked());
-    DCHECK(!it->second->upload.is_locked());
 
-    // Unlocked images must not be budgeted.
-    DCHECK(!it->second->upload.budgeted);
+    // If an image without refs is budgeted, it must have an associated image
+    // upload.
+    DCHECK(!it->second->upload.budgeted || it->second->HasUploadedData());
 
     // Free the uploaded image if it exists.
     if (it->second->HasUploadedData())
       DeleteImage(it->second.get());
 
     it = persistent_cache_.Erase(it);
+
+    if (CanFitInWorkingSet(required_size) && !ExceedsPreferredCount())
+      return true;
   }
 
-  return CanFitInWorkingSet(required_size);
+  return false;
 }
 
 bool GpuImageDecodeCache::CanFitInWorkingSet(size_t size) const {
@@ -1346,7 +1339,7 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
 
 void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
                                                  ImageData* image_data) {
-  CheckContextLockAcquiredIfNecessary();
+  context_->GetLock()->AssertAcquired();
   lock_.AssertAcquired();
 
   // We are about to upload a new image and are holding the context lock.
@@ -1377,15 +1370,7 @@ void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
       return;
 
     ClientImageTransferCacheEntry image_entry(&pixmap, nullptr);
-    size_t size = image_entry.SerializedSize();
-    void* data = context_->ContextSupport()->MapTransferCacheEntry(size);
-    // TODO(piman): handle error (failed to allocate/map shm)
-    DCHECK(data);
-    bool succeeded = image_entry.Serialize(
-        base::make_span(reinterpret_cast<uint8_t*>(data), size));
-    DCHECK(succeeded);
-    context_->ContextSupport()->UnmapAndCreateTransferCacheEntry(
-        image_entry.UnsafeType(), image_entry.Id());
+    context_->ContextSupport()->CreateTransferCacheEntry(image_entry);
     image_data->upload.SetTransferCacheId(image_entry.Id());
   } else {
     DCHECK(!use_transfer_cache_);
@@ -1498,7 +1483,7 @@ void GpuImageDecodeCache::UnlockImage(ImageData* image_data) {
 // we need to call GlIdFromSkImage, which flushes pending IO on the image,
 // rather than just using a cached GL ID.
 void GpuImageDecodeCache::RunPendingContextThreadOperations() {
-  CheckContextLockAcquiredIfNecessary();
+  context_->GetLock()->AssertAcquired();
   lock_.AssertAcquired();
 
   for (auto* image : images_pending_complete_lock_) {
@@ -1519,8 +1504,8 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
   images_pending_unlock_.clear();
 
   for (auto id : ids_pending_unlock_) {
-    context_->ContextSupport()->UnlockTransferCacheEntries({std::make_pair(
-        static_cast<uint32_t>(TransferCacheEntryType::kImage), id)});
+    context_->ContextSupport()->UnlockTransferCacheEntries(
+        {std::make_pair(TransferCacheEntryType::kImage, id)});
   }
   ids_pending_unlock_.clear();
 
@@ -1535,9 +1520,9 @@ void GpuImageDecodeCache::RunPendingContextThreadOperations() {
 
   for (auto id : ids_pending_deletion_) {
     if (context_->ContextSupport()->ThreadsafeLockTransferCacheEntry(
-            static_cast<uint32_t>(TransferCacheEntryType::kImage), id)) {
+            TransferCacheEntryType::kImage, id)) {
       context_->ContextSupport()->DeleteTransferCacheEntry(
-          static_cast<uint32_t>(TransferCacheEntryType::kImage), id);
+          TransferCacheEntryType::kImage, id);
     }
   }
   ids_pending_deletion_.clear();
@@ -1565,7 +1550,7 @@ bool GpuImageDecodeCache::TryLockImage(HaveContextLock have_context_lock,
     DCHECK(use_transfer_cache_);
     DCHECK(data->upload.transfer_cache_id());
     if (context_->ContextSupport()->ThreadsafeLockTransferCacheEntry(
-            static_cast<uint32_t>(TransferCacheEntryType::kImage),
+            TransferCacheEntryType::kImage,
             *data->upload.transfer_cache_id())) {
       data->upload.OnLock();
       return true;
@@ -1704,12 +1689,6 @@ bool GpuImageDecodeCache::SupportsColorSpaces() const {
     default:
       return false;
   }
-}
-
-void GpuImageDecodeCache::CheckContextLockAcquiredIfNecessary() {
-  if (!context_->GetLock())
-    return;
-  context_->GetLock()->AssertAcquired();
 }
 
 }  // namespace cc

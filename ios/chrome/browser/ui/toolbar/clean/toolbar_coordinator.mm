@@ -215,9 +215,11 @@
 }
 
 - (void)updateToolbarState {
-  // TODO(crbug.com/803383): This should be done inside the location bar.
   // Updates the omnibox.
   [self.locationBarCoordinator updateOmniboxState];
+  // Updates the toolbar buttons.
+  if ([self getWebState])
+    [self.mediator updateConsumerForWebState:[self getWebState]];
 }
 
 - (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {

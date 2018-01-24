@@ -20,15 +20,6 @@ FakeSensor::FakeSensor(device::mojom::SensorType sensor_type)
   shared_buffer_handle_ = mojo::SharedBufferHandle::Create(
       sizeof(device::SensorReadingSharedBuffer) *
       static_cast<uint64_t>(device::mojom::SensorType::LAST));
-
-  if (!shared_buffer_handle_.is_valid())
-    return;
-
-  // Create read/write mapping now, to ensure it is kept writable
-  // after the region is sealed read-only on Android.
-  shared_buffer_mapping_ = shared_buffer_handle_->MapAtOffset(
-      device::mojom::SensorInitParams::kReadBufferSizeForTests,
-      GetBufferOffset());
 }
 
 FakeSensor::~FakeSensor() = default;
@@ -90,12 +81,16 @@ void FakeSensor::SetReading(device::SensorReading reading) {
 }
 
 void FakeSensor::SensorReadingChanged() {
-  if (!shared_buffer_mapping_.get())
+  if (!shared_buffer_handle_.is_valid())
     return;
 
-  auto* buffer = static_cast<device::SensorReadingSharedBuffer*>(
-      shared_buffer_mapping_.get());
+  mojo::ScopedSharedBufferMapping shared_buffer =
+      shared_buffer_handle_->MapAtOffset(
+          device::mojom::SensorInitParams::kReadBufferSizeForTests,
+          GetBufferOffset());
 
+  device::SensorReadingSharedBuffer* buffer =
+      static_cast<device::SensorReadingSharedBuffer*>(shared_buffer.get());
   auto& seqlock = buffer->seqlock.value();
   seqlock.WriteBegin();
   buffer->reading = reading_;
@@ -164,11 +159,9 @@ void FakeSensorProvider::GetSensor(device::mojom::SensorType type,
 
     mojo::MakeStrongBinding(std::move(sensor),
                             mojo::MakeRequest(&init_params->sensor));
-    std::move(callback).Run(device::mojom::SensorCreationResult::SUCCESS,
-                            std::move(init_params));
+    std::move(callback).Run(std::move(init_params));
   } else {
-    std::move(callback).Run(
-        device::mojom::SensorCreationResult::ERROR_NOT_AVAILABLE, nullptr);
+    std::move(callback).Run(nullptr);
   }
 }
 

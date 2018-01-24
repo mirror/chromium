@@ -5,7 +5,6 @@
 #include "components/dom_distiller/core/distiller.h"
 
 #include <map>
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -126,7 +125,7 @@ void DistillerImpl::DistillNextPage() {
     DCHECK(started_pages_index_.find(page_num) == started_pages_index_.end());
     DCHECK(finished_pages_index_.find(page_num) == finished_pages_index_.end());
     seen_urls_.insert(url.spec());
-    pages_.push_back(std::make_unique<DistilledPageData>());
+    pages_.push_back(base::MakeUnique<DistilledPageData>());
     started_pages_index_[page_num] = pages_.size() - 1;
     distiller_page_->DistillPage(
         url,

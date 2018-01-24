@@ -139,7 +139,7 @@ public class ShareIntentTest {
         try {
             mockActivity.waitForFileCheck();
         } catch (InterruptedException e) {
-            throw new AssertionError("Test thread was interrupted while trying to wait.", e);
+            assert false : "Test thread was interrupted while trying to wait.";
         }
 
         ShareHelper.setLastShareComponentName(new ComponentName("", ""), null);

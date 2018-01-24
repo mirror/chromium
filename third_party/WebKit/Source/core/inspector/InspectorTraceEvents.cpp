@@ -42,7 +42,6 @@
 #include "platform/wtf/DynamicAnnotations.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/TextPosition.h"
-#include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
 #include "v8/include/v8-profiler.h"
 #include "v8/include/v8.h"
 
@@ -335,17 +334,18 @@ String UrlForFrame(LocalFrame* frame) {
 const char* CompileOptionsString(v8::ScriptCompiler::CompileOptions options) {
   switch (options) {
     case v8::ScriptCompiler::kNoCompileOptions:
-      return "code";
+      return "no";
     case v8::ScriptCompiler::kProduceParserCache:
       return "parser";
     case v8::ScriptCompiler::kConsumeParserCache:
       return "parser";
+    case v8::ScriptCompiler::kProduceCodeCache:
+      return "code";
+    case v8::ScriptCompiler::kProduceFullCodeCache:
+      return "full code";
     case v8::ScriptCompiler::kConsumeCodeCache:
       return "code";
-    case v8::ScriptCompiler::kEagerCompile:
-      return "full code";
-    case v8::ScriptCompiler::kProduceCodeCache:
-    case v8::ScriptCompiler::kProduceFullCodeCache:
+    default:
       NOTREACHED();
   }
   NOTREACHED();
@@ -687,8 +687,6 @@ std::unique_ptr<TracedValue> InspectorSendRequestEvent::Data(
     LocalFrame* frame,
     const ResourceRequest& request) {
   String request_id = IdentifiersFactory::RequestId(loader, identifier);
-  if (request.GetFrameType() != network::mojom::RequestContextFrameType::kNone)
-    request_id = IdentifiersFactory::LoaderId(loader);
 
   std::unique_ptr<TracedValue> value = TracedValue::Create();
   value->SetString("requestId", request_id);
@@ -1056,8 +1054,8 @@ InspectorCompileScriptEvent::V8CacheResult::ProduceResult::ProduceResult(
     int cache_size)
     : produce_options(produce_options), cache_size(cache_size) {
   DCHECK(produce_options == v8::ScriptCompiler::kProduceParserCache ||
-         produce_options == v8::ScriptCompiler::kNoCompileOptions ||
-         produce_options == v8::ScriptCompiler::kEagerCompile);
+         produce_options == v8::ScriptCompiler::kProduceCodeCache ||
+         produce_options == v8::ScriptCompiler::kProduceFullCodeCache);
 }
 
 InspectorCompileScriptEvent::V8CacheResult::ConsumeResult::ConsumeResult(

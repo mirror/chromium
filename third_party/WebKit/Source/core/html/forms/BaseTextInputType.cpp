@@ -120,4 +120,8 @@ bool BaseTextInputType::SupportsSelectionAPI() const {
   return true;
 }
 
+bool BaseTextInputType::SupportsAutocapitalize() const {
+  return true;
+}
+
 }  // namespace blink

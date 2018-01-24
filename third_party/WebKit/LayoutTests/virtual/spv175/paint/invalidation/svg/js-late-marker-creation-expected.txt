@@ -19,7 +19,7 @@
         {
           "object": "LayoutSVGPath path",
           "rect": [189, 197, 139, 139],
-          "reason": "full"
+          "reason": "style change"
         }
       ]
     }
@@ -27,7 +27,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutSVGPath path",
-      "reason": "full"
+      "reason": "style change"
     }
   ]
 }

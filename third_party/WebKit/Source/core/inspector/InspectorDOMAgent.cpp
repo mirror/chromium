@@ -1386,7 +1386,7 @@ String InspectorDOMAgent::DocumentBaseURLString(Document* document) {
 static protocol::DOM::ShadowRootType GetShadowRootType(
     ShadowRoot* shadow_root) {
   switch (shadow_root->GetType()) {
-    case ShadowRootType::kUserAgent:
+    case ShadowRootType::kUserAgentV1:
       return protocol::DOM::ShadowRootTypeEnum::UserAgent;
     case ShadowRootType::V0:
     case ShadowRootType::kOpen:
@@ -2196,23 +2196,6 @@ protocol::Response InspectorDOMAgent::describeNode(
     return Response::Error("Node not found");
   *result = BuildObjectForNode(node, depth.fromMaybe(0),
                                pierce.fromMaybe(false), nullptr, nullptr);
-  return Response::OK();
-}
-
-protocol::Response InspectorDOMAgent::getFrameOwner(const String& frame_id,
-                                                    int* node_id) {
-  Frame* frame = inspected_frames_->Root();
-  for (; frame; frame = frame->Tree().TraverseNext(inspected_frames_->Root())) {
-    if (frame->GetDevToolsFrameToken() == frame_id)
-      break;
-  }
-  if (!frame || !frame->Owner()->IsLocal())
-    return Response::Error("Frame with given id does not belong to target.");
-  HTMLFrameOwnerElement* frame_owner = ToHTMLFrameOwnerElement(frame->Owner());
-  if (!frame_owner)
-    return Response::Error("No iframe owner for given node");
-  *node_id =
-      PushNodePathToFrontend(frame_owner, document_node_to_id_map_.Get());
   return Response::OK();
 }
 

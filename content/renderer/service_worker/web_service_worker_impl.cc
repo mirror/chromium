@@ -11,7 +11,9 @@
 #include "content/child/thread_safe_sender.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
+#include "content/renderer/service_worker/service_worker_handle_reference.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
+#include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -42,17 +44,18 @@ class ServiceWorkerHandleImpl : public blink::WebServiceWorker::Handle {
 }  // namespace
 
 WebServiceWorkerImpl::WebServiceWorkerImpl(
-    blink::mojom::ServiceWorkerObjectInfoPtr info,
+    std::unique_ptr<ServiceWorkerHandleReference> handle_ref,
     ThreadSafeSender* thread_safe_sender)
-    : info_(std::move(info)),
-      state_(info_->state),
+    : handle_ref_(std::move(handle_ref)),
+      state_(handle_ref_->state()),
       thread_safe_sender_(thread_safe_sender),
       proxy_(nullptr) {
-  DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId, info_->handle_id);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId,
+            handle_ref_->handle_id());
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
-  dispatcher->AddServiceWorker(info_->handle_id, this);
+  dispatcher->AddServiceWorker(handle_ref_->handle_id(), this);
 }
 
 void WebServiceWorkerImpl::OnStateChanged(
@@ -74,7 +77,7 @@ blink::WebServiceWorkerProxy* WebServiceWorkerImpl::Proxy() {
 }
 
 blink::WebURL WebServiceWorkerImpl::Url() const {
-  return info_->url;
+  return handle_ref_->url();
 }
 
 blink::mojom::ServiceWorkerState WebServiceWorkerImpl::GetState() const {
@@ -87,14 +90,14 @@ void WebServiceWorkerImpl::PostMessageToWorker(
     const WebSecurityOrigin& source_origin,
     blink::WebVector<blink::MessagePortChannel> channels) {
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_PostMessageToWorker(
-      info_->handle_id,
+      handle_ref_->handle_id(),
       static_cast<WebServiceWorkerProviderImpl*>(provider)->provider_id(),
       message.Utf16(), url::Origin(source_origin), channels.ReleaseVector()));
 }
 
 void WebServiceWorkerImpl::Terminate() {
   thread_safe_sender_->Send(
-      new ServiceWorkerHostMsg_TerminateWorker(info_->handle_id));
+      new ServiceWorkerHostMsg_TerminateWorker(handle_ref_->handle_id()));
 }
 
 // static
@@ -110,7 +113,7 @@ WebServiceWorkerImpl::~WebServiceWorkerImpl() {
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   if (dispatcher)
-    dispatcher->RemoveServiceWorker(info_->handle_id);
+    dispatcher->RemoveServiceWorker(handle_ref_->handle_id());
 }
 
 }  // namespace content

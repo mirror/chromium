@@ -494,8 +494,9 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
   if (using_browser_compositor_) {
     viz::FrameSinkId frame_sink_id =
         host_->AllocateFrameSinkId(false /* is_guest_view_hack */);
-    delegated_frame_host_ = std::make_unique<ui::DelegatedFrameHostAndroid>(
-        &view_, CompositorImpl::GetHostFrameSinkManager(), this, frame_sink_id);
+    delegated_frame_host_.reset(new ui::DelegatedFrameHostAndroid(
+        &view_, CompositorImpl::GetHostFrameSinkManager(),
+        CompositorImpl::GetFrameSinkManager(), this, frame_sink_id));
 
     // Let the page-level input event router know about our frame sink ID
     // for surface-based hit testing.
@@ -1696,7 +1697,8 @@ void RenderWidgetHostViewAndroid::SendBeginFrame(viz::BeginFrameArgs args) {
   args.deadline = sync_compositor_ ? base::TimeTicks()
   : args.frame_time + (args.interval * 0.6);
   if (sync_compositor_) {
-    sync_compositor_->SendBeginFrame(view_.GetWindowAndroid(), args);
+    host_->Send(new ViewMsg_BeginFrame(host_->GetRoutingID(), args));
+    sync_compositor_->DidSendBeginFrame(view_.GetWindowAndroid());
   } else if (renderer_compositor_frame_sink_) {
     renderer_compositor_frame_sink_->OnBeginFrame(args);
   }
@@ -2298,8 +2300,10 @@ void RenderWidgetHostViewAndroid::SendBeginFramePaused() {
   bool paused = begin_frame_paused_ || !observing_root_window_;
 
   if (!using_browser_compositor_) {
-    if (sync_compositor_)
-      sync_compositor_->SetBeginFramePaused(paused);
+    if (host_) {
+      host_->Send(
+          new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), paused));
+    }
   } else if (renderer_compositor_frame_sink_) {
     renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
   }

@@ -45,7 +45,7 @@ FaceDetector::FaceDetector(ExecutionContext* context,
 }
 
 ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
-                                     SkBitmap bitmap) {
+                                     skia::mojom::blink::BitmapPtr bitmap) {
   ScriptPromise promise = resolver->Promise();
   if (!face_service_) {
     resolver->Reject(DOMException::Create(

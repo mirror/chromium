@@ -15,6 +15,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "components/cryptauth/mock_cryptauth_client.h"
 #include "components/cryptauth/remote_device.h"
 #include "components/cryptauth/remote_device_test_util.h"
@@ -68,10 +69,10 @@ class DeviceCapabilityManagerImplTest
 
   void SetUp() override {
     mock_cryptauth_client_factory_ =
-        std::make_unique<MockCryptAuthClientFactory>(
+        base::MakeUnique<MockCryptAuthClientFactory>(
             MockCryptAuthClientFactory::MockType::MAKE_NICE_MOCKS);
     mock_cryptauth_client_factory_->AddObserver(this);
-    device_capability_manager_ = std::make_unique<DeviceCapabilityManagerImpl>(
+    device_capability_manager_ = base::MakeUnique<DeviceCapabilityManagerImpl>(
         mock_cryptauth_client_factory_.get());
   }
 

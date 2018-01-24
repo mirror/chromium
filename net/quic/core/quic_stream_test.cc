@@ -146,11 +146,6 @@ class QuicStreamTest : public QuicTestWithParam<bool> {
     return QuicConsumedData(1, false);
   }
 
-  bool ClearControlFrame(const QuicFrame& frame) {
-    DeleteFrame(&const_cast<QuicFrame&>(frame));
-    return true;
-  }
-
  protected:
   MockQuicConnectionHelper helper_;
   MockAlarmFactory alarm_factory_;
@@ -449,13 +444,7 @@ TEST_F(QuicStreamTest, StopReadingSendsFlowControl) {
   EXPECT_CALL(*connection_,
               CloseConnection(QUIC_FLOW_CONTROL_RECEIVED_TOO_MUCH_DATA, _, _))
       .Times(0);
-  if (session_->use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_))
-        .Times(AtLeast(1))
-        .WillRepeatedly(Invoke(this, &QuicStreamTest::ClearControlFrame));
-  } else {
-    EXPECT_CALL(*connection_, SendWindowUpdate(_, _)).Times(AtLeast(1));
-  }
+  EXPECT_CALL(*connection_, SendWindowUpdate(_, _)).Times(AtLeast(1));
 
   string data(1000, 'x');
   for (QuicStreamOffset offset = 0;
@@ -687,8 +676,7 @@ TEST_F(QuicStreamTest, StreamWaitsForAcks) {
   EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_TRUE(stream_->IsWaitingForAcks());
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(9, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero());
   // Stream is not waiting for acks as all sent data is acked.
   EXPECT_FALSE(stream_->IsWaitingForAcks());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
@@ -708,16 +696,14 @@ TEST_F(QuicStreamTest, StreamWaitsForAcks) {
 
   // kData2 is acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(9, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero());
   // Stream is waiting for acks as FIN is not acked.
   EXPECT_TRUE(stream_->IsWaitingForAcks());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
 
   // FIN is acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(0, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(18, 0, true, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(18, 0, true, QuicTime::Delta::Zero());
   EXPECT_FALSE(stream_->IsWaitingForAcks());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
 }
@@ -734,19 +720,15 @@ TEST_F(QuicStreamTest, StreamDataGetAckedOutOfOrder) {
   EXPECT_EQ(3u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_TRUE(stream_->IsWaitingForAcks());
 
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero());
   EXPECT_EQ(3u, QuicStreamPeer::SendBuffer(stream_).size());
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(18, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(18, 9, false, QuicTime::Delta::Zero());
   EXPECT_EQ(3u, QuicStreamPeer::SendBuffer(stream_).size());
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   // FIN is not acked yet.
   EXPECT_TRUE(stream_->IsWaitingForAcks());
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(27, 0, true, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(27, 0, true, QuicTime::Delta::Zero());
   EXPECT_FALSE(stream_->IsWaitingForAcks());
 }
 
@@ -1062,41 +1044,35 @@ TEST_F(QuicStreamTest, StreamDataGetAckedMultipleTimes) {
   // Ack [0, 9), [5, 22) and [18, 26)
   // Verify [0, 9) 9 bytes are acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(9, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(0, 9, false, QuicTime::Delta::Zero());
   EXPECT_EQ(2u, QuicStreamPeer::SendBuffer(stream_).size());
   // Verify [9, 22) 13 bytes are acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(13, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(5, 17, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(5, 17, false, QuicTime::Delta::Zero());
   EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
   // Verify [22, 26) 4 bytes are acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(4, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(18, 8, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(18, 8, false, QuicTime::Delta::Zero());
   EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_TRUE(stream_->IsWaitingForAcks());
 
   // Ack [0, 27).
   // Verify [26, 27) 1 byte is acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(1, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(26, 1, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(26, 1, false, QuicTime::Delta::Zero());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_TRUE(stream_->IsWaitingForAcks());
 
   // Ack Fin. Verify OnPacketAcked is called.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(0, _));
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(27, 0, true, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(27, 0, true, QuicTime::Delta::Zero());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_FALSE(stream_->IsWaitingForAcks());
 
   // Ack [10, 27) and fin.
   // No new data is acked, verify OnPacketAcked is not called.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(_, _)).Times(0);
-  EXPECT_FALSE(
-      stream_->OnStreamFrameAcked(10, 17, true, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(10, 17, true, QuicTime::Delta::Zero());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_FALSE(stream_->IsWaitingForAcks());
 }
@@ -1148,8 +1124,7 @@ TEST_F(QuicStreamTest, OnStreamFrameLost) {
   EXPECT_TRUE(stream_->HasPendingRetransmission());
 
   // Ack [9, 18).
-  EXPECT_TRUE(
-      stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero()));
+  stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero());
   EXPECT_TRUE(stream_->HasPendingRetransmission());
   // This OnCanWrite causes [18, 27) and fin to be retransmitted. Verify fin can
   // be bundled with data.
@@ -1188,37 +1163,6 @@ TEST_F(QuicStreamTest, CannotBundleLostFin) {
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
       .WillOnce(Return(QuicConsumedData(0, true)));
   stream_->OnCanWrite();
-}
-
-TEST_F(QuicStreamTest, MarkConnectionLevelWriteBlockedOnWindowUpdateFrame) {
-  // Set a small initial control window size.
-  set_initial_flow_control_window_bytes(100);
-  Initialize(kShouldProcessData);
-
-  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
-      .WillRepeatedly(Invoke(MockQuicSession::ConsumeData));
-  if (session_->use_control_frame_manager()) {
-    EXPECT_CALL(*connection_, SendControlFrame(_))
-        .WillOnce(Invoke(this, &QuicStreamTest::ClearControlFrame));
-  } else {
-    EXPECT_CALL(*connection_, SendBlocked(stream_->id()));
-  }
-  string data(1024, '.');
-  stream_->WriteOrBufferData(data, false, nullptr);
-  EXPECT_FALSE(HasWriteBlockedStreams());
-
-  QuicWindowUpdateFrame window_update(kInvalidControlFrameId, stream_->id(),
-                                      1234);
-
-  stream_->OnWindowUpdateFrame(window_update);
-  if (session_->session_unblocks_stream()) {
-    // Verify stream is marked connection level write blocked.
-    EXPECT_TRUE(HasWriteBlockedStreams());
-    EXPECT_TRUE(stream_->HasBufferedData());
-  } else {
-    EXPECT_FALSE(HasWriteBlockedStreams());
-    EXPECT_FALSE(stream_->HasBufferedData());
-  }
 }
 
 }  // namespace

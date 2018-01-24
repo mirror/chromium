@@ -25,10 +25,22 @@
   var viewportMessagesCount;
 
   var testSuite = [
-    function testSelectionSingleLineText(next) {
+    function verifyViewportIsTallEnough(next) {
       viewport.invalidate();
       viewport.forceScrollItemToBeFirst(0);
       viewportMessagesCount = viewport.lastVisibleIndex() - viewport.firstVisibleIndex() + 1;
+      if (viewportMessagesCount < minimumViewportMessagesCount) {
+        TestRunner.addResult(String.sprintf(
+            'Test cannot be run as viewport is not tall enough. It is required to contain at least %d messages, but %d only fit',
+            minimumViewportMessagesCount, viewportMessagesCount));
+        TestRunner.completeTest();
+        return;
+      }
+      TestRunner.addResult(String.sprintf('Viewport contains %d messages', viewportMessagesCount));
+      next();
+    },
+
+    function testSelectionSingleLineText(next) {
       selectMessages(middleMessage, 2, middleMessage, 7);
       dumpSelectionText();
       dumpViewportRenderedItems();
@@ -64,7 +76,7 @@
     },
 
     function testHalfScrollSelectionDown(next) {
-      viewport.forceScrollItemToBeLast(middleMessage);
+      viewport.forceScrollItemToBeFirst(middleMessage - viewportMessagesCount + 1);
       dumpSelectionModel();
       dumpViewportRenderedItems();
       next();

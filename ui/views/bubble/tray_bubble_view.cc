@@ -360,10 +360,7 @@ void TrayBubbleView::GetWidgetHitTestMask(gfx::Path* mask) const {
 }
 
 base::string16 TrayBubbleView::GetAccessibleWindowTitle() const {
-  if (delegate_)
-    return delegate_->GetAccessibleNameForBubble();
-  else
-    return base::string16();
+  return delegate_->GetAccessibleNameForBubble();
 }
 
 gfx::Size TrayBubbleView::CalculatePreferredSize() const {
@@ -441,8 +438,7 @@ void TrayBubbleView::MouseMovedOutOfHost() {
   // The mouse was accidentally over the bubble when it opened and the AutoClose
   // logic was not activated. Now that the user did move the mouse we tell the
   // delegate to disable AutoClose.
-  if (delegate_)
-    delegate_->OnMouseEnteredView();
+  delegate_->OnMouseEnteredView();
   mouse_actively_entered_ = true;
   mouse_watcher_->Stop();
 }

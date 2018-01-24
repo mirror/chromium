@@ -179,9 +179,10 @@ void RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
 // static
 std::vector<std::unique_ptr<NavigationThrottle>>
 RenderFrameDevToolsAgentHost::CreateNavigationThrottles(
-    NavigationHandleImpl* navigation_handle) {
+    NavigationHandle* navigation_handle) {
   std::vector<std::unique_ptr<NavigationThrottle>> result;
-  FrameTreeNode* frame_tree_node = navigation_handle->frame_tree_node();
+  FrameTreeNode* frame_tree_node =
+      static_cast<NavigationHandleImpl*>(navigation_handle)->frame_tree_node();
 
   // Interception might throttle navigations in inspected frames.
   RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
@@ -292,8 +293,8 @@ WebContents* RenderFrameDevToolsAgentHost::GetWebContents() {
 }
 
 void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  session->SetRenderer(frame_host_ ? frame_host_->GetProcess()->GetID()
-                                   : ChildProcessHost::kInvalidUniqueID,
+  session->SetFallThroughForNotFound(true);
+  session->SetRenderer(frame_host_ ? frame_host_->GetProcess() : nullptr,
                        frame_host_);
 
   protocol::EmulationHandler* emulation_handler =
@@ -309,8 +310,7 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
   session->AddHandler(base::WrapUnique(new protocol::SchemaHandler()));
   session->AddHandler(base::WrapUnique(new protocol::ServiceWorkerHandler()));
   session->AddHandler(base::WrapUnique(new protocol::StorageHandler()));
-  session->AddHandler(
-      base::WrapUnique(new protocol::TargetHandler(false /* browser_only */)));
+  session->AddHandler(base::WrapUnique(new protocol::TargetHandler()));
   session->AddHandler(base::WrapUnique(new protocol::TracingHandler(
       protocol::TracingHandler::Renderer,
       frame_tree_node_ ? frame_tree_node_->frame_tree_node_id() : 0,
@@ -335,6 +335,7 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
 
 void RenderFrameDevToolsAgentHost::DetachSession(DevToolsSession* session) {
   // Destroying session automatically detaches in renderer.
+  suspended_messages_by_session_.erase(session);
   if (sessions().empty()) {
     frame_trace_recorder_.reset();
     RevokePolicy();
@@ -344,10 +345,25 @@ void RenderFrameDevToolsAgentHost::DetachSession(DevToolsSession* session) {
   }
 }
 
-void RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
+bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
     const std::string& message) {
-  session->DispatchProtocolMessage(message);
+  int call_id = 0;
+  std::string method;
+  if (session->Dispatch(message, &call_id, &method) !=
+      protocol::Response::kFallThrough) {
+    return true;
+  }
+
+  if (!navigation_handles_.empty()) {
+    suspended_messages_by_session_[session].push_back(
+        {call_id, method, message});
+    return true;
+  }
+
+  session->DispatchProtocolMessageToAgent(call_id, method, message);
+  session->waiting_messages()[call_id] = {method, message};
+  return true;
 }
 
 void RenderFrameDevToolsAgentHost::InspectElement(
@@ -383,14 +399,8 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
   NavigationHandleImpl* handle =
       static_cast<NavigationHandleImpl*>(navigation_handle);
-  if (handle->frame_tree_node() != frame_tree_node_) {
-    if (ShouldForceCreation() && handle->GetRenderFrameHost() &&
-        handle->GetRenderFrameHost()->IsCrossProcessSubframe()) {
-      RenderFrameDevToolsAgentHost::GetOrCreateForDangling(
-          handle->frame_tree_node());
-    }
+  if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  }
 
   UpdateFrameHost(handle->GetRenderFrameHost());
   // UpdateFrameHost may destruct |this|.
@@ -398,9 +408,10 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
 
 void RenderFrameDevToolsAgentHost::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
+  NotifyNavigated();
+
   NavigationHandleImpl* handle =
       static_cast<NavigationHandleImpl*>(navigation_handle);
-  NotifyNavigated(FindAgentHost(handle->frame_tree_node()));
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
   navigation_handles_.erase(handle);
@@ -410,8 +421,16 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   UpdateFrameHost(frame_tree_node_->current_frame_host());
 
   if (navigation_handles_.empty()) {
-    for (DevToolsSession* session : sessions())
-      session->ResumeSendingMessagesToAgent();
+    for (auto& pair : suspended_messages_by_session_) {
+      DevToolsSession* session = pair.first;
+      for (const Message& message : pair.second) {
+        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
+                                                message.message);
+        session->waiting_messages()[message.call_id] = {message.method,
+                                                        message.message};
+      }
+    }
+    suspended_messages_by_session_.clear();
   }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
@@ -443,7 +462,7 @@ void RenderFrameDevToolsAgentHost::UpdateFrameHost(
   if (IsAttached()) {
     GrantPolicy();
     for (DevToolsSession* session : sessions()) {
-      session->SetRenderer(frame_host ? frame_host->GetProcess()->GetID() : -1,
+      session->SetRenderer(frame_host ? frame_host->GetProcess() : nullptr,
                            frame_host);
     }
     MaybeReattachToRenderFrame();
@@ -453,8 +472,15 @@ void RenderFrameDevToolsAgentHost::UpdateFrameHost(
 void RenderFrameDevToolsAgentHost::MaybeReattachToRenderFrame() {
   if (!EnsureAgent())
     return;
-  for (DevToolsSession* session : sessions())
-    session->AttachToAgent(agent_ptr_);
+  for (DevToolsSession* session : sessions()) {
+    session->ReattachToAgent(agent_ptr_);
+    for (const auto& pair : session->waiting_messages()) {
+      int call_id = pair.first;
+      const DevToolsSession::Message& message = pair.second;
+      session->DispatchProtocolMessageToAgent(call_id, message.method,
+                                              message.message);
+    }
+  }
 }
 
 void RenderFrameDevToolsAgentHost::GrantPolicy() {
@@ -497,10 +523,6 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  if (navigation_handles_.empty()) {
-    for (DevToolsSession* session : sessions())
-      session->SuspendSendingMessagesToAgent();
-  }
   navigation_handles_.insert(handle);
 }
 
@@ -629,11 +651,8 @@ void RenderFrameDevToolsAgentHost::DisconnectWebContents() {
   frame_tree_node_ = nullptr;
   navigation_handles_.clear();
   WebContentsObserver::Observe(nullptr);
-  // UpdateFrameHost may destruct |this|.
-  scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(nullptr);
-  for (DevToolsSession* session : sessions())
-    session->ResumeSendingMessagesToAgent();
+  // UpdateFrameHost may destruct |this|.
 }
 
 void RenderFrameDevToolsAgentHost::ConnectWebContents(WebContents* wc) {

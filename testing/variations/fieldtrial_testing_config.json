@@ -923,21 +923,6 @@
             ]
         }
     ],
-    "Crostini": [
-        {
-            "platforms": [
-                "chromeos"
-            ],
-            "experiments": [
-                {
-                    "name": "Crostini",
-                    "enable_features": [
-                        "Crostini"
-                    ]
-                }
-            ]
-        }
-    ],
     "CustomFeedbackUi": [
         {
             "platforms": [

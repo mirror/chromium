@@ -1682,7 +1682,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (BOOL)prefersStatusBarHidden {
   BOOL defaultValue = NO;
-  if (IsUIRefreshPhase1Enabled()) {
+  if (IsAdaptiveToolbarEnabled()) {
     defaultValue = [super prefersStatusBarHidden];
   }
   return self.hideStatusBar || defaultValue;
@@ -1934,7 +1934,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
 
-  if (IsUIRefreshPhase1Enabled()) {
+  if (IsAdaptiveToolbarEnabled()) {
     PrimaryToolbarCoordinator* topToolbarCoordinator =
         [[PrimaryToolbarCoordinator alloc] initWithBrowserState:_browserState];
     self.primaryToolbarCoordinator = topToolbarCoordinator;

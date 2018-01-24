@@ -138,15 +138,6 @@ Element* FrameSelection::RootEditableElementOrDocumentElement() const {
   return selection_root ? selection_root : GetDocument().documentElement();
 }
 
-size_t FrameSelection::CharacterIndexForPoint(const IntPoint& point) const {
-  const EphemeralRange range = GetFrame()->RangeForPoint(point);
-  if (range.IsNull())
-    return kNotFound;
-  Element* const editable = RootEditableElementOrDocumentElement();
-  DCHECK(editable);
-  return PlainTextRange::Create(*editable, range).Start();
-}
-
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated()
     const {
   // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets
@@ -759,34 +750,6 @@ void FrameSelection::SelectAll() {
   SelectAll(SetSelectionBy::kSystem);
 }
 
-// Implementation of |SVGTextControlElement::selectSubString()|
-void FrameSelection::SelectSubString(const Element& element,
-                                     int offset,
-                                     int length) {
-  // Find selection start
-  VisiblePosition start = VisiblePosition::FirstPositionInNode(element);
-  for (int i = 0; i < offset; ++i)
-    start = NextPositionOf(start);
-  if (start.IsNull())
-    return;
-
-  // Find selection end
-  VisiblePosition end(start);
-  for (int i = 0; i < length; ++i)
-    end = NextPositionOf(end);
-  if (end.IsNull())
-    return;
-
-  // TODO(editing-dev): We assume |start| and |end| are not null and we don't
-  // known when |start| and |end| are null. Once we get a such case, we check
-  // null for |start| and |end|.
-  SetSelectionAndEndTyping(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(start.DeepEquivalent(), end.DeepEquivalent())
-          .SetAffinity(start.Affinity())
-          .Build());
-}
-
 void FrameSelection::NotifyAccessibilityForSelectionChange() {
   if (GetSelectionInDOMTree().IsNone())
     return;
@@ -1174,25 +1137,19 @@ void FrameSelection::MoveRangeSelectionExtent(const IntPoint& contents_point) {
           .Build());
 }
 
-void FrameSelection::MoveRangeSelection(const IntPoint& base_point,
-                                        const IntPoint& extent_point,
+// TODO(yosin): We should make |FrameSelection::moveRangeSelection()| to take
+// two |IntPoint| instead of two |VisiblePosition| like
+// |moveRangeSelectionExtent()|.
+void FrameSelection::MoveRangeSelection(const VisiblePosition& base_position,
+                                        const VisiblePosition& extent_position,
                                         TextGranularity granularity) {
-  const VisiblePosition& base_position =
-      VisiblePositionForContentsPoint(base_point, GetFrame());
-  const VisiblePosition& extent_position =
-      VisiblePositionForContentsPoint(extent_point, GetFrame());
-  MoveRangeSelectionInternal(
+  SelectionInDOMTree new_selection =
       SelectionInDOMTree::Builder()
           .SetBaseAndExtentDeprecated(base_position.DeepEquivalent(),
                                       extent_position.DeepEquivalent())
           .SetAffinity(base_position.Affinity())
-          .Build(),
-      granularity);
-}
+          .Build();
 
-void FrameSelection::MoveRangeSelectionInternal(
-    const SelectionInDOMTree& new_selection,
-    TextGranularity granularity) {
   if (new_selection.IsNone())
     return;
 

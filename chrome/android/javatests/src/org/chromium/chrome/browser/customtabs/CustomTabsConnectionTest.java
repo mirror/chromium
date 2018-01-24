@@ -349,7 +349,11 @@ public class CustomTabsConnectionTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mCustomTabsConnection.lowConfidenceMayLaunchUrl(invalidBundles);
+                try {
+                    mCustomTabsConnection.lowConfidenceMayLaunchUrl(invalidBundles);
+                } catch (ClassCastException e) {
+                    Assert.fail();
+                }
             }
         });
     }

@@ -215,12 +215,10 @@ decltype(&base::ReplaceFile) RulesetService::g_replace_file_func =
 RulesetService::RulesetService(
     PrefService* local_state,
     scoped_refptr<base::SequencedTaskRunner> blocking_task_runner,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
     RulesetServiceDelegate* delegate,
     const base::FilePath& indexed_ruleset_base_dir)
     : local_state_(local_state),
-      blocking_task_runner_(std::move(blocking_task_runner)),
-      background_task_runner_(std::move(background_task_runner)),
+      blocking_task_runner_(blocking_task_runner),
       delegate_(delegate),
       is_after_startup_(false),
       indexed_ruleset_base_dir_(indexed_ruleset_base_dir) {
@@ -436,7 +434,7 @@ void RulesetService::InitializeAfterStartup() {
 
   IndexedRulesetVersion most_recently_indexed_version;
   most_recently_indexed_version.ReadFromPrefs(local_state_);
-  background_task_runner_->PostTask(
+  blocking_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&IndexedRulesetLocator::DeleteObsoleteRulesets,
                  indexed_ruleset_base_dir_, most_recently_indexed_version));
@@ -454,7 +452,7 @@ void RulesetService::IndexAndStoreRuleset(
     const WriteRulesetCallback& success_callback) {
   DCHECK(!unindexed_ruleset_info.content_version.empty());
   base::PostTaskAndReplyWithResult(
-      background_task_runner_.get(), FROM_HERE,
+      blocking_task_runner_.get(), FROM_HERE,
       base::Bind(&RulesetService::IndexAndWriteRuleset,
                  indexed_ruleset_base_dir_, unindexed_ruleset_info),
       base::Bind(&RulesetService::OnWrittenRuleset, AsWeakPtr(),

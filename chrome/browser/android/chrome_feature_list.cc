@@ -42,7 +42,6 @@ namespace {
 const base::Feature* kFeaturesExposedToJava[] = {
     &autofill::kAutofillScanCardholderName,
     &features::kClearOldBrowsingData,
-    &features::kClipboardContentSetting,
     &features::kCopylessPaste,
     &features::kDownloadsForeground,
     &features::kDownloadsLocationChange,
@@ -72,14 +71,17 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeInactivitySheetExpansion,
     &kChromeHomeMenuItemsExpandSheet,
     &kChromeHomePersistentIph,
+    &kChromeHomePromo,
+    &kChromeHomePromoInfoOnly,
+    &kChromeHomePromoOnStartup,
     &kChromeHomePullToRefreshIphAtTop,
+    &kChromeHomeOptOutSnackbar,
     &kChromeHomeShowGoogleGWhenUrlCleared,
     &kChromeHomeSurvey,
     &kChromeHomeSwipeLogic,
     &kChromeHomeSwipeLogicVelocity,
     &kChromeSmartSelection,
     &kChromeMemexFeature,
-    &kChromeModernDesign,
     &kContentSuggestionsScrollToLoad,
     &kContentSuggestionsSettings,
     &kContentSuggestionsThumbnailDominantColor,
@@ -113,7 +115,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kReaderModeInCCT,
     &kSearchEnginePromoExistingDevice,
     &kSearchEnginePromoNewDevice,
-    &kSoleIntegration,
     &kSpannableInlineAutocomplete,
     &kSpecialLocaleFeature,
     &kSpecialLocaleWrapper,
@@ -122,7 +123,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kVideoPersistence,
     &kVrBrowsingFeedback,
     &kVrBrowsingInCustomTab,
-    &kVrIconInDaydreamHome,
     &kVrLaunchIntents,
     &payments::features::kWebPaymentsMethodSectionOrderV2,
     &payments::features::kWebPaymentsModifiers,
@@ -210,8 +210,20 @@ const base::Feature kChromeHomeMenuItemsExpandSheet{
 const base::Feature kChromeHomePersistentIph{"ChromeHomePersistentIph",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kChromeHomePromo{"ChromeHomePromo",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomePromoInfoOnly{"ChromeHomePromoInfoOnly",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomePromoOnStartup{"ChromeHomePromoOnStartup",
+                                              base::FEATURE_ENABLED_BY_DEFAULT};
+
 const base::Feature kChromeHomePullToRefreshIphAtTop{
     "ChromeHomePullToRefreshIphAtTop", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomeOptOutSnackbar{
+    "ChromeHomeOptOutSnackbar", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeShowGoogleGWhenUrlCleared{
     "ChromeHomeShowGoogleGWhenUrlCleared", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -226,9 +238,6 @@ const base::Feature kChromeHomeSwipeLogicVelocity{
     "ChromeHomeSwipeLogicVelocity", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeMemexFeature{"ChromeMemex",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeModernDesign{"ChromeModernDesign",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeSmartSelection{"ChromeSmartSelection",
@@ -338,9 +347,6 @@ const base::Feature kPwaPersistentNotification{
 const base::Feature kReaderModeInCCT{"ReaderModeInCCT",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kSoleIntegration{"SoleIntegration",
-                                     base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kSpannableInlineAutocomplete{
     "SpannableInlineAutocomplete", base::FEATURE_ENABLED_BY_DEFAULT};
 
@@ -370,9 +376,6 @@ const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
 
 const base::Feature kVrBrowsingInCustomTab{"VrBrowsingInCustomTab",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kVrIconInDaydreamHome{"VrIconInDaydreamHome",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kVrLaunchIntents{"VrLaunchIntents",
                                      base::FEATURE_DISABLED_BY_DEFAULT};

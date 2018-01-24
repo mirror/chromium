@@ -533,12 +533,13 @@ TEST_F(QuicSentPacketManagerTest, AckAckAndUpdateRtt) {
 
 TEST_F(QuicSentPacketManagerTest, Rtt) {
   QuicPacketNumber packet_number = 1;
-  QuicTime::Delta expected_rtt = QuicTime::Delta::FromMilliseconds(20);
+  QuicTime::Delta expected_rtt = QuicTime::Delta::FromMilliseconds(15);
   SendDataPacket(packet_number);
-  clock_.AdvanceTime(expected_rtt);
+  clock_.AdvanceTime(QuicTime::Delta::FromMilliseconds(20));
 
   ExpectAck(packet_number);
   QuicAckFrame ack_frame = InitAckFrame(packet_number);
+  ack_frame.ack_delay_time = QuicTime::Delta::FromMilliseconds(5);
   manager_.OnIncomingAck(ack_frame, clock_.Now());
   EXPECT_EQ(expected_rtt, manager_.GetRttStats()->latest_rtt());
 }

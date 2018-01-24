@@ -73,19 +73,4 @@ void FakeSmbProviderClient::ReadFile(int32_t mount_id,
                                 std::move(fd)));
 }
 
-void FakeSmbProviderClient::DeleteEntry(int32_t mount_id,
-                                        const base::FilePath& entry_path,
-                                        bool recursive,
-                                        StatusCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), smbprovider::ERROR_OK));
-}
-
-void FakeSmbProviderClient::CreateFile(int32_t mount_id,
-                                       const base::FilePath& file_path,
-                                       StatusCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), smbprovider::ERROR_OK));
-}
-
 }  // namespace chromeos

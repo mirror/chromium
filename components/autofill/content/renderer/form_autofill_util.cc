@@ -1149,7 +1149,7 @@ bool UnownedFormElementsAndFieldSetsToFormData(
     FormData* form,
     FormFieldData* field) {
   form->origin = GetCanonicalOriginForDocument(document);
-  if (document.GetFrame() && document.GetFrame()->Top()) {
+  if (document.GetFrame()) {
     form->main_frame_origin = document.GetFrame()->Top()->GetSecurityOrigin();
   } else {
     form->main_frame_origin = url::Origin();

@@ -396,6 +396,10 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 @property(nonatomic, strong)
     SigninInteractionCoordinator* signinInteractionCoordinator;
 
+// Activates browsing and enables web views if |enabled| is YES.
+// Disables browsing and purges web views if |enabled| is NO.
+// Must be called only on the main thread.
+- (void)setWebUsageEnabled:(BOOL)enabled;
 // Activates |mainBVC| and |otrBVC| and sets |currentBVC| as primary iff
 // |currentBVC| can be made active.
 - (void)activateBVCAndMakeCurrentBVCPrimary;
@@ -862,6 +866,16 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
         [[BrowsingDataRemovalController alloc] init];
   }
   return _browsingDataRemovalController;
+}
+
+- (void)setWebUsageEnabled:(BOOL)enabled {
+  DCHECK([NSThread isMainThread]);
+  if (enabled) {
+    [self activateBVCAndMakeCurrentBVCPrimary];
+  } else {
+    [self.mainBVC setActive:NO];
+    [self.otrBVC setActive:NO];
+  }
 }
 
 - (void)activateBVCAndMakeCurrentBVCPrimary {
@@ -1525,23 +1539,6 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
                      completion:nil];
 }
 
-- (void)prepareForBrowsingDataRemoval {
-  // Disables browsing and purges web views.
-  // Must be called only on the main thread.
-  DCHECK([NSThread isMainThread]);
-  [self.mainBVC setActive:NO];
-  [self.otrBVC setActive:NO];
-}
-
-- (void)browsingDataWasRemoved {
-  // Activates browsing and enables web views.
-  // Must be called only on the main thread.
-  DCHECK([NSThread isMainThread]);
-  [self.mainBVC setActive:YES];
-  [self.otrBVC setActive:YES];
-  [self.currentBVC setPrimary:YES];
-}
-
 #pragma mark - ApplicationSettingsCommands
 
 // TODO(crbug.com/779791) : Remove show settings from MainController.
@@ -2042,10 +2039,10 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
   // TODO(crbug.com/632772): Remove web usage disabling once
   // https://bugs.webkit.org/show_bug.cgi?id=149079 has been fixed.
   if (mask & IOSChromeBrowsingDataRemover::REMOVE_SITE_DATA) {
-    [self prepareForBrowsingDataRemoval];
+    [self setWebUsageEnabled:NO];
   }
   ProceduralBlock browsingDataRemoved = ^{
-    [self browsingDataWasRemoved];
+    [self setWebUsageEnabled:YES];
     if (completionHandler) {
       completionHandler();
     }

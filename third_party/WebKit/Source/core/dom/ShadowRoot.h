@@ -49,7 +49,12 @@ class StringOrTrustedHTML;
 class V0InsertionPoint;
 class WhitespaceAttacher;
 
-enum class ShadowRootType { V0, kOpen, kClosed, kUserAgent };
+enum class ShadowRootType {
+  V0,
+  kOpen,
+  kClosed,
+  kUserAgentV1
+};
 
 class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   DEFINE_WRAPPERTYPEINFO();
@@ -94,9 +99,9 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   bool IsV1() const {
     return GetType() == ShadowRootType::kOpen ||
            GetType() == ShadowRootType::kClosed ||
-           GetType() == ShadowRootType::kUserAgent;
+           GetType() == ShadowRootType::kUserAgentV1;
   }
-  bool IsUserAgent() const { return GetType() == ShadowRootType::kUserAgent; }
+  bool IsUserAgent() const { return GetType() == ShadowRootType::kUserAgentV1; }
 
   void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;

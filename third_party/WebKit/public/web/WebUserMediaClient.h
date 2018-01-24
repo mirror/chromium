@@ -36,6 +36,7 @@ namespace blink {
 class WebApplyConstraintsRequest;
 class WebMediaStreamTrack;
 class WebUserMediaRequest;
+class WebMediaDeviceChangeObserver;
 
 class WebUserMediaClient {
  public:
@@ -43,6 +44,8 @@ class WebUserMediaClient {
 
   virtual void RequestUserMedia(const WebUserMediaRequest&) = 0;
   virtual void CancelUserMediaRequest(const WebUserMediaRequest&) = 0;
+  virtual void SetMediaDeviceChangeObserver(
+      const WebMediaDeviceChangeObserver&) = 0;
   virtual void ApplyConstraints(const WebApplyConstraintsRequest&) = 0;
   virtual void StopTrack(const WebMediaStreamTrack&) = 0;
 };

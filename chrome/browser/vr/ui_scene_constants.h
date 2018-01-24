@@ -66,13 +66,11 @@ static constexpr float kUrlBarBackButtonWidthDMM = 0.087f;
 static constexpr float kUrlBarBackButtonIconOffsetDMM = 0.0045f;
 static constexpr float kUrlBarSeparatorWidthDMM = 0.002f;
 static constexpr float kUrlBarOriginRegionWidthDMM = 0.583f;
-static constexpr float kUrlBarOriginContentWidthDMM = 0.536f;
+static constexpr float kUrlBarOriginContentWidthDMM = 0.556f;
 static constexpr float kUrlBarOriginContentOffsetDMM = 0.007f;
 static constexpr float kUrlBarFieldSpacingDMM = 0.008f;
 static constexpr float kUrlBarOfflineIconTextSpacingDMM = 0.004f;
 static constexpr float kUrlBarSecuritySeparatorHeightDMM = 0.026f;
-static constexpr float kUrlBarOriginFadeWidth = 0.044f;
-static constexpr float kUrlBarOriginMinimumPathWidth = 0.044f;
 
 static constexpr float kOverlayPlaneDistance = 2.3f;
 
@@ -261,20 +259,6 @@ static constexpr float kSnackbarFontHeightDMM = 0.024f;
 static constexpr float kSnackbarHeightDMM = 0.08f;
 static constexpr float kSnackbarMoveInAngle = -base::kPiFloat / 10;
 static constexpr int kSnackbarTransitionDurationMs = 300;
-
-static constexpr float kControllerLabelSpacerSize = 0.025f;
-static constexpr float kControllerLabelLayoutMargin = -0.005f;
-static constexpr float kControllerLabelCalloutWidth = 0.02f;
-static constexpr float kControllerLabelCalloutHeight = 0.001f;
-static constexpr float kControllerLabelFontHeight = 0.05f;
-static constexpr float kControllerLabelScale = 0.2f;
-
-// TODO(vollick): these should be encoded in the controller mesh.
-static constexpr float kControllerTrackpadOffset = -0.035f;
-static constexpr float kControllerExitButtonOffset = -0.008f;
-static constexpr float kControllerBackButtonOffset = -0.008f;
-
-static constexpr int kControllerLabelTransitionDurationMs = 700;
 
 static constexpr float kSkyDistance = 1000.0f;
 static constexpr float kGridOpacity = 0.5f;

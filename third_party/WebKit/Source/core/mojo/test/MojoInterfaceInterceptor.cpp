@@ -59,11 +59,10 @@ void MojoInterfaceInterceptor::start(ExceptionState& exception_state) {
       StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
 
   if (process_scope_) {
-    service_manager::Identity identity(
-        Platform::Current()->GetBrowserServiceName());
+    std::string browser_service = Platform::Current()->GetBrowserServiceName();
     service_manager::Connector::TestApi test_api(
         Platform::Current()->GetConnector());
-    if (test_api.HasBinderOverride(identity, interface_name)) {
+    if (test_api.HasBinderOverride(browser_service, interface_name)) {
       exception_state.ThrowDOMException(
           kInvalidModificationError,
           "Interface " + interface_name_ +
@@ -73,7 +72,7 @@ void MojoInterfaceInterceptor::start(ExceptionState& exception_state) {
 
     started_ = true;
     test_api.OverrideBinderForTesting(
-        identity, interface_name,
+        browser_service, interface_name,
         WTF::BindRepeating(&MojoInterfaceInterceptor::OnInterfaceRequest,
                            WrapWeakPersistent(this)));
     return;
@@ -104,12 +103,11 @@ void MojoInterfaceInterceptor::stop() {
       StringUTF8Adaptor(interface_name_).AsStringPiece().as_string();
 
   if (process_scope_) {
-    service_manager::Identity identity(
-        Platform::Current()->GetBrowserServiceName());
+    std::string browser_service = Platform::Current()->GetBrowserServiceName();
     service_manager::Connector::TestApi test_api(
         Platform::Current()->GetConnector());
-    DCHECK(test_api.HasBinderOverride(identity, interface_name));
-    test_api.ClearBinderOverride(identity, interface_name);
+    DCHECK(test_api.HasBinderOverride(browser_service, interface_name));
+    test_api.ClearBinderOverride(browser_service, interface_name);
     return;
   }
 

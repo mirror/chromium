@@ -2170,6 +2170,8 @@ TEST_F(RenderViewImplTest, NavigationStartForCrossProcessHistoryNavigation) {
 TEST_F(RenderViewImplTest, PreferredSizeZoomed) {
   LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
            "width:400px; height:400px;'/></body>");
+  view()->webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
+      false);
   EnablePreferredSizeMode();
 
   gfx::Size size = GetPreferredSize();
@@ -2184,6 +2186,8 @@ TEST_F(RenderViewImplScaleFactorTest, PreferredSizeWithScaleFactor) {
   DoSetUp();
   LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
            "width:400px; height:400px;'/></body>");
+  view()->webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
+      false);
   EnablePreferredSizeMode();
 
   gfx::Size size = GetPreferredSize();

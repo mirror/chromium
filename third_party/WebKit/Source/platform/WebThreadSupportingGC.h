@@ -30,8 +30,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   WTF_MAKE_NONCOPYABLE(WebThreadSupportingGC);
 
  public:
-  static std::unique_ptr<WebThreadSupportingGC> Create(
-      const WebThreadCreationParams&);
+  static std::unique_ptr<WebThreadSupportingGC> Create(const char* name);
   static std::unique_ptr<WebThreadSupportingGC> CreateForThread(WebThread*);
   ~WebThreadSupportingGC();
 
@@ -78,7 +77,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
  private:
-  WebThreadSupportingGC(const WebThreadCreationParams&, WebThread*);
+  WebThreadSupportingGC(const char* name, WebThread*);
 
   std::unique_ptr<GCTaskRunner> gc_task_runner_;
 

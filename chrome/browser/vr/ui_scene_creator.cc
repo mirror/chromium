@@ -10,7 +10,6 @@
 #include "base/callback.h"
 #include "base/i18n/case_conversion.h"
 #include "base/numerics/math_constants.h"
-#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
@@ -416,59 +415,6 @@ std::unique_ptr<UiElement> CreateSnackbar(
   return snackbar_root;
 }
 
-std::unique_ptr<UiElement> CreateControllerLabel(UiElementName name,
-                                                 float z_offset,
-                                                 const base::string16& text,
-                                                 Model* model) {
-  auto layout = Create<LinearLayout>(name, kPhaseNone, LinearLayout::kLeft);
-  layout->set_hit_testable(false);
-  layout->set_margin(kControllerLabelLayoutMargin);
-  layout->SetTranslate(0, 0, z_offset);
-  layout->AddBinding(VR_BIND_FUNC(
-      LayoutAlignment, Model, model,
-      model->controller.handedness == PlatformController::kRightHanded ? LEFT
-                                                                       : RIGHT,
-      LinearLayout, layout.get(), set_x_centering));
-  layout->AddBinding(VR_BIND_FUNC(
-      LinearLayout::Direction, Model, model,
-      model->controller.handedness == PlatformController::kRightHanded
-          ? LinearLayout::kRight
-          : LinearLayout::kLeft,
-      LinearLayout, layout.get(), set_direction));
-
-  auto spacer = std::make_unique<UiElement>();
-  spacer->SetVisible(true);
-  spacer->set_hit_testable(false);
-  spacer->set_requires_layout(true);
-  spacer->SetSize(kControllerLabelSpacerSize, kControllerLabelSpacerSize);
-
-  auto callout = Create<Rect>(kNone, kPhaseForeground);
-  callout->SetVisible(true);
-  callout->set_hit_testable(false);
-  callout->SetColor(SK_ColorWHITE);
-  callout->SetSize(kControllerLabelCalloutWidth, kControllerLabelCalloutHeight);
-  callout->SetRotate(1, 0, 0, -base::kPiFloat / 2);
-
-  auto label =
-      Create<Text>(kNone, kPhaseForeground, kControllerLabelFontHeight);
-  label->SetText(text);
-  label->SetColor(model->color_scheme().controller_label_callout);
-  label->SetVisible(true);
-  label->set_hit_testable(false);
-  label->SetAlignment(UiTexture::kTextAlignmentRight);
-  label->SetLayoutMode(kSingleLineFixedHeight);
-  label->SetRotate(1, 0, 0, -base::kPiFloat / 2);
-  label->SetShadowsEnabled(true);
-  label->SetScale(kControllerLabelScale, kControllerLabelScale,
-                  kControllerLabelScale);
-
-  layout->AddChild(std::move(spacer));
-  layout->AddChild(std::move(callout));
-  layout->AddChild(std::move(label));
-
-  return layout;
-}
-
 }  // namespace
 
 UiSceneCreator::UiSceneCreator(UiBrowserInterface* browser,
@@ -647,22 +593,22 @@ void UiSceneCreator::CreateSystemIndicators() {
     UiElementName name;
     const gfx::VectorIcon& icon;
     int resource_string;
-    bool CapturingStateModel::*signal;
+    bool PermissionsModel::*signal;
   };
   const std::vector<Indicator> indicators = {
       {kAudioCaptureIndicator, vector_icons::kMicIcon,
        IDS_AUDIO_CALL_NOTIFICATION_TEXT_2,
-       &CapturingStateModel::audio_capture_enabled},
+       &PermissionsModel::audio_capture_enabled},
       {kVideoCaptureIndicator, vector_icons::kVideocamIcon,
        IDS_VIDEO_CALL_NOTIFICATION_TEXT_2,
-       &CapturingStateModel::video_capture_enabled},
+       &PermissionsModel::video_capture_enabled},
       {kScreenCaptureIndicator, vector_icons::kScreenShareIcon,
        IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2,
-       &CapturingStateModel::screen_capture_enabled},
+       &PermissionsModel::screen_capture_enabled},
       {kBluetoothConnectedIndicator, vector_icons::kBluetoothConnectedIcon, 0,
-       &CapturingStateModel::bluetooth_connected},
+       &PermissionsModel::bluetooth_connected},
       {kLocationAccessIndicator, vector_icons::kLocationOnIcon, 0,
-       &CapturingStateModel::location_access_enabled},
+       &PermissionsModel::location_access},
   };
 
   std::unique_ptr<LinearLayout> indicator_layout =
@@ -697,8 +643,8 @@ void UiSceneCreator::CreateSystemIndicators() {
                   &Toast::SetForegroundColor);
     element->AddBinding(std::make_unique<Binding<bool>>(
         VR_BIND_LAMBDA(
-            [](Model* m, bool CapturingStateModel::*permission) {
-              return m->capturing_state.*permission;
+            [](Model* m, bool PermissionsModel::*permission) {
+              return m->permissions.*permission;
             },
             base::Unretained(model_), indicator.signal),
         VR_BIND_LAMBDA(
@@ -751,13 +697,6 @@ void UiSceneCreator::CreateContentQuad() {
                                         Model, model_, model->content_location,
                                         ContentElement, main_content.get(),
                                         SetTextureLocation));
-  main_content->AddBinding(VR_BIND_FUNC(
-      unsigned int, Model, model_, model->content_overlay_texture_id,
-      ContentElement, main_content.get(), SetOverlayTextureId));
-  main_content->AddBinding(
-      VR_BIND_FUNC(UiElementRenderer::TextureLocation, Model, model_,
-                   model->content_overlay_location, ContentElement,
-                   main_content.get(), SetOverlayTextureLocation));
 
   shadow->AddChild(std::move(main_content));
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(shadow));
@@ -793,16 +732,6 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
   auto transient_parent = std::make_unique<ShowUntilSignalTransientElement>(
       base::TimeDelta::FromSeconds(kSplashScreenMinDurationSeconds),
       base::TimeDelta::Max(),
-      base::BindRepeating(
-          [](Model* model) {
-            DCHECK(model->web_vr.awaiting_min_splash_screen_duration());
-            // TODO(ymalik): The assumption here is that the WebVR VSync will be
-            // paused until the min splash screen duration passes. This state
-            // change should be driven by the scheduler in the future and the UI
-            // should act on it.
-            model->web_vr.state = kWebVrAwaitingFirstFrame;
-          },
-          base::Unretained(model_)),
       base::BindRepeating(
           [](Model* model, UiBrowserInterface* browser,
              TransientElementHideReason reason) {
@@ -1083,10 +1012,9 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   voice_search_button->set_y_anchoring(BOTTOM);
   voice_search_button->set_y_centering(TOP);
   voice_search_button->set_contributes_to_parent_bounds(false);
-  VR_BIND_VISIBILITY(voice_search_button,
-                     model->speech.has_or_can_request_audio_permission &&
-                         !model->incognito &&
-                         !model->capturing_state.audio_capture_enabled);
+  VR_BIND_VISIBILITY(
+      voice_search_button,
+      model->speech.has_or_can_request_audio_permission && !model->incognito);
   VR_BIND_BUTTON_COLORS(model_, voice_search_button.get(),
                         &ColorScheme::button_colors,
                         &DiscButton::SetButtonColors);
@@ -1230,9 +1158,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   close_button->SetSize(kVoiceSearchCloseButtonWidth,
                         kVoiceSearchCloseButtonHeight);
   close_button->set_hover_offset(kButtonZOffsetHoverDMM * kContentDistance);
-  close_button->SetTranslate(0, -kVoiceSearchCloseButtonYOffset, 0);
-  close_button->SetRotate(
-      1, 0, 0, atan(-kVoiceSearchCloseButtonYOffset / kContentDistance));
+  close_button->SetTranslate(0.0, -kVoiceSearchCloseButtonYOffset, 0.f);
   VR_BIND_BUTTON_COLORS(model_, close_button.get(), &ColorScheme::button_colors,
                         &DiscButton::SetButtonColors);
   scene_->AddUiElement(kSpeechRecognitionListening, std::move(close_button));
@@ -1312,34 +1238,6 @@ void UiSceneCreator::CreateController() {
   controller->AddBinding(VR_BIND_FUNC(float, Model, model_,
                                       model->controller.opacity, Controller,
                                       controller.get(), SetOpacity));
-
-  auto callout_group = Create<UiElement>(kNone, kPhaseNone);
-  callout_group->SetVisible(false);
-  callout_group->set_hit_testable(false);
-  callout_group->SetTransitionedProperties({OPACITY});
-  callout_group->SetTransitionDuration(
-      base::TimeDelta::FromMilliseconds(kControllerLabelTransitionDurationMs));
-  VR_BIND_VISIBILITY(callout_group, model->controller.resting_in_viewport);
-
-  callout_group->AddChild(CreateControllerLabel(
-      kControllerTrackpadLabel, kControllerTrackpadOffset,
-      l10n_util::GetStringUTF16(IDS_VR_BUTTON_TRACKPAD), model_));
-
-  auto exit_button_label = CreateControllerLabel(
-      kControllerExitButtonLabel, kControllerExitButtonOffset,
-      l10n_util::GetStringUTF16(IDS_VR_BUTTON_EXIT), model_);
-  VR_BIND_VISIBILITY(exit_button_label, model->fullscreen_enabled());
-  callout_group->AddChild(std::move(exit_button_label));
-
-  auto back_button_label = CreateControllerLabel(
-      kControllerBackButtonLabel, kControllerBackButtonOffset,
-      l10n_util::GetStringUTF16(IDS_VR_BUTTON_BACK), model_);
-  VR_BIND_VISIBILITY(back_button_label, model->omnibox_editing_enabled() ||
-                                            model->voice_search_enabled());
-  callout_group->AddChild(std::move(back_button_label));
-
-  controller->AddChild(std::move(callout_group));
-
   scene_->AddUiElement(kControllerGroup, std::move(controller));
 
   auto laser = std::make_unique<Laser>(model_);
@@ -1839,14 +1737,6 @@ void UiSceneCreator::CreateCloseButton() {
                                        : kCloseButtonVerticalOffset,
                                  value ? -kCloseButtonFullscreenDistance
                                        : -kCloseButtonDistance)));
-  element->AddBinding(VR_BIND(
-      bool, Model, model_, model->fullscreen_enabled(), UiElement,
-      element.get(),
-      view->SetRotate(
-          1, 0, 0,
-          atan(value ? kCloseButtonFullscreenVerticalOffset /
-                           kCloseButtonFullscreenDistance
-                     : kCloseButtonVerticalOffset / kCloseButtonDistance))));
   element->AddBinding(VR_BIND(
       bool, Model, model_, model->fullscreen_enabled(), UiElement,
       element.get(),

@@ -27,11 +27,11 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutSVGText text",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "RootInlineBox",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "LayoutSVGInlineText #text",

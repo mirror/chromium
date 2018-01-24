@@ -46,8 +46,7 @@ QuicSession::QuicSession(QuicConnection* connection,
       num_draining_incoming_streams_(0),
       num_locally_closed_incoming_streams_highest_offset_(0),
       error_(QUIC_NO_ERROR),
-      flow_controller_(this,
-                       connection_,
+      flow_controller_(connection_,
                        kConnectionLevelId,
                        perspective(),
                        kMinimumFlowControlSendWindow,
@@ -55,19 +54,11 @@ QuicSession::QuicSession(QuicConnection* connection,
                        perspective() == Perspective::IS_SERVER,
                        nullptr),
       currently_writing_stream_id_(0),
-      goaway_sent_(false),
-      goaway_received_(false),
-      control_frame_manager_(this),
       can_use_slices_(GetQuicReloadableFlag(quic_use_mem_slices)),
       allow_multiple_acks_for_data_(
-          GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)),
-      session_unblocks_stream_(
-          GetQuicReloadableFlag(quic_streams_unblocked_by_session)) {
+          GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
   if (allow_multiple_acks_for_data_) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_allow_multiple_acks_for_data2);
-  }
-  if (use_control_frame_manager()) {
-    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_use_control_frame_manager);
   }
 }
 
@@ -155,9 +146,7 @@ void QuicSession::OnRstStream(const QuicRstStreamFrame& frame) {
   stream->OnStreamReset(frame);
 }
 
-void QuicSession::OnGoAway(const QuicGoAwayFrame& frame) {
-  goaway_received_ = true;
-}
+void QuicSession::OnGoAway(const QuicGoAwayFrame& frame) {}
 
 void QuicSession::OnConnectionClosed(QuicErrorCode error,
                                      const string& error_details,
@@ -276,7 +265,7 @@ bool QuicSession::CheckStreamNotBusyLooping(QuicStream* stream,
 }
 
 void QuicSession::OnCanWrite() {
-  if (!RetransmitLostData()) {
+  if (!RetransmitLostStreamData()) {
     // Cannot finish retransmitting lost data, connection is write blocked.
     return;
   }
@@ -298,16 +287,12 @@ void QuicSession::OnCanWrite() {
       num_writes += 1;
     }
   }
-  if (num_writes == 0 && (!use_control_frame_manager() ||
-                          !control_frame_manager_.WillingToWrite())) {
+  if (num_writes == 0) {
     return;
   }
 
   QuicConnection::ScopedPacketFlusher flusher(
       connection_, QuicConnection::SEND_ACK_IF_QUEUED);
-  if (use_control_frame_manager() && control_frame_manager_.WillingToWrite()) {
-    control_frame_manager_.OnCanWrite();
-  }
   for (size_t i = 0; i < num_writes; ++i) {
     if (!(write_blocked_streams_.HasWriteBlockedCryptoOrHeadersStream() ||
           write_blocked_streams_.HasWriteBlockedDataStreams())) {
@@ -340,14 +325,11 @@ void QuicSession::OnCanWrite() {
 
 bool QuicSession::WillingAndAbleToWrite() const {
   // Schedule a write when:
-  // 1) control frame manager has pending or new control frames, or
-  // 2) any stream has pending retransmissions, or
-  // 3) If the crypto or headers streams are blocked, or
-  // 4) connection is not flow control blocked and there are write blocked
+  // 1) any stream has pending retransmissions, or
+  // 2) If the crypto or headers streams are blocked, or
+  // 3) connection is not flow control blocked and there are write blocked
   // streams.
-  return (use_control_frame_manager() &&
-          control_frame_manager_.WillingToWrite()) ||
-         !streams_with_pending_retransmission_.empty() ||
+  return !streams_with_pending_retransmission_.empty() ||
          write_blocked_streams_.HasWriteBlockedCryptoOrHeadersStream() ||
          (!flow_controller_.IsBlocked() &&
           write_blocked_streams_.HasWriteBlockedDataStreams());
@@ -402,11 +384,6 @@ QuicConsumedData QuicSession::WritevData(QuicStream* stream,
   return data;
 }
 
-bool QuicSession::WriteControlFrame(const QuicFrame& frame) {
-  DCHECK(use_control_frame_manager());
-  return connection_->SendControlFrame(frame);
-}
-
 void QuicSession::SendRstStream(QuicStreamId id,
                                 QuicRstStreamErrorCode error,
                                 QuicStreamOffset bytes_written) {
@@ -417,39 +394,17 @@ void QuicSession::SendRstStream(QuicStreamId id,
 
   if (connection()->connected()) {
     // Only send a RST_STREAM frame if still connected.
-    if (use_control_frame_manager()) {
-      control_frame_manager_.WriteOrBufferRstStream(id, error, bytes_written);
-      connection_->OnStreamReset(id, error);
-    } else {
-      connection_->SendRstStream(id, error, bytes_written);
-    }
+    connection_->SendRstStream(id, error, bytes_written);
   }
   CloseStreamInner(id, true);
 }
 
 void QuicSession::SendGoAway(QuicErrorCode error_code, const string& reason) {
-  if (goaway_sent_) {
+  if (goaway_sent()) {
     return;
   }
-  goaway_sent_ = true;
-  if (use_control_frame_manager()) {
-    control_frame_manager_.WriteOrBufferGoAway(
-        error_code, largest_peer_created_stream_id_, reason);
-  } else {
-    connection_->SendGoAway(error_code, largest_peer_created_stream_id_,
-                            reason);
-  }
-}
 
-void QuicSession::SendBlocked(QuicStreamId id) {
-  DCHECK(use_control_frame_manager());
-  control_frame_manager_.WriteOrBufferBlocked(id);
-}
-
-void QuicSession::SendWindowUpdate(QuicStreamId id,
-                                   QuicStreamOffset byte_offset) {
-  DCHECK(use_control_frame_manager());
-  control_frame_manager_.WriteOrBufferWindowUpdate(id, byte_offset);
+  connection_->SendGoAway(error_code, largest_peer_created_stream_id_, reason);
 }
 
 void QuicSession::CloseStream(QuicStreamId stream_id) {
@@ -877,6 +832,14 @@ void QuicSession::set_max_open_outgoing_streams(
   max_open_outgoing_streams_ = max_open_outgoing_streams;
 }
 
+bool QuicSession::goaway_sent() const {
+  return connection_->goaway_sent();
+}
+
+bool QuicSession::goaway_received() const {
+  return connection_->goaway_received();
+}
+
 bool QuicSession::IsClosedStream(QuicStreamId id) {
   DCHECK_NE(0u, id);
   if (IsOpenStream(id)) {
@@ -935,10 +898,7 @@ void QuicSession::MarkConnectionLevelWriteBlocked(QuicStreamId id) {
 bool QuicSession::HasDataToWrite() const {
   return write_blocked_streams_.HasWriteBlockedCryptoOrHeadersStream() ||
          write_blocked_streams_.HasWriteBlockedDataStreams() ||
-         connection_->HasQueuedData() ||
-         !streams_with_pending_retransmission_.empty() ||
-         (use_control_frame_manager() &&
-          control_frame_manager_.WillingToWrite());
+         connection_->HasQueuedData();
 }
 
 void QuicSession::PostProcessAfterData() {
@@ -947,14 +907,6 @@ void QuicSession::PostProcessAfterData() {
 
 void QuicSession::OnAckNeedsRetransmittableFrame() {
   flow_controller_.SendWindowUpdate();
-  if (use_control_frame_manager() && !control_frame_manager_.WillingToWrite()) {
-    SendPing();
-  }
-}
-
-void QuicSession::SendPing() {
-  DCHECK(use_control_frame_manager());
-  control_frame_manager_.WritePing();
 }
 
 size_t QuicSession::GetNumDynamicOutgoingStreams() const {
@@ -1028,26 +980,21 @@ QuicStream* QuicSession::GetStream(QuicStreamId id) const {
   return nullptr;
 }
 
-bool QuicSession::OnFrameAcked(const QuicFrame& frame,
+void QuicSession::OnFrameAcked(const QuicFrame& frame,
                                QuicTime::Delta ack_delay_time) {
   if (frame.type != STREAM_FRAME) {
-    if (use_control_frame_manager()) {
-      return control_frame_manager_.OnControlFrameAcked(frame);
-    }
-    return false;
+    return;
   }
-  bool new_stream_data_acked = false;
   QuicStream* stream = GetStream(frame.stream_frame->stream_id);
   // Stream can already be reset when sent frame gets acked.
   if (stream != nullptr) {
-    new_stream_data_acked = stream->OnStreamFrameAcked(
-        frame.stream_frame->offset, frame.stream_frame->data_length,
-        frame.stream_frame->fin, ack_delay_time);
+    stream->OnStreamFrameAcked(frame.stream_frame->offset,
+                               frame.stream_frame->data_length,
+                               frame.stream_frame->fin, ack_delay_time);
     if (!stream->HasPendingRetransmission()) {
       streams_with_pending_retransmission_.erase(stream->id());
     }
   }
-  return new_stream_data_acked;
 }
 
 void QuicSession::OnStreamFrameRetransmitted(const QuicStreamFrame& frame) {
@@ -1066,9 +1013,6 @@ void QuicSession::OnStreamFrameRetransmitted(const QuicStreamFrame& frame) {
 
 void QuicSession::OnFrameLost(const QuicFrame& frame) {
   if (frame.type != STREAM_FRAME) {
-    if (use_control_frame_manager()) {
-      control_frame_manager_.OnControlFrameLost(frame);
-    }
     return;
   }
   QuicStream* stream = GetStream(frame.stream_frame->stream_id);
@@ -1104,16 +1048,9 @@ uint128 QuicSession::GetStatelessResetToken() const {
   return kStatelessResetToken;
 }
 
-bool QuicSession::RetransmitLostData() {
+bool QuicSession::RetransmitLostStreamData() {
   QuicConnection::ScopedPacketFlusher retransmission_flusher(
       connection_, QuicConnection::SEND_ACK_IF_QUEUED);
-  if (use_control_frame_manager() &&
-      control_frame_manager_.HasPendingRetransmission()) {
-    control_frame_manager_.OnCanWrite();
-    if (control_frame_manager_.HasPendingRetransmission()) {
-      return false;
-    }
-  }
   while (!streams_with_pending_retransmission_.empty()) {
     if (!connection_->CanWriteStreamData()) {
       break;
@@ -1153,10 +1090,6 @@ bool QuicSession::RetransmitLostData() {
 
 void QuicSession::NeuterUnencryptedData() {
   connection_->NeuterUnencryptedPackets();
-}
-
-bool QuicSession::use_control_frame_manager() const {
-  return connection_->use_control_frame_manager();
 }
 
 }  // namespace net

@@ -204,9 +204,6 @@ class CORE_EXPORT InspectorDOMAgent final
       protocol::Maybe<bool> pierce,
       std::unique_ptr<protocol::DOM::Node>*) override;
 
-  protocol::Response getFrameOwner(const String& frame_id,
-                                   int* node_id) override;
-
   bool Enabled() const;
   void ReleaseDanglingNodes();
 

@@ -4,10 +4,9 @@
 
 #include "components/task_scheduler_util/common/variations_util.h"
 
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/strcat.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -77,7 +76,7 @@ std::unique_ptr<base::SchedulerWorkerPoolParams> GetWorkerPoolParams(
     return nullptr;
   }
 
-  auto params = std::make_unique<base::SchedulerWorkerPoolParams>(
+  auto params = base::MakeUnique<base::SchedulerWorkerPoolParams>(
       base::RecommendedMaxNumberOfThreadsInPool(min, max, cores_multiplier,
                                                 offset),
       base::TimeDelta::FromMilliseconds(detach_milliseconds),
@@ -123,7 +122,7 @@ std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams(
     return nullptr;
   }
 
-  return std::make_unique<base::TaskScheduler::InitParams>(
+  return base::MakeUnique<base::TaskScheduler::InitParams>(
       *background_worker_pool_params, *background_blocking_worker_pool_params,
       *foreground_worker_pool_params, *foreground_blocking_worker_pool_params);
 }

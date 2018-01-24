@@ -206,7 +206,7 @@ NetworkTrafficAnnotationTag BranchedCompleteNetworkTrafficAnnotation(
 //   }
 // }
 
-// Please do not use this unless uninitialized annotations are required.
+// Do not use this unless net-serialization is required.
 // Mojo interfaces for this class and the next one are defined in
 // '/services/network/public/interfaces'.
 struct MutableNetworkTrafficAnnotationTag {

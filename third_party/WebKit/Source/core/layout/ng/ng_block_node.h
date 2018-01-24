@@ -62,7 +62,6 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   void SaveStaticOffsetForLegacy(const NGLogicalOffset&,
                                  const LayoutObject* offset_container);
 
-  static bool CanUseNewLayout(const LayoutBox&);
   bool CanUseNewLayout() const;
 
   String ToString() const;

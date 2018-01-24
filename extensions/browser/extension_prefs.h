@@ -21,6 +21,7 @@
 #include "components/sync/model/string_ordinal.h"
 #include "extensions/browser/blacklist_state.h"
 #include "extensions/browser/disable_reason.h"
+#include "extensions/browser/extension_scoped_prefs.h"
 #include "extensions/browser/install_flag.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -69,7 +70,7 @@ class URLPatternSet;
 //       preference. Extension-controlled preferences are stored in
 //       PrefValueStore::extension_prefs(), which this class populates and
 //       maintains as the underlying extensions change.
-class ExtensionPrefs : public KeyedService {
+class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
  public:
   using ExtensionsInfo = std::vector<std::unique_ptr<ExtensionInfo>>;
 
@@ -232,33 +233,35 @@ class ExtensionPrefs : public KeyedService {
   // Populates |out| with the ids of all installed extensions.
   void GetExtensions(ExtensionIdList* out) const;
 
+  // ExtensionScopedPrefs methods:
   void UpdateExtensionPref(const std::string& id,
                            base::StringPiece key,
-                           std::unique_ptr<base::Value> value);
+                           std::unique_ptr<base::Value> value) override;
 
-  void DeleteExtensionPrefs(const std::string& id);
+  void DeleteExtensionPrefs(const std::string& id) override;
 
   bool ReadPrefAsBoolean(const std::string& extension_id,
                          base::StringPiece pref_key,
-                         bool* out_value) const;
+                         bool* out_value) const override;
 
   bool ReadPrefAsInteger(const std::string& extension_id,
                          base::StringPiece pref_key,
-                         int* out_value) const;
+                         int* out_value) const override;
 
   bool ReadPrefAsString(const std::string& extension_id,
                         base::StringPiece pref_key,
-                        std::string* out_value) const;
+                        std::string* out_value) const override;
 
   bool ReadPrefAsList(const std::string& extension_id,
                       base::StringPiece pref_key,
-                      const base::ListValue** out_value) const;
+                      const base::ListValue** out_value) const override;
 
-  bool ReadPrefAsDictionary(const std::string& extension_id,
-                            base::StringPiece pref_key,
-                            const base::DictionaryValue** out_value) const;
+  bool ReadPrefAsDictionary(
+      const std::string& extension_id,
+      base::StringPiece pref_key,
+      const base::DictionaryValue** out_value) const override;
 
-  bool HasPrefForExtension(const std::string& extension_id) const;
+  bool HasPrefForExtension(const std::string& extension_id) const override;
 
   // Did the extension ask to escalate its permission during an upgrade?
   bool DidExtensionEscalatePermissions(const std::string& id) const;

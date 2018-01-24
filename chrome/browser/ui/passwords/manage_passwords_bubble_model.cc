@@ -270,7 +270,6 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
     DisplayReason display_reason)
     : password_overridden_(false),
       delegate_(std::move(delegate)),
-      interaction_reported_(false),
       metrics_recorder_(delegate_->GetPasswordFormMetricsRecorder()) {
   origin_ = delegate_->GetOrigin();
   state_ = delegate_->GetState();
@@ -393,16 +392,9 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
 }
 
 ManagePasswordsBubbleModel::~ManagePasswordsBubbleModel() {
-  if (!interaction_reported_)
-    OnBubbleClosing();
-}
-
-void ManagePasswordsBubbleModel::OnBubbleClosing() {
   interaction_keeper_->ReportInteractions(this);
   if (delegate_)
     delegate_->OnBubbleHidden();
-  delegate_.reset();
-  interaction_reported_ = true;
 }
 
 void ManagePasswordsBubbleModel::OnNeverForThisSiteClicked() {

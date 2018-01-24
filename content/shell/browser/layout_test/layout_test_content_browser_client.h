@@ -27,9 +27,7 @@ class LayoutTestContentBrowserClient : public ShellContentBrowserClient {
   LayoutTestNotificationManager* GetLayoutTestNotificationManager();
 
   // ContentBrowserClient overrides.
-  void RenderProcessWillLaunch(
-      RenderProcessHost* host,
-      service_manager::mojom::ServiceRequest* service_request) override;
+  void RenderProcessWillLaunch(RenderProcessHost* host) override;
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
       blink::AssociatedInterfaceRegistry* associated_registry,

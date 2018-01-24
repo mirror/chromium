@@ -6,11 +6,9 @@
 #define COMPONENTS_CBOR_CBOR_READER_H_
 
 #include <stddef.h>
-
 #include <string>
 #include <vector>
 
-#include "base/containers/span.h"
 #include "base/optional.h"
 #include "components/cbor/cbor_export.h"
 #include "components/cbor/cbor_values.h"
@@ -52,6 +50,8 @@ namespace cbor {
 
 class CBOR_EXPORT CBORReader {
  public:
+  using Bytes = std::vector<uint8_t>;
+
   enum class DecoderError {
     CBOR_NO_ERROR = 0,
     UNSUPPORTED_MAJOR_TYPE,
@@ -79,7 +79,7 @@ class CBOR_EXPORT CBORReader {
   // CBOR data- then an empty optional is returned. Optional |error_code_out|
   // can be provided by the caller to obtain additional information about
   // decoding failures.
-  static base::Optional<CBORValue> Read(base::span<const uint8_t> input_data,
+  static base::Optional<CBORValue> Read(const Bytes& input_data,
                                         DecoderError* error_code_out = nullptr,
                                         int max_nesting_level = kCBORMaxDepth);
 
@@ -87,8 +87,7 @@ class CBOR_EXPORT CBORReader {
   static const char* ErrorCodeToString(DecoderError error_code);
 
  private:
-  CBORReader(base::span<const uint8_t>::const_iterator it,
-             const base::span<const uint8_t>::const_iterator end);
+  CBORReader(Bytes::const_iterator it, const Bytes::const_iterator end);
   base::Optional<CBORValue> DecodeCBOR(int max_nesting_level);
   base::Optional<CBORValue> DecodeValueToNegative(uint64_t value);
   base::Optional<CBORValue> DecodeValueToUnsigned(uint64_t value);
@@ -109,8 +108,8 @@ class CBOR_EXPORT CBORReader {
 
   DecoderError GetErrorCode();
 
-  base::span<const uint8_t>::const_iterator it_;
-  const base::span<const uint8_t>::const_iterator end_;
+  Bytes::const_iterator it_;
+  const Bytes::const_iterator end_;
   DecoderError error_code_;
 
   DISALLOW_COPY_AND_ASSIGN(CBORReader);

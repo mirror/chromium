@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "base/component_export.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "ipc/ipc_channel.h"
@@ -19,7 +18,7 @@ namespace IPC {
 // Encapsulates how a Channel is created. A ChannelFactory can be
 // passed to the constructor of ChannelProxy or SyncChannel to tell them
 // how to create underlying channel.
-class COMPONENT_EXPORT(IPC) ChannelFactory {
+class IPC_EXPORT ChannelFactory {
  public:
   // Creates a factory for "native" channel built through
   // IPC::Channel::Create().

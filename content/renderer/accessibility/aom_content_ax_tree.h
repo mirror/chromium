@@ -5,32 +5,43 @@
 #ifndef CONTENT_RENDERER_ACCESSIBILITY_AOM_CONTENT_AX_TREE_H_
 #define CONTENT_RENDERER_ACCESSIBILITY_AOM_CONTENT_AX_TREE_H_
 
-#include <stdint.h>
+#include "third_party/WebKit/public/platform/ComputedAXTree.h"
 
-#include "third_party/WebKit/public/platform/WebComputedAXTree.h"
+#include <stdint.h>
+#include <string>
 
 #include "base/macros.h"
-#include "content/renderer/render_frame_impl.h"
-#include "third_party/WebKit/public/platform/WebString.h"
 #include "ui/accessibility/ax_tree.h"
+
+namespace blink {
+class WebFrame;
+}
 
 namespace content {
 
-class AomContentAxTree : public blink::WebComputedAXTree {
+class AomContentAxTree : public blink::ComputedAXTree {
  public:
-  explicit AomContentAxTree(RenderFrameImpl* render_frame);
+  AomContentAxTree();
+  ~AomContentAxTree() override;
 
-  // blink::WebComputedAXTree implementation.
-  bool ComputeAccessibilityTree() override;
+  // blink::ComputedAXTree implementation.
+  bool ComputeAccessibilityTree(blink::WebFrame*) override;
 
-  // String accessible property getters.
-  // TODO(meredithl): Change these to return null rather than empty strings.
-  blink::WebString GetNameForAXNode(int32_t) override;
-  blink::WebString GetRoleForAXNode(int32_t) override;
+  // Accessible property getters. These will return empty strings if the id does
+  // not correspond to a node in the current AXTree snapshot.
+  bool GetStringAttributeForAXNode(int32_t,
+                                   blink::AOMStringAttribute,
+                                   std::string*) override;
+
+  // Get the specified attribute for a given AXID, returning true if the
+  // attribute is present on that corresponding AXNode.
+  bool GetIntAttributeForAXNode(int32_t,
+                                blink::AOMIntAttribute,
+                                int32_t*) override;
 
  private:
   ui::AXTree tree_;
-  RenderFrameImpl* render_frame_;
+
   DISALLOW_COPY_AND_ASSIGN(AomContentAxTree);
 };
 

@@ -36,8 +36,7 @@ class FakeVSyncProvider : public gfx::VSyncProvider {
     return false;
   }
 
-  bool SupportGetVSyncParametersIfAvailable() const override { return false; }
-  bool IsHWClock() const override { return false; }
+  bool SupportGetVSyncParametersIfAvailable() override { return false; }
 
   int call_count() const { return call_count_; }
 

@@ -7,6 +7,7 @@
 #include "base/callback.h"
 #include "base/containers/hash_tables.h"
 #include "base/metrics/histogram.h"
+#include "services/network/public/cpp/data_element.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_data_item.h"
 #include "storage/browser/blob/blob_entry.h"
@@ -62,24 +63,6 @@ void BlobEntry::AppendSharedBlobItem(
   }
   size_ += item->item()->length();
   items_.push_back(std::move(item));
-}
-
-void BlobEntry::SetSharedBlobItems(
-    std::vector<scoped_refptr<ShareableBlobDataItem>> items) {
-  DCHECK(items_.empty());
-  DCHECK(offsets_.empty());
-  DCHECK_EQ(size_, 0u);
-
-  items_ = std::move(items);
-  offsets_.reserve(items_.size());
-  for (const auto& item : items_) {
-    size_ += item->item()->length();
-    offsets_.emplace_back(size_);
-  }
-  // The loop above pushed one too many offset onto offsets_, so remove the
-  // last one.
-  if (!offsets_.empty())
-    offsets_.pop_back();
 }
 
 const std::vector<scoped_refptr<ShareableBlobDataItem>>& BlobEntry::items()

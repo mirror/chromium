@@ -396,9 +396,8 @@ NSString* const kDoneTouchBarId = @"DONE";
 }
 
 - (LocationBarDecoration*)decorationForBubble {
-  BrowserWindowController* browserWindowController = [BrowserWindowController
-      browserWindowControllerForWindow:[self parentWindow]];
-  LocationBarViewMac* locationBar = [browserWindowController locationBarBridge];
+  LocationBarViewMac* locationBar =
+      [[[self parentWindow] windowController] locationBarBridge];
   return locationBar ? locationBar->star_decoration() : nullptr;
 }
 

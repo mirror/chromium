@@ -109,8 +109,7 @@
             pathAndBase.startsWith('/uievents/') ||
             pathAndBase.startsWith('/pointerlock/') ||
             pathAndBase.startsWith('/html/') ||
-            pathAndBase.startsWith('/input-events/') ||
-            pathAndBase.startsWith('/css/selectors/')) {
+            pathAndBase.startsWith('/input-events/')) {
             // Per-test automation scripts.
             src = automationPath + pathAndBase + '-automation.js';
         } else {

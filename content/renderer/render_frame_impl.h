@@ -107,7 +107,6 @@ struct FrameMsg_SerializeAsMHTML_Params;
 struct FrameMsg_TextTrackSettings_Params;
 
 namespace blink {
-class WebComputedAXTree;
 class WebContentDecryptionModule;
 class WebLocalFrame;
 class WebPresentationClient;
@@ -528,7 +527,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loaders,
+      base::Optional<URLLoaderFactoryBundle> subresource_loaders,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info,
       const base::UnguessableToken& devtools_navigation_token) override;
   void CommitFailedNavigation(
@@ -537,7 +536,7 @@ class CONTENT_EXPORT RenderFrameImpl
       bool has_stale_copy_in_cache,
       int error_code,
       const base::Optional<std::string>& error_page_content,
-      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loaders) override;
+      base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
 
   // mojom::FullscreenVideoElementHandler implementation:
   void RequestFullscreenVideoElement() override;
@@ -1117,7 +1116,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // browser at navigation time. For any other frames (i.e. frames on the
   // initial about:blank Document), the bundle returned here is lazily cloned
   // from the parent or opener's own bundle.
-  URLLoaderFactoryBundle* GetSubresourceLoaderFactories();
+  URLLoaderFactoryBundle& GetSubresourceLoaderFactories();
 
   // Update current main frame's encoding and send it to browser window.
   // Since we want to let users see the right encoding info from menu
@@ -1298,8 +1297,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // called before notifying the FrameHost of the commit.
   void UpdateStateForCommit(const blink::WebHistoryItem& item,
                             blink::WebHistoryCommitType commit_type);
-
-  blink::WebComputedAXTree* GetOrCreateWebComputedAXTree() override;
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
@@ -1610,7 +1607,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // URLLoaderFactory instances used for subresource loading when the Network
   // Service is enabled.
-  scoped_refptr<URLLoaderFactoryBundle> subresource_loader_factories_;
+  base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
@@ -1633,10 +1630,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // scrolled and focused editable node.
   bool has_scrolled_focused_editable_node_into_rect_ = false;
   gfx::Rect rect_for_scrolled_focused_editable_node_;
-
-  // Contains a representation of the accessibility tree stored in content for
-  // use inside of Blink.
-  std::unique_ptr<blink::WebComputedAXTree> computed_ax_tree_;
 
 #if defined(OS_MACOSX)
   // Return the mojo interface for making ClipboardHost calls.

@@ -54,7 +54,7 @@ XSLStyleSheetResource* XSLStyleSheetResource::FetchSynchronously(
   XSLStyleSheetResource* resource =
       ToXSLStyleSheetResource(fetcher->RequestResource(
           params, XSLStyleSheetResourceFactory(), nullptr));
-  if (resource->Data())
+  if (resource && resource->Data())
     resource->sheet_ = resource->DecodedText();
   return resource;
 }

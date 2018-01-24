@@ -18,7 +18,6 @@
 #include "core/dom/QualifiedName.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/forms/HTMLInputElement.h"
@@ -260,10 +259,6 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node,
       value->setPseudoElementIndexes(
           VisitPseudoElements(element, include_event_listeners));
     }
-
-    HTMLImageElement* image_element = ToHTMLImageElementOrNull(node);
-    if (image_element)
-      value->setCurrentSourceURL(image_element->currentSrc());
   } else if (node->IsDocumentNode()) {
     Document* document = ToDocument(node);
     value->setDocumentURL(InspectorDOMAgent::DocumentURLString(document));

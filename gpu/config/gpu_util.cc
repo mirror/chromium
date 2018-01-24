@@ -330,9 +330,7 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
                                      bool ignore_gpu_blacklist,
                                      bool disable_gpu_driver_bug_workarounds,
                                      bool log_gpu_control_list_decisions,
-                                     base::CommandLine* command_line,
-                                     bool* needs_more_info) {
-  DCHECK(!needs_more_info || !(*needs_more_info));
+                                     base::CommandLine* command_line) {
   bool use_swift_shader = false;
   bool use_swift_shader_for_webgl = false;
   if (command_line->HasSwitch(switches::kUseGL)) {
@@ -361,9 +359,6 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
     blacklisted_features = list->MakeDecision(
         GpuControlList::kOsAny, std::string(), gpu_info, target_test_group);
     gpu_feature_info.applied_gpu_blacklist_entries = list->GetActiveEntries();
-    if (needs_more_info) {
-      *needs_more_info = list->needs_more_info();
-    }
   }
 
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =

@@ -340,7 +340,7 @@ NodeRareData& Node::EnsureRareData() {
 
   DCHECK(data_.rare_data_);
   SetFlag(kHasRareDataFlag);
-  ScriptWrappableMarkingVisitor::WriteBarrier(RareData());
+  ScriptWrappableVisitor::WriteBarrier(RareData());
   return *RareData();
 }
 

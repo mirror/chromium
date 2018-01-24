@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/test_reg_util_win.h"
 #include "chrome/install_static/install_details.h"
 #include "chrome/install_static/install_modes.h"
@@ -260,7 +261,7 @@ class MakeInstallDetailsTest : public testing::TestWithParam<TestData> {
     // Prepare the inputs from the process command line.
     command_line_.ParseFromString(test_data_.command_line);
     master_preferences_ =
-        std::make_unique<installer::MasterPreferences>(command_line_);
+        base::MakeUnique<installer::MasterPreferences>(command_line_);
   }
 
   void SetUp() override {

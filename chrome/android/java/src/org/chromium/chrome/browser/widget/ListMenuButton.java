@@ -146,8 +146,8 @@ public class ListMenuButton extends TintedImageButton {
 
     @Override
     protected void onDetachedFromWindow() {
-        dismiss();
         super.onDetachedFromWindow();
+        dismiss();
     }
 
     private void showMenu() {

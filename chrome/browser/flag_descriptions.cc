@@ -288,10 +288,10 @@ const char kEnableAutofillCreditCardUploadCvcPromptDescription[] =
     "Google Payments.";
 
 const char kEnableAutofillCreditCardUploadGooglePayBrandingName[] =
-    "Enable Google Pay branding when offering credit card upload";
+    "Show the Google Pay logo when offering credit card upload";
 const char kEnableAutofillCreditCardUploadGooglePayBrandingDescription[] =
-    "If enabled, shows the Google Pay logo, a shorter header message, and a "
-    "narrower dialog when credit card upload to Google Payments is offered.";
+    "If enabled, shows the Google Pay logo and a shorter header message when "
+    "credit card upload to Google Payments is offered.";
 
 const char kEnableAutofillCreditCardUploadSendDetectedValuesName[] =
     "Always send metadata on detected form values for Autofill credit card "
@@ -1340,11 +1340,6 @@ const char kSoftwareRasterizerName[] = "3D software rasterizer";
 const char kSoftwareRasterizerDescription[] =
     "Fall back to a 3D software rasterizer when the GPU cannot be used.";
 
-const char kSoleIntegrationName[] = "Sole integration";
-const char kSoleIntegrationDescription[] =
-    "Enable Sole integration for browser customization. You must restart "
-    "the browser twice for changes to take effect.";
-
 const char kSoundContentSettingName[] = "Sound content setting";
 const char kSoundContentSettingDescription[] =
     "Enable site-wide muting in content settings and tab strip context menu.";
@@ -1727,6 +1722,11 @@ const char kChromeHomeMenuItemsDescription[] =
     " when Chrome Home is enabled. These items will open the bottom sheet to"
     " show the desired content.";
 
+const char kChromeHomeOptOutSnackbarName[] = "Chrome Home Opt-out Snackbar";
+const char kChromeHomeOptOutSnackbarDescription[] =
+    "Show a snackbar prompting users to take a survey the first time they"
+    " opt-out of Chrome Home";
+
 const char kChromeHomePersistentIphName[] = "Chrome Home Persistent Iph";
 const char kChromeHomePersistentIphDescription[] =
     "Wait to dismiss the Chrome Home IPH until the user inteacts with the "
@@ -1736,6 +1736,10 @@ const char kChromeHomePersonalizedOmniboxSuggestionsName[] =
     "Chrome Home Personalized Omnibox Suggestions";
 const char kChromeHomePersonalizedOmniboxSuggestionsDescription[] =
     "Enable personalized omnibox suggestions on focus for Chrome Home.";
+
+const char kChromeHomePromoName[] = "Chrome Home Promo";
+const char kChromeHomePromoDescription[] =
+    "Enable showing the opt-in/out Chrome Home promo.";
 
 const char kChromeHomePullToRefreshIphAtTopName[] =
     "Chrome Home Pull-To-Refresh Iph At Top";
@@ -1752,10 +1756,6 @@ const char kChromeHomeSwipeLogicDescription[] =
     "Various swipe logic options for Chrome Home for sheet expansion.";
 const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
 const char kChromeHomeSwipeLogicVelocity[] = "Velocity suppression model";
-
-const char kChromeModernDesignName[] = "Chrome Modern Design";
-const char kChromeModernDesignDescription[] =
-    "Enable modern design for Chrome.";
 
 const char kChromeMemexName[] = "Chrome Memex";
 const char kChromeMemexDescription[] =
@@ -2805,10 +2805,6 @@ const char kVrBrowsingExperimentalRenderingDescription[] =
 const char kVrBrowsingInCustomTabName[] = "VR browsing in Custom Tabs";
 const char kVrBrowsingInCustomTabDescription[] =
     "Allow browsing within a VR headset while in a Custom Tab.";
-
-const char kVrIconInDaydreamHomeName[] = "Chrome icon in Daydream Home";
-const char kVrIconInDaydreamHomeDescription[] =
-    "Adds an icon to Daydream Home that allows launching Chrome in VR.";
 
 const char kVrLaunchIntentsName[] = "VR intents";
 const char kVrLaunchIntentsDescription[] =

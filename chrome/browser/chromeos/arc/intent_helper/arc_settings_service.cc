@@ -41,7 +41,7 @@
 #include "components/proxy_config/pref_proxy_config_tracker_impl.h"
 #include "components/proxy_config/proxy_config_dictionary.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
-#include "net/proxy_resolution/proxy_config.h"
+#include "net/proxy/proxy_config.h"
 
 using ::chromeos::CrosSettings;
 using ::chromeos::system::TimezoneSettings;
@@ -59,10 +59,10 @@ bool GetHttpProxyServer(const ProxyConfigDictionary* proxy_config_dict,
   proxy_rules.ParseFromString(proxy_rules_string);
 
   const net::ProxyList* proxy_list = nullptr;
-  if (proxy_rules.type == net::ProxyConfig::ProxyRules::Type::PROXY_LIST) {
+  if (proxy_rules.type == net::ProxyConfig::ProxyRules::TYPE_SINGLE_PROXY) {
     proxy_list = &proxy_rules.single_proxies;
   } else if (proxy_rules.type ==
-             net::ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME) {
+             net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME) {
     proxy_list = proxy_rules.MapUrlSchemeToProxyList(url::kHttpScheme);
   }
   if (!proxy_list || proxy_list->IsEmpty())

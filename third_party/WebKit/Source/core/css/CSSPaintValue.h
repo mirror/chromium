@@ -33,12 +33,11 @@ class CSSPaintValue : public CSSImageGeneratorValue {
 
   String GetName() const;
 
-  // The |target_size| is container size with subpixel snapping when used
-  // in the context of paint images.
+  // The |container_size| is container size with subpixel snapping.
   scoped_refptr<Image> GetImage(const ImageResourceObserver&,
                                 const Document&,
                                 const ComputedStyle&,
-                                const FloatSize& target_size);
+                                const LayoutSize& container_size);
   bool IsFixedSize() const { return false; }
   FloatSize FixedSize(const Document&) { return FloatSize(); }
 

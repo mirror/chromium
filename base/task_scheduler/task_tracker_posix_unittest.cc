@@ -42,7 +42,7 @@ class TaskSchedulerTaskTrackerPosixTest : public testing::Test {
 
  protected:
   Thread service_thread_;
-  TaskTrackerPosix tracker_ = {"Test"};
+  TaskTrackerPosix tracker_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerTaskTrackerPosixTest);

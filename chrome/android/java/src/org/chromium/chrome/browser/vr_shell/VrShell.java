@@ -16,8 +16,8 @@ public interface VrShell {
     /**
      * Performs native VrShell initialization.
      */
-    void initializeNative(
-            Tab currentTab, boolean forWebVr, boolean webVrAutopresentationExpected, boolean inCct);
+    void initializeNative(Tab currentTab, boolean forWebVr, boolean webVrAutopresentationExpected,
+            boolean inCct, boolean browsingDisabled);
 
     /**
      * Pauses VrShell.
@@ -70,6 +70,12 @@ public interface VrShell {
      * Requests to exit VR.
      */
     void requestToExitVr(@UiUnsupportedMode int reason);
+
+    /**
+     * Gives VrShell a chance to clean up any view-dependent state before removing
+     * VrShell from the view hierarchy.
+     */
+    void onBeforeWindowDetached();
 
     /**
      *  Triggers VrShell to navigate forward.

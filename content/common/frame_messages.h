@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
+#include "components/viz/common/surfaces/surface_sequence.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
 #include "content/common/content_security_policy/csp_context.h"
@@ -453,7 +454,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::CommonNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(should_check_main_world_csp)
   IPC_STRUCT_TRAITS_MEMBER(has_user_gesture)
   IPC_STRUCT_TRAITS_MEMBER(started_from_context_menu)
-  IPC_STRUCT_TRAITS_MEMBER(suggested_filename)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::NavigationTiming)
@@ -759,8 +759,9 @@ IPC_STRUCT_TRAITS_END()
 // -----------------------------------------------------------------------------
 // Messages sent from the browser to the renderer.
 
-IPC_MESSAGE_ROUTED1(FrameMsg_SetChildFrameSurface,
-                    viz::SurfaceInfo /* surface_info */)
+IPC_MESSAGE_ROUTED2(FrameMsg_SetChildFrameSurface,
+                    viz::SurfaceInfo /* surface_info */,
+                    viz::SurfaceSequence /* sequence */)
 
 // Notifies the embedding frame that the process rendering the child frame's
 // contents has terminated.
@@ -1437,6 +1438,16 @@ IPC_MESSAGE_CONTROL3(FrameHostMsg_PluginInstanceThrottleStateChange,
                      int32_t /* pp_instance */,
                      bool /* is_throttled */)
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
+
+// Satisfies a Surface destruction dependency associated with |sequence|.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_SatisfySequence,
+                    viz::SurfaceSequence /* sequence */)
+
+// Creates a destruction dependency for the Surface specified by the given
+// |surface_id|.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_RequireSequence,
+                    viz::SurfaceId /* surface_id */,
+                    viz::SurfaceSequence /* sequence */)
 
 // Provides the result from handling BeforeUnload.  |proceed| matches the return
 // value of the frame's beforeunload handler: true if the user decided to

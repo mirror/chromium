@@ -53,27 +53,25 @@ NetworkLog.HAREntry = class {
   }
 
   /**
-   * @param {!SDK.NetworkRequest} request
-   * @return {!Promise<!Object>}
+   * @return {!Object}
    */
-  static async build(request) {
-    var harEntry = new NetworkLog.HAREntry(request);
-    var ipAddress = harEntry._request.remoteAddress();
+  build() {
+    var ipAddress = this._request.remoteAddress();
     var portPositionInString = ipAddress.lastIndexOf(':');
     if (portPositionInString !== -1)
       ipAddress = ipAddress.substr(0, portPositionInString);
 
-    var timings = harEntry._buildTimings();
+    var timings = this._buildTimings();
     var time = 0;
     // "ssl" is included in the connect field, so do not double count it.
     for (var t of [timings.blocked, timings.dns, timings.connect, timings.send, timings.wait, timings.receive])
       time += Math.max(t, 0);
 
     var entry = {
-      startedDateTime: NetworkLog.HARLog.pseudoWallTime(harEntry._request, harEntry._request.issueTime()),
+      startedDateTime: NetworkLog.HARLog.pseudoWallTime(this._request, this._request.issueTime()),
       time: time,
-      request: await harEntry._buildRequest(),
-      response: harEntry._buildResponse(),
+      request: this._buildRequest(),
+      response: this._buildResponse(),
       cache: {},  // Not supported yet.
       timings: timings,
       // IPv6 address should not have square brackets per (https://tools.ietf.org/html/rfc2373#section-2.2).
@@ -81,21 +79,21 @@ NetworkLog.HAREntry = class {
     };
 
     // Chrome specific.
-    if (harEntry._request.cached())
-      entry._fromCache = harEntry._request.cachedInMemory() ? 'memory' : 'disk';
+    if (this._request.cached())
+      entry._fromCache = this._request.cachedInMemory() ? 'memory' : 'disk';
 
-    if (harEntry._request.connectionId !== '0')
-      entry.connection = harEntry._request.connectionId;
-    var page = NetworkLog.PageLoad.forRequest(harEntry._request);
+    if (this._request.connectionId !== '0')
+      entry.connection = this._request.connectionId;
+    var page = NetworkLog.PageLoad.forRequest(this._request);
     if (page)
       entry.pageref = 'page_' + page.id;
     return entry;
   }
 
   /**
-   * @return {!Promise<!Object>}
+   * @return {!Object}
    */
-  async _buildRequest() {
+  _buildRequest() {
     var headersText = this._request.requestHeadersText();
     var res = {
       method: this._request.requestMethod,
@@ -107,9 +105,8 @@ NetworkLog.HAREntry = class {
       headersSize: headersText ? headersText.length : -1,
       bodySize: this.requestBodySize
     };
-    var postData = await this._buildPostData();
-    if (postData)
-      res.postData = postData;
+    if (this._request.requestFormData)
+      res.postData = this._buildPostData();
 
     return res;
   }
@@ -226,16 +223,12 @@ NetworkLog.HAREntry = class {
   }
 
   /**
-   * @return {!Promise<!Object>}
+   * @return {!Object}
    */
-  async _buildPostData() {
-    var postData = await this._request.requestFormData();
-    if (!postData)
-      return null;
-    var res = {mimeType: this._request.requestContentType(), text: postData};
-    var formParameters = await this._request.formParameters();
-    if (formParameters)
-      res.params = this._buildParameters(formParameters);
+  _buildPostData() {
+    var res = {mimeType: this._request.requestContentType(), text: this._request.requestFormData};
+    if (this._request.formParameters)
+      res.params = this._buildParameters(this._request.formParameters);
     return res;
   }
 
@@ -331,6 +324,13 @@ NetworkLog.HAREntry.Timing;
  */
 NetworkLog.HARLog = class {
   /**
+   * @param {!Array.<!SDK.NetworkRequest>} requests
+   */
+  constructor(requests) {
+    this._requests = requests;
+  }
+
+  /**
    * @param {!SDK.NetworkRequest} request
    * @param {number} monotonicTime
    * @return {string}
@@ -340,16 +340,15 @@ NetworkLog.HARLog = class {
   }
 
   /**
-   * @param {!Array.<!SDK.NetworkRequest>} requests
-   * @return {!Promise<!Object>}
+   * @return {!Object}
    */
-  static async build(requests) {
-    var log = new NetworkLog.HARLog();
-    var entryPromises = [];
-    for (var request of requests)
-      entryPromises.push(NetworkLog.HAREntry.build(request));
-    var entries = await Promise.all(entryPromises);
-    return {version: '1.2', creator: log._creator(), pages: log._buildPages(requests), entries: entries};
+  build() {
+    return {
+      version: '1.2',
+      creator: this._creator(),
+      pages: this._buildPages(),
+      entries: this._requests.map(this._convertResource.bind(this))
+    };
   }
 
   _creator() {
@@ -359,14 +358,13 @@ NetworkLog.HARLog = class {
   }
 
   /**
-   * @param {!Array.<!SDK.NetworkRequest>} requests
    * @return {!Array.<!Object>}
    */
-  _buildPages(requests) {
+  _buildPages() {
     var seenIdentifiers = {};
     var pages = [];
-    for (var i = 0; i < requests.length; ++i) {
-      var request = requests[i];
+    for (var i = 0; i < this._requests.length; ++i) {
+      var request = this._requests[i];
       var page = NetworkLog.PageLoad.forRequest(request);
       if (!page || seenIdentifiers[page.id])
         continue;
@@ -391,6 +389,14 @@ NetworkLog.HARLog = class {
         onLoad: this._pageEventTime(page, page.loadTime)
       }
     };
+  }
+
+  /**
+   * @param {!SDK.NetworkRequest} request
+   * @return {!Object}
+   */
+  _convertResource(request) {
+    return (new NetworkLog.HAREntry(request)).build();
   }
 
   /**

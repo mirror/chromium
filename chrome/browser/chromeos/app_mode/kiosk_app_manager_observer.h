@@ -33,10 +33,6 @@ class KioskAppManagerObserver {
   // |success| indicates if all the updates are completed successfully.
   virtual void OnKioskAppExternalUpdateComplete(bool success) {}
 
-  // Called when kiosk app session initialization is complete - i.e. when
-  // KioskAppManager::InitSession() is called.
-  virtual void OnKioskSessionInitialized() {}
-
  protected:
   virtual ~KioskAppManagerObserver() {}
 };

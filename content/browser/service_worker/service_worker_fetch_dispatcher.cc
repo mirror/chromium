@@ -431,10 +431,9 @@ class ServiceWorkerFetchDispatcher::ResponseCallback
 class ServiceWorkerFetchDispatcher::URLLoaderAssets
     : public base::RefCounted<ServiceWorkerFetchDispatcher::URLLoaderAssets> {
  public:
-  URLLoaderAssets(
-      std::unique_ptr<network::mojom::URLLoaderFactory> url_loader_factory,
-      std::unique_ptr<network::mojom::URLLoader> url_loader,
-      std::unique_ptr<DelegatingURLLoaderClient> url_loader_client)
+  URLLoaderAssets(network::mojom::URLLoaderFactoryPtr url_loader_factory,
+                  std::unique_ptr<network::mojom::URLLoader> url_loader,
+                  std::unique_ptr<DelegatingURLLoaderClient> url_loader_client)
       : url_loader_factory_(std::move(url_loader_factory)),
         url_loader_(std::move(url_loader)),
         url_loader_client_(std::move(url_loader_client)) {}
@@ -448,7 +447,7 @@ class ServiceWorkerFetchDispatcher::URLLoaderAssets
   friend class base::RefCounted<URLLoaderAssets>;
   virtual ~URLLoaderAssets() {}
 
-  std::unique_ptr<network::mojom::URLLoaderFactory> url_loader_factory_;
+  network::mojom::URLLoaderFactoryPtr url_loader_factory_;
   std::unique_ptr<network::mojom::URLLoader> url_loader_;
   std::unique_ptr<DelegatingURLLoaderClient> url_loader_client_;
 
@@ -687,8 +686,11 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
 
   DCHECK(!url_loader_assets_);
 
-  auto url_loader_factory = std::make_unique<URLLoaderFactoryImpl>(
-      ResourceRequesterInfo::CreateForNavigationPreload(requester_info));
+  network::mojom::URLLoaderFactoryPtr url_loader_factory;
+  URLLoaderFactoryImpl::Create(
+      ResourceRequesterInfo::CreateForNavigationPreload(requester_info),
+      mojo::MakeRequest(&url_loader_factory),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 
   network::ResourceRequest request;
   request.method = original_request->method();
@@ -820,7 +822,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreloadWithURLLoader(
   // Unlike the non-S13N code path, we don't own the URLLoaderFactory being used
   // (it's the generic network factory), so we don't need to pass it to
   // URLLoaderAssets to keep it alive.
-  std::unique_ptr<network::mojom::URLLoaderFactory> null_factory;
+  network::mojom::URLLoaderFactoryPtr null_factory;
   url_loader_assets_ = base::MakeRefCounted<URLLoaderAssets>(
       std::move(null_factory), std::move(url_loader),
       std::move(url_loader_client));

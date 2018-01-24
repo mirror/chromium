@@ -21,12 +21,6 @@ const char MediaEngagementPreloadedList::kHistogramCheckResultName[] =
 const char MediaEngagementPreloadedList::kHistogramLoadResultName[] =
     "Media.Engagement.PreloadedList.LoadResult";
 
-const char MediaEngagementPreloadedList::kHistogramLoadTimeName[] =
-    "Media.Engagement.PreloadedList.LoadTime";
-
-const char MediaEngagementPreloadedList::kHistogramLookupTimeName[] =
-    "Media.Engagement.PreloadedList.LookupTime";
-
 // static
 MediaEngagementPreloadedList* MediaEngagementPreloadedList::GetInstance() {
   CR_DEFINE_STATIC_LOCAL(MediaEngagementPreloadedList, instance, ());
@@ -53,7 +47,6 @@ bool MediaEngagementPreloadedList::empty() const {
 }
 
 bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
-  SCOPED_UMA_HISTOGRAM_TIMER(kHistogramLoadTimeName);
   DETACH_FROM_SEQUENCE(sequence_checker_);
 
   // Check the file exists.
@@ -88,7 +81,6 @@ bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
 
 bool MediaEngagementPreloadedList::CheckOriginIsPresent(
     const url::Origin& origin) const {
-  SCOPED_UMA_HISTOGRAM_TIMER(kHistogramLookupTimeName);
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Check if we have loaded the data.

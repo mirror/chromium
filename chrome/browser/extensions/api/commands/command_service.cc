@@ -177,16 +177,16 @@ bool CommandService::GetBrowserActionCommand(const std::string& extension_id,
                                              QueryType type,
                                              Command* command,
                                              bool* active) const {
-  return GetExtensionActionCommand(extension_id, type, command, active,
-                                   Command::Type::kBrowserAction);
+  return GetExtensionActionCommand(
+      extension_id, type, command, active, BROWSER_ACTION);
 }
 
 bool CommandService::GetPageActionCommand(const std::string& extension_id,
                                           QueryType type,
                                           Command* command,
                                           bool* active) const {
-  return GetExtensionActionCommand(extension_id, type, command, active,
-                                   Command::Type::kPageAction);
+  return GetExtensionActionCommand(
+      extension_id, type, command, active, PAGE_ACTION);
 }
 
 bool CommandService::GetNamedCommands(const std::string& extension_id,
@@ -403,7 +403,8 @@ Command CommandService::FindCommandByName(const std::string& extension_id,
 bool CommandService::GetSuggestedExtensionCommand(
     const std::string& extension_id,
     const ui::Accelerator& accelerator,
-    Command* command) const {
+    Command* command,
+    ExtensionCommandType* command_type) const {
   const Extension* extension =
       ExtensionRegistry::Get(profile_)
           ->GetExtensionById(extension_id, ExtensionRegistry::ENABLED);
@@ -418,6 +419,8 @@ bool CommandService::GetSuggestedExtensionCommand(
       accelerator == prospective_command.accelerator()) {
     if (command)
       *command = prospective_command;
+    if (command_type)
+      *command_type = BROWSER_ACTION;
     return true;
   } else if (GetPageActionCommand(extension_id,
                                   CommandService::SUGGESTED,
@@ -426,6 +429,8 @@ bool CommandService::GetSuggestedExtensionCommand(
              accelerator == prospective_command.accelerator()) {
     if (command)
       *command = prospective_command;
+    if (command_type)
+      *command_type = PAGE_ACTION;
     return true;
   } else if (GetNamedCommands(extension_id,
                               CommandService::SUGGESTED,
@@ -437,6 +442,8 @@ bool CommandService::GetSuggestedExtensionCommand(
       if (accelerator == it->second.accelerator()) {
         if (command)
           *command = it->second;
+        if (command_type)
+          *command_type = NAMED;
         return true;
       }
     }
@@ -447,10 +454,11 @@ bool CommandService::GetSuggestedExtensionCommand(
 bool CommandService::RequestsBookmarkShortcutOverride(
     const Extension* extension) const {
   return RemovesBookmarkShortcut(extension) &&
-         GetSuggestedExtensionCommand(
-             extension->id(),
-             chrome::GetPrimaryChromeAcceleratorForCommandId(IDC_BOOKMARK_PAGE),
-             nullptr);
+      GetSuggestedExtensionCommand(
+          extension->id(),
+          chrome::GetPrimaryChromeAcceleratorForCommandId(IDC_BOOKMARK_PAGE),
+          NULL,
+          NULL);
 }
 
 void CommandService::AddObserver(Observer* observer) {
@@ -850,7 +858,7 @@ bool CommandService::GetExtensionActionCommand(
     QueryType query_type,
     Command* command,
     bool* active,
-    Command::Type action_type) const {
+    ExtensionCommandType action_type) const {
   const ExtensionSet& extensions =
       ExtensionRegistry::Get(profile_)->enabled_extensions();
   const Extension* extension = extensions.GetByID(extension_id);
@@ -861,13 +869,13 @@ bool CommandService::GetExtensionActionCommand(
 
   const Command* requested_command = NULL;
   switch (action_type) {
-    case Command::Type::kBrowserAction:
+    case BROWSER_ACTION:
       requested_command = CommandsInfo::GetBrowserActionCommand(extension);
       break;
-    case Command::Type::kPageAction:
+    case PAGE_ACTION:
       requested_command = CommandsInfo::GetPageActionCommand(extension);
       break;
-    case Command::Type::kNamed:
+    case NAMED:
       NOTREACHED();
       return false;
   }

@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "google_apis/drive/drive_api_error_codes.h"
@@ -37,7 +38,7 @@ CancelCallback FilesListRequestRunner::CreateAndStartWithSizeBackoff(
                             max_results);
   base::Closure* const cancel_callback = new base::Closure;
   std::unique_ptr<drive::FilesListRequest> request =
-      std::make_unique<drive::FilesListRequest>(
+      base::MakeUnique<drive::FilesListRequest>(
           request_sender_, url_generator_,
           base::Bind(&FilesListRequestRunner::OnCompleted,
                      weak_ptr_factory_.GetWeakPtr(), max_results, corpora,

@@ -26,6 +26,10 @@ void HostFrameSinkManager::SetLocalManager(
   frame_sink_manager_impl_ = frame_sink_manager_impl;
 
   frame_sink_manager_ = frame_sink_manager_impl;
+
+  // Assign temporary references if FrameSinkManagerImpl is using them.
+  assign_temporary_references_ =
+      frame_sink_manager_impl_->surface_manager()->using_surface_references();
 }
 
 void HostFrameSinkManager::BindAndSetManager(
@@ -98,9 +102,6 @@ void HostFrameSinkManager::SetFrameSinkDebugLabel(
 
 void HostFrameSinkManager::CreateRootCompositorFrameSink(
     mojom::RootCompositorFrameSinkParamsPtr params) {
-  // Should only be used with an out-of-process display compositor.
-  DCHECK(frame_sink_manager_ptr_);
-
   FrameSinkId frame_sink_id = params->frame_sink_id;
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(data.IsFrameSinkRegistered());
@@ -229,9 +230,6 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
 
   data.support = support.get();
   data.is_root = is_root;
-
-  if (is_root)
-    display_hit_test_query_[frame_sink_id] = std::make_unique<HitTestQuery>();
 
   return support;
 }

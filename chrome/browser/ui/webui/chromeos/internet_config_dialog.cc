@@ -17,14 +17,11 @@
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace chromeos {
 
 namespace {
-
-// Dialog height for configured networks that only require a passphrase.
-// This height includes room for a 'connecting' or error message.
-constexpr int kDialogHeightPasswordOnly = 365;
 
 void AddInternetStrings(content::WebUIDataSource* html_source) {
   // Add default strings first.
@@ -74,18 +71,6 @@ InternetConfigDialog::InternetConfigDialog(const std::string& network_type,
       network_id_(network_id) {}
 
 InternetConfigDialog::~InternetConfigDialog() {}
-
-void InternetConfigDialog::GetDialogSize(gfx::Size* size) const {
-  const NetworkState* network =
-      network_id_.empty() ? nullptr
-                          : NetworkHandler::Get()
-                                ->network_state_handler()
-                                ->GetNetworkStateFromGuid(network_id_);
-  int height = network && network->SecurityRequiresPassphraseOnly()
-                   ? kDialogHeightPasswordOnly
-                   : InternetConfigDialog::kDialogHeight;
-  size->SetSize(InternetConfigDialog::kDialogWidth, height);
-}
 
 std::string InternetConfigDialog::GetDialogArgs() const {
   base::DictionaryValue args;

@@ -30,7 +30,7 @@ void InspectorHandler::Wire(UberDispatcher* dispatcher) {
   Inspector::Dispatcher::wire(dispatcher, this);
 }
 
-void InspectorHandler::SetRenderer(int process_host_id,
+void InspectorHandler::SetRenderer(RenderProcessHost* process_host,
                                    RenderFrameHostImpl* frame_host) {
   host_ = frame_host;
 }

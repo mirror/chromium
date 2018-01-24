@@ -83,12 +83,8 @@ enum class VerifySignatureResult {
 void RecordFirstRunSeedImportResult(FirstRunSeedImportResult result);
 #endif  // OS_ANDROID
 
-// Records the result of attempting to load the latest variations seed on
-// startup.
+// Records the result of attempting to load a variations seed on startup.
 void RecordLoadSeedResult(LoadSeedResult state);
-
-// Records the result of attempting to load the safe variations seed on startup.
-void RecordLoadSafeSeedResult(LoadSeedResult state);
 
 // Records the result of attempting to store a variations seed received from the
 // server.

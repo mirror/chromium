@@ -66,7 +66,6 @@ public class ChromePreferenceManager {
 
     private static final String CHROME_HOME_MENU_ITEM_CLICK_COUNT_KEY =
             "chrome_home_menu_item_click_count";
-    private static final String SOLE_INTEGRATION_ENABLED_KEY = "sole_integration_enabled";
 
     private static class LazyHolder {
         static final ChromePreferenceManager INSTANCE = new ChromePreferenceManager();
@@ -403,12 +402,61 @@ public class ChromePreferenceManager {
     }
 
     /**
-     * Clean up unused Chrome Home preferences.
+     * Set whether or not Chrome Home is enabled by the user.
+     * @param isEnabled If Chrome Home is enabled by the user.
      */
-    public void clearObsoleteChromeHomePrefs() {
+    public void setChromeHomeUserEnabled(boolean isEnabled) {
+        writeBoolean(CHROME_HOME_USER_ENABLED_KEY, isEnabled);
+    }
+
+    /**
+     * Get whether or not Chrome Home is enabled by the user.
+     * @return True if Chrome Home is enabled by the user.
+     */
+    public boolean isChromeHomeUserEnabled() {
+        return mSharedPreferences.getBoolean(CHROME_HOME_USER_ENABLED_KEY, false);
+    }
+
+    /**
+     * @return Whether or not the user has set their Chrome Home preference.
+     */
+    public boolean isChromeHomeUserPreferenceSet() {
+        return mSharedPreferences.contains(CHROME_HOME_USER_ENABLED_KEY);
+    }
+
+    /**
+     * Remove the Chrome Home user preference.
+     */
+    public void clearChromeHomeUserPreference() {
         removeKey(CHROME_HOME_USER_ENABLED_KEY);
-        removeKey(CHROME_HOME_INFO_PROMO_SHOWN_KEY);
-        removeKey(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN);
+    }
+
+    /**
+     * Set that the Chrome Home info-promo has been shown.
+     */
+    public void setChromeHomeInfoPromoShown() {
+        writeBoolean(CHROME_HOME_INFO_PROMO_SHOWN_KEY, true);
+    }
+
+    /**
+     * @return Whether the info-only version of the Chrome Home promo has been shown.
+     */
+    public boolean hasChromeHomeInfoPromoShown() {
+        return mSharedPreferences.getBoolean(CHROME_HOME_INFO_PROMO_SHOWN_KEY, false);
+    }
+
+    /**
+     * Mark that the Chrome Home opt-out snackbar has been shown.
+     */
+    public void setChromeHomeOptOutSnackbarShown() {
+        writeBoolean(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN, true);
+    }
+
+    /**
+     * @return Whether the Chrome Home opt-out snackbar has been shown.
+     */
+    public boolean getChromeHomeOptOutSnackbarShown() {
+        return mSharedPreferences.getBoolean(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN, false);
     }
 
     /**
@@ -443,22 +491,6 @@ public class ChromePreferenceManager {
     /** Returns whether the content suggestions surface has ever been shown. */
     public boolean getSuggestionsSurfaceShown() {
         return mSharedPreferences.getBoolean(CONTENT_SUGGESTIONS_SHOWN_KEY, false);
-    }
-
-    /**
-     * Get whether or not Sole integration is enabled.
-     * @return True if Sole integration is enabled.
-     */
-    public boolean isSoleEnabled() {
-        return mSharedPreferences.getBoolean(SOLE_INTEGRATION_ENABLED_KEY, false);
-    }
-
-    /**
-     * Set whether or not Sole integration is enabled.
-     * @param isEnabled If Sole integration is enabled.
-     */
-    public void setSoleEnabled(boolean isEnabled) {
-        writeBoolean(SOLE_INTEGRATION_ENABLED_KEY, isEnabled);
     }
 
     /**

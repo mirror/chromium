@@ -13,7 +13,6 @@
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/model/controller_model.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
-#include "chrome/browser/vr/ui_renderer.h"
 #include "ui/gfx/transform.h"
 
 namespace ui {
@@ -65,11 +64,9 @@ class VrTestContext : public vr::UiBrowserInterface {
   void CycleWebVrModes();
   void ToggleSplashScreen();
   void CycleOrigin();
-  RenderInfo GetRenderInfo() const;
   gfx::Transform ProjectionMatrix() const;
   gfx::Transform ViewProjectionMatrix() const;
-  ControllerModel UpdateController(const RenderInfo& render_info);
-  gfx::Point3F LaserOrigin() const;
+  ControllerModel UpdateController();
 
   std::unique_ptr<Ui> ui_;
   gfx::Size window_size_;
@@ -97,8 +94,6 @@ class VrTestContext : public vr::UiBrowserInterface {
 
   std::unique_ptr<TextInputDelegate> text_input_delegate_;
   std::unique_ptr<TestKeyboardDelegate> keyboard_delegate_;
-
-  PlatformController::Handedness handedness_ = PlatformController::kRightHanded;
 
   DISALLOW_COPY_AND_ASSIGN(VrTestContext);
 };

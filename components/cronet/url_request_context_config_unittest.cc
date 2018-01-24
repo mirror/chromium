@@ -4,16 +4,14 @@
 
 #include "components/cronet/url_request_context_config.h"
 
-#include <memory>
-
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "net/cert/cert_verifier.h"
 #include "net/http/http_network_session.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy_resolution/proxy_config.h"
-#include "net/proxy_resolution/proxy_config_service_fixed.h"
+#include "net/proxy/proxy_config.h"
+#include "net/proxy/proxy_config_service_fixed.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -368,7 +366,7 @@ TEST(URLURLRequestContextConfigTest, SetQuicConnectionOptions) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      std::make_unique<net::ProxyConfigServiceFixed>(
+      base::MakeUnique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =

@@ -50,7 +50,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using blink::mojom::CacheStorageError;
-using storage::BlobDataItem;
 
 namespace content {
 namespace cache_storage_cache_unittest {
@@ -163,11 +162,11 @@ void CopyBody(const storage::BlobDataHandle& blob_handle, std::string* output) {
   const auto& items = data->items();
   for (const auto& item : items) {
     switch (item->type()) {
-      case BlobDataItem::Type::kBytes: {
-        output->append(item->bytes().data(), item->length());
+      case network::DataElement::TYPE_BYTES: {
+        output->append(item->bytes(), item->length());
         break;
       }
-      case BlobDataItem::Type::kDiskCacheEntry: {
+      case network::DataElement::TYPE_DISK_CACHE_ENTRY: {
         disk_cache::Entry* entry = item->disk_cache_entry();
         int32_t body_size = entry->GetDataSize(item->disk_cache_stream_index());
 
@@ -196,7 +195,7 @@ void CopySideData(const storage::BlobDataHandle& blob_handle,
   const auto& items = data->items();
   ASSERT_EQ(1u, items.size());
   const auto& item = items[0];
-  ASSERT_EQ(BlobDataItem::Type::kDiskCacheEntry, item->type());
+  ASSERT_EQ(network::DataElement::TYPE_DISK_CACHE_ENTRY, item->type());
   ASSERT_EQ(CacheStorageCache::INDEX_SIDE_DATA,
             item->disk_cache_side_stream_index());
 
@@ -485,7 +484,7 @@ class CacheStorageCacheTest : public testing::Test {
     std::unique_ptr<storage::BlobDataBuilder> builder =
         std::make_unique<storage::BlobDataBuilder>(uuid);
     builder->AppendData(data);
-    return blob_storage_context_->AddFinishedBlob(std::move(builder));
+    return blob_storage_context_->AddFinishedBlob(builder.get());
   }
 
   void CopySideDataToResponse(storage::BlobDataHandle* side_data_blob_handle,

@@ -23,9 +23,7 @@ class InputDeviceController : public mojom::InputDeviceController {
   ~InputDeviceController() override;
 
   // Registers the interface provided by this class with |registry|.
-  void AddInterface(
-      service_manager::BinderRegistry* registry,
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner = nullptr);
+  void AddInterface(service_manager::BinderRegistry* registry);
 
   // mojom::InputDeviceController::
   void AddKeyboardDeviceObserver(

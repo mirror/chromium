@@ -344,7 +344,7 @@ void SliderContainerElement::DefaultEventHandler(Event* event) {
 
 void SliderContainerElement::HandleTouchEvent(TouchEvent* event) {
   HTMLInputElement* input = HostInput();
-  if (!input || input->IsDisabledFormControl() || !event)
+  if (input->IsDisabledFormControl())
     return;
 
   if (event->type() == EventTypeNames::touchend) {
@@ -365,9 +365,6 @@ void SliderContainerElement::HandleTouchEvent(TouchEvent* event) {
   TouchList* touches = event->targetTouches();
   SliderThumbElement* thumb = ToSliderThumbElement(
       GetTreeScope().getElementById(ShadowElementNames::SliderThumb()));
-  if (!thumb || !touches)
-    return;
-
   if (touches->length() == 1) {
     if (event->type() == EventTypeNames::touchstart) {
       start_point_ = touches->item(0)->AbsoluteLocation();

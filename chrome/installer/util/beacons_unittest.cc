@@ -7,6 +7,7 @@
 #include <memory>
 #include <tuple>
 
+#include "base/memory/ptr_util.h"
 #include "base/test/test_reg_util_win.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
@@ -172,7 +173,7 @@ class DefaultBrowserBeaconTest
 
     // Configure InstallDetails for the test.
     scoped_install_details_ =
-        std::make_unique<install_static::ScopedInstallDetails>(system_install_,
+        base::MakeUnique<install_static::ScopedInstallDetails>(system_install_,
                                                                mode_index);
     // Override the registry so that tests can freely push state to it.
     ASSERT_NO_FATAL_FAILURE(

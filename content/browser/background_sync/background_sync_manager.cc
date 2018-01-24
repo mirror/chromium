@@ -162,7 +162,7 @@ void OnSyncEventFinished(scoped_refptr<ServiceWorkerVersion> active_version,
   std::move(callback).Run(mojo::ConvertTo<ServiceWorkerStatusCode>(status));
 }
 
-void DidStartWorkerForSyncEvent(
+void DidStartWorker(
     base::OnceCallback<void(ServiceWorkerVersion::StatusCallback)> task,
     ServiceWorkerVersion::StatusCallback callback,
     ServiceWorkerStatusCode start_worker_status) {
@@ -775,7 +775,7 @@ void BackgroundSyncManager::DispatchSyncEvent(
   if (active_version->running_status() != EmbeddedWorkerStatus::RUNNING) {
     active_version->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::SYNC,
-        base::BindOnce(&DidStartWorkerForSyncEvent,
+        base::BindOnce(&DidStartWorker,
                        base::BindOnce(&BackgroundSyncManager::DispatchSyncEvent,
                                       weak_ptr_factory_.GetWeakPtr(), tag,
                                       std::move(active_version), last_chance),

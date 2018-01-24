@@ -595,12 +595,13 @@ TEST_P(AppListViewFocusTest, LinearFocusTraversalInFolder) {
 
   std::vector<views::View*> forward_view_list;
   forward_view_list.push_back(search_box_view()->search_box());
+  forward_view_list.push_back(
+      app_list_folder_view()->folder_header_view()->GetFolderNameViewForTest());
   const views::ViewModelT<AppListItemView>* view_model =
       app_list_folder_view()->items_grid_view()->view_model_for_test();
   for (int i = 0; i < view_model->view_size(); ++i)
     forward_view_list.push_back(view_model->view_at(i));
-  forward_view_list.push_back(
-      app_list_folder_view()->folder_header_view()->GetFolderNameViewForTest());
+  forward_view_list.push_back(search_box_view()->back_button());
   forward_view_list.push_back(search_box_view()->search_box());
   std::vector<views::View*> backward_view_list = forward_view_list;
   std::reverse(backward_view_list.begin(), backward_view_list.end());
@@ -743,13 +744,12 @@ TEST_F(AppListViewFocusTest, VerticalFocusTraversalInFolder) {
 
   std::vector<views::View*> forward_view_list;
   forward_view_list.push_back(search_box_view()->search_box());
-  const views::ViewModelT<AppListItemView>* view_model =
-      app_list_folder_view()->items_grid_view()->view_model_for_test();
-  for (int i = 0; i < view_model->view_size();
-       i += app_list_folder_view()->items_grid_view()->cols())
-    forward_view_list.push_back(view_model->view_at(i));
   forward_view_list.push_back(
       app_list_folder_view()->folder_header_view()->GetFolderNameViewForTest());
+  const views::ViewModelT<AppListItemView>* view_model =
+      app_list_folder_view()->items_grid_view()->view_model_for_test();
+  for (int i = 0; i < view_model->view_size(); i += apps_grid_view()->cols())
+    forward_view_list.push_back(view_model->view_at(i));
   forward_view_list.push_back(search_box_view()->search_box());
 
   // Test traversal triggered by down.
@@ -757,11 +757,11 @@ TEST_F(AppListViewFocusTest, VerticalFocusTraversalInFolder) {
 
   std::vector<views::View*> backward_view_list;
   backward_view_list.push_back(search_box_view()->search_box());
+  for (int i = view_model->view_size() - 1; i >= 0;
+       i -= apps_grid_view()->cols())
+    backward_view_list.push_back(view_model->view_at(i));
   backward_view_list.push_back(
       app_list_folder_view()->folder_header_view()->GetFolderNameViewForTest());
-  for (int i = view_model->view_size() - 1; i >= 0;
-       i -= app_list_folder_view()->items_grid_view()->cols())
-    backward_view_list.push_back(view_model->view_at(i));
   backward_view_list.push_back(search_box_view()->search_box());
 
   // Test traversal triggered by up.
@@ -1327,6 +1327,8 @@ TEST_F(AppListViewTest, MultiplePagesAlwaysReinitializeOnFirstPage) {
   params.parent = GetContext();
   params.initial_apps_page = 1;
   view_->Initialize(params);
+  const gfx::Size size = view_->bounds().size();
+  view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   Show();
 
   ASSERT_EQ(0, view_->GetAppsPaginationModel()->selected_page());
@@ -1819,6 +1821,8 @@ TEST_F(AppListViewTest, MultiplePagesReinitializeOnInputPage) {
   params.parent = GetContext();
   params.initial_apps_page = 1;
   view_->Initialize(params);
+  const gfx::Size size = view_->bounds().size();
+  view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   Show();
 
   ASSERT_EQ(1, view_->GetAppsPaginationModel()->selected_page());

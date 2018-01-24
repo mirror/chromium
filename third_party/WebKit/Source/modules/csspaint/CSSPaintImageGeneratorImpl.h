@@ -16,7 +16,6 @@ namespace blink {
 
 class CSSSyntaxDescriptor;
 class Document;
-class DocumentPaintDefinition;
 class Image;
 class PaintWorklet;
 
@@ -48,11 +47,6 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
   CSSPaintImageGeneratorImpl(PaintWorklet*, const String&);
 
   bool HasDocumentDefinition() const;
-  // This function first checks whether the document definition with |name_|
-  // exists or not. If it does exist, the function fetches the document
-  // definition and checks if it is valid. The function returns true when the
-  // document definition exists and is valid.
-  bool GetValidDocumentDefinition(DocumentPaintDefinition*&) const;
 
   Member<Observer> observer_;
   Member<PaintWorklet> paint_worklet_;

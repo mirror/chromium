@@ -85,8 +85,15 @@ class FakeBaseScreen : public chromeos::BaseScreen {
 
 class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
  public:
-  FakeLoginDisplayHost() = default;
-  ~FakeLoginDisplayHost() override = default;
+  FakeLoginDisplayHost() {
+    DCHECK(!chromeos::LoginDisplayHost::default_host_);
+    chromeos::LoginDisplayHost::default_host_ = this;
+  }
+
+  ~FakeLoginDisplayHost() override {
+    DCHECK_EQ(chromeos::LoginDisplayHost::default_host_, this);
+    chromeos::LoginDisplayHost::default_host_ = nullptr;
+  }
 
   /// chromeos::LoginDisplayHost:
   chromeos::LoginDisplay* CreateLoginDisplay(

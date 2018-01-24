@@ -11,12 +11,11 @@
     return NetworkTestRunner.networkRequests().pop();
   }
 
-  async function dumpRequest(request) {
+  function dumpRequest(request) {
     TestRunner.addResult('Dumping request: ');
     TestRunner.addResult('    url: ' + request.url());
-    var formData = await request.requestFormData();
-    if (formData)
-      TestRunner.addResult('    requestFormData: ' + formData);
+    if (request.requestFormData)
+      TestRunner.addResult('    requestFormData: ' + request.requestFormData);
     TestRunner.addResult('    requestMethod: ' + request.requestMethod);
     TestRunner.addResult('    test request header value: ' + request.requestHeaderValue('headerName'));
   }
@@ -35,7 +34,7 @@
 
     var originalRequest =
         await TestRunner.waitForEvent(NetworkLog.NetworkLog.Events.RequestAdded, NetworkLog.networkLog);
-    await dumpRequest(originalRequest);
+    dumpRequest(originalRequest);
     TestRunner.NetworkAgent.replayXHR(originalRequest.requestId());
     var replayedRequest =
         await TestRunner.waitForEvent(NetworkLog.NetworkLog.Events.RequestAdded, NetworkLog.networkLog);

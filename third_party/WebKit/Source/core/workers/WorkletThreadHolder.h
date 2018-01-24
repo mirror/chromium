@@ -32,7 +32,7 @@ class WorkletThreadHolder {
       return;
     thread_holder_instance_ = new WorkletThreadHolder<DerivedWorkletThread>;
     thread_holder_instance_->Initialize(
-        WorkerBackingThread::Create(WebThreadCreationParams(thread_name)));
+        WorkerBackingThread::Create(thread_name));
   }
 
   static void EnsureInstance(WebThread* thread) {
@@ -44,12 +44,12 @@ class WorkletThreadHolder {
     thread_holder_instance_->Initialize(WorkerBackingThread::Create(thread));
   }
 
-  static void CreateForTest(const WebThreadCreationParams& params) {
+  static void CreateForTest(const char* thread_name) {
     MutexLocker locker(HolderInstanceMutex());
     DCHECK(!thread_holder_instance_);
     thread_holder_instance_ = new WorkletThreadHolder<DerivedWorkletThread>;
     thread_holder_instance_->Initialize(
-        WorkerBackingThread::CreateForTest(params));
+        WorkerBackingThread::CreateForTest(thread_name));
   }
 
   static void CreateForTest(WebThread* thread) {

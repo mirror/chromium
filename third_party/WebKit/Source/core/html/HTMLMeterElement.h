@@ -72,7 +72,6 @@ class CORE_EXPORT HTMLMeterElement final : public LabelableElement {
   bool AreAuthorShadowsAllowed() const override { return false; }
 
   bool SupportLabels() const override { return true; }
-  bool ShouldForceLegacyLayout() const final { return true; }
 
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
   void ParseAttribute(const AttributeModificationParams&) override;

@@ -53,6 +53,17 @@ public final class DomDistillerUrlUtils {
         return nativeIsDistilledPage(url);
     }
 
+    public static boolean isUrlDistillable(String url) {
+        if (TextUtils.isEmpty(url)) return false;
+        return nativeIsUrlDistillable(url);
+    }
+
+    // TODO(yfriedman): Change method so that it takes in a WebContents and a
+    // callback.
+    public static String getIsDistillableJs() {
+        return nativeGetIsDistillableJs();
+    }
+
     public static String getValueForKeyInUrl(String url, String key) {
         assert key != null;
         if (TextUtils.isEmpty(url)) return null;
@@ -60,7 +71,9 @@ public final class DomDistillerUrlUtils {
     }
 
     private static native String nativeGetDistillerViewUrlFromUrl(String scheme, String url);
+    private static native String nativeGetIsDistillableJs();
     private static native String nativeGetOriginalUrlFromDistillerUrl(String viewerUrl);
     private static native boolean nativeIsDistilledPage(String url);
+    private static native boolean nativeIsUrlDistillable(String url);
     private static native String nativeGetValueForKeyInUrl(String url, String key);
 }

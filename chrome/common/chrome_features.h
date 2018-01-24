@@ -93,10 +93,6 @@ extern const base::Feature kContentFullscreen;
 extern const base::Feature kCopylessPaste;
 #endif
 
-#if defined(OS_CHROMEOS)
-extern const base::Feature kCrostini;
-#endif
-
 #if defined(OS_WIN)
 extern const base::Feature kDesktopIOSPromotion;
 #endif  // defined(OS_WIN)

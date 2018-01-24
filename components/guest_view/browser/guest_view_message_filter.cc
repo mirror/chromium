@@ -4,8 +4,7 @@
 
 #include "components/guest_view/browser/guest_view_message_filter.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/guest_view/browser/bad_message.h"
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager.h"
@@ -54,7 +53,7 @@ GuestViewManager* GuestViewMessageFilter::GetOrCreateGuestViewManager() {
   auto* manager = GuestViewManager::FromBrowserContext(browser_context_);
   if (!manager) {
     manager = GuestViewManager::CreateWithDelegate(
-        browser_context_, std::make_unique<GuestViewManagerDelegate>());
+        browser_context_, base::MakeUnique<GuestViewManagerDelegate>());
   }
   return manager;
 }

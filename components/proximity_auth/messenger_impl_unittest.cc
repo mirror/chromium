@@ -8,6 +8,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "components/cryptauth/connection.h"
 #include "components/cryptauth/cryptauth_test_util.h"
 #include "components/cryptauth/fake_connection.h"
@@ -63,12 +64,12 @@ class MockMessengerObserver : public MessengerObserver {
 class TestMessenger : public MessengerImpl {
  public:
   TestMessenger()
-      : MessengerImpl(std::make_unique<cryptauth::FakeConnection>(
+      : MessengerImpl(base::MakeUnique<cryptauth::FakeConnection>(
                           cryptauth::CreateClassicRemoteDeviceForTest()),
-                      std::make_unique<cryptauth::FakeSecureContext>()) {}
+                      base::MakeUnique<cryptauth::FakeSecureContext>()) {}
   TestMessenger(std::unique_ptr<cryptauth::Connection> connection)
       : MessengerImpl(std::move(connection),
-                      std::make_unique<cryptauth::FakeSecureContext>()) {}
+                      base::MakeUnique<cryptauth::FakeSecureContext>()) {}
   ~TestMessenger() override {}
 
   // Simple getters for the mock objects owned by |this| messenger.

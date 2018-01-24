@@ -13,6 +13,7 @@
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
+#include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/ipc/gl_in_process_context.h"
@@ -186,8 +187,6 @@ void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
 }
 
 base::Lock* InProcessContextProvider::GetLock() {
-  if (!support_locking_)
-    return nullptr;
   return &context_lock_;
 }
 

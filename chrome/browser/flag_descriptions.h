@@ -823,9 +823,6 @@ extern const char kSmoothScrollingDescription[];
 extern const char kSoftwareRasterizerName[];
 extern const char kSoftwareRasterizerDescription[];
 
-extern const char kSoleIntegrationName[];
-extern const char kSoleIntegrationDescription[];
-
 extern const char kSoundContentSettingName[];
 extern const char kSoundContentSettingDescription[];
 
@@ -1056,11 +1053,17 @@ extern const char kChromeHomeInactivitySheetExpansionDescription[];
 extern const char kChromeHomeMenuItemsName[];
 extern const char kChromeHomeMenuItemsDescription[];
 
+extern const char kChromeHomeOptOutSnackbarName[];
+extern const char kChromeHomeOptOutSnackbarDescription[];
+
 extern const char kChromeHomePersistentIphName[];
 extern const char kChromeHomePersistentIphDescription[];
 
 extern const char kChromeHomePersonalizedOmniboxSuggestionsName[];
 extern const char kChromeHomePersonalizedOmniboxSuggestionsDescription[];
+
+extern const char kChromeHomePromoName[];
+extern const char kChromeHomePromoDescription[];
 
 extern const char kChromeHomePullToRefreshIphAtTopName[];
 extern const char kChromeHomePullToRefreshIphAtTopDescription[];
@@ -1075,9 +1078,6 @@ extern const char kChromeHomeSwipeLogicVelocity[];
 
 extern const char kChromeHomeName[];
 extern const char kChromeHomeDescription[];
-
-extern const char kChromeModernDesignName[];
-extern const char kChromeModernDesignDescription[];
 
 extern const char kChromeMemexName[];
 extern const char kChromeMemexDescription[];
@@ -1727,9 +1727,6 @@ extern const char kVrBrowsingExperimentalRenderingDescription[];
 
 extern const char kVrBrowsingInCustomTabName[];
 extern const char kVrBrowsingInCustomTabDescription[];
-
-extern const char kVrIconInDaydreamHomeName[];
-extern const char kVrIconInDaydreamHomeDescription[];
 
 extern const char kVrLaunchIntentsName[];
 extern const char kVrLaunchIntentsDescription[];

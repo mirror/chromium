@@ -13,7 +13,6 @@
 namespace blink {
 
 class Element;
-class LocalFrameView;
 class Page;
 class GraphicsLayer;
 class PaintLayer;
@@ -37,7 +36,7 @@ class CORE_EXPORT TopDocumentRootScrollerController
 
   // This class needs to be informed of changes to compositing so that it can
   // update the compositor when the effective root scroller changes.
-  void DidUpdateCompositing(const LocalFrameView&);
+  void DidUpdateCompositing();
 
   // PaintLayerScrollableAreas need to notify this class when they're being
   // disposed so that we can remove them as the root scroller.

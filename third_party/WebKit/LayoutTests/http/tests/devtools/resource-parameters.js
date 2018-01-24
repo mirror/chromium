@@ -23,10 +23,10 @@
   TestRunner.evaluateInPage('submit()');
   TestRunner.networkManager.addEventListener(SDK.NetworkManager.Events.RequestFinished, onRequestFinished);
 
-  async function onRequestFinished(event) {
+  function onRequestFinished(event) {
     var request = event.data;
     TestRunner.addResult(request.url());
-    TestRunner.addObject(await NetworkLog.HAREntry.build(request), NetworkTestRunner.HARPropertyFormattersWithSize);
+    TestRunner.addObject(new NetworkLog.HAREntry(request).build(), NetworkTestRunner.HARPropertyFormattersWithSize);
     TestRunner.completeTest();
   }
 })();

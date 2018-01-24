@@ -78,14 +78,12 @@ P2PSocketHostUdp::PendingPacket::PendingPacket(
     const net::IPEndPoint& to,
     const std::vector<char>& content,
     const rtc::PacketOptions& options,
-    uint64_t id,
-    const net::NetworkTrafficAnnotationTag traffic_annotation)
+    uint64_t id)
     : to(to),
       data(new net::IOBuffer(content.size())),
       size(content.size()),
       packet_options(options),
-      id(id),
-      traffic_annotation(traffic_annotation) {
+      id(id) {
   memcpy(data->data(), &content[0], size);
 }
 
@@ -265,12 +263,10 @@ void P2PSocketHostUdp::HandleReadResult(int result) {
   }
 }
 
-void P2PSocketHostUdp::Send(
-    const net::IPEndPoint& to,
-    const std::vector<char>& data,
-    const rtc::PacketOptions& options,
-    uint64_t packet_id,
-    const net::NetworkTrafficAnnotationTag traffic_annotation) {
+void P2PSocketHostUdp::Send(const net::IPEndPoint& to,
+                            const std::vector<char>& data,
+                            const rtc::PacketOptions& options,
+                            uint64_t packet_id) {
   if (!socket_) {
     // The Send message may be sent after the an OnError message was
     // sent by hasn't been processed the renderer.
@@ -280,12 +276,11 @@ void P2PSocketHostUdp::Send(
   IncrementTotalSentPackets();
 
   if (send_pending_) {
-    send_queue_.push_back(
-        PendingPacket(to, data, options, packet_id, traffic_annotation));
+    send_queue_.push_back(PendingPacket(to, data, options, packet_id));
     IncrementDelayedBytes(data.size());
     IncrementDelayedPackets();
   } else {
-    PendingPacket packet(to, data, options, packet_id, traffic_annotation);
+    PendingPacket packet(to, data, options, packet_id);
     DoSend(packet);
   }
 }
@@ -349,9 +344,6 @@ void P2PSocketHostUdp::DoSend(const PendingPacket& packet) {
   auto callback_binding =
       base::Bind(&P2PSocketHostUdp::OnSend, base::Unretained(this), packet.id,
                  packet.packet_options.packet_id, send_time);
-
-  // TODO(crbug.com/656607): Pass traffic annotation after DatagramSocketServer
-  // is updated.
   int result = socket_->SendTo(packet.data.get(), packet.size, packet.to,
                                callback_binding);
 

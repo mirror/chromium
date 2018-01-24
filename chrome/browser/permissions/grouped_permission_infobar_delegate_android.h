@@ -46,6 +46,7 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
 
   // ConfirmInfoBarDelegate:
   InfoBarIdentifier GetIdentifier() const override;
+  Type GetInfoBarType() const override;
   int GetButtons() const override;
   base::string16 GetButtonLabel(InfoBarButton button) const override;
 

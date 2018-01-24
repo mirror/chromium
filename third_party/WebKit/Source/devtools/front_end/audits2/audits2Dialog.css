@@ -9,30 +9,18 @@
     margin: 7px var(--view-horizontal-margin);
     flex: auto;
     align-items: center;
-    width: 100%;
-    max-width: 500px;
-}
-
-.launcher-container {
-  width: 100%;
 }
 
 .audits2-view .dialog-close-button {
     position: absolute;
-    top: 0px;
-    right: -14px;
+    top: 10px;
+    right: 10px;
 }
 
 header {
     color: #666;
     font-weight: bold;
     font-size: 14px;
-    flex: none;
-}
-
-.audits2-form {
-  flex: auto;
-  overflow-y: scroll;
 }
 
 .audits2-form label {
@@ -139,5 +127,4 @@ button {
 
 .audits2-dialog-buttons {
     justify-content: center;
-    min-height: 40px;
 }

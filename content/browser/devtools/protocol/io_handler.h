@@ -11,9 +11,7 @@
 #include "content/browser/devtools/protocol/io.h"
 
 namespace content {
-class BrowserContext;
 class DevToolsIOContext;
-class StoragePartition;
 
 namespace protocol {
 
@@ -24,7 +22,7 @@ class IOHandler : public DevToolsDomainHandler,
   ~IOHandler() override;
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(int process_host_id,
+  void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host) override;
 
   // Protocol methods.
@@ -43,8 +41,7 @@ class IOHandler : public DevToolsDomainHandler,
 
   std::unique_ptr<IO::Frontend> frontend_;
   DevToolsIOContext* io_context_;
-  BrowserContext* browser_context_;
-  StoragePartition* storage_partition_;
+  RenderProcessHost* process_host_;
   base::WeakPtrFactory<IOHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(IOHandler);

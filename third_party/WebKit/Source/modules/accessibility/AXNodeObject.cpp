@@ -422,9 +422,6 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
   if (IsHTMLMeterElement(*GetNode()))
     return kMeterRole;
 
-  if (IsHTMLProgressElement(*GetNode()))
-    return kProgressIndicatorRole;
-
   if (IsHTMLOutputElement(*GetNode()))
     return kStatusRole;
 

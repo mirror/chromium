@@ -598,8 +598,7 @@ TEST_P(QuicChromiumClientSessionTest, CancelPendingStreamRequest) {
 TEST_P(QuicChromiumClientSessionTest, ConnectionCloseBeforeStreamRequest) {
   MockQuicData quic_data;
   quic_data.AddWrite(client_maker_.MakeInitialSettingsPacket(1, nullptr));
-  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(
-      1, false, QUIC_CRYPTO_VERSION_NOT_SUPPORTED, "Time to panic!"));
+  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(1));
   quic_data.AddSocketDataToFactory(&socket_factory_);
 
   Initialize();
@@ -623,8 +622,7 @@ TEST_P(QuicChromiumClientSessionTest, ConnectionCloseBeforeStreamRequest) {
 TEST_P(QuicChromiumClientSessionTest, ConnectionCloseBeforeHandshakeConfirmed) {
   MockQuicData quic_data;
   quic_data.AddRead(ASYNC, ERR_IO_PENDING);
-  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(
-      1, false, QUIC_CRYPTO_VERSION_NOT_SUPPORTED, "Time to panic!"));
+  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(1));
   quic_data.AddSocketDataToFactory(&socket_factory_);
 
   Initialize();
@@ -652,8 +650,7 @@ TEST_P(QuicChromiumClientSessionTest, ConnectionCloseWithPendingStreamRequest) {
   MockQuicData quic_data;
   quic_data.AddWrite(client_maker_.MakeInitialSettingsPacket(1, nullptr));
   quic_data.AddRead(ASYNC, ERR_IO_PENDING);
-  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(
-      1, false, QUIC_CRYPTO_VERSION_NOT_SUPPORTED, "Time to panic!"));
+  quic_data.AddRead(server_maker_.MakeConnectionClosePacket(1));
   quic_data.AddSocketDataToFactory(&socket_factory_);
 
   Initialize();
@@ -1178,19 +1175,13 @@ TEST_P(QuicChromiumClientSessionTest, MigrateToSocket) {
   CompleteCryptoHandshake();
 
   char data[] = "ABCD";
-  std::unique_ptr<QuicEncryptedPacket> client_ping;
-  std::unique_ptr<QuicEncryptedPacket> ack_and_data_out;
-  if (session_->use_control_frame_manager()) {
-    client_ping = client_maker_.MakeAckAndPingPacket(2, false, 1, 1, 1);
-    ack_and_data_out = client_maker_.MakeDataPacket(3, 5, false, false, 0,
-                                                    QuicStringPiece(data));
-  } else {
-    client_ping = client_maker_.MakePingPacket(2, /*include_version=*/false);
-    ack_and_data_out = client_maker_.MakeAckAndDataPacket(
-        3, false, 5, 1, 1, 1, false, 0, QuicStringPiece(data));
-  }
+  std::unique_ptr<QuicEncryptedPacket> client_ping(
+      client_maker_.MakePingPacket(2, /*include_version=*/false));
   std::unique_ptr<QuicEncryptedPacket> server_ping(
       server_maker_.MakePingPacket(1, /*include_version=*/false));
+  std::unique_ptr<QuicEncryptedPacket> ack_and_data_out(
+      client_maker_.MakeAckAndDataPacket(3, false, 5, 1, 1, 1, false, 0,
+                                         QuicStringPiece(data)));
   MockRead reads[] = {
       MockRead(SYNCHRONOUS, server_ping->data(), server_ping->length(), 0),
       MockRead(SYNCHRONOUS, ERR_IO_PENDING, 1)};
@@ -1296,12 +1287,8 @@ TEST_P(QuicChromiumClientSessionTest, MigrateToSocketMaxReaders) {
 TEST_P(QuicChromiumClientSessionTest, MigrateToSocketReadError) {
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
       client_maker_.MakeInitialSettingsPacket(1, nullptr));
-  std::unique_ptr<QuicEncryptedPacket> client_ping;
-  if (FLAGS_quic_reloadable_flag_quic_use_control_frame_manager) {
-    client_ping = client_maker_.MakeAckAndPingPacket(2, false, 1, 1, 1);
-  } else {
-    client_ping = client_maker_.MakePingPacket(2, /*include_version=*/false);
-  }
+  std::unique_ptr<QuicEncryptedPacket> client_ping(
+      client_maker_.MakePingPacket(2, /*include_version=*/false));
   std::unique_ptr<QuicEncryptedPacket> server_ping(
       server_maker_.MakePingPacket(1, /*include_version=*/false));
   MockWrite old_writes[] = {

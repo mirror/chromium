@@ -404,6 +404,11 @@ TranslateInfoBarDelegate::TranslateInfoBarDelegate(
   DCHECK(translate_manager_);
 }
 
+infobars::InfoBarDelegate::Type
+TranslateInfoBarDelegate::GetInfoBarType() const {
+  return PAGE_ACTION_TYPE;
+}
+
 int TranslateInfoBarDelegate::GetIconId() const {
   return translate_manager_->translate_client()->GetInfobarIconID();
 }

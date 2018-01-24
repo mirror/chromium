@@ -18,10 +18,8 @@
 #endif
 
 namespace {
-// Returns whether fullscreen should be disabled for |web_state|'s SSL status.
-// This will return true if the visible NavigationItem's SSL has a broken
-// security style or is showing mixed content.
-bool ShouldDisableFullscreenForWebStateSSL(web::WebState* web_state) {
+// Returns whether |web_state|'s visible NavigationItem has a broken SSL.
+bool IsWebStateSSLBroken(web::WebState* web_state) {
   if (!web_state)
     return false;
   web::NavigationManager* manager = web_state->GetNavigationManager();
@@ -31,8 +29,7 @@ bool ShouldDisableFullscreenForWebStateSSL(web::WebState* web_state) {
   if (!item)
     return false;
   const web::SSLStatus& ssl = item->GetSSL();
-  return ssl.security_style == web::SECURITY_STYLE_AUTHENTICATION_BROKEN ||
-         (ssl.content_status & web::SSLStatus::DISPLAYED_INSECURE_CONTENT) > 0;
+  return ssl.security_style == web::SECURITY_STYLE_AUTHENTICATION_BROKEN;
 }
 }  // namespace
 
@@ -60,7 +57,7 @@ void FullscreenWebStateObserver::SetWebState(web::WebState* web_state) {
     web_state_->AddObserver(this);
   // Update the model according to the new WebState.
   SetIsLoading(web_state_ ? web_state->IsLoading() : false);
-  SetDisableFullscreenForSSL(ShouldDisableFullscreenForWebStateSSL(web_state_));
+  SetIsSSLBroken(web_state_ ? IsWebStateSSLBroken(web_state_) : false);
   // Update the scroll view replacement handler's proxy.
   scroll_view_replacement_handler_.proxy =
       web_state_ ? web_state_->GetWebViewProxy() : nil;
@@ -70,7 +67,6 @@ void FullscreenWebStateObserver::DidFinishNavigation(
     web::WebState* web_state,
     web::NavigationContext* navigation_context) {
   model_->ResetForNavigation();
-  SetDisableFullscreenForSSL(ShouldDisableFullscreenForWebStateSSL(web_state));
 }
 
 void FullscreenWebStateObserver::DidStartLoading(web::WebState* web_state) {
@@ -83,7 +79,7 @@ void FullscreenWebStateObserver::DidStopLoading(web::WebState* web_state) {
 
 void FullscreenWebStateObserver::DidChangeVisibleSecurityState(
     web::WebState* web_state) {
-  SetDisableFullscreenForSSL(ShouldDisableFullscreenForWebStateSSL(web_state));
+  SetIsSSLBroken(IsWebStateSSLBroken(web_state));
 }
 
 void FullscreenWebStateObserver::WebStateDestroyed(web::WebState* web_state) {
@@ -91,10 +87,10 @@ void FullscreenWebStateObserver::WebStateDestroyed(web::WebState* web_state) {
   SetWebState(nullptr);
 }
 
-void FullscreenWebStateObserver::SetDisableFullscreenForSSL(bool disable) {
-  if (!!ssl_disabler_.get() == disable)
+void FullscreenWebStateObserver::SetIsSSLBroken(bool broken) {
+  if (!!ssl_disabler_.get() == broken)
     return;
-  ssl_disabler_ = disable
+  ssl_disabler_ = broken
                       ? std::make_unique<ScopedFullscreenDisabler>(controller_)
                       : nullptr;
 }

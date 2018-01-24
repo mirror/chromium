@@ -5,19 +5,14 @@
 #ifndef IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_VIEW_CONTROLLER_H_
 #define IOS_CHROME_BROWSER_UI_TOOLBAR_ADAPTIVE_PRIMARY_TOOLBAR_VIEW_CONTROLLER_H_
 
-#import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.h"
 
 // ViewController for the primary toobar part of the adaptive toolbar. It is the
 // part always displayed and containing the location bar.
-@interface PrimaryToolbarViewController
-    : AdaptiveToolbarViewController<ActivityServicePositioner>
+@interface PrimaryToolbarViewController : AdaptiveToolbarViewController
 
 // Sets the location bar view, containing the omnibox.
 - (void)setLocationBarView:(UIView*)locationBarView;
-
-// Shows the animation when transitioning to a prerendered page.
-- (void)showPrerenderingAnimation;
 
 @end
 

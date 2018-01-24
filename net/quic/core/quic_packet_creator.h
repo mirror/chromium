@@ -157,7 +157,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
       const ParsedQuicVersionVector& supported_versions);
 
   // Creates a connectivity probing packet.
-  OwningSerializedPacketPointer SerializeConnectivityProbingPacket();
+  std::unique_ptr<QuicEncryptedPacket> SerializeConnectivityProbingPacket();
 
   // Returns a dummy packet that is valid but contains no useful information.
   static SerializedPacket NoPacket();

@@ -70,10 +70,10 @@ class ManagePasswordsBubbleDelegateViewBase
 
   ~ManagePasswordsBubbleDelegateViewBase() override;
 
- private:
-  // WidgetObserver:
-  void OnWidgetClosing(views::Widget* widget) override;
+  // LocationBarBubbleDelegateView:
+  void CloseBubble() override;
 
+ private:
   // Singleton instance of the Password bubble.The instance is owned by the
   // Bubble and will be deleted when the bubble closes.
   static ManagePasswordsBubbleDelegateViewBase* g_manage_passwords_bubble_;

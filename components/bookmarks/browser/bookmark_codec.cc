@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include <algorithm>
-#include <memory>
 #include <utility>
 
 #include "base/json/json_string_value_serializer.h"

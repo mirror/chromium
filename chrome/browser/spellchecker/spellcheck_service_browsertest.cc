@@ -18,14 +18,12 @@
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
-#include "chrome/browser/chrome_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/constants.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/prefs/pref_service.h"
@@ -76,19 +74,13 @@ class SpellcheckServiceBrowserTest : public InProcessBrowserTest,
                           base::SPLIT_WANT_NONEMPTY));
     prefs_->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionaries_value);
 
-    service_manager::Identity renderer_identity = renderer_->GetChildIdentity();
     SpellcheckService* spellcheck =
-        SpellcheckServiceFactory::GetForRenderer(renderer_identity);
+        SpellcheckServiceFactory::GetForRenderer(renderer_->GetChildIdentity());
     ASSERT_NE(nullptr, spellcheck);
 
-    // Override requests for the spellcheck::mojom::SpellChecker
+    // Override |renderer_| requests for the spellcheck::mojom::SpellChecker
     // interface so we can test the SpellChecker request flow.
-    service_manager::Connector::TestApi test_api(
-        ChromeService::GetInstance()->connector());
-    test_api.OverrideBinderForTesting(
-        service_manager::Identity(chrome::mojom::kRendererServiceName,
-                                  renderer_identity.user_id(),
-                                  renderer_identity.instance()),
+    renderer_->OverrideBinderForTesting(
         spellcheck::mojom::SpellChecker::Name_,
         base::BindRepeating(&SpellcheckServiceBrowserTest::Bind,
                             base::Unretained(this)));

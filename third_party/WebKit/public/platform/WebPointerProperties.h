@@ -77,13 +77,9 @@ class WebPointerProperties {
   WebFloatPoint PositionInWidget() const { return position_in_widget_; }
   WebFloatPoint PositionInScreen() const { return position_in_screen_; }
 
-  void SetPositionInWidget(float x, float y) {
-    position_in_widget_ = WebFloatPoint(x, y);
-  }
-
-  void SetPositionInScreen(float x, float y) {
-    position_in_screen_ = WebFloatPoint(x, y);
-  }
+  // TODO(mustaq): Move the setters for position_in_widget_ and
+  // position_in_screen_ here from the subclasses when mouse event coordinate
+  // truncation is removed. crbug.com/456625
 
   PointerId id;
 

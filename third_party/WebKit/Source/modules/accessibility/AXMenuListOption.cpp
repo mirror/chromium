@@ -104,8 +104,7 @@ bool AXMenuListOption::IsVisible() const {
 
   // In a single-option select with the popup collapsed, only the selected
   // item is considered visible.
-  return !parent_->IsOffScreen() ||
-         ((IsSelected() == kSelectedStateTrue) ? true : false);
+  return !parent_->IsOffScreen() || IsSelected();
 }
 
 bool AXMenuListOption::IsOffScreen() const {
@@ -113,17 +112,11 @@ bool AXMenuListOption::IsOffScreen() const {
   return !IsVisible();
 }
 
-AccessibilitySelectedState AXMenuListOption::IsSelected() const {
-  if (!GetNode() || !CanSetSelectedAttribute())
-    return kSelectedStateUndefined;
-
+bool AXMenuListOption::IsSelected() const {
   AXMenuListPopup* parent = static_cast<AXMenuListPopup*>(ParentObject());
-  if (parent && !parent->IsOffScreen()) {
-    return ((parent->ActiveDescendant() == this) ? kSelectedStateTrue
-                                                 : kSelectedStateFalse);
-  }
-  return ((element_ && element_->Selected()) ? kSelectedStateTrue
-                                             : kSelectedStateFalse);
+  if (parent && !parent->IsOffScreen())
+    return parent->ActiveDescendant() == this;
+  return element_ && element_->Selected();
 }
 
 bool AXMenuListOption::OnNativeSetSelectedAction(bool b) {

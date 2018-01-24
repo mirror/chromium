@@ -376,7 +376,8 @@ bool PaintLayer::FixedToViewport() const {
     return scroll == view_scroll;
   }
 
-  return GetLayoutObject().Container() == GetLayoutObject().View();
+  return GetLayoutObject().ContainerForFixedPosition() ==
+         GetLayoutObject().View();
 }
 
 bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
@@ -910,8 +911,10 @@ FloatPoint PaintLayer::PerspectiveOrigin() const {
   const LayoutRect border_box = ToLayoutBox(GetLayoutObject()).BorderBoxRect();
   const ComputedStyle& style = GetLayoutObject().StyleRef();
 
-  return FloatPointForLengthPoint(style.PerspectiveOrigin(),
-                                  FloatSize(border_box.Size()));
+  return FloatPoint(FloatValueForLength(style.PerspectiveOriginX(),
+                                        border_box.Width().ToFloat()),
+                    FloatValueForLength(style.PerspectiveOriginY(),
+                                        border_box.Height().ToFloat()));
 }
 
 PaintLayer* PaintLayer::ContainingLayer(const PaintLayer* ancestor,

@@ -4,8 +4,7 @@
 
 #include "components/startup_metric_utils/browser/startup_metric_host_impl.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
@@ -18,7 +17,7 @@ StartupMetricHostImpl::~StartupMetricHostImpl() = default;
 // static
 void StartupMetricHostImpl::Create(
     mojom::StartupMetricHostRequest request) {
-  mojo::MakeStrongBinding(std::make_unique<StartupMetricHostImpl>(),
+  mojo::MakeStrongBinding(base::MakeUnique<StartupMetricHostImpl>(),
                           std::move(request));
 }
 
