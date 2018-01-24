@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06291080_a3c298ed",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "You right. I just don\u0027t like unretained, it looks like a bug. I\u0027ll follow you.",
+      "parentUuid": "289e2eb4_144371a4",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5435a5_50ef25d4",
         "filename": "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bb4607_7fb06cf8",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "On creating listener we stated to notify only from scope ui::MediaKeysListener::Scope::kChrome. Application focus is checked on listener implementation side.",
+      "parentUuid": "9a5435a5_50ef25d4",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "cd91daa6_d3c4742e",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "we can avoid that",
+      "parentUuid": "768ed739_dc162e70",
+      "range": {
+        "startLine": 154,
+        "startChar": 17,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d36d14a9_fc953b6f",
         "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c281eaf4_99099245",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "Actually there is a comment in media_keys_listener.h, on declaration side.",
+      "parentUuid": "d36d14a9_fc953b6f",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "9d61e9eb_881de4dd",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "81ab080b_70021cd1",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebbe4521_baf11e2b",
         "filename": "ui/base/accelerators/media_keys_listener.h",
         "patchSetId": 4
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "d214019a_6e22fab3",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbe4521_baf11e2b",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 64
+      },
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a77e27fb_2bc277e1",
         "filename": "ui/base/accelerators/media_keys_listener.h",
         "patchSetId": 4
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "d19e7951_8c4b9130",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77e27fb_2bc277e1",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "872bad13_d4c8ca26",
         "filename": "ui/base/accelerators/media_keys_listener_empty.cc",
         "patchSetId": 4
@@ -153,6 +297,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e99669_89a058d6",
+        "filename": "ui/base/accelerators/media_keys_listener_empty.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:12:36Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "872bad13_d4c8ca26",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
