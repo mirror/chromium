@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a86c6d5f_57ef880a",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T19:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9360b415_0dbd5460",
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a282bec6_a7044c52",
         "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b7d8b0_965688dd",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T19:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a282bec6_a7044c52",
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c852cb8d_14a75451",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T19:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537bc0f6_36bbb61c",
+      "range": {
+        "startLine": 21,
+        "startChar": 91,
+        "endLine": 21,
+        "endChar": 122
+      },
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "81ce0a74_f3179e3c",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T19:49:06Z",
+      "side": 1,
+      "message": "It\u0027s changed to an array and a new CollectionInfo struct is defined. The whole thing is renamed from CollectionName* to CollectionInfo*",
+      "parentUuid": "cfdcfcc7_df41ea8f",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 31
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d17682_708cc470",
         "filename": "chrome/common/extensions/api/wallpaper_private.json",
         "patchSetId": 12
