@@ -74,25 +74,6 @@ const char kPakFileExtension[] = ".pak";
 
 ResourceBundle* g_shared_instance_ = NULL;
 
-#if defined(OS_ANDROID)
-// Returns the scale factor closest to |scale| from the full list of factors.
-// Note that it does NOT rely on the list of supported scale factors.
-// Finding the closest match is inefficient and shouldn't be done frequently.
-ScaleFactor FindClosestScaleFactorUnsafe(float scale) {
-  float smallest_diff =  std::numeric_limits<float>::max();
-  ScaleFactor closest_match = SCALE_FACTOR_100P;
-  for (int i = SCALE_FACTOR_100P; i < NUM_SCALE_FACTORS; ++i) {
-    const ScaleFactor scale_factor = static_cast<ScaleFactor>(i);
-    float diff = std::abs(GetScaleForScaleFactor(scale_factor) - scale);
-    if (diff < smallest_diff) {
-      closest_match = scale_factor;
-      smallest_diff = diff;
-    }
-  }
-  return closest_match;
-}
-#endif  // OS_ANDROID
-
 base::FilePath GetResourcesPakFilePath(const std::string& pak_name) {
   base::FilePath path;
   if (PathService::Get(base::DIR_MODULE, &path))
@@ -766,17 +747,7 @@ void ResourceBundle::InitSharedInstance(Delegate* delegate) {
   // For Windows we have a separate case in this function.
   supported_scale_factors.push_back(SCALE_FACTOR_100P);
 #endif
-#if defined(OS_ANDROID)
-  float display_density;
-  if (display::Display::HasForceDeviceScaleFactor()) {
-    display_density = display::Display::GetForcedDeviceScaleFactor();
-  } else {
-    display_density = GetPrimaryDisplayScale();
-  }
-  const ScaleFactor closest = FindClosestScaleFactorUnsafe(display_density);
-  if (closest != SCALE_FACTOR_100P)
-    supported_scale_factors.push_back(closest);
-#elif defined(OS_IOS)
+#if defined(OS_IOS)
   display::Display display = display::Screen::GetScreen()->GetPrimaryDisplay();
   if (display.device_scale_factor() > 2.0) {
     DCHECK_EQ(3.0, display.device_scale_factor());
