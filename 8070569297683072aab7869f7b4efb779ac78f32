@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25e671e_7d180aca",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/inline-styles-binding.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-24T22:45:00Z",
+      "side": 1,
+      "message": "TestRunner.startURL?",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "8070569297683072aab7869f7b4efb779ac78f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fb6f4d_679c4c28",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/inline-styles-binding.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-24T22:45:00Z",
+      "side": 1,
+      "message": "var uiSourceCode \u003d await TestRunner.waitForUISourceCode(\u0027inline-style.html\u0027, Workspace.projectTypes.Network);",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "8070569297683072aab7869f7b4efb779ac78f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dbbe16_5cdd5ad6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/inline-styles-binding.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-24T22:45:00Z",
+      "side": 1,
+      "message": "TestRunner.cssModel\nTestRunner.debuggerModel",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "8070569297683072aab7869f7b4efb779ac78f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd0794b_6c7a66a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-24T22:45:00Z",
+      "side": 1,
+      "message": "I\u0027m scared of reenterability here. Let\u0027s serialize these to avoid it.",
+      "range": {
+        "startLine": 297,
+        "startChar": 18,
+        "endLine": 297,
+        "endChar": 23
+      },
+      "revId": "8070569297683072aab7869f7b4efb779ac78f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
