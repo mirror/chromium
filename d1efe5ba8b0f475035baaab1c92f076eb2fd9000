@@ -16,6 +16,24 @@
       "revId": "d1efe5ba8b0f475035baaab1c92f076eb2fd9000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f5b1c1_d22a8a07",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T20:02:36Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good idea. That makes the code a lot more readable. Done.",
+      "parentUuid": "d385599b_1dfc6b1e",
+      "revId": "d1efe5ba8b0f475035baaab1c92f076eb2fd9000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
