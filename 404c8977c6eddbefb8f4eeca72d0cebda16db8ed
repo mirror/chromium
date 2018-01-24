@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "af15952e_3af9169c",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T17:15:10Z",
+      "side": 1,
+      "message": "Add threading DCHECKS throughout this file to make sure we don\u0027t try to delete on the wrong thread or something.",
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e55ba84_fb03daa5",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T17:15:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we should ever silently fail to create the keyboard. We should probably propagate the error back and at least exit VR and log a message. Maybe we should even CHECK that the keyboard was created successfully.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db61810_63257c48",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T17:15:10Z",
+      "side": 1,
+      "message": "DCHECK this, we shouldn\u0027t ever try to create the keyboard twice before destroying it.",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 55
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4699273a_e769eb91",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T17:15:10Z",
+      "side": 1,
+      "message": "If we never silently fail to create the keyboard, you should make this a DCHECK, because we should also never try to destroy the keyboard without having created it first.",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44693fb5_0ecb48b3",
         "filename": "chrome/browser/vr/elements/keyboard.cc",
         "patchSetId": 8
