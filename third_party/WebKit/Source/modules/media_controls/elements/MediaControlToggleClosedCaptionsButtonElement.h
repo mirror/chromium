@@ -22,6 +22,7 @@ class MediaControlToggleClosedCaptionsButtonElement final
   void UpdateDisplayType() override;
   WebLocalizedString::Name GetOverflowStringName() const override;
   bool HasOverflowButton() const override;
+  String GetOverflowMenuSubtitleString() const override;
 
  protected:
   const char* GetNameForHistograms() const override;
