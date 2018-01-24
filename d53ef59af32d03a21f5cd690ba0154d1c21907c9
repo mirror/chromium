@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97939ff6_492d1671",
+        "filename": "extensions/renderer/object_backed_native_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T02:02:20Z",
+      "side": 1,
+      "message": "Note: I renamed these so that any previous calls to RouteFunction would be compiler errors (including when this lands on trunk).  This way, we ensure we got them all, even if they aren\u0027t exercised in a test that would trigger the DCHECK.",
+      "revId": "d53ef59af32d03a21f5cd690ba0154d1c21907c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
