@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "96c163ed_b81fb081",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1141154
+      },
+      "writtenOn": "2018-01-24T09:13:21Z",
+      "side": 1,
+      "message": "This CL fixes a crash I see when WebAssembly streaming compilation is interrupted by a tab refresh. So I think we should either move forward with this CL, or we find another way to fix this crash.\n\nThe changes in this CL seem reasonable to me. I can understand why there is a ScriptForbiddenScope when the a tab gets refreshed. It seems logical to me that if we are not allowed to execute a script in the first place, then there is no reason the reject the promise at all.\n\nCan you, Kentaro and Adam, please provide actionable feedback so that we can either move this CL forward, or fix the crash in some other way?",
+      "parentUuid": "d41f177f_ffd4000c",
+      "revId": "09c3d33975b82bbea1f3e51e40bca2c0d15e4288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50259efd_8f2c9597",
         "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
         "patchSetId": 2
