@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40cb9b36_bf04b59f",
+        "filename": "sandbox/linux/services/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-24T23:00:59Z",
+      "side": 1,
+      "message": "Yikes!",
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42bf114_9c2ad9ae",
+        "filename": "sandbox/linux/services/libc_interceptor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-24T23:00:59Z",
+      "side": 1,
+      "message": "SetUseLocaltimeOverride() ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b17cbf_6b4bf4ea",
+        "filename": "sandbox/linux/services/libc_interceptor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-24T23:00:59Z",
+      "side": 1,
+      "message": "Is this needed? Every check is guarded by use_localtime_override \u0026\u0026 is_zygote_or_renderer so I\u0027m not sure why we have both.",
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
