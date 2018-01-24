@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/scheduler/renderer/queueing_time_estimator.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_functions.h"
+#include "platform/scheduler/renderer/queueing_time_estimator.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/test/fake_web_frame_scheduler.h"
 #include "platform/testing/HistogramTester.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/page/launching_process_state.h"
+#include "third_party/WebKit/public/common/page/launching_process_state.h"
 
 #include <map>
 #include <string>
