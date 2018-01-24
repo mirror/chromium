@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad8621b2_9cf3a43e",
+        "filename": "third_party/WebKit/Source/core/dom/IdleDeadlineTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-24T06:11:01Z",
+      "side": 1,
+      "message": "NOTE: Currently, this does not pass the presubmit because base::TimeTicks is not allowed (yet).",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "01e61b168486571b1657d5b91733c6e7e18b1898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b14aa10_7d1c5d36",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-24T06:11:01Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "01e61b168486571b1657d5b91733c6e7e18b1898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff21aa1_5abeb83f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2018-01-24T06:11:01Z",
+      "side": 1,
+      "message": "I\u0027ve made the return type base::TimeTicks because: (1) returning TimeTicks is better than returning a double value, and (2) it seems scheduler doesn\u0027t depend on WTF, so WTF::TimeTicks seems not usable.\n\nHowever, this causes some presubmit errors; see above.",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "01e61b168486571b1657d5b91733c6e7e18b1898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
