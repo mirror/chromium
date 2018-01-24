@@ -11,6 +11,8 @@
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller+subclassing.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
+#import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/util/named_guide.h"
@@ -119,7 +121,15 @@
 - (void)updateForFullscreenProgress:(CGFloat)progress {
   self.view.leadingStackView.alpha = progress;
   self.view.trailingStackView.alpha = progress;
-  // TODO(crbug.com/804731): Update the location bar constraints.
+  self.view.locationBarHeight.constant =
+      kToolbarHeightFullscreen +
+      (kToolbarHeight - kToolbarHeightFullscreen) * progress -
+      2 * kLocationBarVerticalMargin;
+  self.view.locationBarContainer.backgroundColor =
+      [self.buttonFactory.toolbarConfiguration.omniboxBackgroundColor
+          colorWithAlphaComponent:progress];
+  // TODO(crbug.com/804731): Check if the location bar needs to expand to the
+  // full width and what is the associated animation if it is the case.
 }
 
 - (void)updateForFullscreenEnabled:(BOOL)enabled {
