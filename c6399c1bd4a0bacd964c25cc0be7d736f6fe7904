@@ -87,6 +87,24 @@
       "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393efe79_e464148d",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T03:00:17Z",
+      "side": 1,
+      "message": "I\u0027m a bit dubious about these (\"raw count\" style metrics frequently don\u0027t have the desired effect), but I\u0027ll leave it up to a metrics owner.",
+      "parentUuid": "aea6fb2a_25cdbbc2",
+      "revId": "c6399c1bd4a0bacd964c25cc0be7d736f6fe7904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

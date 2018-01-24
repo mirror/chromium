@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b27b20_e9952207",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T03:00:17Z",
+      "side": 1,
+      "message": "Remove this default so that future enum additions *need* to be added to this switch statement (or else the compiler emits an error)",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb97635_5385999a",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T03:00:17Z",
+      "side": 1,
+      "message": "nit: no (c) in new code",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7e47a7_1428232e",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T03:00:17Z",
+      "side": 1,
+      "message": "Prefer enum class",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb70c919_b812b3ea",
+        "filename": "extensions/common/extension_updater_uma.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T03:00:17Z",
+      "side": 1,
+      "message": "Add a note that these are used in UMA and should not be reordered.",
+      "revId": "56b8e8ff1bed1154d1aab77cde043ecf0a77951b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
