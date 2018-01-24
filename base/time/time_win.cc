@@ -43,11 +43,15 @@
 #include "base/logging.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/platform_thread.h"
+#include "base/time/time_override.h"
 
 using base::ThreadTicks;
+using base::ThreadTicksNowFunction;
 using base::Time;
 using base::TimeDelta;
+using base::TimeNowFunction;
 using base::TimeTicks;
+using base::TimeTicksNowFunction;
 
 namespace {
 
@@ -130,8 +134,7 @@ bool SafeConvertToWord(int in, WORD* out) {
 
 // Time -----------------------------------------------------------------------
 
-// static
-Time Time::Now() {
+Time base::subtle::TimeNowIgnoringOverride() {
   if (g_initial_time == 0)
     InitializeClock();
 
@@ -146,7 +149,7 @@ Time Time::Now() {
   // To avoid any drift, we periodically resync the counters to the system
   // clock.
   while (true) {
-    TimeTicks ticks = TimeTicks::Now();
+    TimeTicks ticks = base::subtle::TimeTicksNowIgnoringOverride();
 
     // Calculate the time elapsed since we started our timer
     TimeDelta elapsed = ticks - g_initial_ticks;
@@ -157,15 +160,14 @@ Time Time::Now() {
       continue;
     }
 
-    return Time(elapsed + Time(g_initial_time));
+    return Time() + elapsed + TimeDelta::FromMicroseconds(g_initial_time);
   }
 }
 
-// static
-Time Time::NowFromSystemTime() {
+Time base::subtle::TimeNowFromSystemTimeIgnoringOverride() {
   // Force resync.
   InitializeClock();
-  return Time(g_initial_time);
+  return Time() + TimeDelta::FromMicroseconds(g_initial_time);
 }
 
 // static
@@ -360,6 +362,7 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
 }
 
 // TimeTicks ------------------------------------------------------------------
+
 namespace {
 
 // We define a wrapper to adapt between the __stdcall and __cdecl call of the
@@ -401,7 +404,7 @@ static_assert(
 // which will roll over the 32-bit value every ~49 days.  We try to track
 // rollover ourselves, which works if TimeTicks::Now() is called at least every
 // 48.8 days (not 49 days because only changes in the top 8 bits get noticed).
-TimeDelta RolloverProtectedNow() {
+TimeTicks RolloverProtectedNow() {
   LastTimeAndRolloversState state;
   DWORD now;  // DWORD is always unsigned 32 bits.
 
@@ -432,8 +435,9 @@ TimeDelta RolloverProtectedNow() {
     // Another thread has done something in between so retry from the top.
   }
 
-  return TimeDelta::FromMilliseconds(
-      now + (static_cast<uint64_t>(state.as_values.rollovers) << 32));
+  return TimeTicks() +
+         TimeDelta::FromMilliseconds(
+             now + (static_cast<uint64_t>(state.as_values.rollovers) << 32));
 }
 
 // Discussion of tick counter options on Windows:
@@ -471,13 +475,12 @@ TimeDelta RolloverProtectedNow() {
 // this timer; and also other Windows applications can alter it, affecting this
 // one.
 
-using NowFunction = TimeDelta (*)(void);
-
-TimeDelta InitialNowFunction();
+TimeTicks InitialNowFunction();
 
 // See "threading notes" in InitializeNowFunctionPointer() for details on how
 // concurrent reads/writes to these globals has been made safe.
-NowFunction g_now_function = &InitialNowFunction;
+TimeTicksNowFunction g_time_ticks_now_ignoring_override_function =
+    &InitialNowFunction;
 int64_t g_qpc_ticks_per_second = 0;
 
 // As of January 2015, use of <atomic> is forbidden in Chromium code. This is
@@ -508,8 +511,8 @@ TimeDelta QPCValueToTimeDelta(LONGLONG qpc_value) {
        g_qpc_ticks_per_second));
 }
 
-TimeDelta QPCNow() {
-  return QPCValueToTimeDelta(QPCNowRaw());
+TimeTicks QPCNow() {
+  return TimeTicks() + QPCValueToTimeDelta(QPCNowRaw());
 }
 
 bool IsBuggyAthlon(const base::CPU& cpu) {
@@ -533,7 +536,7 @@ void InitializeNowFunctionPointer() {
   //
   // Otherwise, Now uses the high-resolution QPC clock. As of 21 August 2015,
   // ~72% of users fall within this category.
-  NowFunction now_function;
+  TimeTicksNowFunction now_function;
   base::CPU cpu;
   if (ticks_per_sec.QuadPart <= 0 ||
       !cpu.has_non_stop_time_stamp_counter() || IsBuggyAthlon(cpu)) {
@@ -553,12 +556,19 @@ void InitializeNowFunctionPointer() {
   // are changed.
   g_qpc_ticks_per_second = ticks_per_sec.QuadPart;
   ATOMIC_THREAD_FENCE(memory_order_release);
-  g_now_function = now_function;
+  // Also set g_time_ticks_now_function to avoid the additional indirection via
+  // TimeTicksNowIgnoringOverride() for future calls to TimeTicks::Now(). But
+  // g_time_ticks_now_function may have already be overridden.
+  if (base::internal::g_time_ticks_now_function ==
+      &base::subtle::TimeTicksNowIgnoringOverride) {
+    base::internal::g_time_ticks_now_function = now_function;
+  }
+  g_time_ticks_now_ignoring_override_function = now_function;
 }
 
-TimeDelta InitialNowFunction() {
+TimeTicks InitialNowFunction() {
   InitializeNowFunctionPointer();
-  return g_now_function();
+  return g_time_ticks_now_function();
 }
 
 }  // namespace
@@ -572,16 +582,15 @@ TimeTicks::TickFunctionType TimeTicks::SetMockTickFunction(
   return old;
 }
 
-// static
-TimeTicks TimeTicks::Now() {
-  return TimeTicks() + g_now_function();
+TimeTicks base::subtle::TimeTicksNowIgnoringOverride() {
+  return g_time_ticks_now_ignoring_override_function();
 }
 
 // static
 bool TimeTicks::IsHighResolution() {
-  if (g_now_function == &InitialNowFunction)
+  if (g_time_ticks_now_ignoring_override_function == &InitialNowFunction)
     InitializeNowFunctionPointer();
-  return g_now_function == &QPCNow;
+  return g_time_ticks_now_ignoring_override_function == &QPCNow;
 }
 
 // static
@@ -610,8 +619,9 @@ TimeTicks::Clock TimeTicks::GetClock() {
       Clock::WIN_QPC : Clock::WIN_ROLLOVER_PROTECTED_TIME_GET_TIME;
 }
 
-// static
-ThreadTicks ThreadTicks::Now() {
+// ThreadTicks ----------------------------------------------------------------
+
+ThreadTicks base::subtle::ThreadTicksNowIgnoringOverride() {
   return ThreadTicks::GetForThread(PlatformThread::CurrentHandle());
 }
 

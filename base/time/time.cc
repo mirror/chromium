@@ -15,6 +15,7 @@
 #include "base/no_destructor.h"
 #include "base/strings/stringprintf.h"
 #include "base/third_party/nspr/prtime.h"
+#include "base/time/time_override.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -133,6 +134,23 @@ std::ostream& operator<<(std::ostream& os, TimeDelta time_delta) {
 }
 
 // Time -----------------------------------------------------------------------
+
+TimeNowFunction internal::g_time_now_function =
+    &subtle::TimeNowIgnoringOverride;
+
+TimeNowFunction internal::g_time_now_from_system_time_function =
+    &subtle::TimeNowFromSystemTimeIgnoringOverride;
+
+// static
+Time Time::Now() {
+  return internal::g_time_now_function();
+}
+
+// static
+Time Time::NowFromSystemTime() {
+  // Just use g_time_now_function because it returns the system time.
+  return internal::g_time_now_from_system_time_function();
+}
 
 // static
 Time Time::FromDeltaSinceWindowsEpoch(TimeDelta delta) {
@@ -298,7 +316,17 @@ std::ostream& operator<<(std::ostream& os, Time time) {
                             exploded.millisecond);
 }
 
-// Static
+// TimeTicks ------------------------------------------------------------------
+
+TimeTicksNowFunction internal::g_time_ticks_now_function =
+    &subtle::TimeTicksNowIgnoringOverride;
+
+// static
+TimeTicks TimeTicks::Now() {
+  return internal::g_time_ticks_now_function();
+}
+
+// static
 TimeTicks TimeTicks::UnixEpoch() {
   static const base::NoDestructor<base::TimeTicks> epoch(
       []() { return TimeTicks::Now() - (Time::Now() - Time::UnixEpoch()); }());
@@ -328,6 +356,16 @@ std::ostream& operator<<(std::ostream& os, TimeTicks time_ticks) {
   return os << as_time_delta.InMicroseconds() << " bogo-microseconds";
 }
 
+// ThreadTicks ----------------------------------------------------------------
+
+ThreadTicksNowFunction internal::g_thread_ticks_now_function =
+    &subtle::ThreadTicksNowIgnoringOverride;
+
+// static
+ThreadTicks ThreadTicks::Now() {
+  return internal::g_thread_ticks_now_function();
+}
+
 std::ostream& operator<<(std::ostream& os, ThreadTicks thread_ticks) {
   const TimeDelta as_time_delta = thread_ticks - ThreadTicks();
   return os << as_time_delta.InMicroseconds() << " bogo-thread-microseconds";
@@ -348,5 +386,37 @@ bool Time::Exploded::HasValidValues() const {
          is_in_range(second, 0, 60) &&
          is_in_range(millisecond, 0, 999);
 }
+
+// ScopedTimeClockOverrides ---------------------------------------------------
+
+namespace subtle {
+// static
+bool ScopedTimeClockOverrides::overrides_active_ = false;
+
+ScopedTimeClockOverrides::ScopedTimeClockOverrides(
+    TimeNowFunction time_override,
+    TimeTicksNowFunction time_ticks_override,
+    ThreadTicksNowFunction thread_ticks_override) {
+  CHECK(!overrides_active_);
+  overrides_active_ = true;
+  if (time_override) {
+    internal::g_time_now_function = time_override;
+    internal::g_time_now_from_system_time_function = time_override;
+  }
+  if (time_ticks_override)
+    internal::g_time_ticks_now_function = time_ticks_override;
+  if (thread_ticks_override)
+    internal::g_thread_ticks_now_function = thread_ticks_override;
+}
+
+ScopedTimeClockOverrides::~ScopedTimeClockOverrides() {
+  internal::g_time_now_function = &TimeNowIgnoringOverride;
+  internal::g_time_now_from_system_time_function =
+      &TimeNowFromSystemTimeIgnoringOverride;
+  internal::g_time_ticks_now_function = &TimeTicksNowIgnoringOverride;
+  internal::g_thread_ticks_now_function = &ThreadTicksNowIgnoringOverride;
+  overrides_active_ = false;
+}
+}  // namespace subtle
 
 }  // namespace base
