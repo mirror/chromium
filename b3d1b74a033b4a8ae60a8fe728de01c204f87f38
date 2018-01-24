@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f386d23_8fd9cdf6",
+        "filename": "components/viz/common/skia_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:54:13Z",
+      "side": 1,
+      "message": "I\u0027m actually removing the use of this.",
+      "revId": "b3d1b74a033b4a8ae60a8fe728de01c204f87f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
