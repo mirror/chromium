@@ -76,9 +76,9 @@ TEST_F(StyleEngineTest, DocumentDirtyAfterInject) {
   StyleSheetContents* parsed_sheet =
       StyleSheetContents::Create(CSSParserContext::Create(GetDocument()));
   parsed_sheet->ParseString("div {}");
-  GetStyleEngine().InjectSheet(parsed_sheet);
+  GetStyleEngine().InjectSheet("", parsed_sheet);
+  EXPECT_FALSE(IsDocumentStyleSheetCollectionClean());
   GetDocument().View()->UpdateAllLifecyclePhases();
-
   EXPECT_TRUE(IsDocumentStyleSheetCollectionClean());
 }
 
@@ -140,10 +140,9 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "#t1 { color: green !important }"
       "#t2 { color: white !important }"
       "#t3 { color: white }");
-  WebStyleSheetId green_id =
-      GetStyleEngine().InjectSheet(green_parsed_sheet,
-                                   WebDocument::kUserOrigin);
-  EXPECT_EQ(1u, green_id);
+  AtomicString green_id("green");
+  GetStyleEngine().InjectSheet(green_id, green_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(3u, GetStyleEngine().StyleForElementCount() - initial_count);
@@ -167,9 +166,9 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "#t1 { color: blue !important }"
       "#t2 { color: silver }"
       "#t3 { color: silver !important }");
-  WebStyleSheetId blue_id =
-      GetStyleEngine().InjectSheet(blue_parsed_sheet, WebDocument::kUserOrigin);
-  EXPECT_EQ(2u, blue_id);
+  AtomicString blue_id("blue");
+  GetStyleEngine().InjectSheet(blue_id, blue_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(6u, GetStyleEngine().StyleForElementCount() - initial_count);
@@ -249,9 +248,9 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       " font-style: italic;"
       "}"
     );
-  WebStyleSheetId font_face_id =
-      GetStyleEngine().InjectSheet(font_face_parsed_sheet,
-                                   WebDocument::kUserOrigin);
+  AtomicString font_face_id("font_face");
+  GetStyleEngine().InjectSheet(font_face_id, font_face_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   // After injecting a more specific font, now there are two and the
@@ -325,9 +324,9 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
   StyleSheetContents* keyframes_parsed_sheet =
       StyleSheetContents::Create(CSSParserContext::Create(GetDocument()));
   keyframes_parsed_sheet->ParseString("@keyframes dummy-animation { from {} }");
-  WebStyleSheetId keyframes_id =
-      GetStyleEngine().InjectSheet(keyframes_parsed_sheet,
-                                   WebDocument::kUserOrigin);
+  AtomicString keyframes_id("keyframes");
+  GetStyleEngine().InjectSheet(keyframes_id, keyframes_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   // After injecting the style sheet, a @keyframes rule named dummy-animation
@@ -387,9 +386,10 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       " --stop-color: red !important;"
       " --go-color: green;"
       "}");
-  WebStyleSheetId custom_properties_id =
-      GetStyleEngine().InjectSheet(custom_properties_parsed_sheet,
-                                   WebDocument::kUserOrigin);
+  AtomicString custom_properties_id("custom_properties");
+  GetStyleEngine().InjectSheet(custom_properties_id,
+                               custom_properties_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
   ASSERT_TRUE(t6->GetComputedStyle());
   ASSERT_TRUE(t7->GetComputedStyle());
@@ -431,9 +431,10 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "  color: black !important;"
       " }"
       "}");
-  WebStyleSheetId media_queries_sheet_id =
-      GetStyleEngine().InjectSheet(media_queries_parsed_sheet,
-                                   WebDocument::kUserOrigin);
+  AtomicString media_queries_sheet_id("media_queries_sheet");
+  GetStyleEngine().InjectSheet(media_queries_sheet_id,
+                               media_queries_parsed_sheet,
+                               WebDocument::kUserOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
   ASSERT_TRUE(t8->GetComputedStyle());
   EXPECT_EQ(MakeRGB(255, 0, 0), t8->GetComputedStyle()->VisitedDependentColor(
@@ -479,9 +480,9 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "#t10 {"
       " color: white !important;"
       "}");
-  WebStyleSheetId author_sheet_id =
-      GetStyleEngine().InjectSheet(parsed_author_sheet,
-                                   WebDocument::kAuthorOrigin);
+  AtomicString author_sheet_id("author_sheet");
+  GetStyleEngine().InjectSheet(author_sheet_id, parsed_author_sheet,
+                               WebDocument::kAuthorOrigin);
   GetDocument().View()->UpdateAllLifecyclePhases();
   ASSERT_TRUE(t9->GetComputedStyle());
   ASSERT_TRUE(t10->GetComputedStyle());

@@ -141,34 +141,32 @@ StyleEngine::StyleSheetsForStyleSheetList(TreeScope& tree_scope) {
   return collection.StyleSheetsForStyleSheetList();
 }
 
-WebStyleSheetId StyleEngine::InjectSheet(StyleSheetContents* sheet,
-                                         WebDocument::CSSOrigin origin) {
+void StyleEngine::InjectSheet(const StyleSheetId& id, StyleSheetContents* sheet,
+                              WebDocument::CSSOrigin origin) {
   if (origin == WebDocument::kUserOrigin) {
     injected_user_style_sheets_.push_back(
-        std::make_pair(++injected_sheets_id_count_,
-                       CSSStyleSheet::Create(sheet, *document_)));
+        std::make_pair(id, CSSStyleSheet::Create(sheet, *document_)));
     MarkUserStyleDirty();
   } else {
     injected_author_style_sheets_.push_back(
-        std::make_pair(++injected_sheets_id_count_,
-                       CSSStyleSheet::Create(sheet, *document_)));
+        std::make_pair(id, CSSStyleSheet::Create(sheet, *document_)));
     MarkDocumentDirty();
   }
-
-  return injected_sheets_id_count_;
 }
 
-void StyleEngine::RemoveInjectedSheet(WebStyleSheetId sheet_id) {
+void StyleEngine::RemoveInjectedSheet(const StyleSheetId& id) {
   for (size_t i = 0; i < injected_user_style_sheets_.size(); ++i) {
-    if (injected_user_style_sheets_[i].first == sheet_id) {
+    if (injected_user_style_sheets_[i].first == id) {
       injected_user_style_sheets_.EraseAt(i);
       MarkUserStyleDirty();
+      return;
     }
   }
   for (size_t i = 0; i < injected_author_style_sheets_.size(); ++i) {
-    if (injected_author_style_sheets_[i].first == sheet_id) {
+    if (injected_author_style_sheets_[i].first == id) {
       injected_author_style_sheets_.EraseAt(i);
       MarkDocumentDirty();
+      return;
     }
   }
 }
