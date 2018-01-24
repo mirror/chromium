@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02142f59_47747022",
+        "filename": "skia/public/interfaces/test/struct_traits_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2018-01-24T21:13:21Z",
+      "side": 1,
+      "message": "Indeed -- rowBytes must be a multiple of bytesPerPixel()\n\nWe should add that as an assert in debug skia...",
+      "parentUuid": "c9408354_6ca0bf9b",
+      "revId": "fb84bd43b3285f08e80fc64661b9513f1983f605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0242a928_8de64eec",
         "filename": "skia/public/interfaces/test/struct_traits_unittest.cc",
         "patchSetId": 1
