@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "745c34b1_63ff1ec0",
+        "filename": "chrome/common/media_router/media_source_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-24T00:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229b0557_ad484296",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd948dd_7ed00dd2",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
         "patchSetId": 5
@@ -278,6 +296,24 @@
       "side": 1,
       "message": "Then shouldn\u0027t cap_start_index be checked against npos?",
       "parentUuid": "5b388030_96975d45",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7514b2d2_b8f691d7",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-24T00:24:00Z",
+      "side": 1,
+      "message": "If cap_start_index is npos then substr will return the entire string (starting from index 0 in this case). I added a note here.",
+      "parentUuid": "1db41046_a561afd8",
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -512,6 +548,24 @@
     },
     {
       "key": {
+        "uuid": "0ccc90db_eb5dba3e",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-24T00:24:00Z",
+      "side": 1,
+      "message": "Ack. Thanks :)",
+      "parentUuid": "6d312fad_25ec2109",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3015a6fd_795fd9c7",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -583,6 +637,24 @@
     },
     {
       "key": {
+        "uuid": "7d3f116e_f904363b",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-24T00:24:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b933684a_71baf30d",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba96162_d9d0a992",
         "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
         "patchSetId": 5
@@ -648,6 +720,24 @@
       "side": 1,
       "message": "Uh, that\u0027s an \"interesting\" (aka slightly scary) capability and I don\u0027t really understand the use case for it.  Let\u0027s discuss further when you\u0027re back from travels.\n\nFor the purposes of this patch, is it the case that the availability URL is just app ids or a broadcast request, or can they be combined into one URL?\n\nIf they can\u0027t be combined, I would prefer that broadcast URLs be modeled by a completely separate class/object.",
       "parentUuid": "d5af05fa_bb92bcfd",
+      "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3e5ff1_72029274",
+        "filename": "chrome/common/media_router/providers/cast/cast_media_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-24T00:24:00Z",
+      "side": 1,
+      "message": "An actual availability URL and a broadcast request URL are separate. Making BroadcastRequest a separate struct requires parsing the URL twice though, which is something I want to avoid.",
+      "parentUuid": "0f151c68_73f755e8",
       "revId": "47e5517884d0427b502855d859d0bad9dfb00c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
