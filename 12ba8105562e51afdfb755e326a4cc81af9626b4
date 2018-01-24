@@ -22,6 +22,30 @@
       "revId": "12ba8105562e51afdfb755e326a4cc81af9626b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769f3d19_25e47cb2",
+        "filename": "ui/views/controls/message_box_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T00:49:20Z",
+      "side": 1,
+      "message": "We were talking upthread about using this in ScrollView directly, but I didn\u0027t want to expand the scope of this patch. Actually... looking through the variety of places ScrollView is used (instead of just ClipHeightTo) you\u0027re right that\u0027s probably not going to happen.\n\nHow about DISTANCE_DIALOG_SCROLLABLE_AREA_MAX_HEIGHT? That\u0027s more what I intended.",
+      "parentUuid": "7e101178_a2745f67",
+      "range": {
+        "startLine": 256,
+        "startChar": 37,
+        "endLine": 256,
+        "endChar": 72
+      },
+      "revId": "12ba8105562e51afdfb755e326a4cc81af9626b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
