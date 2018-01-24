@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f15ed8a_046b2351",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T23:52:20Z",
+      "side": 1,
+      "message": "Do we know why this is the case, or if it\u0027s okay?  What is the effect to the user in this case?",
+      "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
