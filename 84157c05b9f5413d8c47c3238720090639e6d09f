@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a3b594a3_647a53f6",
+        "filename": "ui/accessibility/ax_node_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T00:04:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e90feb9c_03e35262",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c5d297_46ae78c1",
         "filename": "ui/accessibility/ax_node_data.h",
         "patchSetId": 11
@@ -170,6 +188,24 @@
       "side": 1,
       "message": "Sometimes preferred for bitmasks? But you\u0027re right, in this case\nwe should be consistent. Changed to int32_t.",
       "parentUuid": "7c6dec0d_ec80aee2",
+      "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1fb09c_7136ecb8",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T00:04:07Z",
+      "side": 1,
+      "message": "Ok, I think there are more of the uint32_t usages scattered around.",
+      "parentUuid": "c5c58102_dc4014e6",
       "revId": "84157c05b9f5413d8c47c3238720090639e6d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
