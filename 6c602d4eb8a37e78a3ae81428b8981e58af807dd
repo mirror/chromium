@@ -16,6 +16,24 @@
       "revId": "6c602d4eb8a37e78a3ae81428b8981e58af807dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf6947a_70a707bb",
+        "filename": "content/browser/web_contents/aura/overscroll_navigation_overlay_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-24T23:08:44Z",
+      "side": 0,
+      "message": "I added support to base::Optional for memset(0) here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/883946\n\nUsing memset is definitely not the preferred way to do things in C++. (In fact, it might even be undefined behavior if the compiler assumes non-volatile things aren\u0027t changing?)\n\n\nI think leaving this memset out is the correct move. I haven\u0027t been able to find the generated default ctor for ViewHostMsg_ResizeOrRepaing_ACK_Params. So I haven\u0027t confirmed if all members are listed in the initializer list (and thus whether they are value-/zero-initialized or default-initialized). But either way, this is at least moving towards more correct.",
+      "parentUuid": "59cb4ee1_7c057195",
+      "revId": "6c602d4eb8a37e78a3ae81428b8981e58af807dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
