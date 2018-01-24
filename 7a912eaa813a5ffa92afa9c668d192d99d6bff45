@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3901e745_c63383fa",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-24T13:20:49Z",
+      "side": 1,
+      "message": "d",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "7a912eaa813a5ffa92afa9c668d192d99d6bff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62989df_11684978",
+        "filename": "services/audio/service_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-24T13:20:49Z",
+      "side": 1,
+      "message": "Is having a nested namespace like this usual for services? I prefer not nesting namespaces without a good reason.",
+      "revId": "7a912eaa813a5ffa92afa9c668d192d99d6bff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
