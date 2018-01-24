@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48605745_35f6e4c9",
+        "filename": "base/memory/aligned_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T16:35:22Z",
+      "side": 1,
+      "message": "The ordering isn\u0027t per the style guide here. build/build_config and base/foo should be together. Then standard library things.",
+      "revId": "ecd3d82e17e85d1517a55d7d7012e99577af17e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
