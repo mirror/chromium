@@ -509,6 +509,7 @@ bool VariationsService::DoFetchFromURL(const GURL& url) {
         return false;
       }
       base::Base64Encode(serial_number, &serial_number);
+      pending_seed_request_->AddExtraRequestHeader("X-Serial-Encrypted: true");
     }
     pending_seed_request_->AddExtraRequestHeader("If-None-Match:" +
                                                  serial_number);
