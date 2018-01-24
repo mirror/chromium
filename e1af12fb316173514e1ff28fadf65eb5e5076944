@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd1b0b0_cde0a995",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-24T14:29:52Z",
+      "side": 1,
+      "message": "nit: Prefer the format \"/*is_header_request\u003d*/true\" - that\u0027s the format clang-tidy expects, and it can verify that the name actually matches the declared parameter name. (It\u0027s not really relevant yet since clang-tidy support for Chromium is still \"very experimental\", but one can hope ;) )",
+      "range": {
+        "startLine": 206,
+        "startChar": 76,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3b28ca_2fd68d20",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-24T14:29:52Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right to always unconditionally set these flags?\n\nOne step back: Could we just call FixAccountConsistencyRequestHeader here? This feels like we\u0027re duplicating logic, which will likely get out of sync.\nI also wonder whether DICE headers should also be added if appropriate?",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec0f122_7ac4e7b1",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-24T14:29:52Z",
+      "side": 1,
+      "message": "optional: This is basically the same test as above, just the expectations are different for ChromeOS vs other platforms. It would be possible to have a common test, and just \"#ifdef CHROMEOS\" around the expectations. WDYT?",
+      "range": {
+        "startLine": 344,
+        "startChar": 6,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
