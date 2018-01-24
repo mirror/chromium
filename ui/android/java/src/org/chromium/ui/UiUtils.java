@@ -54,8 +54,8 @@ public class UiUtils {
     private UiUtils() {
     }
 
-    /** The minimum size of the bottom margin below the app to detect a keyboard. */
-    private static final float KEYBOARD_DETECT_BOTTOM_THRESHOLD_DP = 100;
+    /** The height of Android's bottom navigation controls (back, home, and app switcher). */
+    private static final float ANDROID_BOTTOM_NAVIGATION_CONTROLS_HEIGHT_DP = 56;
 
     /** A delegate that allows disabling keyboard visibility detection. */
     private static KeyboardShowingDelegate sKeyboardShowingDelegate;
@@ -213,8 +213,22 @@ public class UiUtils {
         rootView.getWindowVisibleDisplayFrame(appRect);
 
         final float density = context.getResources().getDisplayMetrics().density;
-        final float bottomMarginDp = Math.abs(rootView.getHeight() - appRect.height()) / density;
-        return bottomMarginDp > KEYBOARD_DETECT_BOTTOM_THRESHOLD_DP;
+
+        float bottomNavHeight = ANDROID_BOTTOM_NAVIGATION_CONTROLS_HEIGHT_DP;
+        int bottomAndroidNavigationId =
+                context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (bottomAndroidNavigationId > 0) {
+            bottomNavHeight =
+                    context.getResources().getDimensionPixelSize(bottomAndroidNavigationId);
+        }
+
+        final float statusBarHeightDp = appRect.top / density;
+        final float androidControlsHeightDp = statusBarHeightDp + bottomNavHeight;
+
+        // The sum of the top and bottom margins.
+        final float appMarginsDp = Math.abs(rootView.getHeight() - appRect.height()) / density;
+
+        return appMarginsDp > androidControlsHeightDp;
     }
 
     /**
