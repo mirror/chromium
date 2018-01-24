@@ -147,9 +147,13 @@ class OmniboxEditModel {
 
   bool user_input_in_progress() const { return user_input_in_progress_; }
 
-  // Sets the state of user_input_in_progress_, and notifies the observer if
-  // that state has changed.
-  void SetInputInProgress(bool in_progress);
+  // Sets the state of user_input_in_progress_, and records time. If |notify|
+  // set, notifies observers. Returns whether state changed, to avoid
+  // unnecessary notification.
+  bool SetInputInProgress(bool in_progress, bool notify);
+
+  // Notifies the observer that the state has changed.
+  void NotifyObserversInputInProgress(bool in_progress);
 
   // Sets permanent_text_ to |text|. Returns true if the permanent text changed
   // and the change should be immediately user-visible, because either the user
