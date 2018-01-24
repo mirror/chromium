@@ -958,6 +958,8 @@ class CONTENT_EXPORT RenderWidget
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+  bool did_commit_after_resize_ = false;
+
   base::WeakPtrFactory<RenderWidget> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidget);
