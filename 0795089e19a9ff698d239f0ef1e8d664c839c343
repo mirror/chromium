@@ -34,6 +34,24 @@
       "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53015b4a_5a9f6be4",
+        "filename": "third_party/WebKit/public/platform/WebBlobInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T19:33:26Z",
+      "side": 0,
+      "message": "Yeah, this only gets rid of the constructors that don\u0027t take a message-pipe-to-a-mojo-blob, other than that nothing regarding the usage of WebBlobInfo is changed.",
+      "parentUuid": "5844dc74_3bcf39f2",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
