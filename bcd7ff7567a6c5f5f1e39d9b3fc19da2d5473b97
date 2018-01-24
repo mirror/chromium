@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cc5a8d7_23c3fbb5",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-24T22:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4d21244_ddfbefb0",
+      "revId": "bcd7ff7567a6c5f5f1e39d9b3fc19da2d5473b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817709ef_7843b615",
         "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "bcd7ff7567a6c5f5f1e39d9b3fc19da2d5473b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a765f2da_908b8a49",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-24T22:42:01Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll add a UMA metric here when I integrate with the unrar library.",
+      "parentUuid": "817709ef_7843b615",
+      "revId": "bcd7ff7567a6c5f5f1e39d9b3fc19da2d5473b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
