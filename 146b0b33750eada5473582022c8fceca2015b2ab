@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daab6094_3d21d341",
+        "filename": "device/u2f/u2f_apdu_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T17:43:26Z",
+      "side": 1,
+      "message": "nit: encoded \u003d cmd-\u003eGetEncodedCommand();",
+      "range": {
+        "startLine": 221,
+        "startChar": 30,
+        "endLine": 221,
+        "endChar": 57
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b49eb2_bb8513d7",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T17:43:26Z",
+      "side": 1,
+      "message": "nit: can simply be `*device`, also applies below",
+      "range": {
+        "startLine": 755,
+        "startChar": 16,
+        "endLine": 755,
+        "endChar": 29
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
