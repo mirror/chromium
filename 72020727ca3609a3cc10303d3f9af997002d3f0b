@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2de90325_c329d2fa",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-24T23:17:00Z",
+      "side": 1,
+      "message": "The reason for HitTestAggregatorDelegate is that HitTestAggregator doesn\u0027t have access to FrameSinkManagerImpl tho? Are you suggesting to get the FrameSinkManagerImpl from its HitTestManager?",
+      "parentUuid": "2608e22f_9777c525",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4ecf970_24a1019c",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T23:00:14Z",
       "side": 1,
       "message": "The base::Optional isn\u0027t necessary, since the unique_ptr can be null already.",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b941b14_9d03b887",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-24T23:17:00Z",
+      "side": 1,
+      "message": "Ah right, I had base::Optional\u003cHitTestAggregator\u003e at first... Removed.",
+      "parentUuid": "b4ecf970_24a1019c",
       "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
