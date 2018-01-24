@@ -143,7 +143,7 @@ class BleAdvertiserImplTest : public testing::Test {
     ErrorTolerantBleAdvertisementImpl::Factory::SetInstanceForTesting(
         fake_advertisement_factory_.get());
 
-    ble_advertiser_ = std::make_unique<BleAdvertiserImpl>(
+    ble_advertiser_ = BleAdvertiserImpl::Factory::NewInstance(
         mock_local_data_provider_.get(), mock_seed_fetcher_.get(),
         fake_ble_synchronizer_.get());
 

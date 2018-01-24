@@ -100,7 +100,7 @@ HostScannerOperation::Factory::BuildInstance(
     BleConnectionManager* connection_manager,
     HostScanDevicePrioritizer* host_scan_device_prioritizer,
     TetherHostResponseRecorder* tether_host_response_recorder) {
-  return std::make_unique<HostScannerOperation>(
+  return HostScannerOperation::Factory::NewInstance(
       devices_to_connect, connection_manager, host_scan_device_prioritizer,
       tether_host_response_recorder);
 }
