@@ -19,6 +19,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/zygote_handle.h"
 #include "gpu/config/gpu_switches.h"
+#include "sandbox/linux/services/libc_interceptor.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 
 namespace content {
@@ -54,7 +55,8 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
        base::CommandLine::ForCurrentProcess()->HasSwitch(
            switches::kEnableOOPRasterization))) {
     const int sandbox_fd = SandboxHostLinux::GetInstance()->GetChildSocket();
-    options->fds_to_remap.push_back(std::make_pair(sandbox_fd, GetSandboxFD()));
+    options->fds_to_remap.push_back(
+        std::make_pair(sandbox_fd, sandbox::GetBackChannelFD()));
   }
 
   options->environ = delegate_->GetEnvironment();
