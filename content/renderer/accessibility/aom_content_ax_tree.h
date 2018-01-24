@@ -28,6 +28,11 @@ class AomContentAxTree : public blink::WebComputedAXTree {
   blink::WebString GetNameForAXNode(int32_t) override;
   blink::WebString GetRoleForAXNode(int32_t) override;
 
+  // Int accessible property getters.
+  bool GetIntAttributeForAXNode(int32_t axID,
+                                blink::AOMIntAttribute,
+                                int32_t* out_param) override;
+
  private:
   ui::AXTree tree_;
   RenderFrameImpl* render_frame_;
