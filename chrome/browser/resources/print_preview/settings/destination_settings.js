@@ -132,6 +132,7 @@ cr.define('print_preview', function() {
             print_preview.DestinationSettingsClasses_.ICON)[0];
         iconEl.src = destination.iconUrl;
         iconEl.srcset = destination.srcSet;
+        iconEl.title = destination.iconTooltip;
 
         const hint = destination.hint;
         const locationEl = this.getElement().getElementsByClassName(
