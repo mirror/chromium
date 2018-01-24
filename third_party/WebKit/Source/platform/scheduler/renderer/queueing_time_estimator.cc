@@ -18,6 +18,8 @@ namespace {
 #define FRAME_STATUS_PREFIX \
   "RendererScheduler.ExpectedQueueingTimeByFrameStatus."
 #define TASK_QUEUE_PREFIX "RendererScheduler.ExpectedQueueingTimeByTaskQueue."
+#define INTERACTIVE_PREFIX \
+  "RendererScheduler.ExpectedQueueingTimeByInteractive."
 
 // On Windows, when a computer sleeps, we may end up getting extremely long
 // tasks or idling. We'll ignore tasks longer than |kInvalidPeriodThreshold|.
@@ -70,7 +72,7 @@ QueueingTimeEstimator::QueueingTimeEstimator(
     QueueingTimeEstimator::Client* client,
     base::TimeDelta window_duration,
     int steps_per_window)
-    : client_(client), state_(steps_per_window) {
+    : client_(client), state_(steps_per_window, window_duration) {
   DCHECK_GE(steps_per_window, 1);
   state_.window_step_width = window_duration / steps_per_window;
 }
@@ -99,9 +101,11 @@ void QueueingTimeEstimator::OnRendererStateChanged(
   state_.OnRendererStateChanged(client_, backgrounded, transition_time);
 }
 
-QueueingTimeEstimator::Calculator::Calculator(int steps_per_window)
+QueueingTimeEstimator::Calculator::Calculator(int steps_per_window,
+                                              base::TimeDelta window_duration)
     : steps_per_window_(steps_per_window),
-      step_queueing_times_(steps_per_window) {}
+      step_queueing_times_(steps_per_window),
+      window_duration_(window_duration) {}
 
 // static
 const char* QueueingTimeEstimator::Calculator::GetReportingMessageFromQueueType(
@@ -182,6 +186,16 @@ QueueingTimeEstimator::Calculator::GetReportingMessageFromFrameStatus(
   return "";
 }
 
+// static
+const char*
+QueueingTimeEstimator::Calculator::GetReportingMessageFromInteractiveStatus(
+    bool is_interactive) {
+  if (!is_interactive)
+    return INTERACTIVE_PREFIX "Before";
+
+  return INTERACTIVE_PREFIX "After";
+}
+
 void QueueingTimeEstimator::Calculator::UpdateStatusFromTaskQueue(
     MainThreadTaskQueue* queue) {
   current_queue_type_ =
@@ -189,6 +203,11 @@ void QueueingTimeEstimator::Calculator::UpdateStatusFromTaskQueue(
   WebFrameScheduler* scheduler = queue ? queue->GetFrameScheduler() : nullptr;
   current_frame_status_ =
       scheduler ? GetFrameStatus(scheduler) : FrameStatus::kNone;
+  if (!interactive_time_.has_value() && scheduler &&
+      scheduler->GetInteractiveTime().has_value()) {
+    interactive_time_ =
+        base::TimeTicks(scheduler->GetInteractiveTime().value());
+  }
 }
 
 void QueueingTimeEstimator::Calculator::AddQueueingTime(
@@ -200,7 +219,8 @@ void QueueingTimeEstimator::Calculator::AddQueueingTime(
 }
 
 void QueueingTimeEstimator::Calculator::EndStep(
-    QueueingTimeEstimator::Client* client) {
+    QueueingTimeEstimator::Client* client,
+    base::TimeTicks step_end_time) {
   step_queueing_times_.Add(step_expected_queueing_time_);
 
   // RendererScheduler reports the queueing time once per disjoint window.
@@ -209,12 +229,25 @@ void QueueingTimeEstimator::Calculator::EndStep(
   // Discard:         |-------window EQT------|
   // Discard:                 |-------window EQT------|
   // Report:                          |-------window EQT------|
-  client->OnQueueingTimeForWindowEstimated(step_queueing_times_.GetAverage(),
+  base::TimeDelta window_queueing_time = step_queueing_times_.GetAverage();
+  client->OnQueueingTimeForWindowEstimated(window_queueing_time,
                                            step_queueing_times_.IndexIsZero());
   ResetStep();
   if (!step_queueing_times_.IndexIsZero())
     return;
 
+  if (!interactive_time_.has_value()) {
+    window_timings_.push_back({step_end_time, window_queueing_time});
+  } else {
+    if (!window_timings_.empty()) {
+      for (const WindowTiming& timing : window_timings_) {
+        MaybeReportInteractiveSplit(timing.end_time, timing.queueing_time,
+                                    client);
+      }
+      window_timings_.clear();
+    }
+    MaybeReportInteractiveSplit(step_end_time, window_queueing_time, client);
+  }
   std::map<const char*, base::TimeDelta> delta_by_message;
   for (int i = 0; i < static_cast<int>(MainThreadTaskQueue::QueueType::kCount);
        ++i) {
@@ -236,12 +269,27 @@ void QueueingTimeEstimator::Calculator::EndStep(
             base::TimeDelta());
 }
 
+void QueueingTimeEstimator::Calculator::MaybeReportInteractiveSplit(
+    base::TimeTicks window_end,
+    base::TimeDelta window_queueing_time,
+    QueueingTimeEstimator::Client* client) {
+  base::TimeTicks window_start = window_end - window_duration_;
+  if (window_end <= interactive_time_.value()) {
+    client->OnReportFineGrainedExpectedQueueingTime(
+        GetReportingMessageFromInteractiveStatus(false), window_queueing_time);
+  } else if (window_start >= interactive_time_.value()) {
+    client->OnReportFineGrainedExpectedQueueingTime(
+        GetReportingMessageFromInteractiveStatus(true), window_queueing_time);
+  }
+}
+
 void QueueingTimeEstimator::Calculator::ResetStep() {
   step_expected_queueing_time_ = base::TimeDelta();
 }
 
-QueueingTimeEstimator::State::State(int steps_per_window)
-    : calculator_(steps_per_window) {}
+QueueingTimeEstimator::State::State(int steps_per_window,
+                                    base::TimeDelta window_duration)
+    : calculator_(steps_per_window, window_duration) {}
 
 void QueueingTimeEstimator::State::OnTopLevelTaskStarted(
     QueueingTimeEstimator::Client* client,
@@ -302,14 +350,15 @@ void QueueingTimeEstimator::State::AdvanceTime(
     return;
   }
   while (TimePastStepEnd(current_time)) {
+    base::TimeTicks step_end_time = step_start_time + window_step_width;
     if (processing_task) {
       // Include the current task in this window.
-      calculator_.AddQueueingTime(ExpectedQueueingTimeFromTask(
-          current_task_start_time, current_time, step_start_time,
-          step_start_time + window_step_width));
+      calculator_.AddQueueingTime(
+          ExpectedQueueingTimeFromTask(current_task_start_time, current_time,
+                                       step_start_time, step_end_time));
     }
-    calculator_.EndStep(client);
-    step_start_time += window_step_width;
+    calculator_.EndStep(client, step_end_time);
+    step_start_time = step_end_time;
   }
   if (processing_task) {
     calculator_.AddQueueingTime(ExpectedQueueingTimeFromTask(
@@ -403,8 +452,9 @@ base::TimeDelta QueueingTimeEstimator::EstimateQueueingTimeIncludingCurrentTask(
   //                |----tmp window-----|
   base::TimeDelta last_window_queueing_time =
       record_queueing_time_client.queueing_time();
+  // Do not bother computing the end of the step, unused here.
   temporary_queueing_time_estimator_state.calculator_.EndStep(
-      &record_queueing_time_client);
+      &record_queueing_time_client, base::TimeTicks());
   return std::max(last_window_queueing_time,
                   record_queueing_time_client.queueing_time());
 }
