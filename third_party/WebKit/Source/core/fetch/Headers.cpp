@@ -8,6 +8,7 @@
 #include "bindings/core/v8/V8IteratorResultValue.h"
 #include "bindings/core/v8/byte_string_sequence_sequence_or_byte_string_byte_string_record.h"
 #include "core/dom/Iterator.h"
+#include "platform/loader/cors/CORS.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -99,8 +100,8 @@ void Headers::append(const String& name,
   // "5. Otherwise, if guard is |request-no-CORS| and |name|/|value| is not a
   //     CORS-safelisted header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name),
-                                          AtomicString(normalized_value)))
+      !CORS::IsCORSSafelistedHeader(AtomicString(name),
+                                    AtomicString(normalized_value)))
     return;
   // "6. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
@@ -130,7 +131,7 @@ void Headers::remove(const String& name, ExceptionState& exception_state) {
   // "4. Otherwise, if guard is |request-no-CORS| and |name|/`invalid` is not
   //     a CORS-safelisted header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name), "invalid"))
+      !CORS::IsCORSSafelistedHeader(AtomicString(name), "invalid"))
     return;
   // "5. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
@@ -196,8 +197,8 @@ void Headers::set(const String& name,
   // "5. Otherwise, if guard is |request-no-CORS| and |name|/|value| is not a
   //     CORS-safelisted header, return."
   if (guard_ == kRequestNoCORSGuard &&
-      !FetchUtils::IsCORSSafelistedHeader(AtomicString(name),
-                                          AtomicString(normalized_value)))
+      !CORS::IsCORSSafelistedHeader(AtomicString(name),
+                                    AtomicString(normalized_value)))
     return;
   // "6. Otherwise, if guard is |response| and |name| is a forbidden response
   //     header name, return."
