@@ -105,6 +105,24 @@
       "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac428662_ad89c2e4",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T08:02:49Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "b86a91b9_8425538f",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
