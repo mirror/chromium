@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a930558c_91fee8d1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub-expected.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-24T20:47:17Z",
+      "side": 1,
+      "message": "Why are these all failing?",
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90216ad2_eeff03b4",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-24T20:47:17Z",
+      "side": 1,
+      "message": "This behavior should be behind a runtime flag, is it?",
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f914d4e_d14d4d5e",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-24T20:47:17Z",
+      "side": 1,
+      "message": "This is an unrelated change, right? If so please remove from this CL.",
+      "range": {
+        "startLine": 259,
+        "startChar": 36,
+        "endLine": 259,
+        "endChar": 45
+      },
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
