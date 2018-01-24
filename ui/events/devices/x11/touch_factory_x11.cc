@@ -179,8 +179,8 @@ bool TouchFactory::ShouldProcessXI2Event(XEvent* xev) {
            (virtual_core_keyboard_device_ == xiev->deviceid);
   }
 
-  if (event->evtype != XI_ButtonPress &&
-      event->evtype != XI_ButtonRelease &&
+  if (event->evtype != XI_ButtonPress && event->evtype != XI_ButtonRelease &&
+      event->evtype != XI_Enter && event->evtype != XI_Leave &&
       event->evtype != XI_Motion) {
     return true;
   }
