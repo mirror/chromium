@@ -1562,16 +1562,21 @@ void OutOfProcessInstance::DocumentLoadComplete(
   }
 
   pp::PDF::SetContentRestriction(this, content_restrictions);
-  HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
-                        1000000, 50);
-  HistogramEnumeration("PDF.HasAttachment",
-                       document_features.has_attachments ? 1 : 0, 2);
-  HistogramEnumeration("PDF.IsLinearized",
-                       document_features.is_linearized ? 1 : 0, 2);
-  HistogramEnumeration("PDF.IsTagged", document_features.is_tagged ? 1 : 0, 2);
-  HistogramEnumeration("PDF.FormType",
-                       static_cast<int32_t>(document_features.form_type),
-                       static_cast<int32_t>(PDFEngine::FormType::kCount));
+
+  // Filtering out print preview PDFs from reported metrics.
+  if (!IsPrintPreview()) {
+    HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
+                          1000000, 50);
+    HistogramEnumeration("PDF.HasAttachment",
+                         document_features.has_attachments ? 1 : 0, 2);
+    HistogramEnumeration("PDF.IsLinearized",
+                         document_features.is_linearized ? 1 : 0, 2);
+    HistogramEnumeration("PDF.IsTagged", document_features.is_tagged ? 1 : 0,
+                         2);
+    HistogramEnumeration("PDF.FormType",
+                         static_cast<int32_t>(document_features.form_type),
+                         static_cast<int32_t>(PDFEngine::FormType::kCount));
+  }
 }
 
 void OutOfProcessInstance::RotateClockwise() {
