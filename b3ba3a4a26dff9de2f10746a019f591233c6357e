@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccd54f98_70697ebb",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T00:20:47Z",
+      "side": 1,
+      "message": "Done. Note that this makes the bubble 320px (vasilii@, this is the preferred non-modal size for the Harmony specs). I think it looks good: https://i.imgur.com/4Z3Rq7E.png",
+      "parentUuid": "dd4c32fc_c10d7455",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a6de82_dd2193a6",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7de7a4_63a6eedf",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T00:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a6de82_dd2193a6",
+      "range": {
+        "startLine": 307,
+        "startChar": 19,
+        "endLine": 307,
+        "endChar": 65
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bb9d51e4_f12c246c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T00:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a9be5b_d348bf83",
+      "range": {
+        "startLine": 359,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 26
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ca49af_98d08fa7",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7beb82c3_b8f71609",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T00:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3ca49af_98d08fa7",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4409c573_0a0053b4",
         "filename": "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e755e8_972fa82b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_save_confirmation_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T00:20:47Z",
+      "side": 1,
+      "message": "Done. Gone.",
+      "parentUuid": "4409c573_0a0053b4",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 86
+      },
+      "revId": "b3ba3a4a26dff9de2f10746a019f591233c6357e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
