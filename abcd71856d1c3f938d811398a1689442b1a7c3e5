@@ -142,6 +142,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa15df8_1ffcfc01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-24T19:40:39Z",
+      "side": 1,
+      "message": "I went to do that first, but then it wanted me to add try/catch since Callable throws Exception. Maybe worth just adding a new interface to base for NoThrowingCallable?",
+      "parentUuid": "7ed79ba9_191bf46e",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
