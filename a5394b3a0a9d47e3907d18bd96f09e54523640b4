@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d57ff5_53b5e94f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:05:51Z",
+      "side": 1,
+      "message": "Please link to a bug that includes examples of the flaky failures and links to logs",
+      "revId": "a5394b3a0a9d47e3907d18bd96f09e54523640b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
