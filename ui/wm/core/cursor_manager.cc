@@ -12,6 +12,8 @@
 #include "ui/wm/core/native_cursor_manager.h"
 #include "ui/wm/core/native_cursor_manager_delegate.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace wm {
 
 namespace internal {
@@ -165,6 +167,8 @@ bool CursorManager::IsMouseEventsEnabled() const {
 }
 
 void CursorManager::SetDisplay(const display::Display& display) {
+  LOG(ERROR) << "SetDisplay:" << display.ToString();
+  base::debug::StackTrace().Print();
   display_ = display;
   for (auto& observer : observers_)
     observer.OnCursorDisplayChanged(display);

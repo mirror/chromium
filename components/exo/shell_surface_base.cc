@@ -148,11 +148,15 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
     if (enabled())
       return ash::CustomFrameViewAsh::SizeConstraintsChanged();
   }
+  gfx::Size GetMinimumSize() const override { return minimum_size_; }
+
+  void SetMinimumSize(const gfx::Size& size) { minimum_size_ = size; }
 
  private:
   // TODO(oshima): Remove this once the transition to new drag/resize
   // is complete. https://crbug.com/801666.
   const bool client_controlled_move_resize_;
+  gfx::Size minimum_size_;
 
   DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
 };
@@ -666,6 +670,9 @@ void ShellSurfaceBase::OnSurfaceCommit() {
   SubmitCompositorFrame();
 
   widget_->OnSizeConstraintsChanged();
+  CustomFrameView* frame_view =
+      static_cast<CustomFrameView*>(widget_->non_client_view()->frame_view());
+  frame_view->SetMinimumSize(minimum_size_);
 }
 
 bool ShellSurfaceBase::IsTouchEnabled(Surface*) const {
