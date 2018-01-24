@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af4dc1c_8491672e",
+        "filename": "media/base/cdm_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-24T19:49:00Z",
+      "side": 1,
+      "message": "Strange to name it GetDecryptContext() but it returns a bool. How about IsDecryptContextAvailable(), IsDecryptContextSupported(), ...? Or FetchDecryptContext(), as the comments seem to indicate that DecryptContext is populated (although I don\u0027t know how one gets it)?",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90229a94_4685965c",
+        "filename": "media/mojo/services/mojo_cdm_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-24T19:49:00Z",
+      "side": 1,
+      "message": "Are the parameters to this the same as what is passed to SetKey() below? Could they be checked just to verify they make it to the proxy?\n\nSame for others (like RemoveKey and OnCreateMediaCryptoSession). client checks may have to be _ due to it sometimes failing.",
+      "range": {
+        "startLine": 207,
+        "startChar": 34,
+        "endLine": 207,
+        "endChar": 40
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c20d4e_48226d13",
+        "filename": "media/mojo/services/mojo_cdm_service_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-24T19:49:00Z",
+      "side": 1,
+      "message": "As this is done in 2 different places, I think adding a function GetNextCdmId() makes sure the IDs are allocated properly.",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55bda2e_7be8554e",
+        "filename": "media/mojo/services/mojo_cdm_service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-24T19:49:00Z",
+      "side": 1,
+      "message": "I think there\u0027s a bug to change this from int to something else (guid?). Should there be a \"typedef int CdmId;\" used to make changing it easier?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f0e1db_71d7bcef",
+        "filename": "media/mojo/services/mojo_cdm_service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-24T19:49:00Z",
+      "side": 1,
+      "message": "Does this need to be part of the class? Could we just have, in the .cc file, \nnamespace {\nint getNextCdmId() {\n    static int next_cdm_id \u003d kInvalidCdmId;\n    return ++next_cdm_id;\n}\n}\n\nAlso makes it easy to change int to something else in the future.",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
