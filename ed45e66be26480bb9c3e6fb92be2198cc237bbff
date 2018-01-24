@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4d287f30_0c44c310",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T23:27:31Z",
+      "side": 1,
+      "message": "That looks a bit nicer and easier to follow. Thanks!",
+      "parentUuid": "62dc8e10_68bad72d",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb7e381a_8b90917f",
         "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
         "patchSetId": 1
