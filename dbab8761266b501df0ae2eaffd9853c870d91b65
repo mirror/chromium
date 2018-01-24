@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b9d080_473d8f5a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:19:29Z",
+      "side": 1,
+      "message": "nit: guideOwner. The view doesn\u0027t own the layout, it owns the guide.",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df40d347_267d138c",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:19:29Z",
+      "side": 1,
+      "message": "Please use a helper since they now accept layout guides.",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad91ea1_5a07b977",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:19:29Z",
+      "side": 1,
+      "message": "Are you sure this is necessary? You didn\u0027t change any layout of layoutOwningView.",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c83e160_8bdb772f",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:19:29Z",
+      "side": 1,
+      "message": "This comment is hard to parse. Maybe something like this will be cleaner:\n\n---\nFor all layout guide in this group, all of the constraints to them are dropped upon size class changes and rotations. Any view constrained to them is expected to be dismissed on such events. For example, the tools menu is closed upon rotation. \n---\n\nAlso, this comment is above kOmniboxGuide, the only guide that does NOT share this limitation. Please move it. \n\n\nnit: s/is destroyed/are destroyed",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
