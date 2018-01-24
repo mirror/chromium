@@ -5,6 +5,7 @@
 module blink.mojom;
 
 import "third_party/WebKit/common/blob/blob.mojom";
+import "skia/public/interfaces/bitmap.mojom";
 
 // A MessagePort is represented as a raw mojo message pipe, as such no interface
 // definition exists for it here. Messages on this pipe are serialized versions
@@ -35,6 +36,8 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  array<SerializedArrayBufferContents> arrayBufferContentsArray;
+  array<skia.mojom.Bitmap> imageBitmapContentsArray;
 };
 
 // Struct wrapping a Blob interface pointer.
@@ -47,3 +50,40 @@ struct SerializedBlob {
   uint64 size;
   Blob blob;
 };
+
+struct SerializedArrayBufferContents {
+        array<uint8> contents;
+};
+
+//struct SerializedImageBitmapContents {
+//        SerializedArrayBufferContents contents;
+//        SerializedCanvasColorParams canvasColorParams;
+//
+//        bool is_premultiplied;
+//        bool is_accelerated;
+//};
+//
+//struct SerializedCanvasColorParams {
+//        enum CanvasColorSpace {
+//                UNKNOWN,
+//                SRGB,
+//                REC_2020,
+//                P3,
+//        };
+//        enum CanvasPixelFormat {
+//                UNKNOWN,
+//                RGB_A8,
+//                RGB_10A2,
+//                RGB_A12,
+//                F16,
+//        };
+//        enum OpacityMode {
+//                UNKNOWN,
+//                NON_OPAQUE,
+//                OPAQUE,
+//        };
+//
+//        CanvasColorSpace canvasColorSpace;
+//        CanvasPixelFormat canvasPixelFormat;
+//        OpacityMode opacityMode;
+//};

@@ -8,6 +8,7 @@
 #include "third_party/WebKit/common/message_port/cloneable_message_struct_traits.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/transferable_message.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace mojo {
 
@@ -22,6 +23,16 @@ struct BLINK_COMMON_EXPORT
   static std::vector<mojo::ScopedMessagePipeHandle> ports(
       blink::TransferableMessage& input) {
     return blink::MessagePortChannel::ReleaseHandles(input.ports);
+  }
+
+  static std::vector<blink::mojom::SerializedArrayBufferContentsPtr>&
+  arrayBufferContentsArray(blink::TransferableMessage& input) {
+    return input.arrayBufferContentsArray;
+  }
+
+  static std::vector<SkBitmap>& imageBitmapContentsArray(
+      blink::TransferableMessage& input) {
+    return input.imageBitmapContentsArray;
   }
 
   static bool Read(blink::mojom::TransferableMessage::DataView data,

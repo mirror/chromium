@@ -6,6 +6,7 @@
 
 #include "base/containers/span.h"
 #include "third_party/WebKit/common/message_port/cloneable_message_struct_traits.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace mojo {
 
@@ -14,12 +15,18 @@ bool StructTraits<blink::mojom::TransferableMessage::DataView,
     Read(blink::mojom::TransferableMessage::DataView data,
          blink::TransferableMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
+  std::vector<blink::mojom::SerializedArrayBufferContentsPtr> arrayBufferArray;
+  std::vector<SkBitmap> imageBitmaps;
   if (!data.ReadMessage(static_cast<blink::CloneableMessage*>(out)) ||
+      !data.ReadArrayBufferContentsArray(&arrayBufferArray) ||
+      !data.ReadImageBitmapContentsArray(&imageBitmaps) ||
       !data.ReadPorts(&ports)) {
     return false;
   }
 
   out->ports = blink::MessagePortChannel::CreateFromHandles(std::move(ports));
+  out->arrayBufferContentsArray = std::move(arrayBufferArray);
+  out->imageBitmapContentsArray = std::move(imageBitmaps);
   return true;
 }
 
