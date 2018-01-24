@@ -640,9 +640,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest, CancelRequestXHR) {
   {
     std::string message;
     EXPECT_TRUE(dom_message_queue.WaitForMessage(&message));
-    // TODO(arthursonzogni): This is wrong, "abort" should be received.
-    // See https://crbug.com/804868
-    EXPECT_EQ("\"timeout\"", message);
+    EXPECT_EQ("\"abort\"", message);
   }
 }
 

@@ -267,6 +267,9 @@ bool HttpCache::Writers::InitiateTruncateEntry() {
     DCHECK(next_state_ == State::CACHE_WRITE_DATA_COMPLETE ||
            next_state_ == State::NETWORK_READ_COMPLETE);
     next_state_ = State::ASYNC_OP_COMPLETE_PRE_TRUNCATE;
+    // If not in do loop, initiate do loop.
+    if (!in_do_loop_)
+      DoLoop(OK);
     return true;
   }
 
