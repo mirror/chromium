@@ -69,6 +69,24 @@
       "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a000f2f0_3106be41",
+        "filename": "build/config/win/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-24T04:34:56Z",
+      "side": 1,
+      "message": "My change landed in r323300 and I have updated this CL to use the macro that I introduced.",
+      "parentUuid": "33e1597c_a5b69a7c",
+      "revId": "0f770d2edd0b4f352dd25aa21e89ed2d2dd689c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
