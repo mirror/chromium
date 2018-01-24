@@ -26,8 +26,10 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "base/containers/linked_list.h"
+#include "base/containers/mru_cache.h"
 #include "base/containers/queue.h"
 #include "base/strings/string16.h"
+#include "base/template_util.h"
 
 // Composable memory usage estimators.
 //
@@ -163,6 +165,12 @@ size_t EstimateMemoryUsage(const base::flat_set<T, C>& set);
 template <class K, class V, class C>
 size_t EstimateMemoryUsage(const base::flat_map<K, V, C>& map);
 
+template <class Key,
+          class Payload,
+          class HashOrComp,
+          template <typename, typename, typename> class Map>
+size_t EstimateMemoryUsage(const MRUCacheBase<Key, Payload, HashOrComp, Map>&);
+
 // TODO(dskiba):
 //   std::forward_list
 
@@ -215,11 +223,79 @@ struct EMUCaller<T, typename std::enable_if<HasEMU<T>::value>::type> {
   static size_t Call(const T& value) { return EstimateMemoryUsage(value); }
 };
 
+template <template <class...> class Container, class I, class = void>
+struct IsIteratorForContainerImpl : std::false_type {};
+
+template <template <class...> class Container, class I>
+struct IsIteratorForContainerImpl<
+    Container,
+    I,
+    std::enable_if_t<base::internal::is_iterator<I>::value>> {
+  using value_type = typename std::iterator_traits<I>::value_type;
+  using container_type = Container<value_type>;
+
+  // We use enum instead of static constexpr bool, beause we don't have inline
+  // variables until c++17.
+  //
+  // The downside is - value is not of type bool.
+  enum : bool {
+    value =
+        std::is_same<typename container_type::iterator, I>::value ||
+        std::is_same<typename container_type::const_iterator, I>::value ||
+        std::is_same<typename container_type::reverse_iterator, I>::value ||
+        std::is_same<typename container_type::const_reverse_iterator, I>::value,
+  };
+};
+
+template <template <class...> class Container, class I>
+constexpr bool IsIteratorForContainer() {
+  return IsIteratorForContainerImpl<Container, I>::value;
+}
+
+template <class I, template <class...> class... Containers>
+constexpr bool OneOfContainersIterator() {
+  // We are forced to create a temporary variable to workaround a compilation
+  // error in msvs.
+  const bool all_tests[] = {IsIteratorForContainer<Containers, I>()...};
+  for (bool test : all_tests)
+    if (test)
+      return true;
+  return false;
+}
+
+// std::array has an extra required template argument. We curry it.
+template <class T>
+using array_test_helper = std::array<T, 1>;
+
+template <class I>
+constexpr bool IsStandardContainerIterator() {
+  // TODO(dyaroshev): deal with maps iterators if there is a need.
+  // It requires to parse pairs into keys and values.
+  // TODO(dyaroshev): deal with unordered containers: they do not have reverse
+  // iterators.
+  return OneOfContainersIterator<I, array_test_helper, std::vector, std::deque,
+                                 /*std::forward_list,*/ std::list, std::set,
+                                 std::multiset>();
+}
+
+template <class T>
+constexpr bool IsKnownNonAllocatingType() {
+  if (std::is_trivially_destructible<T>::value)
+    return true;
+
+  // In MSVS standard library in debug mode some iterators are not trivially
+  // destructible.
+  // This is a workaround against that.
+  if (IsStandardContainerIterator<T>())
+    return true;
+
+  return false;
+}
+
 template <class T>
 struct EMUCaller<
     T,
-    typename std::enable_if<!HasEMU<T>::value &&
-                            std::is_trivially_destructible<T>::value>::type> {
+    std::enable_if_t<!HasEMU<T>::value && IsKnownNonAllocatingType<T>()>> {
   static size_t Call(const T& value) { return 0; }
 };
 
@@ -438,6 +514,12 @@ size_t HashMapBucketCountForTesting(size_t bucket_count) {
   return bucket_count;
 }
 
+template <class MruCacheType>
+size_t DoEstimateMemoryUsageForMruCache(const MruCacheType& mru_cache) {
+  return EstimateMemoryUsage(mru_cache.ordering_) +
+         EstimateMemoryUsage(mru_cache.index_);
+}
+
 }  // namespace internal
 
 template <class V>
@@ -574,6 +656,15 @@ template <class K, class V, class C>
 size_t EstimateMemoryUsage(const base::flat_map<K, V, C>& map) {
   using value_type = typename base::flat_map<K, V, C>::value_type;
   return sizeof(value_type) * map.capacity() + EstimateIterableMemoryUsage(map);
+}
+
+template <class Key,
+          class Payload,
+          class HashOrComp,
+          template <typename, typename, typename> class Map>
+size_t EstimateMemoryUsage(
+    const MRUCacheBase<Key, Payload, HashOrComp, Map>& mru_cache) {
+  return internal::DoEstimateMemoryUsageForMruCache(mru_cache);
 }
 
 }  // namespace trace_event
