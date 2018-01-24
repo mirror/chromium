@@ -128,7 +128,9 @@ class BASE_EXPORT TimeDelta {
   // may be unclear from the perspective of a caller.
   //
   // DEPRECATED - Do not use in new code. http://crbug.com/634507
-  static TimeDelta FromInternalValue(int64_t delta) { return TimeDelta(delta); }
+  static constexpr TimeDelta FromInternalValue(int64_t delta) {
+    return TimeDelta(delta);
+  }
 
   // Returns the maximum time delta, which should be greater than any reasonable
   // time delta we might compare it to. Adding or subtracting the maximum time
@@ -146,10 +148,10 @@ class BASE_EXPORT TimeDelta {
   // For serializing, use FromInternalValue to reconstitute.
   //
   // DEPRECATED - Do not use in new code. http://crbug.com/634507
-  int64_t ToInternalValue() const { return delta_; }
+  constexpr int64_t ToInternalValue() const { return delta_; }
 
   // Returns the magnitude (absolute value) of this TimeDelta.
-  TimeDelta magnitude() const {
+  constexpr TimeDelta magnitude() const {
     // Some toolchains provide an incomplete C++11 implementation and lack an
     // int64_t overload for std::abs().  The following is a simple branchless
     // implementation:
@@ -158,13 +160,15 @@ class BASE_EXPORT TimeDelta {
   }
 
   // Returns true if the time delta is zero.
-  bool is_zero() const {
-    return delta_ == 0;
-  }
+  constexpr bool is_zero() const { return delta_ == 0; }
 
   // Returns true if the time delta is the maximum/minimum time delta.
-  bool is_max() const { return delta_ == std::numeric_limits<int64_t>::max(); }
-  bool is_min() const { return delta_ == std::numeric_limits<int64_t>::min(); }
+  constexpr bool is_max() const {
+    return delta_ == std::numeric_limits<int64_t>::max();
+  }
+  constexpr bool is_min() const {
+    return delta_ == std::numeric_limits<int64_t>::min();
+  }
 
 #if defined(OS_POSIX)
   struct timespec ToTimeSpec() const;
@@ -175,23 +179,26 @@ class BASE_EXPORT TimeDelta {
   //
   // InMillisecondsRoundedUp() instead returns an integer that is rounded up
   // to the next full millisecond.
-  int InDays() const;
-  int InHours() const;
-  int InMinutes() const;
-  double InSecondsF() const;
-  int64_t InSeconds() const;
-  double InMillisecondsF() const;
-  int64_t InMilliseconds() const;
-  int64_t InMillisecondsRoundedUp() const;
-  int64_t InMicroseconds() const;
-  int64_t InNanoseconds() const;
+  constexpr int InDays() const;
+  constexpr int InHours() const;
+  constexpr int InMinutes() const;
+  constexpr double InSecondsF() const;
+  constexpr int64_t InSeconds() const;
+  constexpr double InMillisecondsF() const;
+  constexpr int64_t InMilliseconds() const;
+  constexpr int64_t InMillisecondsRoundedUp() const;
+  constexpr int64_t InMicroseconds() const;
+  constexpr int64_t InNanoseconds() const;
 
-  TimeDelta& operator=(TimeDelta other) {
+  constexpr TimeDelta& operator=(TimeDelta other) {
     delta_ = other.delta_;
     return *this;
   }
 
-  // Computations with other deltas.
+  // Computations with other deltas. Can easily be made constexpr with C++17 but
+  // hard to do until then per limitations around
+  // __builtin_(add|sub)_overflow in safe_math_clang_gcc_impl.h :
+  // https://chromium-review.googlesource.com/c/chromium/src/+/873352#message-59594ab70827795a67e0780404adf37b4b6c2f14
   TimeDelta operator+(TimeDelta other) const {
     return TimeDelta(time_internal::SaturatedAdd(*this, other.delta_));
   }
@@ -205,13 +212,11 @@ class BASE_EXPORT TimeDelta {
   TimeDelta& operator-=(TimeDelta other) {
     return *this = (*this - other);
   }
-  TimeDelta operator-() const {
-    return TimeDelta(-delta_);
-  }
+  constexpr TimeDelta operator-() const { return TimeDelta(-delta_); }
 
   // Computations with numeric types.
-  template<typename T>
-  TimeDelta operator*(T a) const {
+  template <typename T>
+  constexpr TimeDelta operator*(T a) const {
     CheckedNumeric<int64_t> rv(delta_);
     rv *= a;
     if (rv.IsValid())
@@ -221,8 +226,8 @@ class BASE_EXPORT TimeDelta {
       return TimeDelta(std::numeric_limits<int64_t>::min());
     return TimeDelta(std::numeric_limits<int64_t>::max());
   }
-  template<typename T>
-  TimeDelta operator/(T a) const {
+  template <typename T>
+  constexpr TimeDelta operator/(T a) const {
     CheckedNumeric<int64_t> rv(delta_);
     rv /= a;
     if (rv.IsValid())
@@ -233,17 +238,17 @@ class BASE_EXPORT TimeDelta {
       return TimeDelta(std::numeric_limits<int64_t>::min());
     return TimeDelta(std::numeric_limits<int64_t>::max());
   }
-  template<typename T>
-  TimeDelta& operator*=(T a) {
+  template <typename T>
+  constexpr TimeDelta& operator*=(T a) {
     return *this = (*this * a);
   }
-  template<typename T>
-  TimeDelta& operator/=(T a) {
+  template <typename T>
+  constexpr TimeDelta& operator/=(T a) {
     return *this = (*this / a);
   }
 
-  int64_t operator/(TimeDelta a) const { return delta_ / a.delta_; }
-  TimeDelta operator%(TimeDelta a) const {
+  constexpr int64_t operator/(TimeDelta a) const { return delta_ / a.delta_; }
+  constexpr TimeDelta operator%(TimeDelta a) const {
     return TimeDelta(delta_ % a.delta_);
   }
 
@@ -292,8 +297,8 @@ class BASE_EXPORT TimeDelta {
   int64_t delta_;
 };
 
-template<typename T>
-inline TimeDelta operator*(T a, TimeDelta td) {
+template <typename T>
+constexpr TimeDelta operator*(T a, TimeDelta td) {
   return td * a;
 }
 
@@ -769,6 +774,87 @@ constexpr TimeDelta TimeDelta::FromProduct(int64_t value,
              : value < std::numeric_limits<int64_t>::min() / positive_value
                    ? Min()
                    : TimeDelta(value * positive_value);
+}
+
+constexpr int TimeDelta::InDays() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int>::max();
+  }
+  return static_cast<int>(delta_ / Time::kMicrosecondsPerDay);
+}
+
+constexpr int TimeDelta::InHours() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int>::max();
+  }
+  return static_cast<int>(delta_ / Time::kMicrosecondsPerHour);
+}
+
+constexpr int TimeDelta::InMinutes() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int>::max();
+  }
+  return static_cast<int>(delta_ / Time::kMicrosecondsPerMinute);
+}
+
+constexpr double TimeDelta::InSecondsF() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<double>::infinity();
+  }
+  return static_cast<double>(delta_) / Time::kMicrosecondsPerSecond;
+}
+
+constexpr int64_t TimeDelta::InSeconds() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int64_t>::max();
+  }
+  return delta_ / Time::kMicrosecondsPerSecond;
+}
+
+constexpr double TimeDelta::InMillisecondsF() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<double>::infinity();
+  }
+  return static_cast<double>(delta_) / Time::kMicrosecondsPerMillisecond;
+}
+
+constexpr int64_t TimeDelta::InMilliseconds() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int64_t>::max();
+  }
+  return delta_ / Time::kMicrosecondsPerMillisecond;
+}
+
+constexpr int64_t TimeDelta::InMillisecondsRoundedUp() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int64_t>::max();
+  }
+  return (delta_ + Time::kMicrosecondsPerMillisecond - 1) /
+         Time::kMicrosecondsPerMillisecond;
+}
+
+constexpr int64_t TimeDelta::InMicroseconds() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int64_t>::max();
+  }
+  return delta_;
+}
+
+constexpr int64_t TimeDelta::InNanoseconds() const {
+  if (is_max()) {
+    // Preserve max to prevent overflow.
+    return std::numeric_limits<int64_t>::max();
+  }
+  return delta_ * Time::kNanosecondsPerMicrosecond;
 }
 
 // For logging use only.
