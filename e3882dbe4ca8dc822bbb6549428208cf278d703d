@@ -34,6 +34,23 @@
       "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4273b0_d26b1461",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-24T18:01:00Z",
+      "side": 0,
+      "message": "Digging into this code more, I think this line would be broken if GURL::query_piece() included the initial delimiter (it wouldn\u0027t correctly detect that we are at the start of the query string), but that is separate from the fact that it is completely valid for a ref component to include a \u0027?\u0027 character, even as the first character in the component (which is what triggered the DCHECK failure). For example, if it included the delimiter, and the component being searched for was the first component, this would skip that component (incorrectly). But if the \u0027?\u0027 was a part of that component, we would be correctly at the start of the query/ref string at this point.",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
