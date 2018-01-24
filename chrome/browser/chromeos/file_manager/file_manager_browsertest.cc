@@ -37,7 +37,7 @@ class FileManagerBrowserTest :
   }
 };
 
-IN_PROC_BROWSER_TEST_P(FileManagerBrowserTest, Test) {
+IN_PROC_BROWSER_TEST_P(FileManagerBrowserTest, FLAKY_Test) {
   StartTest();
 }
 
