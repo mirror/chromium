@@ -37,7 +37,7 @@
 #include "WebTextDirection.h"
 #include "WebWidgetClient.h"
 #include "public/platform/WebString.h"
-#include "third_party/WebKit/common/page/page_visibility_state.mojom-shared.h"
+#include "third_party/WebKit/public/common/page/page_visibility_state.mojom-shared.h"
 
 namespace blink {
 

@@ -12,6 +12,7 @@ include_rules = [
     "+mojo",
     "+testing/gmock/include/gmock",
     "+testing/gtest/include/gtest",
+    "+third_party/WebKit/public/common",
     "+third_party/WebKit/common",
     "+url",
 ]

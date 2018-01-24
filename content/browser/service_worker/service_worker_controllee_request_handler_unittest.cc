@@ -35,7 +35,7 @@
 #include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
 namespace service_worker_controllee_request_handler_unittest {

@@ -23,8 +23,8 @@
 #include "net/log/net_log_with_source.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
-#include "third_party/WebKit/common/blob/blob.mojom.h"
-#include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
+#include "third_party/WebKit/public/common/blob/blob.mojom.h"
+#include "third_party/WebKit/public/common/service_worker/service_worker_event_status.mojom.h"
 
 namespace net {
 class URLRequest;
