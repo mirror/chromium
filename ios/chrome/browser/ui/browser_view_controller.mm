@@ -4229,8 +4229,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 #pragma mark - WebToolbarDelegate (Public)
 
 - (void)locationBarDidBecomeFirstResponder {
-  if (_locationBarHasFocus)
+  if (_locationBarHasFocus) {
+    [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:YES];
     return;  // TODO(crbug.com/244366): This should not be necessary.
+  }
+
   _locationBarHasFocus = YES;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kLocationBarBecomesFirstResponderNotification
@@ -4247,11 +4250,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
   [[OmniboxGeolocationController sharedInstance]
       locationBarDidBecomeFirstResponder:_browserState];
+
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:YES];
 }
 
 - (void)locationBarDidResignFirstResponder {
-  if (!_locationBarHasFocus)
+  if (!_locationBarHasFocus) {
+    [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:NO];
     return;  // TODO(crbug.com/244366): This should not be necessary.
+  }
   _locationBarHasFocus = NO;
   [self.sideSwipeController setEnabled:YES];
   [[NSNotificationCenter defaultCenter]
@@ -4284,6 +4291,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
                                                false /* check_for_repost */);
   }
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:NO];
 }
 
 - (void)locationBarBeganEdit {
