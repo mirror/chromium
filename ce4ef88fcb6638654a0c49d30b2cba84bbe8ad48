@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175beb4c_50cf6323",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081d6e30_233f972a",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8325bb6a_944033da",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1cbc5255_14ec4406",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8325bb6a_944033da",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328a4a48_af9bdc2e",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855c6a09_74d18ede",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "328a4a48_af9bdc2e",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "babcc478_dfa47863",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "Done. Also changed all the occurrences within this file.",
+      "parentUuid": "5ef8ff07_3fc56946",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e90d1d8e_137b35d2",
         "filename": "chrome/common/extensions/api/wallpaper_private.json",
         "patchSetId": 12
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0791f9a9_fef7c1e3",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "It\u0027s changed to be a map, mapping between the collection id and collection name. The keys can\u0027t be known in advance so it may not be denoted as Properties.",
+      "parentUuid": "e90d1d8e_137b35d2",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 31
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d17682_708cc470",
         "filename": "chrome/common/extensions/api/wallpaper_private.json",
         "patchSetId": 12
@@ -151,6 +271,24 @@
       "writtenOn": "2018-01-24T00:23:15Z",
       "side": 1,
       "message": "can you define this object\u0027s properties?\n\nLet\u0027s assume the object is expected to have string properties A and B, with B being optional.\n(e.g. {A: \u0027a_value\u0027, B: \u0027b_value\u0027}, or {A: \u0027value\u0027});\nunder types you\u0027d have to define the object type - add\n{\n  \"name\": \"ImageInfo\",\n  \"type\": \"object\",\n  \"description\": \"TODO\",\n  \"properties\": [\n     {\n        \"name\": \"A\",\n        \"type\": \"string\"\n        \"description\": \"...\"\n     },\n     {\n       \"name\": \"B\",\n        \"type\": \"string\",\n        \"description\": \"....\",\n        \"optional\": true\n     }\n   ]\n}\n\n\nAnd then here, you\u0027d have:\n\n{\n  \"type\": \"array\",\n  \"name\": \"imagesInfo\",\n  \"items\": {\n    \"$ref\": \"ImageInfo\"\n  }\n}",
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69089ee_c76e0891",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T02:29:35Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "45d17682_708cc470",
       "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
