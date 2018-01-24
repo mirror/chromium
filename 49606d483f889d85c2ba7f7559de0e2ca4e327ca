@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be18bdeb_82598c89",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-24T06:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a31475_c2d06358",
+      "range": {
+        "startLine": 627,
+        "startChar": 4,
+        "endLine": 627,
+        "endChar": 48
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "780a73dd_5d2f6037",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 33
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T08:33:30Z",
       "side": 1,
       "message": "Same drive-by comment : is this startup specific or does it also do periodic collection?",
+      "range": {
+        "startLine": 632,
+        "startChar": 60,
+        "endLine": 632,
+        "endChar": 67
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202bc622_4ed5b603",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-24T06:03:24Z",
+      "side": 1,
+      "message": "My understanding is that it is startup specific at this stage. The periodic collection will be triggered once startup sampling finishes via ReceiveCompletedProfilesImpl() in call_stack_profile_metrics_provider.cc\n\n@wittman to confirm.",
+      "parentUuid": "780a73dd_5d2f6037",
       "range": {
         "startLine": 632,
         "startChar": 60,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "fd33eb10_139b71ea",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-24T06:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73843962_a4340fe1",
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5df819a_1b84a4a5",
         "filename": "chrome/browser/chrome_browser_main.h",
         "patchSetId": 33
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-23T08:33:30Z",
       "side": 1,
       "message": "nit: IIUC, this samples after startup too? i.e. https://uma.googleplex.com/p/chrome/callstacks/?sid\u003da143f66e8d015d58db6e8ea45441ab56",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb17ff4_bee408ff",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-24T06:03:24Z",
+      "side": 1,
+      "message": "I think this latter sentence may be obsolete since we have already enabled periodic sampling for the UI thread.",
+      "parentUuid": "e5df819a_1b84a4a5",
       "range": {
         "startLine": 152,
         "startChar": 12,
@@ -102,6 +192,24 @@
       "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153a3c9c_86231ea2",
+        "filename": "chrome/common/stack_sampling_configuration.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-24T06:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa60b656_2e9abdbb",
+      "revId": "49606d483f889d85c2ba7f7559de0e2ca4e327ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
