@@ -34,6 +34,24 @@
       "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "378baa61_d8671408",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T22:05:25Z",
+      "side": 1,
+      "message": "Hmm, so basically the issue we are seeing in the test is that for the first resolution, the call to FillCapabilities(photo_stream_index_, ...) worked, but for the second resolution it didn\u0027t. \nSince we don\u0027t know what GetDeviceStreamCount() returned, we can\u0027t tell if we tried MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_PHOTO or 0 as the stream index when it failed.\n\nNow, the relevant change for this reland is that we fall back to trying to use the video stream instead of the photo stream, with the video stream being either MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_VIDEO_PREVIEW or also 0. I feel this has only a relatively small chance of succeeding, and I don\u0027t like that it does not really help us much in understanding how exactly the MF API calls behavior in the problematic situation.\n\nMy recommendation would be to temporarily land a version of this CL that does the following here:\n* Call GetDeviceStreamCount() and LOG(WARNING) the result.\n* Call FillCapabilities(MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_PHOTO) and LOG whether or not it succeeded.\n* If it did not succeed, call FillCapabilities(MF_CAPTURE_ENGINE_FIRST_SOURCE_PHOTO_STREAM) and LOG\n* If that did not succeed either, call FillCapabilities(0) and LOG whether or not it succeeded.\n\nSame for video case. First try MF_CAPTURE_ENGINE_PREFERRED_SOURCE_STREAM_FOR_VIDEO_PREVIEW, then MF_CAPTURE_ENGINE_FIRST_SOURCE_VIDEO_STREAM, then 0.\n\nWith this logging in place, we should be able to see enough to decide if there is any way we can convince the APIs to work in the problematic case, or if things are really in a bad state where erroring out is the only option. If that happens, the next interesting question would be what exactly it is that brings things into this bad state, but let\u0027s think about it when we get there.",
+      "parentUuid": "4a9b2e3c_539de698",
+      "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
