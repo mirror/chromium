@@ -16,6 +16,24 @@
       "revId": "18de4a11e9abae3ce443bf98472c2841515c7b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1d2315_9a10f3d2",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T17:12:45Z",
+      "side": 1,
+      "message": "Done - thank you for your patience with explaining the above to me.",
+      "parentUuid": "4ad2372b_bf93333c",
+      "revId": "18de4a11e9abae3ce443bf98472c2841515c7b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

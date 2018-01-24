@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57637fa3_cf1df515",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T17:12:45Z",
+      "side": 1,
+      "message": "Hmmm... this seems to be inconsistent with how XSDB handles network errors.  I\u0027ve opened https://crbug.com/805503 to discuss.",
+      "range": {
+        "startLine": 528,
+        "startChar": 46,
+        "endLine": 528,
+        "endChar": 52
+      },
+      "revId": "f098c6e962d897588db2e99f9ab092243f678dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

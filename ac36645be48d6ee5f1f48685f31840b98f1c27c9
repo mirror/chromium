@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3964c400_6babca8a",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T17:12:45Z",
+      "side": 0,
+      "message": "In additional to the WPT coverage (which is great - it caught the XSDB bug), I think we also need XSDB browsertest coverage for the following scenarios:\n\n- XSDB should allow non-opaque service worker responses (this is somewhat redundant with the WPT test)\n\n- XSDB should block opaque service worker responses (this cannot be tested via layout tests, because blocking-in-the-browser is indistinguishable in layout tests from blocking-in-the-renderer)\n\n- XSDB should allow cross-origin network requests initiated by a service worker (this is something that could be possibly tested by WPT / layout test)\n\n- XSDB should block cross-origin network requests initiated by a service worker (as above, it seems impossible to test via WPT because of the blocking-in-the-browser VS blocking-in-the-renderer indistinguishability).\n\nI plan to work on the tests later this week.",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 129
+      },
+      "revId": "ac36645be48d6ee5f1f48685f31840b98f1c27c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
