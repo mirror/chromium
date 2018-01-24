@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6876b068_d5dd78be",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 11
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-24T18:15:29Z",
+      "side": 0,
+      "message": "I\u0027m rather confused about why the close-* tests have started passing. You haven\u0027t implemented the close() method yet, so what\u0027s giving us the `close` event?",
+      "revId": "6d8303f76f980f622295bf54a1bd01a153e6e670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9e0496c_4df4c5dc",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-24T18:15:29Z",
+      "side": 1,
+      "message": "++docs\n\nAlso please rename to OnConnectionErrorForNonPersistentNotifications or something -- now the name implies that it\u0027s called for connection errors that are non-persistent.",
+      "revId": "ddb5275bb127fd84a5a60065074a79b467346463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1092d850_fb1d2d5d",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-24T18:15:29Z",
+      "side": 1,
+      "message": "non_persistent_notification_listeners_?\n\nSame reason: the name now reads like it\u0027s listeners that are non-persistent.",
+      "revId": "ddb5275bb127fd84a5a60065074a79b467346463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3b47a3_1fbf594c",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-24T18:15:29Z",
+      "side": 1,
+      "message": "nit: drop the leading blink::, we\u0027re already in that namespace",
+      "revId": "ddb5275bb127fd84a5a60065074a79b467346463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe715272_b133c34d",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-24T18:15:29Z",
+      "side": 1,
+      "message": "Add documentation",
+      "revId": "ddb5275bb127fd84a5a60065074a79b467346463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
