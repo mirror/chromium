@@ -5,9 +5,11 @@
 #ifndef SamplingHeapProfiler_h
 #define SamplingHeapProfiler_h
 
+#include "WebCommon.h"
+
 namespace blink {
 
-class SamplingHeapProfiler {
+class BLINK_PLATFORM_EXPORT SamplingHeapProfiler {
  public:
   static SamplingHeapProfiler* GetInstance();
 

@@ -34,6 +34,10 @@ AtomicWord g_current_interval;
 AtomicWord g_sampling_interval = 128 * 1024;
 unsigned g_last_sample_ordinal = 0;
 
+inline bool HasBeenSampledFastCheck(void* address) {
+  return address && reinterpret_cast<unsigned*>(address)[-1] == kMagicSignature;
+}
+
 }  // namespace
 
 SamplingNativeHeapProfiler::Sample::Sample(size_t size,
@@ -102,10 +106,8 @@ void* SamplingNativeHeapProfiler::ReallocFn(const AllocatorDispatch* self,
   size_t accumulated;
   bool will_sample = ShouldRecordSample(size, &accumulated);
   char* client_address = reinterpret_cast<char*>(address);
-  if (UNLIKELY(address &&
-               reinterpret_cast<unsigned*>(address)[-1] == kMagicSignature)) {
+  if (UNLIKELY(HasBeenSampledFastCheck(address)))
     address = GetInstance()->RecordFree(address);
-  }
   intptr_t prev_offset = client_address - reinterpret_cast<char*>(address);
   bool was_sampled = prev_offset;
   if (LIKELY(!was_sampled && !will_sample))
@@ -127,10 +129,8 @@ void* SamplingNativeHeapProfiler::ReallocFn(const AllocatorDispatch* self,
 void SamplingNativeHeapProfiler::FreeFn(const AllocatorDispatch* self,
                                         void* address,
                                         void* context) {
-  if (UNLIKELY(address &&
-               reinterpret_cast<unsigned*>(address)[-1] == kMagicSignature)) {
+  if (UNLIKELY(HasBeenSampledFastCheck(address)))
     address = GetInstance()->RecordFree(address);
-  }
   self->next->free_function(self->next, address, context);
 }
 
@@ -139,9 +139,7 @@ size_t SamplingNativeHeapProfiler::GetSizeEstimateFn(
     const AllocatorDispatch* self,
     void* address,
     void* context) {
-  size_t ret =
-      self->next->get_size_estimate_function(self->next, address, context);
-  return ret;
+  return self->next->get_size_estimate_function(self->next, address, context);
 }
 
 // static
@@ -151,8 +149,17 @@ unsigned SamplingNativeHeapProfiler::BatchMallocFn(
     void** results,
     unsigned num_requested,
     void* context) {
-  CHECK(false) << "Not implemented.";
-  return 0;
+  unsigned num_allocated = self->next->batch_malloc_function(
+      self->next, size + kDefaultAlignment, results, num_requested, context);
+  for (unsigned i = 0; i < num_allocated; ++i) {
+    size_t accumulated;
+    if (UNLIKELY(ShouldRecordSample(size, &accumulated))) {
+      results[i] =
+          GetInstance()->RecordAlloc(accumulated, size, results[i],
+                                     kDefaultAlignment, kSkipAllocatorFrames);
+    }
+  }
+  return num_allocated;
 }
 
 // static
@@ -160,16 +167,27 @@ void SamplingNativeHeapProfiler::BatchFreeFn(const AllocatorDispatch* self,
                                              void** to_be_freed,
                                              unsigned num_to_be_freed,
                                              void* context) {
-  CHECK(false) << "Not implemented.";
+  for (unsigned i = 0; i < num_to_be_freed; ++i) {
+    if (UNLIKELY(HasBeenSampledFastCheck(to_be_freed[i])))
+      to_be_freed[i] = GetInstance()->RecordFree(to_be_freed[i]);
+  }
+  self->next->batch_free_function(self->next, to_be_freed, num_to_be_freed,
+                                  context);
 }
 
 // static
 void SamplingNativeHeapProfiler::FreeDefiniteSizeFn(
     const AllocatorDispatch* self,
-    void* ptr,
+    void* address,
     size_t size,
     void* context) {
-  CHECK(false) << "Not implemented.";
+  if (UNLIKELY(HasBeenSampledFastCheck(address))) {
+    void* client_address = address;
+    address = GetInstance()->RecordFree(address);
+    size += reinterpret_cast<uint8_t*>(client_address) -
+            reinterpret_cast<uint8_t*>(address);
+  }
+  self->next->free_definite_size_function(self->next, address, size, context);
 }
 
 AllocatorDispatch SamplingNativeHeapProfiler::allocator_dispatch_ = {
