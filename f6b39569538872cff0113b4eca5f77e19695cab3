@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4677c58_42f1fe6b",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 4118,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-24T17:39:33Z",
+      "side": 1,
+      "message": "Do I have to move the above line down here?",
+      "range": {
+        "startLine": 4118,
+        "startChar": 18,
+        "endLine": 4118,
+        "endChar": 0
+      },
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
