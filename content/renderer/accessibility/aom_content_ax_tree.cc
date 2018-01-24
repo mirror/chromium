@@ -4,10 +4,34 @@
 
 #include "content/renderer/accessibility/aom_content_ax_tree.h"
 
+#include <string>
+
 #include "content/common/ax_content_node_data.h"
 #include "content/renderer/accessibility/render_accessibility_impl.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
+
+namespace {
+
+ui::AXStringAttribute GetCorrespondingAXAttribute(
+    blink::AOMStringAttribute attr) {
+  switch (attr) {
+    case blink::AOMStringAttribute::AOM_ATTR_KEY_SHORTCUTS:
+      return ui::AXStringAttribute::AX_ATTR_KEY_SHORTCUTS;
+    case blink::AOMStringAttribute::AOM_ATTR_NAME:
+      return ui::AXStringAttribute::AX_ATTR_NAME;
+    case blink::AOMStringAttribute::AOM_ATTR_PLACEHOLDER:
+      return ui::AXStringAttribute::AX_ATTR_PLACEHOLDER;
+    case blink::AOMStringAttribute::AOM_ATTR_ROLE_DESCRIPTION:
+      return ui::AXStringAttribute::AX_ATTR_ROLE_DESCRIPTION;
+    case blink::AOMStringAttribute::AOM_ATTR_VALUE_TEXT:
+      return ui::AXStringAttribute::AX_ATTR_VALUE;
+    default:
+      return ui::AXStringAttribute::AX_STRING_ATTRIBUTE_NONE;
+  }
+}
+
+}  // namespace
 
 namespace content {
 
@@ -33,18 +57,27 @@ bool AomContentAxTree::ComputeAccessibilityTree() {
   return tree_.Unserialize(tree_update);
 }
 
-blink::WebString AomContentAxTree::GetNameForAXNode(int32_t axID) {
+blink::WebString AomContentAxTree::GetStringAttributeForAXNode(
+    int32_t axID,
+    blink::AOMStringAttribute attr) {
   ui::AXNode* node = tree_.GetFromId(axID);
-  return (node) ? blink::WebString::FromUTF8(
-                      node->data().GetStringAttribute(ui::AX_ATTR_NAME))
-                : blink::WebString();
-}
+  if (!node)
+    return blink::WebString();
 
-blink::WebString AomContentAxTree::GetRoleForAXNode(int32_t axID) {
-  ui::AXNode* node = tree_.GetFromId(axID);
-  // TODO(meredithl): Change to blink_ax_conversion.cc method once available.
-  return (node) ? blink::WebString::FromUTF8(ui::ToString(node->data().role))
-                : blink::WebString();
+  // The role is stored seperately inside AXNodeData, so we have to do a special
+  // case for this attribute.
+  if (attr == blink::AOMStringAttribute::AOM_ATTR_ROLE) {
+    // TODO(meredithl): Change to blink_ax_conversion.cc method once available.
+    return blink::WebString::FromUTF8(ui::ToString(node->data().role));
+  }
+
+  std::string out_string;
+  if (node->data().GetStringAttribute(GetCorrespondingAXAttribute(attr),
+                                      &out_string)) {
+    return blink::WebString::FromUTF8(out_string.c_str());
+  }
+
+  return blink::WebString();
 }
 
 }  // namespace content

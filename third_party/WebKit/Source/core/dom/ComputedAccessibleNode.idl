@@ -8,6 +8,10 @@
 [
     RuntimeEnabled=AccessibilityObjectModel
 ] interface ComputedAccessibleNode {
+    readonly attribute DOMString? keyShortcuts;
     readonly attribute DOMString? name;
+    readonly attribute DOMString? placeholder;
     readonly attribute DOMString? role;
+    readonly attribute DOMString? roleDescription;
+    readonly attribute DOMString? valueText;
 };
