@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb5240ee_6f431022",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "It was by mistake.",
+      "parentUuid": "ee3f7bdd_f20be632",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "674c31b9_2d24f62c",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d55a6aab_7fd222e9",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674c31b9_2d24f62c",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364b038c_9e5bb891",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "f3322882619f840d817b922041ee351627d46f37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac3590f_3c139a5a",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364b038c_9e5bb891",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "0caa1e8b_e12c56e9",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb42a8a_cd8c8194",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 13
+      },
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a62a4fd6_cb097ea5",
         "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
         "patchSetId": 7
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "0dceed05_996e4e66",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "Done.\nThe comment was wrong.",
+      "parentUuid": "a62a4fd6_cb097ea5",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 76
+      },
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35a5820_d0cdf23e",
         "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "f3322882619f840d817b922041ee351627d46f37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46f83d3_29554d23",
+        "filename": "ui/file_manager/integration_tests/file_manager/gear_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T02:12:35Z",
+      "side": 1,
+      "message": "Added a comment.\nIt tests that the command is enabled.",
+      "parentUuid": "f35a5820_d0cdf23e",
+      "revId": "f3322882619f840d817b922041ee351627d46f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
