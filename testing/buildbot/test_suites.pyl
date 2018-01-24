@@ -913,6 +913,7 @@
         '--skip=telemetry.internal.actions.action_runner_unittest.ActionRunnerTest.testWaitForElementWithWrongText',
         '--skip=telemetry.internal.actions.action_runner_unittest.ActionRunnerTest.testWaitForJavaScriptCondition',
         '--skip=telemetry.internal.actions.key_event_unittest.KeyPressActionTest.testPressEndAndHome',
+        '--skip=telemetry.internal.actions.scroll_unittest.ScrollActionTest.testWheelScrollDistanceWhileZoomed',
         '--skip=telemetry.page.page_run_end_to_end_unittest.ActualPageRunEndToEndTests.testTrafficSettings',
       ],
       'swarming': {
