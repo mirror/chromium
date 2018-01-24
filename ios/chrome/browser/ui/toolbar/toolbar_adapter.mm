@@ -165,7 +165,8 @@
 #pragma mark - VoiceSearchControllerDelegate
 
 - (void)receiveVoiceSearchResult:(NSString*)voiceResult {
-  [self.toolbarCoordinator receiveVoiceSearchResult:voiceResult];
+  [self.toolbarCoordinator.voiceSearchControllerDelegate
+      receiveVoiceSearchResult:voiceResult];
 }
 
 #pragma mark - ActivityServicePositioner
@@ -178,8 +179,9 @@
 
 - (void)receiveQRScannerResult:(NSString*)qrScannerResult
                loadImmediately:(BOOL)load {
-  [self.toolbarCoordinator receiveQRScannerResult:qrScannerResult
-                                  loadImmediately:load];
+  [self.toolbarCoordinator.QRScannerResultLoader
+      receiveQRScannerResult:qrScannerResult
+             loadImmediately:load];
 }
 
 #pragma mark - BubbleViewAnchorPointProvider
