@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc2e286_e17b875a",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T23:01:41Z",
+      "side": 1,
+      "message": "nit: remove this",
+      "revId": "51b4a6af24fedc40c1a9c3937292748bba2c019e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06e5fde_0d3a7bd6",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T23:01:41Z",
+      "side": 1,
+      "message": "same as with GetCollectionsInfo :)",
+      "revId": "51b4a6af24fedc40c1a9c3937292748bba2c019e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
