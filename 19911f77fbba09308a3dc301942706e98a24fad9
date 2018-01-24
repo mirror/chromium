@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0c05e8c_4902f2af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "VR needs it for now.",
+      "parentUuid": "12d2203d_53a1ec0e",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 32
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "314764f9_2763b71e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/VrModalPresenter.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14aab5d_2c8b2b32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/VrModalPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314764f9_2763b71e",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2b402747_acb1b46c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/VrModalPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd401174_7c487a1b",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4621efe0_65b52995",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a322c8_82a0786b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4621efe0_65b52995",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c2f70f91_32c6cef4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "ad9cb329_8435be60",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4dcfada_440dee01",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ac3bf4d4_f0ce565d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4dcfada_440dee01",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1808f4c8_6bec390e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 5
@@ -154,6 +298,24 @@
       "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdf80d4_6d3810b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1808f4c8_6bec390e",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "7f238b54_6f19b4b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f907a3_89ae8e5b",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22f031eb_3c0dcd19",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 5
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "eb531e21_18783735",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f031eb_3c0dcd19",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6523805f_e8cf8764",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -214,6 +424,30 @@
       "writtenOn": "2018-01-23T06:35:45Z",
       "side": 1,
       "message": "As discussed offline, we\u0027d need some way to have only one manager for clients to hold. If not on this CL, at least we need a clear path on how we are going to handle the effect of changing managers on clients.",
+      "range": {
+        "startLine": 862,
+        "startChar": 48,
+        "endLine": 862,
+        "endChar": 66
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e0f7de_a0ed6684",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "I filed a bug to track this. https://crbug.com/803492",
+      "parentUuid": "6523805f_e8cf8764",
       "range": {
         "startLine": 862,
         "startChar": 48,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "3818e686_d98f2cb4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30a8a1c6_291a6b3d",
+      "range": {
+        "startLine": 1488,
+        "startChar": 12,
+        "endLine": 1488,
+        "endChar": 25
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f8db94b_3d2fe745",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -260,6 +518,24 @@
       "writtenOn": "2018-01-22T22:19:56Z",
       "side": 1,
       "message": "I think we\u0027ll want to cache the previous one (before overriding it with the vr dialog manager) instead of creating a new one.\n\nFrom the offline discussion, I think we\u0027ll need a way to support not clobbering all of the dialogs when switching, but we can do that in a followup.",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e02ff16_6dd1d11d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "I stored the previous one and used it here. But I had to close all the dialogs for now. I\u0027ll fix this problem in follow up CLs.",
+      "parentUuid": "4f8db94b_3d2fe745",
       "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "f1682d57_5d9af29f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b570216f_0ea47766",
+      "range": {
+        "startLine": 1492,
+        "startChar": 12,
+        "endLine": 1496,
+        "endChar": 38
+      },
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb0eda2_e0ce57b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 5
@@ -303,6 +603,24 @@
       "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ac61a7_5eac0d38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-24T22:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb0eda2_e0ce57b3",
+      "revId": "19911f77fbba09308a3dc301942706e98a24fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
