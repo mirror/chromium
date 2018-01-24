@@ -14,6 +14,7 @@
 #include "base/process/kill.h"
 #include "base/process/launch.h"
 #include "base/process/process.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
@@ -31,6 +32,9 @@
 #endif
 
 namespace internal {
+
+class WaitForExitScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
 
 #if defined(OS_WIN)
 bool ExecProcess(const base::CommandLine& cmdline,
@@ -248,7 +252,11 @@ bool ExecProcess(const base::CommandLine& cmdline,
         }
 
         base::Process process(pid);
-        return process.WaitForExit(exit_code);
+        {
+          // TODO(fdoray): https://crbug.com/805628
+          WaitForExitScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+          return process.WaitForExit(exit_code);
+        }
       }
   }
 
@@ -257,4 +265,3 @@ bool ExecProcess(const base::CommandLine& cmdline,
 #endif
 
 }  // namespace internal
-

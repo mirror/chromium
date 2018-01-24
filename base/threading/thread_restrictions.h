@@ -65,6 +65,9 @@ class InFlightIO;
 namespace gpu {
 class GpuChannelHost;
 }
+namespace internal {
+class WaitForExitScopedAllowBaseSyncPrimitives;
+}
 namespace leveldb {
 class LevelDBMojoProxy;
 }
@@ -267,6 +270,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
   friend class base::GetAppOutputScopedAllowBaseSyncPrimitives;
   friend class content::SessionStorageDatabase;
+  friend class ::internal::WaitForExitScopedAllowBaseSyncPrimitives;
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
   friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
