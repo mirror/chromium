@@ -78,7 +78,7 @@ DOMFileSystem* DOMFileSystem::Create(ExecutionContext* context,
 DOMFileSystem* DOMFileSystem::CreateIsolatedFileSystem(
     ExecutionContext* context,
     const String& filesystem_id) {
-  if (filesystem_id.IsEmpty())
+  if (!context || filesystem_id.IsEmpty())
     return nullptr;
 
   StringBuilder filesystem_name;
@@ -138,7 +138,7 @@ void DOMFileSystem::ReportError(ErrorCallbackBase* error_callback,
 void DOMFileSystem::ReportError(ExecutionContext* execution_context,
                                 ErrorCallbackBase* error_callback,
                                 FileError::ErrorCode file_error) {
-  if (!error_callback)
+  if (!execution_context || !error_callback)
     return;
   ScheduleCallback(execution_context,
                    WTF::Bind(&ErrorCallbackBase::Invoke,
@@ -173,6 +173,9 @@ class ConvertToFileWriterCallback : public FileWriterBaseCallback {
 void DOMFileSystem::CreateWriter(const FileEntry* file_entry,
                                  FileWriterCallback* success_callback,
                                  ErrorCallbackBase* error_callback) {
+  if (!GetExecutionContext())
+    return;
+
   DCHECK(file_entry);
 
   if (!FileSystem()) {
@@ -194,6 +197,9 @@ void DOMFileSystem::CreateFile(
     const FileEntry* file_entry,
     SnapshotFileCallback::OnDidCreateSnapshotFileCallback* success_callback,
     ErrorCallbackBase* error_callback) {
+  if (!GetExecutionContext())
+    return;
+
   KURL file_system_url = CreateFileSystemURL(file_entry);
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
@@ -208,9 +214,7 @@ void DOMFileSystem::CreateFile(
 
 void DOMFileSystem::ScheduleCallback(ExecutionContext* execution_context,
                                      base::OnceClosure task) {
-  if (!execution_context)
-    return;
-
+  DCHECK(execution_context);
   DCHECK(execution_context->IsContextThread());
 
   std::unique_ptr<int> identifier = std::make_unique<int>(0);

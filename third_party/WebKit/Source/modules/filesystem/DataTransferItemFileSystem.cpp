@@ -50,6 +50,9 @@ namespace blink {
 // static
 Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
                                                     DataTransferItem& item) {
+  if (!script_state->ContextIsValid())
+    return nullptr;
+
   if (!item.GetDataObjectItem()->IsFilename())
     return nullptr;
 

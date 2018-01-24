@@ -213,6 +213,10 @@ void DOMFileSystemBase::GetMetadata(const EntryBase* entry,
                                     MetadataCallback* success_callback,
                                     ErrorCallbackBase* error_callback,
                                     SynchronousType synchronous_type) {
+  DCHECK(context_);
+  if (context_->IsContextDestroyed())
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -268,6 +272,9 @@ void DOMFileSystemBase::Move(
     EntryCallbacks::OnDidGetEntryCallback* success_callback,
     ErrorCallbackBase* error_callback,
     SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -298,6 +305,9 @@ void DOMFileSystemBase::Copy(
     EntryCallbacks::OnDidGetEntryCallback* success_callback,
     ErrorCallbackBase* error_callback,
     SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -325,6 +335,9 @@ void DOMFileSystemBase::Remove(const EntryBase* entry,
                                VoidCallback* success_callback,
                                ErrorCallbackBase* error_callback,
                                SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -348,6 +361,9 @@ void DOMFileSystemBase::RemoveRecursively(const EntryBase* entry,
                                           VoidCallback* success_callback,
                                           ErrorCallbackBase* error_callback,
                                           SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -373,6 +389,9 @@ void DOMFileSystemBase::GetParent(
     const EntryBase* entry,
     EntryCallbacks::OnDidGetEntryCallback* success_callback,
     ErrorCallbackBase* error_callback) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -394,6 +413,9 @@ void DOMFileSystemBase::GetFile(
     EntryCallbacks::OnDidGetEntryCallback* success_callback,
     ErrorCallbackBase* error_callback,
     SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -424,6 +446,9 @@ void DOMFileSystemBase::GetDirectory(
     EntryCallbacks::OnDidGetEntryCallback* success_callback,
     ErrorCallbackBase* error_callback,
     SynchronousType synchronous_type) {
+  if (!context_)
+    return;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return;
@@ -453,6 +478,9 @@ int DOMFileSystemBase::ReadDirectory(
     DirectoryReaderOnDidReadCallback* success_callback,
     ErrorCallbackBase* error_callback,
     SynchronousType synchronous_type) {
+  if (!context_)
+    return 0;
+
   if (!FileSystem()) {
     ReportError(error_callback, FileError::kAbortErr);
     return 0;
