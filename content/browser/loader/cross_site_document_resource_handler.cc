@@ -514,6 +514,27 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
       return false;
   }
 
+  // Requests from foo.example.com will consult foo.example.com's service worker
+  // first (if one has been registered).  The service worker can handle requests
+  // initiated by foo.example.com even if they are cross-origin (e.g. requests
+  // for bar.example.com).  This is okay and should not be blocked by XSDB,
+  // unless the initiator opted out of CORS / opted into receiving an opaque
+  // response.  See also https://crbug.com/803672.
+  if (response->head.was_fetched_via_service_worker) {
+    switch (response->head.response_type_via_service_worker) {
+      case network::mojom::FetchResponseType::kBasic:
+      case network::mojom::FetchResponseType::kCORS:
+      case network::mojom::FetchResponseType::kDefault:
+      case network::mojom::FetchResponseType::kError:
+        // Non-opaque responses shouldn't be blocked.
+        return false;
+      case network::mojom::FetchResponseType::kOpaque:
+      case network::mojom::FetchResponseType::kOpaqueRedirect:
+        // Opaque responses are eligible for blocking. Continue on...
+        break;
+    }
+  }
+
   // Look up MIME type.  Even if it doesn't claim to be a blockable type (i.e.,
   // HTML, XML, JSON, or plain text), it may still fail the checks during the
   // SniffForFetchOnlyResource() phase.
