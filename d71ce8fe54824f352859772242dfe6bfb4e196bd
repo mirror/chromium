@@ -22,6 +22,30 @@
       "revId": "d71ce8fe54824f352859772242dfe6bfb4e196bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487b15bd_9faa6209",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-24T01:51:12Z",
+      "side": 1,
+      "message": "The optimization was added in https://chromium.googlesource.com/chromium/src/+/9128fbd562becb4383b50fdf97795422935dc17b by hyatt@apple.com in 2008. There was no other details about it.\n\nWe have already removed the optimization from BoxPainter.\n\nWill create another CL to remove the optimization. Will perhaps include a performance test.",
+      "parentUuid": "d3f5e26d_a0e6a47d",
+      "range": {
+        "startLine": 379,
+        "startChar": 33,
+        "endLine": 379,
+        "endChar": 34
+      },
+      "revId": "d71ce8fe54824f352859772242dfe6bfb4e196bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
