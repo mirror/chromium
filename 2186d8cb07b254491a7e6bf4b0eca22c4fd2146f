@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "656009a1_2c38528f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "unittests",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73db0c0_c5f806d2",
+        "filename": "content/browser/renderer_host/input/fling_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "This is a bit scary. The null check for fling_booster_ is buried in the call to FlingCancellationIsDeferred.\n\nI\u0027d either prefer that we unfactor out FlingCancellationIsDeferred, or perhaps switch to having a method to get the last fling boost event.",
+      "range": {
+        "startLine": 346,
+        "startChar": 29,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91adc957_6ce074eb",
+        "filename": "content/browser/renderer_host/input/fling_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "Can we add some documentation to this file describing why we handle touch and wheel asymmetrically?\n\nThe fact that for touch we generate gesture, but for wheel we generate raw events is unintuitive at first.",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06aa97a9_787d2ca5",
+        "filename": "content/browser/renderer_host/input/fling_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "Maybe add \" of the current_fling_parameters_\".",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 12
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f2b938_6c81727e",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "Can we get a GFS that has a source device that isn\u0027t touch or touchpad?",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e43b77f_b0ab857b",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T16:38:53Z",
+      "side": 1,
+      "message": "cancel",
+      "range": {
+        "startLine": 1169,
+        "startChar": 22,
+        "endLine": 1169,
+        "endChar": 29
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
