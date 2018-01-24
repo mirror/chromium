@@ -18,6 +18,7 @@
 #include "content/public/common/origin_util.h"
 #include "net/http/http_byte_range.h"
 #include "net/http/http_util.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 

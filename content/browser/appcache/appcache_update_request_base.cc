@@ -7,6 +7,7 @@
 #include "content/browser/appcache/appcache_update_url_request.h"
 #include "content/public/common/content_features.h"
 #include "net/url_request/url_request_context.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 

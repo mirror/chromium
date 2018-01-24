@@ -21,7 +21,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/supports_user_data.h"
 #include "base/trace_event/trace_event.h"
-#include "content/public/common/content_features.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
@@ -29,6 +28,7 @@
 #include "net/nqe/network_quality_estimator.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
+#include "services/network/public/cpp/network_features.h"
 #include "url/scheme_host_port.h"
 
 namespace content {
