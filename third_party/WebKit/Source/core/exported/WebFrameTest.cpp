@@ -10898,7 +10898,8 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentLoadFinishTime) {
   DocumentLoader* loader = document->Loader();
 
   EXPECT_TRUE(loader);
-  EXPECT_EQ(loader->GetTiming().ResponseEnd(), resource->LoadFinishTime());
+  EXPECT_EQ(TimeTicksInSeconds(loader->GetTiming().ResponseEnd()),
+            resource->LoadFinishTime());
 }
 
 class CallbackOrderingWebFrameClient
