@@ -61,7 +61,7 @@ class TimeZoneMonitor;
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    GeolocationProvider::RequestContextProducer
+    GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const WakeLockContextCallback& wake_lock_context_callback,
@@ -71,7 +71,7 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    GeolocationProvider::RequestContextProducer
+    GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const CustomLocationProviderCallback& custom_location_provider_callback);
@@ -82,7 +82,7 @@ class DeviceService : public service_manager::Service {
 #if defined(OS_ANDROID)
   DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
                 scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-                GeolocationProvider::RequestContextProducer
+                GeolocationProviderImpl::RequestContextProducer
                     geolocation_request_context_producer,
                 const std::string& geolocation_api_key,
                 const WakeLockContextCallback& wake_lock_context_callback,
@@ -90,7 +90,7 @@ class DeviceService : public service_manager::Service {
 #else
   DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
                 scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-                GeolocationProvider::RequestContextProducer
+                GeolocationProviderImpl::RequestContextProducer
                     geolocation_request_context_producer,
                 const std::string& geolocation_api_key);
 #endif
@@ -146,7 +146,7 @@ class DeviceService : public service_manager::Service {
   scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
-  GeolocationProvider::RequestContextProducer
+  GeolocationProviderImpl::RequestContextProducer
       geolocation_request_context_producer_;
   const std::string geolocation_api_key_;
   WakeLockContextCallback wake_lock_context_callback_;

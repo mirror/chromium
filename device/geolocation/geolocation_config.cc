@@ -22,7 +22,7 @@ void GeolocationConfig::Create(mojom::GeolocationConfigRequest request) {
 void GeolocationConfig::IsHighAccuracyLocationBeingCaptured(
     IsHighAccuracyLocationBeingCapturedCallback callback) {
   std::move(callback).Run(
-      GeolocationProvider::GetInstance()->HighAccuracyLocationInUse());
+      GeolocationProviderImpl::GetInstance()->HighAccuracyLocationInUse());
 }
 
 }  // namespace device

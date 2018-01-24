@@ -49,12 +49,15 @@ namespace device {
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const GeolocationProvider::RequestContextProducer
+    const GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const WakeLockContextCallback& wake_lock_context_callback,
     const CustomLocationProviderCallback& custom_location_provider_callback,
     const base::android::JavaRef<jobject>& java_nfc_delegate) {
+  GeolocationProviderImpl::SetRequestContextProducer(
+      geolocation_request_context_producer);
+  GeolocationProviderImpl::SetApiKey(geolocation_api_key);
   GeolocationProviderImpl::SetCustomLocationProviderCallback(
       custom_location_provider_callback);
   return std::make_unique<DeviceService>(
@@ -66,10 +69,13 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
 std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const GeolocationProvider::RequestContextProducer
+    const GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const CustomLocationProviderCallback& custom_location_provider_callback) {
+  GeolocationProviderImpl::SetRequestContextProducer(
+      geolocation_request_context_producer);
+  GeolocationProviderImpl::SetApiKey(geolocation_api_key);
   GeolocationProviderImpl::SetCustomLocationProviderCallback(
       custom_location_provider_callback);
   return std::make_unique<DeviceService>(
@@ -82,7 +88,7 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
 DeviceService::DeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const GeolocationProvider::RequestContextProducer
+    const GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const WakeLockContextCallback& wake_lock_context_callback,
@@ -100,7 +106,7 @@ DeviceService::DeviceService(
 DeviceService::DeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-    const GeolocationProvider::RequestContextProducer
+    const GeolocationProviderImpl::RequestContextProducer
         geolocation_request_context_producer,
     const std::string& geolocation_api_key)
     : file_task_runner_(std::move(file_task_runner)),
