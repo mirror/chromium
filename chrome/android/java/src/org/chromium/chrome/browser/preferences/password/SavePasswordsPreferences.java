@@ -6,6 +6,9 @@ package org.chromium.chrome.browser.preferences.password;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -14,14 +17,17 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -34,6 +40,8 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.util.Locale;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -79,10 +87,12 @@ public class SavePasswordsPreferences
     // True if the option to export passwords in the three-dots menu should be disabled due to an
     // ongoing export.
     private boolean mExportOptionSuspended = false;
+    private String mSearchQuery;
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
     private TextMessagePreference mEmptyView;
+    private Menu mMenuForTesting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,10 +100,7 @@ public class SavePasswordsPreferences
         getActivity().setTitle(R.string.prefs_saved_passwords);
         setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
         PasswordManagerHandlerProvider.getInstance().addObserver(this);
-        if (ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
-                && ReauthenticationManager.isReauthenticationApiAvailable()) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(providesPasswordExport() || providesPasswordSearch());
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
             mExportRequested =
@@ -104,8 +111,51 @@ public class SavePasswordsPreferences
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
+        mMenuForTesting = menu;
         inflater.inflate(R.menu.save_password_preferences_action_bar_menu, menu);
+        menu.findItem(R.id.export_passwords).setVisible(providesPasswordExport());
         menu.findItem(R.id.export_passwords).setEnabled(false);
+        MenuItem searchItem = menu.findItem(R.id.menu_id_search);
+        searchItem.setVisible(providesPasswordSearch());
+        if (providesPasswordSearch()) {
+            setUpSearchAction(searchItem);
+        }
+    }
+
+    /**
+     * Prepares the searchItem's icon and searchView. Sets up listeners to clicks and interactions
+     * with the searchItem or its searchView.
+     * @param searchItem the item containing the SearchView. Must not be null.
+     */
+    private void setUpSearchAction(MenuItem searchItem) {
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+        searchItem.setIcon(convertToPlainWhite(searchItem.getIcon()));
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                filterPasswords(""); // Hide other menu elements.
+                return true; // Continue expanding.
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                filterPasswords(null); // Reset filter to bring back all preferences.
+                return true; // Continue collapsing.
+            }
+        });
+        searchView.setOnSearchClickListener(view -> filterPasswords(""));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true; // Continue with default action - nothing.
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return filterPasswords(query);
+            }
+        });
     }
 
     @Override
@@ -178,6 +228,12 @@ public class SavePasswordsPreferences
     private void exportAfterWarning() {
         // TODO(crbug.com/788701): Synchronise with obtaining serialised passwords and pass them to
         // the intent.
+    }
+
+    private boolean filterPasswords(String query) {
+        mSearchQuery = query;
+        rebuildPasswordLists();
+        return false; // Query has been handled. Don't trigger default action of SearchView.
     }
 
     /**
@@ -253,10 +309,13 @@ public class SavePasswordsPreferences
             SavedPasswordEntry saved = PasswordManagerHandlerProvider.getInstance()
                                                .getPasswordManagerHandler()
                                                .getSavedPasswordEntry(i);
-            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             String url = saved.getUrl();
             String name = saved.getUserName();
             String password = saved.getPassword();
+            if (shouldBeFiltered(url, name)) {
+                continue; // The current password won't show with the active filter, try the next.
+            }
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             screen.setTitle(url);
             screen.setOnPreferenceClickListener(this);
             screen.setSummary(name);
@@ -267,10 +326,32 @@ public class SavePasswordsPreferences
             args.putInt(PASSWORD_LIST_ID, i);
             profileCategory.addPreference(screen);
         }
+        mNoPasswords = profileCategory.getPreferenceCount() == 0;
+        if (mNoPasswords) {
+            displayManageAccountLink(); // Maybe the password is just not on the device.
+            displayEmptyScreenMessage();
+        }
+    }
+
+    /**
+     * Returns true if there is a search query that requires the exclusion of an entry based on
+     * the passed url or name.
+     * @param url the visible URL of the entry to check. May be empty but must not be null.
+     * @param name the visible user name of the entry to check. May be empty but must not be null.
+     * @return Returns whether the entry with the passed url and name should be filtered.
+     */
+    private boolean shouldBeFiltered(final String url, final String name) {
+        if (mSearchQuery == null) {
+            return false;
+        }
+        return !url.toLowerCase(Locale.ENGLISH).contains(mSearchQuery.toLowerCase(Locale.ENGLISH))
+                && !name.toLowerCase(Locale.getDefault())
+                            .contains(mSearchQuery.toLowerCase(Locale.getDefault()));
     }
 
     @Override
     public void passwordExceptionListAvailable(int count) {
+        if (mSearchQuery != null) return; // Don't show exceptions if a search is ongoing.
         resetList(PREF_KEY_CATEGORY_EXCEPTIONS);
         resetNoEntriesTextMessage();
 
@@ -351,7 +432,23 @@ public class SavePasswordsPreferences
         return true;
     }
 
+    /**
+     * Convert a given icon to a plain white version by applying the MATRIX_TRANSFORM_TO_WHITE color
+     * filter. The resulting drawable will be brighter than a usual grayscale conversion.
+     *
+     * For grayscale conversion, use the function ColorMatrix#setSaturation(0) instead.
+     * @param icon The drawable to be converted.
+     * @return Returns the bright white version of the passed drawable.
+     */
+    private static Drawable convertToPlainWhite(Drawable icon) {
+        icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        return icon;
+    }
+
     private void createSavePasswordsSwitch() {
+        if (mSearchQuery != null) {
+            return; // Don't create this option when the preferences are filtered for passwords.
+        }
         mSavePasswordsSwitch = new ChromeSwitchPreference(getActivity(), null);
         mSavePasswordsSwitch.setKey(PREF_SAVE_PASSWORDS_SWITCH);
         mSavePasswordsSwitch.setTitle(R.string.prefs_saved_passwords);
@@ -382,6 +479,9 @@ public class SavePasswordsPreferences
     }
 
     private void createAutoSignInCheckbox() {
+        if (mSearchQuery != null) {
+            return; // Don't create this option when the preferences are filtered for passwords.
+        }
         mAutoSignInSwitch = new ChromeBaseCheckBoxPreference(getActivity(), null);
         mAutoSignInSwitch.setKey(PREF_AUTOSIGNIN_SWITCH);
         mAutoSignInSwitch.setTitle(R.string.passwords_auto_signin_title);
@@ -407,20 +507,48 @@ public class SavePasswordsPreferences
     }
 
     private void displayManageAccountLink() {
-        if (getPreferenceScreen().findPreference(PREF_KEY_MANAGE_ACCOUNT_LINK) == null) {
-            if (mLinkPref == null) {
-                ForegroundColorSpan colorSpan = new ForegroundColorSpan(
-                        ApiCompatibilityUtils.getColor(getResources(), R.color.google_blue_700));
-                SpannableString title = SpanApplier.applySpans(
-                        getString(R.string.manage_passwords_text),
-                        new SpanApplier.SpanInfo("<link>", "</link>", colorSpan));
-                mLinkPref = new ChromeBasePreference(getActivity());
-                mLinkPref.setKey(PREF_KEY_MANAGE_ACCOUNT_LINK);
-                mLinkPref.setTitle(title);
-                mLinkPref.setOnPreferenceClickListener(this);
-                mLinkPref.setOrder(ORDER_MANAGE_ACCOUNT_LINK);
-            }
-            getPreferenceScreen().addPreference(mLinkPref);
+        if (mSearchQuery != null && !mNoPasswords) {
+            return; // Don't add the Manage Account link if there is a search going on.
         }
+        if (getPreferenceScreen().findPreference(PREF_KEY_MANAGE_ACCOUNT_LINK) != null) {
+            return; // Don't add the Manage Account link if it's present.
+        }
+        if (mLinkPref != null) {
+            // If we created the link before, reuse it.
+            getPreferenceScreen().addPreference(mLinkPref);
+            return;
+        }
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(
+                ApiCompatibilityUtils.getColor(getResources(), R.color.google_blue_700));
+        SpannableString title = SpanApplier.applySpans(getString(R.string.manage_passwords_text),
+                new SpanApplier.SpanInfo("<link>", "</link>", colorSpan));
+        mLinkPref = new ChromeBasePreference(getActivity());
+        mLinkPref.setKey(PREF_KEY_MANAGE_ACCOUNT_LINK);
+        mLinkPref.setTitle(title);
+        mLinkPref.setOnPreferenceClickListener(this);
+        mLinkPref.setOrder(ORDER_MANAGE_ACCOUNT_LINK);
+        getPreferenceScreen().addPreference(mLinkPref);
+    }
+
+    /**
+     * Returns whether the password export feature is ready to use.
+     * @return Returns true if the flag is set and the Reauthentication Api is available.
+     */
+    private boolean providesPasswordExport() {
+        return ChromeFeatureList.isEnabled(EXPORT_PASSWORDS)
+                && ReauthenticationManager.isReauthenticationApiAvailable();
+    }
+
+    /**
+     * Returns whether the password search feature is ready to use.
+     * @return Returns true if the flag is set.
+     */
+    private boolean providesPasswordSearch() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.PASSWORD_SEARCH);
+    }
+
+    @VisibleForTesting
+    Menu getMenuForTesting() {
+        return mMenuForTesting;
     }
 }

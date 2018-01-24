@@ -4,13 +4,18 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -18,12 +23,16 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.filters.SmallTest;
+import android.support.test.rule.ActivityTestRule;
+import android.view.MenuItem;
 import android.view.View;
 
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,6 +44,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
@@ -42,9 +52,11 @@ import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesTest;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Tests for the "Save Passwords" settings screen.
@@ -57,6 +69,10 @@ public class SavePasswordsPreferencesTest {
     @Rule
     public TestRule mProcessor = new Features.InstrumentationProcessor();
 
+    @Rule
+    final public ActivityTestRule<Preferences> mActivityTestRule =
+            new ActivityTestRule<>(Preferences.class);
+
     private static final class FakePasswordManagerHandler implements PasswordManagerHandler {
         // This class has exactly one observer, set on construction and expected to last at least as
         // long as this object (a good candidate is the owner of this object).
@@ -65,11 +81,18 @@ public class SavePasswordsPreferencesTest {
         // The faked contents of the password store to be displayed.
         private ArrayList<SavedPasswordEntry> mSavedPasswords = new ArrayList<SavedPasswordEntry>();
 
+        // The faked contents of the saves password exceptions to be displayed.
+        private ArrayList<String> mSavedPasswordExeptions = new ArrayList<>();
+
         // This is set to true when serializePasswords is called.
         private boolean mSerializePasswordsCalled;
 
         public void setSavedPasswords(ArrayList<SavedPasswordEntry> savedPasswords) {
             mSavedPasswords = savedPasswords;
+        }
+
+        public void setSavedPasswordExceptions(ArrayList<String> savedPasswordExceptions) {
+            mSavedPasswordExeptions = savedPasswordExceptions;
         }
 
         public boolean getSerializePasswordsCalled() {
@@ -89,6 +112,7 @@ public class SavePasswordsPreferencesTest {
         @Override
         public void updatePasswordLists() {
             mObserver.passwordListAvailable(mSavedPasswords.size());
+            mObserver.passwordExceptionListAvailable(mSavedPasswordExeptions.size());
         }
 
         @Override
@@ -98,9 +122,7 @@ public class SavePasswordsPreferencesTest {
 
         @Override
         public String getSavedPasswordException(int index) {
-            // Define this method before starting to use it in tests.
-            assert false;
-            return null;
+            return mSavedPasswordExeptions.get(index);
         }
 
         @Override
@@ -123,6 +145,20 @@ public class SavePasswordsPreferencesTest {
         }
     }
 
+    private final static SavedPasswordEntry ZEUS_ON_EARTH =
+            new SavedPasswordEntry("http://www.phoenicia.gr", "Zeus", "Europa");
+    private final static SavedPasswordEntry ARES_AT_OLYMP =
+            new SavedPasswordEntry("https://1-of-12.olymp.gr", "Ares", "God-o'w@r");
+    private final static SavedPasswordEntry PHOBOS_AT_OLYMP =
+            new SavedPasswordEntry("https://visitor.olymp.gr", "Phobos-son-of-ares", "G0d0fF34r");
+    private final static SavedPasswordEntry DEIMOS_AT_OLYMP =
+            new SavedPasswordEntry("https://visitor.olymp.gr", "Deimops-Ares-son", "G0d0fT3rr0r");
+    private final static SavedPasswordEntry HADES_AT_UNDERWORLD =
+            new SavedPasswordEntry("https://underworld.gr", "", "C3rb3rus");
+    private final static SavedPasswordEntry[] GREEK_GODS = {
+            ZEUS_ON_EARTH, ARES_AT_OLYMP, PHOBOS_AT_OLYMP, DEIMOS_AT_OLYMP, HADES_AT_UNDERWORLD,
+    };
+
     // Used to provide fake lists of stored passwords. Tests which need it can use setPasswordSource
     // to instantiate it.
     FakePasswordManagerHandler mHandler;
@@ -132,19 +168,60 @@ public class SavePasswordsPreferencesTest {
      * @param entry An entry to be added to saved passwords. Can be null.
      */
     private void setPasswordSource(SavedPasswordEntry entry) throws Exception {
+        SavedPasswordEntry[] entries = {};
+        if (entry != null) {
+            entries = new SavedPasswordEntry[] {entry};
+        }
+        setPasswordSourceWithMultipleEntries(entries);
+    }
+
+    /**
+     * Helper to set up a fake source of displayed passwords with multiple initial passwords.
+     * @param initialEntries All entries to be added to saved passwords. Can not be null.
+     */
+    private void setPasswordSourceWithMultipleEntries(SavedPasswordEntry[] initialEntries)
+            throws Exception {
         if (mHandler == null) {
             mHandler = new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
         }
-        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
-        if (entry != null) entries.add(entry);
+        ArrayList<SavedPasswordEntry> entries = new ArrayList<>(Arrays.asList(initialEntries));
         mHandler.setSavedPasswords(entries);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
-                        mHandler);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                ()
+                        -> PasswordManagerHandlerProvider.getInstance()
+                                   .setPasswordManagerHandlerForTest(mHandler));
+    }
+
+    /**
+     * Helper to set up a fake source of displayed passwords without passwords but with exceptions.
+     * @param exceptions All exceptions to be added to saved exceptions. Can not be null.
+     */
+    private void setPasswordExceptions(String[] exceptions) throws Exception {
+        if (mHandler == null) {
+            mHandler = new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        }
+        mHandler.setSavedPasswordExceptions(new ArrayList<>(Arrays.asList(exceptions)));
+        ThreadUtils.runOnUiThreadBlocking(
+                ()
+                        -> PasswordManagerHandlerProvider.getInstance()
+                                   .setPasswordManagerHandlerForTest(mHandler));
+    }
+
+    /**
+     * Looks for the search icon by id. If it cannot be found, it's probably hidden in the overflow
+     * menu. In that case, open the menu and search for its title.
+     * @return Returns either the search icon button or the search menu option.
+     */
+    public static Matcher<View> withSearchMenuIdOrText() {
+        Matcher<View> matcher = withId(R.id.menu_id_search);
+        try {
+            Espresso.onView(matcher).check(matches(isDisplayed()));
+            return matcher;
+        } catch (Exception NoMatchingViewException) {
+            openActionBarOverflowOrOptionsMenu(
+                    InstrumentationRegistry.getInstrumentation().getTargetContext());
+            return withText(R.string.search);
+        }
     }
 
     /**
@@ -301,7 +378,7 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // The text matches a text view, but the disabled entity is some wrapper two levels up in
         // the view hierarchy, hence the two withParent matchers.
@@ -326,7 +403,7 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // The text matches a text view, but the potentially disabled entity is some wrapper two
         // levels up in the view hierarchy, hence the two withParent matchers.
@@ -378,7 +455,7 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // Before tapping the menu item for export, pretend that the last successful
         // reauthentication just happened. This will allow the export flow to continue.
@@ -408,7 +485,7 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // Before tapping the menu item for export, pretend that the last successful
         // reauthentication just happened. This will allow the export flow to continue.
@@ -439,7 +516,7 @@ public class SavePasswordsPreferencesTest {
                         SavePasswordsPreferences.class.getName());
 
         View mainDecorView = preferences.getWindow().getDecorView();
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
                 .perform(click());
@@ -467,11 +544,11 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
                 .perform(click());
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // The text matches a text view, but the potentially disabled entity is some wrapper two
         // levels up in the view hierarchy, hence the two withParent matchers.
@@ -498,7 +575,7 @@ public class SavePasswordsPreferencesTest {
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
                 .perform(click());
@@ -510,7 +587,7 @@ public class SavePasswordsPreferencesTest {
                 preferences.getFragmentForTest().onResume();
             }
         });
-        Espresso.openActionBarOverflowOrOptionsMenu(
+        openActionBarOverflowOrOptionsMenu(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         // The text matches a text view, but the potentially disabled entity is some wrapper two
         // levels up in the view hierarchy, hence the two withParent matchers.
@@ -571,5 +648,301 @@ public class SavePasswordsPreferencesTest {
         Espresso.onView(withContentDescription(R.string.password_entry_editor_view_stored_password))
                 .perform(click());
         Espresso.onView(withText("test password")).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is visible if the Feature is enabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    @SuppressWarnings("AlwaysShowAction") // We need to ensure the icon is in the action bar.
+    public void testSearchIconVisibleInActionBarWithFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        SavePasswordsPreferences f =
+                (SavePasswordsPreferences) PreferencesTest
+                        .startPreferences(InstrumentationRegistry.getInstrumentation(),
+                                SavePasswordsPreferences.class.getName())
+                        .getFragmentForTest();
+
+        // Force the search option into the action bar.
+        ThreadUtils.runOnUiThreadBlocking(
+                ()
+                        -> f.getMenuForTesting()
+                                   .findItem(R.id.menu_id_search)
+                                   .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS));
+
+        Espresso.onView(withId(R.id.menu_id_search)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is visible if the Feature is enabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchTextInOverflowMenuVisibleWithFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        SavePasswordsPreferences f =
+                (SavePasswordsPreferences) PreferencesTest
+                        .startPreferences(InstrumentationRegistry.getInstrumentation(),
+                                SavePasswordsPreferences.class.getName())
+                        .getFragmentForTest();
+
+        // Force the search option into the overflow menu.
+        ThreadUtils.runOnUiThreadBlocking(
+                ()
+                        -> f.getMenuForTesting()
+                                   .findItem(R.id.menu_id_search)
+                                   .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER));
+
+        // Open the overflow menu.
+        openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+
+        Espresso.onView(withText(R.string.search)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the search item is not visible if the Feature is disabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @DisableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconGoneWithoutFeature() throws Exception {
+        setPasswordSource(null); // Initialize empty preferences.
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withSearchMenuIdOrText()).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search filters the list by name.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchFiltersByUserName() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Search for a string matching multiple user names. Case doesn't need to match.
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("aREs"), closeSoftKeyboard());
+
+        Espresso.onView(withText(ARES_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(PHOBOS_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(DEIMOS_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(HADES_AT_UNDERWORLD.getUrl())).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search filters the list by URL.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchFiltersByUrl() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Search for a string that matches multiple URLs. Case doesn't need to match.
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("Olymp"), closeSoftKeyboard());
+
+        Espresso.onView(withText(ARES_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(PHOBOS_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(DEIMOS_AT_OLYMP.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(HADES_AT_UNDERWORLD.getUrl())).check(doesNotExist());
+    }
+
+    /**
+     * Check that the search filters the list by URL.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchDisplaysAccountLinkIfSearchTurnsUpEmpty() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Open the search which should hide the Account link.
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        // Search for a string that matches nothing which should bring the Account link back.
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("Mars"), closeSoftKeyboard());
+
+        for (SavedPasswordEntry god : GREEK_GODS) {
+            Espresso.onView(allOf(withText(god.getUserName()), withText(god.getUrl())))
+                    .check(doesNotExist());
+        }
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that triggering the search hides all non-password prefs.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedHidesExceptionsTemporarily() throws Exception {
+        setPasswordExceptions(new String[] {"http://exclu.de", "http://not-inclu.de"});
+        final SavePasswordsPreferences savePasswordPreferences =
+                (SavePasswordsPreferences) PreferencesTest
+                        .startPreferences(InstrumentationRegistry.getInstrumentation(),
+                                SavePasswordsPreferences.class.getName())
+                        .getFragmentForTest();
+
+        Espresso.onView(withText(R.string.section_saved_passwords_exceptions)).perform(scrollTo());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        Espresso.onView(withText(R.string.section_saved_passwords_exceptions))
+                .check(matches(isDisplayed()));
+
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+
+        Espresso.onView(withText(R.string.section_saved_passwords_exceptions))
+                .check(doesNotExist());
+
+        Espresso.pressBack(); // Close keyboard.
+        Espresso.pressBack(); // Close search view.
+
+        Espresso.onView(withText(R.string.section_saved_passwords_exceptions)).perform(scrollTo());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        Espresso.onView(withText(R.string.section_saved_passwords_exceptions))
+                .check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that triggering the search hides all non-password prefs.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchIconClickedHidesGeneralPrefs() throws Exception {
+        setPasswordSource(ZEUS_ON_EARTH);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+    }
+
+    /**
+     * Check that closing the search via back button brings back all non-password prefs.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackButtonBringsBackGeneralPrefs() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.pressBack(); // Close keyboard.
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        Espresso.onView(withContentDescription("Collapse")).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that closing the search via back button brings back all non-password prefs.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchBarBackKeyBringsBackGeneralPrefs() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(startsWith("View and manage"))).check(doesNotExist());
+
+        Espresso.pressBack(); // Close keyboard.
+        Espresso.pressBack(); // Close search view.
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title))
+                .check(matches(isDisplayed()));
+        Espresso.onView(withText(startsWith("View and manage"))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that the filtered password list persists after the user had inspected a single result.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures(ChromeFeatureList.PASSWORD_SEARCH)
+    public void testSearchResultsPersistAfterEntryInspection() throws Exception {
+        setPasswordSourceWithMultipleEntries(GREEK_GODS);
+        setPasswordExceptions(new String[] {"http://exclu.de", "http://not-inclu.de"});
+        PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                SavePasswordsPreferences.class.getName());
+
+        // Open the search and filter all but "Zeus".
+        Espresso.onView(withSearchMenuIdOrText()).perform(click());
+        Espresso.onView(withId(R.id.search_src_text))
+                .perform(click(), typeText("Zeu"), closeSoftKeyboard());
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(PHOBOS_AT_OLYMP.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(HADES_AT_UNDERWORLD.getUrl())).check(doesNotExist());
+
+        // Click "Zeus" to open edit field and verify the password.
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).perform(click());
+        // Before tapping the view button, pretend that the last successful reauthentication just
+        // happened.
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setLastReauthTimeMillis(System.currentTimeMillis());
+        Espresso.onView(withId(R.id.password_entry_editor_view_password)).perform(click());
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Espresso.onView(withText(ZEUS_ON_EARTH.getPassword())).check(matches(isDisplayed()));
+        Espresso.pressBack(); // Go back to the search list.
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        Espresso.onView(withText(R.string.passwords_auto_signin_title)).check(doesNotExist());
+        Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(matches(isDisplayed()));
+        Espresso.onView(withText(PHOBOS_AT_OLYMP.getUserName())).check(doesNotExist());
+        Espresso.onView(withText(HADES_AT_UNDERWORLD.getUrl())).check(doesNotExist());
     }
 }
