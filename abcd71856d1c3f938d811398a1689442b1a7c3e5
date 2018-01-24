@@ -94,6 +94,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fedb99_10d2070d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-24T17:55:36Z",
+      "side": 1,
+      "message": "I added the callback idea to the other review.\n\nI don\u0027t like the idea of command-line being lazily initialized, because that means blocking IO at points where you\u0027re not expecting it, and the \"work-around\" is that you check every flag using a background thread (super annoying).\n\nWe currently check for --startup-tracing right in ChromeApplication, which I can\u0027t see a good way around.\n\nAgree that we should warm prefs earlier than we do now though, but hopefully we can do so via a background thread rather than blocking.",
+      "parentUuid": "61c68136_448f24da",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
