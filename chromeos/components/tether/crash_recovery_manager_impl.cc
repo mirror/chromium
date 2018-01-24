@@ -48,7 +48,7 @@ CrashRecoveryManagerImpl::Factory::BuildInstance(
     NetworkStateHandler* network_state_handler,
     ActiveHost* active_host,
     HostScanCache* host_scan_cache) {
-  return std::make_unique<CrashRecoveryManagerImpl>(
+  return CrashRecoveryManagerImpl::Factory::NewInstance(
       network_state_handler, active_host, host_scan_cache);
 }
 

@@ -41,7 +41,7 @@ class ErrorTolerantBleAdvertisementImplTest : public testing::Test {
 
     fake_synchronizer_ = std::make_unique<FakeBleSynchronizer>();
 
-    advertisement_ = std::make_unique<ErrorTolerantBleAdvertisementImpl>(
+    advertisement_ = ErrorTolerantBleAdvertisementImpl::Factory::NewInstance(
         kDeviceId,
         std::make_unique<cryptauth::DataWithTimestamp>(
             *fake_advertisement_data_),

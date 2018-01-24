@@ -42,8 +42,8 @@ std::unique_ptr<DisconnectTetheringOperation>
 DisconnectTetheringOperation::Factory::BuildInstance(
     const cryptauth::RemoteDevice& device_to_connect,
     BleConnectionManager* connection_manager) {
-  return std::make_unique<DisconnectTetheringOperation>(device_to_connect,
-                                                        connection_manager);
+  return DisconnectTetheringOperation::Factory::NewInstance(device_to_connect,
+                                                            connection_manager);
 }
 
 DisconnectTetheringOperation::DisconnectTetheringOperation(

@@ -60,7 +60,7 @@ class CrashRecoveryManagerImplTest : public NetworkStateTest {
     fake_active_host_ = std::make_unique<FakeActiveHost>();
     fake_host_scan_cache_ = std::make_unique<FakeHostScanCache>();
 
-    crash_recovery_manager_ = std::make_unique<CrashRecoveryManagerImpl>(
+    crash_recovery_manager_ = CrashRecoveryManagerImpl::Factory::NewInstance(
         network_state_handler(), fake_active_host_.get(),
         fake_host_scan_cache_.get());
 

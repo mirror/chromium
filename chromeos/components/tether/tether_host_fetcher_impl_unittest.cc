@@ -56,7 +56,7 @@ class TetherHostFetcherImplTest : public testing::Test {
         std::make_unique<cryptauth::FakeRemoteDeviceProvider>();
     fake_remote_device_provider_->set_synced_remote_devices(test_devices_);
 
-    tether_host_fetcher_ = std::make_unique<TetherHostFetcherImpl>(
+    tether_host_fetcher_ = TetherHostFetcherImpl::Factory::NewInstance(
         fake_remote_device_provider_.get());
 
     test_observer_ = std::make_unique<TestObserver>();
