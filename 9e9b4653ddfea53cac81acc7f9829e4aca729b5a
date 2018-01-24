@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25a7b2a9_2a64c8ef",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-24T22:22:51Z",
+      "side": 1,
+      "message": "Comment needs update: neither GLES nor GL supports the\nhypothetical:\ninternal format: GL_RGB10\npixel/data format: GL_RGB\npixel/data type: UNSIGNED_INT_10_10_10_REV (doesn\u0027t exist)",
+      "parentUuid": "880976c9_33511168",
+      "revId": "9e9b4653ddfea53cac81acc7f9829e4aca729b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55d4967_3ef0a2b4",
         "filename": "ui/gl/gl_image_memory.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T17:34:52Z",
       "side": 1,
       "message": "Won\u0027t this be always Invalid Format?",
+      "revId": "9e9b4653ddfea53cac81acc7f9829e4aca729b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "453be92e_05679237",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-24T22:22:51Z",
+      "side": 1,
+      "message": "It might be any of the formats in l.366-368: \"YVU_420\" etc,\nbut could also just be \"invalid\".",
+      "parentUuid": "e55d4967_3ef0a2b4",
       "revId": "9e9b4653ddfea53cac81acc7f9829e4aca729b5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
