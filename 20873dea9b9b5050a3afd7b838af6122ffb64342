@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a9278a_c3588e93",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7021,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "I got a little confused reading this test and the one below it because I missed that kDynamicInterstitialCert was in this last, so I was confused how we ended up matching this one. Maybe you could add a comment above each DynamicInterstitialInfo and say why it is or isn\u0027t matched?",
+      "range": {
+        "startLine": 7020,
+        "startChar": 8,
+        "endLine": 7021,
+        "endChar": 61
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a962ebf5_f55c4928",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7032,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "Looks like this is unnecessary (there are a few places in this file you can remove)",
+      "range": {
+        "startLine": 7032,
+        "startChar": 0,
+        "endLine": 7032,
+        "endChar": 66
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2d6af1_642cf461",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7180,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "same request here about comment on each DynamicInterstitialInfo",
+      "range": {
+        "startLine": 7180,
+        "startChar": 4,
+        "endLine": 7180,
+        "endChar": 8
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de245a4_8f983c63",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7193,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "should this be UNKNOWN_CERT_ERROR or CERT_COMMON_NAME_INVALID? That way when the interstitial doesn\u0027t match we\u0027ve isolated it to the common name",
+      "range": {
+        "startLine": 7193,
+        "startChar": 49,
+        "endLine": 7193,
+        "endChar": 75
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cbf052_261f2404",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7234,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 7234,
+        "startChar": 49,
+        "endLine": 7234,
+        "endChar": 75
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4522bc2a_cbafd1d3",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "Is it possible to get this and the organization name out of the cert in ssl_info() so that if the test certs change, we don\u0027t need to update these strings?",
+      "range": {
+        "startLine": 237,
+        "startChar": 40,
+        "endLine": 237,
+        "endChar": 49
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910d5d69_6e55c434",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "nit: maybe add a comment here to draw attention to the fact that you don\u0027t set a common name",
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a8eab7_057ac586",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "nit: common -\u003e organization",
+      "range": {
+        "startLine": 382,
+        "startChar": 67,
+        "endLine": 382,
+        "endChar": 73
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563f2409_7b91f524",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 1,
+      "message": "Should this line be omitted since it\u0027s supposed to test a missing organization name?\n(also ditto about adding a comment to draw attention to the field that you don\u0027t set)",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 51
+      },
+      "revId": "20873dea9b9b5050a3afd7b838af6122ffb64342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

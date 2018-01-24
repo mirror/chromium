@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47fea2e1_a76dd3bb",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-24T18:22:40Z",
+      "side": 0,
+      "message": "Did we lose this test case? Seems like we should still have a test that these hashes trigger a match (with empty common name/org name fields).",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 48
+      },
+      "revId": "30abaff35cfa985f0eafaf4d00f171281db971a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
