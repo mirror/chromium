@@ -36,7 +36,7 @@ namespace chromeos {
 
 namespace {
 
-bool ConnectionStateChanged(NetworkState* network,
+bool ConnectionStateChanged(const NetworkState* network,
                             const std::string& prev_connection_state,
                             bool prev_is_captive_portal) {
   if (network->is_captive_portal() != prev_is_captive_portal)
@@ -1152,6 +1152,7 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
     const std::string& service_path,
     const std::string& key,
     const base::Value& value) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   SCOPED_NET_LOG_IF_SLOW();
   bool changed = false;
   NetworkState* network = GetModifiableNetworkState(service_path);
@@ -1175,8 +1176,11 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
     network_list_sorted_ = false;
     if (ConnectionStateChanged(network, prev_connection_state,
                                prev_is_captive_portal)) {
-      if (OnNetworkConnectionStateChanged(network))
-        notify_default = false;  // already notified
+      // OnNetworkConnectionStateChanged may clear |default_network_path_| if
+      // |network| is the default network and is in an unexpected state.
+      bool default_notified = OnNetworkConnectionStateChanged(network);
+      if (default_notified || network->path() != default_network_path_)
+        notify_default = false;
       // If the connection state changes, other properties such as IPConfig
       // may have changed, so request a full update.
       request_update = true;
@@ -1591,7 +1595,8 @@ bool NetworkStateHandler::OnNetworkConnectionStateChanged(
   SCOPED_NET_LOG_IF_SLOW();
   DCHECK(network);
   bool notify_default = false;
-  if (network->path() == default_network_path_) {
+  std::string service_path = network->path();
+  if (service_path == default_network_path_) {
     if (network->IsConnectedState()) {
       notify_default = true;
     } else if (network->IsConnectingState()) {
@@ -1605,8 +1610,11 @@ bool NetworkStateHandler::OnNetworkConnectionStateChanged(
                      << GetLogName(network)
                      << "State: " << network->connection_state();
       default_network_path_.clear();
-      SortNetworkList(true /* ensure_cellular */);
+      SortNetworkList(true /* ensure_cellular */);  // May destroy |network|.
       NotifyDefaultNetworkChanged(nullptr);
+      network = GetModifiableNetworkState(service_path);
+      if (!network)
+        return notify_default;
     }
   }
   std::string desc = "NetworkConnectionStateChanged";
