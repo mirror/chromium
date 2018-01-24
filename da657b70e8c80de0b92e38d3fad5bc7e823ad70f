@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff5f602c_7ed0546f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/experimental-features/unsized-image.tentative.https.sub-expected.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T22:01:02Z",
+      "side": 1,
+      "message": "This feature is being landed behind a flag. In the virtual suite, tests will pass. But in here, images are using the actual size as intrinsic size instead of the default size.",
+      "parentUuid": "a930558c_91fee8d1",
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90216ad2_eeff03b4",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652dacac_6ba1bda7",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T22:01:02Z",
+      "side": 1,
+      "message": "It should be, although IsSupportedInFeaturePolicy() checks for this flag.\nSo in the future when I move the feature behind a different flag I don\u0027t need to change this file.",
+      "parentUuid": "90216ad2_eeff03b4",
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f1d219_04bd0425",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T22:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f914d4e_d14d4d5e",
+      "range": {
+        "startLine": 259,
+        "startChar": 36,
+        "endLine": 259,
+        "endChar": 45
+      },
+      "revId": "da657b70e8c80de0b92e38d3fad5bc7e823ad70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
