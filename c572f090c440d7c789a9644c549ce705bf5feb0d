@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0a6edcb_31df8ed4",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T20:43:37Z",
+      "side": 1,
+      "message": "You should be passing ipc_thread_\u0027s task runner over to ServiceManagerContext, no?",
+      "revId": "c572f090c440d7c789a9644c549ce705bf5feb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d357a3_15ddd45a",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T20:43:37Z",
+      "side": 1,
+      "message": "Ideally everything done here could just be done by InitializeServiceManager now and we could delete this?",
+      "revId": "c572f090c440d7c789a9644c549ce705bf5feb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181e309f_529dbdb1",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T20:43:37Z",
+      "side": 1,
+      "message": "this seems redundant",
+      "revId": "c572f090c440d7c789a9644c549ce705bf5feb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066b842f_5881b7fe",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T20:43:37Z",
+      "side": 1,
+      "message": "Why is all this code separated and deferred now?",
+      "revId": "c572f090c440d7c789a9644c549ce705bf5feb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
