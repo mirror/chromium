@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "402a5a63_01b57114",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3506,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "1. removed\n2. Hmm probably? I\u0027m not sure how the histogram handles negative (from overflow) values. Units are microseconds so there\u0027s not negative-value buckets but they could be sent to the underflow bucket, which would be wrong. However, when I tried to do that, presubmit checks complained about not being able to use base::saturated_cast (I think anything base is not allowed in Source/core for some reason). Do you know of any alternative?",
+      "parentUuid": "4e6a3c6e_d82bfcc8",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbb2e0f9_865324d9",
         "filename": "third_party/WebKit/Source/core/exported/WebDocumentLoaderImpl.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefd0fbc_1186bf90",
+        "filename": "third_party/WebKit/Source/core/exported/WebDocumentLoaderImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Yes, I want to remove most conversions in the long term. This CL was just becoming too large so it had to be trimmed at some point.",
+      "parentUuid": "fbb2e0f9_865324d9",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab157c05_a000ceb3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac2bf0e_0f0159d3",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85222f82_efe5efee",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a33dc9e_81e5e6f0",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85222f82_efe5efee",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "25468650_ed833e37",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a77f8a6_a7da2b12",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13103822_356c7c51",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1622d9a2_dcfc107a",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13103822_356c7c51",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b02cb97_a4ba2952",
         "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-24T19:38:00Z",
       "side": 1,
       "message": "probably pre-existing, but what if this is over std::numeric_limits\u003cbase::HistogramBase::Sample\u003e::max()?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46428ce5_6d5fa64f",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Not really worried about this particular one, because that would only happen if CurrentTimeTicks() yields a value ~68 years greater than navigation_start.",
+      "parentUuid": "7b02cb97_a4ba2952",
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0cb290a2_1f1c5cde",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "I changed this DCHECKS before the TimeTicks change and I think they didn\u0027t work with the old WTF::TimeTicks. Now it does.",
+      "parentUuid": "353f6df3_9db3cdfb",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85a3d37_b60c8188",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
         "patchSetId": 4
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "55c218f8_e0154d30",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85a3d37_b60c8188",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b46610fb_76c00abb",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2018-01-24T19:38:00Z",
       "side": 1,
       "message": "nit (but not new): overflow?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce42614f_d119b720",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Probably not needed (or not as needed as the one in Document). Will add the cast here and in Document once we have a suitable replacement for saturated_cast.",
+      "parentUuid": "b46610fb_76c00abb",
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "48873209_82caaeef",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa88d61_2962561d",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e56e22_7ab62611",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 4
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "33fbb75a_b716c32f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e56e22_7ab62611",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "747e852f_eacbf66d",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceResourceTiming.cpp",
         "patchSetId": 4
@@ -217,6 +433,24 @@
       "writtenOn": "2018-01-24T19:38:00Z",
       "side": 1,
       "message": "timing-\u003eDnsEnd() cannot be negative? Do you know what this is trying to achieve? The comment makes it look like it\u0027s trying to do std::max (but trying to handle zero meaning unset?).",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db29375_a421fa64",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceResourceTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "I don\u0027t think it can be negative. But that\u0027s why I\u0027ve added a DCHECK in the only setter, WebURLLoadTiming::SetDNSEnd. It does look like it\u0027s trying to do that, handling the unset value separately.",
+      "parentUuid": "747e852f_eacbf66d",
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "dd9d2679_e5211341",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Yes but followup once we change Will/DidProcessTask to use TimeTicks instead of double.",
+      "parentUuid": "9bb215f4_cb303525",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2fa0e49_04a5c45d",
         "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
         "patchSetId": 4
@@ -254,6 +506,24 @@
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c37b73_fe6e627a",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2fa0e49_04a5c45d",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "58061a57_1f1281a4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadTiming.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "Rephrased the comment.",
+      "parentUuid": "1f3184cd_13de5211",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0941c2b_600450c7",
         "filename": "third_party/WebKit/Source/platform/probe/PlatformProbes.cpp",
         "patchSetId": 4
@@ -285,6 +573,24 @@
       "writtenOn": "2018-01-24T19:38:00Z",
       "side": 1,
       "message": "aside: this is...odd...these will change depending on when they are read? Not your problem, I guess, but do you know why this works this way?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec564a73_393e64da",
+        "filename": "third_party/WebKit/Source/platform/probe/PlatformProbes.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2018-01-24T22:34:03Z",
+      "side": 1,
+      "message": "I think it\u0027s intended that |start_time_| of the probe will be the first call to CaptureStartTime(). Many callers don\u0027t even use the return value.",
+      "parentUuid": "a0941c2b_600450c7",
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
