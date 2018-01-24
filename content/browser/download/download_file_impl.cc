@@ -344,6 +344,9 @@ bool DownloadFileImpl::CalculateBytesToWrite(SourceStream* source_stream,
     }
   }
 
+  // TODO(xingliu): Figure out what happens 2nd request length is 0.
+  // In here we probably already leak some data for the 1st request if buffer is
+  // large.
   if (source_stream->length() != DownloadSaveInfo::kLengthFullContent &&
       source_stream->bytes_written() +
               static_cast<int64_t>(bytes_available_to_write) >
@@ -396,6 +399,8 @@ bool DownloadFileImpl::ShouldRetryFailedRename(DownloadInterruptReason reason) {
 
 DownloadInterruptReason DownloadFileImpl::HandleStreamCompletionStatus(
     SourceStream* source_stream) {
+  // TODO(xingliu): If 2nd request can be open range, this hack needs to be
+  // fixed.
   DownloadInterruptReason reason = source_stream->GetCompletionStatus();
   if (source_stream->length() == DownloadSaveInfo::kLengthFullContent &&
       !received_slices_.empty() &&
@@ -650,6 +655,7 @@ void DownloadFileImpl::NotifyObserver(SourceStream* source_stream,
     if (should_terminate)
       CancelRequest(source_stream->offset());
     if (source_stream->length() == DownloadSaveInfo::kLengthFullContent) {
+      // TODO(xingliu): If 2nd request can be open, this hack needs a fix.
       SetPotentialFileLength(source_stream->offset() +
                              source_stream->bytes_written());
     }
@@ -786,6 +792,7 @@ void DownloadFileImpl::HandleStreamError(SourceStream* source_stream,
     // nowhere.
     // TODO(qinmin): make all streams half open so that they can recover
     // failures from their neighbors.
+    // TODO(xingliu): if 2nd request is opened, fix this.
     SourceStream* preceding_neighbor = FindPrecedingNeighbor(source_stream);
     while (preceding_neighbor) {
       int64_t upper_range = source_stream->offset() + source_stream->length();

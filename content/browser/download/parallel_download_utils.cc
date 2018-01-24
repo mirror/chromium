@@ -47,13 +47,14 @@ std::vector<DownloadItem::ReceivedSlice> FindSlicesForRemainingContent(
     slice_size = slice_size > 0 ? slice_size : 1;
     for (int i = 0, num_requests = total_length / slice_size;
          i < num_requests - 1; ++i) {
-      new_slices.emplace_back(current_offset, slice_size);
+      new_slices.emplace_back(current_offset,
+                              DownloadSaveInfo::kLengthFullContent);
       current_offset += slice_size;
     }
   }
 
-  // Last slice is a half open slice, which results in sending range request
-  // like "Range:50-" to fetch from 50 bytes to the end of the file.
+  // All slices are half open, which sends request headers like "Range:50-".
+  // If server rejects a certain request, others should take over.
   new_slices.emplace_back(current_offset, DownloadSaveInfo::kLengthFullContent);
   return new_slices;
 }
@@ -70,7 +71,7 @@ std::vector<DownloadItem::ReceivedSlice> FindSlicesToDownload(
       received_slices.begin();
   DCHECK_GE(iter->offset, 0);
   if (iter->offset != 0)
-    result.emplace_back(0, iter->offset);
+    result.emplace_back(0, DownloadSaveInfo::kLengthFullContent);
 
   while (true) {
     int64_t offset = iter->offset + iter->received_bytes;
@@ -83,7 +84,7 @@ std::vector<DownloadItem::ReceivedSlice> FindSlicesToDownload(
 
     DCHECK_GE(next->offset, offset);
     if (next->offset > offset)
-      result.emplace_back(offset, next->offset - offset);
+      result.emplace_back(offset, DownloadSaveInfo::kLengthFullContent);
     iter = next;
   }
   return result;

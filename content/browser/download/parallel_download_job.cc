@@ -182,8 +182,7 @@ void ParallelDownloadJob::BuildParallelRequests() {
       // workers. Otherwise, just fork |slices_to_download.size()| number of
       // workers.
       slices_to_download = FindSlicesForRemainingContent(
-          first_slice_offset,
-          content_length_ - first_slice_offset + initial_request_offset_,
+          first_slice_offset, content_length_ - first_slice_offset,
           GetParallelRequestCount(), GetMinSliceSize());
     } else {
       RecordParallelDownloadCreationEvent(
@@ -192,9 +191,6 @@ void ParallelDownloadJob::BuildParallelRequests() {
   }
 
   DCHECK(!slices_to_download.empty());
-  DCHECK_EQ(slices_to_download.back().received_bytes,
-            DownloadSaveInfo::kLengthFullContent);
-
   ForkSubRequests(slices_to_download);
   RecordParallelDownloadRequestCount(
       static_cast<int>(slices_to_download.size()));
@@ -208,6 +204,7 @@ void ParallelDownloadJob::ForkSubRequests(
 
   // If the initial request is working on the first hole, don't create parallel
   // request for this hole.
+  // TODO(xingliu): needs to fix this.
   bool skip_first_slice = true;
   DownloadItem::ReceivedSlices initial_slices_to_download =
       FindSlicesToDownload(initial_received_slices_);
@@ -272,9 +269,10 @@ void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
   download_params->set_etag(download_item_->GetETag());
   download_params->set_offset(offset);
 
-  // Setting the length will result in range request to fetch a slice of the
-  // file.
-  download_params->set_length(length);
+  // All parallel requests are half open, which sends request headers like
+  // "Range:50-".
+  // If server rejects a certain request, others should take over.
+  download_params->set_length(DownloadSaveInfo::kLengthFullContent);
 
   // Subsequent range requests don't need the "If-Range" header.
   download_params->set_use_if_range(false);

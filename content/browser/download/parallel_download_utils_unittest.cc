@@ -35,14 +35,15 @@ TEST(ParallelDownloadUtilsTest, FindSlicesToDownload) {
   slices_to_download = FindSlicesToDownload(downloaded_slices);
   EXPECT_EQ(2u, slices_to_download.size());
   EXPECT_EQ(500, slices_to_download[0].offset);
-  EXPECT_EQ(500, slices_to_download[0].received_bytes);
+  EXPECT_EQ(DownloadSaveInfo::kLengthFullContent,
+            slices_to_download[0].received_bytes);
   EXPECT_EQ(1500, slices_to_download[1].offset);
   EXPECT_EQ(DownloadSaveInfo::kLengthFullContent,
             slices_to_download[1].received_bytes);
 
   // Fill the gap.
-  downloaded_slices.emplace(
-      downloaded_slices.begin() + 1, slices_to_download[0]);
+  downloaded_slices.emplace(downloaded_slices.begin() + 1,
+                            DownloadItem::ReceivedSlice(500, 500));
   slices_to_download = FindSlicesToDownload(downloaded_slices);
   EXPECT_EQ(1u, slices_to_download.size());
   EXPECT_EQ(1500, slices_to_download[0].offset);
@@ -54,7 +55,8 @@ TEST(ParallelDownloadUtilsTest, FindSlicesToDownload) {
   slices_to_download = FindSlicesToDownload(downloaded_slices);
   EXPECT_EQ(2u, slices_to_download.size());
   EXPECT_EQ(0, slices_to_download[0].offset);
-  EXPECT_EQ(500, slices_to_download[0].received_bytes);
+  EXPECT_EQ(DownloadSaveInfo::kLengthFullContent,
+            slices_to_download[0].received_bytes);
   EXPECT_EQ(1500, slices_to_download[1].offset);
   EXPECT_EQ(DownloadSaveInfo::kLengthFullContent,
             slices_to_download[1].received_bytes);
@@ -109,7 +111,7 @@ TEST(ParallelDownloadUtilsTest, FindSlicesForRemainingContentMinSliceSize) {
   slices = FindSlicesForRemainingContent(0, 100, 33, 50);
   EXPECT_EQ(2u, slices.size());
   EXPECT_EQ(0, slices[0].offset);
-  EXPECT_EQ(50, slices[0].received_bytes);
+  EXPECT_EQ(0, slices[0].received_bytes);
   EXPECT_EQ(50, slices[1].offset);
   EXPECT_EQ(0, slices[1].received_bytes);
 
@@ -126,6 +128,18 @@ TEST(ParallelDownloadUtilsTest, FindSlicesForRemainingContentMinSliceSize) {
   EXPECT_EQ(1u, slices.size());
   EXPECT_EQ(0, slices[0].offset);
   EXPECT_EQ(0, slices[0].received_bytes);
+
+  // Extreme case where size is smaller than request number.
+  slices = FindSlicesForRemainingContent(0, 1, 3, 1);
+  EXPECT_EQ(1u, slices.size());
+  EXPECT_EQ(DownloadItem::ReceivedSlice(0, 0), slices[0]);
+
+  // Normal case.
+  slices = FindSlicesForRemainingContent(0, 100, 3, 5);
+  EXPECT_EQ(3u, slices.size());
+  EXPECT_EQ(DownloadItem::ReceivedSlice(0, 0), slices[0]);
+  EXPECT_EQ(DownloadItem::ReceivedSlice(33, 0), slices[1]);
+  EXPECT_EQ(DownloadItem::ReceivedSlice(66, 0), slices[2]);
 }
 
 TEST(ParallelDownloadUtilsTest, GetMaxContiguousDataBlockSizeFromBeginning) {
