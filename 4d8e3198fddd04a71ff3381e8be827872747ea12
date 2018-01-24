@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40211470_ae99c79c",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T23:06:43Z",
+      "side": 1,
+      "message": "Nice to know the behavior is sane. (Logging is disabled.)",
+      "parentUuid": "ce8e2e09_c1d96c84",
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49e5a0b2_d4de5701",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 6
@@ -154,6 +172,30 @@
       "side": 1,
       "message": "Note that this number can be easily converted to an actual Date object, which is independent of the way that ChromeSync is maintaining the time for corresponding navigations. Please let me know if you still see any concern.",
       "parentUuid": "2db07c25_282f234e",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09df6ac_74c615ea",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T23:06:43Z",
+      "side": 1,
+      "message": "I don\u0027t know if ChromeSync uses timestamps relative to windows epoch.  If it uses a different relative value, then there\u0027s no way to convert between a timestamp like this with one of theirs.  That\u0027s why I ask.\n\nI\u0027m also slightly concerned that the user\u0027s clock may change between the navigation and the omnibox request (e.g., for those computers that sync their clocks from a server periodically, and correct any error they see), and then you\u0027ll be sending a different time.  This minor corrections could prevent matching, as if you\u0027re sending times in microseconds, any revision, no matter how small, will produce a different result.",
+      "parentUuid": "6182ceb3_3805ccd9",
       "range": {
         "startLine": 79,
         "startChar": 21,
