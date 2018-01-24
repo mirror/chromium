@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aadb2b14_8ce2bb1c",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3db46554_be3a685f",
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb26bc90_33aa9c80",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b59c4ef_e0440eeb",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb26bc90_33aa9c80",
+      "range": {
+        "startLine": 690,
+        "startChar": 25,
+        "endLine": 690,
+        "endChar": 47
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6120ba0e_8bfdb9e0",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "c8d1b26a_bbc4ab2a",
+      "range": {
+        "startLine": 702,
+        "startChar": 42,
+        "endLine": 702,
+        "endChar": 68
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c19edbfc_67011da1",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c2cb36_6952c90f",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19edbfc_67011da1",
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c5b36468_888c1785",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8bfc9c3_73d4e963",
+      "range": {
+        "startLine": 717,
+        "startChar": 6,
+        "endLine": 717,
+        "endChar": 21
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b328ec9_95c63cdb",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 5
@@ -125,6 +233,30 @@
       "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4675fa8_b1c456dd",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:17:34Z",
+      "side": 1,
+      "message": "Why would we do that? All callers pass a std::string.",
+      "parentUuid": "8b328ec9_95c63cdb",
+      "range": {
+        "startLine": 765,
+        "startChar": 45,
+        "endLine": 765,
+        "endChar": 63
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
