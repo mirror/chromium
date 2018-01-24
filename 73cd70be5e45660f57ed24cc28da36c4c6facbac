@@ -22,6 +22,30 @@
       "revId": "73cd70be5e45660f57ed24cc28da36c4c6facbac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e26078c_99d2f7e2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/NfcHost.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-24T00:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f131627f_99f021da",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "73cd70be5e45660f57ed24cc28da36c4c6facbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
