@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d112e357_a4b9eaaf",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad23e7d_61f252b6",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbddd5c_562e75cb",
         "filename": "chrome/browser/resources/settings/device_page/display.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-23T16:53:29Z",
       "side": 1,
       "message": "In the mocks I saw lined in the issue there is only one slider but this adds a second slider, are there mocks with that? Since this is behind a flag we don\u0027t need to block this on that but since two sliders may be confusing we should definitely have a UX mock for this before we ship it.",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fd0f78_d8c1737f",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "The mocks are not final and are made based on (PM + Eng)\u0027s idea of how the final mock would look like. The reason this is hidden behind a flag is that we do not have a final UX reviewed mock yet.\n\nIn the end we plan to eliminate the display resolution/display mode slider. It will be presented as an advanced setting for external displays only.",
+      "parentUuid": "bfbddd5c_562e75cb",
       "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26c2a59d_d2def735",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63dbefc_24fb8260",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d301a942_66701f46",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd70551f_7d106ad3",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done.\n\nBut the same values are not passed. Added a check in DisplayInfoProviderChromeOS.",
+      "parentUuid": "d301a942_66701f46",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a167a46d_5e73157f",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a26af6_d0ac2386",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4fdcfec_382dc81c",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e82872d_7a8b775d",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Even in the worst case the minimum zoom delta will be 15. When the minimum resolution width is 640, the range of resolution would go from 640px to 1600px. \nResulting in a zoom range of 100% to 250% with a delta of (150 / 9 \u003d 16.66)\n\nThis does assume that there will be no display with resolution less than 640px or greater than 4096px. If the display mode resolution goes beyond these values for any display, this logic would fail. \n\nTo fix this I will update the range if a display has size beyond the range.",
+      "parentUuid": "d4fdcfec_382dc81c",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1f39b946_789d3e91",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afd2ac7f_96ec2c88",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3658cee2_5ec5e8ef",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6f2b8e5c_69577a04",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3658cee2_5ec5e8ef",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969917b8_4a5d2ac4",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356598d1_c353efb2",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-24T03:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969917b8_4a5d2ac4",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
