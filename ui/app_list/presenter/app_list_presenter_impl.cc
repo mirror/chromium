@@ -161,10 +161,10 @@ void AppListPresenterImpl::EndDragFromShelf(
     mojom::AppListState app_list_state) {
   if (view_) {
     if (app_list_state == mojom::AppListState::CLOSED ||
-        view_->app_list_state() == AppListViewState::CLOSED) {
+        view_->app_list_state() == ash::AppListViewState::kClosed) {
       view_->Dismiss();
     } else {
-      view_->SetState(AppListViewState(app_list_state));
+      view_->SetState(ash::AppListViewState(app_list_state));
     }
     view_->SetIsInDrag(false);
     view_->DraggingLayout();

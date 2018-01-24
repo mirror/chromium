@@ -44,7 +44,7 @@ class AppListModelUpdater {
   virtual void RemoveUninstalledItem(const std::string& id) {}
   virtual void MoveItemToFolder(const std::string& id,
                                 const std::string& folder_id) {}
-  virtual void SetStatus(app_list::AppListModel::Status status) {}
+  virtual void SetStatus(ash::AppListModelStatus status) {}
   virtual void SetState(ash::AppListState state) {}
   virtual void HighlightItemInstalledFromUI(const std::string& id) {}
   // For SearchModel:
@@ -80,7 +80,7 @@ class AppListModelUpdater {
   virtual app_list::AppListFolderItem* FindFolderItem(
       const std::string& folder_id) = 0;
   virtual bool FindItemIndexForTest(const std::string& id, size_t* index) = 0;
-  virtual app_list::AppListViewState StateFullscreen() = 0;
+  virtual ash::AppListViewState StateFullscreen() = 0;
   virtual std::map<std::string, size_t> GetIdToAppListIndexMap() = 0;
   virtual size_t BadgedItemCount() = 0;
   // For SearchModel:

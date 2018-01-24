@@ -10,8 +10,8 @@
 #include <vector>
 
 #include "ash/app_list/model/app_list_model.h"
-#include "ash/app_list/model/app_list_view_state.h"
 #include "ash/app_list/model/search/search_model.h"
+#include "ash/public/cpp/app_list/app_list_types.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_functions.h"
@@ -68,14 +68,14 @@ enum ApplistSearchResultOpenedSource {
   kMaxApplistSearchResultOpenedSource = 3,
 };
 
-void RecordHistogram(bool is_tablet_mode, app_list::AppListViewState state) {
+void RecordHistogram(bool is_tablet_mode, ash::AppListViewState state) {
   ApplistSearchResultOpenedSource source;
 
   if (is_tablet_mode) {
     source = kFullscreenTablet;
   } else {
-    source = state == app_list::AppListViewState::HALF ? kHalfClamshell
-                                                       : kFullscreenClamshell;
+    source = state == ash::AppListViewState::kHalf ? kHalfClamshell
+                                                   : kFullscreenClamshell;
   }
   UMA_HISTOGRAM_ENUMERATION(kAppListSearchResultOpenSourceHistogram, source,
                             kMaxApplistSearchResultOpenedSource);
