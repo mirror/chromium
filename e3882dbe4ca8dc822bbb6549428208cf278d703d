@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ddb6d05a_da30c188",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T18:58:25Z",
+      "side": 0,
+      "message": "You\u0027re absolutely right - technically I suppose the name of the first param in the hash fragment here is \u0027?modal_active\u0027. But I think the intent is that the name is just \u0027modal_active\u0027 and that the web app is injecting what is conceptually a query string into the hash fragment.\n\nI think I\u0027m inclined to assume that ? and # at the beginning of these fragments are redundant characters and should be ignored. It\u0027s a heuristic-based approach for sure, but I think it\u0027s more likely to produce correct results (in terms of what the web developer intended).\n\nWe should definitely add a comment here to explain why we are trimming these off, and why we think it\u0027s the right thing to do, even though we know it\u0027s a heuristic.\n\nWDYT?",
+      "parentUuid": "3803d0af_9dd7fc18",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b4273b0_d26b1461",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 4
