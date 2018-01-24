@@ -17,7 +17,6 @@
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
-#include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
 class PrefRegistrySimple;
@@ -30,10 +29,6 @@ class FilePath;
 
 namespace extensions {
 class ExternalLoader;
-}
-
-namespace net {
-class URLFetcher;
 }
 
 namespace user_prefs {
@@ -141,8 +136,7 @@ class StartupCustomizationDocument : public CustomizationDocument {
 // outside this class by calling StartFetching() or EnsureCustomizationApplied()
 // methods.
 // User of the file should check IsReady before use it.
-class ServicesCustomizationDocument : public CustomizationDocument,
-                                      private net::URLFetcherDelegate {
+class ServicesCustomizationDocument : public CustomizationDocument {
  public:
   static ServicesCustomizationDocument* GetInstance();
 
@@ -227,8 +221,8 @@ class ServicesCustomizationDocument : public CustomizationDocument,
   // Overriden from CustomizationDocument:
   bool LoadManifestFromString(const std::string& manifest) override;
 
-  // Overriden from net::URLFetcherDelegate:
-  void OnURLFetchComplete(const net::URLFetcher* source) override;
+  void OnSimpleLoaderComplete(content::SimpleURLLoader* source,
+                              std::unique_ptr<std::string> response_body);
 
   // Initiate file fetching. Wait for online status.
   void StartFileFetch();

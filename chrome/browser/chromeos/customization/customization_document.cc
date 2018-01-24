@@ -35,6 +35,7 @@
 #include "chrome/browser/chromeos/net/delay_network_call.h"
 #include "chrome/browser/extensions/external_loader.h"
 #include "chrome/browser/extensions/external_provider_impl.h"
+#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
@@ -45,11 +46,14 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/common/simple_url_loader.h"
 #include "extensions/common/extension_urls.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
-#include "net/url_request/url_fetcher.h"
+#include "services/network/public/cpp/resource_request.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
 
 namespace chromeos {
 namespace {
@@ -571,14 +575,43 @@ void ServicesCustomizationDocument::StartFileFetch() {
 }
 
 void ServicesCustomizationDocument::DoStartFileFetch() {
-  url_fetcher_ = net::URLFetcher::Create(url_, net::URLFetcher::GET, this);
-  url_fetcher_->SetRequestContext(g_browser_process->system_request_context());
-  url_fetcher_->AddExtraRequestHeader("Accept: application/json");
-  url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
-                             net::LOAD_DO_NOT_SAVE_COOKIES |
-                             net::LOAD_DISABLE_CACHE |
-                             net::LOAD_DO_NOT_SEND_AUTH_DATA);
-  url_fetcher_->Start();
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("chromeos_customization_document", R"(
+          semantics {
+            sender: "Chrome OS Services Customization"
+            description:
+              "Chrome OS downloads the OEM services customization manifest."
+            trigger:
+              "When a public session starts on managed devices and an OEM "
+              "has uploaded a service customization document."
+            data:
+              "URL of the OEM service customization document. "
+              "No user information is sent."
+            destination: WEBSITE
+          }
+          policy {
+            cookies_allowed: NO
+            setting: "Unconditionally enabled on Chrome OS."
+          })");
+  auto resource_request = std::make_unique<network::ResourceRequest>();
+  resource_request->url = url_;
+  resource_request->load_flags =
+      net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES |
+      net::LOAD_DISABLE_CACHE | net::LOAD_DO_NOT_SEND_AUTH_DATA;
+  auto headers = std::make_unique<net::HttpRequestHeaders>();
+  headers.SetHeader("Accept", "application/json");
+  resource_request->headers = headers;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create(std::move(resource_request),
+                                       traffic_annotation);
+  network::mojom::URLLoaderFactory* loader_factory =
+      g_browser_process->system_network_context_manager()
+          ->GetURLLoaderFactory();
+  simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+      loader_factory,
+      base::BindOnce(&ServicesCustomizationDocument::OnSimpleLoaderComplete,
+                     base::Unretained(this),
+                     base::Unretained(simple_loader.get())));
 }
 
 bool ServicesCustomizationDocument::LoadManifestFromString(
@@ -610,26 +643,26 @@ void ServicesCustomizationDocument::OnManifestLoaded() {
   }
 }
 
-void ServicesCustomizationDocument::OnURLFetchComplete(
-    const net::URLFetcher* source) {
-  std::string mime_type;
-  std::string data;
-  if (source->GetStatus().is_success() &&
-      source->GetResponseCode() == net::HTTP_OK &&
-      source->GetResponseHeaders()->GetMimeType(&mime_type) &&
-      mime_type == "application/json" &&
-      source->GetResponseAsString(&data)) {
+void ServicesCustomizationDocument::OnSimpleLoaderComplete(
+    content::SimpleURLLoader* source,
+    std::unique_ptr<std::string> response_body) {
+  if (source->ResponseInfo() && source->ResponseInfo()->headers &&
+      source->NetError() == net::OK &&
+      source->ResponseInfo()->headers->response_code() == net::HTTP_OK &&
+      source->ResponseInfo()->headers->mime_type == "application/json" &&
+      *response_body) {
+    std::string data = std::move(response_body);
     LoadManifestFromString(data);
-  } else if (source->GetResponseCode() == net::HTTP_NOT_FOUND) {
+  } else if (source->ResponseInfo()->headers->response_code() ==
+             net::HTTP_NOT_FOUND) {
     LOG(ERROR) << "Customization manifest is missing on server: "
-               << source->GetURL().spec();
+               << url_.spec();
     OnCustomizationNotFound();
   } else {
     if (num_retries_ < kMaxFetchRetries) {
       num_retries_++;
       content::BrowserThread::PostDelayedTask(
-          content::BrowserThread::UI,
-          FROM_HERE,
+          content::BrowserThread::UI, FROM_HERE,
           base::Bind(&ServicesCustomizationDocument::StartFileFetch,
                      weak_ptr_factory_.GetWeakPtr()),
           base::TimeDelta::FromSeconds(kRetriesDelayInSec));
@@ -637,8 +670,9 @@ void ServicesCustomizationDocument::OnURLFetchComplete(
     }
     // This doesn't stop fetching manifest on next restart.
     LOG(ERROR) << "URL fetch for services customization failed:"
-               << " response code = " << source->GetResponseCode()
-               << " URL = " << source->GetURL().spec();
+               << " response code = "
+               << source->ResponseInfo()->headers->response_code()
+               << " URL = " << url_.spec();
 
     LogManifestLoadResult(HISTOGRAM_LOAD_RESULT_RETRIES_FAIL);
   }
