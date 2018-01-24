@@ -319,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "1ac40e4f_9332c58c",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T22:07:25Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t understand what you mean. RunCommandPiped() has a default argument of (..., stdout\u003dsubprocess.PIPE, ...), right?\n\nIf you\u0027re sure it\u0027s OK, though, I yield. :)",
+      "parentUuid": "45b6ddf4_267ed6c8",
+      "revId": "8c79860866aee5d452da9ec36c585c78e8eaf411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42b45b79_708edc35",
         "filename": "build/fuchsia/runner_v2/device_target.py",
         "patchSetId": 4
