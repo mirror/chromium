@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41146f05_e25e629a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "Would it make sense to have a static function like IsRequestHandlerEnabled() and check these two features, and use that throughout the code?",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e8dce9_d59e4d63",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55be07f8_ec96374a",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "paloda -\u003e payload",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5adf504_f6de0a15",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "I have a slight preference that this class itself doesn\u0027t depend on DataPipe (which we wouldn\u0027t be using if we port this in //net), while for initial implementation I could be fine with this...",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fedaf3b_26b499d3",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "Request part in the Signed exchange headers includes method string too, should we have it? (While I don\u0027t really see when we might want to use methods other than GET)",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e567028a_59d37d4b",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "Ditto, though could be okay in the initial code. (And works just fine as we connect to URLLoader...)",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c825ba04_cb5c8fb2",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "We want to be able to express the validation result too, would that be returned via finish_callback?\n\nOne of the gotchas I felt in the last prototype was needing to pass two callbacks always need clearer documentation about what should happen in error cases, e.g. if both of these two callbacks should fire or not etc. Could we clearly document the expected behavior for various cases here, or split the method into two or three where each has its own callback?",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b4ad36_4586589f",
+        "filename": "content/browser/loader/web_package_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "found a -\u003e finds an",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43e5cba_fff02f46",
+        "filename": "content/browser/loader/web_package_request_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "I wonder... if we rather want to re-bind the new loader to the throttling loader. In our case directly calling back to the URLLoaderClient is probably fine, but it means we\u0027re bypassing ThrottlingURLLoader for this path, right?",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8177492f_26600881",
+        "filename": "content/browser/loader/web_package_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "binded -\u003e bound",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc600c3c_998ffd54",
+        "filename": "content/browser/loader/web_package_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "I\u0027m not super sure about the value of splitting this and WebPackageLoader yet, is that to make each class\u0027s lifetime management simpler?\n\n(If we want to introduce this and WebPackageLoader let\u0027s chat offline about naming; I want to use clearer names that are not too confusing)",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad6d966_3bd37c5c",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 23
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T09:22:38Z",
+      "side": 1,
+      "message": "hxtg is what we\u0027ll be using for the extension, so maybe let\u0027s just use that (if we\u0027re not going with longer name like signed-exchanges)",
+      "revId": "8c7c062ce25eeeb1d24885cdc4b409058a12ecce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
