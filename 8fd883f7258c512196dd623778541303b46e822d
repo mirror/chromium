@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ea37540a_c0817326",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 24
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T16:45:18Z",
+      "side": 1,
+      "message": "@robertma, could you please confirm this is the right thing to do here? Thanks",
+      "parentUuid": "736d4b46_c33d9571",
+      "revId": "8fd883f7258c512196dd623778541303b46e822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb6e4d05_b9247956",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 24
@@ -50,6 +68,24 @@
       "revId": "8fd883f7258c512196dd623778541303b46e822d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed10a5c_219f006e",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T16:45:18Z",
+      "side": 1,
+      "message": "Yes because IsFeatureEnabled() is a LocalFrame method.",
+      "parentUuid": "bb6e4d05_b9247956",
+      "revId": "8fd883f7258c512196dd623778541303b46e822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
