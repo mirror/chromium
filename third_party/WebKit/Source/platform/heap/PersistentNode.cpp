@@ -192,6 +192,21 @@ void CrossThreadPersistentRegions::UnpoisonCrossThreadPersistents() {
 #if DCHECK_IS_ON()
   DCHECK_EQ(persistent_count, persistent_region_->persistent_count_);
 #endif
+  persistent_count = 0;
+  for (PersistentNodeSlots* slots = weak_persistent_region_->slots_; slots;
+       slots = slots->next_) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      const PersistentNode& node = slots->slot_[i];
+      if (!node.IsUnused()) {
+        ASAN_UNPOISON_MEMORY_REGION(node.Self(),
+                                    sizeof(CrossThreadWeakPersistent<void*>));
+        ++persistent_count;
+      }
+    }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, weak_persistent_region_->persistent_count_);
+#endif
 }
 #endif
 
