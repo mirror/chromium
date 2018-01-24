@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <windows.h>
 #include <psapi.h>
 #include <stddef.h>
+#include <string.h>
+#include <windows.h>
 
 #include "base/debug/gdi_debug_util_win.h"
 #include "base/memory/ptr_util.h"
@@ -57,7 +58,7 @@ static bool Create(int width,
 
   size_t row_bytes = skia::PlatformCanvasStrideForWidth(width);
   if (do_clear)
-    bzero(pixels, row_bytes * height);
+    memset(pixels, 0, row_bytes * height);
 
   HDC hdc = CreateCompatibleDC(nullptr);
   if (!hdc) {
