@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f7e96f_ef055da0",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-24T19:38:42Z",
+      "side": 1,
+      "message": "We want the toolbar to be visible for the entire duration of the side swipe gesture, so I think it makes more sense to reset the disabler only when the gesture recognizer state is ended or cancelled.  It wouldn\u0027t have any visual effect, but is more correct, as it would prevent the toolbar from being hidden in the event of some possible programmatic scrolling that might affect the fullscreen progress.",
+      "revId": "cfb555a3dc9aa3bf91fce6598dbba2719157bff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
