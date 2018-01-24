@@ -37,7 +37,7 @@ config("compiler") {
     # version of the toolchain_libs directory in the Fuchsia SDK can be
     # different from the version of Chromium's clang.
     "-resource-dir",
-    rebase_path(fuchsia_sdk, root_build_dir) + "/toolchain_libs/clang/6.0.0",
+    rebase_path(fuchsia_sdk, root_build_dir) + "/toolchain_libs/clang/7.0.0",
 
     # The stack defaults to 256k on Fuchsia (see
     # https://fuchsia.googlesource.com/zircon/+/master/system/private/zircon/stack.h#9),
