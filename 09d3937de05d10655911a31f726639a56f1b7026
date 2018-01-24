@@ -16,6 +16,143 @@
       "revId": "09d3937de05d10655911a31f726639a56f1b7026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dddabab_a9b2be12",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "Yeah, these functions should now be listed among the other overrides, without a comment, ordered to match the original declaration in RenderText; and please reorder the impls to match.",
+      "parentUuid": "affa08ac_4589b430",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe456a59_64df24bd",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "Move this comment into the impl(s)",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870504af_63e60855",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "optional nit: remove header transitively included via render_text.h",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03d28a0_10275f9f",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "optional nit: remove header transitively included via render_text.h",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089157bf_87a8a371",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "optional nit: remove header transitively included via render_text.h",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df1fddf_b8e6babc",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86c02b2_eca14015",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef50f902_d04f809d",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:27:41Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
