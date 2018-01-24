@@ -69,6 +69,24 @@
       "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd57dae4_15f1a953",
+        "filename": "ui/gfx/render_text_test_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-24T15:20:17Z",
+      "side": 1,
+      "message": "Done.  Feel free to drop nits on the arrangement of the functions, etc.",
+      "parentUuid": "bccf1846_ca7380c5",
+      "revId": "d273edc277a41d01337ce4195a9216c512546bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

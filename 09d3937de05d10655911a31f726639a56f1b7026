@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affa08ac_4589b430",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-24T15:20:17Z",
+      "side": 1,
+      "message": "Let me know if you want the newly-overriding methods moved together into the \"RenderText\" section below.  Could make an argument either way.",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
