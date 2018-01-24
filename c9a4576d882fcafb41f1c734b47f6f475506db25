@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f989a1b_ce23323b",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:49:27Z",
+      "side": 1,
+      "message": "Nit: No need to obey the 80 col rule for import statements.",
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba63bc5f_30c4f7b1",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:49:27Z",
+      "side": 1,
+      "message": "Is null a valid value for destinationStore? If so let\u0027s change the type annotation at line 9 to ?print_preview.DestinationStore to indicate that. Otherwise, this check is not needed.",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38d2fd4_3c54f5b5",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:49:27Z",
+      "side": 1,
+      "message": "Where is this defined?",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38b6890_1ea98c43",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:49:27Z",
+      "side": 1,
+      "message": "Can we provide a mixins instead to override those styles, instead of affecting the default case which does not utilize different icons between hover and non hover? Basically how about the following?\n\n#close {\n  ...\n  @apply --cr-dialog-close-image;\n}\n\n#close:hover {\n  @apply --cr-dialog-close-image-hover;\n}\n\n#close:active {\n  @apply --cr-dialog-close-image-active;\n}",
+      "revId": "c9a4576d882fcafb41f1c734b47f6f475506db25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
