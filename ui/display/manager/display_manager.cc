@@ -1488,6 +1488,8 @@ void DisplayManager::UpdateZoomFactor(int64_t display_id, float zoom_factor) {
   DCHECK(zoom_factor > 0);
   DCHECK_NE(display_id, kInvalidDisplayId);
 
+  LOG(ERROR) << "The value here: " << zoom_factor;
+
   display_zoom_factors_[display_id] = zoom_factor;
 
   for (const auto& display : active_display_list_) {
