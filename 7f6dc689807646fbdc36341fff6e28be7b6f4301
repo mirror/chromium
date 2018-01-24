@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d92d43b_582dc5d7",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 34
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-24T13:33:04Z",
+      "side": 1,
+      "message": "Several points. Maybe the CL is good as-is, but I don\u0027t fully understand it yet. Sorry about the questions.\n\n* Main point: We need to get symbolized stacks (with source files and line numbers) on bots. As long as we get that, we can omit as much debug info as possible there.\n\n* lld supports --strip-debug, yes?\n\n* My high-level reading here is that we tell the compiler to build with debug info (but only -g1, which I think includes line tables only (?)), only to then tell the linker to strip it. That seems a bit roundabout -- why is this necessary? If we really don\u0027t want debug info, we could tell the compiler to not write it in the first place. And if we do want it, why should the linker remove it? (I probably don\u0027t really understand what exactly --strip-debug does.)\n\n* I thought we used fission, which means the debug info doesn\u0027t make it to the binary; why does this do anything? (...oooh I vaguely remember dblaikie@ telling me that line tables still go in the main executable for reasons. I think he also said something about that possibly being changeable? It might be worth to send an email to dblaikie@ describing in detail what we do, what we want, and ask him what our options are, assuming that we control the entire toolchain.)\n\n* This is only done for non-component builds, but all the debug bots use component builds (?)\n\n* Why is mac special?\n\n* in the android branch above, we have\n\n      if (strip_debug_info) {\n        ldflags +\u003d [ \"-Wl,--strip-debug\" ]\n      }\n\n  should we just do that in the linux branch too? Being consistent seems nice.",
+      "revId": "7f6dc689807646fbdc36341fff6e28be7b6f4301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
