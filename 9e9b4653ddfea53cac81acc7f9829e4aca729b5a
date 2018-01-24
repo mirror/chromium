@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880976c9_33511168",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-24T17:34:52Z",
+      "side": 1,
+      "message": "We\u0027re not using OpenGLES on linux though, are we?\nDid you try with GL_RGB and it doesn\u0027t work?",
+      "revId": "9e9b4653ddfea53cac81acc7f9829e4aca729b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55d4967_3ef0a2b4",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-24T17:34:52Z",
+      "side": 1,
+      "message": "Won\u0027t this be always Invalid Format?",
+      "revId": "9e9b4653ddfea53cac81acc7f9829e4aca729b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
