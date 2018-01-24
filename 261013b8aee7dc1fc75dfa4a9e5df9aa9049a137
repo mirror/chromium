@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87d582c_9630537e",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "Pass DownloadSource in directly.",
+      "range": {
+        "startLine": 1473,
+        "startChar": 21,
+        "endLine": 1473,
+        "endChar": 55
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3def774_78f3ed5a",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1997,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "Leave the original type and use that in the API.",
+      "range": {
+        "startLine": 1997,
+        "startChar": 2,
+        "endLine": 1997,
+        "endChar": 5
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd12742_e71e5e67",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2001,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "Build change_in_file_size as a base::Optional and set it conditionally, then just have a single function call to RecordDownloadInterrupted.",
+      "range": {
+        "startLine": 2001,
+        "startChar": 4,
+        "endLine": 2001,
+        "endChar": 28
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82861ae3_ec62b1b5",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "resulting_file_size?",
+      "range": {
+        "startLine": 2002,
+        "startChar": 47,
+        "endLine": 2002,
+        "endChar": 65
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4199be_ba13ddd2",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2371,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "Same here w/ the cast",
+      "range": {
+        "startLine": 2371,
+        "startChar": 45,
+        "endLine": 2371,
+        "endChar": 61
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cce85f_a07b2693",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "We shouldn\u0027t return an int encoded as a type here.  It probably should happen at the final step when we build the UKM.  IMO make DownloadContent public, make DownloadContentFromMimeType public, and use that directly instead of relying on the return value here.",
+      "range": {
+        "startLine": 777,
+        "startChar": 9,
+        "endLine": 777,
+        "endChar": 43
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0bdba6_622a4f4b",
+        "filename": "content/browser/download/download_ukm_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:03:30Z",
+      "side": 1,
+      "message": "General comment from the previous files: Don\u0027t cast the arguments down to ints until you have to at the very end.  Guarantees type safety until we hand off to the UKM layer.",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "261013b8aee7dc1fc75dfa4a9e5df9aa9049a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
