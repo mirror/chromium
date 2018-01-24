@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53a32b49_6eb8f383",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9c8d16_37b48258",
+      "range": {
+        "startLine": 12,
+        "startChar": 68,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb74b3a0_160040e7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "71c761aa_33502fa3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Without backticks, yes. I changed it to be enclosed in backticks so I removed it.",
+      "parentUuid": "bb74b3a0_160040e7",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15d5f28b_814b50ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2cdce09_b84ab7e4",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b44eeee4_fe249cec",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d2cdb7_079535c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44eeee4_fe249cec",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7382ec0b_72c24958",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f88d6e3_bb91c273",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78324da_a14aa4c1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
         "patchSetId": 3
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "359d8818_24dae56b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Thanks for the help",
+      "parentUuid": "c78324da_a14aa4c1",
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab8e97a_2be0f718",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
         "patchSetId": 3
@@ -148,6 +286,24 @@
       "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b5d1ef_bada91da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab8e97a_2be0f718",
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
