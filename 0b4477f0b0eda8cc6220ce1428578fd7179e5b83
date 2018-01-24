@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d26514_370af623",
+        "filename": "chrome/browser/resources/media_router/extension/typecheck.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T21:12:10Z",
+      "side": 1,
+      "message": "+dbeam\n\nI am a bit concerned with this dynamic detection of java binary, to decide whether to run this or not. Question:\n\nAssuming that one is building on a Linux workstation, with Java setup already, does that mean that as part of building the usual \"chrome\" target, it will spawn java binary and perform type-checking, basically slowing down the build for anyone who has Java installed locally?\n\nIIUC, type-checking is not necessary for the code to build, it is just being added as an extra target. Is that accurate?\n\nCould you take a look at https://chromium.googlesource.com/chromium/src/+/master/docs/closure_compilation.md#typechecking-your-javascript, which describes the approach currently used for type-checking all of Chromium\u0027s JS code?",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "0b4477f0b0eda8cc6220ce1428578fd7179e5b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
