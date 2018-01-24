@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9679f59_654ad456",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:05:46Z",
+      "side": 1,
+      "message": "HashSet",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722afe2c_1bd824e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:05:46Z",
+      "side": 1,
+      "message": "sFirstSeenDownloadIds?",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 61
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c115f6_65bc1324",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:05:46Z",
+      "side": 1,
+      "message": "Can just use \".add\" if you use a HashSet.",
+      "range": {
+        "startLine": 612,
+        "startChar": 16,
+        "endLine": 614,
+        "endChar": 17
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
