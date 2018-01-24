@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3803d0af_9dd7fc18",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-24T18:50:22Z",
+      "side": 0,
+      "message": "The problem I see here (as opposed to in the caller functions with more semantic knowledge of what |query| is) is that by GURL/the URL spec, it is valid to have a query string that starts with \u0027?\u0027 or a ref string that starts with \u0027?\u0027 or \u0027#\u0027. Trimming the leading characters would mean this would fail to match a |component| of \"?modal_active\", to borrow from the test URL under discussion.\n\nI\u0027m not sure we are able to have visibility into GURL\u0027s implementation on this to be able to distinguish these cases (GURL giving a query piece that includes the delimiter versus the query piece genuinely has a \u0027?\u0027 or \u0027#\u0027 as the first character). Maybe there should instead be unit tests that would break if GURL breaks the expected behavior?",
+      "parentUuid": "d39cb8b3_2002d612",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b4273b0_d26b1461",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 4
