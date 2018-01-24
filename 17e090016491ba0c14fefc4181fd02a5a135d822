@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826cbf89_6d71f051",
+        "filename": "net/url_request/test_url_request_interceptor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-24T19:34:24Z",
+      "side": 1,
+      "message": "This seems like a fine change, but I don\u0027t think I understand how it relates to getting rid of SequencedWorkerPool?",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "17e090016491ba0c14fefc4181fd02a5a135d822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
