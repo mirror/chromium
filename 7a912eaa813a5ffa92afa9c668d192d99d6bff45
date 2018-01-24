@@ -39,6 +39,24 @@
       "revId": "7a912eaa813a5ffa92afa9c668d192d99d6bff45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64207992_67c352a8",
+        "filename": "services/audio/service_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-24T15:02:35Z",
+      "side": 1,
+      "message": "I don\u0027t like naming it \"CreateServiceInProcess\" and then adding other \"CreateService*\" methods.\nAnd I don\u0027t want to make it a static method of Service as well, since implementation will require a dependency on AudioManagerAccessor implementation, and Service depends only on its interface.\nDo you have some other ideas?\n\nKen - WDYT?",
+      "parentUuid": "f62989df_11684978",
+      "revId": "7a912eaa813a5ffa92afa9c668d192d99d6bff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
