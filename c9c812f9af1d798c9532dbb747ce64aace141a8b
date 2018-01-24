@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9640bb33_3b5fbe31",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-24T19:43:41Z",
+      "side": 1,
+      "message": "The ScopedBlockingCall in DhcpProxyScriptAdapterFetcher::GetPacURLFromDhcp will allow the TaskScheduler thread pool to grow when a :DhcpRequestParams() call blocks. https://chromium-review.googlesource.com/c/chromium/src/+/881273/14/net/proxy_resolution/dhcp_pac_file_adapter_fetcher_win.cc#249\n\nThe TaskScheduler is responsible for making sure that it doesn\u0027t create more threads than what\u0027s reasonable. We don\u0027t want every component in Chrome to try to outsmart TaskScheduler.",
+      "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
