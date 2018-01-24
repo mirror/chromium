@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b5346d_505eedcb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-24T00:07:14Z",
+      "side": 1,
+      "message": "This puts output parameters at the end of the list.",
+      "revId": "ad7b8090ff91365c035f020423a884940b5e0b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
