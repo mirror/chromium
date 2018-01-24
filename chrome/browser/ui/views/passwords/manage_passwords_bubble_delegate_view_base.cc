@@ -104,6 +104,8 @@ ManagePasswordsBubbleDelegateViewBase::CreateBubble(
                                          anchor_point, reason);
   } else {
     NOTREACHED();
+    view = new ManagePasswordsBubbleDelegateViewBase(web_contents, anchor_view,
+                                                     anchor_point, reason);
   }
 
   g_manage_passwords_bubble_ = view;
