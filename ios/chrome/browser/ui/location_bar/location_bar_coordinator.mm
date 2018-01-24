@@ -12,6 +12,8 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_consumer.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_mediator.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
@@ -30,20 +32,23 @@
 #error "This file requires ARC support."
 #endif
 
-@interface LocationBarCoordinator ()
+@interface LocationBarCoordinator ()<LocationBarConsumer>
 // Object taking care of adding the accessory views to the keyboard.
 @property(nonatomic, strong)
     ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
+@property(nonatomic, strong) LocationBarMediator* mediator;
 @end
 
 @implementation LocationBarCoordinator
 @synthesize locationBarView = _locationBarView;
+@synthesize mediator = _mediator;
 @synthesize keyboardDelegate = _keyboardDelegate;
 @synthesize browserState = _browserState;
 @synthesize dispatcher = dispatcher;
 @synthesize URLLoader = _URLLoader;
 @synthesize locationBarController = _locationBarController;
 @synthesize delegate = _delegate;
+@synthesize webStateList = _webStateList;
 
 #pragma mark - public
 
@@ -83,11 +88,17 @@
   self.keyboardDelegate.omniboxTextField = self.locationBarView.textField;
   ConfigureAssistiveKeyboardViews(self.locationBarView.textField, kDotComTLD,
                                   self.keyboardDelegate);
+
+  self.mediator = [[LocationBarMediator alloc] init];
+  self.mediator.webStateList = self.webStateList;
+  self.mediator.consumer = self;
 }
 
 - (void)stop {
   self.locationBarView = nil;
 }
+
+#pragma mark - LocationBarConsumer
 
 - (void)updateOmniboxState {
   _locationBarController->SetShouldShowHintText(
