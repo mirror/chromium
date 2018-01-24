@@ -16,6 +16,24 @@
       "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5844dc74_3bcf39f2",
+        "filename": "third_party/WebKit/public/platform/WebBlobInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-24T19:21:06Z",
+      "side": 0,
+      "message": "Superficial answer: It seems like they\u0027re still used in one of the 2 constructors below.\n\nIf you were thinking past that, can you please explain your reasoning, so I may learn?",
+      "parentUuid": "87ed7065_20fbc27d",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
