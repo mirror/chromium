@@ -22,6 +22,23 @@
       "revId": "20e8c944aeef4b3bcb6d431d2c5b6b67a56da8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b558c1_7d6c4e4e",
+        "filename": "mojo/public/cpp/bindings/array_traits_wtf_vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-24T21:18:00Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s more common to use CamelCase for template argument names even if they aren\u0027t really types.",
+      "revId": "20e8c944aeef4b3bcb6d431d2c5b6b67a56da8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
