@@ -58,6 +58,16 @@ declare_args() {
 
   # Set the number of lines for LogcatExtractor to send.
   logcat_extractor_size = 512
+
+  if (is_android) {
+    # Set to true to get logcat from a remote service
+    use_remote_service_logcat = false
+
+    # Set the package name and class path for the component which will provide device logs
+    # Values defined in eureka-internal
+    device_logs_provider_package = "\"\""
+    device_logs_provider_class = "\"\""
+  }
 }
 
 declare_args() {
