@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0960aca_40ed5f59",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30958,
+      "author": {
+        "id": 1000266
+      },
+      "writtenOn": "2018-01-24T19:10:19Z",
+      "side": 1,
+      "message": "Optional clarification: \"initiation to connection\"",
+      "range": {
+        "startLine": 30958,
+        "startChar": 54,
+        "endLine": 30958,
+        "endChar": 74
+      },
+      "revId": "dab289e246bc7d16fb13bda14fef16e347ab0869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
