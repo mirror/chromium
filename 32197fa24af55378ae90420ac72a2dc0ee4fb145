@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "04bd30d0_ee60f3e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T17:37:01Z",
+      "side": 1,
+      "message": "We can\u0027t commit to supporting FMP.\nWe won\u0027t remove it without something which works as an acceptable replacement for this use case though.\n\nThat being said, I don\u0027t think we should expose it to CCT.",
+      "parentUuid": "8d2e27bf_c1e0a0e7",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26f31df8_30ee0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 6
