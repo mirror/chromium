@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42454f7e_bc6f1bc5",
+        "filename": "content/browser/loader/mime_sniffing_resource_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-24T12:56:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have the flag check done by MimeSniffingResourceHandler",
+      "revId": "47390b688bc2248057e9782e37fa070f7ce50114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd5dbed_f203b734",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-24T12:56:34Z",
+      "side": 1,
+      "message": "Remove the comment here since we are addressing this TODO in this commit.",
+      "revId": "47390b688bc2248057e9782e37fa070f7ce50114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
