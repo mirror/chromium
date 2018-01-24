@@ -48,6 +48,8 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     static final int HIDE_NOTIFICATION_DELAY_MILLIS = 1000;
 
     private Tab mTab;
+    @VisibleForTesting
+    LargeIconBridge mLargeIconBridge;
     private Bitmap mPageMediaImage;
     @VisibleForTesting
     Bitmap mFavicon;
@@ -56,7 +58,8 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     @VisibleForTesting
     MediaSessionObserver mMediaSessionObserver;
     private int mPreviousVolumeControlStream = AudioManager.USE_DEFAULT_STREAM_TYPE;
-    private MediaNotificationInfo.Builder mNotificationInfoBuilder;
+    @VisibleForTesting
+    MediaNotificationInfo.Builder mNotificationInfoBuilder;
     // The fallback title if |mPageMetadata| is null or its title is empty.
     private String mFallbackTitle;
     // The metadata set by the page.
@@ -287,12 +290,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         @Override
         public void onFaviconUpdated(Tab tab, Bitmap icon) {
             assert tab == mTab;
-
-            // Store the favicon only if notification is being shown. Otherwise the favicon is
-            // obtained from large icon bridge when needed.
-            if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
-            if (!updateFavicon(icon)) return;
-            updateNotificationImage(mFavicon);
+            updateFavicon(icon);
         }
 
         @Override
@@ -362,12 +360,19 @@ public class MediaSessionTabHelper implements MediaImageCallback {
             hideNotificationImmediately();
             mTab.removeObserver(this);
             mTab = null;
+            mLargeIconBridge.destroy();
+            mLargeIconBridge = null;
         }
     };
 
     @VisibleForTesting
     MediaSessionTabHelper(Tab tab) {
         mTab = tab;
+        // LargeIconBridge cannot be created in tests due to native initialization. Test for null
+        // profile is used to work around.
+        if (mTab.getProfile() != null) {
+            mLargeIconBridge = new LargeIconBridge(mTab.getProfile());
+        }
         mTab.addObserver(mTabObserver);
         mMediaImageManager =
                 new MediaImageManager(MediaNotificationManager.MINIMAL_MEDIA_IMAGE_SIZE_PX,
@@ -429,24 +434,27 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     }
 
     /**
-     * Updates the best favicon if the given icon is better.
-     * @return whether the best favicon is updated.
+     * Updates the best favicon if the given icon is better and the favicon is shown in
+     * notification.
      */
-    private boolean updateFavicon(Bitmap icon) {
-        if (icon == null) return false;
+    private void updateFavicon(Bitmap icon) {
+        if (icon == null) return;
+
+        // Store the favicon only if notification is being shown. Otherwise the favicon is
+        // obtained from large icon bridge when needed.
+        if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
 
         // Disable favicons in notifications for low memory devices on O
         // where the notification icon is optional.
-        if (SysUtils.isLowEndDevice() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            return false;
+        if (SysUtils.isLowEndDevice() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) return;
 
-        if (!MediaNotificationManager.isBitmapSuitableAsMediaImage(icon)) return false;
+        if (!MediaNotificationManager.isBitmapSuitableAsMediaImage(icon)) return;
         if (mFavicon != null && (icon.getWidth() < mFavicon.getWidth()
                                         || icon.getHeight() < mFavicon.getHeight())) {
-            return false;
+            return;
         }
         mFavicon = MediaNotificationManager.downscaleIconToIdealSize(icon);
-        return true;
+        updateNotificationImage(mFavicon);
     }
 
     /**
@@ -519,25 +527,19 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         if (mFavicon != null) return mFavicon;
 
         // Fetch favicon image and update the notification when available.
-        if (mTab == null) return null;
+        if (mTab == null || mLargeIconBridge == null) return null;
         WebContents webContents = mTab.getWebContents();
         if (webContents == null) return null;
         String pageUrl = webContents.getLastCommittedUrl();
         int size = MediaNotificationManager.MINIMAL_MEDIA_IMAGE_SIZE_PX;
-        if (mTab.getProfile() == null) return null;
-        LargeIconBridge bridge = new LargeIconBridge(mTab.getProfile());
         LargeIconBridge.LargeIconCallback callback = new LargeIconBridge.LargeIconCallback() {
             @Override
             public void onLargeIconAvailable(
                     Bitmap icon, int fallbackColor, boolean isFallbackColorDefault, int iconType) {
-                if (isNotificationHiddingOrHidden() || mPageMediaImage != null) return;
-                if (updateFavicon(icon)) {
-                    updateNotificationImage(mFavicon);
-                }
-                bridge.destroy();
+                updateFavicon(icon);
             }
         };
-        if (!bridge.getLargeIconForUrl(pageUrl, size, callback)) bridge.destroy();
+        mLargeIconBridge.getLargeIconForUrl(pageUrl, size, callback);
 
         return null;
     }
