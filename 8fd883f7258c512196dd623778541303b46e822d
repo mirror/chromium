@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d6835b5_c5dd7cc8",
+        "filename": "chrome/android/profiles/chrome-profile-3309-text.prof",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T19:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea47ae9_00144ed3",
+      "revId": "8fd883f7258c512196dd623778541303b46e822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "736d4b46_c33d9571",
         "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
         "patchSetId": 24
@@ -69,6 +87,24 @@
       "revId": "8fd883f7258c512196dd623778541303b46e822d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cf3022_72ead8c4",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 24
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-24T19:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27197a94_b871db7e",
+      "revId": "8fd883f7258c512196dd623778541303b46e822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
