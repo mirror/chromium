@@ -70,6 +70,7 @@ void CSSUnitValue::setUnit(const String& unit_name,
   }
 
   unit_ = unit;
+  ClearCSSText();
 }
 
 String CSSUnitValue::unit() const {

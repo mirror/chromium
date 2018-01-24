@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Serialization of CSSStyleValue constructed from DOMString</title>
+<!-- Tentative because how this is implemented for nested objects is still
+     being discussed:
+     https://github.com/w3c/css-houdini-drafts/issues/556 -->
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylevalue-serialization">
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#parse-a-cssstylevalue">
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#dom-cssnumericvalue-parse">
+<meta name="assert" content="Test CSSStyleValues constructed from DOMStrings preserve their input" />
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+// Implementations are permitted to strip leading and trailing
+// whitespace/comments, so input preservation only really matters
+// for custom properties and things containing numbers.
+const gTestArguments = [
+  {
+    subclass: 'CSSUnparsedValue',
+    property: '--Foo',
+    value: ' auto/* */ '
+  },
+  {
+    subclass: 'CSSUnitValue',
+    property: 'width',
+    value: '1.000px'
+  },
+  {
+    subclass: 'CSSPositionValue',
+    property: 'object-position',
+    value: '1.00px 1.00px'
+  },
+  // TODO: What is the behaviour for nested objects like <calc>
+  // and <transform>
+];
+
+for (const {subclass, property, value} of gTestArguments) {
+  test(() => {
+    const result = CSSStyleValue.parse(property, value);
+    assert_equals(result.toString(), value);
+  }, subclass + ' constructed from parsing serializes exactly to the ' +
+     'original string');
+}
+
+test(() => {
+  const result = CSSStyleValue.parseAll('transition-duration', '1.0s, 2.0s');
+  assert_equals(result.length, 2);
+  assert_equals(result[0].toString(), '1.0s');
+  assert_equals(result[1].toString(), '2.0s');
+}, 'CSSStyleValues constructed from parsing list-valued property serializes ' +
+   'to each original item in the list');
+
+</script>

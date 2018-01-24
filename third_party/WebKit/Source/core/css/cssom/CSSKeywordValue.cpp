@@ -66,6 +66,7 @@ void CSSKeywordValue::setValue(const String& keyword,
     return;
   }
   keyword_value_ = keyword;
+  ClearCSSText();
 }
 
 CSSValueID CSSKeywordValue::KeywordValueID() const {

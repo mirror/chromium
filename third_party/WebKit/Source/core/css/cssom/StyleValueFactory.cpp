@@ -27,20 +27,6 @@ namespace blink {
 
 namespace {
 
-CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
-                                                    const CSSValue& value) {
-  switch (property_id) {
-    case CSSPropertyTransform:
-      return CSSTransformValue::FromCSSValue(value);
-    case CSSPropertyObjectPosition:
-      return CSSPositionValue::FromCSSValue(value);
-    default:
-      // TODO(meade): Implement other properties.
-      break;
-  }
-  return nullptr;
-}
-
 CSSStyleValue* CreateStyleValue(const CSSValue& value) {
   if (value.IsIdentifierValue() || value.IsCustomIdentValue())
     return CSSKeywordValue::FromCSSValue(value);
@@ -60,16 +46,26 @@ CSSStyleValue* CreateStyleValue(const CSSValue& value) {
   return nullptr;
 }
 
+CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
+                                                    const CSSValue& value) {
+  switch (property_id) {
+    case CSSPropertyTransform:
+      return CSSTransformValue::FromCSSValue(value);
+    case CSSPropertyObjectPosition:
+      return CSSPositionValue::FromCSSValue(value);
+    default:
+      // TODO(meade): Implement other properties.
+      break;
+  }
+  return CreateStyleValue(value);
+}
+
 CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
                                             const CSSValue& value) {
   if (value.IsCSSWideKeyword())
     return CSSKeywordValue::FromCSSValue(value);
 
-  CSSStyleValue* style_value =
-      CreateStyleValueWithPropertyInternal(property_id, value);
-  if (style_value)
-    return style_value;
-  return CreateStyleValue(value);
+  return CreateStyleValueWithPropertyInternal(property_id, value);
 }
 
 CSSStyleValueVector UnsupportedCSSValue(CSSPropertyID property_id,
@@ -121,6 +117,11 @@ CSSStyleValueVector StyleValueFactory::FromString(
   CSSStyleValueVector style_value_vector =
       StyleValueFactory::CssValueToStyleValueVector(property_id, *value);
   DCHECK(!style_value_vector.IsEmpty());
+
+  // TODO(801935): Handle list-valued properties and calcs.
+  if (style_value_vector.size() == 1U)
+    style_value_vector[0]->SetCSSText(css_text);
+
   return style_value_vector;
 }
 
