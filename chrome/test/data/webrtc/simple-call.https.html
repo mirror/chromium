@@ -1,0 +1,143 @@
+<!doctype html>
+<meta charset=utf-8>
+<html>
+<body>
+  <p>1. [A] Create local offer<br/>
+  2. [B] Set remote offer<br/>
+  3. [A] Copy ice candidate -> [B] Add ice candidate<br/>
+  4. [B] Create local answer<br/>
+  5. [A] Set remote answer<br/>
+  6. [B] Copy ice candidate -> [A] Add ice candidate<br/>
+  7. Profit</p>
+  <table border="1">
+    <tr>
+      <td><video id="local-view" autoplay width="320" height="320"></video></td>
+      <td><video id="remote-view" autoplay width="320" height="320"></video></td>
+    </tr>
+    <tr>
+      <td>
+        <button id="ice-candidate-button">Copy ice candidate</button><br/>
+        <textarea cols="50" rows="10" id="ice-candidate-text-area"></textarea>
+      </td>
+      <td>
+        <button id="create-offer-button">Create offer</button><br/>
+        <textarea cols="50" rows="10" id="offer-text-area"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button id="add-ice-candidate-button">Add ice candidate</button><br/>
+        <textarea cols="50" rows="10" id="add-ice-candidate-text-area"></textarea>
+      </td>
+      <td>
+        <button id="offer-answer-button">Set offer, create answer</button><br/>
+        <textarea cols="50" rows="10" id="offer-answer-text-area"></textarea>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+<script>
+'use strict';
+
+const localView = document.getElementById('local-view');
+const remoteView = document.getElementById('remote-view');
+
+const iceCandidateButton = document.getElementById('ice-candidate-button');
+const iceCandidateTextArea = document.getElementById('ice-candidate-text-area');
+const createOfferButton = document.getElementById('create-offer-button');
+const offerTextArea = document.getElementById('offer-text-area');
+
+const addIceCandidateButton = document.getElementById('add-ice-candidate-button');
+const addIceCandidateTextArea = document.getElementById('add-ice-candidate-text-area');
+const offerAnswerButton = document.getElementById('offer-answer-button');
+const offerAnswerTextArea = document.getElementById('offer-answer-text-area');
+
+const pc = new RTCPeerConnection();
+
+pc.onicecandidate = (e) => {
+  if (e.candidate) {
+    iceCandidateTextArea.value = JSON.stringify(e.candidate);
+    console.log('onicecandidate fired');
+  }
+}
+
+navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+.then(stream => {
+  localView.srcObject = stream;
+  pc.addTrack(stream.getTracks()[0], stream);
+  pc.addTrack(stream.getTracks()[1], stream);
+})
+
+iceCandidateButton.onclick = () => {
+  iceCandidateTextArea.select();
+  document.execCommand('copy');
+  console.log('Ice candidate copied');
+}
+
+createOfferButton.onclick = () => {
+  if (createOfferButton.innerHTML == 'Create offer') {
+    pc.createOffer()
+    .then(offer => {
+      offerTextArea.value = offer.sdp;
+      createOfferButton.innerHTML = 'Copy offer';
+      offerAnswerButton.innerHTML = 'Set answer';
+      return pc.setLocalDescription(offer);
+    }).then(() => {
+      console.log('Offer created and local description set')
+    });
+  } else {
+    offerTextArea.select();
+    document.execCommand('copy');
+    console.log('Copied offer');
+  }
+}
+
+addIceCandidateButton.onclick = () => {
+  let iceCandidate = new RTCIceCandidate(JSON.parse(addIceCandidateTextArea.value));
+  pc.addIceCandidate(iceCandidate);
+  console.log('Added ice candidate: ' + JSON.stringify(iceCandidate));
+}
+
+offerAnswerButton.onclick = () => {
+  if (offerAnswerButton.innerHTML == 'Set offer, create answer') {
+    let offerInit = { type:'offer', sdp:offerAnswerTextArea.value };
+    let offer = new RTCSessionDescription(offerInit);
+    console.log('Setting remote offer: ' + JSON.stringify(offer));
+    pc.setRemoteDescription(offer)
+    .then(() => {
+      console.log('Offer set, creating answer');
+      offerAnswerButton.innerHTML = 'Create answer';
+    });
+  } else if (offerAnswerButton.innerHTML == 'Create answer') {
+    pc.createAnswer()
+    .then(answer => {
+      offerAnswerTextArea.value = answer.sdp;
+      offerAnswerButton.innerHTML = 'Copy answer';
+      console.log('Answer created');
+      pc.setLocalDescription(answer);
+    }).then(() => {
+      console.log('Answer set');
+    });
+  } else if (offerAnswerButton.innerHTML == 'Set answer') {
+    let answerInit = { type:'answer', sdp:offerAnswerTextArea.value };
+    let answer = new RTCSessionDescription(answerInit);
+    console.log('Setting answer offer: ' + JSON.stringify(answer));
+    pc.setRemoteDescription(answer)
+    .then(() => {
+      offerAnswerTextArea.value = 'DONE';
+      console.log('Answer set');
+    });
+  } else {
+    offerAnswerTextArea.select();
+    document.execCommand('copy');
+    offerAnswerTextArea.value = 'DONE';
+    console.log('Copied answer');
+  }
+}
+
+pc.ontrack = e => {
+  console.log('TRACK EVENT FIRED WITH TRACK ' + e.track.id + ' AND STREAM: ' + e.streams[0].id);
+  remoteView.srcObject = e.streams[0];
+};
+</script>

@@ -415,3 +415,11 @@ IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest,
             ExecuteJavascript(
                 "testRTCRtpSenderReplaceTrackSendsNewVideoTrack()", left_tab_));
 }
+
+IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest, LaunchSimpleCallPage) {
+  StartServer();
+  left_tab_ = OpenTestPageInNewTab("/webrtc/simple-call.https.html");
+  right_tab_ = OpenTestPageInNewTab("/webrtc/simple-call.https.html");
+  base::RunLoop run_loop;
+  run_loop.Run();
+}
