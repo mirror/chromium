@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b77ca497_213c0dbe",
+        "filename": "base/metrics/field_trial.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a1ea92_5dc4180f",
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af36a3ed_6b969746",
         "filename": "base/metrics/field_trial.h",
         "patchSetId": 13
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-23T20:47:08Z",
       "side": 1,
       "message": "Output params should be last. Sorry for not catching this during your change of AllStatesToString().\n\nHowever, in this case, I actually suggest returning the string as a proper return value. Compilers are now smart enough to do move optimizations for such cases, so it\u0027s not as expensive as it used to be - which was the reason people used out params for strings.",
+      "range": {
+        "startLine": 522,
+        "startChar": 52,
+        "endLine": 522,
+        "endChar": 0
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9c1a8a_d9b922a0",
+        "filename": "base/metrics/field_trial.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done for AllParamsToString\n\nIs it ok if I leave AllStatesToString as it is in this CL?",
+      "parentUuid": "af36a3ed_6b969746",
       "range": {
         "startLine": 522,
         "startChar": 52,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "274296ef_0766842c",
+        "filename": "components/variations/net/variations_command_line.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9b87d5_aa864105",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff14a886_4faacae7",
         "filename": "components/variations/net/variations_command_line.h",
         "patchSetId": 13
@@ -85,6 +151,30 @@
       "revId": "953a9788154a3b52d11346a4387962425efcec3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8360047e_92d7a265",
+        "filename": "components/variations/net/variations_command_line.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff14a886_4faacae7",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "79ba6db4_072aa951",
+        "filename": "components/variations/net/variations_command_line.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cbde454_700fe782",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e386a27_44c4317c",
         "filename": "components/variations/net/variations_command_line_unittest.cc",
         "patchSetId": 13
@@ -131,6 +245,30 @@
       "revId": "953a9788154a3b52d11346a4387962425efcec3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ae5c2b_81eac15e",
+        "filename": "components/variations/net/variations_command_line_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e386a27_44c4317c",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "22a8fe02_67559ee6",
+        "filename": "components/version_ui/resources/about_version.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "It is not really really needed but the variations command line output is really long even with this width. And there is still a lot of space left on my big screen. Maybe it could be a percentage instead of px to adopt to different screensize ? Note, mobile has different css",
+      "parentUuid": "f284375a_26e28253",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c1c3b2_ee0b76f1",
         "filename": "components/version_ui/version_handler_helper.h",
         "patchSetId": 13
@@ -171,6 +333,24 @@
       "revId": "953a9788154a3b52d11346a4387962425efcec3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd867b8_95cc4fd6",
+        "filename": "components/version_ui/version_handler_helper.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-24T17:26:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c1c3b2_ee0b76f1",
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
