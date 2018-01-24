@@ -222,6 +222,30 @@
       "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c190d9cc_c1383cef",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T13:42:46Z",
+      "side": 1,
+      "message": "Ack. I\u0027ve often seen lack of virtual in this case end up in bugs when code is later refactored to use the base class for destruction, but i\u0027m not sure that justifies adding it. Either way is OK with me.",
+      "parentUuid": "63a91096_c05956f6",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 23
+      },
+      "revId": "5488f695deaa9fcc4c041dbed8bee4d44d19e2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

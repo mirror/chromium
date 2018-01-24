@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7491af9e_c653113c",
+        "filename": "components/exo/wayland/clients/rects.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T13:42:46Z",
+      "side": 1,
+      "message": "nit: maybe add a temporary variable for this",
+      "range": {
+        "startLine": 395,
+        "startChar": 14,
+        "endLine": 396,
+        "endChar": 35
+      },
+      "revId": "fe05f8be489be440fa43e6292e3f9cf0cae36c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
