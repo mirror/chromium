@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ed7065_20fbc27d",
+        "filename": "third_party/WebKit/public/platform/WebBlobInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-24T19:16:53Z",
+      "side": 0,
+      "message": "Should file_path_ and file_name_ be deleted now?",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
