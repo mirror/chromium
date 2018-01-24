@@ -1999,6 +1999,13 @@ config("minimal_symbols") {
       if (strip_debug_info) {
         ldflags += [ "-Wl,--strip-debug" ]
       }
+    } else if (!is_mac && !is_nacl && !using_sanitizer && !is_component_build) {
+      # This is for speed up link time by reducing binary size,
+      # especially for buildbot.
+      # Some large binary (e.g. unit_tests) has neary GB size and
+      # writing such binary to disk taking time due to limited disk throughput
+      # in buildbot running on GCE.
+      ldflags += [ "-Wl,--strip-debug" ]
     }
 
     # Note: -gsplit-dwarf implicitly turns on -g2 with clang, so don't pass it.
