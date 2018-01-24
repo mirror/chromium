@@ -16,6 +16,24 @@
       "revId": "6b3756e3591c76690cf6ab20b50b53c3ac2436b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218c085c_c3fb8c7c",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2018-01-24T20:22:14Z",
+      "side": 1,
+      "message": "This essentially does the same thing as before since we have the |done_listener|. If the |runTest| has an uncaught error, the |WaitUntilSatisfied| will time out, whereas before, |ExecuteScript| would time out.\n\nIf you like, I could put |runTest| in a try block, so we could explicitly fail the test in the case of an error instead of waiting for the timeout. That should also make things clearer.",
+      "parentUuid": "a6d5a83e_0c3ef3d3",
+      "revId": "6b3756e3591c76690cf6ab20b50b53c3ac2436b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
