@@ -199,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "33e6cbe1_961e1ee3",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-01-24T19:52:30Z",
+      "side": 1,
+      "message": "Oh, duh. Ignore my BUILDFLAG comment.\n\nThanks Simeon, and sorry Sandeep for the noise.",
+      "parentUuid": "ab5abdd1_deb13a0c",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "065a51ea5566152f0fd20c4002295157125f347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52bbb512_44d0706d",
         "filename": "chromecast/browser/android/junit/src/org/chromium/chromecast/shell/DumpStreamBuilderUnitTest.java",
         "patchSetId": 4
