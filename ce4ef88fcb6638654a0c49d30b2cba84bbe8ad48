@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "081d6e30_233f972a",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "can we return base::Value(), to indicate an error to the caller",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8325bb6a_944033da",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "why is url_fetcher_ not reset on failure, too?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328a4a48_af9bdc2e",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "optional:\nfetch_callback_;\nor just callback_; (on_collection_names is implied by the class name)",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4504aea4_206d4e27",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "can this be part of WallpaperManager?\nOr even better, I\u0027d remove it all together.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef8ff07_3fc56946",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "this should be bool, so s/\"true\"/true/",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90d1d8e_137b35d2",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "Should this be array?",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 31
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d17682_708cc470",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:23:15Z",
+      "side": 1,
+      "message": "can you define this object\u0027s properties?\n\nLet\u0027s assume the object is expected to have string properties A and B, with B being optional.\n(e.g. {A: \u0027a_value\u0027, B: \u0027b_value\u0027}, or {A: \u0027value\u0027});\nunder types you\u0027d have to define the object type - add\n{\n  \"name\": \"ImageInfo\",\n  \"type\": \"object\",\n  \"description\": \"TODO\",\n  \"properties\": [\n     {\n        \"name\": \"A\",\n        \"type\": \"string\"\n        \"description\": \"...\"\n     },\n     {\n       \"name\": \"B\",\n        \"type\": \"string\",\n        \"description\": \"....\",\n        \"optional\": true\n     }\n   ]\n}\n\n\nAnd then here, you\u0027d have:\n\n{\n  \"type\": \"array\",\n  \"name\": \"imagesInfo\",\n  \"items\": {\n    \"$ref\": \"ImageInfo\"\n  }\n}",
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
