@@ -16,6 +16,24 @@
       "revId": "44e0e49a3a4e4a3d77c19bcdf5a08d505b641174",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f7f6b3_c099492b",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-createImageBitmap-drawImage-video.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2018-01-24T19:41:39Z",
+      "side": 1,
+      "message": "Agreed. I was thinking the same a couple of minutes ago. I did that to merge the tests in the next step and get rid of the separate test file for video, but there were issues. In fact, let me give it another try.",
+      "parentUuid": "d541fc98_e4c20e9e",
+      "revId": "44e0e49a3a4e4a3d77c19bcdf5a08d505b641174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
