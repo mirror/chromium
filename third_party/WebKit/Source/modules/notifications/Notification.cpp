@@ -154,7 +154,8 @@ Notification::Notification(ExecutionContext* context,
     : ContextLifecycleObserver(context),
       type_(type),
       state_(State::kLoading),
-      data_(data) {
+      data_(data),
+      listener_binding_(this) {
   DCHECK(GetWebNotificationManager());
 }
 
@@ -196,8 +197,12 @@ void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   DCHECK(origin);
 
   if (RuntimeEnabledFeatures::NotificationsWithMojoEnabled()) {
+    mojom::blink::NonPersistentNotificationListenerPtr event_listener;
+    listener_binding_.Bind(mojo::MakeRequest(&event_listener));
+
     NotificationManager::From(execution_context)
-        ->DisplayNonPersistentNotification(data_, loader->GetResources());
+        ->DisplayNonPersistentNotification(data_, loader->GetResources(),
+                                           std::move(event_listener));
   } else {
     GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
                                       loader->GetResources(), this);
@@ -235,6 +240,18 @@ void Notification::close() {
 
   GetWebNotificationManager()->ClosePersistent(WebSecurityOrigin(origin),
                                                data_.tag, notification_id_);
+}
+
+void Notification::OnShow() {
+  DispatchShowEvent();
+}
+
+void Notification::OnClick() {
+  DispatchClickEvent();
+}
+
+void Notification::OnClose() {
+  DispatchCloseEvent();
 }
 
 void Notification::DispatchShowEvent() {
@@ -458,6 +475,8 @@ const AtomicString& Notification::InterfaceName() const {
 }
 
 void Notification::ContextDestroyed(ExecutionContext*) {
+  listener_binding_.Close();
+
   GetWebNotificationManager()->NotifyDelegateDestroyed(this);
 
   state_ = State::kClosed;
