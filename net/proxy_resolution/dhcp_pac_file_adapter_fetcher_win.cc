@@ -11,7 +11,8 @@
 #include "base/memory/free_deleter.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/time/time.h"
 #include "net/base/net_errors.h"
 #include "net/proxy_resolution/dhcpcsvc_init_win.h"
@@ -32,10 +33,8 @@ const int kTimeoutMs = 2000;
 namespace net {
 
 DhcpProxyScriptAdapterFetcher::DhcpProxyScriptAdapterFetcher(
-    URLRequestContext* url_request_context,
-    scoped_refptr<base::TaskRunner> task_runner)
-    : task_runner_(task_runner),
-      state_(STATE_START),
+    URLRequestContext* url_request_context)
+    : state_(STATE_START),
       result_(ERR_IO_PENDING),
       url_request_context_(url_request_context) {
   DCHECK(url_request_context_);
@@ -58,16 +57,14 @@ void DhcpProxyScriptAdapterFetcher::Fetch(
   wait_timer_.Start(FROM_HERE, ImplGetTimeout(),
                     this, &DhcpProxyScriptAdapterFetcher::OnTimeout);
   scoped_refptr<DhcpQuery> dhcp_query(ImplCreateDhcpQuery());
-  task_runner_->PostTaskAndReply(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      base::Bind(
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(
           &DhcpProxyScriptAdapterFetcher::DhcpQuery::GetPacURLForAdapter,
-          dhcp_query.get(),
-          adapter_name),
-      base::Bind(
-          &DhcpProxyScriptAdapterFetcher::OnDhcpQueryDone,
-          AsWeakPtr(),
-          dhcp_query));
+          dhcp_query.get(), adapter_name),
+      base::BindOnce(&DhcpProxyScriptAdapterFetcher::OnDhcpQueryDone,
+                     AsWeakPtr(), dhcp_query));
 }
 
 void DhcpProxyScriptAdapterFetcher::Cancel() {
@@ -249,6 +246,8 @@ std::string DhcpProxyScriptAdapterFetcher::GetPacURLFromDhcp(
     // articles about calls to this function failing when other flags are used
     // (e.g. http://support.microsoft.com/kb/885270) so we won't take any
     // chances on non-standard, poorly documented usage.
+    base::ScopedBlockingCall scoped_blocking_call(
+        base::BlockingType::MAY_BLOCK);
     res = ::DhcpRequestParams(DHCPCAPI_REQUEST_SYNCHRONOUS,
                               NULL,
                               const_cast<LPWSTR>(adapter_name_wide.c_str()),
