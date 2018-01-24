@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a74c14_a3dc38cc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/BackgroundSyncLauncherTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-24T20:16:18Z",
+      "side": 1,
+      "message": "ExecutionExcpetion and InterruptedException are both subclasses of Exception. Why do we need to declare the throws separately?",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "1e273eea904211b885c6bbd9a9f34a2ca848fe6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
