@@ -33,6 +33,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -48,6 +49,7 @@
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_task_runner.h"
+#include "content/browser/download/download_ukm_helper.h"
 #include "content/browser/download/download_utils.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -1463,7 +1465,14 @@ void DownloadItemImpl::Start(
       RecordParallelizableDownloadCount(NEW_DOWNLOAD_COUNT,
                                         IsParallelDownloadEnabled());
     }
-    RecordDownloadMimeType(mime_type_);
+    int file_type = RecordDownloadMimeType(mime_type_);
+    auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
+    if (in_progress_entry) {
+      DownloadUkmHelper::RecordDownloadStarted(
+          in_progress_entry->ukm_download_id, new_create_info.ukm_source_id,
+          file_type, static_cast<int>(download_source_));
+    }
+
     if (!GetBrowserContext()->IsOffTheRecord()) {
       RecordDownloadCountWithSource(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE,
                                     download_source_);
@@ -1828,6 +1837,18 @@ void DownloadItemImpl::Completed() {
     auto_opened_ = true;
   }
   UpdateObservers();
+
+  base::TimeDelta time_since_start = GetEndTime() - GetStartTime();
+
+  // If all data is saved, the number of received bytes is resulting file size.
+  int resulting_file_size = GetReceivedBytes();
+
+  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
+  if (in_progress_entry) {
+    DownloadUkmHelper::RecordDownloadCompleted(
+        in_progress_entry->ukm_download_id, resulting_file_size,
+        time_since_start);
+  }
 }
 
 // **** End of Download progression cascade
@@ -1971,6 +1992,23 @@ void DownloadItemImpl::InterruptWithPartialState(
   RecordDownloadInterrupted(reason, GetReceivedBytes(), total_bytes_,
                             job_ && job_->IsParallelizable(),
                             IsParallelDownloadEnabled(), download_source_);
+
+  base::TimeDelta time_since_start = base::Time::Now() - GetStartTime();
+  int reason_int = static_cast<int>(reason);
+  int resulting_file_size = GetReceivedBytes();
+  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
+  if (in_progress_entry) {
+    if (total_bytes_ >= 0) {
+      int change_in_file_size = total_bytes_ - GetReceivedBytes();
+      DownloadUkmHelper::RecordDownloadInterrupted(
+          in_progress_entry->ukm_download_id, change_in_file_size, reason_int,
+          resulting_file_size, time_since_start);
+    } else {
+      DownloadUkmHelper::RecordDownloadInterrupted(
+          in_progress_entry->ukm_download_id, base::nullopt, reason_int,
+          resulting_file_size, time_since_start);
+    }
+  }
   if (reason == DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH)
     received_bytes_at_length_mismatch_ = GetReceivedBytes();
 
@@ -2321,11 +2359,18 @@ void DownloadItemImpl::ResumeInterruptedDownload(
       Referrer(GetReferrerUrl(), blink::kWebReferrerPolicyAlways));
 
   TransitionTo(RESUMING_INTERNAL);
-
   RecordDownloadCountWithSource(source == ResumptionRequestSource::USER
                                     ? MANUAL_RESUMPTION_COUNT
                                     : AUTO_RESUMPTION_COUNT,
                                 download_source_);
+
+  base::TimeDelta time_since_start = base::Time::Now() - GetStartTime();
+  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
+  if (in_progress_entry) {
+    DownloadUkmHelper::RecordDownloadResumed(in_progress_entry->ukm_download_id,
+                                             static_cast<int>(GetResumeMode()),
+                                             time_since_start);
+  }
 
   delegate_->ResumeInterruptedDownload(std::move(download_params), GetId());
 
