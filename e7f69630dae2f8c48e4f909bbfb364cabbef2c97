@@ -16,6 +16,24 @@
       "revId": "e7f69630dae2f8c48e4f909bbfb364cabbef2c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac831bf6_7c722daa",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T00:54:38Z",
+      "side": 1,
+      "message": "Oh hah, I had that originally but the NSButton API docs confused me. Anyway, done.",
+      "parentUuid": "409d7927_f758573e",
+      "revId": "e7f69630dae2f8c48e4f909bbfb364cabbef2c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
