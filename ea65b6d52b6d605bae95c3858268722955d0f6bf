@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a65ac541_49e50883",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-24T22:34:50Z",
+      "side": 1,
+      "message": "note: the sync prompt should be hidden if it is dice-enabled.",
+      "revId": "ea65b6d52b6d605bae95c3858268722955d0f6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
