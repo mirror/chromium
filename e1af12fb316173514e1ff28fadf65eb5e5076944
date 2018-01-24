@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6e775afa_acead5c4",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-24T15:58:20Z",
+      "side": 1,
+      "message": "Not all of the checks being relevant here is IMO fine, but I agree that hopping to the IO thread and back here doesn\u0027t seem great. So I guess duplicating is the smaller evil.\n\nShould all the new code go into an \"if (account_consistency_mirror_required_)\"? I think it\u0027ll work out to the exact same thing, but as it is, that\u0027s not clear at all from reading the code.\nPlease also add a comment to explain why setting those PROFILE_MODE_ flags and an empty account_id is the right thing to do here.",
+      "parentUuid": "fb104c56_e1eb51b6",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
