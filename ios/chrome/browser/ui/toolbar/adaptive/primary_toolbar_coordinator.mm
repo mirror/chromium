@@ -13,7 +13,6 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
-#import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator+subclassing.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
@@ -27,16 +26,12 @@
 #error "This file requires ARC support."
 #endif
 
-@interface PrimaryToolbarCoordinator ()<OmniboxPopupPositioner> {
-  std::unique_ptr<LocationBarControllerImpl> _locationBar;
-}
+@interface PrimaryToolbarCoordinator ()<OmniboxPopupPositioner>
 
 // Redefined as PrimaryToolbarViewController.
 @property(nonatomic, strong) PrimaryToolbarViewController* viewController;
 // The coordinator for the location bar in the toolbar.
 @property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
-// Coordinator for the omnibox popup.
-@property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
 
 @end
 
@@ -44,7 +39,6 @@
 
 @dynamic viewController;
 @synthesize locationBarCoordinator = _locationBarCoordinator;
-@synthesize omniboxPopupCoordinator = _omniboxPopupCoordinator;
 @synthesize delegate = _delegate;
 @synthesize URLLoader = _URLLoader;
 
@@ -96,9 +90,7 @@
 }
 
 - (BOOL)showingOmniboxPopup {
-  OmniboxViewIOS* omniboxViewIOS =
-      static_cast<OmniboxViewIOS*>(_locationBar.get()->GetLocationEntry());
-  return omniboxViewIOS->IsPopupOpen();
+  return [self.locationBarCoordinator showingOmniboxPopup];
 }
 
 - (void)transitionToLocationBarFocusedState:(BOOL)focused {
@@ -161,18 +153,8 @@
   self.locationBarCoordinator.URLLoader = self.URLLoader;
   self.locationBarCoordinator.delegate = self.delegate;
   self.locationBarCoordinator.webStateList = self.webStateList;
+  self.locationBarCoordinator.popupPositioner = self;
   [self.locationBarCoordinator start];
-
-  // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
-  // created.
-  _locationBar = std::make_unique<LocationBarControllerImpl>(
-      self.locationBarCoordinator.locationBarView, self.browserState,
-      self.locationBarCoordinator, self.dispatcher);
-  self.locationBarCoordinator.locationBarController = _locationBar.get();
-  _locationBar->SetURLLoader(self.locationBarCoordinator);
-  self.omniboxPopupCoordinator = _locationBar->CreatePopupCoordinator(self);
-  [self.omniboxPopupCoordinator start];
-  // End of TODO(crbug.com/785253):.
 }
 
 @end
