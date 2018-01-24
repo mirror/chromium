@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e77dc6b_e3bc916d",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-24T17:45:05Z",
+      "side": 1,
+      "message": "implementing",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "c47c427874b84aa8731915d0fee32db554bcb9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
