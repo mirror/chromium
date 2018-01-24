@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46abe342_b0186ae3",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "Did you check to see if any of those values were already used somewhere in other Harmony UI? It\u0027d be nice to reuse the same constants.",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbcdb21_11b8a177",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "What\u0027s the plan for splitting this behavior out? It looks like this code would be much simpler if it didn\u0027t handle separators and warnings in the same class.",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa881ea_3aa9cad7",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "nit: BoxLayout layout \u003d SetLayoutManager(std::make_unique...); layout-\u003eset_main_axis_alignment... better conforms to the typical pattern (same as what you\u0027re doing with the GridLayout a few lines down).",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db1a14c_21ee36c0",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "nit: call AddChildView(new views::Separator) directly. Makes ownership marginally clearer.",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5a4ea5_1537e975",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "nit: Considering this class is specific to a Row, I\u0027d name it something less generic list AutofillPopupRowView (btw why \"native\"?)",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2017e5_f7d6f676",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T19:56:20Z",
+      "side": 1,
+      "message": "Why keep those as members? I can\u0027t see them used anywhere besides the function where they\u0027re instantiated.",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
