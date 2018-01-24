@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db02eb8_338adf56",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T23:28:59Z",
+      "side": 1,
+      "message": "nit: s/views::Widget/views::Widget:/ while you\u0027re here",
+      "range": {
+        "startLine": 73,
+        "startChar": 21,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "cb9bc0395f03e79016d8d00912788e9074d80a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6db0de6_2acbc8df",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T23:28:59Z",
+      "side": 1,
+      "message": "nit: \"gfx::Size minimum_size() const { shell_surface_-\u003eminimum_size(); }\" instead of exposing the shell surface class from here until needed",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 73
+      },
+      "revId": "cb9bc0395f03e79016d8d00912788e9074d80a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a6ff3d_29bda5b4",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T23:28:59Z",
+      "side": 1,
+      "message": "why do we have to expose this? Can\u0027t we use ShellSurfaceBase::GetMinimumSize() instead?",
+      "revId": "cb9bc0395f03e79016d8d00912788e9074d80a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
