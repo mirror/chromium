@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "0f518b47_25d16179",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-24T17:44:55Z",
+      "side": 1,
+      "message": "Comments done.\n\nif (account_consistency_mirror_required_): This would mean that on Chrome OS we\u0027re not sending the \"enable_account_consistency\u003dfalse\" in the header. This is not a change in the overall user experience, but this would mean different behavior of the OneGoogleBar load compared to a regular google.com request on Chrome OS. (Test case in https://chromium-review.googlesource.com/c/chromium/src/+/879141/5/chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc#319 would change.)",
+      "parentUuid": "3440f4d7_6ff764f1",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
