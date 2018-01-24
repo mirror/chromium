@@ -52,6 +52,24 @@
       "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1bc7ea3_481a744c",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-24T22:45:22Z",
+      "side": 1,
+      "message": "I agree with that.\nDone.\n\nPlease know that |MF_CAPTURE_ENGINE_FIRST_SOURCE_PHOTO_STREAM| and |MF_CAPTURE_ENGINE_FIRST_SOURCE_VIDEO_STREAM| exists only MSDN documentation. I never found a header containing those constant.",
+      "parentUuid": "378baa61_d8671408",
+      "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
