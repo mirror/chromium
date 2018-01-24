@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc12fe25_d23ef777",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-24T07:50:23Z",
+      "side": 1,
+      "message": "could you revert the condition?",
+      "revId": "77355cd323efb5cd5cd4e5fab3ec779c75d5e300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1504804_e78c3e56",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-24T07:50:23Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(state_, State::NOT_STARTED);",
+      "revId": "77355cd323efb5cd5cd4e5fab3ec779c75d5e300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264f65f5_2365e15f",
+        "filename": "components/arc/arc_session_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-24T07:50:23Z",
+      "side": 1,
+      "message": "style: could you elide braces?",
+      "revId": "77355cd323efb5cd5cd4e5fab3ec779c75d5e300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
