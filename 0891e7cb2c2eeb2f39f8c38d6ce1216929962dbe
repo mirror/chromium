@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d96e5e1_fecfc523",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-24T11:48:54Z",
+      "side": 1,
+      "message": "It\u0027s tricky for me to debug this as I don\u0027t have a Windows build environment set up.\n\nbratell@, are you building *windows these days? Maybe you have an idea on how to fix this? The goal is to run InProcessGpuTest on all platforms.",
+      "range": {
+        "startLine": 965,
+        "startChar": 0,
+        "endLine": 969,
+        "endChar": 3
+      },
+      "revId": "0891e7cb2c2eeb2f39f8c38d6ce1216929962dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
