@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba42cb0a_142555ae",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T16:48:20Z",
+      "side": 1,
+      "message": "Since this removes the whole case MEDIA_TAB_VIDEO_CAPTURE for Android, do I assume correctly that this case currently never happened on Android even before this CL?",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5499b24_786738ee",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T16:48:20Z",
+      "side": 1,
+      "message": "It is a little bit confusing that there is a MEDIA_TAB_VIDEO_CAPTURE and a MEDIA_DESKTOP_VIDEO_CAPTURE with DesktopMediaID::TYPE_WEB_CONTENTS that both lead to DoStartTabCaptureOnDeviceThread. Is Tab capture a special case of WebContents capture? Would it make sense to rename the method to DoStartWebContentsCaptureOnDeviceThread()?",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618265c2_47aaa466",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T16:48:20Z",
+      "side": 1,
+      "message": "Can WebContentsVideoCaptureDevice::Create() actually return nullptr? If not, this if can be removed.",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a59a41_28dd227b",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T16:48:20Z",
+      "side": 1,
+      "message": "The wrapping of |receiver| here is a duplication of what happens in method CreateDeviceClient(). Instead, could we do the wrapping near the beginning of method LaunchDeviceAsync()?",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
