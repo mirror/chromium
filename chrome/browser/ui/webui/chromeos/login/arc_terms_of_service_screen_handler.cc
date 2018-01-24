@@ -74,7 +74,7 @@ void ArcTermsOfServiceScreenHandler::OnCurrentScreenChanged(
 
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(chromeos::switches::kEnableArcOOBEOptIn))
+  if (command_line->HasSwitch(chromeos::switches::kDisableArcOOBEOptIn))
     return;
 
   MaybeLoadPlayStoreToS(false);

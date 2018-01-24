@@ -1646,7 +1646,7 @@ bool WizardController::IsRemoraPairingOobe() const {
 bool WizardController::ShouldShowArcTerms() const {
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(chromeos::switches::kEnableArcOOBEOptIn)) {
+  if (command_line->HasSwitch(chromeos::switches::kDisableArcOOBEOptIn)) {
     VLOG(1) << "Skip ARC Terms of Service screen because ARC OOBE OptIn is "
             << "disabled.";
     return false;

@@ -436,8 +436,8 @@ bool IsArcOobeOptInActive() {
   // is new and the swtich is appended.
   if (!user_manager::UserManager::Get()->IsCurrentUserNew())
     return false;
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableArcOOBEOptIn)) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+         chromeos::switches::kDisableArcOOBEOptIn)) {
     return false;
   }
 

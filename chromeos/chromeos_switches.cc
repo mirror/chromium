@@ -172,6 +172,9 @@ const char kDerelictIdleTimeout[] = "derelict-idle-timeout";
 // Disables android user data wipe on opt out.
 const char kDisableArcDataWipe[] = "disable-arc-data-wipe";
 
+// Disables ARC OptIn flow in OOBE.
+const char kDisableArcOOBEOptIn[] = "disable-arc-oobe-optin";
+
 // Disables ARC Opt-in verification process and ARC is enabled by default.
 const char kDisableArcOptInVerification[] = "disable-arc-opt-in-verification";
 
@@ -296,9 +299,6 @@ const char kEnableAndroidWallpapersApp[] = "enable-android-wallpapers-app";
 // DEPRECATED. Please use --arc-availability=officially-supported.
 // Enables starting the ARC instance upon session start.
 const char kEnableArc[] = "enable-arc";
-
-// Enables ARC OptIn flow in OOBE.
-const char kEnableArcOOBEOptIn[] = "enable-arc-oobe-optin";
 
 // Enables using a random url for captive portal detection.
 const char kEnableCaptivePortalRandomUrl[] = "enable-captive-portal-random-url";
