@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<style>
+#test1 { display: inline-layout(test1); }
+#test2 { display: inline-layout(); }
+#test3 { display: inline-layout(test3, invalid); }
+</style>
+
+<div id=test1></div>
+<div id=test2></div>
+<div id=test3></div>
+<div id=test4></div>
+<script>
+test(() => {
+  const test1 = document.getElementById('test1');
+  assert_equals(getComputedStyle(test1).display, 'inline-layout(test1)');
+});
+
+test(() => {
+  // inline-layout() should fail to parse.
+  const test2 = document.getElementById('test2');
+  assert_equals(getComputedStyle(test2).display, 'block');
+});
+
+test(() => {
+  // inline-layout(test3, invalid) should fail to parse.
+  const test3 = document.getElementById('test3');
+  assert_equals(getComputedStyle(test3).display, 'block');
+});
+
+test(() => {
+  // Setting the inline style should reflect in the computed style.
+  const test4 = document.getElementById('test4');
+  assert_equals(getComputedStyle(test4).display, 'block');
+
+  test4.style.display = 'inline-layout(test4)';
+  assert_equals(getComputedStyle(test4).display, 'inline-layout(test4)');
+});
+</script>
