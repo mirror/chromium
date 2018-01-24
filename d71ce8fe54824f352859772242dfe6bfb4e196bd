@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3f5e26d_a0e6a47d",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T00:40:36Z",
+      "side": 1,
+      "message": "Hmm, I just realized this optimization won\u0027t work with SPv175+. Should we preemptively remove this from SPv1?",
+      "range": {
+        "startLine": 379,
+        "startChar": 33,
+        "endLine": 379,
+        "endChar": 34
+      },
+      "revId": "d71ce8fe54824f352859772242dfe6bfb4e196bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
