@@ -565,6 +565,11 @@ bool SelectFileDialogImpl::RunSelectFolderDialog(
     browse_info.lpfn = &BrowseCallbackProc;
   }
 
+  // Mitigate gesture-jacking attacks by delaying the dialog's appearance
+  // until the user releases the Enter key. See https://crbug.com/637098
+  while (GetAsyncKeyState(VK_RETURN) < 0)
+    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(30));
+
   LPITEMIDLIST list = SHBrowseForFolder(&browse_info);
   DisableOwner(params.run_state.owner);
   if (list) {
