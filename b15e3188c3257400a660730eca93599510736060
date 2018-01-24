@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d43a1cb2_7d6ec17d",
+        "filename": "media/base/cdm_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T21:54:23Z",
+      "side": 1,
+      "message": "Rintaro will populate the actual DecryptContext in the output parameter. I updated the TODO to make it clear.",
+      "parentUuid": "3af4dc1c_8491672e",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90229a94_4685965c",
         "filename": "media/mojo/services/mojo_cdm_proxy_unittest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "b15e3188c3257400a660730eca93599510736060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c552e2_ec1a3df4",
+        "filename": "media/mojo/services/mojo_cdm_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90229a94_4685965c",
+      "range": {
+        "startLine": 207,
+        "startChar": 34,
+        "endLine": 207,
+        "endChar": 40
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "82f118df_b8c36259",
+        "filename": "media/mojo/services/mojo_cdm_service_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c20d4e_48226d13",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55bda2e_7be8554e",
         "filename": "media/mojo/services/mojo_cdm_service_context.h",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-24T19:49:00Z",
       "side": 1,
       "message": "I think there\u0027s a bug to change this from int to something else (guid?). Should there be a \"typedef int CdmId;\" used to make changing it easier?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8a3c71_59a6d9f5",
+        "filename": "media/mojo/services/mojo_cdm_service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T21:54:23Z",
+      "side": 1,
+      "message": "Currently CDM ID is passed as int in many places in the code base and I don\u0027t want to do that change in this CL. That should be part of the change to fixing that particular bug.",
+      "parentUuid": "c55bda2e_7be8554e",
       "range": {
         "startLine": 31,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "b15e3188c3257400a660730eca93599510736060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6dfe28_bb85b997",
+        "filename": "media/mojo/services/mojo_cdm_service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T21:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f0e1db_71d7bcef",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "b15e3188c3257400a660730eca93599510736060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
