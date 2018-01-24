@@ -30,6 +30,10 @@ namespace content {
 class WebContents;
 }
 
+namespace extensions {
+class Extension;
+}
+
 namespace chrome {
 
 // For all commands, where a tab is not specified, the active tab is assumed.
@@ -151,6 +155,8 @@ void ClearCache(Browser* browser);
 bool IsDebuggerAttachedToCurrentTab(Browser* browser);
 void CopyURL(Browser* browser);
 void OpenInChrome(Browser* browser);
+void OpenInAppBrowser(content::WebContents* contents,
+                      const extensions::Extension* extension);
 #if defined(OS_CHROMEOS)
 void QueryAndDisplayArcApps(
     const Browser* browser,
