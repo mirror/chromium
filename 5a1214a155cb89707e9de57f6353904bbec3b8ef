@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9c930c50_24fc3346",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T18:00:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03265c4d_d2111229",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1edab06e_362771fc",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 27
@@ -257,6 +281,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58914dd5_419c919b",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T18:00:29Z",
+      "side": 1,
+      "message": "I wondered if we could check if |subframe_content_info| is valid (e.g. if the values correspond to actual proxy ids in the renderer process).\n\nIf the validation is postponed, then maybe we could add a short comment saying that |params| is not validated (despite coming from an untrusted renderer process), because we expect validation to be done in the compositor service.",
+      "parentUuid": "8e40c29f_1c2239b0",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -539,6 +587,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b00311b9_e9513dc4",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T18:00:29Z",
+      "side": 1,
+      "message": "\u003e iiuc, |routing_id_| is a member variable which should still be valid while this function is executing. However, |frame| is a web frame |remote_frame_| points to. It may be destroyed/invalid.\n\nIf |!weak_this|, then PrintRenderFrameHelper\u0027s destructor must have run (destroying |weak_ptr_factory_| along the way).  If PrintRenderFrameHelper\u0027s destructor has run, then accessing member variables like |routing_id_| would access deallocated memory (e.g. it would be a use-after-free).  Therefore if |!weak_thos|, then I think we should not call instance methods (e.g. Send() and/or routing_id()) and/or access member variables.",
+      "parentUuid": "0708ff1f_8961d666",
+      "range": {
+        "startLine": 1473,
+        "startChar": 45,
+        "endLine": 1473,
+        "endChar": 57
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
