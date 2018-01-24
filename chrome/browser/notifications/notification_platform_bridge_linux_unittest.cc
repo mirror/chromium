@@ -177,6 +177,16 @@ std::unique_ptr<dbus::Response> GetIdResponse(uint32_t id) {
   return response;
 }
 
+ACTION(OnGetServerInformation) {
+  std::unique_ptr<dbus::Response> response = dbus::Response::CreateEmpty();
+  dbus::MessageWriter writer(response.get());
+  writer.AppendString("NPBL_unittest");  // name
+  writer.AppendString("chromium");       // vendor
+  writer.AppendString("1.0");            // version
+  writer.AppendString("1.2");            // spec_version
+  return response;
+}
+
 ACTION_P(RegisterSignalCallback, callback_addr) {
   *callback_addr = arg2;
   std::move(*arg3).Run("" /* interface_name */, "" /* signal_name */,
@@ -255,6 +265,12 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
     EXPECT_CALL(*mock_notification_proxy_.get(),
                 CallMethodAndBlock(Calls("GetCapabilities"), _))
         .WillOnce(Return(ByMove(std::move(response))));
+
+    if (expect_init_success) {
+      EXPECT_CALL(*mock_notification_proxy_.get(),
+                  CallMethodAndBlock(Calls("GetServerInformation"), _))
+          .WillOnce(OnGetServerInformation());
+    }
 
     if (connect_signals) {
       EXPECT_CALL(*mock_notification_proxy_.get(),
