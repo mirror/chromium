@@ -52,6 +52,24 @@
       "revId": "1b05bd073e87f8b8b0f5be131c29da116636622f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adda8396_d4bcab77",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T18:49:07Z",
+      "side": 0,
+      "message": "\u003e but do you have an idea why this const_cast was needed here, but not everywhere else?\nThis function is const, so the call to client would return a const AutocompleteProviderClient*.\n\nIt looks like you\u0027ve migrated this code into a non-const function, so this cast is no longer necessary.",
+      "parentUuid": "c6d73869_03c2f236",
+      "revId": "1b05bd073e87f8b8b0f5be131c29da116636622f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
