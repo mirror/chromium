@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29ee6e55_87332521",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578f20a6_c4cd0e96",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfcad724_e3910b11",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b696bf53_4258394f",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "The base::Move already does a copy and delete under the hood when moving between different volumes, so I think the code is good the way it is.",
+      "parentUuid": "bfcad724_e3910b11",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2167eceb_c61f7a7c",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c91cba_452bf55a",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2167eceb_c61f7a7c",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9f85fe4b_0211808b",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "My thinking is that if we move the file to the public directory and the DB write fails, we can still use the file from ADM if we add it properly, so I still want to add the file to ADM.  If we return false, I stop all processing.",
+      "parentUuid": "2c3091bf_fe0d5630",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d984776_37cedff2",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c1ffdae2_23a87e65",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "I got rid of the page item, but I\u0027m passing in the ID and path since we already have them instead of adding a new DB query.",
+      "parentUuid": "4d984776_37cedff2",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "851538f6_e69bc249",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -119,6 +227,24 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8cf8a8_f6443850",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "As we discussed in person, the OnceCallback doesn\u0027t let us use the same pattern we used to use with plain Callback, so this was left as is.",
+      "parentUuid": "851538f6_e69bc249",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +268,30 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d01205_b7cb5412",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "I did that, then changed it back because we now have a file path instead of a directory path.",
+      "parentUuid": "2de5c597_fb0b82e3",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +335,48 @@
     },
     {
       "key": {
+        "uuid": "cb23c0d7_e661476f",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "I did that (It works as long as I make the path the first argument), but then undid it due to another change, we need to keep the destination_file_path as a member so it is available in the Run() function.",
+      "parentUuid": "fc4f6089_42e42c38",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0c4459a_e7b9cf06",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9cdaf60_a27c4e60",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faf37557_32be6714",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -199,6 +391,24 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a107a31_9ef4f656",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "We still want to add the file to ADM even if the DB write fails.  In fact, if the DB write fails, that will be the only chance the user has to open the file anymore.",
+      "parentUuid": "faf37557_32be6714",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "fa350e63_5af64c46",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "As it turns out in this case, there is only adding to ADM.  We don\u0027t want to add to ADM if we could not move the file, but we do if the DB write fails.\n\nChanged the bool to an enum so we can return exactly what went wrong.",
+      "parentUuid": "d8aca60e_23c6fbd7",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360ed232_0837c97c",
         "filename": "components/offline_pages/core/model/move_page_task.h",
         "patchSetId": 1
@@ -245,6 +479,30 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3c77d3_2bc65bf6",
+        "filename": "components/offline_pages/core/model/move_page_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "360ed232_0837c97c",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +546,48 @@
     },
     {
       "key": {
+        "uuid": "3a365df7_0cf159d6",
+        "filename": "components/offline_pages/core/model/move_page_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4e2bda_22248032",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69bc9233_92b8e3d7",
+        "filename": "components/offline_pages/core/model/move_page_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec8d652d_77f0ea6a",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d893fd94_d17e607f",
         "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
         "patchSetId": 1
@@ -308,6 +608,30 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb80c5c_b556744e",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d893fd94_d17e607f",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +658,30 @@
     },
     {
       "key": {
+        "uuid": "dca38b0b_280453fa",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6fc9bbb_d31e2beb",
+      "range": {
+        "startLine": 136,
+        "startChar": 15,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d233704_dfda4525",
         "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
         "patchSetId": 1
@@ -357,6 +705,30 @@
     },
     {
       "key": {
+        "uuid": "95971370_8af55e1c",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d233704_dfda4525",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 63
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57e22502_a8af3b18",
         "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
         "patchSetId": 1
@@ -371,6 +743,24 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1572c9d_ab053194",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e22502_a8af3b18",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -397,6 +787,30 @@
     },
     {
       "key": {
+        "uuid": "6075b1fe_60dedcc4",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5aeaa6f_7b1210ce",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 64
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5f01193_4fe74eea",
         "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
         "patchSetId": 1
@@ -414,6 +828,24 @@
     },
     {
       "key": {
+        "uuid": "5b9dd362_c6df946e",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f01193_4fe74eea",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde96b10_f258b1b5",
         "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
         "patchSetId": 1
@@ -428,6 +860,24 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6c91e9_7791b9ce",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-24T02:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde96b10_f258b1b5",
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
