@@ -16,6 +16,24 @@
       "revId": "e9e92a7cd47d3f6e91b553fa1977b8c438f7261c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dffcf1_df8974b2",
+        "filename": "android_webview/system_webview_apk_tmpl.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2018-01-24T00:05:18Z",
+      "side": 1,
+      "message": "I added it here, since this file is already about the system_webview_apk. I\u0027m fine with variables.gni too though.",
+      "parentUuid": "d678247d_e626a0b9",
+      "revId": "e9e92a7cd47d3f6e91b553fa1977b8c438f7261c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
