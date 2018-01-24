@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "bec2a266_8d2ea28c",
+        "filename": "content/browser/renderer_host/input/fling_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2018-01-24T18:07:19Z",
+      "side": 1,
+      "message": "I am not sure if I can understand your comment properly.\n\nIf the fling booster doesn\u0027t exist then we won\u0027t need the last_fling_boost_event.",
+      "parentUuid": "f73db0c0_c5f806d2",
+      "range": {
+        "startLine": 346,
+        "startChar": 29,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91adc957_6ce074eb",
         "filename": "content/browser/renderer_host/input/fling_controller.h",
         "patchSetId": 2
@@ -105,6 +129,30 @@
       "writtenOn": "2018-01-24T16:38:53Z",
       "side": 1,
       "message": "Can we get a GFS that has a source device that isn\u0027t touch or touchpad?",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7121d722_9af882a9",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2018-01-24T18:07:19Z",
+      "side": 1,
+      "message": "Yes, we do. Autoscrolling on windows or joystick scrolling on android will have flings with autoscroll source.",
+      "parentUuid": "f3f2b938_6c81727e",
       "range": {
         "startLine": 67,
         "startChar": 22,
