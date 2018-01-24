@@ -1,0 +1,29 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+[JavaPackage="org.chromium.blink.mojom"]
+module blink.mojom;
+
+// import "ui/gfx/geometry/mojo/geometry.mojom";
+
+
+// Mojom representation of some information about a recent unhandled tap in text.
+// This data replaces usage of ShowUnhandledTapUIIfNeeded.
+struct UnhandledTapInfo {
+    bool dom_tree_changed = false;
+    bool style_changed = false;
+
+    // TODO(donnd): use Point from geometry.mojom instead of ints.
+    //   gfx.mojom.Point tapped_position_in_viewport;
+    int32 tapped_position_in_viewport_x;
+    int32 tapped_position_in_viewport_y;
+
+    bool is_text_node = false;
+    bool is_content_editable = false;
+    bool is_inside_focusable_element_or_aria_widget = false;
+};
+
+interface UnhandledTapNotifier {
+  ShowUnhandledTapUIIfNeeded(UnhandledTapInfo unhandled_tap_info);
+};

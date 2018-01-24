@@ -73,6 +73,7 @@
           "blink::mojom::MediaDownloadInProductHelp",
           "blink::mojom::ShareService",
           "blink::mojom::TextSuggestionHost",
+          "blink::mojom::UnhandledTapNotifier",
           "chrome::mojom::OpenSearchDocumentDescriptionHandler",
           "chrome::mojom::PrerenderCanceler",
           "contextual_search::mojom::ContextualSearchJsApiService",
