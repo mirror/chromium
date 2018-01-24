@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "feac6eb0_951e6381",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-24T17:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46fc2b05_24cd5759",
+      "range": {
+        "startLine": 747,
+        "startChar": 25,
+        "endLine": 747,
+        "endChar": 43
+      },
+      "revId": "b971426b97448590f0d2bbec09740e073f4c473c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fb33b84_853881be",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d7d7a96_a55e6b17",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-24T17:10:58Z",
+      "side": 1,
+      "message": "I tried to do this but didn\u0027t crack the circular dependency issues.",
+      "parentUuid": "8fb33b84_853881be",
+      "range": {
+        "startLine": 747,
+        "startChar": 6,
+        "endLine": 749,
+        "endChar": 56
+      },
+      "revId": "b971426b97448590f0d2bbec09740e073f4c473c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0eb82cf_2a9feafa",
         "filename": "components/previews/core/previews_experiments.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-23T00:53:58Z",
       "side": 1,
       "message": "s/previews/client-side previews/",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "b971426b97448590f0d2bbec09740e073f4c473c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66fb2717_c2dbc9fb",
+        "filename": "components/previews/core/previews_experiments.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-24T17:10:58Z",
+      "side": 1,
+      "message": "I do mean for this to cover both client and server previews now",
+      "parentUuid": "c0eb82cf_2a9feafa",
       "range": {
         "startLine": 84,
         "startChar": 15,
