@@ -98,11 +98,26 @@ bool BluetoothAdapterAndroid::IsPowered() const {
 void BluetoothAdapterAndroid::SetPowered(bool powered,
                                          const base::Closure& callback,
                                          const ErrorCallback& error_callback) {
+  if (set_powered_callbacks_) {
+    // Only allow one pending callback at a time.
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
+    return;
+  }
+
+  if (powered == IsPowered()) {
+    ui_task_runner_->PostTask(FROM_HERE, callback);
+    return;
+  }
+
   if (Java_ChromeBluetoothAdapter_setPowered(AttachCurrentThread(), j_adapter_,
                                              powered)) {
-    callback.Run();
+    // Store pending callbacks until OnAdapterStateChanged() is invoked.
+    set_powered_callbacks_ = std::make_unique<SetPoweredCallbacks>();
+    set_powered_callbacks_->powered = powered;
+    set_powered_callbacks_->callback = callback;
+    set_powered_callbacks_->error_callback = error_callback;
   } else {
-    error_callback.Run();
+    ui_task_runner_->PostTask(FROM_HERE, error_callback);
   }
 }
 
@@ -162,6 +177,16 @@ void BluetoothAdapterAndroid::OnAdapterStateChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& caller,
     const bool powered) {
+  if (set_powered_callbacks_) {
+    // Move into a local variable to clear out both callbacks at the end of the
+    // scope and to allow scheduling another SetPowered() call in either of the
+    // callbacks.
+    std::unique_ptr<SetPoweredCallbacks> callbacks =
+        std::move(set_powered_callbacks_);
+    callbacks->powered == powered ? std::move(callbacks->callback).Run()
+                                  : callbacks->error_callback.Run();
+  }
+
   NotifyAdapterPoweredChanged(powered);
 }
 
@@ -267,6 +292,11 @@ BluetoothAdapterAndroid::BluetoothAdapterAndroid() : weak_ptr_factory_(this) {
 BluetoothAdapterAndroid::~BluetoothAdapterAndroid() {
   Java_ChromeBluetoothAdapter_onBluetoothAdapterAndroidDestruction(
       AttachCurrentThread(), j_adapter_);
+
+  // If there's a pending powered request, run its error callback.
+  if (set_powered_callbacks_) {
+    set_powered_callbacks_->error_callback.Run();
+  }
 }
 
 void BluetoothAdapterAndroid::PurgeTimedOutDevices() {

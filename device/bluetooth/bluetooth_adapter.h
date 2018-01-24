@@ -546,6 +546,21 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
   using DiscoverySessionErrorCallback =
       base::Callback<void(UMABluetoothDiscoverySessionOutcome)>;
 
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
+  // Due to a lack of blocking or callback supporting platform APIs
+  // implementations on Android and macOS need to store pending SetPowered()
+  // callbacks until an appropriate event is received. Declaring the struct here
+  // allows Android and macOS to share the implementation.
+  struct SetPoweredCallbacks {
+    SetPoweredCallbacks();
+    ~SetPoweredCallbacks();
+
+    bool powered = false;
+    base::OnceClosure callback;
+    ErrorCallback error_callback;
+  };
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
+
   BluetoothAdapter();
   virtual ~BluetoothAdapter();
 

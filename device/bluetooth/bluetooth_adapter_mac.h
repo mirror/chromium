@@ -136,15 +136,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
   // not know about bool.
   using SetControllerPowerStateFunction = base::RepeatingCallback<void(int)>;
 
-  struct SetPoweredCallbacks {
-    SetPoweredCallbacks();
-    ~SetPoweredCallbacks();
-
-    bool powered = false;
-    base::OnceClosure callback;
-    ErrorCallback error_callback;
-  };
-
   // Resets |low_energy_central_manager_| to |central_manager| and sets
   // |low_energy_central_manager_delegate_| as the manager's delegate. Should
   // be called only when |IsLowEnergyAvailable()|.

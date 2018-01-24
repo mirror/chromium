@@ -282,6 +282,11 @@ void BluetoothAdapter::NotifyGattDescriptorValueChanged(
     observer.GattDescriptorValueChanged(this, descriptor, value);
 }
 
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
+BluetoothAdapter::SetPoweredCallbacks::SetPoweredCallbacks() = default;
+BluetoothAdapter::SetPoweredCallbacks::~SetPoweredCallbacks() = default;
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
+
 BluetoothAdapter::BluetoothAdapter() : weak_ptr_factory_(this) {
 }
 

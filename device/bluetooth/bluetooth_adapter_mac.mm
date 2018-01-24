@@ -339,9 +339,6 @@ bool BluetoothAdapterMac::IsLowEnergyAvailable() {
 void BluetoothAdapterMac::RemovePairingDelegateInternal(
     BluetoothDevice::PairingDelegate* pairing_delegate) {}
 
-BluetoothAdapterMac::SetPoweredCallbacks::SetPoweredCallbacks() = default;
-BluetoothAdapterMac::SetPoweredCallbacks::~SetPoweredCallbacks() = default;
-
 void BluetoothAdapterMac::SetCentralManagerForTesting(
     CBCentralManager* central_manager) {
   CHECK(BluetoothAdapterMac::IsLowEnergyAvailable());
