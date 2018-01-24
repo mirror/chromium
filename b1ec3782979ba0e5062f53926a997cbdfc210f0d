@@ -203,6 +203,24 @@
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f771e6d_7a56b633",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T14:49:57Z",
+      "side": 1,
+      "message": "Thanks! Avoiding counting time spent in the handler makes sense to me, for the reasons you mention (setTimeout(0) etc).\n\nI\u0027m ok with deferring adding a test if it\u0027s hard to do so. You could file a bug for it.\n\nRE: hardware stamp vs main thread dispatch stamp, that\u0027s an interesting tradeoff. I\u0027m fine leaving it as is. If it\u0027s easy to do so we could consider recording UMA metrics for both, to see how different they are. If they are essentially the same then hardware stamp seems easier to explain, whereas if the hardware-\u003emain thread dispatch adds non-negligible variable latency we may need to be more thoughtful about how it\u0027s incorporated (since IIUC that delay is likely unrelated to the web app\u0027s performance and is outside of the developer\u0027s control). Do we already measure hardware-\u003emain thread dispatch delay and try to make sure our input pipeline is optimized to minimize it?",
+      "parentUuid": "bab3b8c4_9be129b6",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
