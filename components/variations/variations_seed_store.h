@@ -94,7 +94,6 @@ class VariationsSeedStore {
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
   PrefService* local_state() { return local_state_; }
-
   const PrefService* local_state() const { return local_state_; }
 
  protected:
