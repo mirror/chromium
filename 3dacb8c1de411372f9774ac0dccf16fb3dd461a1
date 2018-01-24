@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "711f22c8_5c716c67",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-24T20:06:47Z",
+      "side": 1,
+      "message": "Can it happen that even index 0 is not available? Or would we have caught that somewhere before reaching here?",
+      "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
