@@ -31,6 +31,7 @@ import android.widget.FrameLayout;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -41,7 +42,6 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
@@ -63,7 +63,7 @@ import java.util.List;
 /**
  * Unit tests for {@link TileGroup}.
  */
-@DisabledTest(message = "https://crbug.com/805160")
+@Ignore // Disabled for new Chrome Home, see: https://crbug.com/805160
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @DisableFeatures({ChromeFeatureList.NTP_MODERN_LAYOUT})

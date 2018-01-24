@@ -25,6 +25,7 @@ import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestio
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -38,7 +39,6 @@ import org.robolectric.annotation.Config;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.DisableHistogramsRule;
@@ -66,7 +66,7 @@ import java.util.List;
 /**
  * Unit tests for {@link SuggestionsSection}.
  */
-@DisabledTest(message = "https://crbug.com/805160")
+@Ignore // Disabled for new Chrome Home, see: https://crbug.com/805160
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @EnableFeatures(ChromeFeatureList.CHROME_HOME)
