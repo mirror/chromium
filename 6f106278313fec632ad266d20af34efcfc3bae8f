@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe36c1a_6a3f114c",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "If this pointer is destroyed by the time the task is run, then is platform_cursor leaked?",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "6f106278313fec632ad266d20af34efcfc3bae8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
