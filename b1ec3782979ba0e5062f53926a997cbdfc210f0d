@@ -100,6 +100,23 @@
     },
     {
       "key": {
+        "uuid": "f2c526f1_99f5b69b",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T01:25:40Z",
+      "side": 1,
+      "message": "one more thought here - to make it harder to game this metric, could we test that the \u0027isTrusted\u0027 bit of the input event is true, to make sure it\u0027s not a fake input event synthesized by the application. Otherwise an app could create a fake input event at a time they know they have low latency, dispatch it and treat it as a no-op in JS, and score really well on this metric. WDYT about filtering to just isTrusted events?",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1420081f_f9cd81b6",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
         "patchSetId": 1
