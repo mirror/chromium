@@ -22,6 +22,30 @@
       "revId": "a6bfaaa7154655078e4adf098a854f3e31de5bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904b58e8_003eb505",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-24T20:25:36Z",
+      "side": 0,
+      "message": "As discussed, the old one cannot be removed. |support_| is not available in some cases.",
+      "parentUuid": "3aee1be8_3adbcdbb",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "a6bfaaa7154655078e4adf098a854f3e31de5bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

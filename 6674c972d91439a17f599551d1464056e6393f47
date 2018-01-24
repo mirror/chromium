@@ -22,6 +22,30 @@
       "revId": "6674c972d91439a17f599551d1464056e6393f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f646ace_94ee4f0a",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-24T20:25:36Z",
+      "side": 1,
+      "message": "since RequestCopyOfOutput cannot be removed, this method is still useful.",
+      "parentUuid": "f7ebcaa1_d8310586",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 23
+      },
+      "revId": "6674c972d91439a17f599551d1464056e6393f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
