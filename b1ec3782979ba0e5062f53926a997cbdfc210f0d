@@ -221,6 +221,24 @@
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd18cbe_fc679a02",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T15:02:35Z",
+      "side": 1,
+      "message": "We did measure this, broken down into a few different stages of the pipeline, but no one ever looked at most of them, as they were never the source of our regressions... Since we got rid of parts of the pipeline, we don\u0027t have coverage which excludes the handling time and includes all time before the event is queued.\n\nThey are essentially the same at high percentiles. At low percentiles, the value can be dominated by constants like OS vsync alignment. Most of this is constant per device though (or at least tightly bounded).\n\nIt looks like recording both would actually be a fair bit of pain, our LatencyInfo system isn\u0027t plumbed into the right places. I can consider that going forward, but for now, let\u0027s stick with the hardware timestamp unless anyone has concrete objections.",
+      "parentUuid": "8f771e6d_7a56b633",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
