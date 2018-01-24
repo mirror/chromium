@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e6ed79c_86eebe97",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T21:05:13Z",
+      "side": 1,
+      "message": "This function isn\u0027t used outside of the .cc. Please make it private or put it into the anon namespace.",
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a1894b_b77043e2",
+        "filename": "chrome/browser/mac/exception_processor_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T21:05:13Z",
+      "side": 1,
+      "message": "This seems like an anti-pattern. If you\u0027re changing this already, please make it use HistogramTester instead. Thanks!",
+      "range": {
+        "startLine": 76,
+        "startChar": 54,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947b6b70_9bb7c060",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T21:05:13Z",
+      "side": 1,
+      "message": "This seems unrelated to the CL, please revert.",
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
