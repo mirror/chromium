@@ -694,6 +694,9 @@ extern const char kPasswordExportDescription[];
 extern const char kPasswordImportName[];
 extern const char kPasswordImportDescription[];
 
+extern const char kPasswordSearchName[];
+extern const char kPasswordSearchDescription[];
+
 extern const char kPermissionActionReportingName[];
 extern const char kPermissionActionReportingDescription[];
 
