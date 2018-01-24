@@ -62,8 +62,12 @@ enum AccessibilityRole {
   kInlineTextBoxRole,  // No mapping to ARIA role.
   kInputTimeRole,      // No mapping to ARIA role.
   kLabelRole,
-  kLegendRole,     // No mapping to ARIA role.
-  kLineBreakRole,  // No mapping to ARIA role.
+  kLayoutTableRole,        // No mapping to ARIA role.
+  kLayoutTableCellRole,    // No mapping to ARIA role.
+  kLayoutTableColumnRole,  // No mapping to ARIA role.
+  kLayoutTableRowRole,     // No mapping to ARIA role.
+  kLegendRole,             // No mapping to ARIA role.
+  kLineBreakRole,          // No mapping to ARIA role.
   kLinkRole,
   kListBoxOptionRole,
   kListBoxRole,

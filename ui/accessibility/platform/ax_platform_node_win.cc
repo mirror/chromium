@@ -2517,6 +2517,18 @@ int AXPlatformNodeWin::MSAARole() {
     case AX_ROLE_LEGEND:
       return ROLE_SYSTEM_TEXT;
 
+    case AX_ROLE_LAYOUT_TABLE:
+      return ROLE_SYSTEM_TABLE;
+
+    case AX_ROLE_LAYOUT_TABLE_CELL:
+      return ROLE_SYSTEM_CELL;
+
+    case AX_ROLE_LAYOUT_TABLE_COLUMN:
+      return ROLE_SYSTEM_COLUMN;
+
+    case AX_ROLE_LAYOUT_TABLE_ROW:
+      return ROLE_SYSTEM_ROW;
+
     case AX_ROLE_LINK:
       return ROLE_SYSTEM_LINK;
 
@@ -2921,6 +2933,14 @@ int32_t AXPlatformNodeWin::ComputeIA2Role() {
     case AX_ROLE_LEGEND:
       ia2_role = IA2_ROLE_LABEL;
       break;
+    case AX_ROLE_LAYOUT_TABLE:
+      return ROLE_SYSTEM_TABLE;
+    case AX_ROLE_LAYOUT_TABLE_CELL:
+      return ROLE_SYSTEM_CELL;
+    case AX_ROLE_LAYOUT_TABLE_COLUMN:
+      return ROLE_SYSTEM_COLUMN;
+    case AX_ROLE_LAYOUT_TABLE_ROW:
+      return ROLE_SYSTEM_ROW;
     case AX_ROLE_MAIN:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
@@ -3072,6 +3092,8 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
       }
     }
   }
+  if (GetData().role == AX_ROLE_LAYOUT_TABLE)
+    result.push_back(base::string16(L"layout-guess:true"));
 
   // Expose aria-colcount and aria-rowcount in a table, grid or treegrid.
   if (IsTableLikeRole(GetData().role)) {
