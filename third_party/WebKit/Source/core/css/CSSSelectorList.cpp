@@ -59,21 +59,33 @@ CSSSelectorList CSSSelectorList::AdoptSelectorVector(
     Vector<std::unique_ptr<CSSParserSelector>>& selector_vector) {
   size_t flattened_size = 0;
   for (size_t i = 0; i < selector_vector.size(); ++i) {
+    size_t selector_size = 0;
     for (CSSParserSelector* selector = selector_vector[i].get(); selector;
          selector = selector->TagHistory())
-      ++flattened_size;
+      ++selector_size;
+    // The selector index field in RuleData is only 13 bits so we can't support
+    // more than 8,192 plain selectors.
+    // See https://crbug.com/804179
+    if (flattened_size + selector_size > 8192)
+      break;
+    flattened_size += selector_size;
   }
-  DCHECK(flattened_size);
 
   CSSSelectorList list;
+  if (flattened_size == 0) {
+    selector_vector.clear();
+    return list;
+  }
   list.selector_array_ = reinterpret_cast<CSSSelector*>(
       WTF::Partitions::FastMalloc(WTF::Partitions::ComputeAllocationSize(
                                       flattened_size, sizeof(CSSSelector)),
                                   kCSSSelectorTypeName));
+  size_t vector_index = 0;
   size_t array_index = 0;
-  for (size_t i = 0; i < selector_vector.size(); ++i) {
-    CSSParserSelector* current = selector_vector[i].get();
-    while (current) {
+  while (array_index < flattened_size) {
+    CSSParserSelector* current = selector_vector[vector_index++].get();
+    DCHECK(current);
+    do {
       // Move item from the parser selector vector into selector_array_ without
       // invoking destructor (Ugh.)
       CSSSelector* current_selector = current->ReleaseSelector().release();
@@ -86,7 +98,7 @@ CSSSelectorList CSSSelectorList::AdoptSelectorVector(
       if (current)
         list.selector_array_[array_index].SetNotLastInTagHistory();
       ++array_index;
-    }
+    } while (current);
     DCHECK(list.selector_array_[array_index - 1].IsLastInTagHistory());
   }
   DCHECK_EQ(flattened_size, array_index);
