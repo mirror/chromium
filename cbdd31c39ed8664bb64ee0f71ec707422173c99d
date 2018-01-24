@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b1f7a3_54e658df",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6748,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T23:36:31Z",
+      "side": 1,
+      "message": "Isn\u0027t this the default at this time? Or are we still in a position where we can turn it off?",
+      "revId": "cbdd31c39ed8664bb64ee0f71ec707422173c99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3223ed7_64a3167d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6752,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T23:36:31Z",
+      "side": 1,
+      "message": "This seems excessively long wait. Can\u0027t we start with something smaller and see if we still hit issues? Maybe tiny_timeout() or at most action_timeout()?",
+      "range": {
+        "startLine": 6752,
+        "startChar": 24,
+        "endLine": 6752,
+        "endChar": 42
+      },
+      "revId": "cbdd31c39ed8664bb64ee0f71ec707422173c99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
