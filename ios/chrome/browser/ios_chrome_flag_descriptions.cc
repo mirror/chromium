@@ -30,6 +30,12 @@ const char kClippingTextfieldDescription[] =
     "When enabled, the new URL clipping implementation compatible with iOS 11 "
     "is used.";
 
+const char kContextMenuAsyncElementFetchName[] =
+    "Context Menu Async Element Fetch";
+const char kContextMenuAsyncElementFetchDescription[] =
+    "Whether or not Asynchronous fetching of DOM element for Context Menu is "
+    "enabled.";
+
 const char kContextualSearch[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";

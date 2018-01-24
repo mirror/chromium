@@ -11691,6 +11691,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ContextMenu.DOMElementFetchDuration" units="ms">
+  <owner>michaeldo@chromium.org</owner>
+  <summary>
+    How long it takes to fetch the details of the DOM element the user is
+    selecting for the context menu. On iOS, JavaScript must be run in order to
+    get the details of the DOM element. If the element is not inside the main
+    frame, latency could be added due to the communication between frames. Only
+    logged on iOS.
+  </summary>
+</histogram>
+
 <histogram name="ContextMenu.SaveLinkType" enum="ContextMenuSaveLinkType">
   <owner>qinmin@chromium.org</owner>
   <summary>
