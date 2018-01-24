@@ -16,6 +16,24 @@
       "revId": "ee359e10b0390780f45d5d29bfcdc0917713a9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474cbe63_8cb9e511",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-24T15:44:44Z",
+      "side": 1,
+      "message": "It has to do with the test change I made. I have pulled that fix into a separate CL to avoid any confusion.",
+      "parentUuid": "7805ce30_29182ea8",
+      "revId": "ee359e10b0390780f45d5d29bfcdc0917713a9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
