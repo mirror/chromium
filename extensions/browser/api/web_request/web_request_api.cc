@@ -106,6 +106,22 @@ enum RequestAction {
   MAX
 };
 
+class TimeIncrementer {
+public:
+  TimeIncrementer(base::TimeDelta* accumulator) {
+    DCHECK(accumulator);
+    accumulator_ = accumulator;
+  }
+  ~TimeIncrementer() {
+    *accumulator_ += timer.Elapsed();
+  }
+
+private:
+  base::ElapsedTimer timer;
+  base::TimeDelta* accumulator_;
+  DISALLOW_COPY_AND_ASSIGN(TimeIncrementer);
+};
+
 const char kWebRequestEventPrefix[] = "webRequest.";
 
 // List of all the webRequest events.
@@ -559,8 +575,13 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
     WebRequestInfo* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  TimeIncrementer incrementor(&on_before_request);
+
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
     return net::OK;
+
+  if (observer_)
+    observer_->OnBeforeRequest(*request);
 
   if (IsPageLoad(*request))
     NotifyPageLoad();
@@ -576,15 +597,20 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   // the diffierent network request stages. A redirect should cause another
   // OnBeforeRequest call.
   // |extension_info_map| is null for system level requests.
+
   if (extension_info_map) {
     // Give priority to blocking rules over redirect rules.
     if (extension_info_map->GetRulesetManager()->ShouldBlockRequest(
             *request, is_incognito_context)) {
+      if (observer_)
+        observer_->OnRequestWasBlocked(*request);
       return net::ERR_BLOCKED_BY_CLIENT;
     }
 
     if (extension_info_map->GetRulesetManager()->ShouldRedirectRequest(
             *request, is_incognito_context, new_url)) {
+      if (observer_)
+        observer_->OnRequestWasRedirected(*request, *new_url);
       return net::OK;
     }
   }
@@ -635,6 +661,8 @@ int ExtensionWebRequestEventRouter::OnBeforeSendHeaders(
     const WebRequestInfo* request,
     const net::CompletionCallback& callback,
     net::HttpRequestHeaders* headers) {
+  TimeIncrementer incrementor(&on_before_send_headers);
+
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
     return net::OK;
 
@@ -682,6 +710,7 @@ void ExtensionWebRequestEventRouter::OnSendHeaders(
     const InfoMap* extension_info_map,
     const WebRequestInfo* request,
     const net::HttpRequestHeaders& headers) {
+  TimeIncrementer incrementor(&on_send_headers);
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
     return;
 
@@ -713,6 +742,7 @@ int ExtensionWebRequestEventRouter::OnHeadersReceived(
     const net::HttpResponseHeaders* original_response_headers,
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     GURL* allowed_unsafe_redirect_url) {
+  TimeIncrementer incrementor(&on_headers_received);
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
     return net::OK;
 
@@ -766,6 +796,7 @@ ExtensionWebRequestEventRouter::OnAuthRequired(
     const net::AuthChallengeInfo& auth_info,
     const net::NetworkDelegate::AuthCallback& callback,
     net::AuthCredentials* credentials) {
+  TimeIncrementer incrementor(&on_auth_required);
   // No browser_context means that this is for authentication challenges in the
   // system context. Skip in that case. Also skip sensitive requests.
   if (!browser_context ||
@@ -803,6 +834,7 @@ void ExtensionWebRequestEventRouter::OnBeforeRedirect(
     const InfoMap* extension_info_map,
     const WebRequestInfo* request,
     const GURL& new_location) {
+  TimeIncrementer incrementor(&on_before_redirect);
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
     return;
 
@@ -836,6 +868,7 @@ void ExtensionWebRequestEventRouter::OnResponseStarted(
     const InfoMap* extension_info_map,
     const WebRequestInfo* request,
     int net_error) {
+  TimeIncrementer incrementor(&on_response_started);
   DCHECK_NE(net::ERR_IO_PENDING, net_error);
 
   if (ShouldHideEvent(browser_context, extension_info_map, *request))
@@ -866,6 +899,7 @@ void ExtensionWebRequestEventRouter::OnCompleted(
     const InfoMap* extension_info_map,
     const WebRequestInfo* request,
     int net_error) {
+  TimeIncrementer incrementor(&on_completed);
   // We hide events from the system context as well as sensitive requests.
   // However, if the request first became sensitive after redirecting we have
   // already signaled it and thus we have to signal the end of it. This is
@@ -875,6 +909,9 @@ void ExtensionWebRequestEventRouter::OnCompleted(
        !WasSignaled(*request))) {
     return;
   }
+
+  if (observer_)
+    observer_->OnRequestEnded(*request);
 
   request_time_tracker_->LogRequestEndTime(request->id, base::Time::Now());
 
@@ -907,6 +944,7 @@ void ExtensionWebRequestEventRouter::OnErrorOccurred(
     const WebRequestInfo* request,
     bool started,
     int net_error) {
+  TimeIncrementer incrementor(&on_error_occured);
   // When WebSocket handshake request finishes, the request is cancelled with an
   // ERR_WS_UPGRADE code (see WebSocketStreamRequestImpl::PerformUpgrade).
   // WebRequest API reports this as a completed request.
@@ -929,6 +967,9 @@ void ExtensionWebRequestEventRouter::OnErrorOccurred(
        !WasSignaled(*request))) {
     return;
   }
+
+  if (observer_)
+    observer_->OnRequestEnded(*request);
 
   request_time_tracker_->LogRequestEndTime(request->id, base::Time::Now());
 
@@ -963,6 +1004,10 @@ void ExtensionWebRequestEventRouter::OnRequestWillBeDestroyed(
     const WebRequestInfo* request) {
   ClearPendingCallbacks(*request);
   signaled_requests_.erase(request->id);
+
+  if (observer_)
+    observer_->OnRequestEnded(*request);
+
   request_time_tracker_->LogRequestEndTime(request->id, base::Time::Now());
 }
 
@@ -1036,6 +1081,8 @@ void ExtensionWebRequestEventRouter::DispatchEventToListeners(
     const InfoMap* extension_info_map,
     std::unique_ptr<ListenerIDs> listener_ids,
     std::unique_ptr<WebRequestEventDetails> event_details) {
+  TimeIncrementer incrementor(&dispatch_event_to_listeners);
+
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!listener_ids->empty());
   DCHECK(event_details.get());
@@ -1159,6 +1206,20 @@ size_t ExtensionWebRequestEventRouter::GetListenerCountForTesting(
     void* browser_context,
     const std::string& event_name) {
   return listeners_[browser_context][event_name].size();
+}
+
+void ExtensionWebRequestEventRouter::PrintTimes() const {
+  LOG(ERROR) << "--------on_before_request " << on_before_request.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_before_send_headers " << on_before_send_headers.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_send_headers " << on_send_headers.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_headers_received " << on_headers_received.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_auth_required " << on_auth_required.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_before_redirect " << on_before_redirect.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_response_started " << on_response_started.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_completed " << on_completed.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------on_error_occured " << on_error_occured.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------dispatch_event_to_listeners " << dispatch_event_to_listeners.InMillisecondsF() << "\n";;
+  LOG(ERROR) << "--------total_block_time " << total_block_time.InMillisecondsF() << "\n";;
 }
 
 ExtensionWebRequestEventRouter::EventListener*
@@ -1656,6 +1717,8 @@ int ExtensionWebRequestEventRouter::ExecuteDeltas(void* browser_context,
   helpers::EventResponseDeltas& deltas = blocked_request.response_deltas;
   base::TimeDelta block_time =
       base::Time::Now() - blocked_request.blocking_time;
+  total_block_time += block_time;
+
   request_time_tracker_->IncrementTotalBlockTime(request->id, block_time);
 
   bool request_headers_modified = false;
@@ -1708,6 +1771,14 @@ int ExtensionWebRequestEventRouter::ExecuteDeltas(void* browser_context,
 
   const bool redirected =
       blocked_request.new_url && !blocked_request.new_url->is_empty();
+
+  if (observer_) {
+    if (canceled)
+      observer_->OnRequestWasBlocked(*blocked_request.request);
+    else if (redirected)
+      observer_->OnRequestWasRedirected(*blocked_request.request,
+                                        *blocked_request.new_url);
+  }
 
   if (canceled)
     request_time_tracker_->SetRequestCanceled(request->id);

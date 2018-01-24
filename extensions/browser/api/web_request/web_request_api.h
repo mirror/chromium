@@ -19,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/time/time.h"
 #include "extensions/browser/api/declarative/rules_registry.h"
+#include "extensions/browser/api/declarative_net_request/ruleset_manager.h"
 #include "extensions/browser/api/declarative_webrequest/request_stage.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
 #include "extensions/browser/api/web_request/web_request_permissions.h"
@@ -94,6 +95,21 @@ class WebRequestAPI : public BrowserContextKeyedAPI,
 // thread unless otherwise specified.
 class ExtensionWebRequestEventRouter {
  public:
+  class TestObserver {
+   public:
+    virtual void OnRequestWasBlocked(const WebRequestInfo& request) = 0;
+
+    virtual void OnRequestWasRedirected(const WebRequestInfo& request,
+                                        const GURL& url) = 0;
+
+    virtual void OnBeforeRequest(const WebRequestInfo& request) = 0;
+
+    virtual void OnRequestEnded(const WebRequestInfo& request) = 0;
+
+   protected:
+    virtual ~TestObserver() {}
+  };
+
   struct BlockedRequest;
 
   enum EventTypes {
@@ -254,6 +270,8 @@ class ExtensionWebRequestEventRouter {
   void OnRequestWillBeDestroyed(void* browser_context,
                                 const WebRequestInfo* request);
 
+  void PrintTimes() const;
+
   // Called when an event listener handles a blocking event and responds.
   void OnEventHandled(void* browser_context,
                       const std::string& extension_id,
@@ -293,6 +311,9 @@ class ExtensionWebRequestEventRouter {
   // Registers a |callback| that is executed when the next page load happens.
   // The callback is then deleted.
   void AddCallbackForPageLoad(const base::Closure& callback);
+
+  // Owned by client.
+  void SetObserverForTest(TestObserver* observer) { observer_ = observer; }
 
  private:
   friend class WebRequestAPI;
@@ -533,6 +554,20 @@ class ExtensionWebRequestEventRouter {
 
   std::unique_ptr<extensions::WebRequestEventRouterDelegate>
       web_request_event_router_delegate_;
+
+  base::TimeDelta on_before_request;
+  base::TimeDelta on_before_send_headers;
+  base::TimeDelta on_send_headers;
+  base::TimeDelta on_headers_received;
+  base::TimeDelta on_auth_required;
+  base::TimeDelta on_before_redirect;
+  base::TimeDelta on_response_started;
+  base::TimeDelta on_completed;
+  base::TimeDelta on_error_occured;
+  base::TimeDelta dispatch_event_to_listeners;
+  base::TimeDelta total_block_time;
+
+  TestObserver* observer_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionWebRequestEventRouter);
 };
