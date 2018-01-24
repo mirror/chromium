@@ -1439,4 +1439,13 @@ void ThreadState::CollectAllGarbage() {
   }
 }
 
+void ThreadState::CheckObjectNotInCallbackStacks(const void* object) {
+#if DCHECK_IS_ON()
+  DCHECK(!Heap().MarkingStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().PostMarkingCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().WeakCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().EphemeronStack()->HasCallbackForObject(object));
+#endif
+}
+
 }  // namespace blink
