@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ed85f1bf_b24adb09",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1239285
+      },
+      "writtenOn": "2018-01-24T19:07:11Z",
+      "side": 1,
+      "message": "It\u0027s mostly for comments, but also because YAML is a bit more forgiving about things like unnecessary trailing commas.\n\nIn general I think JSON is fine for data that will only be handled by machines, but YAML is far superior for files that need to be maintained by hand.",
+      "parentUuid": "d647346a_2bc3e2fe",
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5abae39a_a513b468",
         "filename": "third_party/closure_compiler/compile2.py",
         "patchSetId": 11
@@ -86,6 +104,30 @@
       "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a043d634_3845e2e0",
+        "filename": "third_party/closure_compiler/compile2.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1239285
+      },
+      "writtenOn": "2018-01-24T19:07:11Z",
+      "side": 1,
+      "message": "I moved this logic into its own script (typecheck.py), so it should be more clear what\u0027s going on.",
+      "parentUuid": "5abae39a_a513b468",
+      "range": {
+        "startLine": 246,
+        "startChar": 4,
+        "endLine": 250,
+        "endChar": 24
+      },
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
