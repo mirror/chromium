@@ -16,6 +16,24 @@
       "revId": "ece63c7d92c6d354edbd243696842b7b83f150f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291daf10_9e038285",
+        "filename": "content/renderer/indexed_db/webidbcursor_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-24T22:50:28Z",
+      "side": 0,
+      "message": "It doesn\u0027t seem unreasonable to add WebIDBValue::BlobInfoForTesting() / BlobInfoSlow() with a comment that it shouldn\u0027t be used in production. The motivation would be that it generally makes sense for tests to want to read back the data given to a constructor.\n\nBlobCount seems very specific to this test. \n\nWDYT?",
+      "parentUuid": "42d645ff_7587b968",
+      "revId": "ece63c7d92c6d354edbd243696842b7b83f150f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
