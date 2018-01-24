@@ -78,6 +78,10 @@
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "services/audio/common/system_info.h"
+#include "services/audio/public/interfaces/constants.mojom.h"
+#include "services/audio/public/interfaces/system_info.mojom.h"
+#include "services/service_manager/public/cpp/service_context.h"
 #include "ui/aura/window.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/keyboard/keyboard_switches.h"
@@ -2303,6 +2307,7 @@ class KioskVirtualKeyboardTest : public KioskTest {
 
   // Use class variable for sane lifetime.
   std::unique_ptr<media::MockAudioManager> mock_audio_manager_;
+  std::unique_ptr<services::audio::SystemInfo> mock_system_info_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(KioskVirtualKeyboardTest);
@@ -2316,6 +2321,14 @@ IN_PROC_BROWSER_TEST_F(KioskVirtualKeyboardTest, RestrictFeatures) {
   mock_audio_manager_ = std::make_unique<media::MockAudioManager>(
       std::make_unique<media::TestAudioThread>());
   mock_audio_manager_->SetHasInputDevices(true);
+
+  mock_system_info_ =
+      std::make_unique<services::audio::SystemInfo>(mock_audio_manager_.get());
+
+  service_manager::ServiceContext::SetGlobalBinderForTesting(
+      audio::mojom::kServiceName, audio::mojom::SystemInfo::Name_,
+      base::BindRepeating(&services::audio::SystemInfo::Bind,
+                          base::Unretained(mock_system_info_.get())));
 
   set_test_app_id(kTestVirtualKeyboardKioskApp);
   set_test_app_version("0.1");
