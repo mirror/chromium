@@ -131,8 +131,10 @@ void GLSurfacePresentationHelper::CheckPendingFrames() {
     // If GPUTimer is not avaliable or disjoint occurred, we just run
     // presentation callback with current system time.
     for (auto& frame : pending_frames_) {
-      frame.callback.Run(gfx::PresentationFeedback(
-          base::TimeTicks::Now(), vsync_interval_, 0 /* flags */));
+      if (frame.callback) {
+        frame.callback.Run(gfx::PresentationFeedback(
+            base::TimeTicks::Now(), vsync_interval_, 0 /* flags */));
+      }
     }
     pending_frames_.clear();
     return;
