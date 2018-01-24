@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "333b99be_1dc04196",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 3812,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Do you need this dependency?",
+      "range": {
+        "startLine": 3812,
+        "startChar": 6,
+        "endLine": 3812,
+        "endChar": 41
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e4dac0_fb1eac28",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "int title_string_id \u003d IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE;\n#if BUILDFLAG(ENABLE_DICE_SUPPORT)\n   if (AccountConsistencyModeManager::IsDiceEnabledForProfile(GetProfile()))\n       title_string_id \u003d IDS_PASSWORD_MANAGER_DICE_PROMO_TITLE;\n#endif",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 564,
+        "endChar": 25
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cb1c0b_c8ae2928",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "AccountConsistencyModeManager::IsDiceEnabledForProfile isn\u0027t protected by the macros. Why do you need it here?\nThe same question about the header included.",
+      "range": {
+        "startLine": 565,
+        "startChar": 3,
+        "endLine": 565,
+        "endChar": 34
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51358b09_c2bfc0b3",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Forward declaration can just work fine.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98423f2_3b1b4bfc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this header?",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e626c49e_cbfcb099",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Move below ReplaceToShowPromotionIfNeeded",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 32
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9b9989_1b99d3f7",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "How do you ensure that AccountConsistencyModeManager::IsDiceEnabledForProfile is true? Or it doesn\u0027t matter?",
+      "range": {
+        "startLine": 430,
+        "startChar": 23,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5399e8_912e4a4e",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Forward declaring AccountInfo should work.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366a38f1_d306833c",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate_mock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Forward declare AccountInfo.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cd59fa_7ec2ca02",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "I miss a descriptive comment. Also \u0027PasswordBubbleSyncPromoDelegate\u0027 seems like a better name.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 78
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8097c00_02915fad",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "I think we want a separate state for \"Enable sync\" vs. the current \"Sign in to Chrome. Then you don\u0027t need AccountConsistencyModeManager below.",
+      "range": {
+        "startLine": 378,
+        "startChar": 26,
+        "endLine": 378,
+        "endChar": 74
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79f9b7e_e8974feb",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Comment that this guy represents everything in the bubble excluding the title. Basically that the button belongs to it.",
+      "range": {
+        "startLine": 386,
+        "startChar": 7,
+        "endLine": 389,
+        "endChar": 57
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac54a99_33776d2a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "I like nested \u0027class ManagePasswordBubbleSyncPromoDelegate;\u0027 more.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e9ea3d_86a6eab3",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:53:04Z",
+      "side": 1,
+      "message": "Do we really need it here?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
