@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d36fea_d22abadd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T19:07:51Z",
+      "side": 1,
+      "message": "Thanks for fixing my mistake!",
+      "range": {
+        "startLine": 305,
+        "startChar": 61,
+        "endLine": 305,
+        "endChar": 68
+      },
+      "revId": "3955da70d67e9e6018208b9f7f89f92d803cfe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
