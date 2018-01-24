@@ -46,9 +46,8 @@ public class PopupZoomerTest {
         Canvas mCanvas;
         long mPendingDraws = 0;
 
-        CustomCanvasPopupZoomer(
-                Context context, WebContents webContents, ViewGroup containerView, Canvas c) {
-            super(context, webContents, containerView);
+        CustomCanvasPopupZoomer(Context context, ViewGroup containerView, Canvas c) {
+            super(context, containerView);
             mCanvas = c;
         }
 
@@ -70,8 +69,12 @@ public class PopupZoomerTest {
             return true;
         }
 
+        // Test ignores following option listeners by not setting them.
         @Override
-        protected void initOptionalListeners(final ViewGroup containerView) {}
+        protected void setVisibilityChangedListener(PopupZoomer.OnVisibilityChangedListener l) {}
+
+        @Override
+        protected void setOnTapListener(PopupZoomer.OnTapListener l) {}
 
         public void finishPendingDraws() {
             // Finish all pending draw calls. A draw call may change mPendingDraws.
@@ -82,8 +85,8 @@ public class PopupZoomerTest {
     }
 
     private CustomCanvasPopupZoomer createPopupZoomerForTest(
-            Context context, WebContents webContents, ViewGroup containerView) {
-        return new CustomCanvasPopupZoomer(context, webContents, containerView,
+            Context context, ViewGroup containerView) {
+        return new CustomCanvasPopupZoomer(context, containerView,
                 new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
     }
 
@@ -110,8 +113,8 @@ public class PopupZoomerTest {
                 imeAdapter.setInputMethodManagerWrapperForTest(
                         TestInputMethodManagerWrapper.create(imeAdapter));
                 mPopupZoomer = createPopupZoomerForTest(
-                        InstrumentationRegistry.getTargetContext(), webContents, containerView);
-                mContentViewCore.setPopupZoomerForTest(mPopupZoomer);
+                        InstrumentationRegistry.getTargetContext(), containerView);
+                TapDisambiguator.fromWebContents(webContents).setPopupZoomerForTest(mPopupZoomer);
                 mContentViewCore.setTextSuggestionHostForTesting(
                         new TextSuggestionHost(mActivityTestRule.getContentViewCore()));
             }
@@ -172,53 +175,63 @@ public class PopupZoomerTest {
     @SmallTest
     @Feature({"Navigation"})
     public void testOnTouchEventOutsidePopup() throws Exception {
-        mPopupZoomer.setBitmap(Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8));
-        mPopupZoomer.show(new Rect(0, 0, 5, 5));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mPopupZoomer.setBitmap(Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8));
+                mPopupZoomer.show(new Rect(0, 0, 5, 5));
 
-        // Wait for the show animation to finish.
-        mPopupZoomer.finishPendingDraws();
+                // Wait for the show animation to finish.
+                mPopupZoomer.finishPendingDraws();
 
-        // The view should be visible.
-        Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
-        Assert.assertTrue(mPopupZoomer.isShowing());
+                // The view should be visible.
+                Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
+                Assert.assertTrue(mPopupZoomer.isShowing());
 
-        // Send tap event at a point outside the popup.
-        // i.e. coordinates greater than 10 + PopupZoomer.ZOOM_BOUNDS_MARGIN
-        sendSingleTapTouchEventOnView(mPopupZoomer, 50, 50);
+                // Send tap event at a point outside the popup.
+                // i.e. coordinates greater than 10 + PopupZoomer.ZOOM_BOUNDS_MARGIN
+                sendSingleTapTouchEventOnView(mPopupZoomer, 50, 50);
 
-        // Wait for the hide animation to finish.
-        mPopupZoomer.finishPendingDraws();
+                // Wait for the hide animation to finish.
+                mPopupZoomer.finishPendingDraws();
 
-        // The view should be invisible.
-        Assert.assertEquals(View.INVISIBLE, mPopupZoomer.getVisibility());
-        Assert.assertFalse(mPopupZoomer.isShowing());
+                // The view should be invisible.
+                Assert.assertEquals(View.INVISIBLE, mPopupZoomer.getVisibility());
+                Assert.assertFalse(mPopupZoomer.isShowing());
+            }
+        });
     }
 
     @Test
     @SmallTest
     @Feature({"Navigation"})
     public void testOnTouchEventInsidePopupNoOnTapListener() throws Exception {
-        mPopupZoomer.setBitmap(Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8));
-        mPopupZoomer.show(new Rect(0, 0, 5, 5));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mPopupZoomer.setBitmap(Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8));
+                mPopupZoomer.show(new Rect(0, 0, 5, 5));
 
-        // Wait for the animation to finish.
-        mPopupZoomer.finishPendingDraws();
+                // Wait for the animation to finish.
+                mPopupZoomer.finishPendingDraws();
 
-        // The view should be visible.
-        Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
-        Assert.assertTrue(mPopupZoomer.isShowing());
+                // The view should be visible.
+                Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
+                Assert.assertTrue(mPopupZoomer.isShowing());
 
-        // Send tap event at a point inside the popup.
-        // i.e. coordinates between PopupZoomer.ZOOM_BOUNDS_MARGIN and
-        // PopupZoomer.ZOOM_BOUNDS_MARGIN + 10
-        sendSingleTapTouchEventOnView(mPopupZoomer, 30, 30);
+                // Send tap event at a point inside the popup.
+                // i.e. coordinates between PopupZoomer.ZOOM_BOUNDS_MARGIN and
+                // PopupZoomer.ZOOM_BOUNDS_MARGIN + 10
+                sendSingleTapTouchEventOnView(mPopupZoomer, 30, 30);
 
-        // Wait for the animation to finish (if there is any).
-        mPopupZoomer.finishPendingDraws();
+                // Wait for the animation to finish (if there is any).
+                mPopupZoomer.finishPendingDraws();
 
-        // The view should still be visible as no OnTapListener is set.
-        Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
-        Assert.assertTrue(mPopupZoomer.isShowing());
+                // The view should still be visible as no OnTapListener is set.
+                Assert.assertEquals(View.VISIBLE, mPopupZoomer.getVisibility());
+                Assert.assertTrue(mPopupZoomer.isShowing());
+            }
+        });
     }
 
     @Test
