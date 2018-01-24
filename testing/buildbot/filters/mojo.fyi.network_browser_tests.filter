@@ -13,7 +13,6 @@
 -BrowsingDataRemoverBrowserTest.CookieDeletion
 -ChromeSecurityExploitBrowserTest.CreateFilesystemURLInExtensionOrigin
 -ChromeSitePerProcessTest.LaunchExternalProtocolFromSubframe
--ContentFaviconDriverTest.ReloadBypassingCache
 -CredentialManagerBrowserTest.CreatePublicKeyCredentialAlgorithmNotSupported
 -CredentialManagerBrowserTest.CreatePublicKeyCredentialInvalidRp
 -CredentialManagerBrowserTest.MojoConnectionRecreatedAfterNavigation
@@ -589,6 +588,10 @@
 -ChromeResourceDispatcherHostDelegateBrowserTest.ThrottlesAddedExactlyOnceToLargeSniffedDownloads
 -ChromeResourceDispatcherHostDelegateBrowserTest.ThrottlesAddedExactlyOnceToTinySniffedDownloads
 -ChromeResourceDispatcherHostDelegateBrowserTest.MirrorRequestHeader
+# These tests rely on using a delegate to ResourceDispatcherHost.
+-ContentFaviconDriverTest.ReloadBypassingCache
+-ContentFaviconDriverTest.MixedContentSecureFaviconAllowed
+
 
 # Failing NoStatePrefetch tests
 # https://crbug.com/792776
@@ -698,3 +701,4 @@
 -DeclarativeContentApiTest.EnabledForSpanningIncognito
 -DeclarativeContentApiTest.EnabledForSpanningIncognito
 -SetIconAPITest.Overview
+
