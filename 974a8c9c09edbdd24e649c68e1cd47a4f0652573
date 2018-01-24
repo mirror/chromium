@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9342e3b7_e891a280",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-24T18:51:52Z",
+      "side": 1,
+      "message": "This comment does not match the code. \"offset_to_container_box\"?\nAnd now that this struct now only holds paint_offset, do we need it?",
+      "revId": "974a8c9c09edbdd24e649c68e1cd47a4f0652573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
