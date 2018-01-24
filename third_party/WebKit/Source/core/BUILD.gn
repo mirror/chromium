@@ -1988,6 +1988,7 @@ jumbo_source_set("unit_tests") {
     "loader/resource/MockImageResourceObserver.cpp",
     "loader/resource/MockImageResourceObserver.h",
     "loader/resource/MultipartImageResourceParserTest.cpp",
+    "messaging/BlinkTransferableMessageStructTraitsTest.cpp",
     "origin_trials/OriginTrialContextTest.cpp",
     "page/AutoscrollControllerTest.cpp",
     "page/ChromeClientImplTest.cpp",
@@ -2113,6 +2114,7 @@ jumbo_source_set("unit_tests") {
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/Source/core/editing:unit_tests",
+    "//third_party/WebKit/Source/core/messaging",
   ]
 
   # FIXME: Enable mojo unittests on Android after fixing data dependency.
