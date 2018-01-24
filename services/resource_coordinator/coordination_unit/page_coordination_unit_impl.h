@@ -29,28 +29,18 @@ class PageCoordinationUnitImpl
   // mojom::PageCoordinationUnit implementation.
   void AddFrame(const CoordinationUnitID& cu_id) override;
   void RemoveFrame(const CoordinationUnitID& cu_id) override;
+  void SetIsLoading(bool is_loading) override;
   void SetVisibility(bool visible) override;
   void SetUKMSourceId(int64_t ukm_source_id) override;
   void OnFaviconUpdated() override;
   void OnTitleUpdated() override;
   void OnMainFrameNavigationCommitted() override;
 
-  // Returns true when the page is in almost idle state, and updates
-  // |was_almost_idle_| to true if and only if the page was not in almost idle
-  // state and is now in almost idle state.
-  bool CheckAndUpdateAlmostIdleStateIfNeeded();
-
   // There is no direct relationship between processes and pages. However,
   // frames are accessible by both processes and frames, so we find all of the
   // processes that are reachable from the pages's accessible frames.
   std::set<ProcessCoordinationUnitImpl*> GetAssociatedProcessCoordinationUnits()
       const;
-  // In order to not deliver PageAlmostIdle signal multiple times, recording the
-  // previous state is needed. WasAlmostIdle() returns whether the page is
-  // already in almost idle state, almost idle state will be reset when the main
-  // frame navigation of non-same document navigation is committed. And will
-  // only be set to true when CheckAndUpdateAlmostIdleStateIfNeeded() is called.
-  bool WasAlmostIdle() const;
   bool IsVisible() const;
   double GetCPUUsage() const;
 
@@ -66,8 +56,8 @@ class PageCoordinationUnitImpl
   // PageCoordinationUnit.
   base::TimeDelta TimeSinceLastVisibilityChange() const;
 
-  const std::set<FrameCoordinationUnitImpl*>&
-  frame_coordination_units_for_testing() const {
+  const std::set<FrameCoordinationUnitImpl*>& GetFrameCoordinationUnits()
+      const {
     return frame_coordination_units_;
   }
 
@@ -90,11 +80,6 @@ class PageCoordinationUnitImpl
   base::TimeTicks visibility_change_time_;
   // Main frame navigation committed time.
   base::TimeTicks navigation_committed_time_;
-
-  // |was_almost_idle_| is only reset to false when main frame navigation of
-  // non-same document navigation is committed. And will be set to true when
-  // CheckAndUpdateAlmostIdleStateIfNeeded() is called.
-  bool was_almost_idle_;
 
   DISALLOW_COPY_AND_ASSIGN(PageCoordinationUnitImpl);
 };
