@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf933294_1cc4fd86",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-24T23:11:02Z",
+      "side": 1,
+      "message": "Did we ever understand why this works instead of GL_BGRA? It still doesn\u0027t quite make sense to me, so I\u0027m a little worried.",
+      "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
