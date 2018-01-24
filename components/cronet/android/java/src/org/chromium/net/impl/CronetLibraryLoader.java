@@ -13,6 +13,7 @@ import android.os.Looper;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.net.NetworkChangeNotifier;
 
@@ -50,6 +51,7 @@ public class CronetLibraryLoader {
                 if (!sInitThread.isAlive()) {
                     sInitThread.start();
                 }
+
                 postToInitThread(new Runnable() {
                     @Override
                     public void run() {
@@ -101,6 +103,7 @@ public class CronetLibraryLoader {
         // observers. Existing observers in the net stack do not
         // perform expensive work.
         NetworkChangeNotifier.registerToReceiveNotificationsAlways();
+
         // Wait for loadLibrary() to complete so JNI is registered.
         sWaitForLibLoad.block();
         assert sLibraryLoaded;
@@ -121,6 +124,26 @@ public class CronetLibraryLoader {
         } else {
             new Handler(sInitThread.getLooper()).post(r);
         }
+    }
+
+    @CalledByNative
+    private static String getDefaultUserAgent() {
+        return UserAgent.from(ContextUtils.getApplicationContext());
+    }
+
+    @CalledByNative
+    private static void ensureInitializedFromNative() {
+        // Called by native, so native library is already loaded.
+        synchronized (sLoadLock) {
+            sLibraryLoaded = true;
+            sWaitForLibLoad.open();
+        }
+
+        // The application context must already be initialized
+        // using ContextUtils.initApplicationContext().
+        Context applicationContext = ContextUtils.getApplicationContext();
+        assert applicationContext != null;
+        ensureInitialized(applicationContext, null);
     }
 
     // Native methods are implemented in cronet_library_loader.cc.
