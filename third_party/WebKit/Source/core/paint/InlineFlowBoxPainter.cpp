@@ -366,19 +366,8 @@ void InlineFlowBoxPainter::PaintMask(const PaintInfo& paint_info,
   SkBlendMode composite_op = SkBlendMode::kSrcOver;
   DCHECK(box_model.HasLayer());
   if (!box_model.Layer()->MaskBlendingAppliedByCompositor(paint_info)) {
-    if ((mask_box_image && box_model.StyleRef().MaskLayers().HasImage()) ||
-        box_model.StyleRef().MaskLayers().Next()) {
-      push_transparency_layer = true;
-      paint_info.context.BeginLayer(1.0f, SkBlendMode::kDstIn);
-    } else {
-      // TODO(fmalita): passing a dst-in xfer mode down to
-      // paintFillLayers/paintNinePieceImage seems dangerous: it is only
-      // correct if applied atomically (single draw call). While the heuristic
-      // above presumably ensures that is the case, this approach seems super
-      // fragile. We should investigate dropping this optimization in favour
-      // of the more robust layer branch above.
-      composite_op = SkBlendMode::kDstIn;
-    }
+    push_transparency_layer = true;
+    paint_info.context.BeginLayer(1.0f, SkBlendMode::kDstIn);
   }
 
   LayoutRect paint_rect = LayoutRect(adjusted_paint_offset, frame_rect.Size());
