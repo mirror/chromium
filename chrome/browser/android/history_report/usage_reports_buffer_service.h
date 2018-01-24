@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/threading/sequenced_worker_pool.h"
 
 namespace base {
 class FilePath;
