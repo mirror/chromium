@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3489500_016fdf67",
+        "filename": "build/fuchsia/runner_v2/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "what\u0027s this for?",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afc4a6c_b3f15972",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "This should be in __init__ , otherwise it breaks the method interface in Target.",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15be68eb_81504aba",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "As discussed, we can read kernel messages by invoking \"dlog -f\" over SSH, so we don\u0027t need to make an escape hatch here.\n\nThanks for pointing out that I need to send qemu\u0027s stdout and stderr to /dev/null. I fixed that in my current CL.",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955f9015_8e0bf7f9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "I recommend implementing this as a function which returns a QemuTarget object directly. QemuTarget objects work with the context manager via the \"with\" statement, which gives you stronger assurances that you\u0027re not going to have a lot of zombie instances of QEMU kicking around if something crashes.\n\nThe caller can then just invoke RunCommandPiped on the object directly.",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45208def_38981221",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "Recommend adding a cleanup step in \"finally\" if this code might eventually target devices, otherwise tmpfs gets clogged. See https://chromium-review.googlesource.com/c/chromium/src/+/882441/2/build/fuchsia/runner_v2/deploy_util.py .",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e34855e_95d95ec2",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -141,6 +226,40 @@
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0e8ea32_1b715529",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "Line too long?",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087682d8_3180fe3a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T00:56:25Z",
+      "side": 1,
+      "message": "Line too long?",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
