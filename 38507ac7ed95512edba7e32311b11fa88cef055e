@@ -34,6 +34,24 @@
       "revId": "38507ac7ed95512edba7e32311b11fa88cef055e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9caa0b_09d2521f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessCreationParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-24T22:19:03Z",
+      "side": 1,
+      "message": "Removed the lock.\n\nThe CL is now ready for final review :)\n\nMy intention was to make many more related changes in this CL once I got approval from you. I am instead going to post those related changes in a separate CL later today.",
+      "parentUuid": "3c2c2686_9a032fcb",
+      "revId": "38507ac7ed95512edba7e32311b11fa88cef055e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
