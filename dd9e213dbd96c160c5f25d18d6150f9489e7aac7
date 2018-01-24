@@ -34,6 +34,24 @@
       "revId": "dd9e213dbd96c160c5f25d18d6150f9489e7aac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dac899_675c5334",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-24T21:09:54Z",
+      "side": 1,
+      "message": "Bind can take a reference on the ref-counted object.",
+      "parentUuid": "7266f293_6ecbe922",
+      "revId": "dd9e213dbd96c160c5f25d18d6150f9489e7aac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
