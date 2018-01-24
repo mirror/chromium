@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "1e0ae0f5_71e35eac",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T08:39:33Z",
+      "side": 1,
+      "message": "I meant, it is 1 line of code, you can probably inline it?",
+      "parentUuid": "752d4253_ccca06e5",
+      "range": {
+        "startLine": 524,
+        "startChar": 18,
+        "endLine": 524,
+        "endChar": 29
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66d4c24_39ead56e",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
         "patchSetId": 2
@@ -343,6 +367,30 @@
       "side": 1,
       "message": "You said it didn\u0027t matter where I put this method! I\u0027ve renamed the pragma to Toolbar.",
       "parentUuid": "43a1f70e_9a739a13",
+      "range": {
+        "startLine": 1945,
+        "startChar": 15,
+        "endLine": 1945,
+        "endChar": 22
+      },
+      "revId": "b208015714d64422d3c75a27db7ca6db0da509db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08b4e399_76349809",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T08:39:33Z",
+      "side": 1,
+      "message": "Haha :)",
+      "parentUuid": "44ee197b_ffc09353",
       "range": {
         "startLine": 1945,
         "startChar": 15,

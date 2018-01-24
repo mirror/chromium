@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9599884f_b6149049",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T08:39:33Z",
+      "side": 1,
+      "message": "Very optional, maybe outside the scope of this CL: maybe you can directly pass self.delegate to the LocationBarControllerImpl instead of having this class as intermediate? You could even remove the webStateList from this coordinator.",
+      "range": {
+        "startLine": 145,
+        "startChar": 15,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "f7ee8ba3f0a6a3f98463f6efa934a6915cff82a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
