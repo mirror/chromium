@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df29ded_00354d92",
+        "filename": "extensions/browser/extensions_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-24T02:49:53Z",
+      "side": 0,
+      "message": "This should be redundant, was introduced in the constructor and then moved - https://codereview.chromium.org/2785373003/",
+      "revId": "032f83cffa91d583f46f15dbc0bd29b099417fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

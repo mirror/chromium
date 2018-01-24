@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d85777_ae2e65c6",
+        "filename": "extensions/browser/extensions_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-24T02:49:53Z",
+      "side": 1,
+      "message": "This is the actual fix, the test was failing because the incognito context wasn\u0027t marked live.",
+      "revId": "c1c0cb12b6edd6bb18f02e9aaf16e6953ddff488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c342c51_356b4bf4",
+        "filename": "extensions/browser/mock_extension_system.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-24T02:49:53Z",
+      "side": 1,
+      "message": "After doing the fix in extensions_test.cc, some tests started failing, because ExtensionSystem was being accessed for incognito context, and by default null was being returned. This allows it to have a separate instance in incognito like in ExtensionSystemFactory.",
+      "revId": "c1c0cb12b6edd6bb18f02e9aaf16e6953ddff488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
