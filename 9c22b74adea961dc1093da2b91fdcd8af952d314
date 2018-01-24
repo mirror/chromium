@@ -22,6 +22,30 @@
       "revId": "9c22b74adea961dc1093da2b91fdcd8af952d314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc2ce3d_038b9f36",
+        "filename": "content/browser/download/download_worker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T19:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "384d600d_aa7dcda8",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "9c22b74adea961dc1093da2b91fdcd8af952d314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
