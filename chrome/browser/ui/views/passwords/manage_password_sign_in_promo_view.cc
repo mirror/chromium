@@ -14,8 +14,6 @@
 ManagePasswordSignInPromoView::ManagePasswordSignInPromoView(
     ManagePasswordsBubbleModel* model)
     : model_(model) {
-  base::RecordAction(
-      base::UserMetricsAction("Signin_Impression_FromPasswordBubble"));
 }
 
 bool ManagePasswordSignInPromoView::Accept() {
