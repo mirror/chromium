@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e731f6_bc06f2b2",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-24T22:20:53Z",
+      "side": 1,
+      "message": "This needs network service version object too.",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "86c327d0e05ced5ada1a30f317e91dda9e65aaa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
