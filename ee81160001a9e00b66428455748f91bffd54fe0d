@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422673a8_9856ef4b",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "Maybe add something like:\nCHECK(!path.empty()) \u003c\u003c \"ExtensionRegistrar should never ask to load an unknown extension with no path\";",
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d402116b_77fddd93",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "nitty nit: maybe |was_reloading|, to make it clearer that this is the end of the reload process.",
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a25e1f_69c7e45f",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "nit: for getting an extension from a single set, it\u0027s more efficient (and IMO more readable) to just access the set directly:\nregistry_-\u003eenabled_extensions().GetByID(extension_id);",
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fcd968_d9903558",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "I know this was just transferred from ExtensionService, but it actually seems wrong.  We can only terminate an enabled extension (enforced by line 334 here), and we should never have an enabled extension in the reloading_extensions_ set.  Can you add a TODO() to update this to a DCHECK?",
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da9e0bb_8acbf658",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "No need for extensions::",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 393,
+        "endChar": 16
+      },
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5425b2de_5a2bed29",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining what this is emulating?\n\nI\u0027d also prefer that we break this out and put it in the test body, so that we can test the interim state.  Something like:\n\nTEST_F(ExtensionRegistrarTest, ReloadExtension) {\n  AddEnabledExtension();\n  ReloadEnabledExtension();\n  // The extension should be disabled while reloading.\n  ExpectInSet(ExtensionRegistry::DISABLED);\n  EXPECT_EQ(disable_reason::DISABLE_RELOAD,\n            prefs()-\u003eGetDisableReasons(extension()-\u003eid()));\n\n  // Simulate adding the reloaded extension back to the registrar.\n  AddReloadedExtension();\n}",
+      "revId": "ee81160001a9e00b66428455748f91bffd54fe0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

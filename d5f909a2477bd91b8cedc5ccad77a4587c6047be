@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "4004e515_89c75adb",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:34:34Z",
+      "side": 1,
+      "message": "that\u0027s all.  So I\u0027d do something like\nenum class LoadErrorBehavior {\n  kNoisy,  // Shows an error dialog\n  kQuiet,  // Only logs the error\n};",
+      "parentUuid": "ea8de79e_230384d1",
+      "revId": "d5f909a2477bd91b8cedc5ccad77a4587c6047be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27873623_cb5a5aa1",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 4
