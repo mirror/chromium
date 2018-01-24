@@ -52,6 +52,24 @@
       "revId": "ecd3d82e17e85d1517a55d7d7012e99577af17e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c616b2ac_a953c35e",
+        "filename": "base/memory/aligned_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2018-01-24T18:39:04Z",
+      "side": 1,
+      "message": "You\u0027re right of course- reordered.  (Sorry- I\u0027m a bit tired, I failed to read your comment properly.)",
+      "parentUuid": "ff6a6015_a063590f",
+      "revId": "ecd3d82e17e85d1517a55d7d7012e99577af17e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
