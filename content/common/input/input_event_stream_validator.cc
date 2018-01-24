@@ -25,23 +25,28 @@ InputEventStreamValidator::InputEventStreamValidator()
 InputEventStreamValidator::~InputEventStreamValidator() {
 }
 
-void InputEventStreamValidator::Validate(const WebInputEvent& event) {
+void InputEventStreamValidator::Validate(
+    const WebInputEvent& event,
+    const bool fling_cancellation_is_deferred /* = false */) {
   if (!enabled_)
     return;
 
-  DCHECK(ValidateImpl(event, &error_msg_))
+  DCHECK(ValidateImpl(event, &error_msg_, fling_cancellation_is_deferred))
       << error_msg_
       << "\nInvalid Event: " << ui::WebInputEventTraits::ToString(event);
 }
 
-bool InputEventStreamValidator::ValidateImpl(const blink::WebInputEvent& event,
-                                             std::string* error_msg) {
+bool InputEventStreamValidator::ValidateImpl(
+    const blink::WebInputEvent& event,
+    std::string* error_msg,
+    const bool fling_cancellation_is_deferred) {
   DCHECK(error_msg);
   if (WebInputEvent::IsGestureEventType(event.GetType())) {
     const WebGestureEvent& gesture = static_cast<const WebGestureEvent&>(event);
     // TODO(jdduke): Validate touchpad gesture streams.
     if (gesture.source_device == blink::kWebGestureDeviceTouchscreen)
-      return gesture_validator_.Validate(gesture, error_msg);
+      return gesture_validator_.Validate(gesture, error_msg,
+                                         fling_cancellation_is_deferred);
   } else if (WebInputEvent::IsTouchEventType(event.GetType())) {
     const WebTouchEvent& touch = static_cast<const WebTouchEvent&>(event);
     return touch_validator_.Validate(touch, error_msg);

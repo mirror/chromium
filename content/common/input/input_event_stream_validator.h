@@ -24,10 +24,13 @@ class InputEventStreamValidator {
   InputEventStreamValidator();
   ~InputEventStreamValidator();
 
-  void Validate(const blink::WebInputEvent&);
+  void Validate(const blink::WebInputEvent&,
+                const bool fling_cancellation_is_deferred = false);
 
  private:
-  bool ValidateImpl(const blink::WebInputEvent&, std::string* error_msg);
+  bool ValidateImpl(const blink::WebInputEvent&,
+                    std::string* error_msg,
+                    const bool fling_cancellation_is_deferred);
 
   GestureEventStreamValidator gesture_validator_;
   TouchEventStreamValidator touch_validator_;
