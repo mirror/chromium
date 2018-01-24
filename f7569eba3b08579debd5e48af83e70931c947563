@@ -175,6 +175,24 @@
       "revId": "f7569eba3b08579debd5e48af83e70931c947563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e8ebdb_b5319a8b",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T15:56:50Z",
+      "side": 1,
+      "message": "Yes.. ultimately we\u0027d like to remove WebTouchEvent from the exposed blink API.. But if you keep it here we\u0027d need to come back and change it. If you do it now then we don\u0027t need to come back.",
+      "parentUuid": "b10313ab_3cba4470",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
