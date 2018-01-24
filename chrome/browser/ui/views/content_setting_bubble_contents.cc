@@ -41,6 +41,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/text_utils.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/image_button_factory.h"
 #include "ui/views/controls/button/label_button_border.h"
