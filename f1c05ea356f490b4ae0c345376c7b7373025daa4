@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76401316_3e2578ee",
+        "filename": "components/arc/timer/create_timer_request.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-24T23:50:28Z",
+      "side": 1,
+      "message": "nit: Can you add a newline between functions and variables?",
+      "revId": "f1c05ea356f490b4ae0c345376c7b7373025daa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
