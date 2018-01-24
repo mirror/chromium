@@ -44,10 +44,13 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "device/geolocation/geolocation_provider.h"
+#include "media/audio/audio_manager.h"
 #include "media/mojo/features.h"
 #include "media/mojo/interfaces/constants.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
+#include "services/audio/public/interfaces/constants.mojom.h"
+#include "services/audio/service_factory.h"
 #include "services/catalog/manifest_provider.h"
 #include "services/catalog/public/cpp/manifest_parsing_util.h"
 #include "services/catalog/public/interfaces/constants.mojom.h"
@@ -520,6 +523,19 @@ ServiceManagerContext::ServiceManagerContext() {
     info.factory = base::BindRepeating(&metrics::CreateMetricsService);
     packaged_services_connection_->AddEmbeddedService(
         metrics::mojom::kMetricsServiceName, info);
+  }
+
+  if (media::AudioManager::Get()) {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::BindRepeating([] {
+      media::AudioManager* audio_manager = media::AudioManager::Get();
+      return audio_manager
+                 ? audio::service_factory::CreateInProcess(audio_manager)
+                 : nullptr;
+    });
+    info.task_runner = media::AudioManager::Get()->GetTaskRunner();
+    packaged_services_connection_->AddEmbeddedService(
+        audio::mojom::kServiceName, info);
   }
 
   ContentBrowserClient::StaticServiceMap services;
