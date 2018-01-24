@@ -116,7 +116,11 @@ void DispatchEventToExtensions(Profile* profile,
       Profile* restrict_to_profile = nullptr;
       bool from_incognito = false;
       if (IncognitoInfo::IsSplitMode(extension.get())) {
-        if (incognito && util::IsIncognitoEnabled(extension->id(), profile)) {
+        if (incognito) {
+          if (util::IsIncognitoEnabled(extension->id(), profile) ||
+              !profile->HasOffTheRecordProfile()) {
+            continue;
+          }
           restrict_to_profile = profile->GetOffTheRecordProfile();
         } else if (!incognito &&
                    PreferenceAPI::Get(profile)->DoesExtensionControlPref(
