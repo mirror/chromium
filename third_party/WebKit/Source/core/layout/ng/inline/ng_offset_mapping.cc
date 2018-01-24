@@ -152,7 +152,7 @@ const NGOffsetMapping* NGOffsetMapping::GetFor(
   if (!layout_object)
     return nullptr;
   LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow();
-  if (!block_flow || !block_flow->ChildrenInline())
+  if (!block_flow || !block_flow->HasNGInlineNodeData())
     return nullptr;
   NGBlockNode block_node = NGBlockNode(block_flow);
   if (!block_node.CanUseNewLayout())
