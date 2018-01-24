@@ -284,11 +284,6 @@
   self.view = [[ToolbarView alloc] init];
   self.view.delegate = self;
   self.view.buttonFactory = self.buttonFactory;
-  if (@available(iOS 11, *)) {
-    self.view.topSafeAnchor = self.view.safeAreaLayoutGuide.topAnchor;
-  } else {
-    self.view.topSafeAnchor = self.topLayoutGuide.bottomAnchor;
-  }
   self.view.leadingMargin = [self leadingMargin];
 
   [self.view setUp];
