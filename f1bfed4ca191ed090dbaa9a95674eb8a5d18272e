@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fedd32c9_b49a83bb",
+        "filename": "ui/accessibility/ax_enum_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T21:15:45Z",
+      "side": 1,
+      "message": "Should we be using a hash table or binary search? How often is this called? Ditto for the other parsing methods. Have we profiled to ensure no significant time is spent in here?",
+      "revId": "f1bfed4ca191ed090dbaa9a95674eb8a5d18272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f6f41f_8df7a110",
+        "filename": "ui/accessibility/ax_enums.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T21:15:45Z",
+      "side": 1,
+      "message": "Why is 24..31 skipped? Could use an explanation.",
+      "revId": "f1bfed4ca191ed090dbaa9a95674eb8a5d18272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe5c14_98a41949",
+        "filename": "ui/accessibility/ax_enums.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T21:15:45Z",
+      "side": 1,
+      "message": "Aren\u0027t these automatically numbered by being enums?",
+      "revId": "f1bfed4ca191ed090dbaa9a95674eb8a5d18272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
