@@ -33,9 +33,7 @@ URLLoaderFactoryBundle::URLLoaderFactoryBundle() = default;
 
 URLLoaderFactoryBundle::URLLoaderFactoryBundle(
     std::unique_ptr<URLLoaderFactoryBundleInfo> info) {
-  default_factory_.Bind(std::move(info->default_factory_info()));
-  for (auto& factory_info : info->factories_info())
-    factories_[factory_info.first].Bind(std::move(factory_info.second));
+  Update(std::move(info));
 }
 
 URLLoaderFactoryBundle::~URLLoaderFactoryBundle() = default;
@@ -53,7 +51,7 @@ void URLLoaderFactoryBundle::RegisterFactory(
   DCHECK(result.second);
 }
 
-network::mojom::URLLoaderFactory* URLLoaderFactoryBundle::GetFactoryForRequest(
+network::mojom::URLLoaderFactory* URLLoaderFactoryBundle::GetFactoryForURL(
     const GURL& url) {
   auto it = factories_.find(url.scheme());
   if (it == factories_.end()) {
@@ -72,8 +70,7 @@ void URLLoaderFactoryBundle::CreateLoaderAndStart(
     network::mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     const Constraints& constaints) {
-  network::mojom::URLLoaderFactory* factory_ptr =
-      GetFactoryForRequest(request.url);
+  network::mojom::URLLoaderFactory* factory_ptr = GetFactoryForURL(request.url);
 
   factory_ptr->CreateLoaderAndStart(std::move(loader), routing_id, request_id,
                                     options, request, std::move(client),
@@ -81,10 +78,9 @@ void URLLoaderFactoryBundle::CreateLoaderAndStart(
 }
 
 std::unique_ptr<SharedURLLoaderFactoryInfo> URLLoaderFactoryBundle::Clone() {
-  DCHECK(default_factory_);
-
   network::mojom::URLLoaderFactoryPtrInfo default_factory_info;
-  default_factory_->Clone(mojo::MakeRequest(&default_factory_info));
+  if (default_factory_)
+    default_factory_->Clone(mojo::MakeRequest(&default_factory_info));
 
   std::map<std::string, network::mojom::URLLoaderFactoryPtrInfo> factories_info;
   for (auto& factory : factories_) {
