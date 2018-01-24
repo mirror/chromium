@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<title>Permafills (Syntax B) - please open on Chrome.</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+    window.log = [];
+</script>
+
+<!-- non-supported permafill + valid fallback URL w/ CORS header => load the fallback. -->
+<script type="module" onload="log.push('load1a')" onerror="log.push('error1a')"
+    src="browser://none?http://localhost:{{ports[http][0]}}/permafill/fallback.py"></script>
+
+<!-- non-supported permafill + valid fallback URL w/o CORS header
+     => error because of browser:->HTTP cross-origin redirect. -->
+<script type="module" onload="log.push('load1b')" onerror="log.push('error1b')"
+    src="browser://none?http://localhost:{{ports[http][0]}}/permafill/fallback.js"></script>
+
+<!-- The fallback URL w/o CORS header only => load the fallback, because there are no
+     browser: URL in between and thus no cross-origin redirect. -->
+<script type="module" onload="log.push('load1c')" onerror="log.push('error1c')"
+    src="http://localhost:{{ports[http][0]}}/permafill/fallback.js"></script>
+
+<!-- non-supported permafill + no fallback URL => error. -->
+<script type="module" onload="log.push('load1d')" onerror="log.push('error1d')"
+    src="browser://none"></script>
+
+<!-- Supported permafill + valid fallback URL w/ CORS header => load the permafill. -->
+<script type="module" onload="log.push('load2a')" onerror="log.push('error2a')"
+    src="browser://test?http://localhost:{{ports[http][0]}}/permafill/fallback.py"></script>
+
+<!-- Supported permafill + no fallback URL => load the permafill. -->
+<script type="module" onload="log.push('load2d')" onerror="log.push('error2d')"
+    src="browser://test"></script>
+
+<script type="module">
+    test(() => {
+        console.log(log);
+
+        // See the comments above for what is expected.
+        assert_array_equals(log, [
+          "fallback", "load1a",
+          "error1b",
+          "fallback", "load1c",
+          "error1d",
+
+          "permafill(test)", "load2a",
+          "permafill(test)", "load2d"
+        ]);
+      }, "Load permafills by <script> elements");
+
+    promise_test(
+      () => fetch('browser://none?http://localhost:{{ports[http][0]}}/permafill/fallback.py')
+        .then(r => {
+            assert_equals(
+              r.url,
+              'http://localhost:{{ports[http][0]}}/permafill/fallback.py',
+              'Response URL should be the fallback URL');
+            return r.text();
+          })
+        .then(text => {
+            assert_equals(text, 'window.log.push("fallback");');
+          }),
+        "fetch() + non-supported permafill w/ fallback");
+
+    promise_test(
+      () => fetch('browser://none?http://localhost:{{ports[http][0]}}/permafill/fallback.js')
+        .then(r => {
+            assert_unreached('Should fail due to lack of a CORS header');
+          },
+          r => {}),
+        "fetch() + non-supported permafill w/ fallback w/o CORS headers");
+
+    promise_test(
+      () => fetch('browser://none')
+        .then(r => {
+            assert_unreached('Should fail');
+          },
+          r => {}),
+        "fetch() + non-supported permafill w/o fallback");
+
+    promise_test(
+      () => fetch('browser://test?http://localhost:{{ports[http][0]}}/permafill/fallback.py')
+        .then(r => {
+            assert_equals(
+              r.url,
+              'chrome-extension://acihfchgdiicfpkconamoakocligclao/test/index.js',
+              // TODO(hiroshige): should be 'browser://test'
+              'Response URL should be the permafill URL');
+            return r.text();
+          })
+        .then(text => {
+            assert_equals(text, 'window.log.push("permafill(test)");');
+          }),
+        "fetch() + supported permafill w/ fallback");
+
+    promise_test(
+      () => fetch('browser://test')
+        .then(r => {
+            assert_equals(
+              r.url,
+              'chrome-extension://acihfchgdiicfpkconamoakocligclao/test/index.js',
+              // TODO(hiroshige): should be 'browser://test'
+              'Response URL should be the permafill URL');
+            return r.text();
+          })
+        .then(text => {
+            assert_equals(text, 'window.log.push("permafill(test)");');
+          }),
+        "fetch() + supported permafill w/o fallback");
+</script>
