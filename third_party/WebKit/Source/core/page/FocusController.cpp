@@ -1440,7 +1440,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   if (focused_element)
     container = ScrollableAreaOrDocumentOf(focused_element);
 
-  const LayoutRect starting_rect = FindSearchStartPoint(current_frame, type);
+  LayoutRect starting_rect = FindSearchStartPoint(current_frame, type);
   Node* pruned_sub_tree_root = nullptr;
   bool consumed = false;
 
@@ -1452,6 +1452,8 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
 
     // Nothing found in |container| so search the parent container.
     pruned_sub_tree_root = container;
+    if (focused_element && HasOffscreenRect(focused_element))
+      starting_rect = container->GetLayoutObject()->AbsoluteVisualRect();
     container = ScrollableAreaOrDocumentOf(container);
     if (container && container->IsDocumentNode())
       ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
