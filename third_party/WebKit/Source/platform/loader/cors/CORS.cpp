@@ -237,6 +237,19 @@ bool IsCORSEnabledRequestMode(network::mojom::FetchRequestMode request_mode) {
   return network::cors::IsCORSEnabledRequestMode(request_mode);
 }
 
+bool IsCORSSafelistedMethod(const String& method) {
+  return network::cors::IsCORSSafelistedMethod(method.Utf8().data());
+}
+
+bool IsCORSSafelistedContentType(const String& media_type) {
+  return network::cors::IsCORSSafelistedContentType(media_type.Utf8().data());
+}
+
+bool IsCORSSafelistedHeader(const String& name, const String& value) {
+  return network::cors::IsCORSSafelistedHeader(name.Utf8().data(),
+                                               value.Utf8().data());
+}
+
 }  // namespace CORS
 
 }  // namespace blink
