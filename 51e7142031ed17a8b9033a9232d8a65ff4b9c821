@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2348b6f3_6ea3a011",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/reporting/report-uri-from-child-frame.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-24T11:16:08Z",
+      "side": 1,
+      "message": "From chat if anyone comes along wondering: the test isn\u0027t over here, the inserted script creates more tests, and that will happen before the load event. (before the load event and as long as there are any pending tests, testharness.js waits.)",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "51e7142031ed17a8b9033a9232d8a65ff4b9c821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
