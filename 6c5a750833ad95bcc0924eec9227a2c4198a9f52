@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc22082_d6a2c3c0",
+        "filename": "content/browser/child_process_launcher_helper_linux.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-24T19:33:19Z",
+      "side": 1,
+      "message": "nit: options-\u003efds_to_remap.emplace_back(SandboxHostLinux::GetInstance()-\u003eGetChildSocket(), sandbox::GetBackChannelFDNumber()); ?",
+      "revId": "6c5a750833ad95bcc0924eec9227a2c4198a9f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
