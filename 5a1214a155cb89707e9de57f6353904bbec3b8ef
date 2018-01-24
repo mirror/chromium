@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f539dbce_28247537",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56642727_922a5322",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 56
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8247cee0_1a262a06",
         "filename": "chrome/browser/printing/print_browsertest.cc",
         "patchSetId": 27
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "78c9de3c_011a3556",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8247cee0_1a262a06",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 25
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f255b58_1114e482",
         "filename": "chrome/browser/printing/print_browsertest.cc",
         "patchSetId": 27
@@ -68,6 +116,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03265c4d_d2111229",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "After reading more carefully, NavigateToURL() by default will return when loading is done. So we don\u0027t need to wait again here. Removed.",
+      "parentUuid": "7f255b58_1114e482",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "4dffc455_381763cf",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Code changed, no longer check here.",
+      "parentUuid": "6c220e72_cbfbaf41",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb466c4_6fcc7b18",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 27
@@ -137,6 +233,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e40c29f_1c2239b0",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "It is declared in components/printing/common/print_messages.h. This function doesn\u0027t do any check other than simple forwarding to the compositor service. There is not much we can check. If the content is bad, we may just get some garbage or nothing.",
+      "parentUuid": "dbb466c4_6fcc7b18",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "74f213a8_0c9967cf",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "We no longer tracking frames in this class. For overall printing compositing process, we use frame_guid to identify frames. It could be easily replaced with GlobalFrameRoutingId or ungessable_token if either is available.",
+      "parentUuid": "533a7706_a4b0c320",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4f45dd_8368c738",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 27
@@ -183,6 +327,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbb1b6c_2a63962d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "yes, it could be nullptr if this frame is deleted during beforeevent.",
+      "parentUuid": "be4f45dd_8368c738",
+      "range": {
+        "startLine": 1432,
+        "startChar": 4,
+        "endLine": 1432,
+        "endChar": 52
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "7fdea424_c6affe97",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1439,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "4708fe82_b46f3a34",
+      "range": {
+        "startLine": 1439,
+        "startChar": 4,
+        "endLine": 1439,
+        "endChar": 10
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c54c49b_e9ff0bea",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 27
@@ -229,6 +421,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba57bf9_e1639213",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "This only fails when we can not create or map the shared memory. In that case, we may have a bigger problem than printing. Not sure whether it is worth to handle as it is unlikely to happen.",
+      "parentUuid": "6c54c49b_e9ff0bea",
+      "range": {
+        "startLine": 1468,
+        "startChar": 0,
+        "endLine": 1469,
+        "endChar": 11
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "126098a0_72cbfa42",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Right, now we do proxy id -\u003e frame guid in browser.",
+      "parentUuid": "47edcd47_3123f26b",
+      "range": {
+        "startLine": 1472,
+        "startChar": 6,
+        "endLine": 1472,
+        "endChar": 36
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b360137_00c50414",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 27
@@ -275,6 +515,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0708ff1f_8961d666",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "iiuc, |routing_id_| is a member variable which should still be valid while this function is executing. However, |frame| is a web frame |remote_frame_| points to. It may be destroyed/invalid.",
+      "parentUuid": "8b360137_00c50414",
+      "range": {
+        "startLine": 1473,
+        "startChar": 45,
+        "endLine": 1473,
+        "endChar": 57
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "da872254_9b58ee1f",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Yes, you are right. Changed to get rph id in browser. :)",
+      "parentUuid": "5cb141d3_0b36be72",
+      "range": {
+        "startLine": 2025,
+        "startChar": 6,
+        "endLine": 2025,
+        "endChar": 36
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2762a2a0_59672296",
         "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
         "patchSetId": 27
@@ -321,6 +609,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9404dfb_5030583f",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "I think it should be fine. In worst case, we print at wrong place/size, but the content is still the one that allowed to access.",
+      "parentUuid": "2762a2a0_59672296",
+      "range": {
+        "startLine": 385,
+        "startChar": 60,
+        "endLine": 385,
+        "endChar": 64
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "25ec6e00_e95b3cf6",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Fixed. Changed to its parent. It is easier to understand this way. In reality, it should be the same as they will all point to the same web_contents\u0027 delegate.",
+      "parentUuid": "f840ce69_ecd91148",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 26
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30905cb9_dc37901d",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 27
@@ -367,6 +703,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e2d5a5_50b7f736",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 4024,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "The code is changed to use web contents delegate. Should be fine for webview guests too.",
+      "parentUuid": "30905cb9_dc37901d",
+      "range": {
+        "startLine": 4023,
+        "startChar": 0,
+        "endLine": 4024,
+        "endChar": 77
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

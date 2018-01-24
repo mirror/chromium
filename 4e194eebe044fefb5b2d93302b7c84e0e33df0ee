@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "380a859a_435b254b",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Yes, we check them in TestPrintFrameContentMsgFilter. Added comments.",
+      "parentUuid": "c2b3b77d_73de1d60",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e376b3c_9e2d2889",
         "filename": "components/printing/browser/print_composite_client.h",
         "patchSetId": 26
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "7062ed9e_0be6f73e",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "This file has been refactored. Overall, we use frame_guid through the printing compositing process. It is just like GlobalFrameRoutingId, except I concated it into a uint64 type for easier handling.",
+      "parentUuid": "d384b5a8_96693a9e",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 65
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6fdb105_49647091",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e376b3c_9e2d2889",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f9ccdc_bba23722",
         "filename": "components/printing/browser/print_composite_client.h",
         "patchSetId": 26
@@ -79,6 +145,24 @@
       "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0463b8_8c2e7750",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "No longer needed here.",
+      "parentUuid": "d5f9ccdc_bba23722",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e14e9b7f_ac34005e",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Done, fixed to its parent.",
+      "parentUuid": "47b4618b_08baa564",
+      "range": {
+        "startLine": 390,
+        "startChar": 24,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb9096c_3d43f510",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 26
@@ -119,6 +227,24 @@
       "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3942d77_5aaf0d95",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-24T05:11:54Z",
+      "side": 1,
+      "message": "Good point, changed to be part of WebContentsDelegate.",
+      "parentUuid": "5fb9096c_3d43f510",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
