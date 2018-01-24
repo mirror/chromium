@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b46705_a7dffb3a",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-24T21:07:58Z",
+      "side": 1,
+      "message": "A sleep on the main thread is very dangerous!\nIf we really want this, then we should use a timer and the timer should move to the site that is calling into run the dialog, not the actual dialog code.",
+      "range": {
+        "startLine": 568,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 71
+      },
+      "revId": "bc54809543ad90b9a531a6504a7ba05d0557b04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
