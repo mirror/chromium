@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4294b55e_d8dae33a",
+        "filename": "media/mojo/interfaces/renderer.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T19:58:22Z",
+      "side": 1,
+      "message": "I thought about this more. It\u0027s a bit odd for the renderer process media pipeline to ask the browser to create a specific type of media Renderer. That sounds like a layer violation and kinda defeats the purpose of polymorphism. For example, when we select a VideoDecoder in the renderer process media pipeline, we use a VideoDecoderConfig to select the first/best decoder that can handle it. We don\u0027t send VideoDecoderType to ask for a specific decoder to create.\n\nWith that in mind, it seems that on Renderer::Initialize(), the browser side should be able to check the MediaResource::Type by checking whether |streams| or |media_url| is null, and use that information to decide which concrete MediaRenderer to create. Note that on Android, MediaPlayerRenderer will be the default Renderer to handle URL type MediaResource, which seems a reasonable assumption.\n\nIn your case, it seems Renderer::Initialize() is too late and you need to make the selection at creation time. Then you can pass a MediaResource::Type in InterfaceFactory::CreateRenderer, instead of a HostedRendererType. Does that make sense?",
+      "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
