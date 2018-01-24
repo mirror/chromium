@@ -1385,6 +1385,7 @@ TEST(IncrementalMarkingTest, HeapHashMapCopyValuesToVectorMember) {
 TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
   ThreadState* state = ThreadState::Current();
   state->SetGCState(ThreadState::kIncrementalMarkingStartScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
   state->SetGCState(ThreadState::kIncrementalMarkingStepScheduled);
   Persistent<Object> obj1 = Object::Create();
   NormalPageArena* arena = static_cast<NormalPageArena*>(
@@ -1414,8 +1415,29 @@ TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
     // Non-weak hash table backings should be promptly freed.
     EXPECT_GT(after, before);
   }
-  state->SetGCState(ThreadState::kIncrementalMarkingFinalizeScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
+  state->SetGCState(ThreadState::kSweeping);
   state->SetGCState(ThreadState::kNoGCScheduled);
+}
+
+TEST(IncrementalMarkingTest, AbortEphemeronIterationDoneCallback) {
+  ThreadState* state = ThreadState::Current();
+  Persistent<Object> obj = Object::Create();
+  using WeakMap = HeapHashMap<WeakMember<Object>, Member<Object>>;
+  Persistent<WeakMap> map = new WeakMap();
+  map->insert(obj, obj);
+  state->IncrementalMarkingStart();
+  state->SetGCState(ThreadState::kGCRunning);
+  // Weak HashMap should register a EphemeronIterationDoneCallback.
+  EXPECT_FALSE(state->Heap().EphemeronIterationDoneStack()->IsEmpty());
+  bool called = false;
+  HeapAllocator::RegisterWeakTable(
+      state->CurrentVisitor(), &called, [](Visitor*, void*) {},
+      [](Visitor*, void* p) { *static_cast<bool*>(p) = true; });
+  state->SetGCState(ThreadState::kIncrementalMarkingStepScheduled);
+  state->IncrementalMarkingAbort();
+  // EphemeronIterationDoneCallbacks should be invoked when aborting.
+  EXPECT_TRUE(called);
 }
 
 }  // namespace incremental_marking_test

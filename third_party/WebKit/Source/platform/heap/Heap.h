@@ -270,6 +270,9 @@ class PLATFORM_EXPORT ThreadHeap {
     return weak_callback_stack_.get();
   }
   CallbackStack* EphemeronStack() const { return ephemeron_stack_.get(); }
+  CallbackStack* EphemeronIterationDoneStack() const {
+    return ephemeron_iteration_done_stack_.get();
+  }
 
   void VisitPersistentRoots(Visitor*);
   void VisitStackRoots(Visitor*);
