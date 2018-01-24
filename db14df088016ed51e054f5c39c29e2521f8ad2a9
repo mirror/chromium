@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "343a342d_ff30b260",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:43:07Z",
+      "side": 1,
+      "message": "Currently by default we\u0027re using non-null ServiceWorkerClientInfoPtr everywhere, and we check its validity by checking the field |client_uuid| value is empty or not. Later after we mojofied other related IPCs, I\u0027ll start to use nullptr to indicate an invalid client info.",
+      "parentUuid": "0a77cf32_ae4aaf2b",
+      "range": {
+        "startLine": 1136,
+        "startChar": 24,
+        "endLine": 1136,
+        "endChar": 68
+      },
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3f206f6_abe253a9",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a20c42a_8df6b190",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:43:07Z",
+      "side": 1,
+      "message": "Ack. I created another CL https://chromium-review.googlesource.com/c/chromium/src/+/882348 to handle GetClients(). Will make this CL base on that one later.",
+      "parentUuid": "82890345_81116f22",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3cf97f3_d617d697",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "14d2d491_8c7d4371",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:43:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3cf97f3_d617d697",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e6f65ed_1e5dc76a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -96,6 +156,24 @@
       "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831e7c33_5cab8238",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:43:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8e6f65ed_1e5dc76a",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
