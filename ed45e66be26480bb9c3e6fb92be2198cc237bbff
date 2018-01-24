@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7607138c_c0784bac",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T18:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c76b216_d0453c4d",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec9c76b_a76c2083",
         "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
         "patchSetId": 1
@@ -30,6 +48,41 @@
       "writtenOn": "2018-01-24T01:18:03Z",
       "side": 1,
       "message": "Instead of having this GetInstance method, can\u0027t the the instance be bound to the SetURLStoreCreationHookForTesting method on line 277, then it becomes parameter here and you don\u0027t need to store |this| in the actual BlobURLStoreInterceptor object?",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dc8e10_68bad72d",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T18:20:11Z",
+      "side": 1,
+      "message": "I initially used a raw function pointer rather than a base::Callback because having a static/global base::Callback instance in blob_registry_impl didn\u0027t seem nice. Having just a pointer to one might not be too bad though, and not having to do all this complicated mess here certainly is nicer.",
+      "parentUuid": "dec9c76b_a76c2083",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb7e381a_8b90917f",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T18:20:11Z",
+      "side": 1,
+      "message": "In the localstorage test you ignore_result and have a comment explaining that it returns true on android and false on other platforms. But here I seem to always be getting true (even though URL.createObjectURL does a sync mojo call which then results in the renderer being killed). Am I just getting (un)lucky in my testing, or is this actually guaranteed to return true?",
       "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
