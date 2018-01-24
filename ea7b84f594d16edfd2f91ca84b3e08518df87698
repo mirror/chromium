@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5463d33a_3bb04c27",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 0,
+      "message": "This code is in IsTableExposableThroughAccessibility() -- if it has ARIA roles in a thead/tbody/tfoot/tr, then it is not exposable as a table at all, let alone a data table.",
+      "revId": "ea7b84f594d16edfd2f91ca84b3e08518df87698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

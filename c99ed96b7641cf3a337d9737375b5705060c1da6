@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb3cf5a_e465fb85",
+        "filename": "content/test/data/accessibility/aria/aria-sort-html-table-expected-blink.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 1,
+      "message": "genericContainer went away because of the role\u003d\"none\"",
+      "revId": "c99ed96b7641cf3a337d9737375b5705060c1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3012c807_537a18a7",
+        "filename": "content/test/data/accessibility/aria/aria-sort-html-table.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 1,
+      "message": "I added role\u003d\"none\" because with this CL, AXTable::ComputeIsDataTable() now says anything with a \u003cth\u003e is a data table.",
+      "revId": "c99ed96b7641cf3a337d9737375b5705060c1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbb636e_a6ba335c",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/name-calc-visibility.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 1,
+      "message": "Needed role\u003d\"presentation\" because a row does not get accessible name from contents (unless it is focusable).",
+      "revId": "c99ed96b7641cf3a337d9737375b5705060c1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51856d90_96bf7fa4",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/table-with-rules.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 1,
+      "message": "This test was written incorrectly.",
+      "revId": "c99ed96b7641cf3a337d9737375b5705060c1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5a30c2_8a00ce2e",
+        "filename": "third_party/closure_compiler/externs/automation.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-24T22:03:00Z",
+      "side": 1,
+      "message": "This file was recreated via script.",
+      "revId": "c99ed96b7641cf3a337d9737375b5705060c1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
