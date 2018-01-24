@@ -21,6 +21,7 @@ class KeyboardDelegate {
  public:
   virtual ~KeyboardDelegate() {}
 
+  virtual void SetRenderingEnabled(bool enabled) = 0;
   virtual void ShowKeyboard() = 0;
   virtual void HideKeyboard() = 0;
   virtual void SetTransform(const gfx::Transform&) = 0;

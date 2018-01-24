@@ -49,6 +49,7 @@ class MockKeyboardDelegate : public KeyboardDelegate {
   MockKeyboardDelegate() = default;
   ~MockKeyboardDelegate() override = default;
 
+  MOCK_METHOD1(SetRenderingEnabled, void(bool));
   MOCK_METHOD0(ShowKeyboard, void());
   MOCK_METHOD0(HideKeyboard, void());
   MOCK_METHOD1(SetTransform, void(const gfx::Transform&));
