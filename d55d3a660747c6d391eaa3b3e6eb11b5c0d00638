@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "eb65dd9d_e432d5e8",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-24T16:17:01Z",
+      "side": 1,
+      "message": "Ah, right, the queueing is before this call. Ack.\n\n+1 to removing comment.",
+      "parentUuid": "bd9567fd_420b1b64",
+      "range": {
+        "startLine": 1212,
+        "startChar": 47,
+        "endLine": 1214,
+        "endChar": 64
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be8dbbf8_1748eb62",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 25
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "7efd6573_c742e1af",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-24T16:17:01Z",
+      "side": 1,
+      "message": "new comment sgtm",
+      "parentUuid": "421d0441_4fa976e9",
+      "range": {
+        "startLine": 80,
+        "startChar": 64,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "573b69dc_265fcc96",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 25
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Yeah, that\u0027s why there is a SimpleSynchronousEntry* owner thing all around. Probably should say \"for the backend\" --- folded into the above discussion.",
       "parentUuid": "573b69dc_265fcc96",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 47
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7440f430_6d7ad141",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-24T16:17:01Z",
+      "side": 1,
+      "message": "Adding \"for the backend\" sgtm.",
+      "parentUuid": "c2ecefeb_e868456f",
       "range": {
         "startLine": 83,
         "startChar": 7,
