@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fcdb872_6aba4b0b",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdb2124_775fc1b5",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1bd5cc_73646c1b",
         "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-24T20:54:28Z",
       "side": 1,
       "message": "is there a ChromeOS specific label?",
+      "range": {
+        "startLine": 83,
+        "startChar": 39,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f4d23b_72e827f1",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T22:48:05Z",
+      "side": 1,
+      "message": "No at this point according to Omri.",
+      "parentUuid": "1b1bd5cc_73646c1b",
       "range": {
         "startLine": 83,
         "startChar": 39,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "26bc5821_88b0cf00",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T22:48:05Z",
+      "side": 1,
+      "message": "Added a boolean to reflect the status.",
+      "parentUuid": "58d44051_4b9f8606",
+      "range": {
+        "startLine": 838,
+        "startChar": 12,
+        "endLine": 838,
+        "endChar": 17
+      },
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f56140_391f1204",
         "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
         "patchSetId": 15
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1754963c_e1e21a1c",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T22:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f56140_391f1204",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b61b535_b80c059f",
         "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
         "patchSetId": 15
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-24T20:54:28Z",
       "side": 1,
       "message": "I\u0027m not convinced that retry logic is needed here, but if you keep it, can you get a reference to the timeout here, and cancel it in getCollectionInfo_",
+      "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89d8c6f_4942b9b3",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-24T22:48:05Z",
+      "side": 1,
+      "message": "The retry logic is removed here and will be added to backdrop_wallpaper_handlers if needed.",
+      "parentUuid": "9b61b535_b80c059f",
       "revId": "8c467f375a8590e2214d52ea5bbe7b853f0f6066",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
