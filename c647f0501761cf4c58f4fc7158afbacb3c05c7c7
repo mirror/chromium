@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b3d145_eb0653d2",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T17:13:24Z",
+      "side": 1,
+      "message": "Where is touch_event used now? I think it can be removed.",
+      "revId": "c647f0501761cf4c58f4fc7158afbacb3c05c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
