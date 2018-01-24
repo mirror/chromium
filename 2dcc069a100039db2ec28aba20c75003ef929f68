@@ -16,6 +16,24 @@
       "revId": "2dcc069a100039db2ec28aba20c75003ef929f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2d0617_dcbef025",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-24T18:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "383ff2d0_cc02a533",
+      "revId": "2dcc069a100039db2ec28aba20c75003ef929f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
