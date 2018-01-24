@@ -22,6 +22,7 @@
 #include "content/browser/isolated_origin_util.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/site_isolation_policy.h"
+#include "content/common/permafill/constants.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
@@ -337,6 +338,7 @@ ChildProcessSecurityPolicyImpl::ChildProcessSecurityPolicyImpl() {
   RegisterWebSafeScheme(url::kFtpScheme);
   RegisterWebSafeScheme(url::kDataScheme);
   RegisterWebSafeScheme("feed");
+  RegisterWebSafeScheme(permafill::kBrowserScheme);
 
   // TODO(nick): https://crbug.com/651534 blob: and filesystem: schemes embed
   // other origins, so we should not treat them as web safe. Remove callers of

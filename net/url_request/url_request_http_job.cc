@@ -26,6 +26,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "build/buildflag.h"
+#include "content/browser/permafill/well_known_interceptor.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -265,6 +266,10 @@ URLRequestJob* URLRequestHttpJob::Factory(URLRequest* request,
   }
 
   const GURL& url = request->url();
+
+  if (URLRequestJob* intercept_job =
+          permafill::InterceptWellKnownURL(request, network_delegate))
+    return intercept_job;
 
   // Check for reasons not to return a URLRequestHttpJob. These don't apply to
   // https and wss requests.

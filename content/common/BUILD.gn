@@ -243,6 +243,8 @@ source_set("common") {
     "pepper_plugin_list.h",
     "pepper_renderer_instance_data.cc",
     "pepper_renderer_instance_data.h",
+    "permafill/constants.cc",
+    "permafill/constants.h",
     "platform_notification_messages.h",
     "plugin_list.cc",
     "plugin_list.h",
