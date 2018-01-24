@@ -82,8 +82,6 @@ const char* VideoCaptureDeviceDescriptor::GetCaptureApiTypeString() const {
     case VideoCaptureApi::ANDROID_TANGO:
       return "Tango API";
     default:
-      NOTREACHED() << "Unknown Video Capture API type: "
-                   << static_cast<int>(capture_api);
       return "Unknown API";
   }
 }

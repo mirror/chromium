@@ -44,7 +44,10 @@ void VirtualDeviceEnabledDeviceFactory::GetDeviceInfos(
 void VirtualDeviceEnabledDeviceFactory::CreateDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
+    mojom::AccessRequestType access_request_type,
     CreateDeviceCallback callback) {
+  // TODO: Honor |access_request_type|.
+
   auto virtual_device_iter = virtual_devices_by_id_.find(device_id);
   if (virtual_device_iter != virtual_devices_by_id_.end()) {
     VirtualDeviceEntry& device_entry = virtual_device_iter->second;
@@ -66,7 +69,7 @@ void VirtualDeviceEnabledDeviceFactory::CreateDevice(
   }
 
   device_factory_->CreateDevice(device_id, std::move(device_request),
-                                std::move(callback));
+                                access_request_type, std::move(callback));
 }
 
 void VirtualDeviceEnabledDeviceFactory::AddVirtualDevice(

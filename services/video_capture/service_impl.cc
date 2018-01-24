@@ -4,12 +4,25 @@
 
 #include "services/video_capture/service_impl.h"
 
+#include "base/containers/circular_deque.h"
+#include "base/logging.h"
+#include "mojo/edk/embedder/incoming_broker_client_invitation.h"
+#include "mojo/edk/embedder/named_platform_handle.h"
+#include "mojo/edk/embedder/named_platform_handle_utils.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/video_capture/device_factory_provider_impl.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 #include "services/video_capture/public/uma/video_capture_service_event.h"
 #include "services/video_capture/testing_controls_impl.h"
+
+namespace {
+
+static const base::FilePath::CharType kSocketPath[] =
+    "/tmp/video_capture_plugin.sock";
+
+}  // anonymous namespace
 
 namespace video_capture {
 
@@ -41,6 +54,8 @@ void ServiceImpl::OnStart() {
 
   factory_provider_bindings_.set_connection_error_handler(base::BindRepeating(
       &ServiceImpl::OnProviderClientDisconnected, base::Unretained(this)));
+
+  TryToConnectToPluginConnectionDispatcher();
 }
 
 void ServiceImpl::OnBindInterface(
@@ -126,6 +141,54 @@ void ServiceImpl::OnProviderClientDisconnected() {
   if (!factory_provider_client_disconnected_cb_.is_null()) {
     factory_provider_client_disconnected_cb_.Run();
   }
+}
+
+void ServiceImpl::TryToConnectToPluginConnectionDispatcher() {
+  base::FilePath socket_path(kSocketPath);
+  if (!base::PathExists(socket_path)) {
+    LOG(ERROR) << "Socket file for PluginConnectionDispatcher not present";
+    return;
+  }
+  if (dispatcher_.is_bound()) {
+    LOG(ERROR) << "Already connected";
+    return;
+  }
+
+  mojo::edk::ScopedPlatformHandle platform_handle =
+      mojo::edk::CreateClientHandle(
+          mojo::edk::NamedPlatformHandle(socket_path.value()));
+  if (!platform_handle.is_valid()) {
+    LOG(ERROR) << "Failed to create client platform handle from path: "
+               << kSocketPath;
+    return;
+  }
+
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+
+  mojo::ScopedMessagePipeHandle message_pipe =
+      invitation.AttachMessagePipe("pipe");
+
+  const base::ProcessHandle kArbitraryUnusedProcessHandle = 0u;
+  invitation.Send(
+      kArbitraryUnusedProcessHandle,
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  std::move(platform_handle)));
+
+  dispatcher_.Bind(
+      mojom::PluginConnectionDispatcherPtrInfo(std::move(message_pipe), 0u));
+  dispatcher_.set_connection_error_handler(base::BindOnce(
+      &ServiceImpl::OnPluginDisconnected, weak_factory_.GetWeakPtr()));
+
+  OnDeviceFactoryProviderRequest(
+      mojo::MakeRequest(&device_factory_provider_for_plugin_));
+  mojom::DeviceFactoryPtr device_factory;
+  device_factory_provider_for_plugin_->ConnectToDeviceFactory(
+      mojo::MakeRequest(&device_factory));
+  dispatcher_->RegisterDeviceFactory(std::move(device_factory));
+}
+
+void ServiceImpl::OnPluginDisconnected() {
+  device_factory_provider_for_plugin_.reset();
 }
 
 }  // namespace video_capture

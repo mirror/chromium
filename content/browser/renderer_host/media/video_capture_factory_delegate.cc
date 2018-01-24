@@ -22,7 +22,10 @@ void VideoCaptureFactoryDelegate::CreateDevice(
     video_capture::mojom::DeviceFactory::CreateDeviceCallback callback) {
   DCHECK(device_factory_->is_bound());
   (*device_factory_)
-      ->CreateDevice(device_id, std::move(device_request), std::move(callback));
+      ->CreateDevice(device_id, std::move(device_request),
+                     video_capture::mojom::AccessRequestType::
+                         ALLOW_PREEMPTION_BY_SUBSEQUENT_REQUESTS,
+                     std::move(callback));
 }
 
 }  // namespace content

@@ -18,43 +18,6 @@
 
 namespace {
 
-// Translates a set of device infos reported by a VideoCaptureSystem to a set
-// of device infos that the video capture service exposes to its client.
-// The Video Capture Service instances of VideoCaptureDeviceClient to
-// convert the formats provided by the VideoCaptureDevice instances. Here, we
-// translate the set of supported formats as reported by the |device_factory_|
-// to what will be output by the VideoCaptureDeviceClient we connect to it.
-// TODO(chfremer): A cleaner design would be to have this translation
-// happen in VideoCaptureDeviceClient, and talk only to VideoCaptureDeviceClient
-// instead of VideoCaptureSystem.
-static void TranslateDeviceInfos(
-    video_capture::mojom::DeviceFactory::GetDeviceInfosCallback callback,
-    const std::vector<media::VideoCaptureDeviceInfo>& device_infos) {
-  std::vector<media::VideoCaptureDeviceInfo> translated_device_infos;
-  for (const auto& device_info : device_infos) {
-    media::VideoCaptureDeviceInfo translated_device_info;
-    translated_device_info.descriptor = device_info.descriptor;
-    for (const auto& format : device_info.supported_formats) {
-      media::VideoCaptureFormat translated_format;
-      translated_format.pixel_format =
-          (format.pixel_format == media::PIXEL_FORMAT_Y16)
-              ? media::PIXEL_FORMAT_Y16
-              : media::PIXEL_FORMAT_I420;
-      translated_format.frame_size = format.frame_size;
-      translated_format.frame_rate = format.frame_rate;
-      translated_format.pixel_storage = media::VideoPixelStorage::CPU;
-      if (base::ContainsValue(translated_device_info.supported_formats,
-                              translated_format))
-        continue;
-      translated_device_info.supported_formats.push_back(translated_format);
-    }
-    if (translated_device_info.supported_formats.empty())
-      continue;
-    translated_device_infos.push_back(translated_device_info);
-  }
-  std::move(callback).Run(translated_device_infos);
-}
-
 static void DiscardDeviceInfosAndCallContinuation(
     base::OnceClosure continuation,
     const std::vector<media::VideoCaptureDeviceInfo>&) {
@@ -65,8 +28,8 @@ static void DiscardDeviceInfosAndCallContinuation(
 
 namespace video_capture {
 
-DeviceFactoryMediaToMojoAdapter::ActiveDeviceEntry::ActiveDeviceEntry() =
-    default;
+DeviceFactoryMediaToMojoAdapter::ActiveDeviceEntry::ActiveDeviceEntry()
+    : allow_preemption(true), hide_from_device_infos(false) {}
 
 DeviceFactoryMediaToMojoAdapter::ActiveDeviceEntry::~ActiveDeviceEntry() =
     default;
@@ -93,34 +56,48 @@ DeviceFactoryMediaToMojoAdapter::~DeviceFactoryMediaToMojoAdapter() = default;
 
 void DeviceFactoryMediaToMojoAdapter::GetDeviceInfos(
     GetDeviceInfosCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   capture_system_->GetDeviceInfosAsync(
-      base::Bind(&TranslateDeviceInfos, base::Passed(&callback)));
+      base::BindOnce(&DeviceFactoryMediaToMojoAdapter::TranslateDeviceInfos,
+                     weak_factory_.GetWeakPtr(), base::Passed(&callback)));
   has_called_get_device_infos_ = true;
 }
 
 void DeviceFactoryMediaToMojoAdapter::CreateDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
+    mojom::AccessRequestType access_request_type,
     CreateDeviceCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   auto active_device_iter = active_devices_by_id_.find(device_id);
   if (active_device_iter != active_devices_by_id_.end()) {
     // The requested device is already in use.
-    // Revoke the access and close the device, then bind to the new request.
     ActiveDeviceEntry& device_entry = active_device_iter->second;
-    device_entry.binding->Unbind();
-    device_entry.device->Stop();
-    device_entry.binding->Bind(std::move(device_request));
-    device_entry.binding->set_connection_error_handler(base::Bind(
-        &DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose,
-        base::Unretained(this), device_id));
-    std::move(callback).Run(mojom::DeviceAccessResultCode::SUCCESS);
-    return;
+    if (device_entry.allow_preemption) {
+      // Revoke the access and close the device, then bind to the new request.
+      device_entry.binding->Unbind();
+      device_entry.device->Stop();
+      device_entry.binding->Bind(std::move(device_request));
+      device_entry.binding->set_connection_error_handler(base::BindOnce(
+          &DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose,
+          base::Unretained(this), device_id));
+      device_entry.allow_preemption =
+          (access_request_type ==
+           mojom::AccessRequestType::ALLOW_PREEMPTION_BY_SUBSEQUENT_REQUESTS);
+      std::move(callback).Run(mojom::DeviceAccessResultCode::SUCCESS);
+      return;
+    } else {
+      std::move(callback).Run(
+          mojom::DeviceAccessResultCode::ERROR_DEVICE_IS_BUSY);
+      return;
+    }
   }
 
-  auto create_and_add_new_device_cb =
-      base::BindOnce(&DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice,
-                     weak_factory_.GetWeakPtr(), device_id,
-                     std::move(device_request), std::move(callback));
+  auto create_and_add_new_device_cb = base::BindOnce(
+      &DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice,
+      weak_factory_.GetWeakPtr(), device_id, std::move(device_request),
+      access_request_type, std::move(callback));
 
   if (has_called_get_device_infos_) {
     std::move(create_and_add_new_device_cb).Run();
@@ -139,10 +116,48 @@ void DeviceFactoryMediaToMojoAdapter::AddVirtualDevice(
   NOTIMPLEMENTED();
 }
 
+void DeviceFactoryMediaToMojoAdapter::TranslateDeviceInfos(
+    video_capture::mojom::DeviceFactory::GetDeviceInfosCallback callback,
+    const std::vector<media::VideoCaptureDeviceInfo>& device_infos) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  std::vector<media::VideoCaptureDeviceInfo> translated_device_infos;
+  for (const auto& device_info : device_infos) {
+    auto active_device_iter =
+        active_devices_by_id_.find(device_info.descriptor.device_id);
+    if (active_device_iter != active_devices_by_id_.end() &&
+        active_device_iter->second.hide_from_device_infos) {
+      continue;
+    }
+
+    media::VideoCaptureDeviceInfo translated_device_info;
+    translated_device_info.descriptor = device_info.descriptor;
+    for (const auto& format : device_info.supported_formats) {
+      media::VideoCaptureFormat translated_format;
+      translated_format.pixel_format =
+          (format.pixel_format == media::PIXEL_FORMAT_Y16)
+              ? media::PIXEL_FORMAT_Y16
+              : media::PIXEL_FORMAT_I420;
+      translated_format.frame_size = format.frame_size;
+      translated_format.frame_rate = format.frame_rate;
+      translated_format.pixel_storage = media::VideoPixelStorage::CPU;
+      if (base::ContainsValue(translated_device_info.supported_formats,
+                              translated_format))
+        continue;
+      translated_device_info.supported_formats.push_back(translated_format);
+    }
+    if (translated_device_info.supported_formats.empty())
+      continue;
+    translated_device_infos.push_back(translated_device_info);
+  }
+  std::move(callback).Run(translated_device_infos);
+}
+
 void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
+    mojom::AccessRequestType access_request_type,
     CreateDeviceCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::unique_ptr<media::VideoCaptureDevice> media_device =
       capture_system_->CreateDevice(device_id);
   if (media_device == nullptr) {
@@ -161,6 +176,13 @@ void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
   device_entry.binding->set_connection_error_handler(base::Bind(
       &DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose,
       base::Unretained(this), device_id));
+  device_entry.allow_preemption =
+      (access_request_type ==
+       mojom::AccessRequestType::ALLOW_PREEMPTION_BY_SUBSEQUENT_REQUESTS);
+  device_entry.hide_from_device_infos =
+      (access_request_type ==
+       mojom::AccessRequestType::
+           DISALLOW_PREEMPTION_AND_HIDE_FROM_DEVICE_INFOS);
   active_devices_by_id_[device_id] = std::move(device_entry);
 
   std::move(callback).Run(mojom::DeviceAccessResultCode::SUCCESS);
@@ -168,6 +190,7 @@ void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
 
 void DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose(
     const std::string& device_id) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   video_capture::uma::LogVideoCaptureServiceEvent(
       video_capture::uma::SERVICE_LOST_CONNECTION_TO_BROWSER);
 
