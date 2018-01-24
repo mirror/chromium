@@ -43,6 +43,11 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#if defined(OS_LINUX)
+#include "gpu/command_buffer/service/image_factory.h"
+#include "gpu/ipc/service/gpu_memory_buffer_factory.h"
+#endif
+
 #if defined(OS_MACOSX)
 #include "ui/gfx/mac/io_surface.h"
 #include "ui/gl/gl_image_io_surface.h"
@@ -459,6 +464,7 @@ void GLManager::Destroy() {
     decoder_->Destroy(have_context);
     decoder_.reset();
   }
+  context_ = nullptr;
 }
 
 const GpuDriverBugWorkarounds& GLManager::workarounds() const {
@@ -494,10 +500,31 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
     gl_image = image;
   }
 #endif  // defined(OS_MACOSX)
-  if (!gl_image) {
-    GpuMemoryBufferImpl* gpu_memory_buffer =
-        GpuMemoryBufferImpl::FromClientBuffer(buffer);
 
+  GpuMemoryBufferImpl* gpu_memory_buffer = nullptr;
+  if (!gl_image)
+    gpu_memory_buffer = GpuMemoryBufferImpl::FromClientBuffer(buffer);
+
+#if defined(OS_LINUX)
+  if (use_native_pixmap_memory_buffers_ && gpu_memory_buffer) {
+    if (gpu_memory_buffer->GetHandle().type == gfx::NATIVE_PIXMAP) {
+      gfx::GpuMemoryBufferHandle handle =
+          gfx::CloneHandleForIPC(gpu_memory_buffer->GetHandle());
+      gfx::BufferFormat format = gpu_memory_buffer->GetFormat();
+
+      std::unique_ptr<gpu::GpuMemoryBufferFactory> gpu_memory_buffer_factory =
+          gpu::GpuMemoryBufferFactory::CreateNativeType();
+      gl_image = gpu_memory_buffer_factory->AsImageFactory()
+                     ->CreateImageForGpuMemoryBuffer(handle, size, format,
+                                                     internalformat, 0, 0);
+
+      if (!gl_image)
+        return -1;
+    }
+  }
+#endif  // defined(OS_LINUX)
+
+  if (!gl_image) {
     scoped_refptr<gl::GLImageRefCountedMemory> image(
         new gl::GLImageRefCountedMemory(size, internalformat));
     if (!image->Initialize(gpu_memory_buffer->bytes(),

@@ -122,6 +122,8 @@ component("service") {
       "gpu_memory_buffer_factory_native_pixmap.h",
       "image_transport_surface_linux.cc",
     ]
+
+    deps += [ "//ui/gfx:memory_buffer" ]
   }
   if (use_x11) {
     sources += [ "x_util.h" ]

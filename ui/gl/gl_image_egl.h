@@ -5,9 +5,12 @@
 #ifndef UI_GL_GL_IMAGE_EGL_H_
 #define UI_GL_GL_IMAGE_EGL_H_
 
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
+#include <stdint.h>
+
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
-#include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_export.h"
 #include "ui/gl/gl_image.h"
 
