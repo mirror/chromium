@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aae64bd9_5f5e809a",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-24T15:45:49Z",
+      "side": 1,
+      "message": "can you mark these methods as private, or it may be simpler to just replace the calls to these setters with assignments.",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 5
+      },
+      "revId": "98cfdecceb5e441fc5e8b82f3e57af78f0622680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
