@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7843df_44131570",
+        "filename": "cc/raster/bitmap_raster_buffer_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c8ebed_a98bb9b4",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "wrap in DCHECK_IS_ON() pls",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b326b0f_69a07cd9",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "Is this OK to remove?",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34816a5_c6254a89",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "Same comments here.",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad79b9ae_9a9b761b",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "hmm we should probably UMA the sizes of these maps",
+      "range": {
+        "startLine": 337,
+        "startChar": 19,
+        "endLine": 337,
+        "endChar": 49
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e27acd_3817372a",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "hmm probably add them to tests.. I\u0027m not a fan of test-only prod code.",
+      "range": {
+        "startLine": 367,
+        "startChar": 57,
+        "endLine": 367,
+        "endChar": 65
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8cd48b_d20fa78d",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "just out of curiosity is \"busy\" \u003d\u003d \"exported\" in this class? or is there another busy state?\n\nAlso not sure why push_front, but I guess it was like that before.",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 19
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d4ae25_f42fb293",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "It looks like we\u0027re using 2 bools to encode 3 possible enum states. It would be a nice cleanup to just have an enum",
+      "range": {
+        "startLine": 438,
+        "startChar": 7,
+        "endLine": 438,
+        "endChar": 52
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d18792_f2bc3725",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "This is a really good comment. I think in the future we can probably expand it a bit more and put it as a class comment for ResourcePool",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ee7cf4_c974db68",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "nit: with",
+      "range": {
+        "startLine": 146,
+        "startChar": 78,
+        "endLine": 146,
+        "endChar": 80
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d889d_3140952a",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": ":)",
+      "range": {
+        "startLine": 147,
+        "startChar": 62,
+        "endLine": 147,
+        "endChar": 74
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265a2cd8_a85f0c59",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T00:42:56Z",
+      "side": 1,
+      "message": "can we DCHECK !0?",
+      "range": {
+        "startLine": 208,
+        "startChar": 49,
+        "endLine": 208,
+        "endChar": 68
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
