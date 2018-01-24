@@ -11,14 +11,57 @@
 #include <memory>
 #include <string>
 
+#include "base/command_line.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/tests/gl_manager.h"
+#include "gpu/config/gpu_driver_bug_workarounds.h"
+#include "gpu/config/gpu_info_collector.h"
+#include "gpu/config/gpu_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gl/init/gl_factory.h"
 
 // GCC requires these declarations, but MSVC requires they not be present.
 #ifndef COMPILER_MSVC
 const uint8_t GLTestHelper::kCheckClearValue;
 #endif
+
+bool GLTestHelper::InitializeGL(gl::GLImplementation gl_impl) {
+  gpu::GPUInfo gpu_info;
+  gpu::CollectBasicGraphicsInfo(&gpu_info);
+  gpu::GLManager::g_gpu_feature_info =
+      gpu::ComputeGpuFeatureInfo(gpu_info,
+                                 false,  // ignore_gpu_blacklist
+                                 false,  // disable_gpu_driver_bug_workarounds
+                                 false,  // log_gpu_control_list_decisions
+                                 base::CommandLine::ForCurrentProcess(),
+                                 nullptr  // needs_more_info
+                                 );
+
+  if (gl_impl == gl::GLImplementation::kGLImplementationNone) {
+    if (!gl::init::InitializeGLNoExtensionsOneOff())
+      return false;
+  } else {
+    if (!gl::init::InitializeGLOneOffImplementation(
+            gl_impl,
+            false,  // fallback_to_software_gl
+            false,  // gpu_service_logging
+            false,  // disable_gl_drawing
+            false   // init_extensions
+            )) {
+      return false;
+    }
+  }
+
+  gl::init::SetDisabledExtensionsPlatform(
+      gpu::GLManager::g_gpu_feature_info.disabled_extensions);
+  return gl::init::InitializeExtensionSettingsOneOffPlatform();
+}
+
+bool GLTestHelper::InitializeGLDefault() {
+  return GLTestHelper::InitializeGL(
+      gl::GLImplementation::kGLImplementationNone);
+}
 
 bool GLTestHelper::HasExtension(const char* extension) {
   // Pad with an extra space to ensure that |extension| is not a substring of

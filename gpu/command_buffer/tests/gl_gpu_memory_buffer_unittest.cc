@@ -13,16 +13,25 @@
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
 #include "base/process/process_handle.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/tests/gl_manager.h"
 #include "gpu/command_buffer/tests/gl_test_utils.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/half_float.h"
 #include "ui/gl/gl_image.h"
+#include "ui/gl/init/gl_factory.h"
+
+#if defined(OS_LINUX)
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
+#include "ui/gl/gl_image_native_pixmap.h"
+#endif
 
 using testing::_;
 using testing::IgnoreResult;
@@ -53,6 +62,143 @@ class GpuMemoryBufferTest : public testing::TestWithParam<gfx::BufferFormat> {
 
   GLManager gl_;
 };
+
+#if defined(OS_LINUX)
+class GpuMemoryBufferTestEGL : public GpuMemoryBufferTest {
+ public:
+  GpuMemoryBufferTestEGL()
+      : skip_test_(true),
+        gl_reinitialized_(false),
+        native_pixmap_factory_(gfx::CreateClientNativePixmapFactoryDmabuf()) {}
+
+ protected:
+  void SetUp() override {
+    // Reinitialize GL to the EGLGLES2 implementation if it is available and
+    // not current. Just skip the test otherwise.
+    if (gl::GetGLImplementation() !=
+        gl::GLImplementation::kGLImplementationEGLGLES2) {
+      const auto impls = gl::init::GetAllowedGLImplementations();
+      if (std::find(impls.begin(), impls.end(),
+                    gl::GLImplementation::kGLImplementationEGLGLES2) ==
+          impls.end()) {
+        LOG(WARNING) << "Skip test, implementation EGLGLES2 is not available";
+        return;
+      }
+
+      gl_reinitialized_ = true;
+      gl::init::ShutdownGL(false /* due_to_fallback */);
+      if (!GLTestHelper::InitializeGL(
+              gl::GLImplementation::kGLImplementationEGLGLES2)) {
+        LOG(WARNING) << "Skip test, failed to initialize EGLGLES2";
+        return;
+      }
+    }
+
+    ASSERT_EQ(gl::GLImplementation::kGLImplementationEGLGLES2,
+              gl::GetGLImplementation());
+
+    // Make the GL context current now to get all extensions.
+    GpuMemoryBufferTest::SetUp();
+
+    gl::GLWindowSystemBindingInfo window_system_binding_info;
+    if (!gl::init::GetGLWindowSystemBindingInfo(&window_system_binding_info)) {
+      LOG(WARNING) << "Skip test, failed to get egl extensions";
+      return;
+    }
+
+    gl::ExtensionSet egl_extensions =
+        gl::MakeExtensionSet(window_system_binding_info.extensions);
+    gl::ExtensionSet gl_extensions =
+        gl::MakeExtensionSet(gl::GetGLExtensionsFromCurrentContext());
+
+    // This extension is required for glCreateImageCHROMIUM on Linux.
+    const std::string dmabuf_import_ext = "EGL_EXT_image_dma_buf_import";
+    if (!gl::HasExtension(egl_extensions, dmabuf_import_ext)) {
+      LOG(WARNING) << "Skip test, missing extension " << dmabuf_import_ext;
+      return;
+    }
+
+    // This extension is required for the to work but not for the real world.
+    // See CreateNativePixmapHandle.
+    const std::string dmabuf_export_ext = "EGL_MESA_image_dma_buf_export";
+    if (!gl::HasExtension(egl_extensions, dmabuf_export_ext)) {
+      LOG(WARNING) << "Skip test, missing extension " << dmabuf_export_ext;
+      return;
+    }
+
+    // This extension is required for glCreateImageCHROMIUM on Linux.
+    const std::string egl_image_ext = "GL_OES_EGL_image";
+    if (!gl::HasExtension(gl_extensions, egl_image_ext)) {
+      LOG(WARNING) << "Skip test, missing extension " << egl_image_ext;
+      return;
+    }
+
+    DCHECK(native_pixmap_factory_);
+    gfx::ClientNativePixmapFactory::SetInstance(native_pixmap_factory_.get());
+    DCHECK_EQ(gfx::ClientNativePixmapFactory::GetInstance(),
+              native_pixmap_factory_.get());
+
+    gl_.set_use_native_pixmap_memory_buffers(true);
+    skip_test_ = false;
+  }
+
+  void TearDown() override {
+    GpuMemoryBufferTest::TearDown();
+
+    // Restore the default GL implementation.
+    if (gl_reinitialized_) {
+      gl::init::ShutdownGL(false /* due_to_fallback */);
+      GLTestHelper::InitializeGLDefault();
+    }
+
+    gfx::ClientNativePixmapFactory::ResetInstance();
+  }
+
+  // Get some real dmabuf fds for testing by exporting an EGLImage created from
+  // a GL texture.
+  gfx::NativePixmapHandle CreateNativePixmapHandle(gfx::BufferFormat format,
+                                                   gfx::Size size,
+                                                   uint8_t* pixels) {
+    // Upload raw pixels to a new GL texture.
+    GLuint tex_client_id = 0;
+    glGenTextures(1, &tex_client_id);
+    DCHECK_NE(0u, tex_client_id);
+    glBindTexture(GL_TEXTURE_2D, tex_client_id);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.width(), size.height(), 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+    // Flush to make sure the texture exists in the service side.
+    glFlush();
+
+    // This works because the test run in a similar mode as In-Process-GPU.
+    unsigned int tex_service_id = 0;
+    gl_.decoder()->GetServiceTextureId(tex_client_id, &tex_service_id);
+    EXPECT_NE(0u, tex_service_id);
+
+    // Create an EGLImage from the real texture id.
+    scoped_refptr<gl::GLImageNativePixmap> image(new gl::GLImageNativePixmap(
+        size, gl::GLImageNativePixmap::GetInternalFormatForTesting(format)));
+    DCHECK(image->InitializeFromTexture(tex_service_id));
+
+    // The test will own the dmabuf fds so no need to keep a reference on the
+    // GL texture and the EGLImage after returning from this function.
+    glDeleteTextures(1, &tex_client_id);
+
+    // Export the EGLImage as dmabuf fds
+    return image->ExportHandle();
+  }
+
+  bool skip_test_;
+
+ private:
+  bool gl_reinitialized_;
+  std::unique_ptr<gfx::ClientNativePixmapFactory> native_pixmap_factory_;
+};
+#endif  // defined(OS_LINUX)
 
 namespace {
 
@@ -102,6 +248,7 @@ void SetRow(gfx::BufferFormat format,
       }
       return;
     case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::RGBX_8888:
       for (int i = 0; i < width * 4; i += 4) {
         buffer[i + 0] = pixel[0];
         buffer[i + 1] = pixel[1];
@@ -110,6 +257,7 @@ void SetRow(gfx::BufferFormat format,
       }
       return;
     case gfx::BufferFormat::BGRA_8888:
+    case gfx::BufferFormat::BGRX_8888:
       for (int i = 0; i < width * 4; i += 4) {
         buffer[i + 0] = pixel[2];
         buffer[i + 1] = pixel[1];
@@ -135,13 +283,11 @@ void SetRow(gfx::BufferFormat format,
     }
     case gfx::BufferFormat::ATC:
     case gfx::BufferFormat::ATCIA:
-    case gfx::BufferFormat::BGRX_8888:
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
     case gfx::BufferFormat::R_16:
     case gfx::BufferFormat::RG_88:
-    case gfx::BufferFormat::RGBX_8888:
     case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::UYVY_422:
     case gfx::BufferFormat::YVU_420:
@@ -273,6 +419,108 @@ TEST_P(GpuMemoryBufferTest, Lifecycle) {
   glDestroyImageCHROMIUM(image_id);
   glDeleteTextures(1, &texture_id);
 }
+
+#if defined(OS_LINUX)
+// Test glCreateImageCHROMIUM with gfx::NATIVE_PIXMAP. Basically the test
+// reproduces the situation where some dmabuf fds are available outside the
+// gpu process and the user wants to import them using glCreateImageCHROMIUM.
+// It can be the case when vaapi is setup in a media service hosted in a
+// dedicated process, i.e. not the gpu process.
+TEST_F(GpuMemoryBufferTestEGL, NativePixmap) {
+  if (skip_test_)
+    return;
+
+  gfx::BufferFormat format = gfx::BufferFormat::RGBX_8888;
+  gfx::Size size(kImageWidth, kImageHeight);
+  size_t buffer_size = gfx::BufferSizeForBufferFormat(size, format);
+  uint8_t pixel[] = {255u, 0u, 0u, 255u};
+  size_t plane = 0;
+  uint32_t stride = gfx::RowSizeForBufferFormat(size.width(), format, plane);
+
+  std::unique_ptr<uint8_t[]> pixels(new uint8_t[buffer_size]);
+
+  // Assign a value to each pixel.
+  for (int y = 0; y < size.height(); ++y) {
+    SetRow(format, static_cast<uint8_t*>(pixels.get()) + y * stride,
+           size.width(), pixel);
+  }
+
+  // A real use case would be to export a VAAPI surface as dmabuf fds. But for
+  // simplicity the test gets them from a GL texture.
+  gfx::NativePixmapHandle native_pixmap_handle =
+      CreateNativePixmapHandle(format, size, pixels.get());
+  EXPECT_EQ(1u, native_pixmap_handle.fds.size());
+
+  // Initialize a GpuMemoryBufferHandle to wrap a native pixmap.
+  gfx::GpuMemoryBufferHandle handle;
+  handle.type = gfx::NATIVE_PIXMAP;
+  handle.native_pixmap_handle = native_pixmap_handle;
+
+  // Create a GMB to pass to glCreateImageCHROMIUM.
+  std::unique_ptr<gfx::GpuMemoryBuffer> buffer =
+      gpu::GpuMemoryBufferImpl::CreateFromHandle(
+          handle, size, format, gfx::BufferUsage::SCANOUT,
+          base::RepeatingCallback<void(const gpu::SyncToken&)>());
+  EXPECT_NE(nullptr, buffer.get());
+
+  // Create the image. This should add the image ID to the ImageManager.
+  GLuint image_id = glCreateImageCHROMIUM(buffer->AsClientBuffer(),
+                                          size.width(), size.height(), GL_RGB);
+  EXPECT_NE(0u, image_id);
+  EXPECT_TRUE(gl_.decoder()->GetImageManagerForTest()->LookupImage(image_id) !=
+              NULL);
+  ASSERT_TRUE(glGetError() == GL_NO_ERROR);
+
+  // Need a texture to bind the image.
+  GLuint texture_id = 0;
+  glGenTextures(1, &texture_id);
+  ASSERT_NE(0u, texture_id);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, texture_id);
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+  // Bind the image.
+  glBindTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id);
+
+  // Build program, buffers and draw the texture.
+  GLuint vertex_shader =
+      GLTestHelper::LoadShader(GL_VERTEX_SHADER, kVertexShader);
+  GLuint fragment_shader =
+      GLTestHelper::LoadShader(GL_FRAGMENT_SHADER, kFragmentShader);
+  GLuint program = GLTestHelper::SetupProgram(vertex_shader, fragment_shader);
+  ASSERT_NE(0u, program);
+  glUseProgram(program);
+
+  GLint sampler_location = glGetUniformLocation(program, "a_texture");
+  ASSERT_NE(-1, sampler_location);
+  glUniform1i(sampler_location, 0);
+
+  GLuint vbo =
+      GLTestHelper::SetupUnitQuad(glGetAttribLocation(program, "a_position"));
+  ASSERT_NE(0u, vbo);
+  glViewport(0, 0, kImageWidth, kImageHeight);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
+  ASSERT_TRUE(glGetError() == GL_NO_ERROR);
+
+  // Check if pixels match the values that were assigned to the mapped buffer.
+  GLTestHelper::CheckPixels(0, 0, kImageWidth, kImageHeight, 0, pixel, nullptr);
+  EXPECT_TRUE(GL_NO_ERROR == glGetError());
+
+  // Release the image.
+  glReleaseTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id);
+
+  // Clean up.
+  glDeleteProgram(program);
+  glDeleteShader(vertex_shader);
+  glDeleteShader(fragment_shader);
+  glDeleteBuffers(1, &vbo);
+  glDestroyImageCHROMIUM(image_id);
+  glDeleteTextures(1, &texture_id);
+}
+#endif  // defined(OS_LINUX)
 
 INSTANTIATE_TEST_CASE_P(GpuMemoryBufferTests,
                         GpuMemoryBufferTest,

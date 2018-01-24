@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/memory/shared_memory_handle.h"
 #include "build/build_config.h"
+#include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_image_ahardwarebuffer.h"
 
 namespace gpu {
