@@ -383,7 +383,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
     content::WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   syncer::UserEventService* user_event_service =
@@ -422,7 +422,7 @@ void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
     PasswordReuseDialogInteraction::InteractionResult interaction_result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   syncer::UserEventService* user_event_service =
@@ -443,7 +443,7 @@ void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
 }
 
 LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType
-ChromePasswordProtectionService::GetSyncAccountType() {
+ChromePasswordProtectionService::GetSyncAccountType() const {
   const AccountInfo account_info = GetAccountInfo();
   if (account_info.account_id.empty() || account_info.hosted_domain.empty()) {
     return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
@@ -527,7 +527,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseLookupEvent(
     content::WebContents* web_contents,
     PasswordProtectionService::RequestOutcome outcome,
     const LoginReputationClientResponse* response) {
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!IsEventLoggingEnabled())
     return;
 
   switch (outcome) {
@@ -671,7 +671,7 @@ bool ChromePasswordProtectionService::UserClickedThroughSBInterstitial(
          current_threat_type == SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE;
 }
 
-AccountInfo ChromePasswordProtectionService::GetAccountInfo() {
+AccountInfo ChromePasswordProtectionService::GetAccountInfo() const {
   SigninManagerBase* signin_manager =
       SigninManagerFactory::GetForProfileIfExists(profile_);
 
@@ -801,7 +801,7 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
 
 std::unique_ptr<PasswordProtectionNavigationThrottle>
 MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle) {
-  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+  if (!base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning))
     return nullptr;
   Profile* profile = Profile::FromBrowserContext(
       navigation_handle->GetWebContents()->GetBrowserContext());
@@ -810,6 +810,20 @@ MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle) {
   // |service| can be null in tests.
   return service ? service->MaybeCreateNavigationThrottle(navigation_handle)
                  : nullptr;
+}
+
+PasswordProtectionTrigger
+ChromePasswordProtectionService::GetPasswordProtectionTriggerPref(
+    const std::string& pref_name) const {
+  const PrefService::Preference* warning_trigger =
+      profile_->GetPrefs()->FindPreference(pref_name);
+  bool is_policy_managed =
+      (warning_trigger && warning_trigger->IsManaged()) ||
+      GetSyncAccountType() ==
+          LoginReputationClientRequest::PasswordReuseEvent::GSUITE;
+  return is_policy_managed ? static_cast<PasswordProtectionTrigger>(
+                                 profile_->GetPrefs()->GetInteger(pref_name))
+                           : PHISHING_REUSE;
 }
 
 }  // namespace safe_browsing
