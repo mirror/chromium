@@ -16,6 +16,24 @@
       "revId": "0dc72f96db21722dc71313d39d75ceec27f6536c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba3d0ea_07d7553b",
+        "filename": "content/network/cors/cors_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-24T05:06:05Z",
+      "side": 0,
+      "message": "yes, that\u0027s right.",
+      "parentUuid": "7c2b4c6a_0a68d878",
+      "revId": "0dc72f96db21722dc71313d39d75ceec27f6536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
