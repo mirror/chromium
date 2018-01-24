@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "a65a7d23_44089b84",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T06:29:47Z",
+      "side": 1,
+      "message": "re the return types: sgtm\n\nre the Set*ClockOverride functions: It\u0027s fine to keep them, but as a nit could you make them private static functions within the ScopedTimeClockOverrides class? This is assuming, for headless, it\u0027ll be acceptable to create a ScopedTimeClockOverrides instance to set the overrides?",
+      "parentUuid": "1fdd9501_9e219eb8",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f6a07f_90e235ba",
         "filename": "base/time/time_win.cc",
         "patchSetId": 11
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "You\u0027re right, it should. Not sure if the thread fuzzer will complain about this though..",
       "parentUuid": "e7f6a07f_90e235ba",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 43
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb51c4ea_6f9a13b1",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T06:29:47Z",
+      "side": 1,
+      "message": "Ideally, the overrides would be made while the process is still single-threaded. I think this is the case in base_unittests. Ideally, for headless, you\u0027ll be putting the overrides in-place near the starting point.",
+      "parentUuid": "10327295_d242220e",
       "range": {
         "startLine": 588,
         "startChar": 0,
