@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6d1b07_2aaea5aa",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T20:48:45Z",
+      "side": 1,
+      "message": "nit: no need for this temp.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "7114ebbf61da7486fa3705ed2fee88c3f7d062cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64966a9_5d12128d",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T20:48:45Z",
+      "side": 1,
+      "message": "nit: keyboard_ptr_for_creation_task \u003d",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "7114ebbf61da7486fa3705ed2fee88c3f7d062cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948e3155_ca37bf54",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T20:48:45Z",
+      "side": 1,
+      "message": "keyboard_ptr_for_creation_task",
+      "range": {
+        "startLine": 50,
+        "startChar": 64,
+        "endLine": 50,
+        "endChar": 72
+      },
+      "revId": "7114ebbf61da7486fa3705ed2fee88c3f7d062cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba5b2fa_d09dad8e",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T20:48:45Z",
+      "side": 1,
+      "message": "nit: keyboard_ptr_for_creation_task \u003d nullptr;",
+      "range": {
+        "startLine": 61,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "7114ebbf61da7486fa3705ed2fee88c3f7d062cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
