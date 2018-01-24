@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9222505_4c27378d",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "You know, I don\u0027t think there\u0027s a need to repeat this logic in EKRViews and EKRCocoa -- can we just add it to the base class -- extensions::ExtensionKeybindingRegistry? (What does devlin think?)",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791a6297_e96b88ed",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "I think the WeakCalls comment no longer applies. (and I think this should be a delegate method). We can probably use a bool return type too, but I\u0027d actually prefer something explicit like\n\n enum class MediaKeyHandleResult {\n   kIgnore,  // Ignore the key and continue propagation to other system apps.\n   kSuppressPropagation,  // Handled. Prevent propagation to other system apps.\n };",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd85e6b6_e799b37e",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "the comment needs to describe the implications of setting |was_handled| to true. i.e., currently - at least on mac - it will prevent the media key from being sent to any other applications in the system if *was_handled is set to true.",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad13364_78546240",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "these should all have comments here",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4b349b_ca2ec114",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "nit: not needed since it\u0027s in the \u0027corresponding\u0027 header",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeadb19c_e4eddb07",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "comment? (you can follow the pattern from the old file)",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb682bd_373ea491",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "nit: // MediaKeysListener:",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba30f57_9b2c09f3",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "this should be pulled out into an anonymous namespace",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83027184_6aee2232",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85384dbf_68817206",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "Note this just wraps a raw pointer in the closure, so is no safer, and less clear, than just being explicit about it:\n\n MediaKeysListener::Delegate* delegate_;\n\n\nIt\u0027s very common pattern for a delegate to own the class that it\u0027s a delegate for, so the ownership should be well understood by other readers in this case.",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b7ba88_a2a54a50",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "nit: NULL -\u003e nullptr. same below",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaf56a3_692334cc",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "DCHECK_EQ - same below . And I know you\u0027re mostly just moving code, but we should change all the NULLs to nullptr here and below.",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd39cd_4913a0b7",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56cdacf_bce4ed68",
+        "filename": "ui/base/accelerators/media_keys_listener_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "TRUE -\u003e true",
+      "range": {
+        "startLine": 159,
+        "startChar": 52,
+        "endLine": 159,
+        "endChar": 56
+      },
+      "revId": "b4dac89e301320051a5c280a9348fa55c4cf70bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

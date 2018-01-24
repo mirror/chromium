@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "6f543586_9dab7592",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T11:50:21Z",
+      "side": 1,
+      "message": "\u003e My approach was to receive media key accelerator event through MediaKeysAcceleratorReceiver - callback. It reduces bulk inheritance and provides more clear life time control (delegate is hanging raw pointer).\n\u003e Is your comment critical?\n\nDelegates are nearly always raw pointers - it\u0027s a common pattern since the delegate typically owns the thing it\u0027s a delegate for (to do other than a raw pointer would make a cycle).\n\nA closure here would need to wrap a pointer (weak or raw), so the lifetime is not clearer - it\u0027s hidden inside the closure.",
+      "parentUuid": "b892667a_609b97c3",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a5435a5_50ef25d4",
         "filename": "chrome/browser/ui/cocoa/extensions/extension_keybinding_registry_cocoa.mm",
         "patchSetId": 4
