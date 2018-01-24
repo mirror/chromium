@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2cbeec9_2cf002c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T21:46:53Z",
+      "side": 0,
+      "message": "Does this seem like something that should get pulled into AnchoredPopupWindow?",
+      "range": {
+        "startLine": 251,
+        "startChar": 16,
+        "endLine": 251,
+        "endChar": 37
+      },
+      "revId": "a7d5300e593dda8e8643143fa587dd1493109381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
