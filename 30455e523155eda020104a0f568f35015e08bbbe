@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d032bf2_b741c5ca",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystemBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-24T11:49:26Z",
+      "side": 1,
+      "message": "Can this happen?",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77eb196b_b0b36e4b",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DataTransferItemFileSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-24T11:49:26Z",
+      "side": 1,
+      "message": "A common pattern is:\n\n  if (!script_state-\u003eContextIsValid())\n    return;",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb5817c_b7c470fd",
+        "filename": "third_party/WebKit/Source/modules/filesystem/WorkerGlobalScopeFileSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-24T11:49:26Z",
+      "side": 1,
+      "message": "This shouldn\u0027t happen.\n\nYou need to check secure_context-\u003eIsContextDestroyed().",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
