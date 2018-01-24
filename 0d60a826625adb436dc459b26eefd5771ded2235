@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc470798_0f468b95",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/requestDevice/blocklisted-service-in-optionalServices.https.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:21:06Z",
+      "side": 1,
+      "message": "2 character indent here",
+      "revId": "0d60a826625adb436dc459b26eefd5771ded2235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
