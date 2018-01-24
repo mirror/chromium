@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0300851a_b8d455f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116017
+      },
+      "writtenOn": "2018-01-24T07:32:13Z",
+      "side": 1,
+      "message": "And we want to say no absolute path exists (except CWD) in command line and CWD can be covered by this fdebug-prefix-map.",
+      "revId": "3c92e8f02e44ceebffd280370d60580d2e748cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
