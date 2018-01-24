@@ -20,6 +20,7 @@
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "net/dns/mock_host_resolver.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 

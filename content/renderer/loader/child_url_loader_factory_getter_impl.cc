@@ -6,6 +6,7 @@
 
 #include "base/feature_list.h"
 #include "content/public/common/content_features.h"
+#include "services/network/public/cpp/network_features.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 namespace content {

@@ -20,9 +20,9 @@
 #include "content/browser/appcache/appcache_url_request_job.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
 #include "content/common/navigation_subresource_loader_params.h"
-#include "content/public/common/content_features.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
+#include "services/network/public/cpp/network_features.h"
 
 namespace content {
 

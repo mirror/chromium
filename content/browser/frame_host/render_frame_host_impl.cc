@@ -142,6 +142,7 @@
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/frame_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
