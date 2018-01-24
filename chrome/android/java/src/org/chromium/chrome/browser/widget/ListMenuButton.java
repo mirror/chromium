@@ -6,13 +6,15 @@ package org.chromium.chrome.browser.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListPopupWindow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -23,7 +25,8 @@ import org.chromium.chrome.R;
  * anchor a popup on press and will rely on a delegate for both querying the items and returning the
  * results.
  */
-public class ListMenuButton extends TintedImageButton {
+public class ListMenuButton
+        extends TintedImageButton implements AnchoredPopupWindow.PositionObserver {
     private final static int INVALID_RES_ID = 0;
 
     /** A class that represents a single item in the popup menu. */
@@ -92,8 +95,9 @@ public class ListMenuButton extends TintedImageButton {
 
     private final int mMenuWidth;
 
-    private ListPopupWindow mPopupMenu;
+    private AnchoredPopupWindow mPopupMenu;
     private Delegate mDelegate;
+    private ViewRectProvider mViewRectProvider;
 
     /**
      * Creates a new {@link ListMenuButton}.
@@ -150,6 +154,12 @@ public class ListMenuButton extends TintedImageButton {
         dismiss();
     }
 
+    @Override
+    public void onPositionChanged(boolean positionBelow, int x, int y, int width, int height) {
+        mPopupMenu.setAnimationStyle(
+                positionBelow ? R.style.OverflowMenuAnim : R.style.OverflowMenuAnimBottom);
+    }
+
     private void showMenu() {
         if (mDelegate == null) throw new IllegalStateException("Delegate was not set.");
 
@@ -164,8 +174,8 @@ public class ListMenuButton extends TintedImageButton {
         // changed.
         dismiss();
 
-        mPopupMenu = new ListPopupWindow(getContext(), null, 0, R.style.ListMenuStyle);
-        mPopupMenu.setAdapter(new ArrayAdapter<Item>(getContext(), R.layout.list_menu_item, items) {
+        ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(
+                getContext(), R.layout.list_menu_item, items) {
             @Override
             public boolean areAllItemsEnabled() {
                 return false;
@@ -188,22 +198,45 @@ public class ListMenuButton extends TintedImageButton {
 
                 return view;
             }
-        });
-        mPopupMenu.setAnchorView(this);
-        mPopupMenu.setWidth(mMenuWidth);
-        mPopupMenu.setVerticalOffset(-getHeight());
-        mPopupMenu.setModal(true);
+        };
 
-        mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
+        ViewGroup contentView = (ViewGroup) LayoutInflater.from(getContext())
+                                        .inflate(R.layout.app_menu_layout, null);
+        ListView list = (ListView) contentView.findViewById(R.id.app_menu_list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener((parent, view, position, id) -> {
             if (mDelegate != null) mDelegate.onItemSelected(items[position]);
 
             // TODO(crbug.com/600642): Somehow the on click event can be triggered way after we
             // dismiss the popup.
             if (mPopupMenu != null) mPopupMenu.dismiss();
         });
-        mPopupMenu.setOnDismissListener(() -> { mPopupMenu = null; });
+        list.setDivider(null);
+
+        mPopupMenu = new AnchoredPopupWindow(getContext(), this,
+                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.menu_bg), contentView,
+                0, mMenuWidth);
+        mPopupMenu.setOverlapAnchor(true);
+        mPopupMenu.setDismissOnTouchInteraction(
+                true); // TODO(twellington): test scrolling and tapping outside
+
+        mViewRectProvider = new ViewRectProvider(this);
+
+        mViewRectProvider.startObserving(new ViewRectProvider.ViewRectProviderObserver() {
+            @Override
+            public void onRectChanged(Rect newRect) {
+                mPopupMenu.setAnchorRect(newRect);
+            }
+
+            @Override
+            public void onRectHidden() {
+                mPopupMenu.dismiss();
+            }
+        });
+
+        mPopupMenu.addOnDismissListener(() -> mViewRectProvider.stopObserving());
+        mPopupMenu.setPositionObserver(this);
 
         mPopupMenu.show();
-        mPopupMenu.getListView().setDivider(null);
     }
 }

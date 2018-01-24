@@ -94,9 +94,9 @@ import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
+import org.chromium.chrome.browser.widget.AnchoredPopupWindow;
 import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
@@ -1730,10 +1730,11 @@ public class Tab
 
         if (!(getActivity() instanceof ChromeTabbedActivity)) return;
 
-        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
-                getActivity().getToolbarManager().getMenuButton(),
-                R.string.iph_data_saver_detail_text,
-                R.string.iph_data_saver_detail_accessibility_text);
+        View anchorView = getActivity().getToolbarManager().getMenuButton();
+        TextBubble textBubble =
+                new TextBubble(getActivity(), anchorView, R.string.iph_data_saver_detail_text,
+                        R.string.iph_data_saver_detail_accessibility_text);
+        textBubble.setAnchorView(anchorView);
         textBubble.setDismissOnTouchInteraction(true);
         getActivity().getAppMenuHandler().setMenuHighlight(R.id.app_menu_footer);
         textBubble.addOnDismissListener(new OnDismissListener() {
@@ -3411,7 +3412,8 @@ public class Tab
 
         Rect rect = new Rect(x, y, x + width, y + height);
         mDownloadIPHBubble.setAnchorRect(rect);
-        mDownloadIPHBubble.setPreferredOrientation(TextBubble.Orientation.BELOW);
+        mDownloadIPHBubble.setPreferredVerticalOrientation(
+                AnchoredPopupWindow.VerticalOrientation.BELOW);
         mDownloadIPHBubble.show();
         createPulse(rect);
     }

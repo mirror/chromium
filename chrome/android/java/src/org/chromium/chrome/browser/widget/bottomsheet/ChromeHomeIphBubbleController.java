@@ -26,7 +26,6 @@ import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -223,11 +222,11 @@ public class ChromeHomeIphBubbleController {
             mHelpBubble.setAnchorRect(getTopAnchorRect(topAnchorView));
             topAnchorView.addOnLayoutChangeListener(topAnchorLayoutChangeListener);
         } else {
-            mHelpBubble = new ViewAnchoredTextBubble(
-                    mContext, anchorView, stringId, accessibilityStringId);
+            mHelpBubble = new TextBubble(mContext, anchorView, stringId, accessibilityStringId);
+            mHelpBubble.setAnchorView(anchorView);
             int inset = mContext.getResources().getDimensionPixelSize(
                     R.dimen.bottom_sheet_help_bubble_inset);
-            ((ViewAnchoredTextBubble) mHelpBubble).setInsetPx(0, inset, 0, inset);
+            ((TextBubble) mHelpBubble).setInsetPx(0, inset, 0, inset);
         }
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PERSISTENT_IPH)) {

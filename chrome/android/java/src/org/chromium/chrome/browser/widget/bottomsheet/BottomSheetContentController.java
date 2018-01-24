@@ -54,7 +54,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetCon
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView.OnNavigationItemSelectedListener;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.ui.UiUtils;
 
@@ -801,8 +801,9 @@ public class BottomSheetContentController
             throw new RuntimeException("Attempting to show invalid content in bottom sheet.");
         }
 
-        final ViewAnchoredTextBubble helpBubble =
-                new ViewAnchoredTextBubble(getContext(), mBottomSheet, stringId, stringId);
+        final TextBubble helpBubble =
+                new TextBubble(getContext(), mBottomSheet, stringId, stringId);
+        helpBubble.setAnchorView(mBottomSheet);
         helpBubble.setDismissOnTouchInteraction(true);
 
         mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
