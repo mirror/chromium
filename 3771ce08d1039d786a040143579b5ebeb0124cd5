@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b07739ca_228c2845",
+        "filename": "chrome/browser/extensions/extension_keybinding_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "83d63ba0_d44151ce",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e3ae07b_a1711b25",
         "filename": "chrome/browser/extensions/global_shortcut_listener_mac.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T04:17:01Z",
       "side": 1,
       "message": "comment?",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4da45b_72b1e234",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5e3ae07b_a1711b25",
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "perhaps MediaKeysListener::Delegate, which declares OnMediaKeysAccelerator for these owning classes to override.",
       "parentUuid": "289e2eb4_144371a4",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b892667a_609b97c3",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "My approach was to receive media key accelerator event through MediaKeysAcceleratorReceiver - callback. It reduces bulk inheritance and provides more clear life time control (delegate is hanging raw pointer).\nIs your comment critical?",
+      "parentUuid": "f2bca1e5_8a126edf",
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "9ba63a10_b65dddae",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "23144ca1_4556de05",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02181ed9_89c00460",
         "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h",
         "patchSetId": 4
@@ -237,6 +309,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dd2a19_3a020446",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "thanks. I\u0027ll fix the order in cc by the way.",
+      "parentUuid": "02181ed9_89c00460",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -304,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "1d7c0b18_87c785f7",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9d3317_f2dc2e6a",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "224a6680_7086ef78",
         "filename": "ui/base/accelerators/media_keys_listener.h",
         "patchSetId": 4
@@ -318,6 +426,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433742ed_c88ff5ef",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2018-01-24T04:48:12Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "224a6680_7086ef78",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
