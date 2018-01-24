@@ -86,24 +86,33 @@ ManagePasswordsBubbleDelegateViewBase::CreateBubble(
   ManagePasswordsBubbleDelegateViewBase* view = nullptr;
   password_manager::ui::State model_state =
       PasswordsModelDelegateFromWebContents(web_contents)->GetState();
-  if (model_state == password_manager::ui::MANAGE_STATE) {
-    view = new ManagePasswordItemsView(web_contents, anchor_view, anchor_point,
-                                       reason);
-  } else if (model_state == password_manager::ui::AUTO_SIGNIN_STATE) {
-    view = new ManagePasswordAutoSignInView(web_contents, anchor_view,
-                                            anchor_point, reason);
-  } else if (model_state == password_manager::ui::CONFIRMATION_STATE) {
-    view = new ManagePasswordSaveConfirmationView(web_contents, anchor_view,
-                                                  anchor_point, reason);
-  } else if (model_state ==
-             password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
-    view = new ManagePasswordUpdatePendingView(web_contents, anchor_view,
-                                               anchor_point, reason);
-  } else if (model_state == password_manager::ui::PENDING_PASSWORD_STATE) {
-    view = new ManagePasswordPendingView(web_contents, anchor_view,
+  switch (model_state) {
+    case password_manager::ui::MANAGE_STATE:
+      view = new ManagePasswordItemsView(web_contents, anchor_view,
                                          anchor_point, reason);
-  } else {
-    NOTREACHED();
+      break;
+    case password_manager::ui::AUTO_SIGNIN_STATE:
+      view = new ManagePasswordAutoSignInView(web_contents, anchor_view,
+                                              anchor_point, reason);
+      break;
+    case password_manager::ui::CONFIRMATION_STATE:
+      view = new ManagePasswordSaveConfirmationView(web_contents, anchor_view,
+                                                    anchor_point, reason);
+      break;
+    case password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE:
+    case password_manager::ui::CHROME_SIGN_IN_PROMO_STATE:
+    case password_manager::ui::PENDING_PASSWORD_UPDATE_STATE:
+      view = new ManagePasswordUpdatePendingView(web_contents, anchor_view,
+                                                 anchor_point, reason);
+      break;
+    case password_manager::ui::PENDING_PASSWORD_STATE:
+      view = new ManagePasswordPendingView(web_contents, anchor_view,
+                                           anchor_point, reason);
+      break;
+    case password_manager::ui::INACTIVE_STATE:
+    case password_manager::ui::CREDENTIAL_REQUEST_STATE:
+      NOTREACHED();
+      break;
   }
 
   g_manage_passwords_bubble_ = view;

@@ -183,25 +183,30 @@ ManagePasswordPendingView::ManagePasswordPendingView(
       are_passwords_revealed_(
           model()->are_passwords_revealed_when_bubble_is_opened()) {
   // Create credentials row.
-  const autofill::PasswordForm& password_form = model()->pending_password();
-  const bool is_password_credential = password_form.federation_origin.unique();
-  if (model()->enable_editing()) {
-    username_field_ = CreateUsernameEditable(password_form).release();
+  if (model()->state() == password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
+    const autofill::PasswordForm& password_form = model()->pending_password();
+    const bool is_password_credential =
+        password_form.federation_origin.unique();
+    if (model()->enable_editing()) {
+      username_field_ = CreateUsernameEditable(password_form).release();
+    } else {
+      username_field_ = CreateUsernameLabel(password_form).release();
+    }
+
+    CreatePasswordField();
+
+    if (is_password_credential) {
+      password_view_button_ =
+          CreatePasswordViewButton(this, are_passwords_revealed_).release();
+    }
+
+    CreateAndSetLayout(is_password_credential);
+    if (model()->enable_editing() &&
+        model()->pending_password().username_value.empty()) {
+      initially_focused_view_ = username_field_;
+    }
   } else {
-    username_field_ = CreateUsernameLabel(password_form).release();
-  }
-
-  CreatePasswordField();
-
-  if (is_password_credential) {
-    password_view_button_ =
-        CreatePasswordViewButton(this, are_passwords_revealed_).release();
-  }
-
-  CreateAndSetLayout(is_password_credential);
-  if (model()->enable_editing() &&
-      model()->pending_password().username_value.empty()) {
-    initially_focused_view_ = username_field_;
+    ReplaceWithPromo();
   }
 }
 
@@ -432,9 +437,11 @@ void ManagePasswordPendingView::ReplaceWithPromo() {
   } else {
     NOTREACHED();
   }
-  GetWidget()->UpdateWindowIcon();
-  UpdateTitleText(
-      static_cast<views::StyledLabel*>(GetBubbleFrameView()->title()));
+  if (GetWidget()) {
+    GetWidget()->UpdateWindowIcon();
+    UpdateTitleText(
+        static_cast<views::StyledLabel*>(GetBubbleFrameView()->title()));
+  }
   DialogModelChanged();
 
   SizeToContents();
