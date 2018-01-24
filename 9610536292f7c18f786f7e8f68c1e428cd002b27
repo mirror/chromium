@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f98509_555ee5c0",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-24T12:26:23Z",
+      "side": 1,
+      "message": "What happens if the sample rate is 22050 or 11025? Maybe it can\u0027t be?",
+      "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5aeb58_465a4221",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-24T12:26:23Z",
+      "side": 1,
+      "message": "Does it have to be copied? I can\u0027t see why.",
+      "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
