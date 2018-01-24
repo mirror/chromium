@@ -112,6 +112,11 @@ enum class TaskType : unsigned {
   // The task runner may be throttled.
   kMiscPlatformAPI = 22,
 
+  // https://html.spec.whatwg.org/#unhandled-promise-rejections
+  // The task runner for handling unhandledrejection and rejectionhandled
+  // events.
+  kPromise = 30,
+
   ///////////////////////////////////////
   // The following task types are DEPRECATED! Use kInternal* instead.
   ///////////////////////////////////////
@@ -152,7 +157,7 @@ enum class TaskType : unsigned {
   // * //media
   kInternalMedia = 29,
 
-  kCount = 30,
+  kCount = 31,
 };
 
 }  // namespace blink

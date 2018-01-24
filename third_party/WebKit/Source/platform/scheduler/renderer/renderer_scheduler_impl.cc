@@ -178,6 +178,8 @@ const char* TaskTypeToString(TaskType task_type) {
       return "InternalIndexedDB";
     case TaskType::kInternalMedia:
       return "InternalMedia";
+    case TaskType::kPromise:
+      return "Promise";
     case TaskType::kCount:
       return "Count";
   }
