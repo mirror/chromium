@@ -5,6 +5,7 @@
 #ifndef EXTENSIONS_UTILITY_UTILITY_HANDLER_H_
 #define EXTENSIONS_UTILITY_UTILITY_HANDLER_H_
 
+#include "base/files/file_path.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace extensions {
@@ -15,6 +16,10 @@ void UtilityThreadStarted();
 
 void ExposeInterfacesToBrowser(service_manager::BinderRegistry* registry,
                                bool running_elevated);
+
+bool ShouldExtractFile(bool is_theme, const base::FilePath& file_path);
+
+bool IsManifestFile(const base::FilePath& file_path);
 
 }  // namespace utility_handler
 
