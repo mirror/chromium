@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf20d1e8_f46bc1fa",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T00:31:13Z",
+      "side": 1,
+      "message": "Should we even hit the delegate if this fails?",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 55
+      },
+      "revId": "66b8069ac287e6e4e2bad7547e8eaa2f485c13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a08625c_6010bb75",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T00:31:13Z",
+      "side": 1,
+      "message": "Is it possible to get rid of the reliance on URLRequest user data?",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 70
+      },
+      "revId": "66b8069ac287e6e4e2bad7547e8eaa2f485c13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edb2a62_1f8f21e1",
+        "filename": "content/browser/download/url_downloader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T00:31:13Z",
+      "side": 1,
+      "message": "Let\u0027s just pass this in from the DownloadUrlParams (the function that builds the UrlDownloader should have it IIUC).",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 76
+      },
+      "revId": "66b8069ac287e6e4e2bad7547e8eaa2f485c13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
