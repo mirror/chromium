@@ -16,6 +16,24 @@
       "revId": "c18d3d358d6e273523921ed0f8b86bf0a11cbed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedc5383_73e4efa9",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-24T22:33:22Z",
+      "side": 1,
+      "message": "As far as I know, DevTools does not have a notion of an inspected-frame inside the WebContents; it knows that the WebContents are inspected, but not which frame.  If CanRequestURL() is tightened in the future, we may want to consider IsWebSafeScheme() + correctly handling the blob/filesystem cases.\n\nI see now that we\u0027re trying to avoid using RenderViewHost for isolation.  If these 2 are equivalent, maybe we prefer using the 2nd one: ?\ninspected_web_contents-\u003eGetRenderViewHost()-\u003eGetProcess()\ninspected_web_contents-\u003eGetMainFrame()-\u003eGetProcess()",
+      "parentUuid": "49c84de9_499e6f71",
+      "revId": "c18d3d358d6e273523921ed0f8b86bf0a11cbed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
