@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9953df55_000bf4b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-nested-header-policy.https.sub.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-24T16:19:37Z",
+      "side": 1,
+      "message": "autoplay is currently under a different flag than everything else -- You might need to change that to something else in order to get the tests to pass.",
+      "revId": "8d929a3333d7fbbd685f6b98d42f2fb26eff962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
