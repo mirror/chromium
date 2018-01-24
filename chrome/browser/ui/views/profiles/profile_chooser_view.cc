@@ -185,6 +185,13 @@ BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
 }
 
+void SigninAccount(const AccountInfo& account) {
+  LOG(ERROR) << "Signin Email: " << account.email;
+  // TODO: adjust enable sync for empty account info
+  //  signin_ui_util::EnableSync(browser_, account, access_point_);
+  // call enable sync in here and move to profile chooser (change paramters)
+}
+
 }  // namespace
 
 // A title card with one back button left aligned and one label center aligned.
@@ -663,7 +670,7 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         this,
         std::vector<AccountInfo>(dice_sync_promo_accounts_.begin() + 1,
                                  dice_sync_promo_accounts_.end()),
-        sender);
+        sender, base::BindRepeating(&SigninAccount));
   } else {
     // Either one of the "other profiles", or one of the profile accounts
     // buttons was pressed.

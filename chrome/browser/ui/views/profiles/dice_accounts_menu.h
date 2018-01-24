@@ -9,6 +9,7 @@
 
 #include "components/signin/core/browser/account_info.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
+#include "ui/views/controls/button/button.h"
 
 namespace views {
 class View;
@@ -16,23 +17,27 @@ class View;
 
 // This bubble view displays a list of selectable accounts given by |accounts|.
 // It is used to select an account for turning on Sync when DICE is enabled.
-// TODO(tangltom): Add action handling.
-class DiceAccountsMenu : public views::BubbleDialogDelegateView {
+class DiceAccountsMenu : public views::BubbleDialogDelegateView,
+                         public views::ButtonListener {
  public:
+  using DiceAccountsMenuCallback =
+      base::RepeatingCallback<void(const AccountInfo& account_to_signin)>;
   // Shows the bubble if it is not already showing. When the bubble window loses
   // focus it will close itself. If the window of |anchor_view| loses focus too,
   // e.g. when the user clicks outside, the bubble will close the |anchor_view|
   // bubble too. The position is set according to |anchor_view|.
   static void ShowBubble(views::BubbleDialogDelegateView* parent_bubble,
                          const std::vector<AccountInfo>& accounts,
-                         views::View* anchor_view);
+                         views::View* anchor_view,
+                         const DiceAccountsMenuCallback& signin_callback);
 
  private:
   friend class DiceAccountsMenuTestProxy;
 
   DiceAccountsMenu(views::BubbleDialogDelegateView* parent_bubble,
                    const std::vector<AccountInfo>& accounts,
-                   views::View* anchor_view);
+                   views::View* anchor_view,
+                   const DiceAccountsMenuCallback& signin_callback);
   ~DiceAccountsMenu() override;
 
   // views::BubbleDialogDelegateView:
@@ -41,8 +46,15 @@ class DiceAccountsMenu : public views::BubbleDialogDelegateView {
   void WindowClosing() override;
   void OnWidgetDestroyed(views::Widget* widget) override;
 
+  // views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
   views::BubbleDialogDelegateView* parent_bubble_;
   std::vector<AccountInfo> accounts_;
+
+  // Called when a menu button is pressed. The account associated with the
+  // button is passed as an argument.
+  const DiceAccountsMenuCallback& signin_callback_;
 
   // Pointer to an DiceAccountMenu object to make sure there is only one at a
   // time.

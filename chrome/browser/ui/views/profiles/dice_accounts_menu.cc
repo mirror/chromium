@@ -55,11 +55,13 @@ DiceAccountsMenu* DiceAccountsMenu::menu_bubble_ = nullptr;
 void DiceAccountsMenu::ShowBubble(
     views::BubbleDialogDelegateView* parent_bubble,
     const std::vector<AccountInfo>& accounts,
-    views::View* anchor_view) {
+    views::View* anchor_view,
+    const DiceAccountsMenuCallback& signin_callback) {
   if (menu_bubble_)
     return;
   ScopedCloseBubbleOnDeactivate parent_bubble_saver(parent_bubble);
-  menu_bubble_ = new DiceAccountsMenu(parent_bubble, accounts, anchor_view);
+  menu_bubble_ = new DiceAccountsMenu(parent_bubble, accounts, anchor_view,
+                                      signin_callback);
   views::Widget* widget =
       views::BubbleDialogDelegateView::CreateBubble(menu_bubble_);
   menu_bubble_->SetAlignment(views::BubbleBorder::ALIGN_ARROW_TO_MID_ANCHOR);
@@ -70,10 +72,12 @@ void DiceAccountsMenu::ShowBubble(
 DiceAccountsMenu::DiceAccountsMenu(
     views::BubbleDialogDelegateView* parent_bubble,
     const std::vector<AccountInfo>& accounts,
-    views::View* anchor_view)
+    views::View* anchor_view,
+    const DiceAccountsMenuCallback& signin_callback)
     : BubbleDialogDelegateView(anchor_view, views::BubbleBorder::NONE),
       parent_bubble_(parent_bubble),
-      accounts_(accounts) {}
+      accounts_(accounts),
+      signin_callback_(signin_callback) {}
 
 DiceAccountsMenu::~DiceAccountsMenu() = default;
 
@@ -94,15 +98,18 @@ void DiceAccountsMenu::Init() {
   gfx::Image default_icon_circle =
       profiles::GetSizedAvatarIcon(default_icon, true, kAvatarIconSize,
                                    kAvatarIconSize, profiles::SHAPE_CIRCLE);
+  int account_idx = 0;
   for (const AccountInfo& account : accounts_) {
     views::View* account_button =
-        new HoverButton(nullptr, *default_icon_circle.ToImageSkia(),
+        new HoverButton(this, *default_icon_circle.ToImageSkia(),
                         base::UTF8ToUTF16(account.email));
+    account_button->set_id(account_idx++);
     AddChildView(account_button);
   }
   views::View* use_another_account = new HoverButton(
-      nullptr, *default_icon_circle.ToImageSkia(),
+      this, *default_icon_circle.ToImageSkia(),
       l10n_util::GetStringUTF16(IDS_PROFILES_DICE_USE_ANOTHER_ACCOUNT_BUTTON));
+  use_another_account->set_id(-1);
   AddChildView(use_another_account);
 }
 
@@ -123,4 +130,14 @@ void DiceAccountsMenu::OnWidgetDestroyed(views::Widget* widget) {
       platform_util::GetTopLevel(parent_widget->GetNativeView());
   if (!platform_util::IsWindowActive(window))
     parent_widget->Close();
+}
+
+void DiceAccountsMenu::ButtonPressed(views::Button* sender,
+                                     const ui::Event& event) {
+  int account_idx = sender->id();
+  if (account_idx < 0 || account_idx >= int(accounts_.size())) {
+    signin_callback_.Run(AccountInfo());
+    return;
+  }
+  signin_callback_.Run(accounts_[account_idx]);
 }
