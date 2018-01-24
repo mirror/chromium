@@ -135,10 +135,7 @@ void ArcPlayStoreEnabledPreferenceHandler::OnIsSyncingChanged() {
     return;
   pref_service_syncable->RemoveObserver(this);
 
-  // TODO(hidehiko): Extract kEnableArcOOBEOptIn check as a utility method.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableArcOOBEOptIn) ||
-      !profile_->IsNewProfile() ||
+  if (!profile_->IsNewProfile() ||
       profile_->GetPrefs()->HasPrefPath(prefs::kArcEnabled) ||
       !arc::IsPlayStoreAvailable()) {
     return;
