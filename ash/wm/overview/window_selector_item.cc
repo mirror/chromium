@@ -53,6 +53,8 @@
 #include "ui/wm/core/shadow.h"
 #include "ui/wm/core/window_util.h"
 
+#include "ui/views/border.h"
+
 namespace ash {
 
 namespace {
@@ -478,6 +480,7 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
       background_->AddChildView(close_button_);
     }
 
+    background_->SetBorder(views::CreateSolidBorder(2, SK_ColorGREEN));
     // Use |cannot_snap_container_| to specify the padding surrounding
     // |cannot_snap_label_| and to give the label rounded corners.
     cannot_snap_container_ = new RoundedRectView(
@@ -528,8 +531,8 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
 
     const int visible_height = close_button_->GetPreferredSize().height();
     gfx::Rect background_bounds(gfx::Rect(bounds.size()));
-    background_bounds.set_height(visible_height);
     background_->SetBoundsRect(background_bounds);
+    background_bounds.set_height(visible_height);
 
     const int label_padding = IsNewOverviewUi() ? kHorizontalLabelPaddingDp
                                                 : kOldHorizontalLabelPaddingDp;
@@ -711,6 +714,15 @@ void WindowSelectorItem::UpdateCannotSnapWarningVisibility() {
   caption_container_view_->SetCannotSnapLabelVisibility(visible);
 }
 
+ScopedTransformOverviewWindow::GridWindowFillMode
+WindowSelectorItem::GetWindowDimensionsType() const {
+  return transform_window_.type();
+}
+
+void WindowSelectorItem::UpdateWindowDimensionsType() {
+  transform_window_.UpdateWindowDimensionsType();
+}
+
 void WindowSelectorItem::SetDimmed(bool dimmed) {
   dimmed_ = dimmed;
   SetOpacity(dimmed ? kDimmedItemOpacity : 1.0f);
@@ -800,7 +812,7 @@ void WindowSelectorItem::SetItemBounds(const gfx::Rect& target_bounds,
   const int top_view_inset = transform_window_.GetTopInset();
   const int title_height = close_button_->GetPreferredSize().height();
   gfx::Rect selector_item_bounds =
-      ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
+      transform_window_.ShrinkRectToFitPreservingAspectRatio(
           screen_rect, target_bounds, top_view_inset, title_height);
   gfx::Transform transform = ScopedTransformOverviewWindow::GetTransformForRect(
       screen_rect, selector_item_bounds);
@@ -902,7 +914,9 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
 void WindowSelectorItem::UpdateHeaderLayout(
     HeaderFadeInMode mode,
     OverviewAnimationType animation_type) {
-  gfx::Rect transformed_window_bounds(transform_window_.GetTransformedBounds());
+  gfx::Rect transformed_window_bounds =
+      transform_window_.window_selector_bounds().value_or(
+          transform_window_.GetTransformedBounds());
   ::wm::ConvertRectFromScreen(root_window_, &transformed_window_bounds);
 
   gfx::Rect label_rect(close_button_->GetPreferredSize());
