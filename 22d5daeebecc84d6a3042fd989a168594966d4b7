@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "15d52381_68fbf999",
+        "filename": "ui/ozone/platform/wayland/fake_server.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "While you\u0027re here anyway, can you add one more sentence explaining what a \"seat\" means in Wayland or a link to the concept in the Wayland docs?",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de20d33d_10d0fec1",
         "filename": "ui/ozone/platform/wayland/wayland_connection.h",
         "patchSetId": 7
@@ -42,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "4993cc45_cef6cd4d",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "You need to remove the listeners here yes? Otherwise there can be a crash during shutdown if events arrive after the destructor runs",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "378d2ebf_e3323877",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 7
@@ -59,6 +93,125 @@
         "endLine": 63,
         "endChar": 12
       },
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc68e47_96b56bc1",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "what does this do?",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cb89c3_0f45642c",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "This type is never used outside of the class? Why can\u0027t it be in it? Putting it in the global namespace in the .h is non-ideal.",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa3f60a_708821a2",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "Class comment please.",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcd889e_3cd1771f",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "this is only used in the private: so put it there?",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e323fa_d0ede9d4",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "You have registered callbacks into wayland that call into these entry points and assume that the connection_ object exists. This can crash during shutdown yes?",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5693910_c87108cc",
+        "filename": "ui/ozone/platform/wayland/wayland_touch_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "docs to say what this test does please",
+      "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1edef23_2575b7f7",
+        "filename": "ui/ozone/platform/wayland/wayland_touch_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T22:24:23Z",
+      "side": 1,
+      "message": "Does this require a real wayland server or use the test server?",
       "revId": "22d5daeebecc84d6a3042fd989a168594966d4b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
