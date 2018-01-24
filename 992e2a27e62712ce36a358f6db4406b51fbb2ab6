@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fba47bc1_a8e255bd",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-24T18:10:53Z",
+      "side": 1,
+      "message": "nit: Simply omit this?",
+      "range": {
+        "startLine": 885,
+        "startChar": 40,
+        "endLine": 885,
+        "endChar": 54
+      },
+      "revId": "992e2a27e62712ce36a358f6db4406b51fbb2ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f43f6597_e803743b",
         "filename": "chrome/browser/policy/policy_browsertest.cc",
         "patchSetId": 7
@@ -18,6 +41,76 @@
         "startChar": 42,
         "endLine": 895,
         "endChar": 43
+      },
+      "revId": "992e2a27e62712ce36a358f6db4406b51fbb2ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d02ef48_18c76c72",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-24T18:10:53Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "f43f6597_e803743b",
+      "range": {
+        "startLine": 895,
+        "startChar": 42,
+        "endLine": 895,
+        "endChar": 43
+      },
+      "revId": "992e2a27e62712ce36a358f6db4406b51fbb2ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2864b38_befbfd01",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-24T18:10:53Z",
+      "side": 1,
+      "message": "nit: AreCommittedInterstitialsEnabled()?",
+      "range": {
+        "startLine": 925,
+        "startChar": 8,
+        "endLine": 925,
+        "endChar": 16
+      },
+      "revId": "992e2a27e62712ce36a358f6db4406b51fbb2ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5472cdac_3820b57c",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3647,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-24T18:10:53Z",
+      "side": 1,
+      "message": "nit: Using AreCommittedInterstitialsEnabled() would be more readable.\nDitto for changes in other tests.",
+      "range": {
+        "startLine": 3647,
+        "startChar": 6,
+        "endLine": 3647,
+        "endChar": 16
       },
       "revId": "992e2a27e62712ce36a358f6db4406b51fbb2ab6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
