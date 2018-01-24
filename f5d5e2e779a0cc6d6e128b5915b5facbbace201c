@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "851b86a7_e4295e98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-24T05:21:17Z",
+      "side": 1,
+      "message": "You don\u0027t need to handle the case of profile being null because LargeIconBridge#getLargeIconForUrl() does so.",
+      "revId": "f5d5e2e779a0cc6d6e128b5915b5facbbace201c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be615ee_a1d9373b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-24T05:21:17Z",
+      "side": 1,
+      "message": "It looks like this function and onFaviconUpdated() can share code",
+      "revId": "f5d5e2e779a0cc6d6e128b5915b5facbbace201c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
