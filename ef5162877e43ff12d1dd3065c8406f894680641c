@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "cc1ef749_3564ad35",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "OK - turned it into a comment, and inverted the checks here and below.\n\nIt\u0027s not as clear stepping through in a debugger, but maybe shorter is sweeter.",
+      "parentUuid": "bafd307a_7f77e28e",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b01cf59_1e75796b",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 47
@@ -345,6 +363,30 @@
       "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d513733d_952d1b12",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "436fe7ea_45a7eeb5",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

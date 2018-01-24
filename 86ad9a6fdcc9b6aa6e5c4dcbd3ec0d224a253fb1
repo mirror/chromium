@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6455fa8_8b536d20",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "I think you\u0027re right there is a scheduling bug here, but I think it pre-existed too.  We didn\u0027t remove the animator from frame to frame, did we?",
+      "parentUuid": "311fc867_d152ab20",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3bebdd2_76bcaa1d",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 48
@@ -63,6 +81,30 @@
       "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83236ec1_80f71459",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25558d4b_0e8567f1",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "d890f744_ea5c1316",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "I think that erring on the side of release performance is the dominant argument. Perhaps adding a check that the global scope is not on the compositor thread in SetGlobalScope? Or just inherit it from Register (currently RegisterOnWorklet asserts that the current (our global scope thread) is not the Mutator thread)\n\nAlso we should probably DCHECK that we have a task runner.",
+      "parentUuid": "01c3be6c_f6ae01a8",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97878c35_2861e2ec",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 48
@@ -169,6 +229,24 @@
       "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7747e28_8d13b410",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-24T22:45:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3db63b0e_0a6cba38",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
