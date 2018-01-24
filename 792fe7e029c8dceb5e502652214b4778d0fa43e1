@@ -16,6 +16,24 @@
       "revId": "792fe7e029c8dceb5e502652214b4778d0fa43e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0c13e6_7e0d9974",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resources/chromium/web-bluetooth-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-24T22:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e41cb5_f5b0443c",
+      "revId": "792fe7e029c8dceb5e502652214b4778d0fa43e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
