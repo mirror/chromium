@@ -124,7 +124,10 @@ NSString* GetBlockedPopupInfobarText(size_t blocked_count) {
   // Ensure that the resulting tab is updated as expected.
   const GURL targetURL =
       HttpServer::MakeUrl(std::string(kTestURL) + "#assigned");
-  [[EarlGrey selectElementWithMatcher:OmniboxText(targetURL.GetContent())]
+  const std::string targetURLString =
+      targetURL.GetContent() +
+      (targetURL.has_ref() ? "#" + targetURL().ref() : "");
+  [[EarlGrey selectElementWithMatcher:OmniboxText(targetURLString)]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -138,7 +141,10 @@ NSString* GetBlockedPopupInfobarText(size_t blocked_count) {
   // Ensure that the resulting tab is updated as expected.
   const GURL targetURL =
       HttpServer::MakeUrl(std::string(kTestURL) + "#updated");
-  [[EarlGrey selectElementWithMatcher:OmniboxText(targetURL.GetContent())]
+  const std::string targetURLString =
+      targetURL.GetContent() +
+      (targetURL.has_ref() ? "#" + targetURL().ref() : "");
+  [[EarlGrey selectElementWithMatcher:OmniboxText(targetURLString)]
       assertWithMatcher:grey_notNil()];
 }
 
