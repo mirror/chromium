@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6f4817a3_9de9220b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T16:20:45Z",
+      "side": 1,
+      "message": "I was more wondering whether onMenuItemActionCollapse is guaranteed to get called even when the search item is represented as text in an overflow menu. It sounds like the answer is yes. I wanted to make sure that filterPasswords(null) was always getting called when a search is ended.",
+      "parentUuid": "e9341683_dd2d6bf4",
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0ef5cf_637953ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 25
