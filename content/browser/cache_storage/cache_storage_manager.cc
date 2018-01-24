@@ -199,10 +199,9 @@ void CacheStorageManager::HasCache(
   cache_storage->HasCache(cache_name, std::move(callback));
 }
 
-void CacheStorageManager::DeleteCache(
-    const GURL& origin,
-    const std::string& cache_name,
-    CacheStorage::BoolAndErrorCallback callback) {
+void CacheStorageManager::DeleteCache(const GURL& origin,
+                                      const std::string& cache_name,
+                                      CacheStorage::ErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   CacheStorage* cache_storage = FindOrCreateCacheStorage(origin);
