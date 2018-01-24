@@ -780,8 +780,8 @@ class DownloadContentTest : public ContentBrowserTest {
   }
 
   void WaitForServerToFinishAllResponses(size_t request_num) {
-    while (test_response_handler_.completed_requests().size() != request_num)
-      base::RunLoop().RunUntilIdle();
+    DownloadResponseObserver response_observer(test_response_handler());
+    response_observer.WaitUntilCompletion(request_num);
   }
 
   void SetupErrorInjectionDownloads() {
@@ -2900,14 +2900,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
                download->GetTargetFilePath().BaseName().value().c_str());
 }
 
-#if defined(OS_ANDROID)
-// Flaky on android: https://crbug.com/786626
-#define MAYBE_ParallelDownloadComplete DISABLED_ParallelDownloadComplete
-#else
-#define MAYBE_ParallelDownloadComplete ParallelDownloadComplete
-#endif
 // Verify parallel download in normal case.
-IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadComplete) {
   EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
 
   GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
@@ -2929,9 +2923,8 @@ IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
   DownloadItem* download = StartDownloadAndReturnItem(shell(), server_url);
   // Send some data for the first request and pause it so download won't
   // complete before other parallel requests are created.
-  request_pause_handler.WaitForCallback();
-  while (test_response_handler()->completed_requests().size() == 0)
-    base::RunLoop().RunUntilIdle();
+  WaitForServerToFinishAllResponses(1u);
+
   // Now resume the first request.
   request_pause_handler.Resume();
   WaitForCompletion(download);
