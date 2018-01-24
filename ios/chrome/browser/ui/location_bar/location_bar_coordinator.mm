@@ -10,11 +10,15 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_url_loader.h"
+#include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
+#include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
@@ -31,10 +35,15 @@
 #error "This file requires ARC support."
 #endif
 
-@interface LocationBarCoordinator ()
+@interface LocationBarCoordinator () {
+  std::unique_ptr<LocationBarControllerImpl> _locationBarController;
+}
 // Object taking care of adding the accessory views to the keyboard.
 @property(nonatomic, strong)
     ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
+// Coordinator for the omnibox popup.
+@property(nonatomic, strong) OmniboxPopupCoordinator* omniboxPopupCoordinator;
+
 @end
 
 @implementation LocationBarCoordinator
@@ -43,9 +52,10 @@
 @synthesize browserState = _browserState;
 @synthesize dispatcher = dispatcher;
 @synthesize URLLoader = _URLLoader;
-@synthesize locationBarController = _locationBarController;
 @synthesize delegate = _delegate;
 @synthesize webStateList = _webStateList;
+@synthesize omniboxPopupCoordinator = _omniboxPopupCoordinator;
+@synthesize popupPositioner = _popupPositioner;
 
 #pragma mark - public
 
@@ -85,9 +95,20 @@
   self.keyboardDelegate.omniboxTextField = self.locationBarView.textField;
   ConfigureAssistiveKeyboardViews(self.locationBarView.textField, kDotComTLD,
                                   self.keyboardDelegate);
+
+  _locationBarController = std::make_unique<LocationBarControllerImpl>(
+      self.locationBarView, self.browserState, self, self.dispatcher);
+  _locationBarController->SetURLLoader(self);
+  self.omniboxPopupCoordinator =
+      _locationBarController->CreatePopupCoordinator(self.popupPositioner);
+  [self.omniboxPopupCoordinator start];
 }
 
 - (void)stop {
+  // The popup has to be destroyed before the location bar.
+  [self.omniboxPopupCoordinator stop];
+  _locationBarController.reset();
+
   self.locationBarView = nil;
 }
 
@@ -95,6 +116,23 @@
   _locationBarController->SetShouldShowHintText(
       [self.delegate toolbarModelIOS]->ShouldDisplayHintText());
   _locationBarController->OnToolbarUpdated();
+}
+
+- (BOOL)showingOmniboxPopup {
+  OmniboxViewIOS* omniboxViewIOS = static_cast<OmniboxViewIOS*>(
+      _locationBarController.get()->GetLocationEntry());
+  return omniboxViewIOS->IsPopupOpen();
+}
+
+- (void)focusOmniboxFromFakebox {
+  OmniboxEditModel* model = _locationBarController->GetLocationEntry()->model();
+  // Setting the caret visibility to false causes OmniboxEditModel to indicate
+  // that omnibox interaction was initiated from the fakebox. Note that
+  // SetCaretVisibility is a no-op unless OnSetFocus is called first.  Only
+  // set fakebox on iPad, where there is a distinction between the omnibox
+  // and the fakebox on the NTP.
+  model->OnSetFocus(false);
+  model->SetCaretVisibility(false);
 }
 
 #pragma mark - LocationBarURLLoader
