@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a5e1c6_433ba67f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T04:21:36Z",
+      "side": 1,
+      "message": "The |success| return value of skipWaiting() is a bit subtle. I guess we should try to document more here to:\nSimulates skipWaiting(). Note that skipWaiting() might not try to activate the worker \"immediately\", if it can\u0027t yet be activated yet. If activation is delayed, |out_result| will not be set. If activation is attempted, |out_result| is generally true but false in case of a fatal/unexpected error like ServiceWorkerContext shutdown.",
+      "revId": "a3e969048b73c159646eb28d500402ac10410fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13f045f_61e29e2f",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T04:21:36Z",
+      "side": 1,
+      "message": "According to the comment above, this is trying to resolve the promise, so it should pass true.",
+      "revId": "a3e969048b73c159646eb28d500402ac10410fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1a179f_0bf8d770",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T04:21:36Z",
+      "side": 1,
+      "message": "Hm, we should be guaranteed a registration since ServiceWorkerGlobalScope#registration should be keeping the registration alive. But it\u0027s a bit scary to change it in this refactoring patch. Can you put a TODO here about removing this code?",
+      "revId": "a3e969048b73c159646eb28d500402ac10410fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc154aab_037c26c8",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T04:21:36Z",
+      "side": 1,
+      "message": "Add:\nThe callback is called with |success| true when the skipWaiting() promise should be resolved. If |success| is false, the operation failed fatally, but per spec the skipWaiting() promise should be left unresolved as it can never reject.",
+      "revId": "a3e969048b73c159646eb28d500402ac10410fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
