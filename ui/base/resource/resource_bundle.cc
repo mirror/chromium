@@ -758,7 +758,9 @@ ResourceBundle::~ResourceBundle() {
 
 // static
 void ResourceBundle::InitSharedInstance(Delegate* delegate) {
-  DCHECK(g_shared_instance_ == NULL) << "ResourceBundle initialized twice";
+  //  DCHECK(g_shared_instance_ == NULL) << "ResourceBundle initialized twice";
+  if (g_shared_instance_)
+    return;
   g_shared_instance_ = new ResourceBundle(delegate);
   static std::vector<ScaleFactor> supported_scale_factors;
 #if !defined(OS_IOS)
