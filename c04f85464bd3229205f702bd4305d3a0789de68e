@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152ee0d8_d7745268",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T21:29:05Z",
+      "side": 1,
+      "message": "nit: split into two DCHECKs for readability.",
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b141885_e07f2477",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T21:29:05Z",
+      "side": 1,
+      "message": "Not quite true. The code today sets it in DRYRUN or ENABLED.",
+      "range": {
+        "startLine": 154,
+        "startChar": 41,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2131b8_c9f349af",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-24T21:29:05Z",
+      "side": 1,
+      "message": "Sorry this isn\u0027t exactly what I meant. I wanted a case where we actually filter the disallowed subframe, not when we have no activation (in that case, the frame should never be marked as an ad). I would also prefer this to be a new test, not added to an existing test (makes hunting for tests later much harder).",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 70
+      },
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
