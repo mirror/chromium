@@ -128,6 +128,30 @@
       "revId": "45dffcae290d960f4eefe1bbb713fc2b15de3df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79290027_78f42b87",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-24T23:52:51Z",
+      "side": 1,
+      "message": "I would clearly state \"runs |callback| synchronously\" here.",
+      "parentUuid": "9714351f_5a353d5f",
+      "range": {
+        "startLine": 116,
+        "startChar": 46,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "45dffcae290d960f4eefe1bbb713fc2b15de3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

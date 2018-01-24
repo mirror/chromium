@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9249711d_7a80843d",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-24T23:52:51Z",
+      "side": 1,
+      "message": "This callback doesn\u0027t actually return anything. Instead, the comment should describe its one and only argument, like GetStorageInfoFromDeviceCallback below with its arguments.\n\nSo how about the following?\n\n// A callback to receive the result of GetStorageInfo().\n// On success, the |storage_info| argument contains the storage metadata.\n// Otherwise, |storage_info| is a nullptr.",
+      "revId": "d12b2b6fef1bd9b7e88b721d1a9b50be67a59918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
