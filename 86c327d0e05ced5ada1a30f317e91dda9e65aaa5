@@ -22,6 +22,30 @@
       "revId": "86c327d0e05ced5ada1a30f317e91dda9e65aaa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f12011_7d4acb53",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T23:34:36Z",
+      "side": 1,
+      "message": "This is fine for now, as we can use the bytestreamreader to tell DownloadFileImpl that the downloads didn\u0027t start. \nSubclassing DownloadStreamHandle is not necessarily needed",
+      "parentUuid": "d0e731f6_bc06f2b2",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "86c327d0e05ced5ada1a30f317e91dda9e65aaa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
