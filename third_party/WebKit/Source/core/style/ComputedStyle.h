@@ -1859,6 +1859,9 @@ class ComputedStyle : public ComputedStyleBase,
     return IsDisplayFlexibleBox(Display()) || IsDisplayGridBox(Display());
   }
   bool IsDisplayFlexibleBox() const { return IsDisplayFlexibleBox(Display()); }
+  bool IsDisplayLayoutCustomBox() const {
+    return IsDisplayLayoutCustomBox(Display());
+  }
 
   // Isolation utility functions.
   bool HasIsolation() const { return Isolation() != EIsolation::kAuto; }
@@ -2276,12 +2279,18 @@ class ComputedStyle : public ComputedStyleBase,
     return display == EDisplay::kGrid || display == EDisplay::kInlineGrid;
   }
 
+  static bool IsDisplayLayoutCustomBox(EDisplay display) {
+    return display == EDisplay::kLayoutCustom ||
+           display == EDisplay::kInlineLayoutCustom;
+  }
+
   static bool IsDisplayReplacedType(EDisplay display) {
     return display == EDisplay::kInlineBlock ||
            display == EDisplay::kWebkitInlineBox ||
            display == EDisplay::kInlineFlex ||
            display == EDisplay::kInlineTable ||
-           display == EDisplay::kInlineGrid;
+           display == EDisplay::kInlineGrid ||
+           display == EDisplay::kInlineLayoutCustom;
   }
 
   static bool IsDisplayInlineType(EDisplay display) {

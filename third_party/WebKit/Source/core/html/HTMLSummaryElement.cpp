@@ -48,7 +48,9 @@ LayoutObject* HTMLSummaryElement::CreateLayoutObject(
     const ComputedStyle& style) {
   EDisplay display = style.Display();
   if (display == EDisplay::kFlex || display == EDisplay::kInlineFlex ||
-      display == EDisplay::kGrid || display == EDisplay::kInlineGrid)
+      display == EDisplay::kGrid || display == EDisplay::kInlineGrid ||
+      display == EDisplay::kLayoutCustom ||
+      display == EDisplay::kInlineLayoutCustom)
     return LayoutObject::CreateObject(this, style);
   return new LayoutBlockFlow(this);
 }
