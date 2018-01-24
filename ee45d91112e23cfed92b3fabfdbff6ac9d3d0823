@@ -22,6 +22,30 @@
       "revId": "ee45d91112e23cfed92b3fabfdbff6ac9d3d0823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732cc196_233807a6",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T18:38:31Z",
+      "side": 1,
+      "message": "Yes, fixed. This will impact the number of download reported in our UMA",
+      "parentUuid": "de005453_d5b53c8d",
+      "range": {
+        "startLine": 55,
+        "startChar": 38,
+        "endLine": 55,
+        "endChar": 43
+      },
+      "revId": "ee45d91112e23cfed92b3fabfdbff6ac9d3d0823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
