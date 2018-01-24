@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0585b42_80216096",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "I disagree somewhat. Two reasons:\n\n1. It\u0027s not obvious that it\u0027s desirable that the Autofill dropdown should change or visually break when other dropdowns in Chrome change. Right now I\u0027m not working off of a Harmony Autofill spec, because there is no Harmony Autofill spec yet. Instead, I took a best guess, based on the specs for other UI elements like dropdown menus, the Hamburger menu, etc.\n\n2. It makes it much harder to trace why things appear they way they do when actually tweaking the UI. One of my major code design goals here is to centralize UI/UX-related decisions at the lowest-level possible.",
+      "parentUuid": "46abe342_b0186ae3",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bbcdb21_11b8a177",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T19:56:20Z",
       "side": 1,
       "message": "What\u0027s the plan for splitting this behavior out? It looks like this code would be much simpler if it didn\u0027t handle separators and warnings in the same class.",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3486d962_5fcc2f84",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "Right now I\u0027m open to input on that point. Eventually I\u0027m thinking we\u0027d have subclasses for regular rows, separators, and warnings, and perhaps a factory that determines which implementation to use.\n\nMy intention was to tackle in a later CL when the need for subclasses is more apparent, but I\u0027m open to doing now if you think it\u0027d already be a significant improvement to the code.",
+      "parentUuid": "7bbcdb21_11b8a177",
       "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d1dff066_ba9b2cd4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "Done for both BoxLayouts in this class.",
+      "parentUuid": "2aa881ea_3aa9cad7",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db1a14c_21ee36c0",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cd8d22_52908be2",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db1a14c_21ee36c0",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2483c2ea_2b9e576a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "Native (throughout these files) was chosen to distinguish it from the old non-Views approach. IIRC there was a big discussion about this on melandory@\u0027s CL but ultimately it didn\u0027t matter too much because this will be renamed to AutofillPopupView once we\u0027re on at 100% and delete the old code.\n\nIn this case though, I agree that AutofillPopupRowView is a good choice.",
+      "parentUuid": "8c5a4ea5_1537e975",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2017e5_f7d6f676",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45276033_bfbe0edd",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-24T21:51:31Z",
+      "side": 1,
+      "message": "Good catch. At one point I had needed a hook into these for styling events.",
+      "parentUuid": "8b2017e5_f7d6f676",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
