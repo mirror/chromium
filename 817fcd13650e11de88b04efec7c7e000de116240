@@ -232,6 +232,23 @@
     },
     {
       "key": {
+        "uuid": "c607bbbe_d9a14c15",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T19:19:22Z",
+      "side": 1,
+      "message": "Can you pass a pointer to the model inside here like the sync promo bubble does?",
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8097c00_02915fad",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -271,6 +288,29 @@
         "startChar": 7,
         "endLine": 389,
         "endChar": 57
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edebfc91_6576cf45",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-24T19:19:22Z",
+      "side": 1,
+      "message": "Can we make sure that the sign_in_promo_, desktop_ios_promo_ and this bubble all inherit from the same class? (You can add a getter for which buttons the framework need to support (ui::BUTTON_OK | ui::BUTTON_CANCEL normally) and have this promo dialog button declare no buttons on its own. Then you can use a custom button inside it.",
+      "range": {
+        "startLine": 391,
+        "startChar": 6,
+        "endLine": 391,
+        "endChar": 21
       },
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
