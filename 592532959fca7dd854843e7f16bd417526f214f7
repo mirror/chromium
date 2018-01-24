@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a457ed_8681e386",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:35:35Z",
+      "side": 1,
+      "message": "kShadowHeightIpad",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0405b46_c8e9010d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:35:35Z",
+      "side": 1,
+      "message": "nit: s/removes/remove",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416cb416_6da471d0",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:35:35Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035c61bd_39bd14fe",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:35:35Z",
+      "side": 1,
+      "message": "After 883504, you\u0027ll just need to expose hasAutocompleteResults on locationBarCoordinator for plumbing",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
