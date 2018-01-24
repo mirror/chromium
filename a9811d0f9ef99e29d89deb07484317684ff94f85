@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40600bf8_1c387565",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T23:35:15Z",
+      "side": 1,
+      "message": "It has different origin as result, but removed anyhow.",
+      "parentUuid": "5b70a230_d964e98f",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327d5aef_4c3b5bdd",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T16:27:14Z",
       "side": 1,
       "message": "gfx::Rect tmp(dst);\ntmp.ClampToCenteredSize(gfx::Size(dst.width(0, src.height() * scale));\nreturn tmp;\n\nYou may pass dst by copy.",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ffbfd4_4f15a5e2",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T23:35:15Z",
+      "side": 1,
+      "message": "Done. Though I just inlined this because it is quite short and only used once.",
+      "parentUuid": "327d5aef_4c3b5bdd",
       "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26462542_4491265b",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T23:35:15Z",
+      "side": 1,
+      "message": "I tried but it wouldn\u0027t work and was hard for me to follow myself.",
+      "parentUuid": "0718748c_0c3e274b",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6aa3a08a_458f0a5a",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "709210e1_6759585a",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T23:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa3a08a_458f0a5a",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bfa5821_1fda8b21",
         "filename": "ash/wm/overview/scoped_transform_overview_window.h",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea9b34f_24cbf23d",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-24T23:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfa5821_1fda8b21",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
