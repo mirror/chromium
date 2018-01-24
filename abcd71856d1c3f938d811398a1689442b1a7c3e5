@@ -118,6 +118,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed79ba9_191bf46e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-24T18:04:23Z",
+      "side": 1,
+      "message": "I\u0027ll defer to Yaron as he\u0027s the owner, but I think passing in the a Callable is clearer than the Callback in your CL.  The check to see if it was init\u0027d by calling the callback seems scary to me.  I\u0027d prefer not to make methods reentrant if we can avoid it (especially if you wouldn\u0027t expect it to be at first glance).\n\nGranted, there is nothing to keep the Callable from doing the same, it just won\u0027t be the expected flow.",
+      "parentUuid": "51fedb99_10d2070d",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
