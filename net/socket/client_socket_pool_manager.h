@@ -154,9 +154,16 @@ int InitSocketHandleForWebSocketRequest(
 // ClientSocketHandle with the relevant socket pool. Use this method for
 // a raw socket connection to a host-port pair (that needs to tunnel through
 // the proxies).
+//
+// Note that this method uses LOAD_IGNORE_LIMITS load flag, which
+// overrides the socket limits. Caller who uses this method must make sure that
+// igoring socket limits is okay because socket pools are shared between
+// consumers of |session|.
 NET_EXPORT int InitSocketHandleForRawConnect(
     const HostPortPair& host_port_pair,
     HttpNetworkSession* session,
+    int request_load_flags,
+    RequestPriority request_priority,
     const ProxyInfo& proxy_info,
     const SSLConfig& ssl_config_for_origin,
     const SSLConfig& ssl_config_for_proxy,
