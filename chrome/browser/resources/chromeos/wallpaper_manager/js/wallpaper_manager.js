@@ -26,10 +26,21 @@ function WallpaperManager(dialogDom) {
   this.wallpaperRequest_ = null;
   this.wallpaperDirs_ = WallpaperDirectories.getInstance();
   this.preManifestDomInit_();
-  this.fetchManifest_();
   // Uses the redesigned wallpaper picker if |useNewWallpaperPicker| is true.
   this.document_.body.classList.toggle(
       'v2', loadTimeData.getBoolean('useNewWallpaperPicker'));
+
+  if (loadTimeData.getBoolean('showBackdropWallpapers')) {
+    // The list of collections (ie. categories such as Art, Landscape etc.).
+    // Each collection contains the display name and the id.
+    this.collectionsInfo_ = null;
+    // The number of failed attempts in a row. Cleared when there's a successful
+    // attempt.
+    this.consecutiveFailedAttempts_ = 0;
+    this.getCollectionsInfo_();
+  } else {
+    this.fetchManifest_();
+  }
 }
 
 // Anonymous 'namespace'.
@@ -38,21 +49,41 @@ function WallpaperManager(dialogDom) {
 
 /**
  * URL of the learn more page for wallpaper picker.
+ *
+ * @const
  */
-/** @const */ var LearnMoreURL =
+var LearnMoreURL =
     'https://support.google.com/chromebook/?p=wallpaper_fileerror&hl=' +
     navigator.language;
 
 /**
  * Index of the All category. It is the first category in wallpaper picker.
+ *
+ * @const
  */
-/** @const */ var AllCategoryIndex = 0;
+var AllCategoryIndex = 0;
 
 /**
  * Index offset of categories parsed from manifest. The All category is added
  * before them. So the offset is 1.
+ *
+ * @const
  */
-/** @const */ var OnlineCategoriesOffset = 1;
+var OnlineCategoriesOffset = 1;
+
+/**
+ * The interval between each fetch attempts.
+ *
+ * @const
+ */
+var RETRY_GET_WALLPAPER_INFO_DELAY_MS = 50;
+
+/**
+ * The maximum number of failed attempts allowed before terminating the fetch.
+ *
+ * @const
+ */
+var MAX_FAILED_ATTEMPTS = 3;
 
 /**
  * Returns a translated string.
@@ -167,6 +198,66 @@ WallpaperManager.prototype.fetchManifest_ = function() {
     // with the online one when available.
     this.onLoadManifestFailed_();
   }
+};
+
+/**
+ * Fetches wallpaper collection info.
+ * @private
+ */
+WallpaperManager.prototype.getCollectionsInfo_ = function() {
+  chrome.wallpaperPrivate.getCollectionsInfo(collectionsInfo => {
+    if (chrome.runtime.lastError)
+      this.onGetCollectionsInfoFailed_();
+    else
+      this.onGetCollectionsInfoSucceeded_(collectionsInfo);
+  });
+};
+
+/**
+ * Called upon the success of fetching the collection info.
+ * @param {Object} collectionsInfo The collection info.
+ * @private
+ */
+WallpaperManager.prototype.onGetCollectionsInfoSucceeded_ = function(
+    collectionsInfo) {
+  this.consecutiveFailedAttempts_ = 0;
+  this.collectionsInfo_ = collectionsInfo;
+  // TODO(crbug.com/800945): Initialize the category list and show the
+  // names.
+
+  // The images belonging to the first collection should be shown by default.
+  this.showCollection_(this.collectionsInfo_[0]['collectionId']);
+};
+
+/**
+ * Called upon the failure of fetching the collection names.
+ * @private
+ */
+WallpaperManager.prototype.onGetCollectionsInfoFailed_ = function() {
+  ++this.consecutiveFailedAttempts_;
+  if (this.consecutiveFailedAttempts_ != MAX_FAILED_ATTEMPTS) {
+    // Schedule another fetch attempt.
+    window.setTimeout(
+        this.getCollectionsInfo_.bind(this), RETRY_GET_WALLPAPER_INFO_DELAY_MS);
+  } else {
+    // TODO(crbug.com/800945): Show error message.
+  }
+};
+
+/**
+ * Fetches info for the images belonging to the specific wallpaper collection
+ * and displays the images.
+ * @param {string} collectionId The id of the collection.
+ * @private
+ */
+WallpaperManager.prototype.showCollection_ = function(collectionId) {
+  // TODO(crbug.com/800945): Check if the info for this collection has already
+  // been fetched. If so, directly show the images.
+  this.consecutiveFailedAttempts_ = 0;
+  chrome.wallpaperPrivate.getImagesInfo(collectionId, function(imagesInfo) {
+    // TODO(crbug.com/800945): Initialize the image grid for this collection
+    // based on the info and show the images.
+  });
 };
 
 /**
