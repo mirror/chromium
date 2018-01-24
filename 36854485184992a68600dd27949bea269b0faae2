@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69a43ed7_19b54a4b",
+        "filename": "base/time/time.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7deb10d_140a111c",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 11
+      },
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fae973_1f801c04",
         "filename": "base/time/time_override.h",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c54cbcc_12ba974a",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "Ack, updated.",
+      "parentUuid": "07fae973_1f801c04",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5a966a2_554f610f",
         "filename": "base/time/time_override.h",
         "patchSetId": 15
@@ -62,6 +110,24 @@
       "revId": "36854485184992a68600dd27949bea269b0faae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f2ae8c_eb5a1cd9",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a966a2_554f610f",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1adad43d_fc33912c",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70128733_1ca42ad5",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac1748c0_a6ec0d59",
         "filename": "base/time/time_win.cc",
         "patchSetId": 15
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "284252dd_0bff24f6",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "I\u0027ve refactored things a fair bit to address this. We had discussed this previously with Yuri and were concerned about indirecting calls through an extern function pointer.\n\nI\u0027ve now moved the function pointers into time_override.h and am defining and calling them from within time.cc. time_win.cc updates the (extern) g_time_ticks_now_function in InitializeNowFunctionPointer(), but for that operation, performance is less important since it should only happen once.\n\nYuri, PTAL whether you agree with that assessment.",
+      "parentUuid": "ac1748c0_a6ec0d59",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2456288_52ea23c1",
         "filename": "base/time/time_win.cc",
         "patchSetId": 15
@@ -113,6 +215,24 @@
       "revId": "36854485184992a68600dd27949bea269b0faae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8875124e_a0321025",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T15:03:09Z",
+      "side": 1,
+      "message": "Done. Override logic is now confined to ScopedTimeClockOverrides and checks that there\u0027s only ever one ScopedTimeClockOverrides.",
+      "parentUuid": "f2456288_52ea23c1",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
