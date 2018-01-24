@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b043cfcb_93521f70",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T23:01:20Z",
+      "side": 0,
+      "message": "This is still needed.  None of the below should run without mojo (i.e., on non-chromium browsers)",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "5646f547e03f79baf219ab6465ceb9cc0740b36c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
