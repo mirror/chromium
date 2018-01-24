@@ -15,7 +15,7 @@
 #include "content/common/service_worker/controller_service_worker.mojom.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
-#include "content/public/renderer/child_url_loader_factory_getter.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/service_worker/service_worker_object.mojom.h"
@@ -79,7 +79,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       mojom::ServiceWorkerContainerAssociatedRequest request,
       mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
       mojom::ControllerServiceWorkerInfoPtr controller_info,
-      scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+      scoped_refptr<SharedURLLoaderFactory> default_loader_factory);
 
   // Constructor for service worker execution contexts.
   ServiceWorkerProviderContext(

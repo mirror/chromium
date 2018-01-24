@@ -54,7 +54,7 @@
 #include "content/renderer/gamepad_shared_memory_reader.h"
 #include "content/renderer/image_capture/image_capture_frame_grabber.h"
 #include "content/renderer/indexed_db/webidbfactory_impl.h"
-#include "content/renderer/loader/child_url_loader_factory_getter_impl.h"
+#include "content/renderer/loader/child_url_loader_factory_bundle.h"
 #include "content/renderer/loader/cors_url_loader_factory.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/web_data_consumer_handle_impl.h"
@@ -344,7 +344,7 @@ RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactory() {
   }
   return std::make_unique<WebURLLoaderFactoryImpl>(
       RenderThreadImpl::current()->resource_dispatcher()->GetWeakPtr(),
-      CreateDefaultURLLoaderFactoryGetter());
+      CreateDefaultURLLoaderFactoryBundle());
 }
 
 std::unique_ptr<blink::WebDataConsumerHandle>
@@ -353,13 +353,15 @@ RendererBlinkPlatformImpl::CreateDataConsumerHandle(
   return std::make_unique<WebDataConsumerHandleImpl>(std::move(handle));
 }
 
-scoped_refptr<ChildURLLoaderFactoryGetter>
-RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
-  return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-      CreateNetworkURLLoaderFactory(),
+scoped_refptr<ChildURLLoaderFactoryBundle>
+RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryBundle() {
+  // TODO(yzshen): Is it safe to use unretained?
+  return base::MakeRefCounted<ChildURLLoaderFactoryBundle>(
+      base::BindOnce(&RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory,
+                     base::Unretained(this)),
       base::FeatureList::IsEnabled(features::kNetworkService)
           ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
-          : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
+          : ChildURLLoaderFactoryBundle::FactoryGetterCallback());
 }
 
 PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
