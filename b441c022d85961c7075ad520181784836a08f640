@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9fb2417_f9b164e7",
+        "filename": "chrome/browser/ui/cocoa/toolbar/reload_button_unittest_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-24T14:34:21Z",
+      "side": 1,
+      "message": "(looks like there are few files in this cl that got reformatted but don\u0027t contain any other changes. this file here, but some others too. consider moving those files out of this cl)",
+      "revId": "b441c022d85961c7075ad520181784836a08f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e01f469_1f9826bb",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-24T14:34:21Z",
+      "side": 1,
+      "message": "nit: is \"Never Info Bar\" some well-known name? if not: I found it hard to understand what it\u0027s supposed to mean. Following the \"try to not use double negation\" (\"never\" is negative and below we say \"!kNever\") I\u0027d do:\n\n#if mac\n  bool kAllowInfoBars \u003d false;\n#else\n  true\n#end\n\n  if (... \u0026\u0026 kAllowInfoBars)\n\nI still don\u0027t know why we don\u0027t want info bars in macviews, but I\u0027d at least understand what\u0027s happening faster.\n\nAlso, my vague understanding was that your goal is to get rid of BUILDFLAG(MAC_VIEWS_BROWSER) and this adds a new use. …ah, I just read your https://bugs.chromium.org/p/chromium/issues/detail?id\u003d802257#c4 and I misunderstood your goal.",
+      "revId": "b441c022d85961c7075ad520181784836a08f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32917ad9_5733f27b",
+        "filename": "chrome/browser/ui/views_mode_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-24T14:34:21Z",
+      "side": 1,
+      "message": "add comment explaining what this means. it\u0027s obvious when looking at the file in the context of this cl, but less so when looking at this file in cs later on",
+      "revId": "b441c022d85961c7075ad520181784836a08f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
