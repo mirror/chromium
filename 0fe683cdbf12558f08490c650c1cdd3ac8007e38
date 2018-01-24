@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2757b19_15f29ef0",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_component_options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-24T10:24:27Z",
+      "side": 1,
+      "message": "nit: setting",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "0fe683cdbf12558f08490c650c1cdd3ac8007e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
