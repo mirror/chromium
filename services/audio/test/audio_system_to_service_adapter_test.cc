@@ -6,9 +6,9 @@
 #include "media/audio/audio_system_test_util.h"
 #include "media/audio/test_audio_thread.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/audio/common/system_info.h"
 #include "services/audio/in_process_audio_manager_accessor.h"
 #include "services/audio/public/interfaces/constants.mojom.h"
-#include "services/audio/system_info.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/interfaces/connector.mojom.h"
 
