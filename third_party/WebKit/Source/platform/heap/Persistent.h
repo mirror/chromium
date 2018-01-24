@@ -222,15 +222,23 @@ class PersistentBase {
         TraceMethodDelegate<PersistentBase,
                             &PersistentBase::TracePersistent>::Trampoline;
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      ProcessHeap::GetCrossThreadPersistentRegions().AllocatePersistentNode(
-          persistent_node_, this, trace_callback);
+      if (weaknessConfiguration == kWeakPersistentConfiguration) {
+        ProcessHeap::GetCrossThreadPersistentRegions()
+            .AllocateWeakPersistentNode(persistent_node_, this, trace_callback);
+      } else {
+        ProcessHeap::GetCrossThreadPersistentRegions().AllocatePersistentNode(
+            persistent_node_, this, trace_callback);
+      }
       return;
     }
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     DCHECK(state->CheckThread());
-    persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
-        this, trace_callback);
+    PersistentRegion* region =
+        weaknessConfiguration == kWeakPersistentConfiguration
+            ? state->GetWeakPersistentRegion()
+            : state->GetPersistentRegion();
+    persistent_node_ = region->AllocatePersistentNode(this, trace_callback);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
@@ -238,9 +246,15 @@ class PersistentBase {
 
   void Uninitialize() {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_)))
-        ProcessHeap::GetCrossThreadPersistentRegions().FreePersistentNode(
-            persistent_node_);
+      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_))) {
+        if (weaknessConfiguration == kWeakPersistentConfiguration) {
+          ProcessHeap::GetCrossThreadPersistentRegions().FreeWeakPersistentNode(
+              persistent_node_);
+        } else {
+          ProcessHeap::GetCrossThreadPersistentRegions().FreePersistentNode(
+              persistent_node_);
+        }
+      }
       return;
     }
 
@@ -253,7 +267,10 @@ class PersistentBase {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    state->FreePersistentNode(persistent_node_);
+    if (weaknessConfiguration == kWeakPersistentConfiguration)
+      state->GetWeakPersistentRegion()->FreePersistentNode(persistent_node_);
+    else
+      state->FreePersistentNode(persistent_node_);
     persistent_node_ = nullptr;
   }
 

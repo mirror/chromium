@@ -408,7 +408,12 @@ class PLATFORM_EXPORT ThreadState {
   PersistentRegion* GetPersistentRegion() const {
     return persistent_region_.get();
   }
-  // A region of PersistentNodes not owned by any particular thread.
+
+  // A region of PersistentNodes for WeakPersistents allocated on the given
+  // thread.
+  PersistentRegion* GetWeakPersistentRegion() const {
+    return weak_persistent_region_.get();
+  }
 
   // Visit local thread stack and trace all pointers conservatively.
   void VisitStack(Visitor*);
@@ -417,8 +422,10 @@ class PLATFORM_EXPORT ThreadState {
   // real machine stack if there is one.
   void VisitAsanFakeStackForPointer(Visitor*, Address);
 
-  // Visit all persistents allocated on this thread.
+  // Visit strong persistents allocated on this thread.
   void VisitPersistents(Visitor*);
+  // Visit WeakPersistents and CrossThreadWeakPersistents.
+  void VisitAllWeakPersistents(Visitor*);
 
   struct GCSnapshotInfo {
     STACK_ALLOCATED();
@@ -614,6 +621,7 @@ class PLATFORM_EXPORT ThreadState {
   std::unique_ptr<ThreadHeap> heap_;
   ThreadIdentifier thread_;
   std::unique_ptr<PersistentRegion> persistent_region_;
+  std::unique_ptr<PersistentRegion> weak_persistent_region_;
   BlinkGC::StackState stack_state_;
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;
