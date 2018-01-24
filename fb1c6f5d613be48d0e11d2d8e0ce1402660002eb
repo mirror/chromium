@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a363fc2b_9f131c21",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2018-01-24T05:18:07Z",
+      "side": 1,
+      "message": "nit: Let\u0027s rename it to paste-into-curent-folder for clarity.",
+      "revId": "fb1c6f5d613be48d0e11d2d8e0ce1402660002eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
