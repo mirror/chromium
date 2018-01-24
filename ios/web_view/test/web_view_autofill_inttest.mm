@@ -19,6 +19,9 @@
 #error "This file requires ARC support."
 #endif
 
+using testing::kWaitForActionTimeout;
+using testing::WaitUntilConditionOrTimeout;
+
 namespace ios_web_view {
 
 namespace {
@@ -98,6 +101,24 @@ TEST_F(WebViewAutofillTest, TestDelegateCallbacks) {
        "document.forms[0].dispatchEvent(event);",
       nil);
   [delegate verify];
+}
+
+// Tests that CWVAutofillController can fetch, fill, and clear suggestions.
+TEST_F(WebViewAutofillTest, TestSuggestionFetchFillClear) {
+  test::EvaluateJavaScript(web_view_, @"document.forms[0][1].click();", nil);
+
+  __block bool suggestions_fetched = false;
+  [[web_view_ autofillController]
+      fetchSuggestionsForFormWithName:kTestFormName
+                            fieldName:kTestFieldName
+                    completionHandler:^(
+                        NSArray<CWVAutofillSuggestion*>* suggestions) {
+                      suggestions_fetched = true;
+                    }];
+  EXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForActionTimeout, ^bool {
+    WaitForBackgroundTasks();
+    return suggestions_fetched;
+  }));
 }
 
 }  // namespace ios_web_view
