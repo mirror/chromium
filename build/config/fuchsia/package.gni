@@ -17,11 +17,12 @@ template("package") {
 
   _runtime_deps_file = "$root_out_dir/gen.runtime/${pkg.package_name}/" +
                        "${pkg.package_name}.runtime_deps"
-  _manifest_file = "$root_out_dir/gen.runtime/${pkg.package_name}/" +
+  _manifest_file = "$root_out_dir/gen/package/${pkg.package_name}/" +
                    "${pkg.package_name}.archive_manifest"
   _write_manifest_target = "${pkg.package_name}__write_manifest"
   _write_archive_target = "${pkg.package_name}__write_archive"
-  _pkg_out_dir = "$root_build_dir/package"
+  _pkg_path =
+      "$root_out_dir/gen/package/${pkg.package_name}/${pkg.package_name}.far"
 
   # Generates a manifest file based on the GN runtime deps
   # suitable for "far" tool consumption.
@@ -64,7 +65,7 @@ template("package") {
                            ])
 
     far_tool_path = "//third_party/fuchsia-sdk/tools/far"
-    archive_path = "$_pkg_out_dir/${pkg.package_name}.far"
+    archive_path = _pkg_path
     script = "//build/gn_run_binary.py"
     depfile = "$target_gen_dir/$target_name.d"
 
