@@ -34,6 +34,24 @@
       "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe14053_50540709",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/server/getPrimaryServices/correct-services.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:09:28Z",
+      "side": 1,
+      "message": "\u003e +4 spaces because it\u0027s a continuation\n\nLook at L18; we don\u0027t go four over there.\n\nIn general, I don\u0027t indent for newlines that just show the structure of a data structure (or an inline function).  I\u0027m not sure if there\u0027s a specific mention of these kinds of things in the style guide, but look at the trailing commas section for example...they only indent 2 because even though it\u0027s a line continuation, it shows the structure of the data structure.\n\nbluetooth_test(() \u003d\u003e getConnectedHealthThermometerDevice({\n  filters: ...\n})\n    .then(...)",
+      "parentUuid": "0afa039a_3ce24bf3",
+      "revId": "4e083109845261ef5e7a9c9629526e0816f64210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
