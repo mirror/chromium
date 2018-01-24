@@ -17,6 +17,11 @@ namespace ui {
 
 namespace {
 
+const double k3232FixedPointScaleValue = 4294967296.0;
+
+const uint64_t kIdentityColorTransform[3][3] = {{1ull << 32, 0, 0},
+                                                {0, 1ull << 32, 0},
+                                                {0, 0, 1ull << 32}};
 void AtomicPageFlipCallback(std::vector<base::WeakPtr<CrtcController>> crtcs,
                             unsigned int frame,
                             base::TimeTicks timestamp) {
@@ -46,7 +51,8 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
           static_cast<HardwareDisplayPlaneAtomic*>(plane);
       atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), 0, 0, gfx::Rect(), gfx::Rect(),
-          gfx::OVERLAY_TRANSFORM_NONE, base::kInvalidPlatformFile);
+          gfx::OVERLAY_TRANSFORM_NONE, kIdentityColorTransform,
+          base::kInvalidPlatformFile);
     }
   }
 
@@ -103,7 +109,8 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
         static_cast<HardwareDisplayPlaneAtomic*>(plane);
     atomic_plane->SetPlaneData(
         plane_list->atomic_property_set.get(), 0, 0, gfx::Rect(), gfx::Rect(),
-        gfx::OVERLAY_TRANSFORM_NONE, base::kInvalidPlatformFile);
+        gfx::OVERLAY_TRANSFORM_NONE, kIdentityColorTransform,
+        base::kInvalidPlatformFile);
   }
   // The list of crtcs is only useful if flags contains DRM_MODE_PAGE_FLIP_EVENT
   // to get the pageflip callback. In this case we don't need to be notified
@@ -145,14 +152,29 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
   uint32_t framebuffer_id = overlay.z_order
                                 ? overlay.buffer->GetFramebufferId()
                                 : overlay.buffer->GetOpaqueFramebufferId();
-  if (!atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(),
-                                  crtc_id, framebuffer_id,
-                                  overlay.display_bounds, src_rect,
-                                  overlay.plane_transform, overlay.fence_fd)) {
+
+  uint64_t fixed_point_color_transform[3][3];
+  {
+    auto to_fixed_point = [](double v) -> uint64_t {
+      return (int64_t)(v * k3232FixedPointScaleValue);
+    };
+    for (int x = 0; x < 3; x++) {
+      for (int y = 0; y < 3; y++) {
+        fixed_point_color_transform[x][y] =
+            to_fixed_point(overlay.color_transform[x][y]);
+      }
+    }
+  }
+
+  atomic_plane->set_crtc(crtc);
+  if (!atomic_plane->SetPlaneData(
+          plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
+          overlay.display_bounds, src_rect, overlay.plane_transform,
+          fixed_point_color_transform, overlay.fence_fd)) {
     LOG(ERROR) << "Failed to set plane properties";
     return false;
   }
-  atomic_plane->set_crtc(crtc);
+
   return true;
 }
 
