@@ -13,7 +13,9 @@ typedef NSString GuideName;
 // The list of well-known UILayoutGuides.  When adding a new guide to the app,
 // create a constant for it below.
 
-// A guide that is constrained to match the frame of the omnibox.
+// All constraints on the layout guide is destroyed when the layout guide is
+// moved (upon size class changes for example). A guide that is constrained to
+// match the frame of the omnibox.
 extern GuideName* const kOmniboxGuide;
 // A guide that is constrained to match the frame of the back button's image.
 extern GuideName* const kBackButtonGuide;
