@@ -207,6 +207,8 @@ class SigninManager : public SigninManagerBase,
 
   // Send all observers |GoogleSigninSucceeded| notifications.
   void FireGoogleSigninSucceeded();
+  void FireGoogleSignedOut(const std::string& account_id,
+                           const AccountInfo& account_info);
 
   // Waits for the AccountTrackerService, then sends GoogleSigninSucceeded to
   // the client and clears the local password.
