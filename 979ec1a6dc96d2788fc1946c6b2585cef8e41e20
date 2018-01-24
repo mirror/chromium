@@ -16,6 +16,24 @@
       "revId": "979ec1a6dc96d2788fc1946c6b2585cef8e41e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3b38ce_4f2c24d9",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-01-24T07:46:22Z",
+      "side": 1,
+      "message": "Discussed offline that it is not possible to add a test that will fail on non-ASAN build because it will still return correct results even though it\u0027s accessing out-of-bound pointer. Also discussed adding a DCHECK (but it will be redundant after the fix). So, I just added explanation on the description.",
+      "parentUuid": "57291b17_b5474528",
+      "revId": "979ec1a6dc96d2788fc1946c6b2585cef8e41e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
