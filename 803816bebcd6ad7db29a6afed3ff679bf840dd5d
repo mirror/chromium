@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd635666_a4e442c4",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T21:52:36Z",
+      "side": 1,
+      "message": "of course this kind of shows that the whole blob_data_ is not very useful, so I have a follow-up CL (https://chromium-review.googlesource.com/c/chromium/src/+/884374) to remove blob_data_.",
+      "revId": "803816bebcd6ad7db29a6afed3ff679bf840dd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
