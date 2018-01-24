@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ff89ee6_f282c442",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsTestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-24T17:05:16Z",
+      "side": 1,
+      "message": "../SRC_ROOT1/chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsTestUtils.java:74 Call requires API level 19 (current min is 16): new java.lang.AssertionError: NewApi [warning]                                                                                       \n            throw new AssertionError(\"Unexpected exception.\", e);                                                                                                                \n                  ~~~~~~~~~~~~~~~~~~                                                                                                                                             \n\nAre you certain that this code will only run on API 19+? If so there should be a TargetApi annotation.",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "70bcf1b946ece006b4dc6a71fbddeaca14ae4ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
