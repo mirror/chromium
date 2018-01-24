@@ -169,18 +169,42 @@ class CrossThreadPersistentRegions final {
 
  public:
   CrossThreadPersistentRegions()
-      : persistent_region_(WTF::WrapUnique(new PersistentRegion)) {}
+      : persistent_region_(WTF::WrapUnique(new PersistentRegion)),
+        weak_persistent_region_(WTF::WrapUnique(new PersistentRegion)) {}
 
   void AllocatePersistentNode(PersistentNode*& persistent_node,
                               void* self,
                               TraceCallback trace) {
-    MutexLocker lock(mutex_);
-    PersistentNode* node =
-        persistent_region_->AllocatePersistentNode(self, trace);
-    ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), node);
+    AllocatePersistentNodeInternal(persistent_region_.get(), persistent_node,
+                                   self, trace);
   }
 
   void FreePersistentNode(PersistentNode*& persistent_node) {
+    FreePersistentNodeInternal(persistent_region_.get(), persistent_node);
+  }
+
+  void AllocateWeakPersistentNode(PersistentNode*& persistent_node,
+                                  void* self,
+                                  TraceCallback trace) {
+    AllocatePersistentNodeInternal(weak_persistent_region_.get(),
+                                   persistent_node, self, trace);
+  }
+
+  void FreeWeakPersistentNode(PersistentNode*& persistent_node) {
+    FreePersistentNodeInternal(weak_persistent_region_.get(), persistent_node);
+  }
+
+  void AllocatePersistentNodeInternal(PersistentRegion* region,
+                                      PersistentNode*& persistent_node,
+                                      void* self,
+                                      TraceCallback trace) {
+    MutexLocker lock(mutex_);
+    PersistentNode* node = region->AllocatePersistentNode(self, trace);
+    ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), node);
+  }
+
+  void FreePersistentNodeInternal(PersistentRegion* region,
+                                  PersistentNode*& persistent_node) {
     MutexLocker lock(mutex_);
     // When the thread that holds the heap object that the cross-thread
     // persistent shuts down, prepareForThreadStateTermination() will clear out
@@ -194,7 +218,7 @@ class CrossThreadPersistentRegions final {
     // check for this.
     if (!persistent_node)
       return;
-    persistent_region_->FreePersistentNode(persistent_node);
+    region->FreePersistentNode(persistent_node);
     ReleaseStore(reinterpret_cast<void* volatile*>(&persistent_node), nullptr);
   }
 
@@ -234,6 +258,15 @@ class CrossThreadPersistentRegions final {
         visitor, CrossThreadPersistentRegions::ShouldTracePersistentNode);
   }
 
+  void TraceWeakPersistentNodes(Visitor* visitor, double deadline_seconds) {
+// If this assert triggers, you're tracing without being in a LockScope.
+#if DCHECK_IS_ON()
+    DCHECK(mutex_.Locked());
+#endif
+    weak_persistent_region_->TracePersistentNodes(
+        visitor, CrossThreadPersistentRegions::ShouldTracePersistentNode);
+  }
+
   void PrepareForThreadStateTermination(ThreadState*);
 
   NO_SANITIZE_ADDRESS
@@ -256,6 +289,7 @@ class CrossThreadPersistentRegions final {
   // because we don't want to virtualize performance-sensitive methods
   // such as PersistentRegion::allocate/freePersistentNode.
   std::unique_ptr<PersistentRegion> persistent_region_;
+  std::unique_ptr<PersistentRegion> weak_persistent_region_;
 
   // Recursive as prepareForThreadStateTermination() clears a PersistentNode's
   // associated Persistent<> -- it in turn freeing the PersistentNode. And both

@@ -132,6 +132,7 @@ const char* StackStateString(BlinkGC::StackState state) {
 ThreadState::ThreadState()
     : thread_(CurrentThread()),
       persistent_region_(std::make_unique<PersistentRegion>()),
+      weak_persistent_region_(std::make_unique<PersistentRegion>()),
       start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       safe_point_scope_marker_(nullptr),
@@ -303,6 +304,12 @@ void ThreadState::VisitPersistents(Visitor* visitor) {
     TRACE_EVENT0("blink_gc", "V8GCController::traceDOMWrappers");
     trace_dom_wrappers_(isolate_, visitor);
   }
+}
+
+void ThreadState::VisitAllWeakPersistents(Visitor* visitor) {
+  ProcessHeap::GetCrossThreadPersistentRegions().TraceWeakPersistentNodes(
+      current_gc_data_.visitor.get(), std::numeric_limits<double>::infinity());
+  weak_persistent_region_->TracePersistentNodes(visitor);
 }
 
 ThreadState::GCSnapshotInfo::GCSnapshotInfo(size_t num_object_types)
@@ -1383,6 +1390,7 @@ bool ThreadState::MarkPhaseAdvanceMarking(double deadline_seconds) {
 }
 
 void ThreadState::MarkPhaseEpilogue() {
+  VisitAllWeakPersistents(current_gc_data_.visitor.get());
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
