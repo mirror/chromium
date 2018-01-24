@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7deb10d_140a111c",
+        "filename": "base/time/time.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "s/default/previous/ here and elsewhere (technically these could stack -- or DCHECK that they don\u0027t stack?)",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 11
+      },
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fae973_1f801c04",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "s/Blink\u0027s/an embedder\u0027s/",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a966a2_554f610f",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "Add \"Nested overrides are not allowed.\"",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70128733_1ca42ad5",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "Put all of this in base::subtle:: with a comment that doesn\u0027t mention specific use cases (this is //base, no knowledge of Blink here).\n\n// Time overrides should be used with extreme caution. Discuss with //base/time OWNERS before adding a new one.\nnamespace subtle {",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1748c0_a6ec0d59",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "That\u0027s a lot of non-platform specific code duplicated in platform-specific files. I understand that we want fast access and hence that having global state in time_override.cc isn\u0027t desired. How about putting the global variables in namespace internal{} in time_override.h and setting them from time_override.cc? (moving all of the generic code there and invoking the platform specific Now\u0027s() from there)",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2456288_52ea23c1",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-24T13:16:18Z",
+      "side": 1,
+      "message": "DCHECK that the original is the default (ban nesting -- and simplifies destruction logic, no need to keep state around).\n\n(or if we do need nesting be explicit about it and s/default/previous/ as mentioned above)",
+      "revId": "36854485184992a68600dd27949bea269b0faae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
