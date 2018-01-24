@@ -51,8 +51,7 @@ enum PrintingMode {
 // |buffer_size| is the size of |pdf_buffer| in bytes.
 // |page_number| is the 0-based index of the page to be rendered.
 // |dc| is the device context to render into.
-// |dpi| and |dpi_y| is the resolution. If the value is -1, the dpi from the DC
-//     will be used.
+// |dpi_x| and |dpi_y| is the resolution.
 // |bounds_origin_x|, |bounds_origin_y|, |bounds_width| and |bounds_height|
 //     specify a bounds rectangle within the DC in which to render the PDF
 //     page.
@@ -77,7 +76,8 @@ PDF_EXPORT bool RenderPDFPageToDC(const void* pdf_buffer,
                                   int buffer_size,
                                   int page_number,
                                   HDC dc,
-                                  int dpi,
+                                  int dpi_x,
+                                  int dpi_y,
                                   int bounds_origin_x,
                                   int bounds_origin_y,
                                   int bounds_width,
@@ -126,7 +126,7 @@ PDF_EXPORT bool GetPDFPageSizeByIndex(const void* pdf_buffer,
 // |bitmap_buffer| is the output buffer for bitmap.
 // |bitmap_width| is the width of the output bitmap.
 // |bitmap_height| is the height of the output bitmap.
-// |dpi| is the resolutions.
+// |dpi_x| and |dpi_y| is the resolution.
 // |autorotate| specifies whether the final image should be rotated to match
 //     the output bound.
 // Returns false if the document or the page number are not valid.
@@ -136,9 +136,9 @@ PDF_EXPORT bool RenderPDFPageToBitmap(const void* pdf_buffer,
                                       void* bitmap_buffer,
                                       int bitmap_width,
                                       int bitmap_height,
-                                      int dpi,
+                                      int dpi_x,
+                                      int dpi_y,
                                       bool autorotate);
-
 }  // namespace chrome_pdf
 
 #endif  // PDF_PDF_H_
