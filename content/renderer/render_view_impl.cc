@@ -15,6 +15,7 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/debug/alias.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
@@ -524,6 +525,9 @@ RenderViewImpl::RenderViewImpl(
       enumeration_completion_id_(0),
       session_storage_namespace_id_(params.session_storage_namespace_id),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "RenderViewImpl with session id "
+             << params.session_storage_namespace_id;
+  base::debug::StackTrace().Print();
   GetWidget()->set_owner_delegate(this);
 }
 

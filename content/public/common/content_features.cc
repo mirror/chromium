@@ -190,7 +190,7 @@ const base::Feature kMojoInputMessages{"MojoInputMessages",
 
 // Mojo-based Session Storage.
 const base::Feature kMojoSessionStorage{"MojoSessionStorage",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
 // ES6 Modules dynamic imports.
 const base::Feature kModuleScriptsDynamicImport{
