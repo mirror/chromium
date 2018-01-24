@@ -111,7 +111,6 @@
 #include "public/web/WebPrintParams.h"
 #include "public/web/WebScriptSource.h"
 #include "public/web/WebSettings.h"
-#include "public/web/WebTappedInfo.h"
 #include "public/web/WebTreeScopeType.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWidget.h"
@@ -4232,82 +4231,6 @@ TEST_P(WebViewTest, PreferredSizeWithGridMinWidthFlexibleTracks) {
   EXPECT_EQ(200, size.width);
 }
 
-class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
- public:
-  void ShowUnhandledTapUIIfNeeded(const WebTappedInfo& tapped_info) override {
-    was_called_ = true;
-    tapped_position_ = tapped_info.Position();
-    tapped_node_ = tapped_info.GetNode();
-    page_changed_ = tapped_info.PageChanged();
-  }
-  bool GetWasCalled() const { return was_called_; }
-  int GetTappedXPos() const { return tapped_position_.X(); }
-  int GetTappedYPos() const { return tapped_position_.Y(); }
-  bool IsTappedNodeNull() const { return tapped_node_.IsNull(); }
-  const WebNode& GetWebNode() const { return tapped_node_; }
-  bool GetPageChanged() const { return page_changed_; }
-  void Reset() {
-    was_called_ = false;
-    tapped_position_ = IntPoint();
-    tapped_node_ = WebNode();
-    page_changed_ = false;
-  }
-
- private:
-  bool was_called_ = false;
-  IntPoint tapped_position_;
-  WebNode tapped_node_;
-  bool page_changed_ = false;
-};
-
-TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
-  std::string test_file = "show_unhandled_tap.html";
-  RegisterMockedHttpURLLoad("Ahem.ttf");
-  RegisterMockedHttpURLLoad(test_file);
-  UnhandledTapWebViewClient client;
-  WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + test_file, nullptr, &client);
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-
-  // Scroll the bottom into view so we can distinguish window coordinates from
-  // document coordinates.
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("bottom")));
-  EXPECT_TRUE(client.GetWasCalled());
-  EXPECT_EQ(64, client.GetTappedXPos());
-  EXPECT_EQ(278, client.GetTappedYPos());
-  EXPECT_FALSE(client.IsTappedNodeNull());
-  EXPECT_TRUE(client.GetWebNode().IsTextNode());
-
-  // Test basic tap handling and notification.
-  client.Reset();
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("target")));
-  EXPECT_TRUE(client.GetWasCalled());
-  EXPECT_EQ(144, client.GetTappedXPos());
-  EXPECT_EQ(82, client.GetTappedYPos());
-  EXPECT_FALSE(client.IsTappedNodeNull());
-  EXPECT_TRUE(client.GetWebNode().IsTextNode());
-  // Make sure the returned text node has the parent element that was our
-  // target.
-  EXPECT_EQ(web_view->MainFrameImpl()->GetDocument().GetElementById("target"),
-            client.GetWebNode().ParentNode());
-
-  // Test correct conversion of coordinates to viewport space under pinch-zoom.
-  web_view->SetPageScaleFactor(2);
-  web_view->SetVisualViewportOffset(WebFloatPoint(50, 20));
-  client.Reset();
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("target")));
-  EXPECT_TRUE(client.GetWasCalled());
-  EXPECT_EQ(188, client.GetTappedXPos());
-  EXPECT_EQ(124, client.GetTappedYPos());
-
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
-}
-
 #define TEST_EACH_MOUSEEVENT(handler, EXPECT)                                 \
   frame->ExecuteScript(WebScriptSource("setTest('mousedown-" handler "');")); \
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,                      \
@@ -4328,90 +4251,6 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,                      \
                              WebString::FromUTF8("target")));                 \
   EXPECT_##EXPECT(client.GetPageChanged());
-
-TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithMutateDom) {
-  std::string test_file = "show_unhandled_tap.html";
-  RegisterMockedHttpURLLoad("Ahem.ttf");
-  RegisterMockedHttpURLLoad(test_file);
-  UnhandledTapWebViewClient client;
-  WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + test_file, nullptr, &client);
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-  WebLocalFrameImpl* frame = web_view->MainFrameImpl();
-
-  // Test dom mutation.
-  TEST_EACH_MOUSEEVENT("mutateDom", TRUE);
-
-  // Test without any DOM mutation.
-  client.Reset();
-  frame->ExecuteScript(WebScriptSource("setTest('none');"));
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("target")));
-  EXPECT_FALSE(client.GetPageChanged());
-
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
-}
-
-TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithMutateStyle) {
-  std::string test_file = "show_unhandled_tap.html";
-  RegisterMockedHttpURLLoad("Ahem.ttf");
-  RegisterMockedHttpURLLoad(test_file);
-  UnhandledTapWebViewClient client;
-  WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + test_file, nullptr, &client);
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-  WebLocalFrameImpl* frame = web_view->MainFrameImpl();
-
-  // Test style mutation.
-  TEST_EACH_MOUSEEVENT("mutateStyle", TRUE);
-
-  // Test checkbox:indeterminate style mutation.
-  TEST_EACH_MOUSEEVENT("mutateIndeterminate", TRUE);
-
-  // Test click div with :active style but it is not covered for now.
-  client.Reset();
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("style_active")));
-  EXPECT_FALSE(client.GetPageChanged());
-
-  // Test without any style mutation.
-  client.Reset();
-  frame->ExecuteScript(WebScriptSource("setTest('none');"));
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("target")));
-  EXPECT_FALSE(client.GetPageChanged());
-
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
-}
-
-TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithPreventDefault) {
-  std::string test_file = "show_unhandled_tap.html";
-  RegisterMockedHttpURLLoad("Ahem.ttf");
-  RegisterMockedHttpURLLoad(test_file);
-  UnhandledTapWebViewClient client;
-  WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
-      base_url_ + test_file, nullptr, &client);
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-  WebLocalFrameImpl* frame = web_view->MainFrameImpl();
-
-  // Testswallowing.
-  TEST_EACH_MOUSEEVENT("preventDefault", FALSE);
-
-  // Test without any preventDefault.
-  client.Reset();
-  frame->ExecuteScript(WebScriptSource("setTest('none');"));
-  EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
-                             WebString::FromUTF8("target")));
-  EXPECT_TRUE(client.GetWasCalled());
-
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
-}
 
 TEST_P(WebViewTest, StopLoadingIfJavaScriptURLReturnsNoStringResult) {
   ViewCreatingWebViewClient client;
