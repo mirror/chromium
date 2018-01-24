@@ -27584,15 +27584,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="GPU.BlacklistFeatureTestResultsWin"
-    enum="GPUBlacklistFeatureTestResultsWin">
-  <owner>vmiura@chromium.org</owner>
-  <summary>
-    Counts number of browser invocations for which a GPU feature is blacklisted
-    in various Windows sub-versions.
-  </summary>
-</histogram>
-
 <histogram name="GPU.BlacklistFeatureTestResultsWindows"
     enum="GPUBlacklistFeatureTestResultsWindows">
   <owner>vmiura@chromium.org</owner>
@@ -104444,11 +104435,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="GPUBlacklistPerFeature" separator=".">
   <owner>vmiura@chromium.org</owner>
   <suffix name="Accelerated2dCanvas" label="Accelerated2dCanvas"/>
-  <suffix name="AcceleratedCompositing" label="AcceleratedCompositing"/>
+  <suffix name="GpuCompositing" label="GpuCompositing"/>
+  <suffix name="GpuRasterization" label="GpuRasterization"/>
   <suffix name="Webgl" label="Webgl"/>
-  <suffix name="TextureSharing" label="TextureSharing"/>
+  <suffix name="Webgl2" label="Webgl2"/>
   <affected-histogram name="GPU.BlacklistFeatureTestResults"/>
-  <affected-histogram name="GPU.BlacklistFeatureTestResultsWin"/>
   <affected-histogram name="GPU.BlacklistFeatureTestResultsWindows"/>
 </histogram_suffixes>
 
