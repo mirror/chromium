@@ -119,6 +119,8 @@ viz_component("common") {
     "resources/single_release_callback.h",
     "resources/transferable_resource.cc",
     "resources/transferable_resource.h",
+    "surfaces/child_local_surface_id_allocator.cc",
+    "surfaces/child_local_surface_id_allocator.h",
     "surfaces/frame_sink_id.cc",
     "surfaces/frame_sink_id.h",
     "surfaces/frame_sink_id_allocator.h",
