@@ -1055,6 +1055,29 @@ bool CSSSelector::NeedsUpdatedDistribution() const {
       *this);
 }
 
+bool CSSSelector::HasPseudoMatches() const {
+  return ForAnyInTagHistory(
+      [](const CSSSelector& selector) -> bool {
+        return selector.GetPseudoType() == CSSSelector::kPseudoMatches;
+      },
+      *this);
+}
+
+unsigned CSSSelector::NumberOfPseudoMatches() const {
+  unsigned count = 0;
+  for (const CSSSelector* simple = this; simple;
+       simple = simple->TagHistory()) {
+    if (simple->GetPseudoType() == CSSSelector::kPseudoMatches) {
+      ++count;
+      for (const CSSSelector* arg = simple->SelectorList()->First(); arg;
+           arg = simple->SelectorList()->Next(*arg)) {
+        count += arg->NumberOfPseudoMatches();
+      }
+    }
+  }
+  return count;
+}
+
 CSSSelector::RareData::RareData(const AtomicString& value)
     : matching_value_(value),
       serializing_value_(value),

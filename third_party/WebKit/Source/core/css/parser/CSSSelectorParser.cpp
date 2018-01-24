@@ -30,6 +30,11 @@ CSSSelectorList CSSSelectorParser::ParseSelector(
     return CSSSelectorList();
 
   parser.RecordUsageAndDeprecations(result);
+
+  if (RuntimeEnabledFeatures::CSSMatchesEnabled()) {
+    if (result.HasPseudoMatches())
+      return result.TransformedList();
+  }
   return result;
 }
 
@@ -43,6 +48,11 @@ CSSSelectorList CSSSelectorParser::ConsumeSelector(
   stream.ConsumeWhitespace();
   CSSSelectorList result = parser.ConsumeComplexSelectorList(stream, observer);
   parser.RecordUsageAndDeprecations(result);
+
+  if (RuntimeEnabledFeatures::CSSMatchesEnabled()) {
+    if (result.HasPseudoMatches())
+      return result.TransformedList();
+  }
   return result;
 }
 
@@ -528,9 +538,19 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumePseudo(
     return nullptr;
 
   switch (selector->GetPseudoType()) {
-    case CSSSelector::kPseudoMatches:
+    case CSSSelector::kPseudoMatches: {
       if (!RuntimeEnabledFeatures::CSSMatchesEnabled())
         break;
+      DisallowPseudoElementsScope scope(this);
+
+      std::unique_ptr<CSSSelectorList> selector_list =
+          std::make_unique<CSSSelectorList>();
+      *selector_list = ConsumeComplexSelectorList(block);
+      if (!selector_list->IsValid() || !block.AtEnd())
+        return nullptr;
+      selector->SetSelectorList(std::move(selector_list));
+      return selector;
+    }
     case CSSSelector::kPseudoHost:
     case CSSSelector::kPseudoHostContext:
     case CSSSelector::kPseudoAny:
