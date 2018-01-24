@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1e74da43_a327075f",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T16:50:22Z",
+      "side": 1,
+      "message": "The actual string sentinel value. Just so it\u0027s shorter and thus uses less disk space.",
+      "parentUuid": "551e5207_0e4d0e9b",
+      "range": {
+        "startLine": 46,
+        "startChar": 62,
+        "endLine": 46,
+        "endChar": 65
+      },
+      "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df070f24_d2889d63",
         "filename": "components/variations/variations_seed_store.cc",
         "patchSetId": 1
