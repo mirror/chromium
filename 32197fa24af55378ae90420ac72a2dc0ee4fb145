@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0793cd9e_3682c597",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T17:53:05Z",
+      "side": 1,
+      "message": "Thanks Tim!\n\nPeter, it looks like you\u0027re sending the callback data to mCustomTabObserver, and not over mConnection as is done for other callbacks. Does that mean that this will expose FMP only internally within Chrome, or will it also send FMP out to CCT embedders, as we do with e.g. onFirstContentfulPaint?\n\nIf the proposed implementation keeps the FMP callback internal to Chrome, let\u0027s add a comment here in the onFirstMeaningfulPaint implementation noting that FMP should not be sent to embedders via e.g. mConnection.notifySinglePageLoadMetric, since we don\u0027t anticipate that we will support FMP in the long term, and since there are concerns with FMP producing accurate numbers for being comparable across different web pages for purposes of assessing page load speed (Tim please correct me if this is not the case), so future readers / modifiers of this code don\u0027t add a call to mConnection.notifySinglePageLoadMetric for FMP and accidentally expose to CCT embedders when we do not want to do that.\n\nThanks!",
+      "parentUuid": "04bd30d0_ee60f3e2",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26f31df8_30ee0d63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 6
