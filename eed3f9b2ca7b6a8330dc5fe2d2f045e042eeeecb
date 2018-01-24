@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e93ae5_f62e2114",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T19:41:36Z",
+      "side": 1,
+      "message": "this should use std::make_unique(...)",
+      "revId": "eed3f9b2ca7b6a8330dc5fe2d2f045e042eeeecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07e5067_3a8d5a23",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T19:41:36Z",
+      "side": 1,
+      "message": "/s/until it removes/until it is removed/",
+      "revId": "eed3f9b2ca7b6a8330dc5fe2d2f045e042eeeecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fccaaac_da29c8e1",
+        "filename": "ui/base/ui_base_features.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T19:41:36Z",
+      "side": 1,
+      "message": "Perhaps instead of \"full Precision Touchpad support\" say \"processing Precision Touchpad events\"?",
+      "revId": "eed3f9b2ca7b6a8330dc5fe2d2f045e042eeeecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efae85e_df10cea8",
+        "filename": "ui/base/win/direct_manipulation.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T19:41:36Z",
+      "side": 1,
+      "message": "I\u0027d still feel better if we dealt with 0 values here instead of just dchecking. I have no idea what the Windows API is going to provide us.",
+      "revId": "eed3f9b2ca7b6a8330dc5fe2d2f045e042eeeecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb63fef_c84e50db",
+        "filename": "ui/events/event.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-24T19:41:36Z",
+      "side": 1,
+      "message": "I\u0027d expect this isn\u0027t actually a bool, but an EF_FLAGS constant.. (see https://cs.chromium.org/chromium/src/ui/events/event_constants.h?q\u003devent_consta\u0026sq\u003dpackage:chromium\u0026l\u003d139)",
+      "revId": "eed3f9b2ca7b6a8330dc5fe2d2f045e042eeeecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
