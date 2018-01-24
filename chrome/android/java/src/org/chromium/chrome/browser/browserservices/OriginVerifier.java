@@ -21,6 +21,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -168,6 +169,13 @@ public class OriginVerifier {
         ThreadUtils.assertOnUiThread();
         mOrigin = origin;
         String scheme = mOrigin.getScheme();
+
+        if (ChromeFeatureList.isEnabled(
+                ChromeFeatureList.DISABLE_DAL_VERIFICATION_FOR_DEVELOPMENT)) {
+            ThreadUtils.runOnUiThread(new VerifiedCallback(true));
+            return;
+        }
+
         if (TextUtils.isEmpty(scheme)
                 || !UrlConstants.HTTPS_SCHEME.equals(scheme.toLowerCase(Locale.US))) {
             ThreadUtils.runOnUiThread(new VerifiedCallback(false));

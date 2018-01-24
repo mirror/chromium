@@ -90,6 +90,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kContextualSuggestionsCarousel,
     &kCustomContextMenu,
     &kCustomFeedbackUi,
+    &kDisableDigitalAssetLinkVerificationForDevelopment,
     &kDontPrefetchLibraries,
     &kDownloadHomeShowStorageInfo,
     &data_reduction_proxy::features::kDataReductionMainMenu,
@@ -264,6 +265,10 @@ const base::Feature kCustomContextMenu{"CustomContextMenu",
 
 const base::Feature kCustomFeedbackUi{"CustomFeedbackUi",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kDisableDigitalAssetLinkVerificationForDevelopment{
+    "DisableDigitalAssetLinkVerificationForDevelopment",
+    base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kDontPrefetchLibraries{"DontPrefetchLibraries",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
