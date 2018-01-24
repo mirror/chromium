@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e933c4_85664089",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-24T16:12:37Z",
+      "side": 0,
+      "message": "Why do we need this change when we check CanUseNewLayout() below?\n\nIt\u0027s possible that someone may call this function before layout and get nullptr. If this is needed, can we DCHECK if the object is not dirty for layout and for collect inlines?",
+      "revId": "a9c0ad90bb57ded7ddc3ce5091b2d7aaf0e61b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
