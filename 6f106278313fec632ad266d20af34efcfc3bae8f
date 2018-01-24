@@ -22,6 +22,30 @@
       "revId": "6f106278313fec632ad266d20af34efcfc3bae8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f520fc80_972cd51c",
+        "filename": "services/ui/ws/threaded_image_cursors.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2018-01-24T20:27:08Z",
+      "side": 1,
+      "message": "Likely. However, this isn\u0027t related to why the bots are failing, and my first attempt to fix this introduced the crash which had me revert the first fix.",
+      "parentUuid": "afe36c1a_6a3f114c",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "6f106278313fec632ad266d20af34efcfc3bae8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
