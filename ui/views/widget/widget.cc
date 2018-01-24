@@ -1095,7 +1095,7 @@ void Widget::OnNativeWidgetDestroyed() {
   native_widget_destroyed_ = true;
 }
 
-gfx::Size Widget::GetMinimumSize() const {
+gfx::Size Widsget::GetMinimumSize() const {
   return non_client_view_ ? non_client_view_->GetMinimumSize() : gfx::Size();
 }
 

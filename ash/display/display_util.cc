@@ -140,6 +140,22 @@ void MoveCursorTo(AshWindowTreeHost* ash_host,
 
   point_in_host.Offset(-native_origin.x(), -native_origin.y());
   host->MoveCursorToLocationInPixels(point_in_host);
+  /*
+  if (!Shell::Get()->display_manager()->IsInUnifiedMode()) {
+    aura::client::CursorClient* cursor_client =
+        aura::client::GetCursorClient(host->window());
+    LOG(ERROR) << "CursorClient:" << cursor_client
+               << ", display="
+               << display::Screen::GetScreen()->GetDisplayNearestWindow(
+                   host->window()).ToString();
+    if (cursor_client) {
+      cursor_client->SetDisplay(
+          display::Screen::GetScreen()->GetDisplayNearestWindow(
+              host->window()));
+    }
+  }
+  */
+  LOG(ERROR) << "Move cursor ToX:";
 
   if (update_last_location_now) {
     gfx::Point new_point_in_screen = point_in_native;

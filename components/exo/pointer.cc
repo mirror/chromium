@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/pointer_gesture_pinch_delegate.h"
+#include "components/exo/shell_surface_base.h"
 #include "components/exo/surface.h"
 #include "components/exo/wm_helper.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -86,6 +87,7 @@ Pointer::Pointer(PointerDelegate* delegate)
       cursor_capture_weak_ptr_factory_(this) {
   auto* helper = WMHelper::GetInstance();
   helper->AddPreTargetHandler(this);
+  LOG(ERROR) << "AddCursorObserver:" << this;
   helper->AddCursorObserver(this);
   helper->AddDisplayConfigurationObserver(this);
 }
@@ -100,6 +102,7 @@ Pointer::~Pointer() {
     pinch_delegate_->OnPointerDestroying(this);
   auto* helper = WMHelper::GetInstance();
   helper->RemoveDisplayConfigurationObserver(this);
+  LOG(ERROR) << "RemoveCursorObserver:" << this;
   helper->RemoveCursorObserver(this);
   helper->RemovePreTargetHandler(this);
   if (root_surface())
@@ -170,6 +173,7 @@ void Pointer::OnSurfaceCommit() {
 
 void Pointer::OnSurfaceDestroying(Surface* surface) {
   if (surface == focus_surface_) {
+    LOG(ERROR) << "CursorDestroying:";
     SetFocus(nullptr, gfx::PointF(), 0);
     return;
   }
@@ -185,10 +189,18 @@ void Pointer::OnSurfaceDestroying(Surface* surface) {
 
 void Pointer::OnMouseEvent(ui::MouseEvent* event) {
   Surface* target = GetEffectiveTargetForEvent(event);
+  if (target == nullptr) {
+    aura::Window* w = static_cast<aura::Window*>(event->target());
+    if (w != nullptr) {
+      target = ShellSurfaceBase::GetMainSurface(w);
+    }
+  }
 
   // Update focus if target is different than the current pointer focus.
-  if (target != focus_surface_)
+  if (target != focus_surface_) {
+    LOG(ERROR) << "Update Focus To:" << target;
     SetFocus(target, event->location_f(), event->button_flags());
+  }
 
   if (!focus_surface_)
     return;
@@ -315,6 +327,8 @@ void Pointer::OnCursorSizeChanged(ui::CursorSize cursor_size) {
 }
 
 void Pointer::OnCursorDisplayChanged(const display::Display& display) {
+  LOG(ERROR) << "OnCusrorDisplayChanged:" << focus_surface_;
+
   if (!focus_surface_)
     return;
 
@@ -347,6 +361,7 @@ Surface* Pointer::GetEffectiveTargetForEvent(ui::Event* event) const {
 void Pointer::SetFocus(Surface* surface,
                        const gfx::PointF& location,
                        int button_flags) {
+  LOG(ERROR) << "SetFocus:" << surface << ", loc=" << location.ToString();
   // First generate a leave event if we currently have a target in focus.
   if (focus_surface_) {
     delegate_->OnPointerLeave(focus_surface_);
@@ -406,6 +421,7 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
   float scale = helper->GetDisplayInfo(display.id()).GetEffectiveUIScale() *
                 capture_scale_ / display.device_scale_factor();
   host_window()->SetTransform(gfx::GetScaleTransform(gfx::Point(), scale));
+  LOG(ERROR) << "CaptureCursor: scale=" << scale;
 
   std::unique_ptr<viz::CopyOutputRequest> request =
       std::make_unique<viz::CopyOutputRequest>(
