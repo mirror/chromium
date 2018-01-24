@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "551e5207_0e4d0e9b",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-24T02:28:24Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not quite sure which part you\u0027re referring to.  Are you suggesting naming the variable kSafeSeedContent, or changing the string value to \"safe_seed_content\", or something else?",
+      "parentUuid": "54c8a9f5_78de17f3",
+      "range": {
+        "startLine": 46,
+        "startChar": 62,
+        "endLine": 46,
+        "endChar": 65
+      },
+      "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df070f24_d2889d63",
         "filename": "components/variations/variations_seed_store.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b37475_952e49bd",
+        "filename": "components/variations/variations_seed_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-24T02:28:24Z",
+      "side": 1,
+      "message": "Ah, good question! I think that case is actually theoretically reachable... Added code to support this case, plus a test.\n\nAnd, added a DCHECK that kIdenticalToSafeSeedSentinel is never stored as the compressed seed value.",
+      "parentUuid": "df070f24_d2889d63",
+      "range": {
+        "startLine": 251,
+        "startChar": 44,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "7f381ddbda69d9b3345c9375124c268d13a0b753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
