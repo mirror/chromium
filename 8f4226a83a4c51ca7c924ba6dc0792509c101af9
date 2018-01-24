@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f19f3f50_75798c79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-24T17:28:21Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncertain about naming the feature DisableXXX, we could just make the feature \"DigitalAssetLinkVerification\" and ask the user to disable it on the command line, but it feels in this case that this is a special disable case.",
+      "range": {
+        "startLine": 209,
+        "startChar": 13,
+        "endLine": 209,
+        "endChar": 62
+      },
+      "revId": "8f4226a83a4c51ca7c924ba6dc0792509c101af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
