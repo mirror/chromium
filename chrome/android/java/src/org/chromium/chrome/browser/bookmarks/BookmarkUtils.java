@@ -180,7 +180,7 @@ public class BookmarkUtils {
                 activity.getBottomSheetContentController().showContentAndOpenSheet(
                         R.id.action_bookmarks);
             }
-        } else if (DeviceFormFactor.isTablet()) {
+        } else if (DeviceFormFactor.isTablet(activity)) {
             openUrl(activity, url, activity.getComponentName());
         } else {
             Intent intent = new Intent(activity, BookmarkActivity.class);
@@ -268,7 +268,7 @@ public class BookmarkUtils {
         RecordHistogram.recordEnumeratedHistogram(
                 "Bookmarks.OpenBookmarkType", bookmarkId.getType(), BookmarkType.LAST + 1);
 
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTablet(activity)) {
             // For tablets, the bookmark manager is open in a tab in the ChromeActivity. Use
             // the ComponentName of the ChromeActivity passed into this method.
             openUrl(activity, url, activity.getComponentName());

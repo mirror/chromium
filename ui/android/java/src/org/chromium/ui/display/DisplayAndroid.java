@@ -19,6 +19,9 @@ import java.util.WeakHashMap;
  * held weakly so to not lead to leaks.
  */
 public class DisplayAndroid {
+    public static final int MINIMUM_TABLET_WIDTH_DP = 600;
+    private static final int MINIMUM_LARGE_TABLET_WIDTH_DP = 720;
+
     /**
      * DisplayAndroidObserver interface for changes to this Display.
      */
@@ -26,14 +29,14 @@ public class DisplayAndroid {
         /**
          * Called whenever the screen orientation changes.
          *
-         * @param orientation One of Surface.ROTATION_* values.
+         * @param rotation One of Surface.ROTATION_* values.
          */
         void onRotationChanged(int rotation);
 
         /**
          * Called whenever the screen density changes.
          *
-         * @param screen density, aka Density Independent Pixel scale.
+         * @param dipScale Density Independent Pixel scale.
          */
         void onDIPScaleChanged(float dipScale);
     }
@@ -96,6 +99,35 @@ public class DisplayAndroid {
      */
     public int getDisplayWidth() {
         return mSize.x;
+    }
+
+    /**
+     * @return The smaller of getDisplayWidth(), getDisplayHeight().
+     */
+    public int getSmallestWidth() {
+        return mSize.x < mSize.y ? mSize.x : mSize.y;
+    }
+
+    /**
+     * @return The minimum width in px at which the display should be treated like a tablet for
+     *         layout.
+     */
+    public int getMinimumTabletWidthPx() {
+        return Math.round(MINIMUM_TABLET_WIDTH_DP * mDipScale);
+    }
+
+    /**
+     * @return Whether the app should currently treat the display as a tablet for layout.
+     */
+    public boolean isTablet() {
+        return getSmallestWidth() >= getMinimumTabletWidthPx();
+    }
+
+    /**
+     * @return Whether the app should currently treat the display as a large tablet for layout.
+     */
+    public boolean isLargeTablet() {
+        return getSmallestWidth() >= Math.round(MINIMUM_LARGE_TABLET_WIDTH_DP * mDipScale);
     }
 
     /**

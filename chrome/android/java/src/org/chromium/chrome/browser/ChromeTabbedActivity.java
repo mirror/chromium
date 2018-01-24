@@ -141,7 +141,6 @@ import org.chromium.content.browser.crypto.CipherFactory;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.common.Referrer;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.PageTransition;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.widget.Toast;
@@ -717,7 +716,7 @@ public class ChromeTabbedActivity
         // left until onScreenshotTaken() since it is less expensive to keep monitoring on and
         // check when the help UI is accessed than it is to start/stop monitoring per tab change
         // (e.g. tab switch or in overview mode).
-        if (DeviceFormFactor.isTablet()) return;
+        if (isTablet()) return;
 
         mScreenshotMonitor.startMonitoring();
     }
@@ -828,7 +827,7 @@ public class ChromeTabbedActivity
             TraceEvent.begin("ChromeTabbedActivity.initializeUI");
 
             CompositorViewHolder compositorViewHolder = getCompositorViewHolder();
-            if (DeviceFormFactor.isTablet()) {
+            if (isTablet()) {
                 mLayoutManager = new LayoutManagerChromeTablet(compositorViewHolder);
             } else {
                 mLayoutManager = new LayoutManagerChromePhone(compositorViewHolder);
@@ -1548,7 +1547,7 @@ public class ChromeTabbedActivity
 
     @Override
     protected int getToolbarLayoutId() {
-        if (DeviceFormFactor.isTablet()) return R.layout.toolbar_tablet;
+        if (isTablet()) return R.layout.toolbar_tablet;
 
         if (FeatureUtilities.isChromeHomeEnabled()) return R.layout.bottom_toolbar_phone;
         return R.layout.toolbar_phone;
@@ -1578,7 +1577,7 @@ public class ChromeTabbedActivity
     @Override
     protected void initializeToolbar() {
         super.initializeToolbar();
-        if (DeviceFormFactor.isTablet()) {
+        if (isTablet()) {
             getToolbarManager().setShouldUpdateToolbarPrimaryColor(false);
         }
     }
@@ -2314,7 +2313,7 @@ public class ChromeTabbedActivity
 
     @Override
     protected void setStatusBarColor(Tab tab, int color) {
-        if (DeviceFormFactor.isTablet()) return;
+        if (isTablet()) return;
         super.setStatusBarColor(tab, isInOverviewMode() ? Color.BLACK : color);
     }
 

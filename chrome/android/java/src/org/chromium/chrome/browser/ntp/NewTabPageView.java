@@ -363,7 +363,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         final TextView searchBoxTextView =
                 (TextView) mSearchBoxView.findViewById(R.id.search_box_text);
         String hintText = getResources().getString(R.string.search_or_type_web_address);
-        if (!DeviceFormFactor.isTablet()) {
+        if (!DeviceFormFactor.isTablet(getContext())) {
             searchBoxTextView.setHint(hintText);
         } else {
             searchBoxTextView.setContentDescription(hintText);
