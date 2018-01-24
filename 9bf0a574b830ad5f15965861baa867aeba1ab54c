@@ -51,6 +51,24 @@
       "revId": "9bf0a574b830ad5f15965861baa867aeba1ab54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a230cf_28ec50d6",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T10:05:52Z",
+      "side": 1,
+      "message": "I think if you do this you make the _textFieldContainer\u0027s height ambiguous. Or maybe it\u0027s inferred from it\u0027s content size? In any case, I think you at least should do \u003e\u003d constraints for top and bottom to be sure that the textfield never goes outside of its container.",
+      "parentUuid": "e6e743ed_36cadb76",
+      "revId": "9bf0a574b830ad5f15965861baa867aeba1ab54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
