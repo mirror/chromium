@@ -16,6 +16,24 @@
       "revId": "1c4f44b74d557153a17f92fd17880af97f86accb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd0bd2f_acfde3f8",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T10:08:29Z",
+      "side": 1,
+      "message": "Ack. I see;-) Thanks! I\u0027ll address this together with others\u0027 comments later.",
+      "parentUuid": "c8d6e92f_b08f3e4a",
+      "revId": "1c4f44b74d557153a17f92fd17880af97f86accb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
