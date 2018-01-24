@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "527c3702_4748c2f8",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystemBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-01-24T13:07:14Z",
+      "side": 1,
+      "message": "Good catch. This should be context_-\u003eIsContextDestroyed().",
+      "parentUuid": "7d032bf2_b741c5ca",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77eb196b_b0b36e4b",
         "filename": "third_party/WebKit/Source/modules/filesystem/DataTransferItemFileSystem.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c6a3373c_c2a9a347",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DataTransferItemFileSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-01-24T13:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77eb196b_b0b36e4b",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fb5817c_b7c470fd",
         "filename": "third_party/WebKit/Source/modules/filesystem/WorkerGlobalScopeFileSystem.cpp",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "30455e523155eda020104a0f568f35015e08bbbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6d15fb_4170b157",
+        "filename": "third_party/WebKit/Source/modules/filesystem/WorkerGlobalScopeFileSystem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-01-24T13:07:14Z",
+      "side": 1,
+      "message": "Done\n\nAh, OK. GetExecutionContext() here is a cast.",
+      "parentUuid": "7fb5817c_b7c470fd",
+      "revId": "30455e523155eda020104a0f568f35015e08bbbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
