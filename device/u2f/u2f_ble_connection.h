@@ -66,6 +66,7 @@ class U2fBleConnection : public BluetoothAdapter::Observer {
   ~U2fBleConnection() override;
 
   const std::string& address() const { return address_; }
+  BluetoothDevice* GetDevice() const;
 
   virtual void Connect();
   virtual void ReadControlPointLength(ControlPointLengthCallback callback);

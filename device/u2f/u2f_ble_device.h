@@ -35,6 +35,7 @@ class U2fBleDevice : public U2fDevice {
   void Connect();
   void SendPing(std::vector<uint8_t> data, MessageCallback callback);
   static std::string GetId(base::StringPiece address);
+  BluetoothDevice* GetDevice() const;
 
   // U2fDevice:
   void TryWink(WinkCallback callback) override;

@@ -54,6 +54,10 @@ std::string U2fBleDevice::GetId(base::StringPiece address) {
   return std::string("ble:").append(address.begin(), address.end());
 }
 
+BluetoothDevice* U2fBleDevice::GetDevice() const {
+  return connection_->GetDevice();
+}
+
 void U2fBleDevice::TryWink(WinkCallback callback) {
   // U2F over BLE does not support winking.
   std::move(callback).Run();
