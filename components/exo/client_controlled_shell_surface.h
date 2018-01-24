@@ -63,8 +63,14 @@ class ClientControlledShellSurface
   // Called when the client was restored.
   void SetRestored();
 
-  // Called when the client chagned the fullscreen state.
+  // Called when the client changed the fullscreen state.
   void SetFullscreen(bool fullscreen);
+
+  // Called when the client was snapped to left.
+  void SetLeftSnapped();
+
+  // Called when the client was snapped to right.
+  void SetRightSnapped();
 
   // Set the callback to run when the surface state changed.
   using StateChangedCallback =
@@ -85,6 +91,17 @@ class ClientControlledShellSurface
   void set_bounds_changed_callback(
       const BoundsChangedCallback& bounds_changed_callback) {
     bounds_changed_callback_ = bounds_changed_callback;
+  }
+
+  // Set the callback to run when the surface state and bounds changed together.
+  using StateAndBoundsChangedCallback = base::RepeatingCallback<void(
+      ash::mojom::WindowStateType current_state_type,
+      ash::mojom::WindowStateType new_state_type,
+      int64_t display_id,
+      const gfx::Rect& bounds)>;
+  void set_state_bounds_changed_callback(
+      const StateAndBoundsChangedCallback& state_bounds_changed_callback) {
+    state_bounds_changed_callback_ = state_bounds_changed_callback;
   }
 
   // Set the callback to run when the drag operation started.
@@ -136,6 +153,14 @@ class ClientControlledShellSurface
                            const gfx::Rect& bounds,
                            bool is_resize,
                            int drag_bounds_change);
+
+  // Sends the window state and bounds change event to client. |display_id|
+  // specifies in which display the surface should live in.
+  void OnStateAndBoundsChangeEvent(ash::mojom::WindowStateType current_state,
+                                   ash::mojom::WindowStateType new_state,
+                                   int64_t display_id,
+                                   const gfx::Rect& bounds);
+
   // Sends the window drag events to client.
   void OnDragStarted(int component);
   void OnDragFinished(bool cancel, const gfx::Point& location);
@@ -228,6 +253,7 @@ class ClientControlledShellSurface
 
   StateChangedCallback state_changed_callback_;
   BoundsChangedCallback bounds_changed_callback_;
+  StateAndBoundsChangedCallback state_bounds_changed_callback_;
   DragStartedCallback drag_started_callback_;
   DragFinishedCallback drag_finished_callback_;
 
@@ -238,7 +264,8 @@ class ClientControlledShellSurface
 
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
-  ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
+  ash::mojom::WindowStateType pending_window_state_ =
+      ash::mojom::WindowStateType::NORMAL;
 
   bool can_maximize_ = true;
 
