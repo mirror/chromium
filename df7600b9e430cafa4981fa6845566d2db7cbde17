@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a95980_e9f8f82b",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "After looking through this again, I\u0027m not sure how much value it\u0027s adding to check the exit code. If it fails partway through, we should send however much of rawLogcat we have managed to acquire, and if rawLogcat is empty, it will become the empty string, which the client class can check for instead of having special behavior for null.\n\n(Sorry this is basically going back on an earlier suggestion to use null here, but it looks like the most consistent way to do this to have all failure cases return an empty iterator rather than throw an exception, since this is an async method)",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b60bf48_ade73d70",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f08476e_6ac8703c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploaderFactory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "nit: \"shouldUse\" or \"uses\" to make it clear that it isn\u0027t an imperative call.",
+      "range": {
+        "startLine": 21,
+        "startChar": 46,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523ff26d_a006f1bf",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "the API may be simpler if the delegate is responsible for invoking the callback with an empty Iterable instead of throwing an exception.",
+      "range": {
+        "startLine": 24,
+        "startChar": 57,
+        "endLine": 24,
+        "endChar": 97
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72fb35c_0953fb77",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "nit: remove braces if it fits on one line",
+      "range": {
+        "startLine": 25,
+        "startChar": 51,
+        "endLine": 25,
+        "endChar": 97
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05632aa_9f17b21c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "Are the tests able to access this when it\u0027s private?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c1dc18_00400f75",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "How about we make it so that getRawLogcat() never returns null? If no logs exist, it will be an empty iterable and the result of this method will be an empty string. We will then have to change the null-checks in CastCrashUploader to check for the empty string instead of null.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bdc21b_d250bcaf",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "This log is unnecessary (it\u0027s redundant with the log on line 33 and the Android PackageManager should already show plenty of spam when a new ServiceConnection is made)",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7b7ee0_73581f7c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "Oh, the API has changed to provide the log filename instead of the raw String?\n\nHave you tested this version end-to-end? I want to confirm that we have e.g. the permission to read the file.",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f91110_372d0fc7",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "Currently, we\u0027re calling onLogsDone(null) in the catch, then again calling onLogsDone(rawLogcat) right after. So the callback is fired twice.\n\nMaybe move the callback.onLogsDone(rawLogcat) call below to inside the try block. But if an IOException occurs with the rawLogcat partially accumulated, we might want to send as much of the rawLogcat as we\u0027ve managed to collect.",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f66a94_4d5b45b3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5beea0c7_dd37c272",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "If this returns a filename instead of a raw log string now, should the method be renamed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13915e87_b6ef298d",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbcfbc0_f94312c0",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "Add a note that says what happens if it\u0027s false, i.e. gets the logs for only this app",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1254fe_8f8c0a6c",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T22:07:47Z",
+      "side": 1,
+      "message": "Add a note that these are only used if use_remote_service_logcat is true.",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
