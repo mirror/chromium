@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7472056b_f85609c5",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T22:40:37Z",
+      "side": 1,
+      "message": "Actually my original version was right. The json_ruleset is optional and we shouldn\u0027t fail if it\u0027s null.",
+      "parentUuid": "c5b36468_888c1785",
+      "range": {
+        "startLine": 717,
+        "startChar": 6,
+        "endLine": 717,
+        "endChar": 21
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b328ec9_95c63cdb",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 5
