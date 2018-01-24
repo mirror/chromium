@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17d2043_16c51a87",
+        "filename": "third_party/WebKit/LayoutTests/fast/performance/performance-measure-exceptions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T19:16:55Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "fbbd7a2dd68a4beb128e3d9fbdf942a2927dd1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87635dd9_fa535817",
+        "filename": "third_party/WebKit/LayoutTests/fast/performance/performance-measure-exceptions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T19:16:55Z",
+      "side": 1,
+      "message": "Might as well update this to const while you\u0027re here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "fbbd7a2dd68a4beb128e3d9fbdf942a2927dd1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5be155c_1ce37230",
+        "filename": "third_party/WebKit/LayoutTests/fast/performance/performance-measure-exceptions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T19:16:55Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "fbbd7a2dd68a4beb128e3d9fbdf942a2927dd1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
