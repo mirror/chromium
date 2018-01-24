@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20070d8_0c75cbeb",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-24T14:53:54Z",
+      "side": 0,
+      "message": "Now flattened_size can be 0, if there\u0027s only one compound selector consisting of more than 8,192 plain selectors (bizarre but possible).",
+      "revId": "c7b07cc3877baeec1d9f5c00fa52c04f2892d97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

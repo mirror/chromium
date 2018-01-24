@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0880b70a_a93f586c",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2018-01-24T14:53:54Z",
+      "side": 1,
+      "message": "It seems the DCHECK at the end of this loop assumes that current will always start out as non-null, therefore I thought it made sense to add an explicit DCHECK here and convert this into a do..while.",
+      "revId": "b20f5339b812a57e2a0d58151d12a8cf4139cf86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
