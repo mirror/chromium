@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0b2a58_9b71ff08",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "nit: need one blank line between methods, per Java style guide (I think a `git cl format` should fix)",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279a8186_f9186e9d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "There\u0027s not much point in making a separate DumpStreamBuilder class now that all the work is in a single factory function.",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 47
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee6e653_26aee35f",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "Can you include the comment from the old revision\u0027s version of CastCrashUploader that explained why we\u0027re taking the first line of the minidump and stripping the first two characters?\n\nIt may also be helpful to rename this variable and the corresponding parameter of the methods that use it. \"dumpFirstLine\" says little about its purpose of being included at the beginning of each section of the dump stream. Perhaps \"mimeBoundary\" would be a better name, and we can rename the variable currently known as \"mimeBoundary\" to \"strippedMimeBoundary\".",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 58
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a6b2fd_13fef225",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "Kind of a nit: In cases where one of the conditions in an if statement is handled by a small early return, it\u0027s a convention to check for the exceptional case at the top and return early if true, and have the main case after the if statement\u0027s body.\n\nSo the following:\n\n  if (a !\u003d null) {\n    // Complicated stuff\n    return resultOfComplicatedStuff;\n  } else {\n    return null;\n  }\n\ncan be refactored to:\n\n  if (a \u003d\u003d null) {\n    return null;\n  }\n  // Complicated stuff\n  return resultOfComplicatedStuff;\n\nThis refactoring can be applied to getUuidStream, getAppFeedbackStream, and getLogcatStream.",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4fa1e0_d5942630",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "I notice that getUuidStream, getAppFeedbackStream, and getLogcatStream are very similar in structure. It looks like they could be refactored to two methods: \n\n  InputStream getTextFieldMimeStream(String mimeBoundary, String name, String content);\n  InputStream getFileMimeStream(String mimeBoundary, String name, String fileName, String content);\n\nYou could even refactor further and have a MimeStreamBuilder class with those two methods, that takes the mimeBoundary String in its constructor, so it doesn\u0027t have to be passed around as much.\n\nIf you did that, the new class might look like:\n\n  class MimeStreamBuilder {\n    public MimeStreamBuilder(String uuid) {...}\n    public void addTextField(String name, String content) {...}\n    public void addFile(String name, String fileName, String content) {...}\n    public void addStream(InputStream stream) {...}\n    public InputStream build() {...}\n  }\n\nAnd DumpStream.constructDumpStream() would look like this:\n  \n  MimeStreamBuilder builder \u003d new MimeStreamBuilder(mimeBoundary);\n  if (!appFeedback.equals(\"\")) {\n    builder.addFile(\"application_feedback.txt\", \"application.txt\", appFeedback);\n  }\n  if (!uuid.equals(\"\")) {\n    builder.addTextField(\"comments\", uuid);\n  }\n  if (!logcat.equals(\"\")) {\n    builder.addFile(\"log.txt\", \"log.txt\", logcat);\n  }\n  try {\n    builder.addStream(new FileInputStream(minidumpFile));\n  } catch (FileNotFoundException e) {...}\n  return new DumpStream(..., builder.build());\n\n... which is a little uglier than what it is now, but it sequesters all the null checks in one place.\n\nIf you do extract the MimeStreamBuilder class successfully, it should be pretty easily testable. Notice that it has no dependencies on the file system or any Android components.",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5905c251_5465012d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "nit: lowercase \"add\" per Java style guide",
+      "range": {
+        "startLine": 163,
+        "startChar": 30,
+        "endLine": 163,
+        "endChar": 42
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad53b5e7_c8d3a6c9",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "A lot of these imports don\u0027t look like they\u0027re used here. I think Chromium\u0027s `git cl presubmit` has a means to check for unused imports in Java.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 6
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce5c28a_236cd925",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "Mutates the given input stream, so subsequent reads from that stream will continue after the first line.",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daac223d_32a3dfdc",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "Test request:\n\ngetFirstLineFromStream(streamOf(\"a\\nb\\n\")) \u003d\u003d \"a\\n\";\ngetFirstLineFromStream(streamOf(\"\")) \u003d\u003d ???\ngetFirstLineFromStream(streamOf(\"a\\n\")) \u003d\u003d \"a\\n\";",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b741b2_fead57a2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/DumpStreamUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-24T00:02:55Z",
+      "side": 1,
+      "message": "This is really odd-looking indentation. Is this what `git cl format` gave you?",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "6596a8ea0498af252702a0d0b5ff4a01ce2fe7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
