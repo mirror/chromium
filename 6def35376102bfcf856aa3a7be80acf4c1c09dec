@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9bc1f95_e2b27698",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:07:03Z",
+      "side": 1,
+      "message": "you could define these in the file scope, and share constants between tests",
+      "revId": "6def35376102bfcf856aa3a7be80acf4c1c09dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf79a88e_70635d68",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T00:07:03Z",
+      "side": 1,
+      "message": "this should be addressGuid\nAlso, you can move listenOnce here,\nhave this be\nvar addressGuid \u003d addressList[0].guid;\nand remove address_guid \u003d \u0027123\u0027;",
+      "revId": "6def35376102bfcf856aa3a7be80acf4c1c09dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
