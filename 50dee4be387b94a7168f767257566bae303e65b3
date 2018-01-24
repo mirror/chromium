@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78284b3f_c0d95784",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-24T19:43:54Z",
+      "side": 1,
+      "message": "This is only used at line 571 I think. If so I would suggest making it private, but even better, can we just inline that logic within iconTooltip() directly?",
+      "range": {
+        "startLine": 575,
+        "startChar": 4,
+        "endLine": 575,
+        "endChar": 19
+      },
+      "revId": "50dee4be387b94a7168f767257566bae303e65b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
