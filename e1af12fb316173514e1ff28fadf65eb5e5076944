@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "25781303_45f4862c",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T15:56:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we need Dice headers here, these are only relevant when doing a signin or a signout.\n\nWhat about the cookie settings check:\nhttps://cs.chromium.org/chromium/src/components/signin/core/browser/signin_header_helper.cc?rcl\u003d5646f547e03f79baf219ab6465ceb9cc0740b36c\u0026l\u003d136",
+      "parentUuid": "fb104c56_e1eb51b6",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
@@ -140,6 +164,29 @@
       "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "848e56ed_ff36a458",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T15:56:35Z",
+      "side": 1,
+      "message": "1) can we use AccountConsistencyModeManager::IsMirrorEnabledForProfile?\n2) Why is this code different from the implementation in AccountConsistencyModeManager::IsMirrorEnabledForProfile?",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
