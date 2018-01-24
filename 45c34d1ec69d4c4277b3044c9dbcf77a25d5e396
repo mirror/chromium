@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5531283d_88ad7ac9",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-01-24T01:01:36Z",
+      "side": 1,
+      "message": "Does this also need an nvidia gpu dimension?",
+      "revId": "45c34d1ec69d4c4277b3044c9dbcf77a25d5e396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
