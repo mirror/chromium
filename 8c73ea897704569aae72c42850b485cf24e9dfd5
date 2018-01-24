@@ -22,6 +22,30 @@
       "revId": "8c73ea897704569aae72c42850b485cf24e9dfd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e710887e_1c9779ac",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/ActivityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-24T22:58:04Z",
+      "side": 1,
+      "message": "Absolutely right, changed the comment.",
+      "parentUuid": "9b865b2c_0bef9aa5",
+      "range": {
+        "startLine": 121,
+        "startChar": 62,
+        "endLine": 121,
+        "endChar": 78
+      },
+      "revId": "8c73ea897704569aae72c42850b485cf24e9dfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
