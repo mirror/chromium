@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f0801a1_e9795b8e",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "This should be -\u003eSetHeader, no?",
+      "range": {
+        "startLine": 602,
+        "startChar": 21,
+        "endLine": 602,
+        "endChar": 27
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191fea4d_254e2e9d",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "This is deleting simple_loader immediately after this method completes.  You need to add a simple_loader_ field to ServicesCustomizationDocument to fix that.  If tests all pass, that means there are absolutely no tests that exercise this code.  :(",
+      "range": {
+        "startLine": 606,
+        "startChar": 34,
+        "endLine": 606,
+        "endChar": 39
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6743cf32_a2029ccb",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "Since we need simple_loader to be owned by |this|, think you can get rid of it as an argument.",
+      "range": {
+        "startLine": 614,
+        "startChar": 27,
+        "endLine": 614,
+        "endChar": 37
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3ae185_3b50c498",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "*resource_body should be response_body.  Move it first, and the ResponseInfo, net::OK, and HTTP_OK checks aren\u0027t needed (Deliberately made the API simpler to use)",
+      "range": {
+        "startLine": 653,
+        "startChar": 21,
+        "endLine": 653,
+        "endChar": 22
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e93bc4c_348d4f3b",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "Need to null-check ResponseInfo here, though.",
+      "range": {
+        "startLine": 656,
+        "startChar": 34,
+        "endLine": 656,
+        "endChar": 35
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9da7400_6bb87911",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:55:55Z",
+      "side": 1,
+      "message": "And here as well.",
+      "range": {
+        "startLine": 674,
+        "startChar": 26,
+        "endLine": 674,
+        "endChar": 38
+      },
+      "revId": "c8eb04db5c86cd87b2a59c4ca58dc77b3c14bb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
