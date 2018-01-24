@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b70a230_d964e98f",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:27:14Z",
+      "side": 1,
+      "message": "won\u0027t this work?\nhttps://cs.chromium.org/chromium/src/ash/wm/splitview/split_view_controller.cc?rcl\u003d15b1ec89853446a6c8a2c4330ffc72c941fdbfdc\u0026l\u003d65",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327d5aef_4c3b5bdd",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:27:14Z",
+      "side": 1,
+      "message": "gfx::Rect tmp(dst);\ntmp.ClampToCenteredSize(gfx::Size(dst.width(0, src.height() * scale));\nreturn tmp;\n\nYou may pass dst by copy.",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0718748c_0c3e274b",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:27:14Z",
+      "side": 1,
+      "message": "won\u0027t adjusting this later simplify the code?",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa3a08a_458f0a5a",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:27:14Z",
+      "side": 1,
+      "message": "Inset(0, -(scale* top_view_inset), 0, 0) ?",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfa5821_1fda8b21",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:27:14Z",
+      "side": 1,
+      "message": "Specifies how the window is laid out in the grid.",
+      "revId": "a9811d0f9ef99e29d89deb07484317684ff94f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
