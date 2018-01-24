@@ -52,6 +52,24 @@
       "revId": "e3c030803714da78700a16020e28fa37016c58f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7ba1c3_ae634d07",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T23:22:31Z",
+      "side": 0,
+      "message": "For elements with mask but no clip-path, this code path won\u0027t be triggered neither before or after the change.\n\nI would guess that this code was unconditionally ran before the introduction of composited scrolling, because we didn\u0027t apply clip-path on composited elements as a composited layer, but instead paint non-composited clip-path on every layers that draw contents. This is technically incorrect because in the presence of ancestor/child clipping mask layer the same clip-path can be applied multiple times. We got away with it because clip-path is either 0 or 1. Some differences can be seen on anti-aliased edges, but not very obvious to bare eyes.\n\nWith this CL we always apply clip-path on composited elements as a group by a composited mask layer, thus we can skip -- and should not, paint non-composited clip-path on content layers.",
+      "parentUuid": "8df06fa8_ff3186bc",
+      "revId": "e3c030803714da78700a16020e28fa37016c58f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
