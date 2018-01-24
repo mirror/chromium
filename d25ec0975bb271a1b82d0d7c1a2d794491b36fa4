@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e776c87_e0faad0c",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T17:56:07Z",
+      "side": 1,
+      "message": "Added TODO. Will localize these in a separate CL.",
+      "parentUuid": "ce3ab0d7_87c6b933",
+      "range": {
+        "startLine": 292,
+        "startChar": 37,
+        "endLine": 292,
+        "endChar": 56
+      },
+      "revId": "d25ec0975bb271a1b82d0d7c1a2d794491b36fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f51e19_e9d42144",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-24T17:43:33Z",
       "side": 1,
       "message": "Shouldn\u0027t this string be translated?",
+      "range": {
+        "startLine": 305,
+        "startChar": 19,
+        "endLine": 305,
+        "endChar": 39
+      },
+      "revId": "d25ec0975bb271a1b82d0d7c1a2d794491b36fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0118768_0df1e7a1",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T17:56:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "63f51e19_e9d42144",
       "range": {
         "startLine": 305,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fff120c6_24458c2b",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T17:56:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "f1a02c31_2b152064",
+      "range": {
+        "startLine": 318,
+        "startChar": 14,
+        "endLine": 318,
+        "endChar": 25
+      },
+      "revId": "d25ec0975bb271a1b82d0d7c1a2d794491b36fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1de6b98_7f3b1a3b",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6eda9753_48319bbf",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T17:56:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "a1de6b98_7f3b1a3b",
+      "range": {
+        "startLine": 323,
+        "startChar": 14,
+        "endLine": 323,
+        "endChar": 27
+      },
+      "revId": "d25ec0975bb271a1b82d0d7c1a2d794491b36fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c817918_e018f3a8",
         "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-24T17:43:33Z",
       "side": 1,
       "message": "Shouldn\u0027t this string be translated?",
+      "range": {
+        "startLine": 326,
+        "startChar": 14,
+        "endLine": 326,
+        "endChar": 26
+      },
+      "revId": "d25ec0975bb271a1b82d0d7c1a2d794491b36fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694072e3_19eb1abf",
+        "filename": "ios/chrome/browser/ui/download/download_manager_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T17:56:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "9c817918_e018f3a8",
       "range": {
         "startLine": 326,
         "startChar": 14,
