@@ -61,17 +61,18 @@ class ConnectTetheringOperation : public MessageTransferOperation {
         ConnectTetheringResponse_ResponseCode error_code) = 0;
   };
 
-  ConnectTetheringOperation(
-      const cryptauth::RemoteDevice& device_to_connect,
-      BleConnectionManager* connection_manager,
-      TetherHostResponseRecorder* tether_host_response_recorder,
-      bool setup_required);
   ~ConnectTetheringOperation() override;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
  protected:
+  ConnectTetheringOperation(
+      const cryptauth::RemoteDevice& device_to_connect,
+      BleConnectionManager* connection_manager,
+      TetherHostResponseRecorder* tether_host_response_recorder,
+      bool setup_required);
+
   // MessageTransferOperation:
   void OnDeviceAuthenticated(
       const cryptauth::RemoteDevice& remote_device) override;
