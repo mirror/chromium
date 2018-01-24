@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c72307b6_c0a5c472",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-24T22:47:24Z",
+      "side": 1,
+      "message": "The auto-flush logic doesn\u0027t interact directly with whether LazyFlush calls Flush. All auto-flush does is limit the immediate entry count so that we think we\u0027re out of space and flush more often. I don\u0027t think it\u0027s easy or useful to write a test for the auto-flush case here.",
+      "parentUuid": "74aa9467_7eede395",
+      "range": {
+        "startLine": 730,
+        "startChar": 11,
+        "endLine": 730,
+        "endChar": 30
+      },
+      "revId": "72ab3ce2a2166f0e7e8a17dea7c53a77212387af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f2b9be3_f68ab427",
         "filename": "gpu/command_buffer/client/cmd_buffer_helper_test.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "72ab3ce2a2166f0e7e8a17dea7c53a77212387af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e83d291_ff49b765",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-24T22:47:24Z",
+      "side": 1,
+      "message": "Added an assert.",
+      "parentUuid": "2f2b9be3_f68ab427",
+      "revId": "72ab3ce2a2166f0e7e8a17dea7c53a77212387af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
