@@ -3812,8 +3812,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
           requireGestureRecognizerToFail:swipeRecognizer];
     }
 
+    web::BrowserState* browserState = self.webStateImpl->GetBrowserState();
     _contextMenuController =
         [[CRWContextMenuController alloc] initWithWebView:_webView
+                                             browserState:browserState
                                        injectionEvaluator:self
                                                  delegate:self];
 

@@ -12,6 +12,40 @@ goog.provide('__crWeb.contextMenu');
 (function() {
 
   /**
+   * Finds the url of the image or link under the selected point. Sends the
+   * found element (or an empty object if no links or images are found) back to
+   * the application by posting a 'FindElementResultHandler' message.
+   * @param {number} x Horizontal center of the selected point in web view
+   *                   coordinates.
+   * @param {number} y Vertical center of the selected point in web view
+   *                 coordinates.
+   * @param {number} webViewWidth the width of web view.
+   * @param {number} webViewHeight the height of web view.
+   * @return {!Object} An object of the form {
+   *     href,  // URL of the link under the point
+   *     innerText,  // innerText of the link, if the selected element is a link
+   *     src,  // src of the image, if the selected element is an image
+   *     title,  // title of the image, if the selected
+   *     referrerPolicy
+   *   }
+   *   where:
+   *     <ul>
+   *     <li>href, innerText are set if the selected element is a link.
+   *     <li>src, title are set if the selected element is an image.
+   *     <li>href is also set if the selected element is an image with a link.
+   *     <li>referrerPolicy is the referrer policy to use for navigations away
+   *         from the current page.
+   *     </ul>
+   */
+  __gCrWeb['findElementAtPoint'] =
+      function(x, y, webViewWidth, webViewHeight) {
+        var scale = getPageWidth() / webViewWidth;
+        var result = getElementFromPointInPageCoordinates(x * scale, y * scale);
+        var handler = window.webkit.messageHandlers['FindElementResultHandler'];
+        handler.postMessage(result);
+      };
+
+  /**
    * Returns the url of the image or link under the selected point. Returns an
    * empty object if no links or images are found.
    * @param {number} x Horizontal center of the selected point in web view
