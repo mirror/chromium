@@ -39,7 +39,7 @@ OneShotAccessibilityTreeSearch::OneShotAccessibilityTreeSearch(
       direction_(OneShotAccessibilityTreeSearch::FORWARDS),
       result_limit_(UNLIMITED_RESULTS),
       immediate_descendants_only_(false),
-      can_wrap_to_last_element_(false),
+      can_wrap_to_last_element_(true),
       visible_only_(false),
       did_search_(false) {}
 
