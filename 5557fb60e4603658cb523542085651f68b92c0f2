@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "89bd7ef2_ff765307",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "FWIW my understanding is that simple if/else would get compiled out if dcheck was off.",
+      "parentUuid": "b2c8ebed_a98bb9b4",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b326b0f_69a07cd9",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
       "writtenOn": "2018-01-24T00:42:56Z",
       "side": 1,
       "message": "Is this OK to remove?",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b83382e_9f2aacf6",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "This is a TODO, will clarify. For gpu the wait is happening in the resource provider atm.",
+      "parentUuid": "9b326b0f_69a07cd9",
       "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,30 @@
       "writtenOn": "2018-01-24T00:42:56Z",
       "side": 1,
       "message": "hmm we should probably UMA the sizes of these maps",
+      "range": {
+        "startLine": 337,
+        "startChar": 19,
+        "endLine": 337,
+        "endChar": 49
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4c0c8a_098b487a",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "It was a list because CheckBusyResources() walked thru it in order. Now we do lookups instead so I think it needs to become a flat_map or a map. The size should be about \u003d\u003d number of tiles we have rastered, so I think we can poke at UMAs for that. I will try to get a rough thot on the size of the map before I choose one, when I convert gpu types.",
+      "parentUuid": "ad79b9ae_9a9b761b",
       "range": {
         "startLine": 337,
         "startChar": 19,
@@ -145,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "449c1ede_240e0300",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "Yes busy is \"imported into ResourceProvider\" for the purpose of exporting to the display compositor. When returned to the pool, we delete from the ResourceProvider but won\u0027t notify that it\u0027s released until it\u0027s no longer exported. We keep the PoolResource in the busy_resources_ set for that time.\n\nI think push_front may have been opinionated to check the resource first in CheckBusyResources, but not sure.",
+      "parentUuid": "5f8cd48b_d20fa78d",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 19
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d4ae25_f42fb293",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 6
@@ -156,6 +240,30 @@
       "writtenOn": "2018-01-24T00:42:56Z",
       "side": 1,
       "message": "It looks like we\u0027re using 2 bools to encode 3 possible enum states. It would be a nice cleanup to just have an enum",
+      "range": {
+        "startLine": 438,
+        "startChar": 7,
+        "endLine": 438,
+        "endChar": 52
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b69dd3_894547fb",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "Ok I\u0027ll look at that in another CL.",
+      "parentUuid": "c9d4ae25_f42fb293",
       "range": {
         "startLine": 438,
         "startChar": 7,
@@ -242,6 +350,30 @@
       "writtenOn": "2018-01-24T00:42:56Z",
       "side": 1,
       "message": "can we DCHECK !0?",
+      "range": {
+        "startLine": 208,
+        "startChar": 49,
+        "endLine": 208,
+        "endChar": 68
+      },
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3802982f_e7cb504d",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T19:26:18Z",
+      "side": 1,
+      "message": "Not here, because ResourcePool checks if it is zero to branch, to see if it was exported. But I think we can in the InUsePoolResource::resource_id_for_export() for clients.",
+      "parentUuid": "265a2cd8_a85f0c59",
       "range": {
         "startLine": 208,
         "startChar": 49,
