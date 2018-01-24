@@ -94,6 +94,30 @@
       "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e75e9a5_d11e4557",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-rendering-horizontal-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-24T08:57:16Z",
+      "side": 1,
+      "message": "Thanks for the detailed clarification. So i understand that we need to look at the layout tree of the test case and try to replicate it in ref test for each cue as much as possible. Also we can use \"Ahem\" font to reduce differences between platforms, that means we need to use same font for cues in the original test as well.\nI will try these things. I am holding it for now, I will come back to this after sometime.",
+      "parentUuid": "edd1d05a_143718b5",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "bea18c0c21bb8a65b649f1597016e44d4f9296d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
