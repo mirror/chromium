@@ -51,7 +51,7 @@ EntryHeapVector HTMLInputElementFileSystem::webkitEntries(
   EntryHeapVector entries;
   FileList* files = input.files();
 
-  if (!files)
+  if (!script_state->IsContextValid() || !files)
     return entries;
 
   DOMFileSystem* filesystem = DOMFileSystem::CreateIsolatedFileSystem(

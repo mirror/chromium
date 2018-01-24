@@ -51,6 +51,9 @@ void WorkerGlobalScopeFileSystem::webkitRequestFileSystem(
     long long size,
     V8FileSystemCallback* success_callback,
     V8ErrorCallback* error_callback) {
+  if (worker.IsContextDestroyed())
+    return nullptr;
+
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem()) {
     DOMFileSystem::ReportError(&worker,
@@ -83,6 +86,9 @@ DOMFileSystemSync* WorkerGlobalScopeFileSystem::webkitRequestFileSystemSync(
     int type,
     long long size,
     ExceptionState& exception_state) {
+  if (worker.IsContextDestroyed())
+    return nullptr;
+
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem()) {
     exception_state.ThrowSecurityError(FileError::kSecurityErrorMessage);
@@ -118,6 +124,9 @@ void WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemURL(
     const String& url,
     V8EntryCallback* success_callback,
     V8ErrorCallback* error_callback) {
+  if (worker.IsContextDestroyed())
+    return nullptr;
+
   KURL completed_url = worker.CompleteURL(url);
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem() ||
@@ -148,6 +157,9 @@ EntrySync* WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemSyncURL(
     WorkerGlobalScope& worker,
     const String& url,
     ExceptionState& exception_state) {
+  if (worker.IsContextDestroyed())
+    return nullptr;
+
   KURL completed_url = worker.CompleteURL(url);
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem() ||

@@ -90,6 +90,9 @@ DirectoryReader::~DirectoryReader() = default;
 
 void DirectoryReader::readEntries(V8EntriesCallback* entries_callback,
                                   V8ErrorCallback* error_callback) {
+  if (!Filesystem()->GetExecutionContext())
+    return;
+
   if (!is_reading_) {
     is_reading_ = true;
     Filesystem()->ReadDirectory(this, full_path_,
