@@ -154,7 +154,9 @@ void DelegatedFrameHost::CopyFromCompositingSurface(
                          preferred_color_type, callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
-  RequestCopyOfOutput(std::move(request));
+  // To avoid unnecessary browser composites, try to go directly to the Surface
+  // rather than through the Layer (which goes through the browser compositor).
+  support_->RequestCopyOfSurface(std::move(request));
 }
 
 void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
@@ -175,11 +177,11 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceToVideoFrame(
           nullptr, std::move(target), callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
-  RequestCopyOfOutput(std::move(request));
+  support_->RequestCopyOfSurface(std::move(request));
 }
 
 bool DelegatedFrameHost::CanCopyFromCompositingSurface() const {
-  return compositor_ && HasFallbackSurface();
+  return support_ && HasFallbackSurface();
 }
 
 void DelegatedFrameHost::BeginFrameSubscription(
@@ -433,12 +435,7 @@ void DelegatedFrameHost::AttemptFrameSubscriberCapture(
 
   // To avoid unnecessary browser composites, try to go directly to the Surface
   // rather than through the Layer (which goes through the browser compositor).
-  if (HasFallbackSurface() &&
-      request_copy_of_output_callback_for_testing_.is_null()) {
-    support_->RequestCopyOfSurface(std::move(request));
-  } else {
-    RequestCopyOfOutput(std::move(request));
-  }
+  support_->RequestCopyOfSurface(std::move(request));
 }
 
 void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
