@@ -14,6 +14,35 @@ namespace content {
 
 class CONTENT_EXPORT DownloadUkmHelper {
  public:
+  // Calculate which exponential bucket the value falls in. This is used to mask
+  // the actual value of the metric due to privacy concerns for certain metrics
+  // that could trace back the user's exact actions.
+  static int CalcExponentialBucket(int value);
+
+  // Record when the download has started.
+  static void RecordDownloadStarted(int download_id,
+                                    ukm::SourceId source_id,
+                                    int file_type,
+                                    int download_source);
+
+  // Record when the download is interrupted.
+  static void RecordDownloadInterrupted(
+      int download_id,
+      base::Optional<int> change_in_file_size,
+      int reason,
+      int resulting_file_size,
+      const base::TimeDelta& time_since_start);
+
+  // Record when the download is resumed.
+  static void RecordDownloadResumed(int download_id,
+                                    int mode,
+                                    const base::TimeDelta& time_since_start);
+
+  // Record when the download is completed.
+  static void RecordDownloadCompleted(int download_id,
+                                      int resulting_file_size,
+                                      const base::TimeDelta& time_since_start);
+
   // Friended Helper for recording main frame URLs to UKM.
   static void UpdateSourceURL(ukm::UkmRecorder* ukm_recorder,
                               ukm::SourceId source_id,
