@@ -131,7 +131,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.ChromeHomeIphMenuHeader;
 import org.chromium.chrome.browser.widget.emptybackground.EmptyBackgroundViewWrapper;
-import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -921,9 +921,10 @@ public class ChromeTabbedActivity
             }
         }
 
-        ViewAnchoredTextBubble textBubble =
-                new ViewAnchoredTextBubble(this, getToolbarAnchorViewForDownloadHomeTextBubble(),
-                        R.string.iph_download_home_text, accessibilityStringId);
+        View anchorView = getToolbarAnchorViewForDownloadHomeTextBubble();
+        TextBubble textBubble = new TextBubble(
+                this, anchorView, R.string.iph_download_home_text, accessibilityStringId);
+        textBubble.setAnchorView(anchorView);
         textBubble.setDismissOnTouchInteraction(true);
         textBubble.addOnDismissListener(() -> mHandler.postDelayed(() -> {
             tracker.dismissed(FeatureConstants.DOWNLOAD_HOME_FEATURE);
