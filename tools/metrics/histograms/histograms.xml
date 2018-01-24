@@ -30955,6 +30955,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Captures the count of successful and failed connection attempts.
 
+    This metric counts the top-level user action of clicking 'Connect' all the
+    way through success or failure of the connection, excluding any programmatic
+    retries within the connection attempt.
+
     This metric provides an immediate understanding of the Instant Tethering
     connection success rate. The counts of failure are broken down in
     InstantTethering.ConnectionToHostResult.Failure.
