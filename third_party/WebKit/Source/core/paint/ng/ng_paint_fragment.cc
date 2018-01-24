@@ -82,8 +82,10 @@ void NGPaintFragment::UpdateVisualRectFromLayoutObject(
   // fragments.
   const NGPhysicalFragment& fragment = PhysicalFragment();
   const LayoutObject* layout_object = fragment.GetLayoutObject();
-  if (fragment.IsText() || fragment.IsLineBox() ||
-      (fragment.IsBox() && layout_object && layout_object->IsLayoutInline())) {
+  bool is_in_inline_formatting_context =
+      fragment.IsText() || fragment.IsLineBox() ||
+      (fragment.IsBox() && layout_object && layout_object->IsLayoutInline());
+  if (is_in_inline_formatting_context) {
     NGPhysicalOffsetRect visual_rect = fragment.SelfVisualRect();
     DCHECK(context.parent_box);
     // TODO(kojii): Review the use of FirstFragment() and PaintOffset(). This is
@@ -110,7 +112,7 @@ void NGPaintFragment::UpdateVisualRectFromLayoutObject(
     // If this fragment isn't from a LayoutObject; i.e., a line box or an
     // anonymous, keep the offset to the parent box.
     UpdateContext child_context =
-        !layout_object || fragment.IsAnonymousBox()
+        is_in_inline_formatting_context
             ? UpdateContext{context.parent_box,
                             context.offset_to_parent_box + fragment.Offset()}
             : UpdateContext{layout_object};
