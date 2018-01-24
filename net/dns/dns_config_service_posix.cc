@@ -165,49 +165,18 @@ ConfigParsePosixResult ReadDnsConfig(DnsConfig* dns_config) {
   dns_config->timeout = base::TimeDelta::FromMilliseconds(kDnsDefaultTimeoutMs);
   return result;
 #else  // defined(OS_ANDROID)
-// Theoretically, this is bad. __system_property_get is not a supported API
-// (but it's currently visible to anyone using Bionic), and the properties
-// are implementation details that may disappear in future Android releases.
-// Practically, libcutils provides property_get, which is a public API, and the
-// DNS code (and its clients) are already robust against failing to get the DNS
-// config for whatever reason, so the properties can disappear and the world
-// won't end.
-// TODO(juliatuttle): Depend on libcutils, then switch this (and other uses of
-//                    __system_property_get) to property_get.
-  dns_config->nameservers.clear();
-
-  if (base::android::BuildInfo::GetInstance()->sdk_int() >=
+  // On pre-Marshmallow, assume that there might be an unhandled configuration,
+  // such as a VPN, and don't bother reading the config.
+  if (base::android::BuildInfo::GetInstance()->sdk_int() <
       base::android::SDK_VERSION_MARSHMALLOW) {
-    net::android::GetDnsServers(&dns_config->nameservers);
-    if (dns_config->nameservers.empty())
-      return CONFIG_PARSE_POSIX_NO_NAMESERVERS;
-    return CONFIG_PARSE_POSIX_OK;
-  }
-
-  char property_value[PROP_VALUE_MAX];
-  __system_property_get("net.dns1", property_value);
-  std::string dns1_string = property_value;
-  __system_property_get("net.dns2", property_value);
-  std::string dns2_string = property_value;
-  if (dns1_string.empty() && dns2_string.empty())
+    dns_config->unhandled_options = true;
     return CONFIG_PARSE_POSIX_NO_NAMESERVERS;
-
-  IPAddress dns1_address;
-  IPAddress dns2_address;
-  bool parsed1 = dns1_address.AssignFromIPLiteral(dns1_string);
-  bool parsed2 = dns2_address.AssignFromIPLiteral(dns2_string);
-  if (!parsed1 && !parsed2)
-    return CONFIG_PARSE_POSIX_BAD_ADDRESS;
-
-  if (parsed1) {
-    IPEndPoint dns1(dns1_address, dns_protocol::kDefaultPort);
-    dns_config->nameservers.push_back(dns1);
-  }
-  if (parsed2) {
-    IPEndPoint dns2(dns2_address, dns_protocol::kDefaultPort);
-    dns_config->nameservers.push_back(dns2);
   }
 
+  dns_config->nameservers.clear();
+  net::android::GetDnsServers(&dns_config->nameservers);
+  if (dns_config->nameservers.empty())
+    return CONFIG_PARSE_POSIX_NO_NAMESERVERS;
   return CONFIG_PARSE_POSIX_OK;
 #endif  // !defined(OS_ANDROID)
 }
@@ -285,8 +254,8 @@ class DnsConfigServicePosix::Watcher {
 };
 
 // A SerialWorker that uses libresolv to initialize res_state and converts
-// it to DnsConfig (except on Android, where it reads system properties
-// net.dns1 and net.dns2; see #if around ReadDnsConfig above.)
+// it to DnsConfig (except on Android, where it reads the config using Android
+// APIs).
 class DnsConfigServicePosix::ConfigReader : public SerialWorker {
  public:
   explicit ConfigReader(DnsConfigServicePosix* service)
