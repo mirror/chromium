@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a74220_78ec6f9c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T22:49:42Z",
+      "side": 0,
+      "message": "Does this get fixed by the firstVisibleIndex changes?",
+      "revId": "d6466fd4536b1a32cc81f230c607f03122674250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
