@@ -260,8 +260,8 @@ void CreateDiceTurnOnSyncHelper(Profile* profile,
   // DiceTurnSyncOnHelper is suicidal (it will kill itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile, browser, access_point, reason, account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::REMOVE_ACCOUNT);
+      profile, access_point, reason, account_id,
+      DiceTurnSyncOnHelper::SigninAbortedMode::REMOVE_ACCOUNT, browser);
 }
 
 // Shows UI for signin errors.

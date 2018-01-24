@@ -150,9 +150,9 @@ void EnableSync(Browser* browser,
   // DiceTurnSyncOnHelper is suicidal (it will delete itself once it finishes
   // enabling sync).
   new DiceTurnSyncOnHelper(
-      profile, browser, access_point,
-      signin_metrics::Reason::REASON_UNKNOWN_REASON, account.account_id,
-      DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT);
+      profile, access_point, signin_metrics::Reason::REASON_UNKNOWN_REASON,
+      account.account_id, DiceTurnSyncOnHelper::SigninAbortedMode::KEEP_ACCOUNT,
+      browser);
 }
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
