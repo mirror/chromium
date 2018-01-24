@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c56f11bc_b373406f",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T16:19:35Z",
+      "side": 1,
+      "message": "Rename this to ChromeOSReconcilorDelegateHelper.",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 12
+      },
+      "revId": "e6fb23a698978acc17a0b00832075b669bafc394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f5cd36_af919338",
+        "filename": "components/signin/core/browser/mirror_account_reconcilor_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T16:19:35Z",
+      "side": 1,
+      "message": "I think it would be a lot cleaner to pass a timeout value instead of this boolean.",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "e6fb23a698978acc17a0b00832075b669bafc394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ef3fa2_074529ff",
+        "filename": "components/signin/core/browser/reconcilor_delegate_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-24T16:19:35Z",
+      "side": 1,
+      "message": "1) Please add comments for this class and these functions.\n2) Why do we need two functions, as they seem to be always called together?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "e6fb23a698978acc17a0b00832075b669bafc394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
