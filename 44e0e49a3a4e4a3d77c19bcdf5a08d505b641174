@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d541fc98_e4c20e9e",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-createImageBitmap-drawImage-video.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2018-01-24T19:26:26Z",
+      "side": 1,
+      "message": "I really don\u0027t like that you moved the checks to a different file. It makes the tests less readable. :/\nIs there a reason you did that?",
+      "revId": "44e0e49a3a4e4a3d77c19bcdf5a08d505b641174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
