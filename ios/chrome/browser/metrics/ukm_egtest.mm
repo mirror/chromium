@@ -28,6 +28,7 @@
 #import "ios/public/provider/chrome/browser/signin/fake_chrome_identity.h"
 #import "ios/public/provider/chrome/browser/signin/fake_chrome_identity_service.h"
 #import "ios/testing/wait_util.h"
+#import "ios/web/public/test/earl_grey/web_view_matchers.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -36,6 +37,7 @@
 #endif
 
 using chrome_test_util::AccountsSyncButton;
+using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::ButtonWithAccessibilityLabelId;
 using chrome_test_util::GetIncognitoTabCount;
 using chrome_test_util::IsIncognitoMode;
@@ -149,6 +151,7 @@ void ClearBrowsingData() {
       performAction:grey_tap()];
 }
 
+
 void OpenNewIncognitoTab() {
   NSUInteger incognito_tab_count = GetIncognitoTabCount();
   chrome_test_util::OpenNewIncognitoTab();
@@ -243,7 +246,9 @@ void SignOut() {
 
 @end
 
-@implementation UKMTestCase
+@implementation UKMTestCase {
+  bool _expect_ukm_enabled_at_end;
+}
 
 + (void)setUp {
   [super setUp];
@@ -272,11 +277,12 @@ void SignOut() {
   GetApplicationContext()->GetMetricsServicesManager()->UpdateUploadPermissions(
       true);
   AssertUKMEnabled(true);
+  _expect_ukm_enabled_at_end = true;
 }
 
 - (void)tearDown {
   AssertSyncInitialized(true);
-  AssertUKMEnabled(true);
+  AssertUKMEnabled(_expect_ukm_enabled_at_end);
 
   // Revoke metrics consent and update MetricsServicesManager.
   GREYAssert(g_metrics_enabled, @"Unpaired set/reset of user consent.");
@@ -403,6 +409,39 @@ void SignOut() {
 // testMultiDisableSync not needed, since there can't be multiple profiles.
 
 // TODO(crbug.com/793082): Implement testSecondaryPassphrase.
+- (void)testSecondaryPassphrase {
+  uint64_t original_client_id = metrics::UkmEGTestHelper::client_id();
+
+  [ChromeEarlGreyUI openSettingsMenu];
+  // Open accounts settings, then sync settings.
+  [[EarlGrey selectElementWithMatcher:SettingsAccountButton()]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:AccountsSyncButton()]
+      performAction:grey_tap()];
+  // Open sync encryption menu.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(l10n_util::GetNSStringWithFixup(IDS_IOS_SYNC_ENCRYPTION_TITLE))]
+      performAction:grey_tap()];
+  // Select passphrase encryption.
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_SYNC_FULL_ENCRYPTION_DATA)]
+      performAction:grey_tap()];
+  // Type and confirm passphrase, then submit
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityValue(@"Passphrase")]
+     performAction:grey_typeText(@"mypassphrase")];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityValue(@"Confirm passphrase")]
+   performAction:grey_typeText(@"mypassphrase")];
+  [[EarlGrey
+    selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_IOS_SYNC_DECRYPT_BUTTON)]
+   performAction:grey_tap()];
+
+  AssertUKMEnabled(false);
+  // Client ID should have been reset.
+  GREYAssert(original_client_id != metrics::UkmEGTestHelper::client_id(),
+             @"Client ID was not reset.");
+
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+   performAction:grey_tap()];
+  _expect_ukm_enabled_at_end = false;
+}
 
 // Make sure that UKM is disabled when sync is not enabled.
 - (void)testSingleSyncSignout {
