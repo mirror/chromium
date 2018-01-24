@@ -1125,26 +1125,12 @@ void ServiceWorkerVersion::GetClients(
     GetClientsCallback callback) {
   service_worker_client_utils::GetClients(
       weak_factory_.GetWeakPtr(), std::move(options),
-      base::Bind(&ServiceWorkerVersion::OnGetClientsFinished,
-                 weak_factory_.GetWeakPtr(),
-                 base::Passed(std::move(callback))));
-}
-
-void ServiceWorkerVersion::OnGetClientsFinished(
-    GetClientsCallback callback,
-    std::unique_ptr<ServiceWorkerClientPtrs> clients) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  // When Clients.matchAll() is called on the script evaluation phase, the
-  // running status can be STARTING here.
-  if (running_status() != EmbeddedWorkerStatus::STARTING &&
-      running_status() != EmbeddedWorkerStatus::RUNNING) {
-    std::move(callback).Run(
-        std::vector<blink::mojom::ServiceWorkerClientInfoPtr>());
-    return;
-  }
-
-  std::move(callback).Run(std::move(*clients));
+      base::AdaptCallbackForRepeating(base::BindOnce(
+          [](GetClientsCallback callback,
+             std::unique_ptr<ServiceWorkerClientPtrs> clients) {
+            std::move(callback).Run(std::move(*clients));
+          },
+          std::move(callback))));
 }
 
 void ServiceWorkerVersion::OnSetCachedMetadataFinished(int64_t callback_id,

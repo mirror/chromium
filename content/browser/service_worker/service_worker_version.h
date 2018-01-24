@@ -695,9 +695,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
       int request_id,
       blink::mojom::ServiceWorkerClientInfoPtr client_info);
 
-  void OnGetClientsFinished(GetClientsCallback callback,
-                            std::unique_ptr<ServiceWorkerClientPtrs> clients);
-
   // The timeout timer periodically calls OnTimeoutTimer, which stops the worker
   // if it is excessively idle or unresponsive to ping.
   void StartTimeoutTimer();
