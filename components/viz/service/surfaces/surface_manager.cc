@@ -47,18 +47,9 @@ SurfaceManager::SurfaceManager(uint32_t number_of_frames_to_activation_deadline)
     : dependency_tracker_(this, number_of_frames_to_activation_deadline),
       root_surface_id_(FrameSinkId(0u, 0u),
                        LocalSurfaceId(1u, base::UnguessableToken::Create())),
+      use_timer_(base::SequencedTaskRunnerHandle::IsSet()),
       weak_factory_(this) {
   thread_checker_.DetachFromThread();
-
-    // Android WebView doesn't have a task runner and doesn't need the timer.
-    if (base::SequencedTaskRunnerHandle::IsSet()) {
-      temporary_reference_timer_.Start(
-          FROM_HERE, base::TimeDelta::FromSeconds(10), this,
-          &SurfaceManager::MarkOldTemporaryReferences);
-    }
-    // TODO(kylechar): After collecting UMA stats on the number of old temporary
-    // references, we may want to turn the timer off when there are no temporary
-    // references to avoid waking the thread unnecessarily.
 }
 
 SurfaceManager::~SurfaceManager() {
@@ -367,6 +358,13 @@ void SurfaceManager::AddTemporaryReference(const SurfaceId& surface_id) {
   temporary_references_[surface_id].owner = base::Optional<FrameSinkId>();
   temporary_reference_ranges_[surface_id.frame_sink_id()].push_back(
       surface_id.local_surface_id());
+
+  if (use_timer_ && !temporary_reference_timer_.IsRunning()) {
+    LOG(ERROR) << "Start timer.";
+    temporary_reference_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromSeconds(10), this,
+        &SurfaceManager::MarkOldTemporaryReferences);
+  }
 }
 
 void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
@@ -396,6 +394,13 @@ void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
   // range tracking map entry.
   if (frame_sink_temp_refs.empty())
     temporary_reference_ranges_.erase(frame_sink_id);
+
+  // Stop the timer if there are no more temporary references.
+  if (temporary_references_.empty() && use_timer_ &&
+      temporary_reference_timer_.IsRunning()) {
+    LOG(ERROR) << "Stop timer.";
+    temporary_reference_timer_.Stop();
+  }
 }
 
 Surface* SurfaceManager::GetLatestInFlightSurface(
