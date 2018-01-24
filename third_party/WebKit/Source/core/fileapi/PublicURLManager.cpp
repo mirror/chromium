@@ -129,7 +129,14 @@ String PublicURLManager::RegisterURL(URLRegistrable* registrable) {
 }
 
 void PublicURLManager::Revoke(const KURL& url) {
-  if (!url.ProtocolIs("blob"))
+  if (is_stopped_)
+    return;
+  // Don't bother trying to revoke URLs that can't have been registered anyway.
+  if (!url.ProtocolIs("blob") || url.HasFragmentIdentifier())
+    return;
+  // Don't support revoking cross-origin blob URLs.
+  if (!SecurityOrigin::Create(url)->IsSameSchemeHostPort(
+          GetExecutionContext()->GetSecurityOrigin()))
     return;
 
   if (RuntimeEnabledFeatures::MojoBlobURLsEnabled() && !is_stopped_) {
