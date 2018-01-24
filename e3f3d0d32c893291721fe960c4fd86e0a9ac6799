@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "693b4e1e_e4d3306d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-24T16:13:52Z",
+      "side": 1,
+      "message": "sp: undestandable -\u003e understandable",
+      "revId": "e3f3d0d32c893291721fe960c4fd86e0a9ac6799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
