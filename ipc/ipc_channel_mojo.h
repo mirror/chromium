@@ -28,7 +28,6 @@
 #include "ipc/ipc_mojo_bootstrap.h"
 #include "mojo/public/cpp/bindings/thread_safe_interface_ptr.h"
 #include "mojo/public/cpp/system/core.h"
-#include "mojo/public/interfaces/bindings/native_struct.mojom.h"
 
 namespace IPC {
 
@@ -80,11 +79,11 @@ class IPC_EXPORT ChannelMojo : public Channel,
   // These access protected API of IPC::Message, which has ChannelMojo
   // as a friend class.
   static MojoResult WriteToMessageAttachmentSet(
-      base::Optional<std::vector<mojo::native::SerializedHandlePtr>> handles,
+      base::Optional<std::vector<IPC::mojom::SerializedHandlePtr>> handles,
       Message* message);
   static MojoResult ReadFromMessageAttachmentSet(
       Message* message,
-      base::Optional<std::vector<mojo::native::SerializedHandlePtr>>* handles);
+      base::Optional<std::vector<IPC::mojom::SerializedHandlePtr>>* handles);
 
   // MessagePipeReader::Delegate
   void OnPeerPidReceived(int32_t peer_pid) override;
