@@ -16,6 +16,23 @@
       "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de961f1_2b07b27b",
+        "filename": "ui/gfx/mojo/ca_layer_params.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-24T00:24:33Z",
+      "side": 1,
+      "message": "Would it make sense to union these then? I assume they\u0027re mutually exclusive.",
+      "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
