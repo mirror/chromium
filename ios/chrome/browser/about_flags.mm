@@ -232,7 +232,11 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"ui-refresh-phase-1", flag_descriptions::kUIRefreshPhase1Name,
      flag_descriptions::kUIRefreshPhase1Description, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(kUIRefreshPhase1)},
-
+    {"context-menu-async-element",
+     flag_descriptions::kContextMenuAsyncElementFetchName,
+     flag_descriptions::kContextMenuAsyncElementFetchDescription,
+     flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(web::features::kContextMenuAsyncElementFetch)},
 };
 
 // Add all switches from experimental flags to |command_line|.
