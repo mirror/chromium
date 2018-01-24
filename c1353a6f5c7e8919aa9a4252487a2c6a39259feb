@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b186d67_a24a03ab",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3890,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "I kept this separate; if the surface changes in the future (eg new frame sink) we wouldn\u0027t need to re-initialize the controller.",
+      "parentUuid": "26d3f67e_22be8fbf",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79f0df6_cff662e7",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5389258e_3dd7d0fb",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e79f0df6_cff662e7",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0d28ef29_27f17b0b",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "Checked they exist.",
+      "parentUuid": "859aa4ef_2ad25c82",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afe0be26_7fb9640b",
         "filename": "content/renderer/media/webmediaplayer_ms.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4ec96d_1398841c",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "Not at the moment; we also don\u0027t use the SurfaceLayerBridgeObserver for WebMediaPlayerMS (usd for video in surfaces).",
+      "parentUuid": "afe0be26_7fb9640b",
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "30d41446_1900cd3f",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "1. Done.\n2. I currently intend to use it for updates.",
+      "parentUuid": "9dbe824e_36b85611",
+      "range": {
+        "startLine": 108,
+        "startChar": 15,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f560dd97_aadcc592",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.h",
         "patchSetId": 3
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "f8c1fae7_d003966d",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f560dd97_aadcc592",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 23
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e54c2b5_4dc8514a",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
         "patchSetId": 3
@@ -136,6 +256,30 @@
       "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d6b989_0787afbb",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e54c2b5_4dc8514a",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 31
+      },
+      "revId": "c1353a6f5c7e8919aa9a4252487a2c6a39259feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

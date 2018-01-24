@@ -22,6 +22,30 @@
       "revId": "18a58336c49686626ef4ed67b37c56aca5b1b89a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7134d8_643238c6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-24T07:37:44Z",
+      "side": 0,
+      "message": "IIRC, we\u0027re not toggling into/out of PIP using this button. Clicking the button will only enter PIP. We expect the [x] close button will exit PIP state.",
+      "parentUuid": "bd0b05d1_7484162d",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "18a58336c49686626ef4ed67b37c56aca5b1b89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
