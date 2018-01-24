@@ -22,6 +22,30 @@
       "revId": "8dd0a2624dd53add9093aa6c1b8dc8341c59da0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690bf97d_72e3f6cc",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-24T23:00:54Z",
+      "side": 1,
+      "message": "Rob found that we have to add this flag to the list that renderer can process. Will do in another CL",
+      "parentUuid": "c462b45e_8a68ab7d",
+      "range": {
+        "startLine": 191,
+        "startChar": 13,
+        "endLine": 191,
+        "endChar": 30
+      },
+      "revId": "8dd0a2624dd53add9093aa6c1b8dc8341c59da0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
