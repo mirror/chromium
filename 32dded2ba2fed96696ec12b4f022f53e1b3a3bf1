@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "49347c07_54dc2116",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-24T00:02:15Z",
+      "side": 1,
+      "message": "So, this increases the run time perf from O(1) to O(n) for looking up the sheet to be removed. I doubt that will be a problem in practice, though.",
+      "revId": "32dded2ba2fed96696ec12b4f022f53e1b3a3bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36924724_8b1802cb",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 1
@@ -115,6 +132,23 @@
       "writtenOn": "2018-01-20T13:55:41Z",
       "side": 1,
       "message": "This is a fallback. If no ID is given, we generate one. As I noted in the other comment, I intend to remove this method eventually. The script injection code will pass in an ID explicitly to the other method.",
+      "revId": "32dded2ba2fed96696ec12b4f022f53e1b3a3bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925532d0_bfb3c531",
+        "filename": "third_party/WebKit/Source/core/exported/WebDocument.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-24T00:02:15Z",
+      "side": 1,
+      "message": "We should test the expectation for the API when inserting a sheet with the same id multiple times, including what happens when we try to remove it/them afterwards.",
       "revId": "32dded2ba2fed96696ec12b4f022f53e1b3a3bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
