@@ -40,6 +40,11 @@ class DownloadManagerTabHelperTest : public PlatformTest {
   FakeDownloadManagerTabHelperDelegate* delegate_;
 };
 
+// Tests that tab helper has correct web_state.
+TEST_F(DownloadManagerTabHelperTest, WebState) {
+  EXPECT_EQ(web_state_.get(), tab_helper()->web_state());
+}
+
 // Tests that created download has NotStarted state.
 TEST_F(DownloadManagerTabHelperTest, DownloadCreation) {
   ASSERT_FALSE(delegate_.state);
