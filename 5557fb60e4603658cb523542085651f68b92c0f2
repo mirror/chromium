@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "81871823_7c5d0221",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-24T22:52:50Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not so much worried about the compiler, but I find that it improves readability.. instead of\n\n  if (...) {\n    DCHECK\n  } else {\n    DCHECK\n  }\n\nwhere I tend to try and understand what the if is checking before realizing that all of this is just a dcheck, I see\n\n#if DCHECK_IS_ON()\n  if (...) {\n    DCHECK\n  } else {\n    DCHECK\n  }\n#endif\n\nand I\u0027m less concerned with checking the correctness of the ifs/elses because I\u0027m confident that this is just assert code.",
+      "parentUuid": "89bd7ef2_ff765307",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b326b0f_69a07cd9",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 6
