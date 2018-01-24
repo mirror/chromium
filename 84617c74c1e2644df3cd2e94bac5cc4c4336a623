@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ee5df9_b5fb4a1a",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T18:41:26Z",
+      "side": 1,
+      "message": "nit: addressGuid",
+      "range": {
+        "startLine": 152,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 26
+      },
+      "revId": "84617c74c1e2644df3cd2e94bac5cc4c4336a623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ddbec1_05d34a43",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T18:41:26Z",
+      "side": 1,
+      "message": "nit: the address",
+      "range": {
+        "startLine": 174,
+        "startChar": 20,
+        "endLine": 174,
+        "endChar": 22
+      },
+      "revId": "84617c74c1e2644df3cd2e94bac5cc4c4336a623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3089b078_b8c6e230",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T18:41:26Z",
+      "side": 1,
+      "message": "nit: cardGuid",
+      "range": {
+        "startLine": 242,
+        "startChar": 14,
+        "endLine": 242,
+        "endChar": 23
+      },
+      "revId": "84617c74c1e2644df3cd2e94bac5cc4c4336a623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc24209b_52b7c4ad",
+        "filename": "chrome/test/data/extensions/api_test/autofill_private/test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T18:41:26Z",
+      "side": 1,
+      "message": "nit: the card",
+      "range": {
+        "startLine": 260,
+        "startChar": 20,
+        "endLine": 260,
+        "endChar": 22
+      },
+      "revId": "84617c74c1e2644df3cd2e94bac5cc4c4336a623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
