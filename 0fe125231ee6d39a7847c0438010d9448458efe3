@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df71f5b_43e38ece",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-24T21:59:34Z",
+      "side": 1,
+      "message": "compilation failure, not test failure",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "0fe125231ee6d39a7847c0438010d9448458efe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
