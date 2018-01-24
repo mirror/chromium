@@ -41,7 +41,6 @@ constexpr int kStatusIndicatorMaxAnimationSeconds = 10;
 constexpr int kStatusIndicatorOffsetFromBottom = 3;
 constexpr int kStatusIndicatorRadiusDip = 2;
 constexpr int kNotificationIndicatorRadiusDip = 7;
-constexpr int kNotificationIndicatorOffset = 12;
 constexpr SkColor kIndicatorBorderColor = SkColorSetA(SK_ColorBLACK, 0x4D);
 constexpr SkColor kIndicatorColor = SK_ColorWHITE;
 
@@ -134,6 +133,51 @@ class ShelfButtonAnimation : public gfx::AnimationDelegate {
 }  // namespace
 
 namespace ash {
+////////////////////////////////////////////////////////////////////////////////
+// ShelfButton::AppNotificationIndicatorView
+
+// The indicator which is activated when the app corresponding with this
+// ShelfButton recieves a notification. This is implemented as a view in order
+// to ensure the indicator appears in front of the icon.
+class ShelfButton::AppNotificationIndicatorView : public views::View {
+ public:
+  AppNotificationIndicatorView(SkColor indicator_color = kIndicatorColor)
+      : indicator_color_(indicator_color) {
+    SetVisible(false);
+  }
+  ~AppNotificationIndicatorView() override {}
+
+  void OnPaint(gfx::Canvas* canvas) override {
+    gfx::ScopedCanvas scoped(canvas);
+
+    canvas->SaveLayerAlpha(SK_AlphaOPAQUE);
+
+    DCHECK_EQ(width(), height());
+    DCHECK_EQ(kNotificationIndicatorRadiusDip, width() / 2);
+    const float dsf = canvas->UndoDeviceScaleFactor();
+    const int kStrokeWidthPx = 1;
+    gfx::PointF center = gfx::RectF(GetLocalBounds()).CenterPoint();
+    center.Scale(dsf);
+
+    // Fill the center.
+    cc::PaintFlags flags;
+    flags.setColor(indicator_color_);
+    flags.setAntiAlias(true);
+    canvas->DrawCircle(
+        center, dsf * kNotificationIndicatorRadiusDip - kStrokeWidthPx, flags);
+
+    // Stroke the border.
+    flags.setColor(SkColorSetA(SK_ColorBLACK, 0x4D));
+    flags.setStyle(cc::PaintFlags::kStroke_Style);
+    canvas->DrawCircle(
+        center, dsf * kNotificationIndicatorRadiusDip - kStrokeWidthPx / 2.0f,
+        flags);
+  }
+
+  const SkColor indicator_color_;
+
+  DISALLOW_COPY_AND_ASSIGN(AppNotificationIndicatorView);
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // ShelfButton::AppStatusIndicatorView
@@ -229,10 +273,16 @@ ShelfButton::ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view)
       shelf_view_(shelf_view),
       icon_view_(new views::ImageView()),
       indicator_(new AppStatusIndicatorView()),
+      notification_indicator_(new AppNotificationIndicatorView()),
       state_(STATE_NORMAL),
       destroyed_flag_(nullptr),
       is_touchable_app_context_menu_enabled_(
           app_list::features::IsTouchableAppContextMenuEnabled()) {
+
+  if (is_touchable_app_context_menu_enabled_) {
+    AddChildView(notification_indicator_);
+  }
+
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
   SetInkDropMode(InkDropMode::ON);
   set_ink_drop_base_color(kShelfInkDropBaseColor);
@@ -249,7 +299,7 @@ ShelfButton::ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view)
   icon_view_->SetPaintToLayer();
   icon_view_->layer()->SetFillsBoundsOpaquely(false);
   icon_view_->SetHorizontalAlignment(views::ImageView::CENTER);
-  icon_view_->SetVerticalAlignment(views::ImageView::LEADING);
+  icon_view_->SetVerticalAlignment(views::ImageView::CENTER);
   // Do not make this interactive, so that events are sent to ShelfView.
   icon_view_->set_can_process_events_within_subtree(false);
 
@@ -307,7 +357,7 @@ void ShelfButton::AddState(State state) {
       indicator_->ShowAttention(true);
 
     if (is_touchable_app_context_menu_enabled_ && (state & STATE_NOTIFICATION))
-      SchedulePaint();
+      notification_indicator_->SetVisible(true);
 
     if (state & STATE_DRAGGING)
       ScaleAppIcon(true);
@@ -322,7 +372,7 @@ void ShelfButton::ClearState(State state) {
       indicator_->ShowAttention(false);
 
     if (is_touchable_app_context_menu_enabled_ && (state & STATE_NOTIFICATION))
-      SchedulePaint();
+      notification_indicator_->SetVisible(false);
 
     if (state & STATE_DRAGGING)
       ScaleAppIcon(false);
@@ -448,6 +498,10 @@ void ShelfButton::Layout() {
                 icon_width, icon_height);
   // The indicator should be aligned with the icon, not the icon + shadow.
   gfx::Point indicator_midpoint = icon_view_bounds.CenterPoint();
+  if (is_touchable_app_context_menu_enabled_) {
+  const gfx::Rect notification_indicator_bounds(icon_view_bounds.right() - kNotificationIndicatorRadiusDip * 2, icon_view_bounds.y(), kNotificationIndicatorRadiusDip*2, kNotificationIndicatorRadiusDip*2);
+  notification_indicator_->SetBoundsRect(notification_indicator_bounds);
+  }
   icon_view_bounds.Inset(insets_shadows);
   icon_view_bounds.AdjustToFit(gfx::Rect(size()));
   icon_view_->SetBoundsRect(icon_view_bounds);
@@ -564,41 +618,6 @@ void ShelfButton::NotifyClick(const ui::Event& event) {
     listener_->ButtonPressed(this, event, GetInkDrop());
 }
 
-void ShelfButton::PaintButtonContents(gfx::Canvas* canvas) {
-  // TODO(newcomer): Implement the notification indicator as a view because
-  // PaintButtonContents always paints behind the icon
-  // (https://crbug.com/803629).
-  if (!is_touchable_app_context_menu_enabled_)
-    return;
-
-  if (~state_ & STATE_NOTIFICATION)
-    return;
-
-  gfx::ScopedCanvas scoped(canvas);
-
-  canvas->SaveLayerAlpha(SK_AlphaOPAQUE);
-
-  const float dsf = canvas->UndoDeviceScaleFactor();
-  const int kStrokeWidthPx = 1;
-  gfx::PointF center = gfx::RectF(GetLocalBounds()).top_right();
-  center.Offset(-kNotificationIndicatorOffset, kNotificationIndicatorOffset);
-  center.Scale(dsf);
-
-  // Fill the center.
-  cc::PaintFlags flags;
-  flags.setColor(kIndicatorColor);
-  flags.setAntiAlias(true);
-  canvas->DrawCircle(
-      center, dsf * kNotificationIndicatorRadiusDip - kStrokeWidthPx, flags);
-
-  // Stroke the border.
-  flags.setColor(kIndicatorBorderColor);
-  flags.setStyle(cc::PaintFlags::kStroke_Style);
-  canvas->DrawCircle(
-      center, dsf * kNotificationIndicatorRadiusDip - kStrokeWidthPx / 2.0f,
-      flags);
-}
-
 void ShelfButton::UpdateState() {
   indicator_->SetVisible(!(state_ & STATE_HIDDEN) &&
                          (state_ & STATE_ATTENTION || state_ & STATE_RUNNING));
@@ -607,9 +626,9 @@ void ShelfButton::UpdateState() {
       shelf_view_->shelf()->IsHorizontalAlignment();
   icon_view_->SetHorizontalAlignment(is_horizontal_shelf
                                          ? views::ImageView::CENTER
-                                         : views::ImageView::LEADING);
+                                         : views::ImageView::CENTER);
   icon_view_->SetVerticalAlignment(is_horizontal_shelf
-                                       ? views::ImageView::LEADING
+                                       ? views::ImageView::CENTER
                                        : views::ImageView::CENTER);
   SchedulePaint();
 }
