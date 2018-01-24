@@ -266,6 +266,20 @@ URLRequestJob* URLRequestHttpJob::Factory(URLRequest* request,
 
   const GURL& url = request->url();
 
+  // Check for .well-knwon/permafill/.
+  std::string permafill_signature = "/.well-known/permafill/";
+  const std::string path = url.path();
+  auto permafill_offset = path.find(permafill_signature);
+  if (path.size() >= 3 && path.substr(path.size() - 3) == ".js" &&
+      permafill_offset != std::string::npos) {
+    permafill_offset += permafill_signature.size();
+    const std::string permafill_name =
+        path.substr(permafill_offset, path.size() - permafill_offset - 3);
+    return new URLRequestRedirectJob(
+        request, network_delegate, GURL("browser:" + permafill_name),
+        URLRequestRedirectJob::REDIRECT_307_TEMPORARY_REDIRECT, "Permafill");
+  }
+
   // Check for reasons not to return a URLRequestHttpJob. These don't apply to
   // https and wss requests.
   if (!url.SchemeIsCryptographic()) {

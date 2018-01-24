@@ -1076,6 +1076,8 @@ void BrowserProcessImpl::PreCreateThreads(
   // commit (including in iframes) in extension processes.
   ChildProcessSecurityPolicy::GetInstance()->RegisterWebSafeIsolatedScheme(
       extensions::kExtensionScheme, true);
+  ChildProcessSecurityPolicy::GetInstance()->RegisterWebSafeIsolatedScheme(
+      extensions::kBrowserScheme, true);
 #endif
 
   if (command_line.HasSwitch(network::switches::kLogNetLog)) {

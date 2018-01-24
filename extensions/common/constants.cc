@@ -8,6 +8,8 @@ namespace extensions {
 
 const char kExtensionScheme[] = "chrome-extension";
 
+const char kBrowserScheme[] = "browser";
+
 const base::FilePath::CharType kManifestFilename[] =
     FILE_PATH_LITERAL("manifest.json");
 const base::FilePath::CharType kLocaleFolder[] =

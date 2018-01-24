@@ -620,6 +620,7 @@ void ChromeContentClient::AddContentDecryptionModules(
 
 static const char* const kChromeStandardURLSchemes[] = {
     extensions::kExtensionScheme,
+    extensions::kBrowserScheme,
     chrome::kChromeNativeScheme,
     chrome::kChromeSearchScheme,
     dom_distiller::kDomDistillerScheme,
@@ -647,6 +648,7 @@ void ChromeContentClient::AddAdditionalSchemes(Schemes* schemes) {
   // so there is no danger of manipulation or eavesdropping on communication
   // with them by third parties.
   schemes->secure_schemes.push_back(extensions::kExtensionScheme);
+  schemes->secure_schemes.push_back(extensions::kBrowserScheme);
 
   schemes->secure_origins = secure_origin_whitelist::GetWhitelist();
 
@@ -666,8 +668,10 @@ void ChromeContentClient::AddAdditionalSchemes(Schemes* schemes) {
   // overridden by the web_accessible_resources manifest key.
   // TODO(kalman): See what happens with a service worker.
   schemes->cors_enabled_schemes.push_back(extensions::kExtensionScheme);
+  schemes->cors_enabled_schemes.push_back(extensions::kBrowserScheme);
 
   schemes->csp_bypassing_schemes.push_back(extensions::kExtensionScheme);
+  schemes->csp_bypassing_schemes.push_back(extensions::kBrowserScheme);
 #endif
 
 #if defined(OS_CHROMEOS)

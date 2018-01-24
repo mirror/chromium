@@ -48,6 +48,10 @@ scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
 std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
 CreateExtensionProtocolHandler(bool is_incognito, InfoMap* extension_info_map);
 
+// Creates the handlers for the browser:// scheme.
+std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateBrowserProtocolHandler();
+
 // Allows tests to set a special handler for chrome-extension:// urls. Note
 // that this goes through all the normal security checks; it's essentially a
 // way to map extra resources to be included in extensions.

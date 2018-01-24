@@ -13,6 +13,8 @@ namespace extensions {
 // Scheme we serve extension content from.
 extern const char kExtensionScheme[];
 
+extern const char kBrowserScheme[];
+
 // The name of the manifest inside an extension.
 extern const base::FilePath::CharType kManifestFilename[];
 

@@ -234,6 +234,9 @@ Dispatcher::Dispatcher(std::unique_ptr<DispatcherDelegate> delegate)
   // rules for the fetch API are consistent with XHR.
   WebSecurityPolicy::RegisterURLSchemeAsSupportingFetchAPI(extension_scheme);
 
+  WebString browser_scheme(WebString::FromASCII(kBrowserScheme));
+  WebSecurityPolicy::RegisterURLSchemeAsSupportingFetchAPI(browser_scheme);
+
   // Extension resources, when loaded as the top-level document, should bypass
   // Blink's strict first-party origin checks.
   WebSecurityPolicy::RegisterURLSchemeAsFirstPartyWhenTopLevel(

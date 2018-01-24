@@ -771,6 +771,7 @@ bool ProfileIOData::IsHandledProtocol(const std::string& scheme) {
     content::kChromeDevToolsScheme,
     dom_distiller::kDomDistillerScheme,
 #if BUILDFLAG(ENABLE_EXTENSIONS)
+    extensions::kBrowserScheme,
     extensions::kExtensionScheme,
 #endif
     content::kChromeUIScheme,
@@ -1304,6 +1305,9 @@ ProfileIOData::SetUpJobFactoryDefaults(
       extensions::CreateExtensionProtocolHandler(is_incognito,
                                                  extension_info_map_.get()));
   DCHECK(set_protocol);
+  set_protocol = job_factory->SetProtocolHandler(
+      extensions::kBrowserScheme, extensions::CreateBrowserProtocolHandler());
+  DCHECK(set_protocol);
 #endif
   set_protocol = job_factory->SetProtocolHandler(
       url::kDataScheme, base::MakeUnique<net::DataProtocolHandler>());
@@ -1370,6 +1374,8 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
   builder->SetProtocolHandler(extensions::kExtensionScheme,
                               extensions::CreateExtensionProtocolHandler(
                                   is_incognito, extension_info_map_.get()));
+  builder->SetProtocolHandler(extensions::kBrowserScheme,
+                              extensions::CreateBrowserProtocolHandler());
 #endif
 #if defined(OS_CHROMEOS)
   if (profile_params_) {

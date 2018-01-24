@@ -78,6 +78,7 @@
 #include "net/http/http_response_info.h"
 #include "net/url_request/url_request_error_job.h"
 #include "net/url_request/url_request_file_job.h"
+#include "net/url_request/url_request_redirect_job.h"
 #include "net/url_request/url_request_simple_job.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "url/url_util.h"
@@ -529,6 +530,21 @@ class ExtensionProtocolHandler
   DISALLOW_COPY_AND_ASSIGN(ExtensionProtocolHandler);
 };
 
+class BrowserProtocolHandler
+    : public net::URLRequestJobFactory::ProtocolHandler {
+ public:
+  BrowserProtocolHandler() {}
+
+  ~BrowserProtocolHandler() override {}
+
+  net::URLRequestJob* MaybeCreateJob(
+      net::URLRequest* request,
+      net::NetworkDelegate* network_delegate) const override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BrowserProtocolHandler);
+};
+
 // Creates URLRequestJobs for extension:// URLs.
 net::URLRequestJob*
 ExtensionProtocolHandler::MaybeCreateJob(
@@ -649,6 +665,33 @@ ExtensionProtocolHandler::MaybeCreateJob(
                                     send_cors_header,
                                     follow_symlinks_anywhere,
                                     verify_job);
+}
+
+// Creates URLRequestJobs for browser:// URLs.
+net::URLRequestJob* BrowserProtocolHandler::MaybeCreateJob(
+    net::URLRequest* request,
+    net::NetworkDelegate* network_delegate) const {
+  // browser://permafill-name?fallback-url
+
+  std::string permafill_name = request->url().host();
+
+  if (permafill_name != "test") {
+    std::string permafill_fallback = request->url().query();
+    GURL permafill_fallback_url(permafill_fallback);
+    if (!permafill_fallback_url.is_valid()) {
+      return new net::URLRequestErrorJob(request, network_delegate,
+                                         net::ERR_FAILED);
+    }
+    return new net::URLRequestRedirectJob(
+        request, network_delegate, permafill_fallback_url,
+        net::URLRequestRedirectJob::REDIRECT_307_TEMPORARY_REDIRECT,
+        "Fallback");
+  }
+
+  return new net::URLRequestRedirectJob(
+      request, network_delegate,
+      GURL("chrome-extension://acihfchgdiicfpkconamoakocligclao/test/index.js"),
+      net::URLRequestRedirectJob::REDIRECT_307_TEMPORARY_REDIRECT, "Permafill");
 }
 
 class FileLoaderObserver : public content::FileURLLoaderObserver {
@@ -980,6 +1023,11 @@ CreateExtensionProtocolHandler(bool is_incognito,
                                extensions::InfoMap* extension_info_map) {
   return std::make_unique<ExtensionProtocolHandler>(is_incognito,
                                                     extension_info_map);
+}
+
+std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
+CreateBrowserProtocolHandler() {
+  return std::make_unique<BrowserProtocolHandler>();
 }
 
 void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler) {
