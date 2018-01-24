@@ -2816,8 +2816,6 @@ split_static_library("ui") {
       "views/passwords/manage_password_pending_view.h",
       "views/passwords/manage_password_save_confirmation_view.cc",
       "views/passwords/manage_password_save_confirmation_view.h",
-      "views/passwords/manage_password_sign_in_promo_view.cc",
-      "views/passwords/manage_password_sign_in_promo_view.h",
       "views/passwords/manage_password_update_pending_view.cc",
       "views/passwords/manage_password_update_pending_view.h",
       "views/passwords/manage_passwords_bubble_delegate_view_base.cc",

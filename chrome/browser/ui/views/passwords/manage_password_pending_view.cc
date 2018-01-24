@@ -10,7 +10,6 @@
 #include "build/buildflag.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
-#include "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
@@ -133,6 +132,37 @@ std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
 }
 }  // namespace
 
+class ManagePasswordSigninPromoDialogDelegate {
+ public:
+  explicit ManagePasswordSigninPromoDialogDelegate(
+      ManagePasswordsBubbleModel* model)
+      : model_(model) {
+    DCHECK(model_);
+  }
+  virtual ~ManagePasswordSigninPromoDialogDelegate() {}
+
+  bool Accept() {
+    model_->OnSignInToChromeClicked();
+    return true;
+  }
+  bool Cancel() {
+    model_->OnSkipSignInClicked();
+    return true;
+  }
+
+  base::string16 GetDialogButtonLabel(ui::DialogButton button) const {
+    return l10n_util::GetStringUTF16(
+        button == ui::DIALOG_BUTTON_OK
+            ? IDS_PASSWORD_MANAGER_SIGNIN_PROMO_SIGN_IN
+            : IDS_PASSWORD_MANAGER_SIGNIN_PROMO_NO_THANKS);
+  }
+
+ private:
+  ManagePasswordsBubbleModel* const model_;
+
+  DISALLOW_COPY_AND_ASSIGN(ManagePasswordSigninPromoDialogDelegate);
+};
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
 class ManagePasswordBubbleSyncPromoDelegate : public BubbleSyncPromoDelegate {
  public:
@@ -155,6 +185,8 @@ class ManagePasswordBubbleSyncPromoDelegate : public BubbleSyncPromoDelegate {
 
  private:
   ManagePasswordPendingView* owner_;
+
+  DISALLOW_COPY_AND_ASSIGN(ManagePasswordBubbleSyncPromoDelegate);
 };
 #endif
 
@@ -167,7 +199,6 @@ ManagePasswordPendingView::ManagePasswordPendingView(
                                             anchor_view,
                                             anchor_point,
                                             reason),
-      sign_in_promo_(nullptr),
       desktop_ios_promo_(nullptr),
       username_field_(nullptr),
       password_view_button_(nullptr),
@@ -202,8 +233,8 @@ ManagePasswordPendingView::ManagePasswordPendingView(
 ManagePasswordPendingView::~ManagePasswordPendingView() = default;
 
 bool ManagePasswordPendingView::Accept() {
-  if (sign_in_promo_)
-    return sign_in_promo_->Accept();
+  if (signin_promo_delegate_)
+    return signin_promo_delegate_->Accept();
 #if defined(OS_WIN)
   if (desktop_ios_promo_)
     return desktop_ios_promo_->Accept();
@@ -218,8 +249,8 @@ bool ManagePasswordPendingView::Accept() {
 }
 
 bool ManagePasswordPendingView::Cancel() {
-  if (sign_in_promo_)
-    return sign_in_promo_->Cancel();
+  if (signin_promo_delegate_)
+    return signin_promo_delegate_->Cancel();
 #if defined(OS_WIN)
   if (desktop_ios_promo_)
     return desktop_ios_promo_->Cancel();
@@ -268,8 +299,8 @@ int ManagePasswordPendingView::GetDialogButtons() const {
 }
 base::string16 ManagePasswordPendingView::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  if (sign_in_promo_)
-    return sign_in_promo_->GetDialogButtonLabel(button);
+  if (signin_promo_delegate_)
+    return signin_promo_delegate_->GetDialogButtonLabel(button);
 #if defined(OS_WIN)
   if (desktop_ios_promo_)
     return desktop_ios_promo_->GetDialogButtonLabel(button);
@@ -388,12 +419,12 @@ void ManagePasswordPendingView::ReplaceWithPromo() {
           IDS_PASSWORD_MANAGER_DICE_PROMO_SIGNIN_MESSAGE,
           IDS_PASSWORD_MANAGER_DICE_PROMO_SYNC_MESSAGE));
     } else {
-      sign_in_promo_ = new ManagePasswordSignInPromoView(model());
-      AddChildView(sign_in_promo_);
+      signin_promo_delegate_ =
+          std::make_unique<ManagePasswordSigninPromoDialogDelegate>(model());
     }
 #else
-    sign_in_promo_ = new ManagePasswordSignInPromoView(model());
-    AddChildView(sign_in_promo_);
+    signin_promo_delegate_ =
+        std::make_unique<ManagePasswordSigninPromoDialogDelegate>(model());
 #endif
 #if defined(OS_WIN)
   } else if (model()->state() ==

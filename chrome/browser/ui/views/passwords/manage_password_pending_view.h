@@ -20,7 +20,7 @@ class ToggleImageButton;
 }  // namespace views
 
 class DesktopIOSPromotionBubbleView;
-class ManagePasswordSignInPromoView;
+class ManagePasswordSigninPromoDialogDelegate;
 class ManagePasswordBubbleSyncPromoDelegate;
 
 // A view offering the user the ability to save credentials. Contains a
@@ -72,10 +72,15 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
   void UpdateTitleText(views::StyledLabel* title_view);
 
   // Different promo dialogs that helps the user get access to credentials
-  // across devices. One of these are non-null when the promotion dialog is
-  // active.
-  ManagePasswordSignInPromoView* sign_in_promo_;
+  // across devices. Only one of these is non-null when the promotion dialog
+  // is active.
   DesktopIOSPromotionBubbleView* desktop_ios_promo_;
+  std::unique_ptr<ManagePasswordSigninPromoDialogDelegate>
+      signin_promo_delegate_;
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  std::unique_ptr<ManagePasswordBubbleSyncPromoDelegate>
+      dice_signin_promo_delegate_;
+#endif
 
   views::View* username_field_;
   views::ToggleImageButton* password_view_button_;
@@ -87,11 +92,6 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
   views::Label* password_label_;
 
   bool are_passwords_revealed_;
-
-#if BUILDFLAG(ENABLE_DICE_SUPPORT)
-  std::unique_ptr<ManagePasswordBubbleSyncPromoDelegate>
-      dice_signin_promo_delegate_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordPendingView);
 };
