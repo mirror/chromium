@@ -225,12 +225,6 @@ public class PermissionUpdateInfobarTest {
 
             mActivityTestRule.runJavaScriptCodeInCurrentTab(
                     "document.querySelector('iframe').src = '';");
-            CriteriaHelper.pollUiThread(Criteria.equals(0, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return mActivityTestRule.getInfoBars().size();
-                }
-            }));
 
             ChromeTabUtils.closeCurrentTab(
                     InstrumentationRegistry.getInstrumentation(), mActivityTestRule.getActivity());
