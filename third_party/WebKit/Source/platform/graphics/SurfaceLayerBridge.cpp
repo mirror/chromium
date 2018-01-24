@@ -62,7 +62,7 @@ void SurfaceLayerBridge::CreateSolidColorLayer() {
 void SurfaceLayerBridge::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   if (!current_surface_id_.is_valid() && surface_info.is_valid()) {
-    // First time a SurfaceId is received
+    // First time a SurfaceId is received.
     current_surface_id_ = surface_info.id();
     if (web_layer_) {
       if (observer_)
@@ -84,7 +84,7 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
       observer_->RegisterContentsLayer(web_layer_.get());
   } else if (current_surface_id_ != surface_info.id()) {
     // A different SurfaceId is received, prompting change to existing
-    // SurfaceLayer
+    // SurfaceLayer.
     current_surface_id_ = surface_info.id();
     cc::SurfaceLayer* surface_layer =
         static_cast<cc::SurfaceLayer*>(cc_layer_.get());
@@ -95,6 +95,15 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
   if (observer_)
     observer_->OnWebLayerUpdated();
   cc_layer_->SetBounds(surface_info.size_in_pixels());
+
+  if (observer_) {
+    viz::FrameSinkId frame_sink_id = surface_info.id().frame_sink_id();
+    uint32_t parent_id =
+        surface_info.id().local_surface_id().parent_sequence_number();
+    base::UnguessableToken nonce = surface_info.id().local_surface_id().nonce();
+    observer_->OnSurfaceIdUpdated(frame_sink_id.client_id(),
+                                  frame_sink_id.sink_id(), parent_id, nonce);
+  }
 }
 
 }  // namespace blink

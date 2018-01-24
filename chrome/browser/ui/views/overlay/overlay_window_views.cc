@@ -100,6 +100,10 @@ void OverlayWindowViews::Activate() {
   widget_->Activate();
 }
 
+bool OverlayWindowViews::IsVisible() {
+  return widget_->IsVisible();
+}
+
 bool OverlayWindowViews::IsAlwaysOnTop() const {
   return true;
 }
