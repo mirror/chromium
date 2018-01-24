@@ -6,11 +6,13 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_icon.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.h"
 #include "components/exo/shell_surface.h"
 #include "extensions/common/constants.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/aura/window.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -24,7 +26,11 @@ ArcAppWindow::ArcAppWindow(int task_id,
     : task_id_(task_id),
       app_shelf_id_(app_shelf_id),
       widget_(widget),
-      owner_(owner) {}
+      owner_(owner) {
+  icon_loader_ = std::make_unique<ArcAppIconLoader>(
+      owner_->observed_profile(), app_list::kGridIconDimension, this);
+  icon_loader_->FetchImage(app_shelf_id_.app_id());
+}
 
 ArcAppWindow::~ArcAppWindow() {
   ImageDecoder::Cancel(this);
@@ -47,10 +53,8 @@ void ArcAppWindow::SetDescription(
   if (!title.empty())
     GetNativeWindow()->SetTitle(base::UTF8ToUTF16(title));
   ImageDecoder::Cancel(this);
-  if (unsafe_icon_data_png.empty()) {
-    SetIcon(gfx::ImageSkia());
+  if (unsafe_icon_data_png.empty())
     return;
-  }
 
   if (ArcAppIcon::IsSafeDecodingDisabledForTesting()) {
     SkBitmap bitmap;
@@ -104,6 +108,7 @@ gfx::Rect ArcAppWindow::GetBounds() const {
 }
 
 void ArcAppWindow::Show() {
+  icon_loader_->FetchImage(app_shelf_id_.app_id());
   widget_->Show();
 }
 
@@ -154,6 +159,15 @@ bool ArcAppWindow::IsAlwaysOnTop() const {
 
 void ArcAppWindow::SetAlwaysOnTop(bool always_on_top) {
   NOTREACHED();
+}
+
+void ArcAppWindow::OnAppImageUpdated(const std::string& app_id,
+                                     const gfx::ImageSkia& image) {
+  exo::ShellSurface* shell_surface = static_cast<exo::ShellSurface*>(
+      widget_->widget_delegate()->GetContentsView());
+  if (!shell_surface)
+    return;
+  shell_surface->SetIcon(image);
 }
 
 void ArcAppWindow::SetIcon(const gfx::ImageSkia& icon) {

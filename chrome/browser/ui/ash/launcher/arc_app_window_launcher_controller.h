@@ -82,6 +82,7 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
   void OnTaskSetActive(int32_t task_id) override;
 
   int active_task_id() const { return active_task_id_; }
+  Profile* observed_profile() { return observed_profile_; }
 
  private:
   class AppWindowInfo;

@@ -11,11 +11,14 @@
 #include "ash/public/cpp/shelf_types.h"
 #include "base/macros.h"
 #include "chrome/browser/image_decoder.h"
+#include "chrome/browser/ui/app_icon_loader_delegate.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_shelf_id.h"
 #include "ui/base/base_window.h"
 
+class ArcAppIconLoader;
 class ArcAppWindowLauncherController;
 class ArcAppWindowLauncherItemController;
+
 namespace gfx {
 class ImageSkia;
 }
@@ -25,7 +28,9 @@ class Widget;
 }
 
 // A ui::BaseWindow for a chromeos launcher to control ARC applications.
-class ArcAppWindow : public ui::BaseWindow, public ImageDecoder::ImageRequest {
+class ArcAppWindow : public ui::BaseWindow,
+                     public ImageDecoder::ImageRequest,
+                     public AppIconLoaderDelegate {
  public:
   // TODO(khmel): use a bool set to false by default, or use an existing enum,
   // like ash::mojom::WindowStateType.
@@ -88,6 +93,10 @@ class ArcAppWindow : public ui::BaseWindow, public ImageDecoder::ImageRequest {
   bool IsAlwaysOnTop() const override;
   void SetAlwaysOnTop(bool always_on_top) override;
 
+  // AppIconLOaderDelegate:
+  void OnAppImageUpdated(const std::string& app_id,
+                         const gfx::ImageSkia& image) override;
+
  private:
   // Sets the icon for the window.
   void SetIcon(const gfx::ImageSkia& icon);
@@ -107,6 +116,8 @@ class ArcAppWindow : public ui::BaseWindow, public ImageDecoder::ImageRequest {
   views::Widget* const widget_;
   ArcAppWindowLauncherController* const owner_;
   ArcAppWindowLauncherItemController* controller_ = nullptr;
+
+  std::unique_ptr<ArcAppIconLoader> icon_loader_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcAppWindow);
 };
