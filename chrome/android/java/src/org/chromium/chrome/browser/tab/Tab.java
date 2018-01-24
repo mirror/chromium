@@ -95,6 +95,7 @@ import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.PulseDrawable;
+import org.chromium.chrome.browser.widget.popups.AnchoredPopupWindow;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
@@ -3411,7 +3412,8 @@ public class Tab
 
         Rect rect = new Rect(x, y, x + width, y + height);
         mDownloadIPHBubble.setAnchorRect(rect);
-        mDownloadIPHBubble.setPreferredOrientation(TextBubble.Orientation.BELOW);
+        mDownloadIPHBubble.setPreferredVerticalOrientation(
+                AnchoredPopupWindow.VerticalOrientation.BELOW);
         mDownloadIPHBubble.show();
         createPulse(rect);
     }

@@ -1410,6 +1410,8 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/widget/findinpage/FindToolbarTablet.java",
   "java/src/org/chromium/chrome/browser/widget/incognitotoggle/IncognitoToggleButtonTablet.java",
   "java/src/org/chromium/chrome/browser/widget/newtab/NewTabButton.java",
+  "java/src/org/chromium/chrome/browser/widget/popups/AnchoredPopupWindow.java",
+  "java/src/org/chromium/chrome/browser/widget/popups/ViewAnchoredPopupWindow.java",
   "java/src/org/chromium/chrome/browser/widget/selection/SelectableBottomSheetContent.java",
   "java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
   "java/src/org/chromium/chrome/browser/widget/selection/SelectableItemViewHolder.java",
