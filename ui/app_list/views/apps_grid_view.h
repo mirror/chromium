@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <set>
 #include <string>
 #include <tuple>
@@ -159,7 +160,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Updates the visibility of app list items according to |app_list_state| and
   // |is_in_drag|.
-  void UpdateControlVisibility(AppListViewState app_list_state,
+  void UpdateControlVisibility(ash::AppListViewState app_list_state,
                                bool is_in_drag);
 
   // Overridden from ui::EventHandler:

@@ -50,8 +50,7 @@ void ChromeAppListModelUpdater::MoveItemToFolder(const std::string& id,
   model_->MoveItemToFolder(item, folder_id);
 }
 
-void ChromeAppListModelUpdater::SetStatus(
-    app_list::AppListModel::Status status) {
+void ChromeAppListModelUpdater::SetStatus(ash::AppListModelStatus status) {
   model_->SetStatus(status);
 }
 
@@ -185,7 +184,7 @@ bool ChromeAppListModelUpdater::TabletMode() {
   return search_model_->tablet_mode();
 }
 
-app_list::AppListViewState ChromeAppListModelUpdater::StateFullscreen() {
+ash::AppListViewState ChromeAppListModelUpdater::StateFullscreen() {
   return model_->state_fullscreen();
 }
 

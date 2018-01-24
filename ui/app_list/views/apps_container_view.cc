@@ -124,11 +124,13 @@ void AppsContainerView::ReparentDragEnded() {
   show_state_ = AppsContainerView::SHOW_APPS;
 }
 
-void AppsContainerView::UpdateControlVisibility(AppListViewState app_list_state,
-                                                bool is_in_drag) {
+void AppsContainerView::UpdateControlVisibility(
+    ash::AppListViewState app_list_state,
+    bool is_in_drag) {
   apps_grid_view_->UpdateControlVisibility(app_list_state, is_in_drag);
-  page_switcher_->SetVisible(
-      app_list_state == AppListViewState::FULLSCREEN_ALL_APPS || is_in_drag);
+  page_switcher_->SetVisible(app_list_state ==
+                                 ash::AppListViewState::kFullscreenAllApps ||
+                             is_in_drag);
 }
 
 void AppsContainerView::UpdateOpacity() {
@@ -139,7 +141,7 @@ void AppsContainerView::UpdateOpacity() {
   AppListView* app_list_view = contents_view()->app_list_view();
   bool should_restore_opacity =
       !app_list_view->is_in_drag() &&
-      (app_list_view->app_list_state() != AppListViewState::CLOSED);
+      (app_list_view->app_list_state() != ash::AppListViewState::kClosed);
   int screen_bottom = app_list_view->GetScreenBottom();
   gfx::Rect switcher_bounds = page_switcher_->GetBoundsInScreen();
   float centerline_above_work_area =

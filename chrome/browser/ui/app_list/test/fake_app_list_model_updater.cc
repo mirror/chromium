@@ -92,8 +92,8 @@ bool FakeAppListModelUpdater::TabletMode() {
   return false;
 }
 
-app_list::AppListViewState FakeAppListModelUpdater::StateFullscreen() {
-  return app_list::AppListViewState::CLOSED;
+ash::AppListViewState FakeAppListModelUpdater::StateFullscreen() {
+  return ash::AppListViewState::kClosed;
 }
 
 std::map<std::string, size_t>

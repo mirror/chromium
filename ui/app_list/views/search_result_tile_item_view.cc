@@ -4,8 +4,8 @@
 
 #include "ui/app_list/views/search_result_tile_item_view.h"
 
-#include "ash/app_list/model/app_list_view_state.h"
 #include "ash/app_list/model/search/search_result.h"
+#include "ash/public/cpp/app_list/app_list_types.h"
 #include "base/i18n/number_formatting.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -239,7 +239,7 @@ void SearchResultTileItemView::OnContextMenuClosed(
   base::TimeDelta user_journey_time = base::TimeTicks::Now() - open_time;
   if (IsSuggestedAppTile()) {
     if (view_delegate_->GetModel()->state_fullscreen() ==
-        AppListViewState::PEEKING) {
+        ash::AppListViewState::kPeeking) {
       UMA_HISTOGRAM_TIMES("Apps.ContextMenuUserJourneyTime.SuggestedAppPeeking",
                           user_journey_time);
     } else {
@@ -380,7 +380,7 @@ void SearchResultTileItemView::ShowContextMenuForView(
 
   if (IsSuggestedAppTile()) {
     if (view_delegate_->GetModel()->state_fullscreen() ==
-        AppListViewState::PEEKING) {
+        ash::AppListViewState::kPeeking) {
       UMA_HISTOGRAM_ENUMERATION(
           "Apps.ContextMenuShowSource.SuggestedAppPeeking", source_type,
           ui::MenuSourceType::MENU_SOURCE_TYPE_LAST);

@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 
-#include "ash/app_list/model/app_list_view_state.h"
+#include "ash/public/cpp/app_list/app_list_types.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
@@ -150,7 +150,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   bool HandleScroll(int offset, ui::EventType type);
 
   // Changes the app list state.
-  void SetState(AppListViewState new_state);
+  void SetState(ash::AppListViewState new_state);
 
   // Starts the close animation.
   void StartCloseAnimation(base::TimeDelta animation_duration);
@@ -194,7 +194,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
 
   gfx::NativeView parent_window() const { return parent_window_; }
 
-  AppListViewState app_list_state() const { return app_list_state_; }
+  ash::AppListViewState app_list_state() const { return app_list_state_; }
 
   views::Widget* search_box_widget() const { return search_box_widget_; }
 
@@ -203,8 +203,8 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   AppListMainView* app_list_main_view() const { return app_list_main_view_; }
 
   bool is_fullscreen() const {
-    return app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS ||
-           app_list_state_ == AppListViewState::FULLSCREEN_SEARCH;
+    return app_list_state_ == ash::AppListViewState::kFullscreenAllApps ||
+           app_list_state_ == ash::AppListViewState::kFullscreenSearch;
   }
 
   bool is_tablet_mode() const { return is_tablet_mode_; }
@@ -254,20 +254,20 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   void EndDrag(const gfx::Point& location);
 
   // Set child views for FULLSCREEN_ALL_APPS and PEEKING.
-  void SetChildViewsForStateTransition(AppListViewState new_state);
+  void SetChildViewsForStateTransition(ash::AppListViewState new_state);
 
   // Converts |state| to the fullscreen equivalent.
-  void ConvertAppListStateToFullscreenEquivalent(AppListViewState* state);
+  void ConvertAppListStateToFullscreenEquivalent(ash::AppListViewState* state);
 
   // Kicks off the proper animation for the state change. If an animation is
   // in progress it will be interrupted.
-  void StartAnimationForState(AppListViewState new_state);
+  void StartAnimationForState(ash::AppListViewState new_state);
 
   // Records the state transition for UMA.
-  void RecordStateTransitionForUma(AppListViewState new_state);
+  void RecordStateTransitionForUma(ash::AppListViewState new_state);
 
   // Creates an Accessibility Event if the state transition warrants one.
-  void MaybeCreateAccessibilityEvent(AppListViewState new_state);
+  void MaybeCreateAccessibilityEvent(ash::AppListViewState new_state);
 
   // Gets the display nearest to the parent window.
   display::Display GetDisplayNearestView() const;
@@ -286,7 +286,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // (ie. PEEKING->PEEKING) then return kMaxAppListStateTransition. If this is
   // modified, histograms will be affected.
   AppListStateTransitionSource GetAppListStateTransitionSource(
-      AppListViewState target_state) const;
+      ash::AppListViewState target_state) const;
 
   // Overridden from views::WidgetDelegateView:
   views::View* GetInitiallyFocusedView() override;
@@ -353,7 +353,7 @@ class APP_LIST_EXPORT AppListView : public views::WidgetDelegateView,
   // Whether the background blur is enabled.
   const bool is_background_blur_enabled_;
   // The state of the app list, controlled via SetState().
-  AppListViewState app_list_state_ = AppListViewState::PEEKING;
+  ash::AppListViewState app_list_state_ = ash::AppListViewState::kPeeking;
   // An observer that notifies AppListView when the display has changed.
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
 

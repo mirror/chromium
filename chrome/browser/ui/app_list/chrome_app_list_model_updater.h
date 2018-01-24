@@ -36,7 +36,7 @@ class ChromeAppListModelUpdater : public app_list::AppListModelObserver,
   void RemoveUninstalledItem(const std::string& id) override;
   void MoveItemToFolder(const std::string& id,
                         const std::string& folder_id) override;
-  void SetStatus(app_list::AppListModel::Status status) override;
+  void SetStatus(ash::AppListModelStatus status) override;
   void SetState(ash::AppListState state) override;
   void HighlightItemInstalledFromUI(const std::string& id) override;
   void SetSearchEngineIsGoogle(bool is_google) override;
@@ -74,7 +74,7 @@ class ChromeAppListModelUpdater : public app_list::AppListModelObserver,
       const std::string& folder_id) override;
   bool FindItemIndexForTest(const std::string& id, size_t* index) override;
   bool TabletMode() override;
-  app_list::AppListViewState StateFullscreen() override;
+  ash::AppListViewState StateFullscreen() override;
   bool SearchEngineIsGoogle() override;
   std::map<std::string, size_t> GetIdToAppListIndexMap() override;
   size_t BadgedItemCount() override;
