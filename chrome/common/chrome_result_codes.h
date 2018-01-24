@@ -21,6 +21,9 @@ enum ResultCode {
   // A critical chrome file is missing.
   RESULT_CODE_MISSING_DATA,
 
+  // Unable to load data from the resource bundle.
+  RESULT_CODE_MISSING_RESOURCE_BUNDLE_DATA,
+
   // Failed to make Chrome default browser (not used?).
   RESULT_CODE_SHELL_INTEGRATION_FAILED,
 
