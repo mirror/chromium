@@ -96,6 +96,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   Profile* profile() { return profile_; }
 
  private:
+  int InitializeResourceBundle();
+
   // Sets up the field trials and related initialization. Call only after
   // about:flags have been converted to switches.
   void SetupFieldTrials();

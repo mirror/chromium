@@ -762,6 +762,7 @@ void BrowserMainLoop::MainMessageLoopStart() {
 }
 
 void BrowserMainLoop::PostMainMessageLoopStart() {
+  InitializeServiceManager();
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:SystemMonitor");
     system_monitor_.reset(new base::SystemMonitor);
@@ -1333,6 +1334,7 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   // Shutdown the Service Manager and IPC.
   service_manager_context_.reset();
   mojo_ipc_support_.reset();
+  ipc_thread_.reset();
 
   if (save_file_manager_)
     save_file_manager_->Shutdown();
@@ -1794,6 +1796,16 @@ void BrowserMainLoop::MainMessageLoopRun() {
 #endif
 }
 
+void BrowserMainLoop::InitializeServiceManager() {
+  ipc_thread_.reset(new base::Thread("service_manager"));
+  ipc_thread_->StartWithOptions(
+      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
+  mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
+      ipc_thread_->task_runner(),
+      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
+  service_manager_context_.reset(new ServiceManagerContext);
+}
+
 void BrowserMainLoop::InitializeMojo() {
   if (!parsed_command_line_.HasSwitch(switches::kSingleProcess)) {
     // Disallow mojo sync calls in the browser process. Note that we allow sync
@@ -1809,7 +1821,7 @@ void BrowserMainLoop::InitializeMojo() {
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
 
-  service_manager_context_.reset(new ServiceManagerContext);
+  service_manager_context_->InitForBrowserProcess();
 #if defined(OS_MACOSX)
   mojo::edk::SetMachPortProvider(MachBroker::GetInstance());
 #endif  // defined(OS_MACOSX)
@@ -1856,7 +1868,6 @@ void BrowserMainLoop::InitializeMojo() {
     TRACE_EVENT0("startup", "BrowserMainLoop::InitStartupTracingForDuration");
     InitStartupTracingForDuration(parsed_command_line_);
   }
-
   if (parts_) {
     parts_->ServiceManagerConnectionStarted(
         ServiceManagerConnection::GetForProcess());

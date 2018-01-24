@@ -140,6 +140,8 @@ class UI_BASE_EXPORT ResourceBundle {
   // Initialize the ResourceBundle using given data pack path for testing.
   static void InitSharedInstanceWithPakPath(const base::FilePath& path);
 
+  static void InitSharedInstance(Delegate* delegate);
+
   // Delete the ResourceBundle for this process if it exists.
   static void CleanupSharedInstance();
 
@@ -318,9 +320,6 @@ class UI_BASE_EXPORT ResourceBundle {
   // Ctor/dtor are private, since we're a singleton.
   explicit ResourceBundle(Delegate* delegate);
   ~ResourceBundle();
-
-  // Shared initialization.
-  static void InitSharedInstance(Delegate* delegate);
 
   // Free skia_images_.
   void FreeImages();
