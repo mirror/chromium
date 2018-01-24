@@ -293,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "4a90b09d_c2c50620",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T20:34:15Z",
+      "side": 1,
+      "message": "Also, thanks :)",
+      "parentUuid": "32d18792_f2bc3725",
+      "revId": "5557fb60e4603658cb523542085651f68b92c0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51ee7cf4_c974db68",
         "filename": "cc/resources/resource_pool.h",
         "patchSetId": 6
