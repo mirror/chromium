@@ -34,6 +34,8 @@ class URLLoaderFactory;
 
 namespace content {
 
+class SimpleURLLoaderStreamHandler;
+
 // Creates and wraps a URLLoader, and runs it to completion. It's recommended
 // that consumers use this class instead of URLLoader directly, due to the
 // complexity of the API.
@@ -152,6 +154,18 @@ class CONTENT_EXPORT SimpleURLLoader {
       DownloadToFileCompleteCallback download_to_file_complete_callback,
       int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
 
+  // SimpleURLLoader will stream the response body to
+  // SimpleURLLoaderStreamHandler on the current thread. Destroying the
+  // SimpleURLLoader will cancel the requests, and prevent any subsequent
+  // methods from being invoked on the Handler. The SimpleURLLoader may be
+  // destroyed in any of the Handler's callbacks. |stream_handler| must
+  // remain valid until either the SimpleURLLoader is deleted, or the
+  // handlers OnComplete() method has been invoked by the SimpleURLLoader.
+  virtual void DownloadAsStream(
+      network::mojom::URLLoaderFactory* url_loader_factory,
+      SimpleURLLoaderStreamHandler* stream_handler,
+      int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
+
   // Sets callback to be invoked during redirects. Callback may delete the
   // SimpleURLLoader.
   virtual void SetOnRedirectCallback(
@@ -160,8 +174,10 @@ class CONTENT_EXPORT SimpleURLLoader {
   // Sets whether partially received results are allowed. Defaults to false.
   // When true, if an error is received after reading the body starts or the max
   // allowed body size exceeded, the partial response body that was received
-  // will be provided to the BodyAsStringCallback. The partial response body may
-  // be an empty string.
+  // will be provided to the caller. The partial response body may be an empty
+  // string.
+  //
+  // When downloading as a stream, this has no observable effect.
   //
   // May only be called before the request is started.
   virtual void SetAllowPartialResults(bool allow_partial_results) = 0;
