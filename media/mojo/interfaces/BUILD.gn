@@ -17,6 +17,8 @@ mojom("interfaces") {
     "interface_factory.mojom",
     "media_log.mojom",
     "media_types.mojom",
+    "mirror_service.mojom",
+    "mirror_service_controller.mojom",
     "output_protection.mojom",
     "platform_verification.mojom",
     "provision_fetcher.mojom",

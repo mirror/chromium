@@ -217,6 +217,7 @@
 #include "google_apis/google_api_keys.h"
 #include "gpu/config/gpu_switches.h"
 #include "media/audio/audio_manager.h"
+#include "media/base/media_switches.h"
 #include "media/media_features.h"
 #include "media/mojo/features.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"

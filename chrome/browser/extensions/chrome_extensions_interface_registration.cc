@@ -6,7 +6,8 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "chrome/browser/media/router/media_router_feature.h"  // nogncheck
+#include "chrome/browser/media/mirror_service_proxy.h"
+#include "chrome/browser/media/router/media_router_feature.h"       // nogncheck
 #include "chrome/browser/media/router/mojo/media_router_desktop.h"  // nogncheck
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -32,6 +33,8 @@ void RegisterChromeInterfacesForExtension(
         base::Bind(&media_router::MediaRouterDesktop::BindToRequest,
                    base::RetainedRef(extension), context));
   }
+  registry->AddInterface(
+      base::Bind(&media::MirrorServiceProxy::BindToRequest, context));
 }
 
 }  // namespace extensions

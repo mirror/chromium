@@ -19,7 +19,7 @@ base::ThreadPriority GetAudioThreadPriority() {
              ? base::ThreadPriority::REALTIME_AUDIO
              : base::ThreadPriority::NORMAL;
 #else
-  return base::ThreadPriority::REALTIME_AUDIO;
+  return base::ThreadPriority::NORMAL;
 #endif
 }
 
