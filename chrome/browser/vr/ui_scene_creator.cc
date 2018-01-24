@@ -1383,6 +1383,9 @@ void UiSceneCreator::CreateKeyboard() {
   keyboard->SetKeyboardDelegate(keyboard_delegate_);
   keyboard->SetDrawPhase(kPhaseForeground);
   keyboard->SetTranslate(0.0, kKeyboardVerticalOffsetDMM, 0.0);
+  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_,
+                                    model->browsing_enabled(), Keyboard,
+                                    keyboard.get(), SetRenderingEnabled));
   VR_BIND_VISIBILITY(keyboard, model->editing_input);
   scaler->AddChild(std::move(keyboard));
   visibility_control_root->AddChild(std::move(scaler));

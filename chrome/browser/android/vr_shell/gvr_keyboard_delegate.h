@@ -7,6 +7,9 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard_loader.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "third_party/gvr-android-keyboard/src/libraries/headers/vr/gvr/capi/include/gvr_keyboard.h"
@@ -25,11 +28,13 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
   ~GvrKeyboardDelegate() override;
 
   void SetUiInterface(vr::KeyboardUiInterface* ui);
+  void OnKeyboardCreated(gvr_keyboard_context* context);
 
   typedef int32_t EventType;
   typedef base::RepeatingCallback<void(EventType)> OnEventCallback;
 
   // vr::KeyboardDelegate implementation.
+  void SetRenderingEnabled(bool enabled) override;
   void OnBeginFrame() override;
   void ShowKeyboard() override;
   void HideKeyboard() override;
@@ -47,13 +52,19 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
 
  private:
   GvrKeyboardDelegate();
-  void Init(gvr_keyboard_context* keyboard_context);
+  void CreateKeyboard();
   void OnGvrKeyboardEvent(EventType);
   vr::TextInputInfo GetTextInfo();
+  bool OnGlThread() const;
 
   vr::KeyboardUiInterface* ui_;
   gvr_keyboard_context* gvr_keyboard_ = nullptr;
   OnEventCallback keyboard_event_callback_;
+  bool creating_keyboard_ = false;
+  bool pending_show_keyboard_ = false;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  base::WeakPtrFactory<GvrKeyboardDelegate> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GvrKeyboardDelegate);
 };
