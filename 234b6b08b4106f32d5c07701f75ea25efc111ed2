@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196284df_da213dc0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T13:19:55Z",
+      "side": 1,
+      "message": "has_credentials",
+      "range": {
+        "startLine": 75,
+        "startChar": 44,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "234b6b08b4106f32d5c07701f75ea25efc111ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
