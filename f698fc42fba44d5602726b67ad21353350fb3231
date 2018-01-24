@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b5e69492_e66d8a71",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T01:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d90fae_958a0f74",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ca030f_b98cac97",
         "filename": "build/fuchsia/runner_v2/device_target.py",
         "patchSetId": 2
@@ -156,6 +180,24 @@
       "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c50db8_cbd3a052",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T01:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00ca030f_b98cac97",
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -320,6 +362,30 @@
       "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122ab9e5_6a39be88",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-24T01:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27630d01_e33c3037",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
