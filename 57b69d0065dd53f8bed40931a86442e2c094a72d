@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564b8e35_48b52996",
+        "filename": "ui/app_list/app_list_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T20:36:33Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "57b69d0065dd53f8bed40931a86442e2c094a72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d027c8_388bf4c3",
+        "filename": "ui/app_list/app_list_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T20:36:33Z",
+      "side": 1,
+      "message": "Move to cc and use \"enum class\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "57b69d0065dd53f8bed40931a86442e2c094a72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fee467_a77776e3",
+        "filename": "ui/app_list/app_list_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-24T20:36:33Z",
+      "side": 1,
+      "message": "nit: Pass all pointers as const pointers.",
+      "range": {
+        "startLine": 26,
+        "startChar": 50,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "57b69d0065dd53f8bed40931a86442e2c094a72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
