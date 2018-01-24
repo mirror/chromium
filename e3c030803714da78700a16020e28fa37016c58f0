@@ -34,6 +34,24 @@
       "revId": "e3c030803714da78700a16020e28fa37016c58f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df06fa8_ff3186bc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-24T04:15:58Z",
+      "side": 0,
+      "message": "But the code must have been there for a reason, right? What about cases involving\nmasks that don\u0027t involve clip-path? Are they still correct?",
+      "parentUuid": "2d837a1b_3ba0d12f",
+      "revId": "e3c030803714da78700a16020e28fa37016c58f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
