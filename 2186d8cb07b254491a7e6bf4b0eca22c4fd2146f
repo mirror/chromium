@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d651a1f_d2a9c755",
+        "filename": "content/browser/renderer_host/input/fling_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T18:28:09Z",
+      "side": 1,
+      "message": "The issue is that if I\u0027m just skimming this code, I can see that I\u0027m dereferencing |fling_booster_|, but I can\u0027t easily see where I check if its null.",
+      "parentUuid": "bec2a266_8d2ea28c",
+      "range": {
+        "startLine": 346,
+        "startChar": 29,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91adc957_6ce074eb",
         "filename": "content/browser/renderer_host/input/fling_controller.h",
         "patchSetId": 2
@@ -162,6 +186,30 @@
       "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1865a64_625d34d2",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T18:28:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7121d722_9af882a9",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "2186d8cb07b254491a7e6bf4b0eca22c4fd2146f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
