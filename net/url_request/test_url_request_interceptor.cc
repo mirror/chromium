@@ -4,10 +4,11 @@
 
 #include "net/url_request/test_url_request_interceptor.h"
 
+#include <utility>
+
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/task_runner.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
@@ -145,15 +146,15 @@ class TestURLRequestInterceptor::Delegate : public URLRequestInterceptor {
 TestURLRequestInterceptor::TestURLRequestInterceptor(
     const std::string& scheme,
     const std::string& hostname,
-    const scoped_refptr<base::TaskRunner>& network_task_runner,
-    const scoped_refptr<base::TaskRunner>& worker_task_runner)
+    scoped_refptr<base::TaskRunner> network_task_runner,
+    scoped_refptr<base::TaskRunner> worker_task_runner)
     : scheme_(scheme),
       hostname_(hostname),
-      network_task_runner_(network_task_runner),
+      network_task_runner_(std::move(network_task_runner)),
       delegate_(new Delegate(scheme,
                              hostname,
                              network_task_runner_,
-                             worker_task_runner)) {
+                             std::move(worker_task_runner))) {
   network_task_runner_->PostTask(
       FROM_HERE, base::Bind(&Delegate::Register, base::Unretained(delegate_)));
 }
@@ -193,12 +194,11 @@ int TestURLRequestInterceptor::GetHitCount() {
 }
 
 LocalHostTestURLRequestInterceptor::LocalHostTestURLRequestInterceptor(
-    const scoped_refptr<base::TaskRunner>& network_task_runner,
-    const scoped_refptr<base::TaskRunner>& worker_task_runner)
+    scoped_refptr<base::TaskRunner> network_task_runner,
+    scoped_refptr<base::TaskRunner> worker_task_runner)
     : TestURLRequestInterceptor("http",
                                 "localhost",
-                                network_task_runner,
-                                worker_task_runner) {
-}
+                                std::move(network_task_runner),
+                                std::move(worker_task_runner)) {}
 
 }  // namespace net

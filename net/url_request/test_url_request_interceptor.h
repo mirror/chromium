@@ -32,11 +32,10 @@ class TestURLRequestInterceptor {
   // |worker_task_runner| will be used to read the files specified by
   // either SetResponse() or SetResponseIgnoreQuery() asynchronously. It
   // must be a task runner allowed to perform disk IO.
-  TestURLRequestInterceptor(
-      const std::string& scheme,
-      const std::string& hostname,
-      const scoped_refptr<base::TaskRunner>& network_task_runner,
-      const scoped_refptr<base::TaskRunner>& worker_task_runner);
+  TestURLRequestInterceptor(const std::string& scheme,
+                            const std::string& hostname,
+                            scoped_refptr<base::TaskRunner> network_task_runner,
+                            scoped_refptr<base::TaskRunner> worker_task_runner);
   virtual ~TestURLRequestInterceptor();
 
   // When requests for |url| arrive, respond with the contents of |path|. The
@@ -57,7 +56,7 @@ class TestURLRequestInterceptor {
   const std::string scheme_;
   const std::string hostname_;
 
-  scoped_refptr<base::TaskRunner> network_task_runner_;
+  const scoped_refptr<base::TaskRunner> network_task_runner_;
 
   // After creation, |delegate_| lives on the thread of the
   // |network_task_runner_|, and a task to delete it is posted from
@@ -72,8 +71,8 @@ class TestURLRequestInterceptor {
 class LocalHostTestURLRequestInterceptor : public TestURLRequestInterceptor {
  public:
   LocalHostTestURLRequestInterceptor(
-      const scoped_refptr<base::TaskRunner>& network_task_runner,
-      const scoped_refptr<base::TaskRunner>& worker_task_runner);
+      scoped_refptr<base::TaskRunner> network_task_runner,
+      scoped_refptr<base::TaskRunner> worker_task_runner);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LocalHostTestURLRequestInterceptor);
