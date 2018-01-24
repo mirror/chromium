@@ -245,15 +245,13 @@ class CustomThreadWatcher : public ThreadWatcher {
 
 class ThreadWatcherTest : public ::testing::Test {
  public:
-  static constexpr TimeDelta ThreadWatcherTest::kSleepTime =
-      TimeDelta::FromMilliseconds(50);
-  static constexpr TimeDelta ThreadWatcherTest::kUnresponsiveTime =
+  static constexpr TimeDelta kSleepTime = TimeDelta::FromMilliseconds(50);
+  static constexpr TimeDelta kUnresponsiveTime =
       TimeDelta::FromMilliseconds(500);
-  static constexpr char ThreadWatcherTest::kIOThreadName[] = "IO";
-  static constexpr char ThreadWatcherTest::kUIThreadName[] = "UI";
-  static constexpr char ThreadWatcherTest::kCrashOnHangThreadNames[] = "UI,IO";
-  static constexpr char ThreadWatcherTest::kCrashOnHangThreadData[] =
-      "UI:12,IO:12";
+  static constexpr char kIOThreadName[] = "IO";
+  static constexpr char kUIThreadName[] = "UI";
+  static constexpr char kCrashOnHangThreadNames[] = "UI,IO";
+  static constexpr char kCrashOnHangThreadData[] = "UI:12,IO:12";
 
   CustomThreadWatcher* io_watcher_;
   CustomThreadWatcher* ui_watcher_;
