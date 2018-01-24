@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ccb6bba_d8e343d6",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T19:07:22Z",
+      "side": 1,
+      "message": "if OnNetworkConnectionStateChange can delete network, using |network| past this point is unsafe.",
+      "revId": "373f43c7b90609cca97eafef1fe330ad4735cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82588d09_7038cd5d",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T19:07:22Z",
+      "side": 1,
+      "message": "Can you file a bug to refactor SortNetworkList not to destroy networks?",
+      "revId": "373f43c7b90609cca97eafef1fe330ad4735cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
