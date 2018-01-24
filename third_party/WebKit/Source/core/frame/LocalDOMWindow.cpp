@@ -1452,7 +1452,12 @@ void LocalDOMWindow::WarnUnusedPreloads(TimerBase* base) {
 void LocalDOMWindow::DispatchLoadEvent() {
   Event* load_event(Event::Create(EventTypeNames::load));
   if (GetFrame() && GetFrame()->Loader().GetDocumentLoader() &&
-      !GetFrame()->Loader().GetDocumentLoader()->GetTiming().LoadEventStart()) {
+      GetFrame()
+          ->Loader()
+          .GetDocumentLoader()
+          ->GetTiming()
+          .LoadEventStart()
+          .is_null()) {
     DocumentLoader* document_loader = GetFrame()->Loader().GetDocumentLoader();
     DocumentLoadTiming& timing = document_loader->GetTiming();
     timing.MarkLoadEventStart();
