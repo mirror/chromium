@@ -54,7 +54,7 @@ class CHROMEOS_EXPORT PpdCache : public base::RefCounted<PpdCache> {
   // be invoked on completion.
   virtual void Store(const std::string& key,
                      const std::string& contents,
-                     const base::Closure& cb) = 0;
+                     base::OnceClosure cb) = 0;
 
  protected:
   friend class base::RefCounted<PpdCache>;

@@ -142,9 +142,10 @@ class PpdCacheImpl : public PpdCache {
   // be invoked on completion.
   void Store(const std::string& key,
              const std::string& contents,
-             const base::Closure& cb) override {
+             base::OnceClosure cb) override {
     store_task_runner_->PostTaskAndReply(
-        FROM_HERE, base::Bind(&StoreImpl, cache_base_dir_, key, contents), cb);
+        FROM_HERE, base::BindOnce(&StoreImpl, cache_base_dir_, key, contents),
+        std::move(cb));
   }
 
  private:
