@@ -176,10 +176,6 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // nested child RWHVCFs inside it.
   virtual void SetVisibilityForChildViews(bool visible) const {}
 
-  // Called to resize the child renderer. |frame_rect| is in pixels if
-  // zoom-for-dsf is enabled, and in DIP if not.
-  virtual void SetRect(const gfx::Rect& frame_rect);
-
 #if defined(USE_AURA)
   // Embeds a WindowTreeClient in the parent. This results in the parent
   // creating a window in the ui server so that this can render to the screen.
@@ -192,7 +188,13 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
                                      uint64_t sequence_number) {}
 
+  bool has_frame_rect() const { return has_frame_rect_; }
+
  protected:
+  // Called to resize the child renderer. |frame_rect| is in pixels if
+  // zoom-for-dsf is enabled, and in DIP if not.
+  virtual void SetRect(const gfx::Rect& frame_rect);
+
   explicit FrameConnectorDelegate(bool use_zoom_for_device_scale_factor);
 
   virtual ~FrameConnectorDelegate() {}
@@ -206,7 +208,13 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   gfx::Rect frame_rect_in_pixels_;
   viz::LocalSurfaceId local_surface_id_;
 
+  // True if the frame rect has been set.
+  bool has_frame_rect_ = false;
+
   const bool use_zoom_for_device_scale_factor_;
+
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewChildFrameZoomForDSFTest,
+                           PhysicalBackingSize);
 };
 
 }  // namespace content
