@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ac02eee1_3b9b3601",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-24T21:26:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "84fd0f78_d8c1737f",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63dbefc_24fb8260",
         "filename": "chrome/browser/resources/settings/device_page/display.js",
         "patchSetId": 4
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Even in the worst case the minimum zoom delta will be 15. When the minimum resolution width is 640, the range of resolution would go from 640px to 1600px. \nResulting in a zoom range of 100% to 250% with a delta of (150 / 9 \u003d 16.66)\n\nThis does assume that there will be no display with resolution less than 640px or greater than 4096px. If the display mode resolution goes beyond these values for any display, this logic would fail. \n\nTo fix this I will update the range if a display has size beyond the range.",
       "parentUuid": "d4fdcfec_382dc81c",
+      "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fddaaeb7_20b26aef",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-24T21:26:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e82872d_7a8b775d",
       "revId": "7db6d18f693e5ede81d8ab4ce51ca80e858a7b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9013f5dc_d871ade6",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-24T21:26:56Z",
+      "side": 1,
+      "message": "nit for calculated \u0027const\u0027 values, we tend to use camelCase, although I\u0027m not aware of a hard and fast rule. e.g. const maxResolitionWidth \u003d",
+      "revId": "60d388f291cdd76bf4d6a2126f1c4a7e5c11ce26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
