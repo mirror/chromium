@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d39cb8b3_2002d612",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T18:14:05Z",
+      "side": 0,
+      "message": "Thanks all!\n\nBased on the example URL that Christopher shared in the bug:\nhttps://www.google.com/webmasters/#?modal_active\u003dnone\n\nI think we probably do want to instead update the code to just skip over any ? or # characters at the beginning of |query|.\n\nPerhaps we could do something like (using base/strings/string_util.h):\nquery \u003d base::TrimString(query, \"?#\", base::TrimPositions::TRIM_LEADING);\n\nChristopher sorry for the change in impl here. If you want to make this change that\u0027d be awesome, but feel free to reassign to me if you prefer. Let\u0027s also get a test added for the specific case you found to make sure we do return the \u0027right\u0027 query params when encountering URLs like the one you cited in the bug: https://www.google.com/webmasters/#?modal_active\u003dnone",
+      "parentUuid": "fffe9109_7c7c79fe",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b4273b0_d26b1461",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 4
