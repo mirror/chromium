@@ -306,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "436fe7ea_45a7eeb5",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "This is the first time it has been obviously called multiple times for a single animation tick - though perhaps I missed that it was called multiple times in a single tick in the previous patch. In any event, I\u0027m not too worried about the particular name, the application order being preserved seems like it should be correct.",
+      "parentUuid": "deb8c831_decf350b",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb3711f3_917a7e3d",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
         "patchSetId": 47

@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311fc867_d152ab20",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "Won\u0027t this cause us to always schedule impl frames, see logic here:\nhttps://cs.chromium.org/chromium/src/cc/trees/layer_tree_host_impl.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d4137\nTickAnimations will return true because NeedsTickMutator returns true meaning we will always schedule one more impl frame.\n\nAs long as we only create a mutator when animation worklet is used we can leave this as an open bug to resolve.",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bebdd2_76bcaa1d",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "Could we pass a weak pointer to the mutator in here and make all calls to the mutator using the weak pointer to guarantee that they won\u0027t be run if the mutator has destructed before the call is received? I think this would eliminate the need for the seal method and prevent raciness in that direction.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3942296_ef0a96e2",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "May as well be a CHECK so that we get a crash instead of hanging indefinitely waiting for a signal that will never come.",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97878c35_2861e2ec",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 48
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "I understand this now, the intent is to signal to the animators that they can no longer use this mutator. However I think this is still racy. This destructor could finish before the worklet gets the seal message and the worklet could try to call GetWeakPtr(). Instead, how about my suggestion to pass a weak pointer rather than a raw pointer at construction time?",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d44d8cf_ff5d7caa",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "nit: s/My/Mutator",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac83b75b_4af1684c",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5506d0f6_fc39f93a",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-24T10:52:46Z",
+      "side": 1,
+      "message": "nit: Remove extra newline.",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
