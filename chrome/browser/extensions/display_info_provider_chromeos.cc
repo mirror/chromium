@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/display_info_provider_chromeos.h"
 
 #include <stdint.h>
+#include <cmath>
 
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/overscan_calibrator.h"
@@ -386,8 +387,27 @@ bool ValidateParamsForDisplay(const system_display::DisplayProperties& info,
   }
 
   // Update the display zoom.
-  if (info.display_zoom_factor)
-    display_manager->UpdateZoomFactor(id, *info.display_zoom_factor);
+  if (info.display_zoom_factor) {
+    display::ManagedDisplayMode current_mode;
+    if (!display_manager->GetActiveModeForDisplayId(id, &current_mode)) {
+      *error = "Unable to find the active mode for display id " +
+               base::Int64ToString(id);
+      return false;
+    }
+    int current_width = static_cast<float>(current_mode.size().width()) /
+                        current_mode.device_scale_factor();
+    const int kMaxAllowedWidth = std::max(4096, current_width);
+    const int kMinAllowedWidth = std::min(640, current_width);
+
+    if (current_width / (*info.display_zoom_factor) <= kMaxAllowedWidth &&
+        current_width / (*info.display_zoom_factor) >= kMinAllowedWidth) {
+      display_manager->UpdateZoomFactor(id, *info.display_zoom_factor);
+    } else {
+      *error = "Zoom value is out of range for display with id: " +
+               base::Int64ToString(id);
+      return false;
+    }
+  }
 
   // Set the display mode.
   if (info.display_mode) {
