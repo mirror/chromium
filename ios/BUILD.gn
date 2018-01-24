@@ -43,6 +43,7 @@ group("all") {
       "//ios/chrome/search_widget_extension",
       "//ios/chrome/share_extension",
       "//ios/showcase",
+      "//ios/testing/test_lister:xctest_lister",
       "//ios/web/shell:ios_web_shell",
       "//ios/web_view/shell:ios_web_view_shell",
 
