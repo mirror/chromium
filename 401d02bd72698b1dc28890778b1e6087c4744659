@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4c6e93_3f0825a7",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T18:49:23Z",
+      "side": 1,
+      "message": "typo: passoword",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4028e9_863e0642",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T18:49:23Z",
+      "side": 1,
+      "message": "nit: Please explain the meaning of the arguments, in particular \n|count|.",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98d0886_1369bdf4",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T18:49:23Z",
+      "side": 1,
+      "message": "optional nit: The name could be confusing (hints at serialised_password_list_.size()). Perhaps |password_count_|?",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
