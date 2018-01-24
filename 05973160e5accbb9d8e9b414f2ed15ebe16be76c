@@ -34,6 +34,24 @@
       "revId": "05973160e5accbb9d8e9b414f2ed15ebe16be76c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c98b05d_692cd7cc",
+        "filename": "base/android/java/src/org/chromium/base/CommandLine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-24T03:15:15Z",
+      "side": 1,
+      "message": "Yep. Like it. Added a sanity check.",
+      "parentUuid": "fd9a236d_27c9a424",
+      "revId": "05973160e5accbb9d8e9b414f2ed15ebe16be76c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
