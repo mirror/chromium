@@ -1,0 +1,81 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.h"
+
+#include <utility>
+
+#include "base/bind.h"
+#include "base/files/file_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "chrome/common/safe_browsing/archive_analyzer_results.h"
+#include "chrome/services/file_util/public/interfaces/constants.mojom.h"
+#include "chrome/services/file_util/public/interfaces/safe_archive_analyzer.mojom.h"
+#include "content/public/browser/browser_thread.h"
+#include "services/service_manager/public/cpp/connector.h"
+
+SandboxedRarAnalyzer::SandboxedRarAnalyzer(
+    const base::FilePath& rar_file,
+    const ResultCallback& callback,
+    service_manager::Connector* connector)
+    : file_path_(rar_file), callback_(callback), connector_(connector) {
+  DCHECK(callback);
+}
+
+void SandboxedRarAnalyzer::Start() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&SandboxedRarAnalyzer::PrepareFileToAnalyze, this));
+}
+
+SandboxedRarAnalyzer::~SandboxedRarAnalyzer() = default;
+
+void SandboxedRarAnalyzer::PrepareFileToAnalyze() {
+  base::File file(file_path_, base::File::FLAG_OPEN | base::File::FLAG_READ);
+
+  if (!file.IsValid()) {
+    DLOG(ERROR) << "Could not open file: " << file_path_.value();
+    ReportFileFailure();
+    return;
+  }
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&SandboxedRarAnalyzer::AnalyzeFile, this,
+                     base::Passed(&file)));
+}
+
+void SandboxedRarAnalyzer::ReportFileFailure() {
+  DCHECK(!analyzer_ptr_);
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(callback_, safe_browsing::ArchiveAnalyzerResults()));
+}
+
+void SandboxedRarAnalyzer::AnalyzeFile(base::File file) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(!analyzer_ptr_);
+
+  connector_->BindInterface(chrome::mojom::kFileUtilServiceName,
+                            mojo::MakeRequest(&analyzer_ptr_));
+  analyzer_ptr_.set_connection_error_handler(
+      base::Bind(&SandboxedRarAnalyzer::AnalyzeFileDone, base::Unretained(this),
+                 safe_browsing::ArchiveAnalyzerResults()));
+  analyzer_ptr_->AnalyzeRarFile(
+      std::move(file),
+      base::Bind(&SandboxedRarAnalyzer::AnalyzeFileDone, this));
+}
+
+void SandboxedRarAnalyzer::AnalyzeFileDone(
+    const safe_browsing::ArchiveAnalyzerResults& results) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  analyzer_ptr_.reset();
+  callback_.Run(results);
+}
