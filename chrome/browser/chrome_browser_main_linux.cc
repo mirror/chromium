@@ -26,6 +26,7 @@
 #if !defined(OS_CHROMEOS)
 #include "base/command_line.h"
 #include "base/linux_util.h"
+#include "chrome/browser/linux/mpris_client.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/os_crypt/key_storage_config_linux.h"
@@ -95,6 +96,10 @@ void ChromeBrowserMainPartsLinux::PostMainMessageLoopStart() {
   bluez::DBusThreadManagerLinux::Initialize();
   bluez::BluezDBusManager::Initialize(
       bluez::DBusThreadManagerLinux::Get()->GetSystemBus(), false);
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableMprisClient)) {
+    mpris_client_ = std::make_unique<MprisClient>();
+  }
 #endif
 
   ChromeBrowserMainPartsPosix::PostMainMessageLoopStart();
@@ -104,6 +109,7 @@ void ChromeBrowserMainPartsLinux::PostDestroyThreads() {
 #if !defined(OS_CHROMEOS)
   bluez::BluezDBusManager::Shutdown();
   bluez::DBusThreadManagerLinux::Shutdown();
+  mpris_client_.reset();
 #endif
 
   ChromeBrowserMainPartsPosix::PostDestroyThreads();
