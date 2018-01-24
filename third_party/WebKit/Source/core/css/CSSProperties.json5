@@ -813,6 +813,7 @@
       default_value: "LengthSize(Length(0, kFixed), Length(0, kFixed))",
       type_name: "LengthSize",
       converter: "ConvertRadius",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "border-bottom-right-radius",
@@ -824,6 +825,7 @@
       default_value: "LengthSize(Length(0, kFixed), Length(0, kFixed))",
       type_name: "LengthSize",
       converter: "ConvertRadius",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "border-bottom-style",
@@ -992,6 +994,7 @@
       default_value: "LengthSize(Length(0, kFixed), Length(0, kFixed))",
       type_name: "LengthSize",
       converter: "ConvertRadius",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "border-top-right-radius",
@@ -1003,6 +1006,7 @@
       default_value: "LengthSize(Length(0, kFixed), Length(0, kFixed))",
       type_name: "LengthSize",
       converter: "ConvertRadius",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "border-top-style",
@@ -1628,6 +1632,7 @@
       getter: "SpecifiedLineHeight",
       computed_style_custom_functions: ["getter"],
       converter: "ConvertLineHeight",
+      typedom_types: ["Length", "Percent", "Number"],
     },
     {
       name: "line-height-step",
@@ -1694,6 +1699,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertQuirkyLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "margin-left",
@@ -1703,6 +1709,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertQuirkyLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "margin-right",
@@ -1712,6 +1719,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertQuirkyLength",
+      typedom_types: ["Length"],
     },
     {
       name: "margin-top",
@@ -1721,6 +1729,8 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertQuirkyLength",
+      keywords: ["auto"],
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "marker-end",
@@ -1773,6 +1783,7 @@
       field_template: "<length>",
       default_value: "Length(kMaxSizeNone)",
       converter: "ConvertLengthMaxSizing",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "max-width",
@@ -1783,6 +1794,7 @@
       field_template: "<length>",
       default_value: "Length(kMaxSizeNone)",
       converter: "ConvertLengthMaxSizing",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "min-height",
@@ -1793,6 +1805,7 @@
       field_template: "<length>",
       default_value: "Length()",
       converter: "ConvertLengthSizing",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "min-width",
@@ -1803,6 +1816,7 @@
       field_template: "<length>",
       default_value: "Length()",
       converter: "ConvertLengthSizing",
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "mix-blend-mode",
@@ -1905,6 +1919,7 @@
       default_value: "1.0",
       type_name: "float",
       computed_style_custom_functions: ["setter"],
+      typedom_types: ["Number"],
     },
     {
       name: "order",
@@ -1973,6 +1988,7 @@
       type_name: "LayoutUnit",
       computed_style_custom_functions: ["initial", "getter", "setter"],
       converter: "ConvertLineWidth<unsigned short>",
+      typedom_types: ["Length"],
     },
     {
       name: "overflow-anchor",
@@ -2042,6 +2058,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "padding-left",
@@ -2051,6 +2068,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "padding-right",
@@ -2060,6 +2078,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "padding-top",
@@ -2069,6 +2088,7 @@
       field_template: "<length>",
       default_value: "Length(kFixed)",
       converter: "ConvertLength",
+      typedom_types: ["Length", "Percent"],
     },
     {
       name: "paint-order",
@@ -2840,6 +2860,7 @@
       interpolable: true,
       custom_apply_functions_inherit: true,
       custom_apply_functions_value: true,
+      typedom_types: ["Percent", "Length"],
     },
     {
       name: "visibility",

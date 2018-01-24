@@ -1,0 +1,21 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Normalization of 'animation-direction'</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#csskeywordvalue">
+<meta name="assert" content="Test 'animation-direction' normalizes to CSSKeywordValue" />
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testhelper.js"></script>
+<body>
+<div id="log">
+<script>
+'use strict';
+
+runPropertyTests('animation-direction', [
+  'normal',
+  'reverse',
+  'alternate',
+  'alternate-reverse',
+], { supportsMultiple: true });
+
+</script>

@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Normalization of 'width'</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylevalue-normalization">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testhelper.js"></script>
+<body>
+<div id="log">
+<script>
+'use strict';
+
+runPropertyTests('margin-top', [
+  '0',
+  'auto',
+  '<percentage>',
+  '<length>',
+]);
+
+</script>

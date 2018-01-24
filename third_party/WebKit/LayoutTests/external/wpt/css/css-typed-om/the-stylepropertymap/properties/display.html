@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Normalization of 'width'</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylevalue-normalization">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/testhelper.js"></script>
+<body>
+<div id="log">
+<script>
+'use strict';
+
+runPropertyTests('display', [
+  'inline',
+  'table-row-group',
+  'table-row',
+  'table-header-group',
+  'table-footer-group',
+  'table-column-group',
+  'table-column',
+  'table-cell',
+  'table-caption',
+  'table',
+  'run-in',
+  'none',
+  'list-item',
+  'inline-table',
+  'inline-flex',
+  'inline-block',
+  'flex',
+  'container',
+  'compact',
+  'block',
+]);
+
+</script>
