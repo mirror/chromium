@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f6f2f5_5107f955",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-24T12:17:14Z",
+      "side": 1,
+      "message": "nit: Make this a bit more explicit:\n\nThis will eliminate the observer needing to make an immediate async call back to the MediaTransferProtocolManager to obtain the MtpStorageInfo object from its identifier.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902fe934_6d2a8463",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-24T12:17:14Z",
+      "side": 1,
+      "message": "shouldn\u0027t this just be |storage_info|? could we not just pass |storage_info| at line 386?",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 37
+      },
+      "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
