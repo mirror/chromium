@@ -41,7 +41,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   // LocationArbitrator uses the default system location provider.
   LocationArbitrator(
       const CustomLocationProviderCallback& custom_location_provider_getter,
-      const GeolocationProvider::RequestContextProducer
+      const GeolocationProviderImpl::RequestContextProducer
           request_context_producer,
       const std::string& api_key);
   ~LocationArbitrator() override;
@@ -96,7 +96,8 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
                            bool from_same_provider) const;
 
   const CustomLocationProviderCallback custom_location_provider_getter_;
-  const GeolocationProvider::RequestContextProducer request_context_producer_;
+  const GeolocationProviderImpl::RequestContextProducer
+      request_context_producer_;
   const std::string api_key_;
 
   LocationProvider::LocationProviderUpdateCallback arbitrator_update_callback_;

@@ -53,7 +53,8 @@ class GeolocationImpl : public mojom::Geolocation {
   GeolocationContext* context_;
 
   // Token that unsubscribes from GeolocationProvider updates when destroyed.
-  std::unique_ptr<GeolocationProvider::Subscription> geolocation_subscription_;
+  std::unique_ptr<GeolocationProviderImpl::Subscription>
+      geolocation_subscription_;
 
   // The callback passed to QueryNextPosition.
   QueryNextPositionCallback position_callback_;

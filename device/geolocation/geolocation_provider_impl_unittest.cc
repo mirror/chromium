@@ -181,7 +181,7 @@ TEST_F(GeolocationProviderTest, OnPermissionGrantedWithoutObservers) {
 
 TEST_F(GeolocationProviderTest, StartStop) {
   EXPECT_FALSE(provider()->IsRunning());
-  std::unique_ptr<GeolocationProvider::Subscription> subscription =
+  std::unique_ptr<GeolocationProviderImpl::Subscription> subscription =
       provider()->AddLocationUpdateCallback(
           base::Bind(&DummyFunction, arbitrator()), false);
   EXPECT_TRUE(provider()->IsRunning());
@@ -205,7 +205,7 @@ TEST_F(GeolocationProviderTest, StalePositionNotSent) {
       base::Bind(&MockGeolocationObserver::OnLocationUpdate,
                  base::Unretained(&first_observer));
   EXPECT_CALL(first_observer, OnLocationUpdate(GeopositionEq(first_position)));
-  std::unique_ptr<GeolocationProvider::Subscription> subscription =
+  std::unique_ptr<GeolocationProviderImpl::Subscription> subscription =
       provider()->AddLocationUpdateCallback(first_callback, false);
   SendMockLocation(first_position);
   base::RunLoop().Run();
@@ -226,7 +226,7 @@ TEST_F(GeolocationProviderTest, StalePositionNotSent) {
   GeolocationProviderImpl::LocationUpdateCallback second_callback =
       base::Bind(&MockGeolocationObserver::OnLocationUpdate,
                  base::Unretained(&second_observer));
-  std::unique_ptr<GeolocationProvider::Subscription> subscription2 =
+  std::unique_ptr<GeolocationProviderImpl::Subscription> subscription2 =
       provider()->AddLocationUpdateCallback(second_callback, false);
   base::RunLoop().RunUntilIdle();
 
@@ -251,7 +251,7 @@ TEST_F(GeolocationProviderTest, OverrideLocationForTesting) {
   GeolocationProviderImpl::LocationUpdateCallback callback =
       base::Bind(&MockGeolocationObserver::OnLocationUpdate,
                  base::Unretained(&mock_observer));
-  std::unique_ptr<GeolocationProvider::Subscription> subscription =
+  std::unique_ptr<GeolocationProviderImpl::Subscription> subscription =
       provider()->AddLocationUpdateCallback(callback, false);
   subscription.reset();
   // Wait for the providers to be stopped now that all clients are gone.

@@ -13,7 +13,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
-#include "device/geolocation/geolocation_provider.h"
+#include "device/geolocation/geolocation_provider_impl.h"
 #include "device/geolocation/network_location_request.h"
 #include "net/base/network_change_notifier.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -35,7 +35,7 @@ class PublicIpAddressLocationNotifier
   // request context produced by |request_context_producer| for network location
   // requests.
   PublicIpAddressLocationNotifier(
-      GeolocationProvider::RequestContextProducer request_context_producer,
+      GeolocationProviderImpl::RequestContextProducer request_context_producer,
       const std::string& api_key);
   ~PublicIpAddressLocationNotifier() override;
 
@@ -99,7 +99,8 @@ class PublicIpAddressLocationNotifier
   const std::string api_key_;
 
   // Callback to produce a URL request context for network geolocation requests.
-  const GeolocationProvider::RequestContextProducer request_context_producer_;
+  const GeolocationProviderImpl::RequestContextProducer
+      request_context_producer_;
 
   // Used to make calls to the Maps geolocate API.
   // Empty unless a call is currently in progress.
