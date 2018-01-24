@@ -588,9 +588,12 @@ WebIDBFactory* RendererBlinkPlatformImpl::IdbFactory() {
 
 std::unique_ptr<blink::WebServiceWorkerCacheStorage>
 RendererBlinkPlatformImpl::CreateCacheStorage(
-    const blink::WebSecurityOrigin& security_origin) {
+    const blink::WebSecurityOrigin& security_origin,
+    service_manager::InterfaceProvider* mojo_provider) {
+  // Requires the Interface Provider from ExecutionContext, because it can be
+  // different of RendererBlinkPlatformImpl::GetInterfaceProvider()
   return std::make_unique<WebServiceWorkerCacheStorageImpl>(
-      thread_safe_sender_.get(), security_origin);
+      thread_safe_sender_.get(), security_origin, mojo_provider);
 }
 
 //------------------------------------------------------------------------------
