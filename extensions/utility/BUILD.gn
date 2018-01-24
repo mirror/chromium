@@ -9,8 +9,6 @@ assert(enable_extensions)
 
 source_set("utility") {
   sources = [
-    "unpacker.cc",
-    "unpacker.h",
     "utility_handler.cc",
     "utility_handler.h",
   ]

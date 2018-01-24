@@ -10,6 +10,8 @@
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
+#include "base/json/json_file_value_serializer.h"
 #include "base/location.h"
 #include "base/task_scheduler/post_task.h"
 #include "content/public/utility/utility_thread.h"
@@ -19,8 +21,9 @@
 #include "extensions/common/extensions_client.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/features/feature_session_type.h"
+#include "extensions/common/manifest.h"
+#include "extensions/common/manifest_constants.h"
 #include "extensions/strings/grit/extensions_strings.h"
-#include "extensions/utility/unpacker.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/zlib/google/zip.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -30,31 +33,56 @@ namespace extensions {
 
 namespace {
 
-struct UnpackResult {
-  std::unique_ptr<base::DictionaryValue> parsed_manifest;
-  base::string16 error;
-};
+constexpr const base::FilePath::CharType* kAllowedThemeFiletypes[] = {
+    FILE_PATH_LITERAL(".bmp"),  FILE_PATH_LITERAL(".gif"),
+    FILE_PATH_LITERAL(".jpeg"), FILE_PATH_LITERAL(".jpg"),
+    FILE_PATH_LITERAL(".json"), FILE_PATH_LITERAL(".png"),
+    FILE_PATH_LITERAL(".webp")};
 
-// Unpacks the extension on background task runner.
-// On success, returns UnpackResult with |parsed_manifest| set to the parsed
-// extension manifest.
-// On failure returns UnpackResult with |error| set to the encountered error
-// message.
-UnpackResult UnpackOnBackgroundTaskRunner(const base::FilePath& path,
-                                          const std::string& extension_id,
-                                          Manifest::Location location,
-                                          int32_t creation_flags) {
-  Unpacker unpacker(path.DirName(), path, extension_id, location,
-                    creation_flags);
-
-  UnpackResult result;
-  if (unpacker.Run()) {
-    result.parsed_manifest = unpacker.TakeParsedManifest();
-  } else {
-    result.error = unpacker.error_message();
+std::unique_ptr<base::DictionaryValue> ReadManifest(
+    const base::FilePath& extension_dir,
+    std::string* error) {
+  DCHECK(error);
+  base::FilePath manifest_path = extension_dir.Append(kManifestFilename);
+  if (!base::PathExists(manifest_path)) {
+    *error = manifest_errors::kInvalidManifest;
+    return nullptr;
   }
 
-  return result;
+  JSONFileValueDeserializer deserializer(manifest_path);
+  std::unique_ptr<base::Value> root = deserializer.Deserialize(NULL, error);
+  if (!root.get()) {
+    return nullptr;
+  }
+
+  if (!root->is_dict()) {
+    *error = manifest_errors::kInvalidManifest;
+    return nullptr;
+  }
+
+  return base::DictionaryValue::From(std::move(root));
+}
+
+bool ShouldExtractFile(bool is_theme, const base::FilePath& file_path) {
+  if (is_theme) {
+    const base::FilePath::StringType extension =
+        base::ToLowerASCII(file_path.FinalExtension());
+    // Allow filenames with no extension.
+    if (extension.empty())
+      return true;
+    return std::find(kAllowedThemeFiletypes,
+                     kAllowedThemeFiletypes + arraysize(kAllowedThemeFiletypes),
+                     extension) !=
+           (kAllowedThemeFiletypes + arraysize(kAllowedThemeFiletypes));
+  }
+  return !base::FilePath::CompareEqualIgnoreCase(file_path.FinalExtension(),
+                                                 FILE_PATH_LITERAL(".exe"));
+}
+
+bool IsManifestFile(const base::FilePath& file_path) {
+  CHECK(!file_path.IsAbsolute());
+  return base::FilePath::CompareEqualIgnoreCase(file_path.value(),
+                                                kManifestFilename);
 }
 
 class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
@@ -87,47 +115,14 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
         std::move(callback));
   }
 
-  void Unpack(version_info::Channel channel,
-              extensions::FeatureSessionType type,
-              const base::FilePath& path,
-              const std::string& extension_id,
-              Manifest::Location location,
-              int32_t creation_flags,
-              UnpackCallback callback) override {
-    CHECK_GT(location, Manifest::INVALID_LOCATION);
-    CHECK_LT(location, Manifest::NUM_LOCATIONS);
-    DCHECK(ExtensionsClient::Get());
-
-    content::UtilityThread::Get()->EnsureBlinkInitialized();
-
-    // Initialize extension system global state.
-    SetCurrentChannel(channel);
-    SetCurrentFeatureSessionType(type);
-
-    // Move unpack operation to background thread to prevent it from blocking
-    // the utility process thread for extended amount of time.
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE,
-        {base::TaskPriority::USER_BLOCKING, base::MayBlock(),
-         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
-        base::BindOnce(&UnpackOnBackgroundTaskRunner, path, extension_id,
-                       location, creation_flags),
-        base::BindOnce(
-            [](UnpackCallback callback, UnpackResult result) {
-              std::move(callback).Run(result.error,
-                                      std::move(result.parsed_manifest));
-            },
-            std::move(callback)));
-  }
-
   static bool UnzipFileManifestIntoPath(
       const base::FilePath& file,
       const base::FilePath& path,
       std::unique_ptr<base::DictionaryValue>* manifest) {
-    if (zip::UnzipWithFilterCallback(
-            file, path, base::Bind(&Unpacker::IsManifestFile), false)) {
+    if (zip::UnzipWithFilterCallback(file, path, base::Bind(&IsManifestFile),
+                                     false)) {
       std::string error;
-      *manifest = Unpacker::ReadManifest(path, &error);
+      *manifest = ReadManifest(path, &error);
       return error.empty() && manifest->get();
     }
 
@@ -142,8 +137,7 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
     // TODO(crbug.com/645263): This silently ignores blocked file types.
     //                         Add install warnings.
     return zip::UnzipWithFilterCallback(
-        file, path,
-        base::Bind(&Unpacker::ShouldExtractFile, internal.is_theme()),
+        file, path, base::Bind(&ShouldExtractFile, internal.is_theme()),
         true /* log_skipped_files */);
   }
 

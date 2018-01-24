@@ -18,7 +18,7 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/strings/grit/extensions_strings.h"
 #include "extensions/test/test_extensions_client.h"
-#include "extensions/utility/unpacker.h"
+// #include "extensions/utility/unpacker.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/zlib/google/zip.h"
@@ -28,6 +28,7 @@ using base::ASCIIToUTF16;
 
 namespace extensions {
 
+/*
 namespace errors = manifest_errors;
 namespace keys = manifest_keys;
 
@@ -179,5 +180,5 @@ TEST_F(UnpackerTest, ManifestExtractionFilter) {
       base::Bind(&Unpacker::IsManifestFile);
   RunZipFileFilterTest(cases, filter);
 }
-
+*/
 }  // namespace extensions
