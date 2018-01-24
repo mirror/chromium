@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57c1338_f2dbd783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "Let\u0027s remove this now",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e8d474_c0e5b722",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "Given that this skeleton class should never be constructed by default, could we have DCHECK(  base::FeatureList::IsEnabled(features::kSignedHTTPExchange) here?",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d7acf8_34b827c5",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "nit: TODO(https://crbug.com/80374) is the one that\u0027s recommended (here and elsewhere)",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806b9465_d4604e91",
+        "filename": "content/browser/loader/url_loader_request_handler.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "I\u0027d write something like this\n\"The |url_loader| points to the ThrottlingURLLoader that currently controls the request. It can be optionally consumed to get the current URLLoaderClient and URLLoader so that the implementation can rebind them to intercept the inflight loading if necessary.  Note that the |url_loader| will be reset after this method is called, which will also drop the URLLoader held by |url_loader_| if it is not unbound yet.\"\n\nHm... but url_loader_ shouldn\u0027t be unconditionally reset after this, actually.",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabece03_28b3184b",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "I suspect this will just let us ignore all navigation throttles...? this ProceedWithResponse plumbing with NavigationMojoResponse case seems tricky, but I do want to be careful not to introduce the code that could be risky.",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4687cdf0_45694484",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "nit: maybe just using present tense would be fine, i.e. \"are bound after OnReceiveResponse() is called.\"\n\n(ditto below)",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb46987_09d96f1a",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T16:08:40Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s guaranteed that this is never called after OnReceiveResponse. (Some impl actually calls it after that)",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
