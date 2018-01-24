@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6a65213_f55bb0b6",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T19:22:09Z",
+      "side": 1,
+      "message": "nit: we could simplify this to just be:\nreturn service-\u003eGetPendingExtensionUpdate(extension_id) \u0026\u0026\n       service-\u003eFinishDelayedInstallationIfReady(extension_id, install_immediately);",
+      "revId": "283fe91fbf5701bce4759dd433be88d8cc8a8858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee42181_402c9ed4",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T19:22:09Z",
+      "side": 1,
+      "message": "prefer static_cast over c-style casts",
+      "range": {
+        "startLine": 70,
+        "startChar": 42,
+        "endLine": 70,
+        "endChar": 52
+      },
+      "revId": "283fe91fbf5701bce4759dd433be88d8cc8a8858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
