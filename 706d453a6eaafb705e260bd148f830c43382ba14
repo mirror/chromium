@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c4667248_fc79d576",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T00:36:13Z",
+      "side": 1,
+      "message": "Yeah sounds good to me. :)",
+      "parentUuid": "93f5b007_44b9ca6d",
+      "range": {
+        "startLine": 256,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 56
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7485c64_925fff74",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 4
@@ -249,6 +273,30 @@
       "side": 1,
       "message": "The check in OnOfflinePagesLoaded is to add a bit to OfflineItem - since we keep items in the cache even if they are hidden. At the same time, the consumer of DownloadUIAdapter actually does not see the items that are hidden, and once the satus changes, this class simulates ItemAdded/Deleted. \nSo the check here is to not include hidden items into reply to GetAllItems, while the check in previous methods is to populate the hidden bit in the local cahce...\n\nBTW, this is another reason why this adapter keeps its own \u0027cache\u0027:  it is not really only a cache, but in fact it keeps some state here.",
       "parentUuid": "071bad2a_27f69b48",
+      "range": {
+        "startLine": 519,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 15
+      },
+      "revId": "706d453a6eaafb705e260bd148f830c43382ba14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7f9972_a493a815",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T00:36:13Z",
+      "side": 1,
+      "message": "Ah makes sense!  Ok thanks.  Yeah there\u0027s an interesting issue with observer update calls that come in the middle of a get -\u003e callback round trip and what that means for the get response.  Good catch.",
+      "parentUuid": "c846c294_8d8c7ecf",
       "range": {
         "startLine": 519,
         "startChar": 4,
