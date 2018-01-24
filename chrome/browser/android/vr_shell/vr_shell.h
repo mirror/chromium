@@ -17,6 +17,7 @@
 #include "base/strings/string16.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/vr/assets_load_status.h"
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/ui.h"
@@ -150,6 +151,7 @@ class VrShell : device::GvrGamepadDataProvider,
 
   device::mojom::VRDisplayFrameTransportOptionsPtr
   GetVRDisplayFrameTransportOptions();
+  void UiSurfaceChanged(jobject surface);
 
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
@@ -186,6 +188,12 @@ class VrShell : device::GvrGamepadDataProvider,
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event,
                              int content_id);
+
+  void ShowAlertDialog(vr::ContentInputDelegate* delegate,
+                       int width,
+                       int height);
+  void CloseAlertDialog();
+  void SetAlertDialogSize(int width, int height);
 
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtr submit_client,

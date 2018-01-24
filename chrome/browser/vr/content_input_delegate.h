@@ -34,14 +34,15 @@ class PlatformController;
 // Receives interaction events with the web content.
 class ContentInputDelegate {
  public:
+  ContentInputDelegate() {}
   explicit ContentInputDelegate(ContentInputForwarder* content);
   virtual ~ContentInputDelegate();
 
-  void OnContentEnter(const gfx::PointF& normalized_hit_point);
-  void OnContentLeave();
-  void OnContentMove(const gfx::PointF& normalized_hit_point);
-  void OnContentDown(const gfx::PointF& normalized_hit_point);
-  void OnContentUp(const gfx::PointF& normalized_hit_point);
+  virtual void OnContentEnter(const gfx::PointF& normalized_hit_point);
+  virtual void OnContentLeave();
+  virtual void OnContentMove(const gfx::PointF& normalized_hit_point);
+  virtual void OnContentDown(const gfx::PointF& normalized_hit_point);
+  virtual void OnContentUp(const gfx::PointF& normalized_hit_point);
 
   // The following functions are virtual so that they may be overridden in the
   // MockContentInputDelegate.
