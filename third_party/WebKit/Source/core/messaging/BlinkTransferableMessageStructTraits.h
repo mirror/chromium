@@ -6,11 +6,15 @@
 #define BlinkTransferableMessageStructTraits_h
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "core/imagebitmap/ImageBitmap.h"
 #include "core/messaging/BlinkCloneableMessageStructTraits.h"
 #include "core/messaging/BlinkTransferableMessage.h"
 #include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
+#include "third_party/WebKit/Source/platform/graphics/Image.h"
+#include "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace mojo {
 
@@ -31,8 +35,29 @@ struct StructTraits<blink::mojom::blink::TransferableMessage::DataView,
     return result;
   }
 
+  static Vector<WTF::ArrayBufferContents>& arrayBufferContentsArray(
+      blink::BlinkCloneableMessage& input) {
+    return input.message->GetArrayBufferContentsArray();
+  }
+
+  static Vector<SkBitmap> imageBitmapContentsArray(
+      blink::BlinkCloneableMessage& input);
+
   static bool Read(blink::mojom::blink::TransferableMessage::DataView,
                    blink::BlinkTransferableMessage* out);
+};
+
+template <>
+class StructTraits<blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                   WTF::ArrayBufferContents> {
+ public:
+  static std::vector<uint8_t> contents(WTF::ArrayBufferContents& abc) {
+    return std::vector<uint8_t>(
+        static_cast<uint8_t*>(abc.Data()),
+        static_cast<uint8_t*>(abc.Data()) + abc.DataLength());
+  }
+  static bool Read(blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                   WTF::ArrayBufferContents* out);
 };
 
 }  // namespace mojo
