@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "291dc80f_552526c7",
+        "filename": "chrome/browser/chrome_browser_main_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-24T23:28:00Z",
+      "side": 1,
+      "message": "Does MprisClient really need to be created / destroyed at these specific spots? If not, maybe just hang it off of BrowserProcessImpl instead?",
+      "revId": "8f14f1a2f1d80c39adb148ccd43b2400c9d55f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
