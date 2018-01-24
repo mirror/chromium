@@ -20,6 +20,10 @@ message MediaPerception {
   // A single FramePerception message or array of perceptions (if reporting the
   // results from multiple frames).
   repeated FramePerception frame_perception = 2;
+
+  // A single AudioPerception message or array of audio perceptions (if
+  // reporting the results from multiple audio frames).
+  repeated AudioPerception audio_perception = 3;
 }
 
 // Used to transmit a history of image frames and their associated annotations.
