@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839e33e8_1b242e60",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-24T00:06:00Z",
+      "side": 0,
+      "message": "For test\u0027s sake, could you change the signature here to get const MotionEvent\u0026 so that ScopedJavaLocalRef will be created right before going up to Java layer only? That will reduce the # of the SJLR, and tell us if that is really the source of overflow issue.",
+      "revId": "b550792f0f9357f380d501288f368e85d43279b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
