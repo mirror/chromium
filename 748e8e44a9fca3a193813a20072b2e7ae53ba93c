@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f10c53b5_848c1a51",
+        "filename": "chrome/test/chromedriver/client/chromedriver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-24T19:37:57Z",
+      "side": 1,
+      "message": "You need to add parentheses around the \u0027or\u0027 expression, i.e.,\n    if (sys.platform.startswith(\u0027linux\u0027) or sys.platform.startswith(\u0027mac\u0027)) \\\n        and android_package is None:\n\nOtherwise, \u0027and\u0027 has a higher precedence over \u0027or\u0027, so the android_package test is applied against mac only.",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 36
+      },
+      "revId": "748e8e44a9fca3a193813a20072b2e7ae53ba93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6d1e45_85c0a830",
+        "filename": "chrome/test/chromedriver/client/chromedriver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-24T19:37:57Z",
+      "side": 1,
+      "message": "There seems to be no reason to add a blank line here.",
+      "revId": "748e8e44a9fca3a193813a20072b2e7ae53ba93c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
