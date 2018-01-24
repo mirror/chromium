@@ -33,6 +33,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/app_list/app_list_util.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -816,6 +817,12 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
     web_app::RevealAppShimInFinderForApp(current_profile, extension);
   }
 #endif
+
+  // Reparent the tab into an app window immediately when opening as a window.
+  if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+      launch_type == extensions::LAUNCH_TYPE_WINDOW) {
+    chrome::OpenInAppBrowser(contents_, extension);
+  }
 
   callback_.Run(extension, web_app_info_);
 }
