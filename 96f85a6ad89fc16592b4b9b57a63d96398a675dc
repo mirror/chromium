@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d86ed327_7ef496f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:59:26Z",
+      "side": 1,
+      "message": "I like the precision here :) Do you mean that they are the same or I miss something?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 82
+      },
+      "revId": "96f85a6ad89fc16592b4b9b57a63d96398a675dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c3458f_0daae403",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:59:26Z",
+      "side": 1,
+      "message": "A comment please. Does it work to move it into namespace {}?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 45
+      },
+      "revId": "96f85a6ad89fc16592b4b9b57a63d96398a675dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35eed7d_0c681b0a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:59:26Z",
+      "side": 1,
+      "message": "virtual? Seems like \n~ManagePasswordSigninPromoDialogDelegate() \u003d default; is good enough",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 55
+      },
+      "revId": "96f85a6ad89fc16592b4b9b57a63d96398a675dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7e732e_9780b9ac",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T16:59:26Z",
+      "side": 1,
+      "message": "Belongs to the second CL",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 189,
+        "endChar": 66
+      },
+      "revId": "96f85a6ad89fc16592b4b9b57a63d96398a675dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
