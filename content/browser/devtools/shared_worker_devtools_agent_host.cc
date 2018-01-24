@@ -15,6 +15,7 @@
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/child_process_host.h"
 
 namespace content {
 
@@ -66,18 +67,17 @@ bool SharedWorkerDevToolsAgentHost::Close() {
   return true;
 }
 
-void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
+void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session,
+                                                  bool is_first) {
   session->AddHandler(std::make_unique<protocol::InspectorHandler>());
   session->AddHandler(std::make_unique<protocol::NetworkHandler>(GetId()));
   session->AddHandler(std::make_unique<protocol::SchemaHandler>());
-  session->SetRenderer(worker_host_ ? worker_host_->process_id() : -1, nullptr);
   if (state_ == WORKER_READY)
-    session->AttachToAgent(EnsureAgent());
+    session->SetRenderer(worker_host_->process_id(), nullptr, EnsureAgent());
 }
 
-void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-}
+void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session,
+                                                  bool is_last) {}
 
 void SharedWorkerDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
@@ -94,7 +94,7 @@ void SharedWorkerDevToolsAgentHost::WorkerReadyForInspection() {
   DCHECK(worker_host_);
   state_ = WORKER_READY;
   for (DevToolsSession* session : sessions())
-    session->AttachToAgent(EnsureAgent());
+    session->SetRenderer(worker_host_->process_id(), nullptr, EnsureAgent());
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerRestarted(
@@ -103,8 +103,6 @@ void SharedWorkerDevToolsAgentHost::WorkerRestarted(
   DCHECK(!worker_host_);
   state_ = WORKER_NOT_READY;
   worker_host_ = worker_host;
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(worker_host_->process_id(), nullptr);
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -113,10 +111,11 @@ void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
   state_ = WORKER_TERMINATED;
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(-1, nullptr);
   worker_host_ = nullptr;
   agent_ptr_.reset();
+  for (DevToolsSession* session : sessions())
+    session->SetRenderer(ChildProcessHost::kInvalidUniqueID, nullptr,
+                         agent_ptr_);
 }
 
 const blink::mojom::DevToolsAgentAssociatedPtr&

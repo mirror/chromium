@@ -62,13 +62,11 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   ~DevToolsAgentHostImpl() override;
 
   static bool ShouldForceCreation();
-
-  virtual void AttachSession(DevToolsSession* session);
-  virtual void DetachSession(DevToolsSession* session);
+  virtual void AttachSession(DevToolsSession* session, bool is_first);
+  virtual void DetachSession(DevToolsSession* session, bool is_last);
   virtual void DispatchProtocolMessage(DevToolsSession* session,
                                        const std::string& message);
   virtual void InspectElement(DevToolsSession* session, int x, int y);
-
   void NotifyCreated();
   void NotifyNavigated(DevToolsAgentHostImpl* host);
   void ForceDetachAllClients();

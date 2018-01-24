@@ -47,6 +47,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "net/base/load_flags.h"
@@ -291,10 +292,15 @@ WebContents* RenderFrameDevToolsAgentHost::GetWebContents() {
   return web_contents();
 }
 
-void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  session->SetRenderer(frame_host_ ? frame_host_->GetProcess()->GetID()
-                                   : ChildProcessHost::kInvalidUniqueID,
-                       frame_host_);
+void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session,
+                                                 bool is_first) {
+  if (is_first) {
+    frame_trace_recorder_.reset(new DevToolsFrameTraceRecorder());
+    GrantPolicy();
+#if defined(OS_ANDROID)
+    GetWakeLock()->RequestWakeLock();
+#endif
+  }
 
   protocol::EmulationHandler* emulation_handler =
       new protocol::EmulationHandler();
@@ -320,21 +326,13 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
     session->AddHandler(base::WrapUnique(new protocol::SecurityHandler()));
   }
 
-  if (EnsureAgent())
-    session->AttachToAgent(agent_ptr_);
-
-  if (sessions().size() == 1) {
-    frame_trace_recorder_.reset(new DevToolsFrameTraceRecorder());
-    GrantPolicy();
-#if defined(OS_ANDROID)
-    GetWakeLock()->RequestWakeLock();
-#endif
-  }
+  session->SetRenderer(ChildProcessHost::kInvalidUniqueID, frame_host_,
+                       EnsureAgent());
 }
 
-void RenderFrameDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-  if (sessions().empty()) {
+void RenderFrameDevToolsAgentHost::DetachSession(DevToolsSession* session,
+                                                 bool is_last) {
+  if (is_last) {
     frame_trace_recorder_.reset();
     RevokePolicy();
 #if defined(OS_ANDROID)
@@ -420,13 +418,8 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
 
 void RenderFrameDevToolsAgentHost::UpdateFrameHost(
     RenderFrameHostImpl* frame_host) {
-  if (frame_host == frame_host_) {
-    if (frame_host && !render_frame_alive_) {
-      render_frame_alive_ = true;
-      MaybeReattachToRenderFrame();
-    }
+  if (frame_host == frame_host_ && (!frame_host || render_frame_alive_))
     return;
-  }
 
   if (frame_host && !ShouldCreateDevToolsForHost(frame_host)) {
     DestroyOnRenderFrameGone();
@@ -439,21 +432,11 @@ void RenderFrameDevToolsAgentHost::UpdateFrameHost(
   frame_host_ = frame_host;
   agent_ptr_.reset();
   render_frame_alive_ = true;
-  if (IsAttached()) {
+  if (IsAttached())
     GrantPolicy();
-    for (DevToolsSession* session : sessions()) {
-      session->SetRenderer(frame_host ? frame_host->GetProcess()->GetID() : -1,
-                           frame_host);
-    }
-    MaybeReattachToRenderFrame();
-  }
-}
-
-void RenderFrameDevToolsAgentHost::MaybeReattachToRenderFrame() {
-  if (!EnsureAgent())
-    return;
   for (DevToolsSession* session : sessions())
-    session->AttachToAgent(agent_ptr_);
+    session->SetRenderer(ChildProcessHost::kInvalidUniqueID, frame_host,
+                         EnsureAgent());
 }
 
 void RenderFrameDevToolsAgentHost::GrantPolicy() {
@@ -527,6 +510,9 @@ void RenderFrameDevToolsAgentHost::RenderFrameDeleted(RenderFrameHost* rfh) {
   if (rfh == frame_host_) {
     render_frame_alive_ = false;
     agent_ptr_.reset();
+    for (DevToolsSession* session : sessions())
+      session->SetRenderer(ChildProcessHost::kInvalidUniqueID, frame_host_,
+                           agent_ptr_);
   }
 }
 
@@ -595,13 +581,15 @@ void RenderFrameDevToolsAgentHost::DidDetachInterstitialPage() {
 
 void RenderFrameDevToolsAgentHost::WasShown() {
 #if defined(OS_ANDROID)
-  GetWakeLock()->RequestWakeLock();
+  if (IsAttached())
+    GetWakeLock()->RequestWakeLock();
 #endif
 }
 
 void RenderFrameDevToolsAgentHost::WasHidden() {
 #if defined(OS_ANDROID)
-  GetWakeLock()->CancelWakeLock();
+  if (IsAttached())
+    GetWakeLock()->CancelWakeLock();
 #endif
 }
 
@@ -788,12 +776,11 @@ void RenderFrameDevToolsAgentHost::SynchronousSwapCompositorFrame(
   }
 }
 
-bool RenderFrameDevToolsAgentHost::EnsureAgent() {
-  if (!frame_host_ || !render_frame_alive_)
-    return false;
-  if (!agent_ptr_)
+const blink::mojom::DevToolsAgentAssociatedPtr&
+RenderFrameDevToolsAgentHost::EnsureAgent() {
+  if (frame_host_ && render_frame_alive_ && !agent_ptr_)
     frame_host_->GetRemoteAssociatedInterfaces()->GetInterface(&agent_ptr_);
-  return true;
+  return agent_ptr_;
 }
 
 bool RenderFrameDevToolsAgentHost::IsChildFrame() {
