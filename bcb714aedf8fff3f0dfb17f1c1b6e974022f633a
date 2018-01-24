@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99db2745_abbd3561",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-01-24T23:22:44Z",
+      "side": 1,
+      "message": "My understanding is that archive_validator_ here, being a scoped_refptr, will be copied and create a ref to ThreadSafeArchiveValidator.\n\nBut the buffer_-\u003edata() is just a char*, so if the OfflinePageRequestJob is deallocated, the buffer_ will be released and buffer-\u003edata() will start pointing to a released memory.\n\nPerhaps better is to pass buffer_ itself, so it will be refcounted properly...",
+      "revId": "bcb714aedf8fff3f0dfb17f1c1b6e974022f633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
