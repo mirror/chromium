@@ -30,6 +30,11 @@ class FullscreenControllerImpl : public FullscreenController {
   void IncrementDisabledCounter() override;
   void DecrementDisabledCounter() override;
 
+  // Accessors.
+  WebStateList* web_state_list() const { return web_state_list_; }
+  FullscreenModel* model() const { return model_.get(); }
+  FullscreenMediator* mediator() const { return mediator_.get(); }
+
  private:
   // KeyedService:
   void Shutdown() override;

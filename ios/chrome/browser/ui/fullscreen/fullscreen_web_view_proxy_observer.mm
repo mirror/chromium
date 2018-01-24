@@ -1,0 +1,63 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_web_view_proxy_observer.h"
+
+#include "base/logging.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_impl.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_web_view_scroll_view_replacement_util.h"
+#import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
+#import "ios/web/public/web_state/ui/crw_web_view_scroll_view_proxy.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
+@interface FullscreenWebViewProxyObserver ()<CRWWebViewScrollViewProxyObserver>
+// The model passed on initialization.
+@property(nonatomic, assign) FullscreenControllerImpl* controller;
+@end
+
+@implementation FullscreenWebViewProxyObserver
+@synthesize proxy = _proxy;
+@synthesize controller = _controller;
+
+- (nullable instancetype)initWithController:
+    (FullscreenControllerImpl*)controller {
+  if (self = [super init]) {
+    _controller = controller;
+    DCHECK(_controller);
+  }
+  return self;
+}
+
+#pragma mark - Accessors
+
+- (void)setProxy:(id<CRWWebViewProxy>)proxy {
+  if (_proxy == proxy)
+    return;
+  [_proxy.scrollViewProxy removeObserver:self];
+  _proxy = proxy;
+  [_proxy.scrollViewProxy addObserver:self];
+}
+
+#pragma mark - CRWWebViewScrollViewProxyObserver
+
+- (void)webViewScrollViewProxyDidSetScrollView:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy {
+  UpdateFullscreenWebViewProxyForReplacedScrollView(self.proxy,
+                                                    self.controller->model());
+}
+
+- (BOOL)webViewScrollViewShouldScrollToTop:
+    (CRWWebViewScrollViewProxy*)webViewScrollViewProxy {
+  // The content offset and the toolbar layout needs to be reset simultaneously,
+  // so disallow UIKit's scroll-to-top animation and instead use the mediator to
+  // trigger a custom animation.
+  self.controller->mediator()->ScrollToTop();
+  return NO;
+}
+
+@end
