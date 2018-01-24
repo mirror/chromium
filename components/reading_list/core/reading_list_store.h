@@ -144,6 +144,8 @@ class ReadingListStore : public ReadingListModelStorage {
     DISALLOW_COPY_AND_ASSIGN(ScopedBatchUpdate);
   };
 
+  std::unique_ptr<syncer::ModelTypeStore> StealStoreForTest();
+
  private:
   void BeginTransaction();
   void CommitTransaction();

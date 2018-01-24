@@ -14,6 +14,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
+#include "base/time/clock.h"
+#include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/sync/device_info/device_info_tracker.h"
@@ -36,17 +38,19 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
  public:
   DeviceInfoSyncBridge(LocalDeviceInfoProvider* local_device_info_provider,
                        const ModelTypeStoreFactory& store_factory,
-                       const ChangeProcessorFactory& change_processor_factory);
+                       const ChangeProcessorFactory& change_processor_factory,
+                       base::Clock* clock = base::DefaultClock::GetInstance());
   ~DeviceInfoSyncBridge() override;
 
   // ModelTypeSyncBridge implementation.
   std::unique_ptr<MetadataChangeList> CreateMetadataChangeList() override;
-  base::Optional<ModelError> MergeSyncData(
+  void MergeSyncData2(std::unique_ptr<MetadataChangeList> metadata_change_list,
+                      EntityChangeList entity_data,
+                      OptionalErrorCallback callback) override;
+  void ApplySyncChanges2(
       std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_data) override;
-  base::Optional<ModelError> ApplySyncChanges(
-      std::unique_ptr<MetadataChangeList> metadata_change_list,
-      EntityChangeList entity_changes) override;
+      EntityChangeList entity_changes,
+      OptionalErrorCallback callback) override;
   void GetData(StorageKeyList storage_keys, DataCallback callback) override;
   void GetAllData(DataCallback callback) override;
   std::string GetClientTag(const EntityData& entity_data) override;
@@ -61,6 +65,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
   int CountActiveDevices() const override;
+
+  std::unique_ptr<ModelTypeStore> StealStoreForTest();
 
  private:
   friend class DeviceInfoSyncBridgeTest;
@@ -90,7 +96,7 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
                      std::unique_ptr<ModelTypeStore::RecordList> record_list);
   void OnReadAllMetadata(base::Optional<ModelError> error,
                          std::unique_ptr<MetadataBatch> metadata_batch);
-  void OnCommit(ModelTypeStore::Result result);
+  void OnCommit(OptionalErrorCallback callback, ModelTypeStore::Result result);
 
   // Load metadata if the data is loaded and the provider is initialized.
   void LoadMetadataIfReady();
@@ -108,7 +114,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
   // Persists the changes in the given aggregators and notifies observers if
   // indicated to do as such.
   void CommitAndNotify(std::unique_ptr<ModelTypeStore::WriteBatch> batch,
-                       bool should_notify);
+                       bool should_notify,
+                       OptionalErrorCallback callback);
 
   // Counts the number of active devices relative to |now|. The activeness of a
   // device depends on the amount of time since it was updated, which means
@@ -118,6 +125,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
 
   // |local_device_info_provider_| isn't owned.
   const LocalDeviceInfoProvider* const local_device_info_provider_;
+
+  base::Clock* const clock_;
 
   ClientIdToSpecifics all_data_;
 

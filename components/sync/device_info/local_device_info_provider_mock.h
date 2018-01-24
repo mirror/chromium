@@ -24,6 +24,9 @@ class LocalDeviceInfoProviderMock : public LocalDeviceInfoProvider {
                               const std::string& sync_user_agent,
                               const sync_pb::SyncEnums::DeviceType device_type,
                               const std::string& signin_scoped_device_id);
+  // Creates initialized based on a DeviceInfo.
+  explicit LocalDeviceInfoProviderMock(
+      std::unique_ptr<DeviceInfo> local_device_info);
   ~LocalDeviceInfoProviderMock() override;
 
   const DeviceInfo* GetLocalDeviceInfo() const override;

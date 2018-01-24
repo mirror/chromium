@@ -7,40 +7,13 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "components/sync/model/fake_model_type_change_processor.h"
 #include "components/sync/model/metadata_batch.h"
+#include "components/sync/model/mock_model_type_change_processor.h"
 #include "components/sync/model/stub_model_type_sync_bridge.h"
 #include "components/sync/protocol/model_type_state.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace syncer {
-
-// A mock MTCP that lets verify DisableSync and ModelReadyToSync were called in
-// the ways that we expect.
-class MockModelTypeChangeProcessor : public FakeModelTypeChangeProcessor {
- public:
-  explicit MockModelTypeChangeProcessor(const base::Closure& disabled_callback)
-      : disabled_callback_(disabled_callback) {}
-  ~MockModelTypeChangeProcessor() override {}
-
-  void DisableSync() override { disabled_callback_.Run(); }
-
-  void ModelReadyToSync(std::unique_ptr<MetadataBatch> batch) override {
-    metadata_batch_ = std::move(batch);
-  }
-
-  MetadataBatch* metadata_batch() { return metadata_batch_.get(); }
-
- private:
-  // This callback is invoked when DisableSync() is called, instead of
-  // remembering that this event happened in our own state. The reason for this
-  // is that after DisableSync() is called on us, the bridge is going to
-  // destroy this processor instance, and any state would be lost. The callback
-  // allows this information to reach somewhere safe instead.
-  base::Closure disabled_callback_;
-
-  std::unique_ptr<MetadataBatch> metadata_batch_;
-};
 
 class MockModelTypeSyncBridge : public StubModelTypeSyncBridge {
  public:
@@ -63,9 +36,7 @@ class MockModelTypeSyncBridge : public StubModelTypeSyncBridge {
   std::unique_ptr<ModelTypeChangeProcessor> CreateProcessor(
       ModelType type,
       ModelTypeSyncBridge* bridge) {
-    return std::make_unique<MockModelTypeChangeProcessor>(
-        base::Bind(&MockModelTypeSyncBridge::OnProcessorDisableSync,
-                   base::Unretained(this)));
+    return std::make_unique<MockModelTypeChangeProcessor>();
   }
 
   void OnProcessorDisableSync() { processor_disable_sync_called_ = true; }
@@ -106,22 +77,6 @@ TEST_F(ModelTypeSyncBridgeTest, OnSyncStarting) {
   // FakeModelTypeProcessor is the one that calls the callback, so if it was
   // called then we know the call on the processor was made.
   EXPECT_TRUE(start_callback_called());
-}
-
-// DisableSync should call DisableSync on the processor and then delete it.
-TEST_F(ModelTypeSyncBridgeTest, DisableSync) {
-  EXPECT_FALSE(bridge()->processor_disable_sync_called());
-  bridge()->DisableSync();
-
-  // Disabling also wipes out metadata, and the bridge should have told the new
-  // processor about this.
-  EXPECT_TRUE(bridge()->processor_disable_sync_called());
-
-  MetadataBatch* batch = bridge()->change_processor()->metadata_batch();
-  EXPECT_NE(nullptr, batch);
-  EXPECT_EQ(sync_pb::ModelTypeState().SerializeAsString(),
-            batch->GetModelTypeState().SerializeAsString());
-  EXPECT_EQ(0U, batch->TakeAllMetadata().size());
 }
 
 // ResolveConflicts should return USE_REMOTE unless the remote data is deleted.
