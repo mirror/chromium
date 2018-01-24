@@ -177,6 +177,8 @@ class NET_EXPORT HttpServerPropertiesImpl
   // have an entry associated with |server|, the method will add one.
   void UpdateCanonicalServerInfoMap(const QuicServerId& server);
 
+  base::TickClock* clock_;  // Unowned
+
   SpdyServersMap spdy_servers_map_;
   Http11ServerHostPortSet http11_servers_;
 

@@ -15,15 +15,15 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 
 namespace net {
 
 HttpServerPropertiesImpl::HttpServerPropertiesImpl(base::TickClock* clock)
-    : broken_alternative_services_(
-          this,
-          clock ? clock : base::DefaultTickClock::GetInstance()),
+    : clock_(clock ? clock : base::DefaultTickClock::GetInstance()),
+      broken_alternative_services_(this, clock_),
       quic_server_info_map_(kDefaultMaxQuicServerEntries),
       max_server_configs_stored_in_properties_(kDefaultMaxQuicServerEntries) {
   canonical_suffixes_.push_back(".ggpht.com");
@@ -521,8 +521,23 @@ HttpServerPropertiesImpl::GetAlternativeServiceInfoAsValue() const {
       if (alternative_service.host.empty()) {
         alternative_service.host = server.host();
       }
-      if (IsAlternativeServiceBroken(alternative_service)) {
-        alternative_service_string.append(" (broken)");
+      base::TimeTicks brokenness_expiration_ticks;
+      if (broken_alternative_services_.IsAlternativeServiceBroken(
+              alternative_service, &brokenness_expiration_ticks)) {
+        // Convert |brokenness_expiration| from TimeTicks to Time
+        base::Time brokenness_expiration =
+            base::Time::Now() +
+            (brokenness_expiration_ticks - clock_->NowTicks());
+        base::Time::Exploded exploded;
+        brokenness_expiration.LocalExplode(&exploded);
+        std::string broken_info_string =
+            " (broken until " +
+            base::StringPrintf("%04d-%02d-%02d %0d:%0d:%0d", exploded.year,
+                               exploded.month, exploded.day_of_month,
+                               exploded.hour, exploded.minute,
+                               exploded.second) +
+            ")";
+        alternative_service_string.append(broken_info_string);
       }
       alternative_service_list->AppendString(alternative_service_string);
     }
