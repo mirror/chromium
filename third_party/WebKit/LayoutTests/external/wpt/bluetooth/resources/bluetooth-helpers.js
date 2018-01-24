@@ -18,11 +18,6 @@ function loadScripts(paths) {
 }
 
 function performChromiumSetup() {
-  // Make sure we are actually on Chromium.
-  if (!Mojo) {
-    return;
-  }
-
   // Load the Chromium-specific resources.
   let prefix = '/resources/chromium';
   let extra = [];
@@ -55,7 +50,6 @@ function performChromiumSetup() {
       .then(() => typeof setBluetoothFakeAdapter === 'undefined' ?
           undefined : setBluetoothFakeAdapter(''));
 }
-
 
 // These tests rely on the User Agent providing an implementation of the
 // Web Bluetooth Testing API.
