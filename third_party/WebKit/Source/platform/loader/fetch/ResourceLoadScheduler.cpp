@@ -422,8 +422,8 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
 }
 
 ResourceLoadScheduler* ResourceLoadScheduler::Create(FetchContext* context) {
-  return new ResourceLoadScheduler(context ? context
-                                           : &FetchContext::NullInstance());
+  return new ResourceLoadScheduler(
+      context ? context : FetchContext::CreateNullInstance());
 }
 
 ResourceLoadScheduler::~ResourceLoadScheduler() = default;

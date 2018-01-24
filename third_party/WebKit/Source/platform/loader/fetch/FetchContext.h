@@ -86,7 +86,7 @@ class PLATFORM_EXPORT FetchContext
   // Extend this when needed.
   enum LogSource { kJSSource };
 
-  static FetchContext& NullInstance();
+  static FetchContext* CreateNullInstance();
 
   virtual ~FetchContext() = default;
 
@@ -264,7 +264,7 @@ class PLATFORM_EXPORT FetchContext
   // FetchContexts continue working after detached (e.g., for fetch() operations
   // with "keepalive" specified).
   // Returns a "detached" fetch context which can be null.
-  virtual FetchContext* Detach() { return nullptr; }
+  virtual FetchContext* Detach() { return CreateNullInstance(); }
 
   // Returns the updated priority of the resource based on the experiments that
   // may be currently enabled.
