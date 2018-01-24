@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6955ae2_c17b8f79",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-24T01:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ac0872_8cbbc3cb",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8646c59_c853c78c",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "24912117118da0128293bcd876c1459e73778807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ac2a8c_9d8d4a4e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3663,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-24T01:17:13Z",
+      "side": 1,
+      "message": "Done and moved into |CreateNetworkServiceDefaultFactoryAndObserve()|.",
+      "parentUuid": "b8646c59_c853c78c",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7f4f5fbf_4c455555",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4137,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-24T01:17:13Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!\nActually I renamed the method to |CreateNetworkServiceDefaultFactoryAndObserve()| and merged |ObserveAndReconnectNetworkServiceFactoryWhenNecessary()| into it.",
+      "parentUuid": "2086e2cd_55aa11ed",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e482c72c_8d62dd65",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "24912117118da0128293bcd876c1459e73778807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a082ea11_5272a076",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-24T01:17:13Z",
+      "side": 1,
+      "message": "Done. Combined as |FlushNetworkAndNavigationInterfacesForTesting()|.",
+      "parentUuid": "e482c72c_8d62dd65",
+      "revId": "24912117118da0128293bcd876c1459e73778807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
