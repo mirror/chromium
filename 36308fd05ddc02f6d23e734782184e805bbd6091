@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97584b0d_87dc453c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T21:01:05Z",
+      "side": 1,
+      "message": "Nit: |metric_name| and |value|",
+      "revId": "36308fd05ddc02f6d23e734782184e805bbd6091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

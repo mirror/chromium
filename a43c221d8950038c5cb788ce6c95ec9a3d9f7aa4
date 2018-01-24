@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "3e4bebaa_34cb877b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T21:01:05Z",
+      "side": 1,
+      "message": "My point is that both DEFINE_STATIC_LOCAL_IMPL and ScopedUsHistogramAndUkmTimer each call CurrentTimeTicks(). So if the time changes between line 208 and line 210, you\u0027ll get different timings for them.\n\nI\u0027m asking if there\u0027s a way to structure the code such that the start time is only queried once using a single CurrentTimeTicks() call that can then be passed to both scoped constructs.",
+      "parentUuid": "dc028409_4d84d4f7",
+      "range": {
+        "startLine": 210,
+        "startChar": 72,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0cc54e2_992d5783",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 7
