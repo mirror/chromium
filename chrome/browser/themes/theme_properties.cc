@@ -25,8 +25,8 @@ namespace {
 // change these defaults, you must increment the version number in
 // browser_theme_pack.cc.
 
-const SkColor kDefaultColorFrame = SkColorSetRGB(0xCC, 0xCC, 0xCC);
-const SkColor kDefaultColorFrameInactive = SkColorSetRGB(0xF5, 0xF5, 0xF5);
+const SkColor kDefaultColorFrame = SkColorSetRGB(0xD0, 0xD2, 0xD6);
+const SkColor kDefaultColorFrameInactive = SkColorSetRGB(0xE3, 0xE5, 0xE8);
 
 #if defined(OS_MACOSX)
 const SkColor kDefaultColorFrameIncognito =
@@ -34,9 +34,9 @@ const SkColor kDefaultColorFrameIncognito =
 const SkColor kDefaultColorFrameIncognitoInactive =
     SkColorSetRGB(0x1E, 0x1E, 0x1E);
 #else
-const SkColor kDefaultColorFrameIncognito = SkColorSetRGB(0x28, 0x2B, 0x2D);
+const SkColor kDefaultColorFrameIncognito = SkColorSetRGB(0x20, 0x21, 0x24);
 const SkColor kDefaultColorFrameIncognitoInactive =
-    SkColorSetRGB(0x38, 0x3B, 0x3D);
+    SkColorSetRGB(0x32, 0x36, 0x39);
 #endif
 
 const SkColor kDefaultColorToolbar = SkColorSetRGB(0xF2, 0xF2, 0xF2);

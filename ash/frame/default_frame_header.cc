@@ -173,8 +173,7 @@ void DefaultFrameHeader::LayoutHeader() {
   if (back_button_) {
     back_button_->set_use_light_images(ShouldUseLightImages());
     gfx::Size size = back_button_->GetPreferredSize();
-    back_button_->SetBounds(0, 0, size.width(),
-                            caption_button_container_size.height());
+    back_button_->SetBounds(8, 8, size.width(), size.height());
     origin = back_button_->bounds().right();
   }
 
