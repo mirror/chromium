@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "913c22c8_819f774e",
+        "filename": "third_party/polymer/v1_0/rsync_exclude.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-24T21:30:26Z",
+      "side": 1,
+      "message": "Is this file generated automatically, or how do we decide what needs to be excluded?",
+      "revId": "32fd23890dd8bf005ca81b7c81c4dbe01f1a6572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
