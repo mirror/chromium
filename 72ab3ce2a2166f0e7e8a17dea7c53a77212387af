@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74aa9467_7eede395",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-24T03:14:57Z",
+      "side": 1,
+      "message": "Is there another test which can be or should be written which also tests the auto-flush case?",
+      "range": {
+        "startLine": 730,
+        "startChar": 11,
+        "endLine": 730,
+        "endChar": 30
+      },
+      "revId": "72ab3ce2a2166f0e7e8a17dea7c53a77212387af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2b9be3_f68ab427",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-24T03:14:57Z",
+      "side": 1,
+      "message": "Are there any assertions this test should make about kTotalNumCommandEntries being even, or similar?",
+      "revId": "72ab3ce2a2166f0e7e8a17dea7c53a77212387af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
