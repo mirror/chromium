@@ -66,6 +66,8 @@ class ThreadedImageCursors {
   // Helper method. Sets |platform_cursor| on the |platform_window|.
   void SetCursorOnPlatformWindow(ui::PlatformCursor platform_cursor,
                                  ui::PlatformWindow* platform_window);
+  void SetCursorOnPlatformWindowAndUnref(ui::PlatformCursor platform_cursor,
+                                         ui::PlatformWindow* platform_window);
 
  private:
   // The object used for performing the actual cursor operations.
