@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fbf46c3_5151d4d9",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-24T16:28:53Z",
+      "side": 1,
+      "message": "Done. Made the existing ::StopKeyRepeat public.",
+      "parentUuid": "a0b48b84_9ab58c22",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d0f83bf_efe1770b",
         "filename": "ui/ozone/platform/wayland/wayland_keyboard.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1e2f40bd_761a784f",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-24T16:28:53Z",
+      "side": 1,
+      "message": "Good idea; done: https://crrev.com/c/881961 (and later https://crrev.com/c/883581 - reland).",
+      "parentUuid": "3d0f83bf_efe1770b",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4802988_54294738",
         "filename": "ui/ozone/platform/wayland/wayland_keyboard_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6fa327_90f927ba",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-24T16:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4802988_54294738",
+      "range": {
+        "startLine": 376,
+        "startChar": 2,
+        "endLine": 376,
+        "endChar": 15
+      },
+      "revId": "63d93ca6f0743afe52f16e9775c8a24714acf645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
