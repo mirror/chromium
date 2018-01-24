@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a9f7d6f_19cc2d75",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-24T19:54:52Z",
+      "side": 1,
+      "message": "How \u0027bout doing this in IsAlternativeServiceBroken since broken_alternative_services_ already has a clock. (In fact, it could even doe the Exploded expansion)",
+      "range": {
+        "startLine": 527,
+        "startChar": 65,
+        "endLine": 527,
+        "endChar": 0
+      },
+      "revId": "f73c61310322190cfa57b12bf955fdf120503b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314721d7_6d4cbab3",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-24T19:54:52Z",
+      "side": 1,
+      "message": "Is there any place where we test this method\u0027s output?",
+      "range": {
+        "startLine": 535,
+        "startChar": 75,
+        "endLine": 535,
+        "endChar": 0
+      },
+      "revId": "f73c61310322190cfa57b12bf955fdf120503b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
