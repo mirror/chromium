@@ -22,6 +22,30 @@
       "revId": "03e404fb8a663d8c6ad6456b330171c13134a195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bb8d36_90bdf19b",
+        "filename": "extensions/browser/service_worker_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2018-01-24T20:04:41Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "6cfe7d4b_b3ca8776",
+      "range": {
+        "startLine": 5,
+        "startChar": 35,
+        "endLine": 5,
+        "endChar": 42
+      },
+      "revId": "03e404fb8a663d8c6ad6456b330171c13134a195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
