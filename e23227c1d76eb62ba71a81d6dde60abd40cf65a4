@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463a6040_0d74f852",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 27
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "dcheng@ confirmed this seems ok to add.",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bc42fe_c90b782c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "Minor nit: Move below OnMessageReceived to keep same order as .h file.",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2310636_5ba878a2",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "Looks like we get here when the RenderWidgetHost doesn\u0027t handle an IPC message sent to it?  Seems ok to me.",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9f9d80_91d7a707",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "(Side note to Ken: Are we thinking about moving some of these ViewHostMsgs to be WidgetHostMsgs at any point, so we can eliminate the \"view\" terminology?  Or will we just get that as they move to widget.mojom?  No change needed for this CL, but I\u0027m curious about how to review additions to view_messages.h.)",
+      "range": {
+        "startLine": 739,
+        "startChar": 20,
+        "endLine": 739,
+        "endChar": 31
+      },
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4b9024_4115eec4",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "Minor nit: Can you move this down below OnSetChildFrameSurface around line 435?",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abb04e6_30921f0b",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "Minor nit: Move below OnSetChildFrameSurface around line 214.",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e864f54_5aeb0145",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 27
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "I think dpranke@ requested that we stick with the extra build bot stage for running layout tests with --site-per-process on the linux_chromium_rel_ng bot for now, rather than adding a virtual test suite.  lukasza@ and dcheng@ may know more about the plans there.\n\n(If we remove this virtual suite, the test should still run with --site-per-process on the Linux bot to give us coverage.)",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93479fee_212f921c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "dcheng@: Is this the right way to do this?  I notice that it requires a DEPS change.",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47fdf07_bf98b0a8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T00:51:29Z",
+      "side": 1,
+      "message": "nit: Update comment.  (Is the rest still correct now that it\u0027s not necessarily a LocalFrameView?)",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
