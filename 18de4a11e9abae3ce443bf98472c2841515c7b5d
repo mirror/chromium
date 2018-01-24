@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad2372b_bf93333c",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T00:52:25Z",
+      "side": 1,
+      "message": "I think this should be something like\n\nif (response-\u003ehead.was_fetched_via_service_worker) {\n  switch (response-\u003ehead.resposne_type_via_service_worker) {\n     case kBasic:\n     case kCORS:\n     case kDefault:\n     case kError:\n       // Non-opaque responses shouldn\u0027t be blocked.\n       return false; \n     case kOpaque:\n     case kOpaqueRedirect:\n     // Opaque responses are eligible for blocking. Continue on with the check.\n       break;\n  }\n}",
+      "revId": "18de4a11e9abae3ce443bf98472c2841515c7b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
