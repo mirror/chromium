@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7959622d_fd7cc7ee",
+        "filename": "cc/raster/playback_image_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-24T01:31:56Z",
+      "side": 1,
+      "message": "Woops. Done.",
+      "parentUuid": "b2a16a98_43de381b",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "9e44480a61144fe78766870c45a7ce1a79ff74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b8c2644_a797a4bb",
         "filename": "cc/tiles/image_controller.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9e44480a61144fe78766870c45a7ce1a79ff74c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34cc786_fa562b8a",
+        "filename": "cc/tiles/image_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-24T01:31:56Z",
+      "side": 1,
+      "message": "You mean pass the bool* as a param right? Sure.",
+      "parentUuid": "0b8c2644_a797a4bb",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9e44480a61144fe78766870c45a7ce1a79ff74c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
