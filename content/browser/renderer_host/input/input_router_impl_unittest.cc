@@ -247,6 +247,12 @@ class InputRouterImplTest : public testing::Test {
 
     client_->set_input_router(input_router());
     disposition_handler_->set_input_router(input_router());
+
+    // Before crbug.com/772130 is fixed, the touch action is always set to auto
+    // when a touch action filter is created. This is no longer true, but a lot
+    // of the tests here are relying on that. So for the tests here, we make the
+    // touch action auto by default.
+    SetTouchActionFromMain(cc::kTouchActionAuto);
   }
 
   void TearDown() override {
@@ -413,13 +419,22 @@ class InputRouterImplTest : public testing::Test {
         ViewHostMsg_HasTouchEventHandlers(0, has_handlers));
   }
 
-  void CancelTouchTimeout() { input_router_->CancelTouchTimeout(); }
+  void CancelTouchTimeout() {
+    // The InputRouterImpl::SetTouchActionFromMain calls the
+    // InputRouterImpl::UpdateTouchAckTimeoutEnabled and that will cancel touch
+    // timeout when the touch action is none.
+    input_router_->SetTouchActionFromMain(cc::kTouchActionNone);
+  }
 
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
                                    uint32_t unique_touch_event_id,
                                    InputEventAckState ack_result) {
     input_router_->SetWhiteListedTouchAction(white_listed_touch_action,
                                              unique_touch_event_id, ack_result);
+  }
+
+  void SetTouchActionFromMain(cc::TouchAction touch_action) {
+    input_router_->SetTouchActionFromMain(touch_action);
   }
 
   DispatchedMessages GetAndResetDispatchedMessages() {
@@ -1492,6 +1507,7 @@ TEST_F(InputRouterImplTest, TouchActionResetWhenTouchHasNoConsumer) {
 TEST_F(InputRouterImplTest, TouchActionResetWhenTouchHandlerRemoved) {
   // Touch sequence with touch handler.
   OnHasTouchEventHandlers(true);
+
   PressTouchPoint(1, 1);
   SendTouchEvent();
   MoveTouchPoint(0, 50, 50);
@@ -1914,8 +1930,10 @@ TEST_F(InputRouterImplTest, TouchActionInCallback) {
       InputEventAckSource::COMPOSITOR_THREAD, ui::LatencyInfo(),
       INPUT_EVENT_ACK_STATE_CONSUMED, base::nullopt, cc::kTouchActionNone);
   ASSERT_EQ(1U, disposition_handler_->GetAndResetAckCount());
-  EXPECT_EQ(cc::TouchAction::kTouchActionNone,
-            input_router_->AllowedTouchAction());
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      input_router_->AllowedTouchAction();
+  EXPECT_TRUE(allowed_touch_action.has_value());
+  EXPECT_EQ(cc::TouchAction::kTouchActionNone, allowed_touch_action.value());
 }
 
 namespace {
