@@ -9,13 +9,19 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "build/buildflag.h"
 #include "chrome/browser/ui/passwords/manage_passwords_state.h"
 #include "chrome/browser/ui/passwords/passwords_client_ui_delegate.h"
 #include "chrome/browser/ui/passwords/passwords_model_delegate.h"
 #include "chrome/common/features.h"
 #include "components/password_manager/core/browser/password_store.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "components/signin/core/browser/account_info.h"
+#endif
 
 namespace base {
 class TimeDelta;
@@ -128,6 +134,9 @@ class ManagePasswordsUIController
   void NavigateToPasswordManagerAccountDashboard() override;
   void NavigateToPasswordManagerSettingsPage() override;
   void NavigateToChromeSignIn() override;
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  void EnableSync(const AccountInfo& account) override;
+#endif
   void OnDialogHidden() override;
   bool AuthenticateUser() override;
   bool ArePasswordsRevealedWhenBubbleIsOpened() const override;

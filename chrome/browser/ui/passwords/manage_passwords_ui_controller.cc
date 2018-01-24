@@ -41,6 +41,10 @@
 #include "chrome/browser/password_manager/password_manager_util_mac.h"
 #endif
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "chrome/browser/signin/signin_ui_util.h"
+#endif
+
 using password_manager::PasswordFormManager;
 
 int ManagePasswordsUIController::save_fallback_timeout_in_seconds_ = 90;
@@ -487,6 +491,15 @@ void ManagePasswordsUIController::NavigateToChromeSignIn() {
       BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN, signin::ManageAccountsParams(),
       signin_metrics::AccessPoint::ACCESS_POINT_PASSWORD_BUBBLE, false);
 }
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+void ManagePasswordsUIController::EnableSync(const AccountInfo& account) {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+  signin_ui_util::EnableSync(
+      browser, account,
+      signin_metrics::AccessPoint::ACCESS_POINT_PASSWORD_BUBBLE);
+}
+#endif
 
 void ManagePasswordsUIController::OnDialogHidden() {
   dialog_controller_.reset();
