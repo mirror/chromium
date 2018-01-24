@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "65d8e262_ee1fa5b1",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-24T05:31:37Z",
+      "side": 1,
+      "message": "I\u0027d keep them in the interface.",
+      "parentUuid": "e0a43a64_edcbc3a4",
+      "revId": "2d2681b7439471f0af5a8b4062962fb09735bd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80609e6a_356e7f03",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.idl",
         "patchSetId": 3
