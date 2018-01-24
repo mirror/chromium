@@ -19,6 +19,7 @@
 #include "net/base/ip_endpoint.h"
 #include "net/interfaces/address_family.mojom.h"
 #include "net/interfaces/ip_endpoint.mojom.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace net {
@@ -80,8 +81,11 @@ class UDPSocket : public mojom::UDPSocket {
   void ReceiveMore(uint32_t num_additional_datagrams) override;
   void SendTo(const net::IPEndPoint& dest_addr,
               base::span<const uint8_t> data,
+              const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
               SendToCallback callback) override;
-  void Send(base::span<const uint8_t> data, SendCallback callback) override;
+  void Send(base::span<const uint8_t> data,
+            const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
+            SendCallback callback) override;
 
  private:
   friend class UDPSocketTest;

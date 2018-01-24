@@ -18,7 +18,6 @@
 #include "net/base/rand_callback.h"
 #include "net/log/net_log.h"
 #include "net/socket/udp_socket.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace network {
 
@@ -206,9 +205,11 @@ void UDPSocket::ReceiveMore(uint32_t num_additional_datagrams) {
   }
 }
 
-void UDPSocket::SendTo(const net::IPEndPoint& dest_addr,
-                       base::span<const uint8_t> data,
-                       SendToCallback callback) {
+void UDPSocket::SendTo(
+    const net::IPEndPoint& dest_addr,
+    base::span<const uint8_t> data,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
+    SendToCallback callback) {
   if (!is_bound_) {
     std::move(callback).Run(net::ERR_UNEXPECTED);
     return;
@@ -216,7 +217,10 @@ void UDPSocket::SendTo(const net::IPEndPoint& dest_addr,
   DoSendToOrWrite(&dest_addr, data, std::move(callback));
 }
 
-void UDPSocket::Send(base::span<const uint8_t> data, SendCallback callback) {
+void UDPSocket::Send(
+    base::span<const uint8_t> data,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
+    SendCallback callback) {
   if (!is_connected_) {
     std::move(callback).Run(net::ERR_UNEXPECTED);
     return;
