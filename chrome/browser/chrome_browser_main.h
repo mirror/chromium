@@ -33,6 +33,10 @@ class ShutdownWatcherHelper;
 class ThreeDAPIObserver;
 class WebUsbDetector;
 
+namespace base {
+class SequencedTaskRunner;
+}
+
 namespace chrome_browser {
 // For use by ShowMissingLocaleMessageBox.
 #if defined(OS_WIN)
@@ -52,6 +56,10 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   virtual void AddParts(ChromeBrowserMainExtraParts* parts);
 
  protected:
+#if !defined(OS_ANDROID)
+  class InitialTaskRunner;
+#endif
+
   explicit ChromeBrowserMainParts(
       const content::MainFunctionParams& parameters);
 
@@ -114,6 +122,12 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // for child processes.
   void SetupOriginTrialsCommandLine(PrefService* local_state);
 
+  // Calling during PreEarlyInitialization() to load local state. Result is
+  // error code.
+  int LoadLocalState(base::SequencedTaskRunner* local_state_task_runner);
+
+  int ApplyFirstRunPrefs(const base::FilePath& user_data_dir);
+
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
@@ -122,6 +136,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Members initialized on construction ---------------------------------------
 
   const content::MainFunctionParams parameters_;
+  // TODO: remove this. This class (and related calls), may mutate the
+  // CommandLine, so it is misleading keeping a const ref here.
   const base::CommandLine& parsed_command_line_;
   int result_code_;
 
@@ -180,7 +196,13 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // Initialized in |SetupFieldTrials()|.
   scoped_refptr<FieldTrialSynchronizer> field_trial_synchronizer_;
 
+  // Initialized in PreMainMessageLoopRun, needed in
+  // PreMainMessageLoopRunThreadsCreated.
   base::FilePath user_data_dir_;
+
+#if !defined(OS_ANDROID)
+  scoped_refptr<InitialTaskRunner> initial_task_runner_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainParts);
 };
