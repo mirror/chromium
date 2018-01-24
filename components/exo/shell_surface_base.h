@@ -66,6 +66,8 @@ class ShellSurfaceBase : public SurfaceTreeHost,
                    int container);
   ~ShellSurfaceBase() override;
 
+  gfx::Size minimum_size() const { return minimum_size_; }
+
   // Set the callback to run when the user wants the shell surface to be closed.
   // The receiver can chose to not close the window on this signal.
   void set_close_callback(const base::RepeatingClosure& close_callback) {
