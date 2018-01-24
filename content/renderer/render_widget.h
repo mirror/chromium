@@ -469,6 +469,8 @@ class CONTENT_EXPORT RenderWidget
 
   void DidResizeOrRepaintAck();
 
+  bool has_size() { return has_size_; }
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -938,6 +940,9 @@ class CONTENT_EXPORT RenderWidget
   // being handled. If the current event results in starting a drag/drop
   // session, this info is sent to the browser along with other drag/drop info.
   DragEventSourceInfo possible_drag_event_info_;
+
+  // True if this RenderWidget has received its size from the browser.
+  bool has_size_ = false;
 
   bool first_update_visual_state_after_hidden_;
   base::TimeTicks was_shown_time_;

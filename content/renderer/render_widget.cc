@@ -1425,6 +1425,11 @@ void RenderWidget::Resize(const ResizeParams& params) {
       params.needs_resize_ack && !local_surface_id_.is_valid()) {
     DCHECK_NE(params.content_source_id, current_content_source_id_);
     reset_next_paint_is_resize_ack();
+
+    if (!has_size_) {
+      has_size_ = true;
+      for (auto& frame : render_frames_)
+        frame.DidReceiveInitialSize();
   }
 }
 
