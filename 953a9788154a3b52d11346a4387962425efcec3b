@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "614c3e70_79a46b78",
+        "filename": "base/metrics/field_trial.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T20:58:02Z",
+      "side": 1,
+      "message": "Agree to not do it for AllStatesToString() in this CL.",
+      "parentUuid": "9c9c1a8a_d9b922a0",
+      "range": {
+        "startLine": 522,
+        "startChar": 52,
+        "endLine": 522,
+        "endChar": 0
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b9b87d5_aa864105",
         "filename": "components/variations/net/variations_command_line.cc",
         "patchSetId": 13
@@ -307,6 +331,30 @@
       "side": 1,
       "message": "It is not really really needed but the variations command line output is really long even with this width. And there is still a lot of space left on my big screen. Maybe it could be a percentage instead of px to adopt to different screensize ? Note, mobile has different css",
       "parentUuid": "f284375a_26e28253",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de544d3_d93ba783",
+        "filename": "components/version_ui/resources/about_version.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T20:58:02Z",
+      "side": 1,
+      "message": "Percentage sgtm. Try that?",
+      "parentUuid": "22a8fe02_67559ee6",
       "range": {
         "startLine": 16,
         "startChar": 16,

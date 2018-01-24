@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf2be499_52058a78",
+        "filename": "base/metrics/field_trial.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T20:58:02Z",
+      "side": 1,
+      "message": "The field_trial.cc code always passes false to |use_plus| param. If so, please make the EscapeDataFunc definition not take the extra arg and just have the single input param.\n\nYou should use a Callback\u003cstd::string(StringPiece)\u003e instead of a plain C function pointer and then you can base::Bind the second param to false at the callsite when passing in the net:: function.",
+      "range": {
+        "startLine": 399,
+        "startChar": 80,
+        "endLine": 399,
+        "endChar": 0
+      },
+      "revId": "1ea47d40375ba57e8982210e761730de75bcbd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8422e75_49dcec86",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T20:58:02Z",
+      "side": 1,
+      "message": "Nit: Put in the anon namespace.",
+      "revId": "1ea47d40375ba57e8982210e761730de75bcbd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3984a413_b2072c29",
+        "filename": "components/variations/net/variations_command_line.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-24T20:58:02Z",
+      "side": 1,
+      "message": "Nit: Generates",
+      "revId": "1ea47d40375ba57e8982210e761730de75bcbd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
