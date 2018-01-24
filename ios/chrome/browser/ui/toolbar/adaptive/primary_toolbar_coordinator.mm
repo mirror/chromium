@@ -49,8 +49,7 @@
   self.viewController.buttonFactory = [self buttonFactoryWithType:PRIMARY];
 
   [self setUpLocationBar];
-  self.viewController.locationBarView =
-      self.locationBarCoordinator.locationBarView;
+  self.viewController.locationBarView = self.locationBarCoordinator.view;
   [super start];
 }
 
@@ -85,8 +84,7 @@
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return
-      [self.locationBarCoordinator.locationBarView.textField isFirstResponder];
+  return [self.locationBarCoordinator isOmniboxFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {

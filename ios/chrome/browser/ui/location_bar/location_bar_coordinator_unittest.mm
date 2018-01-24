@@ -34,17 +34,17 @@ class LocationBarCoordinatorTest : public PlatformTest {
 };
 
 TEST_F(LocationBarCoordinatorTest, Starts) {
-  EXPECT_TRUE(coordinator_.locationBarView == nil);
+  EXPECT_TRUE(coordinator_.view == nil);
   [coordinator_ start];
-  EXPECT_TRUE(coordinator_.locationBarView != nil);
+  EXPECT_TRUE(coordinator_.view != nil);
 }
 
 TEST_F(LocationBarCoordinatorTest, Stops) {
-  EXPECT_TRUE(coordinator_.locationBarView == nil);
+  EXPECT_TRUE(coordinator_.view == nil);
   [coordinator_ start];
-  EXPECT_TRUE(coordinator_.locationBarView != nil);
+  EXPECT_TRUE(coordinator_.view != nil);
   [coordinator_ stop];
-  EXPECT_TRUE(coordinator_.locationBarView == nil);
+  EXPECT_TRUE(coordinator_.view == nil);
 }
 
 }  // namespace
