@@ -26,19 +26,7 @@ Polymer({
     },
 
     // <if expr="not chromeos">
-    /**
-     * This flag is used to conditionally show a set of new sign-in UIs to the
-     * profiles that have been migrated to be consistent with the web sign-ins.
-     * TODO(scottchen): In the future when all profiles are completely migrated,
-     * this should be removed, and UIs hidden behind it should become default.
-     * @private
-     */
-    diceEnabled_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('diceEnabled');
-      },
-    },
+    diceEnabled: Boolean,
     // </if>
 
     /**
@@ -291,7 +279,11 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
-    cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    // <if expr="not chromeos">
+    // If DICE-enabled, this button won't exist here.
+    if (!this.diceEnabled)
+    // </if>
+      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();
