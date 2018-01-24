@@ -12,6 +12,7 @@
 #include "content/public/browser/notification_service.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_constants.h"
+#include "ui/base/accelerators/media_keys_listener.h"
 #include "ui/content_accelerators/accelerator_util.h"
 
 namespace values = extensions::manifest_values;
@@ -24,6 +25,12 @@ ExtensionKeybindingRegistryCocoa::ExtensionKeybindingRegistryCocoa(
     : ExtensionKeybindingRegistry(profile, extension_filter, delegate),
       profile_(profile),
       window_(window) {
+  media_keys_listener_ = ui::MediaKeysListener::Create(
+      base::BindRepeating(
+          &ExtensionKeybindingRegistryCocoa::OnMediaKeysAccelerator,
+          base::Unretained(this)),
+      ui::MediaKeysListener::Scope::kChrome);
+  DCHECK(media_keys_listener_);
   Init();
 }
 
@@ -92,6 +99,10 @@ void ExtensionKeybindingRegistryCocoa::AddExtensionKeybindings(
     AddEventTarget(iter->second.accelerator(),
                    extension->id(),
                    iter->second.command_name());
+    if (!media_keys_listener_->IsWatchingMediaKeys() &&
+        IsAnyMediaKeyRegistered()) {
+      media_keys_listener_->StartWatchingMediaKeys();
+    }
   }
 
   // The Mac implementation keeps track of browser and page actions in the
@@ -130,4 +141,14 @@ void ExtensionKeybindingRegistryCocoa::AddExtensionKeybindings(
 void ExtensionKeybindingRegistryCocoa::RemoveExtensionKeybindingImpl(
     const ui::Accelerator& accelerator,
     const std::string& command_name) {
+  if (!IsAnyMediaKeyRegistered()) {
+    media_keys_listener_->StopWatchingMediaKeys();
+  }
+}
+
+void ExtensionKeybindingRegistryCocoa::OnMediaKeysAccelerator(
+    const ui::Accelerator& accelerator,
+    bool* was_handled) {
+  DCHECK(was_handled);
+  *was_handled = NotifyEventTargets(accelerator);
 }

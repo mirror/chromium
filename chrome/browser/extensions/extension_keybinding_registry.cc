@@ -136,6 +136,15 @@ bool ExtensionKeybindingRegistry::IsAcceleratorRegistered(
   return event_targets_.find(accelerator) != event_targets_.end();
 }
 
+bool ExtensionKeybindingRegistry::IsAnyMediaKeyRegistered() {
+  for (auto iter : event_targets_) {
+    if (Command::IsMediaKey(iter.first)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void ExtensionKeybindingRegistry::AddEventTarget(
     const ui::Accelerator& accelerator,
     const std::string& extension_id,
