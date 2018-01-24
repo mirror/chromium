@@ -89,13 +89,14 @@ public class ChildProcessLauncherHelperTest {
      * ChildProcessLauncher retries on a new connection.
      */
     @Test
-    //@MediumTest
-    //@Feature({"ProcessManagement"})
+    // @MediumTest
+    // @Feature({"ProcessManagement"})
     // Test is flaky: crbug.com/752691
     @DisabledTest
     @ChildProcessAllocatorSettings(
             sandboxedServiceCount = 2, sandboxedServiceName = DEFAULT_SANDBOXED_PROCESS_SERVICE)
-    public void testBindServiceFromMultipleProcesses() throws RemoteException {
+    public void
+    testBindServiceFromMultipleProcesses() throws RemoteException {
         final Context context = InstrumentationRegistry.getTargetContext();
 
         // Start the Helper service.
