@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aacb4e5_fa9670bd",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "we have a circular reference leak here I think. helper unregisters itself in its destructor, which won\u0027t happen until this filter goes away, which won\u0027t happen until helper goes away...\n\nprobably should just have Helper hold a raw pointer to filter, and post anything to itself instead, then filter can unset the pointer if it\u0027s ever destroyed. so then shouldn\u0027t need UnregisterHost here\n\n\n\u003c30 minutes later..\u003e\n\nactually if we do that, then filter would never clear the reference to helper, because filter doesn\u0027t know when a particular route goes away. so instead, filter should hold a raw pointer to helper instead, and helper has to inform filter it goes away (like it does right now).\n\nneed to be super careful to distinguish between no helper because \"unexpected message\" vs no helper because \"UI side is gone already\". actually, \"UI side is gone\" should never happen because these are synchronous calls, and something will be waiting on the result, so UI can\u0027t just say \"no longer interested in result\". ok.. I think that makes sense, in my head",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef291ad_dacf10f7",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "can we avoid creating the helper until the filter ready? that way can have a bunch of nice properties like it only happens once, and have a place to do null checks for all the synchronous calls and early out",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8161d9e4_35562e73",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "left over from something?",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c24c761_0995a5fe",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "is this different from just passing this?",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446c345d_4f4886a4",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "DCHECK(!begin_frame_response_valid_), I think?",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08eb0ea6_a1e6ddf9",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "DCHECK window_android_in_vsync_ and window_android are the same",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130a6cc5_23baa26f",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "guess we should DCHECK(frame_future) here as well",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85e2729_f267f963",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "DCHECK(begin_frame_response_valid_ || remote_closed_)",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b254313_87f640df",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "alright let\u0027s bikeshed the name...\n\nBridge/Proxy? IOHelper? SyncCallHelper?",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7d5747_b5ba8942",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf5c379_569e29a3",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "add OnIOThread/OnUIThread suffix to each public method",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be7b65f_7d67039c",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-24T20:39:09Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
