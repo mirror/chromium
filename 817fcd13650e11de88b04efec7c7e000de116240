@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d327d8d0_1a7d6d14",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "This string should have a use_titlecase version for OSX (\"Password Saved\")",
+      "range": {
+        "startLine": 4707,
+        "startChar": 21,
+        "endLine": 4707,
+        "endChar": 58
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "333b99be_1dc04196",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 8
@@ -87,6 +110,29 @@
         "startChar": 0,
         "endLine": 24,
         "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591f96b6_7cb03afc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "So I can have a handle on context, why is this effort behind a build flag and not a feature flag? Especially if this is intended to launch soon (the linked doc says 67?)",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 33
       },
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -249,6 +295,52 @@
     },
     {
       "key": {
+        "uuid": "63c8ce6b_88ad77c6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "range": {
+        "startLine": 263,
+        "startChar": 34,
+        "endLine": 263,
+        "endChar": 36
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb8b287_33072fe5",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "This should be ui::DIALOG_BUTTON_NONE.",
+      "range": {
+        "startLine": 264,
+        "startChar": 11,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8097c00_02915fad",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -265,6 +357,29 @@
         "startChar": 26,
         "endLine": 378,
         "endChar": 74
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ab40c8_bce75343",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "I have to admit I got really confused here because in DiceBubbleSyncPromoView these parameters are named [no_]accounts_title_resource_id, which I took to mean this was the string for the title and not the label in the contents. Can we rename those?",
+      "range": {
+        "startLine": 388,
+        "startChar": 10,
+        "endLine": 388,
+        "endChar": 56
       },
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -357,6 +472,29 @@
         "startChar": 0,
         "endLine": 91,
         "endChar": 34
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972e1382_4460375f",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-24T23:46:45Z",
+      "side": 1,
+      "message": "dice_sync_promo_delegate_, to keep the language consistent.",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 33
       },
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
