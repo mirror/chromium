@@ -534,4 +534,8 @@ const base::Feature kV8ContextSnapshot{"V8ContextSnapshot",
 const base::Feature kV8VmFuture{"V8VmFuture",
                                 base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables code caching after executing the script.
+const base::Feature kCodeCacheAfterExecute{"CodeCacheAfterExecute",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features

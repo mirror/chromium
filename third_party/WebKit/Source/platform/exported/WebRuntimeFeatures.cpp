@@ -498,4 +498,8 @@ void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
   RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableCodeCacheAfterExecute(bool enable) {
+  RuntimeEnabledFeatures::SetCodeCacheAfterExecuteEnabled(enable);
+}
+
 }  // namespace blink
