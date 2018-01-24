@@ -1,51 +1,44 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.widget.textbubble;
+package org.chromium.chrome.browser.widget;
 
-import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnPreDrawListener;
-import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.content.browser.PositionObserver;
-import org.chromium.content.browser.ViewPositionObserver;
-
 /**
- * A helper class that anchors a {@link TextBubble} to a particular {@link View}.  The bubble will
- * listen to layout events on the {@link View} and update accordingly.
+ * TODO(twellington): write this
  */
-public class ViewAnchoredTextBubble extends TextBubble
-        implements PositionObserver.Listener, ViewTreeObserver.OnGlobalLayoutListener,
-                   View.OnAttachStateChangeListener, OnPreDrawListener, OnDismissListener {
+public class ViewRectProvider implements ViewTreeObserver.OnGlobalLayoutListener,
+                                         View.OnAttachStateChangeListener,
+                                         ViewTreeObserver.OnPreDrawListener {
+    /**
+     * TODO(twellington): write this
+     */
+    public interface ViewRectProviderObserver {
+        void onRectChanged(Rect newRect);
+        void onRectHidden();
+    }
+
     private final int[] mCachedWindowCoordinates = new int[2];
     private final Rect mAnchorRect = new Rect();
     private final Rect mInsetRect = new Rect();
     private final View mAnchorView;
 
-    private final ViewPositionObserver mViewPositionObserver;
-
     /** If not {@code null}, the {@link ViewTreeObserver} that we are registered to. */
     private ViewTreeObserver mViewTreeObserver;
 
-    /**
-     * Creates an instance of a {@link ViewAnchoredTextBubble}.
-     * @param context    Context to draw resources from.
-     * @param anchorView The {@link View} to anchor to.
-     * @param stringId The id of the string resource for the text that should be shown.
-     * @param accessibilityStringId The id of the string resource of the accessibility text.
-     */
-    public ViewAnchoredTextBubble(Context context, View anchorView, @StringRes int stringId,
-            @StringRes int accessibilityStringId) {
-        super(context, anchorView.getRootView(), stringId, accessibilityStringId);
-        mAnchorView = anchorView;
+    private ViewRectProviderObserver mObserver;
 
-        mViewPositionObserver = new ViewPositionObserver(mAnchorView);
+    /**
+     * Creates an instance of a {@link ViewRectProvider}.
+     * @param anchorView The {@link View} used to provide a Rect... make better
+     */
+    public ViewRectProvider(View anchorView) {
+        mAnchorView = anchorView;
     }
 
     /**
@@ -54,25 +47,20 @@ public class ViewAnchoredTextBubble extends TextBubble
      */
     public void setInsetPx(int left, int top, int right, int bottom) {
         mInsetRect.set(left, top, right, bottom);
-        refreshAnchorBounds();
+        if (mObserver != null) refreshAnchorBounds();
     }
 
-    // TextBubble implementation.
-    @Override
-    public void show() {
-        mViewPositionObserver.addListener(this);
+    public void startObserving(ViewRectProviderObserver observer) {
+        mObserver = observer;
         mAnchorView.addOnAttachStateChangeListener(this);
         mViewTreeObserver = mAnchorView.getViewTreeObserver();
         mViewTreeObserver.addOnGlobalLayoutListener(this);
         mViewTreeObserver.addOnPreDrawListener(this);
 
         refreshAnchorBounds();
-        super.show();
     }
 
-    @Override
-    public void onDismiss() {
-        mViewPositionObserver.removeListener(this);
+    public void stopObserving() {
         mAnchorView.removeOnAttachStateChangeListener(this);
 
         if (mViewTreeObserver != null && mViewTreeObserver.isAlive()) {
@@ -80,18 +68,24 @@ public class ViewAnchoredTextBubble extends TextBubble
             mViewTreeObserver.removeOnPreDrawListener(this);
         }
         mViewTreeObserver = null;
+        mObserver = null;
     }
 
     // ViewTreeObserver.OnGlobalLayoutListener implementation.
     @Override
     public void onGlobalLayout() {
-        if (!mAnchorView.isShown()) dismiss();
+        if (!mAnchorView.isShown()) mObserver.onRectHidden();
     }
 
     // ViewTreeObserver.OnPreDrawListener implementation.
     @Override
     public boolean onPreDraw() {
-        if (!mAnchorView.isShown()) dismiss();
+        if (!mAnchorView.isShown()) {
+            mObserver.onRectHidden();
+        } else {
+            refreshAnchorBounds();
+        }
+
         return true;
     }
 
@@ -101,13 +95,7 @@ public class ViewAnchoredTextBubble extends TextBubble
 
     @Override
     public void onViewDetachedFromWindow(View v) {
-        dismiss();
-    }
-
-    // PositionObserver.Listener implementation.
-    @Override
-    public void onPositionChanged(int positionX, int positionY) {
-        refreshAnchorBounds();
+        mObserver.onRectHidden();
     }
 
     private void refreshAnchorBounds() {
@@ -137,6 +125,6 @@ public class ViewAnchoredTextBubble extends TextBubble
         mAnchorRect.right = Math.max(mAnchorRect.left, mAnchorRect.right);
         mAnchorRect.bottom = Math.max(mAnchorRect.top, mAnchorRect.bottom);
 
-        setAnchorRect(mAnchorRect);
+        mObserver.onRectChanged(mAnchorRect);
     }
 }
