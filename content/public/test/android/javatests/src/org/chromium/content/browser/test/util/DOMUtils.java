@@ -235,7 +235,7 @@ public class DOMUtils {
             throws InterruptedException, TimeoutException {
         scrollNodeIntoView(viewCore.getWebContents(), nodeId);
         int[] clickTarget = getClickTargetForNode(viewCore, nodeId);
-        return TouchCommon.singleClickView(
+        return TouchCommon.singleClickExactView(
                 viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
     }
 
@@ -248,7 +248,8 @@ public class DOMUtils {
             throws InterruptedException, TimeoutException {
         scrollNodeIntoViewByJs(viewCore.getWebContents(), jsCode);
         int[] clickTarget = getClickTargetForNodeByJs(viewCore, jsCode);
-        TouchCommon.singleClickView(viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
+        TouchCommon.singleClickExactView(
+                viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
     }
 
     /**
@@ -256,10 +257,9 @@ public class DOMUtils {
      * @param viewCore The ContentViewCore in which the node lives.
      * @param rect The rect to click.
      */
-    public static boolean clickRect(final ContentViewCore viewCore, Rect rect)
-            throws InterruptedException, TimeoutException {
+    public static boolean clickRect(final ContentViewCore viewCore, Rect rect) {
         int[] clickTarget = getClickTargetForBounds(viewCore, rect);
-        return TouchCommon.singleClickView(
+        return TouchCommon.singleClickExactView(
                 viewCore.getContainerView(), clickTarget[0], clickTarget[1]);
     }
 
@@ -280,7 +280,7 @@ public class DOMUtils {
      * <p>Note that content view should be located in the current position for a foreseeable
      * amount of time because this involves sleep to simulate touch to long press transition.
      * @param viewCore The ContentViewCore in which the node lives.
-     * @param nodeId The id of the node.
+     * @param jsCode js code that returns an element.
      */
     public static void longPressNodeByJs(final ContentViewCore viewCore, String jsCode)
             throws InterruptedException, TimeoutException {
