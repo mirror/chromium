@@ -512,6 +512,13 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
 
   void SetURLForUkm(const GURL& url);
 
+  bool always_request_presentation_time() const {
+    return always_request_presentation_time_;
+  }
+  void set_always_request_presentation_time(bool value) {
+    always_request_presentation_time_ = value;
+  }
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
@@ -686,6 +693,8 @@ class CC_EXPORT LayerTreeHost : public MutatorHostClient {
   // the callbacks.
   std::map<int, std::vector<PresentationTimeCallback>>
       frame_to_presentation_time_callbacks_;
+
+  bool always_request_presentation_time_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };

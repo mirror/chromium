@@ -340,6 +340,9 @@ std::unique_ptr<cc::LayerTreeHost> RenderWidgetCompositor::CreateLayerTreeHost(
         deps->GetCompositorImplThreadTaskRunner(), &params);
   }
 
+  if (cmd->HasSwitch(cc::switches::kAlwaysRequestPresentationTime))
+    layer_tree_host->set_always_request_presentation_time(true);
+
   return layer_tree_host;
 }
 
