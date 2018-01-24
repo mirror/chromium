@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffc22634_8b684439",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-24T12:33:11Z",
+      "side": 1,
+      "message": "style: empty line above.",
+      "revId": "77e8dc647d5ac2384ba08f641f1d958191b6b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93bba82_c7a83fbb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlToggleClosedCaptionsButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-24T12:33:11Z",
+      "side": 1,
+      "message": "This is fine but I wonder if it would make sense to call this as part of `UpdateDisplayType()` for elements with an overflow counterpart (as a follow-up, obviously).",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "77e8dc647d5ac2384ba08f641f1d958191b6b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95486fdb_32296f34",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlToggleClosedCaptionsButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-24T12:33:11Z",
+      "side": 1,
+      "message": "Should we even get a call to this? I would expect to not show a CC button in those cases. Is this correct?",
+      "revId": "77e8dc647d5ac2384ba08f641f1d958191b6b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c04cce_2b27b5e2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlToggleClosedCaptionsButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-24T12:33:11Z",
+      "side": 1,
+      "message": "Not very important but let\u0027s have the comment say \"the label for no text track\" as it will avoid being wrong when the name change :)",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "77e8dc647d5ac2384ba08f641f1d958191b6b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
