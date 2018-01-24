@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9552d13b_2cc7d41e",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-24T21:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95591c7a_e3f80beb",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a674725_845e53ca",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebabed9_9f07ae4d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-24T21:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a674725_845e53ca",
+      "revId": "bc3b117e69f6172758043c6f41968a5368a3bfa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
