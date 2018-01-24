@@ -1302,6 +1302,7 @@ RTCPeerConnectionHandler::RTCPeerConnectionHandler(
       track_adapter_map_(
           new WebRtcMediaStreamTrackAdapterMap(dependency_factory_)),
       stream_adapter_map_(new WebRtcMediaStreamAdapterMap(dependency_factory_,
+                                                          task_runner,
                                                           track_adapter_map_)),
       task_runner_(task_runner),
       weak_factory_(this) {

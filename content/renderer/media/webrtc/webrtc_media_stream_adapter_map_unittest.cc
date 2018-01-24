@@ -40,6 +40,7 @@ class WebRtcMediaStreamAdapterMapTest : public ::testing::Test {
     main_thread_ = blink::scheduler::GetSingleThreadTaskRunnerForTesting();
     map_ = new WebRtcMediaStreamAdapterMap(
         dependency_factory_.get(),
+        blink::scheduler::GetSingleThreadTaskRunnerForTesting(),
         new WebRtcMediaStreamTrackAdapterMap(dependency_factory_.get()));
   }
 
