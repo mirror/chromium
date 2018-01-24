@@ -34,12 +34,6 @@ class WebIDBValue {
       WebIDBKey primary_key,
       const WebIDBKeyPath& primary_key_path);
 
-  // Returns the Blob UUIDs associated with this value.
-  //
-  // This is only used by the (deprecated) non-Mojo Blobs code paths, and will
-  // be removed when https://crbug.com/611935 is fixed.
-  BLINK_EXPORT WebVector<WebString> BlobUuids() const;
-
 #if INSIDE_BLINK
   // TODO(pwnall): When Onion Soup-ing IndexedDB, ReleaseIDBValue() should
   //               take a v8::Isolate, and all the ownership tracking logic
