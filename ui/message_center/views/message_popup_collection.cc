@@ -363,8 +363,13 @@ void MessagePopupCollection::OnNotificationRemoved(
   if (iter == toasts_.end())
     return;
 
+  // We should not activate |user_is_closing_toasts_by_clicking_| on
+  // removal by touch sliding, as OnMouseEntered and OnMouseExited events, which
+  // are expected by |user_is_closing_toasts_by_clicking_|, are not fired.
+  bool removed_by_slide = (*iter)->message_view()->removed_by_slide();
+
   target_top_edge_ = (*iter)->bounds().y();
-  if (by_user && !user_is_closing_toasts_by_clicking_) {
+  if (by_user && !removed_by_slide && !user_is_closing_toasts_by_clicking_) {
     // [Re] start a timeout after which the toasts re-position to their
     // normal locations after tracking the mouse pointer for easy deletion.
     // This provides a period of time when toasts are easy to remove because

@@ -94,6 +94,8 @@ class MESSAGE_CENTER_EXPORT MessageView
   void set_scroller(views::ScrollView* scroller) { scroller_ = scroller; }
   std::string notification_id() const { return notification_id_; }
 
+  bool removed_by_slide() const { return removed_by_slide_; }
+
  protected:
   // Creates and add close button to view hierarchy when necessary. Derived
   // classes should call this after its view hierarchy is populated to ensure
@@ -116,6 +118,9 @@ class MESSAGE_CENTER_EXPORT MessageView
 
   // Flag if the notification is set to pinned or not.
   bool pinned_ = false;
+
+  // True if the notification is removed by OnSlideOut().
+  bool removed_by_slide_ = false;
 
   std::unique_ptr<views::Painter> focus_painter_;
 
