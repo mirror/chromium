@@ -16,6 +16,24 @@
       "revId": "fb1c6f5d613be48d0e11d2d8e0ce1402660002eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f91420_f0faaeaa",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T08:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a363fc2b_9f131c21",
+      "revId": "fb1c6f5d613be48d0e11d2d8e0ce1402660002eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
