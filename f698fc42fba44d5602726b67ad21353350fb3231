@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7d8ec05_2a2b5271",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Yikes, this is kind of huge.\n\nWhy do we need this v2 business instead of just evolving the main scripts? Be bold! Nuke the old junk at the same time. It would also make it a lot easier to review what\u0027s changing e.g. in symbolization and in create_runner_script, if the files evolved over a few CLs rather than having copied out code appear as all new files.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 3
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1518d9_586d8dfd",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Remove \\n here and add one above EvaluateCommonArgs()",
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a58c74e_152467a7",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Trailing \\n here and in a few other files.",
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d90fae_958a0f74",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ca030f_b98cac97",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Is this condition backwards? (i.e. if they\u0027re not supplied you want to set defaults, not the other way around?)",
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4322b872_cd762d28",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "This should only look for the right zircon.nodename, rather than any device on the network.",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a3b9a5_d34b95af",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Why does this need to be set when it\u0027s also set in the constructor?",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 21
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e116105_9af1b682",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Not abstract (any more?).",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27630d01_e33c3037",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "Indents are inconsistent for help above here vs. below here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2dbe29_b1837614",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T00:13:15Z",
+      "side": 1,
+      "message": "With with or without with, but not both.",
+      "revId": "f698fc42fba44d5602726b67ad21353350fb3231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
