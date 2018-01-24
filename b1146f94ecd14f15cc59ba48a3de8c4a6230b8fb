@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d5f8e8_9d60b24d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2018-01-24T15:03:49Z",
+      "side": 1,
+      "message": "missing a \"you\"?",
+      "revId": "b1146f94ecd14f15cc59ba48a3de8c4a6230b8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
