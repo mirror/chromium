@@ -68,7 +68,7 @@ class TestBleScannerObserver final : public BleScanner::Observer {
 // Deletes the BleScanner when notified.
 class DeletingObserver final : public BleScanner::Observer {
  public:
-  DeletingObserver(std::unique_ptr<BleScannerImpl>& ble_scanner)
+  DeletingObserver(std::unique_ptr<BleScanner>& ble_scanner)
       : ble_scanner_(ble_scanner) {
     ble_scanner_->AddObserver(this);
   }
@@ -88,7 +88,7 @@ class DeletingObserver final : public BleScanner::Observer {
       device::BluetoothDevice* bluetooth_device) override {}
 
  private:
-  std::unique_ptr<BleScannerImpl>& ble_scanner_;
+  std::unique_ptr<BleScanner>& ble_scanner_;
 };
 
 class MockBluetoothDeviceWithServiceData : public device::MockBluetoothDevice {
@@ -209,7 +209,7 @@ class BleScannerImplTest : public testing::Test {
 
     mock_discovery_session_ = nullptr;
 
-    ble_scanner_ = std::make_unique<BleScannerImpl>(
+    ble_scanner_ = BleScannerImpl::Factory::NewInstance(
         mock_adapter_, mock_local_device_data_provider_.get(),
         fake_ble_synchronizer_.get(), fake_tether_host_fetcher_.get());
 
@@ -297,7 +297,7 @@ class BleScannerImplTest : public testing::Test {
 
   std::vector<bool> discovery_state_changes_so_far_;
 
-  std::unique_ptr<BleScannerImpl> ble_scanner_;
+  std::unique_ptr<BleScanner> ble_scanner_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BleScannerImplTest);

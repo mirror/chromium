@@ -41,7 +41,7 @@ class ErrorTolerantBleAdvertisementImplTest : public testing::Test {
 
     fake_synchronizer_ = std::make_unique<FakeBleSynchronizer>();
 
-    advertisement_ = std::make_unique<ErrorTolerantBleAdvertisementImpl>(
+    advertisement_ = ErrorTolerantBleAdvertisementImpl::Factory::NewInstance(
         kDeviceId,
         std::make_unique<cryptauth::DataWithTimestamp>(
             *fake_advertisement_data_),
@@ -117,7 +117,7 @@ class ErrorTolerantBleAdvertisementImplTest : public testing::Test {
 
   bool stopped_callback_called_;
 
-  std::unique_ptr<ErrorTolerantBleAdvertisementImpl> advertisement_;
+  std::unique_ptr<ErrorTolerantBleAdvertisement> advertisement_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ErrorTolerantBleAdvertisementImplTest);

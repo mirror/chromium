@@ -101,7 +101,7 @@ class TestObserver final : public BleAdvertiser::Observer {
 // Deletes the BleAdvertiser when notified.
 class DeletingObserver final : public BleAdvertiser::Observer {
  public:
-  DeletingObserver(std::unique_ptr<BleAdvertiserImpl>& ble_advertiser)
+  DeletingObserver(std::unique_ptr<BleAdvertiser>& ble_advertiser)
       : ble_advertiser_(ble_advertiser) {
     ble_advertiser_->AddObserver(this);
   }
@@ -115,7 +115,7 @@ class DeletingObserver final : public BleAdvertiser::Observer {
   }
 
  private:
-  std::unique_ptr<BleAdvertiserImpl>& ble_advertiser_;
+  std::unique_ptr<BleAdvertiser>& ble_advertiser_;
 };
 
 }  // namespace
@@ -143,7 +143,7 @@ class BleAdvertiserImplTest : public testing::Test {
     ErrorTolerantBleAdvertisementImpl::Factory::SetInstanceForTesting(
         fake_advertisement_factory_.get());
 
-    ble_advertiser_ = std::make_unique<BleAdvertiserImpl>(
+    ble_advertiser_ = BleAdvertiserImpl::Factory::NewInstance(
         mock_local_data_provider_.get(), mock_seed_fetcher_.get(),
         fake_ble_synchronizer_.get());
 
@@ -195,7 +195,7 @@ class BleAdvertiserImplTest : public testing::Test {
   std::unique_ptr<FakeErrorTolerantBleAdvertisementFactory>
       fake_advertisement_factory_;
 
-  std::unique_ptr<BleAdvertiserImpl> ble_advertiser_;
+  std::unique_ptr<BleAdvertiser> ble_advertiser_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BleAdvertiserImplTest);

@@ -81,7 +81,7 @@ class AsynchronousShutdownObjectContainerImplTest : public testing::Test {
     // Note: The null pointers passed to the constructor are not actually used
     // by the object itself; rather, they are simply passed to the constructors
     // of objects created by the container.
-    container_ = std::make_unique<AsynchronousShutdownObjectContainerImpl>(
+    container_ = AsynchronousShutdownObjectContainerImpl::Factory::NewInstance(
         mock_adapter_, fake_cryptauth_service_.get(),
         nullptr /* tether_host_fetcher */, nullptr /* network_state_handler */,
         nullptr /* managed_network_configuration_handler */,
@@ -131,7 +131,7 @@ class AsynchronousShutdownObjectContainerImplTest : public testing::Test {
   bool was_shutdown_callback_invoked_;
   bool is_adapter_powered_;
 
-  std::unique_ptr<AsynchronousShutdownObjectContainerImpl> container_;
+  std::unique_ptr<AsynchronousShutdownObjectContainer> container_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AsynchronousShutdownObjectContainerImplTest);

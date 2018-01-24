@@ -33,7 +33,7 @@ void TetherHostFetcherImpl::Factory::SetInstanceForTesting(Factory* factory) {
 std::unique_ptr<TetherHostFetcher>
 TetherHostFetcherImpl::Factory::BuildInstance(
     cryptauth::RemoteDeviceProvider* remote_device_provider) {
-  return std::make_unique<TetherHostFetcherImpl>(remote_device_provider);
+  return TetherHostFetcherImpl::Factory::NewInstance(remote_device_provider);
 }
 
 TetherHostFetcherImpl::TetherHostFetcherImpl(
