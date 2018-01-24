@@ -13,6 +13,8 @@ namespace features {
 extern const base::Feature kNetworkService;
 extern const base::Feature kOutOfBlinkCORS;
 extern const base::Feature kRendererSideResourceScheduler;
+extern const base::Feature kReporting;
+extern const base::Feature kNetworkErrorLogging;
 
 }  // namespace features
 }  // namespace network

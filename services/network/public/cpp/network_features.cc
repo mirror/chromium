@@ -19,5 +19,9 @@ const base::Feature kOutOfBlinkCORS{"OutOfBlinkCORS",
 const base::Feature kRendererSideResourceScheduler{
     "RendererSideResourceScheduler", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kReporting{"Reporting", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kNetworkErrorLogging{"NetworkErrorLogging",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace network
