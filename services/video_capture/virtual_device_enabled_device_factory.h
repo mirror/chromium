@@ -30,6 +30,7 @@ class VirtualDeviceEnabledDeviceFactory : public mojom::DeviceFactory {
   void GetDeviceInfos(GetDeviceInfosCallback callback) override;
   void CreateDevice(const std::string& device_id,
                     mojom::DeviceRequest device_request,
+                    mojom::AccessRequestType access_request_type,
                     CreateDeviceCallback callback) override;
   void AddVirtualDevice(const media::VideoCaptureDeviceInfo& device_info,
                         mojom::ProducerPtr producer,

@@ -9,9 +9,15 @@ import "services/video_capture/public/interfaces/device.mojom";
 import "services/video_capture/public/interfaces/producer.mojom";
 import "services/video_capture/public/interfaces/virtual_device.mojom";
 
+enum AccessRequestType {
+  ALLOW_PREEMPTION_BY_SUBSEQUENT_REQUESTS,
+  DISALLOW_PREEMPTION_AND_HIDE_FROM_DEVICE_INFOS
+};
+
 enum DeviceAccessResultCode {
   NOT_INITIALIZED,
   SUCCESS,
+  ERROR_DEVICE_IS_BUSY,
   ERROR_DEVICE_NOT_FOUND
 };
 
@@ -37,7 +43,8 @@ interface DeviceFactory {
   // |device_request| has been (asynchronously) discarded a subsequent call to
   // CreateDevice() would succeed if it were to deny access while still
   // in use.
-  CreateDevice(string device_id, Device& device_request)
+  CreateDevice(string device_id, Device & device_request,
+               AccessRequestType access_request_type)
       => (DeviceAccessResultCode result_code);
 
   // Creates a new virtual capture device, which will be exposed by the device

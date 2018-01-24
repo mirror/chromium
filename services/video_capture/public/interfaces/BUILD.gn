@@ -9,6 +9,7 @@ mojom("interfaces") {
     "device.mojom",
     "device_factory.mojom",
     "device_factory_provider.mojom",
+    "plugin.mojom",
     "producer.mojom",
     "receiver.mojom",
     "testing_controls.mojom",

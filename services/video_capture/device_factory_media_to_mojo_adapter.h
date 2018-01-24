@@ -34,6 +34,7 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
   void GetDeviceInfos(GetDeviceInfosCallback callback) override;
   void CreateDevice(const std::string& device_id,
                     mojom::DeviceRequest device_request,
+                    mojom::AccessRequestType access_request_type,
                     CreateDeviceCallback callback) override;
   void AddVirtualDevice(const media::VideoCaptureDeviceInfo& device_info,
                         mojom::ProducerPtr producer,
@@ -51,10 +52,25 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
     // mojo::Binding<> supports move operators.
     // https://crbug.com/644314
     std::unique_ptr<mojo::Binding<mojom::Device>> binding;
+    bool allow_preemption;
+    bool hide_from_device_infos;
   };
 
+  // Translates a set of device infos reported by a VideoCaptureSystem to a set
+  // of device infos that the video capture service exposes to its client.
+  // The Video Capture Service instances of VideoCaptureDeviceClient to
+  // convert the formats provided by the VideoCaptureDevice instances. Here, we
+  // translate the set of supported formats as reported by the |device_factory_|
+  // to what will be output by the VideoCaptureDeviceClient we connect to it.
+  // TODO(chfremer): A cleaner design would be to have this translation happen
+  // in VideoCaptureDeviceClient, and talk only to VideoCaptureDeviceClient
+  // instead of VideoCaptureSystem.
+  void TranslateDeviceInfos(
+      video_capture::mojom::DeviceFactory::GetDeviceInfosCallback callback,
+      const std::vector<media::VideoCaptureDeviceInfo>& device_infos);
   void CreateAndAddNewDevice(const std::string& device_id,
                              mojom::DeviceRequest device_request,
+                             mojom::AccessRequestType access_request_type,
                              CreateDeviceCallback callback);
   void OnClientConnectionErrorOrClose(const std::string& device_id);
 
@@ -63,6 +79,8 @@ class DeviceFactoryMediaToMojoAdapter : public mojom::DeviceFactory {
   const media::VideoCaptureJpegDecoderFactoryCB jpeg_decoder_factory_callback_;
   std::map<std::string, ActiveDeviceEntry> active_devices_by_id_;
   bool has_called_get_device_infos_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<DeviceFactoryMediaToMojoAdapter> weak_factory_;
 
