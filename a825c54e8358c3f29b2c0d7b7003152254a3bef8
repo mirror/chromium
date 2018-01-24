@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "995405f7_d6b7d513",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-24T21:07:18Z",
+      "side": 1,
+      "message": "This used to be delegate_-\u003eLoadWallpaper() instead of LoginDisplayHost::defalut_host()-\u003eLoadWallpaper(), so I believe this change is safe. Without it a test fails, I started looking into why but I think it will take me a significant amount of time to figure out.",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
