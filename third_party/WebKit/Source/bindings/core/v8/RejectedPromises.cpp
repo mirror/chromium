@@ -148,6 +148,14 @@ class RejectedPromises::Message final {
     return v8::Local<v8::Promise>::Cast(value)->HasHandler();
   }
 
+  void PostTask(const base::Location& from_here, base::OnceClosure task) {
+    // TODO(hajimehoshi): kUnspecedTimer is deprecated. Replace this with a more
+    // appropriate task type.
+    ExecutionContext::From(script_state_)
+        ->GetTaskRunner(blink::TaskType::kUnspecedTimer)
+        ->PostTask(from_here, std::move(task));
+  }
+
  private:
   Message(ScriptState* script_state,
           v8::Local<v8::Promise> promise,
@@ -217,13 +225,10 @@ void RejectedPromises::HandlerAdded(v8::PromiseRejectMessage data) {
     std::unique_ptr<Message>& message = reported_as_errors_.at(i);
     if (!message->IsCollected() && message->HasPromise(data.GetPromise())) {
       message->MakePromiseStrong();
-      Platform::Current()
-          ->CurrentThread()
-          ->Scheduler()
-          ->TimerTaskRunner()
-          ->PostTask(FROM_HERE, WTF::Bind(&RejectedPromises::RevokeNow,
-                                          scoped_refptr<RejectedPromises>(this),
-                                          WTF::Passed(std::move(message))));
+      message->PostTask(FROM_HERE,
+                        WTF::Bind(&RejectedPromises::RevokeNow,
+                                  scoped_refptr<RejectedPromises>(this),
+                                  WTF::Passed(std::move(message))));
       reported_as_errors_.EraseAt(i);
       return;
     }
@@ -239,27 +244,28 @@ void RejectedPromises::Dispose() {
   if (queue_.IsEmpty())
     return;
 
-  std::unique_ptr<MessageQueue> queue = CreateMessageQueue();
-  queue->Swap(queue_);
-  ProcessQueueNow(std::move(queue));
+  while (!queue_.IsEmpty()) {
+    std::unique_ptr<Message> message = queue_.TakeFirst();
+    ProcessQueueNow(std::move(message));
+  }
 }
 
 void RejectedPromises::ProcessQueue() {
   if (queue_.IsEmpty())
     return;
 
-  std::unique_ptr<MessageQueue> queue = CreateMessageQueue();
-  queue->Swap(queue_);
-  Platform::Current()
-      ->CurrentThread()
-      ->Scheduler()
-      ->TimerTaskRunner()
-      ->PostTask(FROM_HERE, WTF::Bind(&RejectedPromises::ProcessQueueNow,
-                                      scoped_refptr<RejectedPromises>(this),
-                                      WTF::Passed(std::move(queue))));
+  while (!queue_.IsEmpty()) {
+    std::unique_ptr<Message> message = queue_.TakeFirst();
+    if (message->IsCollected())
+      continue;
+    message->PostTask(FROM_HERE,
+                      WTF::Bind(&RejectedPromises::ProcessQueueNow,
+                                scoped_refptr<RejectedPromises>(this),
+                                WTF::Passed(std::move(message))));
+  }
 }
 
-void RejectedPromises::ProcessQueueNow(std::unique_ptr<MessageQueue> queue) {
+void RejectedPromises::ProcessQueueNow(std::unique_ptr<Message> message) {
   // Remove collected handlers.
   for (size_t i = 0; i < reported_as_errors_.size();) {
     if (reported_as_errors_.at(i)->IsCollected())
@@ -268,18 +274,16 @@ void RejectedPromises::ProcessQueueNow(std::unique_ptr<MessageQueue> queue) {
       ++i;
   }
 
-  while (!queue->IsEmpty()) {
-    std::unique_ptr<Message> message = queue->TakeFirst();
-    if (message->IsCollected())
-      continue;
-    if (!message->HasHandler()) {
-      message->Report();
-      message->MakePromiseWeak();
-      reported_as_errors_.push_back(std::move(message));
-      if (reported_as_errors_.size() > kMaxReportedHandlersPendingResolution) {
-        reported_as_errors_.EraseAt(0,
-                                    kMaxReportedHandlersPendingResolution / 10);
-      }
+  if (message->IsCollected())
+    return;
+
+  if (!message->HasHandler()) {
+    message->Report();
+    message->MakePromiseWeak();
+    reported_as_errors_.push_back(std::move(message));
+    if (reported_as_errors_.size() > kMaxReportedHandlersPendingResolution) {
+      reported_as_errors_.EraseAt(0,
+                                  kMaxReportedHandlersPendingResolution / 10);
     }
   }
 }

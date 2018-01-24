@@ -49,7 +49,7 @@ class RejectedPromises final : public RefCounted<RejectedPromises> {
   using MessageQueue = Deque<std::unique_ptr<Message>>;
   std::unique_ptr<MessageQueue> CreateMessageQueue();
 
-  void ProcessQueueNow(std::unique_ptr<MessageQueue>);
+  void ProcessQueueNow(std::unique_ptr<Message>);
   void RevokeNow(std::unique_ptr<Message>);
 
   MessageQueue queue_;
