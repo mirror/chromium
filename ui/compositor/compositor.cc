@@ -200,6 +200,9 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   UMA_HISTOGRAM_TIMES("GPU.CreateBrowserCompositor",
                       base::TimeTicks::Now() - before_create);
 
+  if (command_line->HasSwitch(cc::switches::kAlwaysRequestPresentationTime))
+    host_->set_always_request_presentation_time(true);
+
   animation_timeline_ =
       cc::AnimationTimeline::Create(cc::AnimationIdProvider::NextTimelineId());
   animation_host_->AddAnimationTimeline(animation_timeline_.get());
