@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c84de9_499e6f71",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-24T21:45:13Z",
+      "side": 1,
+      "message": "RenderViewHost is less than ideal here, since we might be inspecting an out-of-process iframe.  Is there a way to get at the frame being inspected, or is that not available in this code?  It may not be a big deal since we won\u0027t mix chrome:// and web URLs that way, but it\u0027ll be checking the wrong thing if we tighten CanRequestURL in the future.",
+      "revId": "c18d3d358d6e273523921ed0f8b86bf0a11cbed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
