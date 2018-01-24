@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36852c52_c36bc479",
+        "filename": "third_party/WebKit/Source/core/paint/InlineFlowBoxPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-24T00:00:49Z",
+      "side": 0,
+      "message": "This is moved to avoid empty drawing display items when the box is not visible.",
+      "range": {
+        "startLine": 42,
+        "startChar": 21,
+        "endLine": 42,
+        "endChar": 44
+      },
+      "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
