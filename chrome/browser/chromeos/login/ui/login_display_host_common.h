@@ -10,8 +10,14 @@
 #include <vector>
 
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
+#include "content/public/browser/notification_observer.h"
 
 class AccountId;
+class ScopedKeepAlive;
+
+namespace wm {
+class ScopedDragDropDisabler;
+}
 
 namespace chromeos {
 
@@ -21,7 +27,8 @@ class DemoAppLauncher;
 // LoginDisplayHostCommon contains code which is not specific to a particular UI
 // implementation - the goal is to reduce code duplication between
 // LoginDisplayHostViews and LoginDisplayHostWebUI.
-class LoginDisplayHostCommon : public LoginDisplayHost {
+class LoginDisplayHostCommon : public LoginDisplayHost,
+                               public content::NotificationObserver {
  public:
   LoginDisplayHostCommon();
   ~LoginDisplayHostCommon() override;
@@ -32,7 +39,7 @@ class LoginDisplayHostCommon : public LoginDisplayHost {
   gfx::NativeWindow GetNativeWindow() const override = 0;
   OobeUI* GetOobeUI() const override = 0;
   WebUILoginView* GetWebUILoginView() const override = 0;
-  void BeforeSessionStart() override = 0;
+  void BeforeSessionStart() final;
   void Finalize(base::OnceClosure completion_callback) override = 0;
   void SetStatusAreaVisible(bool visible) override = 0;
   void StartWizard(OobeScreen first_screen) override = 0;
@@ -59,13 +66,22 @@ class LoginDisplayHostCommon : public LoginDisplayHost {
   void LoadSigninWallpaper() final;
   bool IsUserWhitelisted(const AccountId& account_id) final;
 
+  // content::NotificationObserver:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
+
  protected:
   virtual void OnStartSignInScreen(const LoginScreenContext& context) = 0;
   virtual void OnStartAppLaunch() = 0;
   virtual void OnStartArcKiosk() = 0;
+  virtual void OnBrowserCreated() = 0;
 
   // Deletes |auth_prewarmer_|.
   void OnAuthPrewarmDone();
+
+  // Marks display host for deletion.
+  void ShutdownDisplayHost();
 
   // Active instance of authentication prewarmer.
   std::unique_ptr<AuthPrewarmer> auth_prewarmer_;
@@ -79,7 +95,24 @@ class LoginDisplayHostCommon : public LoginDisplayHost {
   // ARC kiosk controller.
   std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
 
+  content::NotificationRegistrar registrar_;
+
  private:
+  // Has ShutdownDisplayHost() already been called?  Used to avoid posting our
+  // own deletion to the message loop twice if the user logs out while we're
+  // still in the process of cleaning up after login (http://crbug.com/134463).
+  bool shutting_down_ = false;
+
+  // Make sure chrome won't exit while we are at login/oobe screen.
+  std::unique_ptr<ScopedKeepAlive> keep_alive_;
+
+  // Keeps a copy of the old Drag'n'Drop client, so that it would be disabled
+  // during a login session and restored afterwards.
+  std::unique_ptr<wm::ScopedDragDropDisabler> scoped_drag_drop_disabler_;
+
+  // True if session start is in progress.
+  bool session_starting_ = false;
+
   base::WeakPtrFactory<LoginDisplayHostCommon> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostCommon);
