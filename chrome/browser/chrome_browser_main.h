@@ -114,6 +114,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // for child processes.
   void SetupOriginTrialsCommandLine(PrefService* local_state);
 
+  int InitializeResourceBundle();
   // Methods for Main Message Loop -------------------------------------------
 
   int PreCreateThreadsImpl();
