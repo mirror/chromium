@@ -16,6 +16,23 @@
       "revId": "ad7b8090ff91365c035f020423a884940b5e0b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c80c1dd_a0cd85c8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-24T00:48:32Z",
+      "side": 1,
+      "message": "Should paint_offset flip as well? I\u0027m a noob to this block flipping madness.",
+      "revId": "ad7b8090ff91365c035f020423a884940b5e0b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
