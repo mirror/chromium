@@ -20,6 +20,7 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/stream_resource_handler.h"
+#include "content/browser/loader/web_package_request_handler.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_save_info.h"
@@ -413,6 +414,8 @@ bool MimeSniffingResourceHandler::MaybeStartInterception() {
   bool must_download = MustDownload();
   if (!must_download) {
     if (blink::IsSupportedMimeType(mime_type))
+      return true;
+    if (WebPackageRequestHandler::IsSupportedMimeType(mime_type))
       return true;
 
     bool handled_by_plugin;

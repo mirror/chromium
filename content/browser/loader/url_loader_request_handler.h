@@ -19,6 +19,7 @@ namespace content {
 class ResourceContext;
 struct ResourceRequest;
 struct SubresourceLoaderParams;
+class ThrottlingURLLoader;
 
 using StartLoaderCallback =
     base::OnceCallback<void(network::mojom::URLLoaderRequest request,
@@ -59,7 +60,8 @@ class CONTENT_EXPORT URLLoaderRequestHandler {
   virtual bool MaybeCreateLoaderForResponse(
       const network::ResourceResponseHead& response,
       network::mojom::URLLoaderPtr* loader,
-      network::mojom::URLLoaderClientRequest* client_request);
+      network::mojom::URLLoaderClientRequest* client_request,
+      ThrottlingURLLoader* url_loader);
 };
 
 }  // namespace content
