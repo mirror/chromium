@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "be61ef59_faa486e3",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueIDMappings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T01:47:07Z",
+      "side": 1,
+      "message": "Hmm I think it\u0027s because we don\u0027t generate mappings for ExtraFields :(",
+      "parentUuid": "9d1fc6cc_ac04d597",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7b06e94_29660350",
         "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
         "patchSetId": 2
@@ -109,6 +127,30 @@
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fc5c25_90f5c48b",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T01:47:07Z",
+      "side": 1,
+      "message": "I think so...",
+      "parentUuid": "e7b06e94_29660350",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 13
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +186,24 @@
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babd5545_bf710cfe",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T01:47:07Z",
+      "side": 1,
+      "message": "Ohhh yeah oops, I forgot that \"*\" means \"auto group\".",
+      "parentUuid": "a5db347e_668d50ba",
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -215,6 +275,30 @@
       "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a055ea0_d5a2c7da",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-24T01:47:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "580182eb_9aec98c6",
+      "range": {
+        "startLine": 1700,
+        "startChar": 3,
+        "endLine": 1700,
+        "endChar": 21
+      },
+      "revId": "632f2ec82dcb3b1d70291628b75343bab2a0617b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
