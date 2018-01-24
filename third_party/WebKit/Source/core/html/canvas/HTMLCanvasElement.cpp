@@ -386,6 +386,12 @@ void HTMLCanvasElement::DidDraw() {
 
 void HTMLCanvasElement::FinalizeFrame() {
   TRACE_EVENT0("blink", "HTMLCanvasElement::FinalizeFrame");
+
+  // FinalizeFrame indicates the end of a script task that may have rendered
+  // into the canvas, now is a good time to clear the cache.
+  if (auto* resource_provider = ResourceProvider())
+    resource_provider->PurgeImageCache();
+
   if (canvas2d_bridge_) {
     // Compute to determine whether disable accleration is needed
     if (IsAccelerated() &&
