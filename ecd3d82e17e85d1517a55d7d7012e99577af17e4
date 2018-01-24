@@ -16,6 +16,24 @@
       "revId": "ecd3d82e17e85d1517a55d7d7012e99577af17e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287b92d5_40287dea",
+        "filename": "base/memory/aligned_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2018-01-24T18:20:47Z",
+      "side": 1,
+      "message": "COMPILER_MSVC is defined in build/build_config.h so it needs to be included before line 13, which conflicts with the style guide.  Is there a suggested \"required deviation from the style guide\" comment?",
+      "parentUuid": "48605745_35f6e4c9",
+      "revId": "ecd3d82e17e85d1517a55d7d7012e99577af17e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
