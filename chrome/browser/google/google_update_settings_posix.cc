@@ -78,6 +78,7 @@ bool GoogleUpdateSettings::GetCollectStatsConsent() {
 
 // static
 bool GoogleUpdateSettings::SetCollectStatsConsent(bool consented) {
+  LOG(ERROR) << "crash: setting collect stats consent to " << consented;
 #if defined(OS_MACOSX)
   crash_reporter::SetUploadConsent(consented);
 #endif

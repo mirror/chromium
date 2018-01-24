@@ -1517,6 +1517,8 @@ void CloseAllFileDescriptors() {
 }
 
 void HandleCrashDump(const BreakpadInfo& info) {
+  LOG(ERROR) << "crash: handing crash dump in " << info.filename;
+
   int dumpfd;
   bool keep_fd = false;
   size_t dump_size;
@@ -1928,6 +1930,8 @@ void InitCrashReporter(const std::string& process_type,
 #else
 void InitCrashReporter(const std::string& process_type) {
 #endif  // defined(OS_ANDROID)
+  LOG(ERROR) << "process_type ` " << process_type << " `\n"
+             << base::debug::StackTrace(20).ToString();
 #if defined(OS_ANDROID)
   // This will guarantee that the BuildInfo has been initialized and subsequent
   // calls will not require memory allocation.
