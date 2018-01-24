@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78dda979_0e7cc165",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:49:14Z",
+      "side": 1,
+      "message": "Currently I\u0027m not sure the source ServiceWorkerClientInfo would be valid definitely, my confusion is recorded here: https://chromium-review.googlesource.com/c/chromium/src/+/877593/2/content/browser/service_worker/service_worker_dispatcher_host.cc#81, I\u0027d like to hear your opinions about that. Thank you~",
+      "parentUuid": "298babcc_8026fd02",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "722f28db_221f4812",
         "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d209f8_ba66d46c",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-24T07:49:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "438d6cb9_62a4ed0c",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
