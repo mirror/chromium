@@ -20,6 +20,7 @@ static_library("network_service") {
     "//base",
     "//mojo/public/cpp/bindings",
     "//net",
+    "//services/network/public/cpp",
     "//services/network/public/interfaces",
     "//url",
   ]
