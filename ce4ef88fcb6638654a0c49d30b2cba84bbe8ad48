@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cfdcfcc7_df41ea8f",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T03:21:06Z",
+      "side": 1,
+      "message": "that\u0027s a reason I\u0027d prefer if this was an array (and then the app can change it to an object if it wants).\nI\u0027m also little concerned that changing this from array to map loses ordering - I wouldn\u0027t be surprised if the collection list was sorted by relevance.",
+      "parentUuid": "0791f9a9_fef7c1e3",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 31
+      },
+      "revId": "ce4ef88fcb6638654a0c49d30b2cba84bbe8ad48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d17682_708cc470",
         "filename": "chrome/common/extensions/api/wallpaper_private.json",
         "patchSetId": 12

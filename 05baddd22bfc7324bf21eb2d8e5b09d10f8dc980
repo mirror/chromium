@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9360b415_0dbd5460",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T03:21:06Z",
+      "side": 1,
+      "message": "you can use wallpaper_private generated code to set these, to avoid hardcoding the property names :)\n(see out/Debug/gen/extensions/common/api/wallpaper_private.*)",
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a282bec6_a7044c52",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T03:21:06Z",
+      "side": 1,
+      "message": "Does base::Value have a method to convert it to unique_ptr?\n\nAlso, consider using\nRespond(ArgumentList(extensions::api::wallpaper_private::GetImagesInfo::Create()))",
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537bc0f6_36bbb61c",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T03:21:06Z",
+      "side": 1,
+      "message": "I\u0027d drop this part - the source is not really relevant for the API,",
+      "range": {
+        "startLine": 21,
+        "startChar": 91,
+        "endLine": 21,
+        "endChar": 122
+      },
+      "revId": "05baddd22bfc7324bf21eb2d8e5b09d10f8dc980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
