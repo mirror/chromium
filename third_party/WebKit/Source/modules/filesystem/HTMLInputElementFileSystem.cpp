@@ -51,11 +51,15 @@ EntryHeapVector HTMLInputElementFileSystem::webkitEntries(
   EntryHeapVector entries;
   FileList* files = input.files();
 
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!context)
+    return entries;
+
   if (!files)
     return entries;
 
   DOMFileSystem* filesystem = DOMFileSystem::CreateIsolatedFileSystem(
-      ExecutionContext::From(script_state), input.DroppedFileSystemId());
+      context, input.DroppedFileSystemId());
   if (!filesystem) {
     // Drag-drop isolated filesystem is not available.
     return entries;

@@ -50,6 +50,10 @@ namespace blink {
 // static
 Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
                                                     DataTransferItem& item) {
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  if (!script_state)
+    return nullptr;
+
   if (!item.GetDataObjectItem()->IsFilename())
     return nullptr;
 
@@ -62,8 +66,8 @@ Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
 
   DOMFileSystem* dom_file_system =
       DraggedIsolatedFileSystemImpl::GetDOMFileSystem(
-          item.GetDataTransfer()->GetDataObject(),
-          ExecutionContext::From(script_state), *item.GetDataObjectItem());
+          item.GetDataTransfer()->GetDataObject(), context,
+          *item.GetDataObjectItem());
   if (!dom_file_system) {
     // IsolatedFileSystem may not be enabled.
     return nullptr;
