@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af73c44_354d4d8b",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-24T17:10:27Z",
+      "side": 1,
+      "message": "I think the callback here is always void(ui::OzonePlatform*). So the template may not be necessary.",
+      "revId": "b1b5a4ae55566b7c28e5cb4ce0591db5362d92e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

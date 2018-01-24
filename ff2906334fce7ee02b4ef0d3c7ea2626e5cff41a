@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "956cd244_2364f3dd",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-24T17:10:27Z",
+      "side": 1,
+      "message": "I was thinking something like the following would also work:\n\n  ui::OzonePlatform::GetInstance()-\u003eAddInterfaces(\u0026registry);\n\nBut you probably will need to do that above, before line 218/219. (also may need to change the signature of OzonePlatform::AddInterfaces(), not sure). But that will also work I think?",
+      "parentUuid": "3d7533d5_f47f51c1",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c95b064_d1799cfa",
         "filename": "content/public/app/mojo/content_gpu_manifest.json",
         "patchSetId": 1
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I can do this but... it\u0027s at odds with my longterm scheme to only configure ozone via the params object. How strongly do you feel about it?",
       "parentUuid": "e2d07123_e1d50f5c",
+      "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bf9915_d29622d0",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-24T17:10:27Z",
+      "side": 1,
+      "message": "I was thinking it is odd for the user of ozone to have to set a flag only required for one particular backend. Maybe the flag could be enable-mojo-ozone or something like that instead, so the callsite doesn\u0027t need to know about drm or other backends?",
+      "parentUuid": "5485b6ba_ac7c020c",
       "revId": "ff2906334fce7ee02b4ef0d3c7ea2626e5cff41a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
