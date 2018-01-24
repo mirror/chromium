@@ -14,6 +14,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
 #include "platform/PlatformExport.h"
+#include "public/platform/SamplingHeapProfiler.h"
 
 namespace base {
 template <typename T>
@@ -22,7 +23,7 @@ struct DefaultSingletonTraits;
 
 namespace blink {
 
-class PLATFORM_EXPORT SamplingNativeHeapProfiler {
+class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
  public:
   class Sample {
    public:
@@ -41,9 +42,9 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler {
 
   SamplingNativeHeapProfiler() = default;
 
-  unsigned Start();
-  void Stop();
-  void SetSamplingInterval(unsigned sampling_interval);
+  unsigned Start() override;
+  void Stop() override;
+  void SetSamplingInterval(unsigned sampling_interval) override;
   void SuppressRandomnessForTest();
 
   std::vector<Sample> GetSamples(unsigned profile_id);
@@ -53,7 +54,7 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler {
  private:
   static void InstallAllocatorHooksOnce();
   static bool InstallAllocatorHooks();
-  static intptr_t GetNextSampleInterval(uint64_t base_interval);
+  static size_t GetNextSampleInterval(size_t base_interval);
 
   static inline bool ShouldRecordSample(size_t, size_t* accumulated);
   void* RecordAlloc(size_t total_allocated,

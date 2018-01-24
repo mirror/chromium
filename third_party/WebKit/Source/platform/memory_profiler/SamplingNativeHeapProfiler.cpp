@@ -42,6 +42,10 @@ SamplingNativeHeapProfiler::Sample::Sample(size_t size,
                                            unsigned offset)
     : size(size), count(count), ordinal(ordinal), offset(offset) {}
 
+SamplingHeapProfiler* SamplingHeapProfiler::GetInstance() {
+  return SamplingNativeHeapProfiler::GetInstance();
+}
+
 void* SamplingNativeHeapProfiler::AllocFn(const AllocatorDispatch* self,
                                           size_t size,
                                           void* context) {
@@ -204,12 +208,13 @@ unsigned SamplingNativeHeapProfiler::Start() {
       GetNextSampleInterval(base::subtle::Acquire_Load(&g_sampling_interval));
   base::subtle::Release_Store(&g_current_interval, next_interval);
   base::subtle::Release_Store(&g_bytes_left, next_interval);
-  base::subtle::Release_Store(&g_running, true);
+  base::subtle::Barrier_AtomicIncrement(&g_running, 1);
   return g_last_sample_ordinal;
 }
 
 void SamplingNativeHeapProfiler::Stop() {
-  base::subtle::Release_Store(&g_running, false);
+  AtomicWord count = base::subtle::Barrier_AtomicIncrement(&g_running, -1);
+  CHECK_GE(count, 0);
 }
 
 void SamplingNativeHeapProfiler::SetSamplingInterval(
@@ -220,9 +225,9 @@ void SamplingNativeHeapProfiler::SetSamplingInterval(
 }
 
 // static
-intptr_t SamplingNativeHeapProfiler::GetNextSampleInterval(uint64_t interval) {
+size_t SamplingNativeHeapProfiler::GetNextSampleInterval(size_t interval) {
   if (UNLIKELY(base::subtle::NoBarrier_Load(&g_deterministic)))
-    return static_cast<intptr_t>(interval);
+    return static_cast<size_t>(interval);
 
   // We sample with a Poisson process, with constant average sampling
   // interval. This follows the exponential probability distribution with
@@ -232,16 +237,16 @@ intptr_t SamplingNativeHeapProfiler::GetNextSampleInterval(uint64_t interval) {
   // next_sample = -ln(u) / λ
   double uniform = base::RandDouble();
   double value = -log(uniform) * interval;
-  intptr_t min_value = sizeof(intptr_t);
+  size_t min_value = sizeof(intptr_t);
   // We limit the upper bound of a sample interval to make sure we don't have
   // huge gaps in the sampling stream. Probability of the upper bound gets hit
   // is exp(-20) ~ 2e-9, so it should not skew the distibution.
-  intptr_t max_value = interval * 20;
+  size_t max_value = interval * 20;
   if (UNLIKELY(value < min_value))
     return min_value;
   if (UNLIKELY(value > max_value))
     return max_value;
-  return static_cast<intptr_t>(value);
+  return static_cast<size_t>(value);
 }
 
 // static
