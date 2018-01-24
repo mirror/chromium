@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8575e086_1d7d1052",
+        "filename": "chrome/test/data/notifications/platform_notification_service.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-24T15:20:01Z",
+      "side": 1,
+      "message": "seems a slippery slope.. but fine!\n\nDone.",
+      "parentUuid": "6201af4d_1c220b94",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "dd679f2a849624045b1902a177fe3124db15e832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be052b3b_5f9f0ac0",
         "filename": "content/browser/notifications/blink_notification_service_impl.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "dd679f2a849624045b1902a177fe3124db15e832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a507da_37ccb327",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-24T15:20:01Z",
+      "side": 1,
+      "message": "What?\n\n:P \n\n(removed).",
+      "parentUuid": "be052b3b_5f9f0ac0",
+      "revId": "dd679f2a849624045b1902a177fe3124db15e832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "681acd99_a31c2829",
+        "filename": "content/browser/notifications/blink_notification_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-24T15:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae9e758_46beb9c9",
+      "revId": "dd679f2a849624045b1902a177fe3124db15e832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f2433b_d4175633",
         "filename": "content/browser/notifications/blink_notification_service_impl.h",
         "patchSetId": 7
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "6cfc375b_2064435b",
+        "filename": "content/browser/notifications/blink_notification_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-24T15:20:01Z",
+      "side": 1,
+      "message": "Good point, thanks.",
+      "parentUuid": "09f2433b_d4175633",
+      "revId": "dd679f2a849624045b1902a177fe3124db15e832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f33d52f5_91f62e1d",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "dd679f2a849624045b1902a177fe3124db15e832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffcffe7_aff85d8d",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-24T15:20:01Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f33d52f5_91f62e1d",
+      "revId": "dd679f2a849624045b1902a177fe3124db15e832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
