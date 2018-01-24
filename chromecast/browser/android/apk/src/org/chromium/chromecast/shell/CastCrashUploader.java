@@ -44,20 +44,21 @@ public final class CastCrashUploader {
     private static final String DUMP_FILE_REGEX = ".*\\.dmp\\d*";
 
     private final ScheduledExecutorService mExecutorService;
+    private final LogcatProvider mLogcatProvider;
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
     private final String mUuid;
     private final String mApplicationFeedback;
-    private final Runnable mQueueAllCrashDumpUploadsRunnable =
-            () -> queueAllCrashDumpUploads(false);
+    private final Runnable mQueueAllCrashDumpUploadsRunnable = () -> queueAllCrashDumpUploads();
 
-    public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
-            String uuid, String applicationFeedback, boolean uploadCrashToStaging) {
+    public CastCrashUploader(ScheduledExecutorService executorService,
+            LogcatProvider logcatProvider, String crashDumpPath, String uuid,
+            String applicationFeedback, boolean uploadCrashToStaging) {
         mExecutorService = executorService;
+        mLogcatProvider = logcatProvider;
         mCrashDumpPath = crashDumpPath;
         mUuid = uuid;
         mApplicationFeedback = applicationFeedback;
-
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
@@ -93,47 +94,28 @@ public final class CastCrashUploader {
      * @param synchronous Whether or not this function should block on queued uploads
      * @param log Log to include, if any
      */
-    private void queueAllCrashDumpUploads(boolean synchronous) {
+    private void queueAllCrashDumpUploads() {
         if (mCrashDumpPath == null) return;
         Log.i(TAG, "Checking for crash dumps");
 
-        List<Future> tasks = new ArrayList<Future>();
-        File crashDumpDirectory = new File(mCrashDumpPath);
 
-        final String log = getLogs(crashDumpDirectory);
+        try {
+            mLogcatProvider.getLogcat((String logs) -> findDumpsAndUpload(logs));
+        } catch (IOException | InterruptedException e) {
+            Log.e(TAG, "Getting Logcat Failed", e);
+            findDumpsAndUpload(null);
+        }
+    }
+
+    private void findDumpsAndUpload(String logs) {
+        File crashDumpDirectory = new File(mCrashDumpPath);
 
         for (final File potentialDump : crashDumpDirectory.listFiles()) {
             String dumpName = potentialDump.getName();
             if (dumpName.matches(DUMP_FILE_REGEX)) {
-                tasks.add(mExecutorService.submit(() -> uploadCrashDump(potentialDump, log)));
+                mExecutorService.submit(() -> uploadCrashDump(potentialDump, logs));
             }
         }
-
-        // Wait on tasks, if necessary.
-        if (synchronous) {
-            for (Future task : tasks) {
-                // Wait on task. If thread received interrupt and should stop waiting, return.
-                if (!waitOnTask(task)) {
-                    return;
-                }
-            }
-        }
-    }
-
-    private String getLogs(File crashDumpDirectory) {
-        String log = null;
-        if (crashDumpDirectory.listFiles().length > 0) {
-            try {
-                Log.i(TAG, "Getting logcat");
-                log = LogcatExtractor.getElidedLogcat();
-                Log.d(TAG, "Log size" + log.length());
-                return log;
-
-            } catch (IOException | InterruptedException e) {
-                Log.e(TAG, "Getting logcat failed ", e);
-            }
-        }
-        return null;
     }
 
     /** Enqueues a background task to upload a single crash dump file. */
