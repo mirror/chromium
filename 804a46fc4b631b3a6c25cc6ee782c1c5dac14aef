@@ -16,6 +16,24 @@
       "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8624afbb_3d37b076",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-24T19:46:51Z",
+      "side": 0,
+      "message": "Wow, I had no idea, I sort of assumed this was light weight.  I wonder if there is a deeper bug. What kind of durations are you seeing here?",
+      "parentUuid": "4955b33f_b290b0b3",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
