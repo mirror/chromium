@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ee54962_88027c72",
+        "filename": "chrome/browser/supervised_user/supervised_user_google_auth_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:29:55Z",
+      "side": 1,
+      "message": "We now have three cases: Android, Chrome OS and anything else. I would do #if defined(OS_CHROMEOS) / #elif defined(OS_ANDROID) / #else (or with Android first) instead of nesting.\n\nAlso, given that we don\u0027t currently plan to launch this on other platforms, the remaining case could get a NOTREACHED()?",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "82ec6963162b149ddb7c6d546643e81ec0d4d432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77f0b84_dd3dd8bc",
+        "filename": "chrome/browser/supervised_user/supervised_user_google_auth_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:29:55Z",
+      "side": 1,
+      "message": "Nit: The term used in Chrome is \"child accounts\". Also in the commit message please.",
+      "range": {
+        "startLine": 125,
+        "startChar": 51,
+        "endLine": 125,
+        "endChar": 64
+      },
+      "revId": "82ec6963162b149ddb7c6d546643e81ec0d4d432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235e6f82_1bcbaa04",
+        "filename": "chrome/browser/supervised_user/supervised_user_google_auth_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T10:29:55Z",
+      "side": 1,
+      "message": "Android _also_ uses Mirror, so that comment sounds a bit misleading. The difference is that on Chrome OS we will log the user out if new cookies can\u0027t be minted, whereas on Android we will trigger the reauth dialog.",
+      "range": {
+        "startLine": 125,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "82ec6963162b149ddb7c6d546643e81ec0d4d432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
