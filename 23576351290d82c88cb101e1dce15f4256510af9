@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "024fe74f_1ada31e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-24T06:28:04Z",
+      "side": 1,
+      "message": "In fact, it should inspect leaf children.\n\nThanks for catching!",
+      "parentUuid": "e90c1660_fffa0f47",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56c0880c_2382f92e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T04:39:51Z",
       "side": 1,
       "message": "Please move these functions to NGPhysicalLineBoxFragment.",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b683051_38b1b859",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-24T06:28:04Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "56c0880c_2382f92e",
       "revId": "23576351290d82c88cb101e1dce15f4256510af9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "cf17439f_08183436",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-24T06:28:04Z",
+      "side": 1,
+      "message": "Added comment about incorrect BiDi behavior.\n\nI\u0027m not adding test for now, as we are not sure about the correct behavior with mixed BiDi yet.",
+      "parentUuid": "7edacf36_4088474c",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d89670e2_78455b16",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 3
@@ -82,6 +136,24 @@
       "writtenOn": "2018-01-24T04:39:51Z",
       "side": 1,
       "message": "What are the expectation of when this line is broken at hyphenation, or when it has text-overflow: ellipsis? We generate fragments for them, are they supposed to be included, or not?",
+      "revId": "23576351290d82c88cb101e1dce15f4256510af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa91a8ba_22dc1af5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-24T06:28:04Z",
+      "side": 1,
+      "message": "It ignores such complications, which means all fragments are included, including those hidden due to ellipsis, and those due to hyphenation.\n\nAs this function is introduced for calculating caret position at line wraps, I guess that serves the purpose.",
+      "parentUuid": "d89670e2_78455b16",
       "revId": "23576351290d82c88cb101e1dce15f4256510af9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
