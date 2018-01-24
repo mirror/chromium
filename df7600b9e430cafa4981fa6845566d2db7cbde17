@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f88c6735_a0fd28da",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2a95980_e9f8f82b",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b60bf48_ade73d70",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26099ba1_972985c6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/AndroidAppLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b60bf48_ade73d70",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "23cf354c_5d06c5e4",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523ff26d_a006f1bf",
+      "range": {
+        "startLine": 24,
+        "startChar": 57,
+        "endLine": 24,
+        "endChar": 97
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a72fb35c_0953fb77",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
         "patchSetId": 9
@@ -114,6 +186,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84610a71_d53712c6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a72fb35c_0953fb77",
+      "range": {
+        "startLine": 25,
+        "startChar": 51,
+        "endLine": 25,
+        "endChar": 97
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "4dff6c5d_f4d90284",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05632aa_9f17b21c",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c1dc18_00400f75",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
         "patchSetId": 9
@@ -160,6 +280,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5960ffa1_9f23e63f",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ElidedLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c1dc18_00400f75",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d62aa217_f1fbabf3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3bdc21b_d250bcaf",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c7b7ee0_73581f7c",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
         "patchSetId": 9
@@ -206,6 +374,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d47b46d_a0f42d3e",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Yes, have tested it end to end.",
+      "parentUuid": "0c7b7ee0_73581f7c",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "bad8a6bf_44fcf215",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61f91110_372d0fc7",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f66a94_4d5b45b3",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
         "patchSetId": 9
@@ -252,6 +468,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6c1f79_b14c8c32",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f66a94_4d5b45b3",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "f5fa7ddf_5bab1fd7",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Yes, but this will require a change on the remote side too so we should do this later.",
+      "parentUuid": "5beea0c7_dd37c272",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13915e87_b6ef298d",
         "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
         "patchSetId": 9
@@ -298,6 +562,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a49070_36754925",
+        "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13915e87_b6ef298d",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "dd39ef7e_d7f380d0",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bbcfbc0_f94312c0",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1254fe_8f8c0a6c",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 9
@@ -344,6 +656,30 @@
       "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58706961_4b8977dd",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1188121
+      },
+      "writtenOn": "2018-01-24T22:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e1254fe_8f8c0a6c",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
