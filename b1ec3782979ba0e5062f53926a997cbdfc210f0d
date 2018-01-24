@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e480341a_a88d6498",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T14:38:34Z",
+      "side": 1,
+      "message": "Yeah, first layout is what made me think this was reasonable, but it did feel questionable.\n\nI\u0027ll go with InteractiveTiming.",
+      "parentUuid": "d6fd0adc_334afc96",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b95afc30_c7710c76",
         "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-23T16:27:31Z",
       "side": 1,
       "message": "nit: since this is a duration, could we be more precise and call it FirstEventQueuingDuration, or FirstEventQueuingDelay, everywhere? \"time\" is less clear - could be a timestamp for instance.",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781b1b62_f01b7e92",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T14:38:34Z",
+      "side": 1,
+      "message": "How about \"First Input Delay\"?",
+      "parentUuid": "b95afc30_c7710c76",
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "6e8693dd_3b2de683",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T14:38:34Z",
+      "side": 1,
+      "message": "Great point, will do.",
+      "parentUuid": "f2c526f1_99f5b69b",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1420081f_f9cd81b6",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
         "patchSetId": 1
@@ -128,6 +182,24 @@
       "writtenOn": "2018-01-23T16:27:31Z",
       "side": 1,
       "message": "re: taking the current timestamp, does this ReportFirstEventQueueingTime callback run before or after the application\u0027s JS code that handles the input event runs? in other words will we include the time the application spends in JS handling the input event in our first event queuing time calculation?\n\nIIUC event.TimeStampSeconds() is the timestamp that the event was generated ~at the hardware level (time user touched the glass, for instance), is that right?",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab3b8c4_9be129b6",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-24T14:38:34Z",
+      "side": 1,
+      "message": "This executes before JS. We want to exclude time spent handling the input event, as it\u0027s trivially gameable (via setTimeout(0) and the like), and developers should be able to switch from delayed input processing to immediate input processing without seeing a regression.\n\nWe should have a test that this doesn\u0027t include processing time though.\n\nWe are using the hardware timestamp currently. The other option is to use the time we sent the event to the main thread. The other options has some pros and cons. It aligns better with the name \"queueing delay\" and better represents the part of the queueing delay the developer has control over.\n\nHowever, it can\u0027t be measured using existing APIs on the web and it\u0027s a bit less representative of user experience. In practice, in high percentiles, the time spent queued on the main thread dominates the total delay, so the practical impact of this decision isn\u0027t huge.\n\nI\u0027m inclined to go with the hardware timestamp, but there are good arguments in both directions.",
+      "parentUuid": "1420081f_f9cd81b6",
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
