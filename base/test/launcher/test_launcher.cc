@@ -887,6 +887,7 @@ bool TestLauncher::Init() {
     // in bot mode.
     retry_limit_ = 3;
   }
+  retry_limit_ = 0;
 
   if (command_line->HasSwitch(switches::kTestLauncherForceRunBrokenTests))
     force_run_broken_tests_ = true;
