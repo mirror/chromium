@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "951644ea_fbb95619",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:06:20Z",
+      "side": 1,
+      "message": "\u003e const float inset \u003d border_thickness_ * scale - 0.5f;\n\nLooks like you\u0027re flooring left,top and ceiling at right, bottom right?\n\nWill this work?\n\nbprder_rect.Inset(border_thickness_);\nRect rect \u003d ScaleToEnclocingRect(rect, scale); \n\nIt\u0027s slightly different, so you may keep it if above doesn\u0027t work.",
+      "parentUuid": "8a783c89_02dadc65",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "581ad5d7_d3939365",
         "filename": "ash/wm/overview/window_grid.cc",
         "patchSetId": 8
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Oops, that was when i thought we would have to animate seperately. But now the widget which own this view has the animation, like before.",
       "parentUuid": "581ad5d7_d3939365",
+      "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9770ac_8487c15b",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-24T16:06:20Z",
+      "side": 1,
+      "message": "so we don\u0027t need other layers (background_view_, label_container_), do we?",
+      "parentUuid": "30acf0ab_e5cb27fa",
       "revId": "a3bcaf03eb9ccfcc1404d88e0573118325337b74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
