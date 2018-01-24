@@ -22,6 +22,30 @@
       "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c68302_c8fcc2df",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-24T13:56:14Z",
+      "side": 1,
+      "message": "Should be fine to remove, that bug is fixed.",
+      "parentUuid": "d7e49950_bcece93b",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
