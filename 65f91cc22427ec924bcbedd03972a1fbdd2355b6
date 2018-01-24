@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76c82728_08a29132",
+        "filename": "sandbox/linux/services/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-24T23:12:14Z",
+      "side": 1,
+      "message": "Yeah, there isn\u0027t a good way around this without taking on how content assigns well-known file descriptors.  Theoretically, this is something that should be told to the interceptor, but I\u0027m worried about initialization order.  I\u0027ll take a shot at this in a follow-up CL.",
+      "parentUuid": "40cb9b36_bf04b59f",
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f42bf114_9c2ad9ae",
         "filename": "sandbox/linux/services/libc_interceptor.h",
         "patchSetId": 16
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3691138b_551b6279",
+        "filename": "sandbox/linux/services/libc_interceptor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-24T23:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f42bf114_9c2ad9ae",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b17cbf_6b4bf4ea",
         "filename": "sandbox/linux/services/libc_interceptor.h",
         "patchSetId": 16
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-24T23:00:59Z",
       "side": 1,
       "message": "Is this needed? Every check is guarded by use_localtime_override \u0026\u0026 is_zygote_or_renderer so I\u0027m not sure why we have both.",
+      "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e59f00e_05730e16",
+        "filename": "sandbox/linux/services/libc_interceptor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-24T23:12:14Z",
+      "side": 1,
+      "message": "I didn\u0027t want to rely on a particular ordering of these calls, which would be crucial if there were a single call.",
+      "parentUuid": "86b17cbf_6b4bf4ea",
       "revId": "65f91cc22427ec924bcbedd03972a1fbdd2355b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
