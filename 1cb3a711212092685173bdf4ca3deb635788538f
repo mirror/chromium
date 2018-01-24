@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "0ab30fba_bafbd203",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-24T16:10:56Z",
+      "side": 1,
+      "message": "Ah, I see, I didn\u0027t understand the global instance served as static storage.  I guess with C APIs we\u0027re stuck returning a char*.",
+      "parentUuid": "bf304541_0e45b1c9",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec04603_e4f294b3",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
@@ -363,6 +387,30 @@
       "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc742b24_96e21d0f",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-24T16:10:56Z",
+      "side": 1,
+      "message": "Done, looks like you added the const in the place I intended; sorry, I should have been more clear where I meant to add it.",
+      "parentUuid": "569b0cbb_03e157bf",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
