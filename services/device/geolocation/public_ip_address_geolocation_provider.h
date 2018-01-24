@@ -32,7 +32,7 @@ class PublicIpAddressGeolocationProvider
   // |api_key| and a URL request context produced by |request_context_producer|
   // for network location requests.
   PublicIpAddressGeolocationProvider(
-      GeolocationProvider::RequestContextProducer request_context_producer,
+      GeolocationProviderImpl::RequestContextProducer request_context_producer,
       const std::string& api_key);
   ~PublicIpAddressGeolocationProvider() override;
 

@@ -33,21 +33,35 @@ namespace device {
 using CustomLocationProviderCallback =
     base::Callback<std::unique_ptr<LocationProvider>()>;
 
+// This is the main API to the geolocation subsystem. The application will hold
+// a single instance of this class and can register multiple clients to be
+// notified of location changes:
+// * Callbacks are registered by AddLocationUpdateCallback() and will keep
+//   receiving updates until the returned subscription object is destructed.
+// The application must instantiate the GeolocationProviderImpl on the UI thread
+// and must communicate with it on the same thread.
+// The underlying location arbitrator will only be enabled whilst there is at
+// least one registered observer or pending callback (and only after
+// mojom::UserDidOptIntoLocationServices()). The arbitrator and the location
+// providers it uses run on a separate Geolocation thread.
 class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
     : public GeolocationProvider,
       public mojom::GeolocationControl,
       public base::Thread {
  public:
-  // GeolocationProvider implementation:
-  std::unique_ptr<GeolocationProvider::Subscription> AddLocationUpdateCallback(
-      const LocationUpdateCallback& callback,
-      bool enable_high_accuracy) override;
-  bool HighAccuracyLocationInUse() override;
-  void OverrideLocationForTesting(const mojom::Geoposition& position) override;
+  // Callback type for a function that asynchronously produces a
+  // URLRequestContextGetter.
+  using RequestContextProducer = base::RepeatingCallback<void(
+      base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>)>;
 
-  // Callback from the LocationArbitrator. Public for testing.
-  void OnLocationUpdate(const LocationProvider* provider,
-                        const mojom::Geoposition& position);
+  // Optional: Provide a callback to produce a request context for network
+  // geolocation requests.
+  static void SetRequestContextProducer(
+      RequestContextProducer request_context_producer);
+
+  // Optional: Provide a Google API key for network geolocation requests.
+  // Call before using Init() on the singleton GetInstance().
+  static void SetApiKey(const std::string& api_key);
 
   // Gets a pointer to the singleton instance of the location relayer, which
   // is in turn bound to the browser's global context objects. This must only be
@@ -60,6 +74,27 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   // and call no more than once.
   static void SetCustomLocationProviderCallback(
       const CustomLocationProviderCallback& callback);
+
+  // GeolocationProvider implementation:
+  void OverrideLocationForTesting(const mojom::Geoposition& position) override;
+
+  typedef base::RepeatingCallback<void(const mojom::Geoposition&)>
+      LocationUpdateCallback;
+  typedef base::CallbackList<void(const mojom::Geoposition&)>::Subscription
+      Subscription;
+
+  // |enable_high_accuracy| is used as a 'hint' for the provider preferences for
+  // this particular observer, however the observer could receive updates for
+  // best available locations from any active provider whilst it is registered.
+  std::unique_ptr<Subscription> AddLocationUpdateCallback(
+      const LocationUpdateCallback& callback,
+      bool enable_high_accuracy);
+
+  bool HighAccuracyLocationInUse();
+
+  // Callback from the LocationArbitrator. Public for testing.
+  void OnLocationUpdate(const LocationProvider* provider,
+                        const mojom::Geoposition& position);
 
   void BindGeolocationControlRequest(mojom::GeolocationControlRequest request);
 
