@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2496a25e_235f2682",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-24T04:35:56Z",
+      "side": 1,
+      "message": "small nit: this simply rejects the promise.",
+      "range": {
+        "startLine": 224,
+        "startChar": 53,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "6eade37e17ae02923f6d737fe2df640a139c771d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
