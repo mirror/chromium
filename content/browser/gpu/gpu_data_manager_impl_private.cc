@@ -557,6 +557,9 @@ void GpuDataManagerImplPrivate::AppendGpuCommandLine(
     // TODO(zmo): This doesn't actually force the software GL.
     // See https://crbug.com/805204.
     command_line->AppendSwitch(switches::kOverrideUseSoftwareGLForTests);
+    const char* software_gl_impl_name =
+        gl::GetGLImplementationName(gl::GetSoftwareGLImplementation());
+    command_line->AppendSwitchASCII(switches::kUseGL, software_gl_impl_name);
   }
 
 #if defined(USE_OZONE)
