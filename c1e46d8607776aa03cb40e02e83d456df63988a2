@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc0b69f_7c463ace",
+        "filename": "chrome/browser/supervised_user/supervised_user_google_auth_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-24T12:58:37Z",
+      "side": 1,
+      "message": "You still need a return statement, as the NOTREACHED() is compiled out in Debug builds.",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 15
+      },
+      "revId": "c1e46d8607776aa03cb40e02e83d456df63988a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
