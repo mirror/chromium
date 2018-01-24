@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63d0b27b_bfe830a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T04:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02055097_bcae3c5f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f60ff4f_3cc2bc76",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/css/passphrase-dialog.css",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3149527e_1e08ed35",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/css/passphrase-dialog.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T04:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f60ff4f_3cc2bc76",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "516ab58b_acb9ef62",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T04:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ad43fc_4a21be78",
+      "range": {
+        "startLine": 247,
+        "startChar": 12,
+        "endLine": 247,
+        "endChar": 60
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b70121_19681a55",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c8cdee_4cb9f9c9",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-24T04:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b70121_19681a55",
+      "range": {
+        "startLine": 342,
+        "startChar": 41,
+        "endLine": 342,
+        "endChar": 72
+      },
+      "revId": "59424abe9dad6d1b4b9181c47a4e2aa5dfc0158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
