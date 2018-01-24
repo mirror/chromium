@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65f39ebf_a1bf269e",
+        "filename": "gpu/command_buffer/client/gpu_memory_buffer_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-24T19:01:07Z",
+      "side": 1,
+      "message": "A virtual function for this doesn\u0027t seem appropriate. Can we pass the client id down to InProcessCommandBuffer as needed instead? Or if we\u0027re lazy, put a kInProcessGpuMemoryBufferClientId constant somewhere that can be shared?",
+      "revId": "0b5f56da7032b354459992d8012d625a5b745b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
