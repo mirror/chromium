@@ -16,6 +16,24 @@
       "revId": "426cf6310b52daebb04d27ac0429bc9059958018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335daa2e_4f98f214",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-24T17:56:57Z",
+      "side": 1,
+      "message": "Yeah, it never got added to automation...so added and used here.",
+      "parentUuid": "39b73be6_ed634146",
+      "revId": "426cf6310b52daebb04d27ac0429bc9059958018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
