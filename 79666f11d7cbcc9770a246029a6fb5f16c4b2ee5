@@ -45,6 +45,30 @@
       "revId": "79666f11d7cbcc9770a246029a6fb5f16c4b2ee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0047546_63f19b42",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2018-01-24T20:34:41Z",
+      "side": 1,
+      "message": "Fixed (names have also changed)",
+      "parentUuid": "b69c74eb_385ab4a7",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "79666f11d7cbcc9770a246029a6fb5f16c4b2ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
