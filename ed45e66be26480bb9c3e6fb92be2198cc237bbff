@@ -86,6 +86,24 @@
       "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02194df7_3684a42c",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T20:35:07Z",
+      "side": 1,
+      "message": "Ah, I was just getting unlucky. The latest tryjobs do sometimes fail because this returns false.",
+      "parentUuid": "cb7e381a_8b90917f",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
