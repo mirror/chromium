@@ -22,7 +22,7 @@ import org.chromium.content.browser.ViewPositionObserver;
  */
 public class ViewAnchoredTextBubble extends TextBubble
         implements PositionObserver.Listener, ViewTreeObserver.OnGlobalLayoutListener,
-                   View.OnAttachStateChangeListener, OnPreDrawListener, OnDismissListener {
+        View.OnAttachStateChangeListener, OnPreDrawListener, OnDismissListener {
     private final int[] mCachedWindowCoordinates = new int[2];
     private final Rect mAnchorRect = new Rect();
     private final Rect mInsetRect = new Rect();
@@ -41,7 +41,7 @@ public class ViewAnchoredTextBubble extends TextBubble
      * @param accessibilityStringId The id of the string resource of the accessibility text.
      */
     public ViewAnchoredTextBubble(Context context, View anchorView, @StringRes int stringId,
-            @StringRes int accessibilityStringId) {
+                                  @StringRes int accessibilityStringId) {
         super(context, anchorView.getRootView(), stringId, accessibilityStringId);
         mAnchorView = anchorView;
 
@@ -127,9 +127,9 @@ public class ViewAnchoredTextBubble extends TextBubble
         // Account for the padding.
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(mAnchorView);
         mAnchorRect.left += isRtl ? ApiCompatibilityUtils.getPaddingEnd(mAnchorView)
-                                  : ApiCompatibilityUtils.getPaddingStart(mAnchorView);
+                : ApiCompatibilityUtils.getPaddingStart(mAnchorView);
         mAnchorRect.right -= isRtl ? ApiCompatibilityUtils.getPaddingStart(mAnchorView)
-                                   : ApiCompatibilityUtils.getPaddingEnd(mAnchorView);
+                : ApiCompatibilityUtils.getPaddingEnd(mAnchorView);
         mAnchorRect.top += mAnchorView.getPaddingTop();
         mAnchorRect.bottom -= mAnchorView.getPaddingBottom();
 
