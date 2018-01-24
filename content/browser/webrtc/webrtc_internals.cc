@@ -20,6 +20,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/service_manager_connection.h"
 #include "ipc/ipc_platform_file.h"
+#include "media/audio/audio_debug_recording_session.h"
 #include "media/audio/audio_manager.h"
 #include "media/media_features.h"
 #include "services/device/public/interfaces/constants.mojom.h"
@@ -333,14 +334,12 @@ void WebRTCInternals::DisableAudioDebugRecordings() {
     i.GetCurrentValue()->DisableAudioDebugRecordings();
   }
 
-  // It's safe to get the AudioManager pointer here. That pointer is invalidated
-  // on the UI thread, which we're on.
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, so it's safe to post unretained to the audio thread.
-  media::AudioManager* audio_manager = media::AudioManager::Get();
-  audio_manager->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::DisableDebugRecording,
-                                base::Unretained(audio_manager)));
+  // Destroying |audio_debug_recording_session_| disables debug recording.
+  // AudioDebugRecordingSession posts AudioManager unretained, which is safe
+  // because AudioManager is deleted on the audio thread, and the AudioManager
+  // outlives this object.
+  audio_debug_recording_session_.reset();
+
 #endif
 }
 
@@ -527,15 +526,13 @@ void WebRTCInternals::EnableAudioDebugRecordingsOnAllRenderProcessHosts() {
         audio_debug_recordings_file_path_);
   }
 
-  // It's safe to get the AudioManager pointer here. That pointer is invalidated
-  // on the UI thread, which we're on.
-  // AudioManager is deleted on the audio thread, and the AudioManager outlives
-  // this object, so it's safe to post unretained to the audio thread.
-  media::AudioManager* audio_manager = media::AudioManager::Get();
-  audio_manager->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&media::AudioManager::EnableDebugRecording,
-                                base::Unretained(audio_manager),
-                                audio_debug_recordings_file_path_));
+  // Creating |audio_debug_recording_session_| enables debug recording.
+  // AudioDebugRecordingSession posts AudioManager unretained, which is safe
+  // because AudioManager is deleted on the audio thread, and the AudioManager
+  // outlives this object.
+  audio_debug_recording_session_ =
+      media::AudioDebugRecordingSession::CreateSession(
+          audio_debug_recordings_file_path_);
 }
 #endif
 
