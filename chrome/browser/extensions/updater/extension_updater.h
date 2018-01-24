@@ -38,6 +38,7 @@ class ExtensionCache;
 class ExtensionPrefs;
 class ExtensionSet;
 class ExtensionUpdaterTest;
+class UpdateService;
 
 // A class for doing auto-updates of installed Extensions. Used like this:
 //
@@ -231,6 +232,10 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
 
   // Fetches the crx files for the extensions that have an available update.
   std::unique_ptr<ExtensionDownloader> downloader_;
+
+  // Update service is responsible for updating Webstore extensions using
+  // Component update client.
+  std::unique_ptr<UpdateService> update_service_;
 
   base::OneShotTimer timer_;
   int frequency_seconds_;

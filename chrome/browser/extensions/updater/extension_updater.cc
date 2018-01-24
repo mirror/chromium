@@ -32,6 +32,7 @@
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/pref_names.h"
+#include "extensions/browser/updater/update_service.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -165,6 +166,10 @@ ExtensionUpdater::~ExtensionUpdater() {
 void ExtensionUpdater::EnsureDownloaderCreated() {
   if (!downloader_.get()) {
     downloader_ = downloader_factory_.Run(this);
+  }
+
+  if (!update_service_.get()) {
+    update_service_.reset(UpdateService::Get(profile_));
   }
 }
 
