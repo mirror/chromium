@@ -157,6 +157,24 @@
       "revId": "f7569eba3b08579debd5e48af83e70931c947563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b10313ab_3cba4470",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-24T15:20:40Z",
+      "side": 1,
+      "message": "If I use that I\u0027m going to need to also set unique_touch_event_id and moved_beyond_slop_region on that object directly similar to what\u0027s being done here for touch event. Are you okay with that?",
+      "parentUuid": "87abafb7_c95bf96b",
+      "revId": "f7569eba3b08579debd5e48af83e70931c947563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

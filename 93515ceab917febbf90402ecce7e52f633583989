@@ -16,6 +16,24 @@
       "revId": "93515ceab917febbf90402ecce7e52f633583989",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3f8033_77c87efb",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-24T15:20:40Z",
+      "side": 1,
+      "message": "That\u0027s correct. Blink does not get the stationary points. However, there might be some points from the previous frame that hasn\u0027t got any update this frame (i.e. stationary points). Those are the events that will have the stale flag set for this frame in Blink so when it constructs the DOM Touch Event it will put them in the list of touch points but not in the updated list.",
+      "parentUuid": "dcd14fe8_2c49017c",
+      "revId": "93515ceab917febbf90402ecce7e52f633583989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
