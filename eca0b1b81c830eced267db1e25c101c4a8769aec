@@ -45,6 +45,30 @@
       "revId": "eca0b1b81c830eced267db1e25c101c4a8769aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c591920_676b53bb",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-24T19:22:47Z",
+      "side": 1,
+      "message": "Hmm... Let\u0027s try this to see if we hit any problem.\nI\u0027ll let this CL move AppListModel::Status only then.",
+      "parentUuid": "e96de6e5_d373e61a",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "eca0b1b81c830eced267db1e25c101c4a8769aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
