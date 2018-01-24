@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "10eef0fb_d36babec",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-24T19:07:40Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "ebc8db00_82092e25",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb9a6e91_9c1014a9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html",
         "patchSetId": 3
@@ -164,6 +188,30 @@
       "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b249383_852237d1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/custom-user-timing/po-customusertiming-measure.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-24T19:07:40Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "f333e1fa_0d1bedd8",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +353,30 @@
       "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340c72f4_a8b9b07d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2018-01-24T19:07:40Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "aaf079cc_f2214288",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 14
+      },
+      "revId": "a3dd56592253d9d66b0ebd83c61b1d664d08a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
