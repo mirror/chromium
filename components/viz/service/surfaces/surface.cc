@@ -391,6 +391,11 @@ void Surface::TakeCopyOutputRequests(Surface::CopyRequestsMap* copy_requests) {
 
   for (const auto& render_pass : active_frame_data_->frame.render_pass_list) {
     for (auto& request : render_pass->copy_requests) {
+      if (request->has_area()) {
+        request->set_area(gfx::ScaleToRoundedRect(
+            request->area(),
+            active_frame_data_->frame.metadata.device_scale_factor));
+      }
       copy_requests->insert(
           std::make_pair(render_pass->id, std::move(request)));
     }

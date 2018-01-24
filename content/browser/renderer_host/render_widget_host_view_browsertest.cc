@@ -515,6 +515,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
     EXPECT_EQ(expected_bitmap.width(), bitmap.width());
     EXPECT_EQ(expected_bitmap.height(), bitmap.height());
     EXPECT_EQ(expected_bitmap.colorType(), bitmap.colorType());
+    LOG(ERROR) << expected_bitmap.width();
     int fails = 0;
     for (int i = 0; i < bitmap.width() && fails < 10; ++i) {
       for (int j = 0; j < bitmap.height() && fails < 10; ++j) {
@@ -728,6 +729,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
     // Left half is #0ff.
     bitmap->eraseARGB(255, 0, 255, 255);
     // Right half is #ff0.
+    LOG(ERROR) << "i is: " << copy_size.width() / 2;
     for (int i = 0; i < copy_size.width() / 2; ++i) {
       for (int j = 0; j < copy_size.height(); ++j) {
         *(bitmap->getAddr32(copy_size.width() / 2 + i, j)) =
@@ -907,6 +909,9 @@ IN_PROC_BROWSER_TEST_P(
   // Scale the output size so that, internally, scaling is not occurring.
   gfx::Size output_size = gfx::ScaleToRoundedSize(copy_rect.size(), scale());
   bool video_frame = false;
+  LOG(ERROR) << "html_rect_size: " << html_rect_size.ToString();
+  LOG(ERROR) << "copy_rect: " << copy_rect.ToString();
+  LOG(ERROR) << "output_size: " << output_size.ToString();
   PerformTestWithLeftRightRects(html_rect_size,
                                 copy_rect,
                                 output_size,
