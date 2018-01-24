@@ -61,8 +61,6 @@ class ASH_EXPORT MessageListView : public views::View,
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  void SetRepositionTargetForTest(const gfx::Rect& target_rect);
-
   void set_scroller(views::ScrollView* scroller) { scroller_ = scroller; }
 
  protected:
