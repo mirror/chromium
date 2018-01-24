@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce8e2e09_c1d96c84",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-24T21:33:31Z",
+      "side": 1,
+      "message": "If we decide to use contextual suggestions for mobile services, then the timestamp will always be 0, which will be used by the the server-side service to ignore the logging process. If we decide to provide contextual suggestions for mobile users and we want to do logging for that usage, then we would need to change this code.",
+      "parentUuid": "2c5ff9ad_a8d769b0",
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e5a0b2_d4de5701",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a8a569cf_1d70c394",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-24T21:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e5a0b2_d4de5701",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645ed636_f7988011",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 6
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b676629a_0f3b638a",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-24T21:33:31Z",
+      "side": 1,
+      "message": "I assume that by \"null\" you mean \"base::Time()\". If |visit_time| is base::Time(), then the computation below results in 0, which can be used by our service to distinguish requests that come from clients which were not set up to send the timestamp from requests that send a 0 timestamp (e.g. the call comes from an Android/test client which did not provide the timestamp by design).",
+      "parentUuid": "645ed636_f7988011",
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db07c25_282f234e",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 6
@@ -70,6 +130,30 @@
       "writtenOn": "2018-01-24T20:44:06Z",
       "side": 1,
       "message": "I know you\u0027re sending this to pair with sync data.  Does this calculation actually correspond with what sync is doing?",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6182ceb3_3805ccd9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-24T21:33:31Z",
+      "side": 1,
+      "message": "Note that this number can be easily converted to an actual Date object, which is independent of the way that ChromeSync is maintaining the time for corresponding navigations. Please let me know if you still see any concern.",
+      "parentUuid": "2db07c25_282f234e",
       "range": {
         "startLine": 79,
         "startChar": 21,
