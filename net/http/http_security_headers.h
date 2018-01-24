@@ -18,7 +18,7 @@ class GURL;
 
 namespace net {
 
-const uint32_t kMaxHSTSAgeSecs = 86400 * 365;  // 1 year
+const uint32_t kMaxHSTSAgeSecs = 86400 * 365 * 2;  // 2 years
 
 // RFC7469 suggests that 60 days is a reasonable maximum max-age value
 // http://tools.ietf.org/html/rfc7469#section-4.1
