@@ -7121,7 +7121,7 @@ void RenderFrameImpl::SetAccessibilityModeForTest(ui::AXMode new_mode) {
 network::mojom::URLLoaderFactory* RenderFrameImpl::GetURLLoaderFactory(
     const GURL& request_url) {
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    return GetSubresourceLoaderFactories()->GetFactoryForRequest(request_url);
+    return GetSubresourceLoaderFactories()->GetFactoryForURL(request_url);
   }
 
   return GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(request_url);
