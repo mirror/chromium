@@ -53,14 +53,13 @@
 #include "base/macros.h"
 #include "base/threading/thread_local_storage.h"
 
+#include "base/message_loop/message_loop.h"
+
 namespace base {
 
 template <typename Type>
 class ThreadLocalPointer {
  public:
-  ThreadLocalPointer() = default;
-  ~ThreadLocalPointer() = default;
-
   Type* Get() {
     return static_cast<Type*>(slot_.Get());
   }
