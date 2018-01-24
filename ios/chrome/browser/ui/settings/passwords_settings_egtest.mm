@@ -45,9 +45,10 @@
 #endif
 
 // This test complements
-// password_details_collection_view_controller_unittest.mm. Very simple
+// password_details_collection_view_controller_unittest.mm and
+// password_exporter_unittest.mm. Very simple
 // integration tests and features which are not currently unittestable should
-// go here, the rest into the unittest.
+// go here, the rest into the unittests.
 // This test only uses the new UI which allows viewing passwords.
 // TODO(crbug.com/159166): Remove the above sentence once the new UI is the
 // default one.
@@ -207,6 +208,13 @@ id<GREYMatcher> DeleteButtonAtBottom() {
                     grey_accessibilityTrait(UIAccessibilityTraitButton),
                     grey_accessibilityElement(),
                     grey_minimumVisiblePercent(0.98), nil);
+}
+
+// Matcher for the Export passwords button in the passwords list view.
+id<GREYMatcher> ExportPasswordsButton() {
+  return grey_allOf(ButtonWithAccessibilityLabel(
+                        l10n_util::GetNSString(IDS_IOS_EXPORT_PASSWORDS)),
+                    grey_interactable(), nullptr);
 }
 
 // This is similar to grey_ancestor, but only limited to the immediate parent.
@@ -1628,6 +1636,35 @@ PasswordForm CreateSampleFormWithIndex(int index) {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+}
+
+// Checks the complete successful export flow.
+- (void)testSuccessfulExportFlow {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kPasswordExport);
+
+  // Having at least one saved form is required for export to be enabled.
+  SaveExamplePasswordForm();
+
+  OpenPasswordSettings();
+
+  [[EarlGrey selectElementWithMatcher:ExportPasswordsButton()]
+      performAction:grey_tap()];
+
+  // Make sure to capture the reauthentication module in a variable until the
+  // end of the test, otherwise it might get deleted too soon and break the
+  // functionality of copying and viewing passwords.
+  MockReauthenticationModule* mock_reauthentication_module =
+      SetUpAndReturnMockReauthenticationModule();
+  mock_reauthentication_module.shouldSucceed = YES;
+
+  id<GREYMatcher> exportConfirmationButton = grey_allOf(
+      ButtonWithAccessibilityLabel(
+          l10n_util::GetNSString(IDS_IOS_EXPORT_PASSWORDS)),
+      grey_not(grey_accessibilityTrait(UIAccessibilityTraitSelected)), nil);
+  [[EarlGrey selectElementWithMatcher:exportConfirmationButton]
       performAction:grey_tap()];
 }
 

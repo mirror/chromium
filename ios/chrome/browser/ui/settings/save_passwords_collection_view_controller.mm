@@ -8,14 +8,17 @@
 
 #include "base/ios/ios_util.h"
 #include "base/logging.h"
+#include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 
 #include "base/numerics/safe_conversions.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/password_manager/core/browser/export/password_csv_writer.h"
 #include "components/password_manager/core/browser/password_list_sorter.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/password_manager/core/browser/password_store.h"
@@ -43,6 +46,8 @@
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
 #import "ios/chrome/browser/ui/settings/settings_utils.h"
 #import "ios/chrome/browser/ui/settings/utils/pref_backed_boolean.h"
+#include "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -509,7 +514,7 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
                 if (!strongSelf) {
                   return;
                 }
-                [strongSelf.passwordExporter startExportFlow];
+                [strongSelf.passwordExporter startExportFlow:savedForms_];
               }];
   [exportConfirmation addAction:exportAction];
 
@@ -751,6 +756,62 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
   [alertController addAction:okAction];
   alertController.preferredAction = okAction;
   [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showExportErrorAlertWithLocalizedReason:(NSString*)localizedReason {
+  UIAlertController* alertController = [UIAlertController
+      alertControllerWithTitle:l10n_util::GetNSString(
+                                   IDS_IOS_EXPORT_PASSWORDS_FAILED_ALERT_TITLE)
+                       message:localizedReason
+                preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction* okAction =
+      [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_OK)
+                               style:UIAlertActionStyleDefault
+                             handler:nil];
+  [alertController addAction:okAction];
+  [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showActivityViewWithActivityItems:(NSArray*)activityItems
+                        completionHandler:
+                            (void (^)(NSString*, BOOL, NSArray*, NSError*))
+                                completionHandler {
+  UIActivityViewController* activityViewController =
+      [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                        applicationActivities:nil];
+  // TODO: There seem to be activity types that wouldn't match a csv file.
+  // Should those be excluded explicitly?
+  NSArray* excludedActivityTypes = @[
+    UIActivityTypeAddToReadingList, UIActivityTypeAirDrop,
+    UIActivityTypeCopyToPasteboard, UIActivityTypeMail, UIActivityTypeMessage,
+    UIActivityTypeOpenInIBooks, UIActivityTypePostToFacebook,
+    UIActivityTypePostToFlickr, UIActivityTypePostToTencentWeibo,
+    UIActivityTypePostToTwitter, UIActivityTypePostToVimeo,
+    UIActivityTypePostToWeibo, UIActivityTypePrint
+  ];
+  [activityViewController setExcludedActivityTypes:excludedActivityTypes];
+  [activityViewController setCompletionWithItemsHandler:completionHandler];
+
+  UIView* sourceView = nil;
+  CGRect sourceRect = CGRectZero;
+  if (IsIPadIdiom() && !IsCompact()) {
+    NSIndexPath* indexPath = [self.collectionViewModel
+        indexPathForItemType:ItemTypeExportPasswordsButton
+           sectionIdentifier:SectionIdentifierExportPasswordsButton];
+    UICollectionViewCell* cell =
+        [self.collectionView cellForItemAtIndexPath:indexPath];
+    sourceView = self.collectionView;
+    sourceRect = cell.frame;
+  }
+  activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+  activityViewController.popoverPresentationController.sourceView = sourceView;
+  activityViewController.popoverPresentationController.sourceRect = sourceRect;
+  activityViewController.popoverPresentationController
+      .permittedArrowDirections =
+      UIPopoverArrowDirectionDown | UIPopoverArrowDirectionDown;
+  [self presentViewController:activityViewController
+                     animated:YES
+                   completion:nil];
 }
 
 @end
