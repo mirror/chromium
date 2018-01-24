@@ -19,13 +19,14 @@ source_set("lib") {
     "in_process_audio_manager_accessor.h",
     "service.cc",
     "service.h",
-    "system_info.cc",
-    "system_info.h",
+    "service_factory.cc",
+    "service_factory.h",
   ]
 
   public_deps = [
     "//base",
     "//media",
+    "//services/audio/common:system_info",
     "//services/audio/public/interfaces",
     "//services/service_manager/public/cpp",
   ]

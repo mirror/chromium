@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_AUDIO_SYSTEM_INFO_H_
-#define SERVICES_AUDIO_SYSTEM_INFO_H_
+#ifndef SERVICES_AUDIO_COMMON_SYSTEM_INFO_H_
+#define SERVICES_AUDIO_COMMON_SYSTEM_INFO_H_
 
 #include <memory>
 #include <string>
@@ -59,4 +59,4 @@ class SystemInfo : public mojom::SystemInfo {
 
 }  // namespace audio
 
-#endif  // SERVICES_AUDIO_SYSTEM_INFO_H_
+#endif  // SERVICES_AUDIO_COMMON_SYSTEM_INFO_H_
