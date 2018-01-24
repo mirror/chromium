@@ -16,6 +16,24 @@
       "revId": "cfb555a3dc9aa3bf91fce6598dbba2719157bff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2916225c_8f19227d",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-24T20:11:50Z",
+      "side": 1,
+      "message": "Done. I actually had this before but removed it since I wasn\u0027t sure those were the only 2 possible exit options, and didn\u0027t want FullScreen to stay disabled. I\u0027ve added UIGestureRecognizerStateFailed as well.",
+      "parentUuid": "d0f7e96f_ef055da0",
+      "revId": "cfb555a3dc9aa3bf91fce6598dbba2719157bff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
