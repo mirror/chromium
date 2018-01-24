@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6bb636f_c2bdefc4",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c3754dd_7dca4389",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f76f97_4e4df039",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3833435_bcaf7e3b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f76f97_4e4df039",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "48ed4864_b02a2c33",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68dd3dd8_0780a4de",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 8
+      },
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2bea793_3578a621",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
         "patchSetId": 9
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c467e5f7_79c912cf",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2bea793_3578a621",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7077c9e_2d60e3ba",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7217fbf8_b983322a",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7077c9e_2d60e3ba",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "e7555aac_fe535473",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65eb6db7_479822b2",
+      "range": {
+        "startLine": 153,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 38
+      },
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95580cf1_47feb620",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e529677_0272405c",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Changed the expect_is_ad_subframe sent in SameSiteNavigation_RulesetGoesAway for child. Although since we do not send the IPC , expect_is_ad_subframe does not really gets used.",
+      "parentUuid": "95580cf1_47feb620",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "8a15a891_9bebc999",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71de5642_e59e51b1",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de1f5e1_62f5277d",
         "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
         "patchSetId": 9
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "3b6703c7_7fbfd0f8",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Moved to ResetActivatonStateForNextCommit and renamed it to ResetInfoForNextCommit",
+      "parentUuid": "3de1f5e1_62f5277d",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f113baf_900f4070",
         "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
         "patchSetId": 9
@@ -181,6 +355,24 @@
       "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ac0571_28bde4b0",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-24T21:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f113baf_900f4070",
+      "revId": "5b13eb485d705011dd6e44b01940e3bd32c12ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
