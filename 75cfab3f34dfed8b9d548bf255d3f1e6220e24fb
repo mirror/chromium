@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a4bf0f_4397ac69",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T17:47:53Z",
+      "side": 1,
+      "message": "nit: are these error cases common? Or will anyone look for it in release builds? Note that these strings will be built into the release build. Consider using DLOG* if that can work.",
+      "revId": "75cfab3f34dfed8b9d548bf255d3f1e6220e24fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcef0a0e_330c2733",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T17:47:53Z",
+      "side": 1,
+      "message": "Do you want to return here?",
+      "revId": "75cfab3f34dfed8b9d548bf255d3f1e6220e24fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91eedd7f_785f551d",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T17:47:53Z",
+      "side": 1,
+      "message": "Do you want to return here?",
+      "revId": "75cfab3f34dfed8b9d548bf255d3f1e6220e24fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

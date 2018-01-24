@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "32c20858_c09f854c",
+        "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-24T17:47:53Z",
+      "side": 1,
+      "message": "rockot: Thanks for the details. I knew I should never use EDK, but didn\u0027t exactly know why :)",
+      "parentUuid": "b4098953_6a5b8653",
+      "revId": "8a920a9cff30a5b9347f698f6228033b4538343b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa47c81_dee3c589",
         "filename": "media/mojo/services/mojo_jpeg_decode_accelerator_service.cc",
         "patchSetId": 22
