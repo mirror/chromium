@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2322e5f_1929eab3",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-24T23:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbbdc98_f2c4219b",
+      "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabc95a1_58816e49",
         "filename": "chrome/browser/logging_chrome_unittest.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7f2e56f8_3f884958",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-24T23:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabc95a1_58816e49",
+      "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c5a4b4_78be8775",
         "filename": "chrome/common/logging_chrome.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-09T22:09:47Z",
       "side": 1,
       "message": "Can we read into |target_path| instead? If |symlink_exists| is true and |new_log| is false, then this function can return early instead of calling ReadSymbolicLink() again on line 221.",
+      "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc58fb6_e661418c",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-24T23:15:42Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "06c5a4b4_78be8775",
       "revId": "18a1323cdca07772588c4979054517c7adcbb56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
