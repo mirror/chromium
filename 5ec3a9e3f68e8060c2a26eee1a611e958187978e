@@ -22,6 +22,30 @@
       "revId": "5ec3a9e3f68e8060c2a26eee1a611e958187978e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb7f458_aa1634e6",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-24T01:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec8416b_1de4f561",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "5ec3a9e3f68e8060c2a26eee1a611e958187978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
