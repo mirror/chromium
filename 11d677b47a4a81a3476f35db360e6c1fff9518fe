@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd48d889_795c9eaf",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "Doesn\u0027t layout-\u003eAddView(username_label.release()) just work?",
+      "range": {
+        "startLine": 234,
+        "startChar": 1,
+        "endLine": 235,
+        "endChar": 60
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7237a6_956768e0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "layout-\u003eAddView(username_field)",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 49
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41eb984_ccf5d7a9",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "Same questions as above.",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 49
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fcc416_185150d1",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "I\u0027d just make it public.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b5bdd3_29b35480",
+        "filename": "chrome/browser/ui/views/passwords/password_views_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "I\u0027d rename to PasswordBubbleBrowserTest",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911117f3_be932587",
+        "filename": "chrome/browser/ui/views/passwords/password_views_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-24T10:55:08Z",
+      "side": 1,
+      "message": "PasswordBubbleInteractiveUiTest",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 36
+      },
+      "revId": "11d677b47a4a81a3476f35db360e6c1fff9518fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
