@@ -16,6 +16,24 @@
       "revId": "01e146f24fc3b3eb4537fc6cc3ad9ded4a4b43f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411a3a33_fa001463",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-24T18:02:41Z",
+      "side": 1,
+      "message": "Oh, yeah, that\u0027s probably it.\n\nIn any case, reverting to the old behaviour of not removing the children works and doesn\u0027t break  my change or anything, so that\u0027s probably safest.",
+      "parentUuid": "a0644320_174c35d4",
+      "revId": "01e146f24fc3b3eb4537fc6cc3ad9ded4a4b43f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
