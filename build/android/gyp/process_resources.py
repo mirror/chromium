@@ -459,18 +459,16 @@ def _CrunchDirectory(aapt, input_dir, output_dir):
                           fail_func=_DidCrunchFail)
 
   # Check for images whose size increased during crunching and replace them
-  # with their originals (except for 9-patches, which must be crunched).
+  # with their originals (crunched 9-patches break aapt2, so keep originals)
   for dir_, _, files in os.walk(output_dir):
     for crunched in files:
-      if crunched.endswith('.9.png'):
-        continue
       if not crunched.endswith('.png'):
         raise Exception('Unexpected file in crunched dir: ' + crunched)
       crunched = os.path.join(dir_, crunched)
       original = os.path.join(input_dir, os.path.relpath(crunched, output_dir))
       original_size = os.path.getsize(original)
       crunched_size = os.path.getsize(crunched)
-      if original_size < crunched_size:
+      if crunched.endswith('.9.png') or original_size < crunched_size:
         shutil.copyfile(original, crunched)
 
 
