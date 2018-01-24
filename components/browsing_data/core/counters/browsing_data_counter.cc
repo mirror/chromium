@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/trace_event/trace_event.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/prefs/pref_service.h"
@@ -66,6 +67,8 @@ base::Time BrowsingDataCounter::GetPeriodEnd() {
 
 void BrowsingDataCounter::Restart() {
   DCHECK(initialized_);
+  TRACE_EVENT_ASYNC_BEGIN1("browser", "BrowsingDataCounter::Restart", this,
+                           "data_type", GetPrefName());
   if (state_ == State::IDLE) {
     DCHECK(!timer_.IsRunning());
     DCHECK(!staged_result_);
@@ -95,7 +98,8 @@ void BrowsingDataCounter::ReportResult(ResultInt value) {
 void BrowsingDataCounter::ReportResult(std::unique_ptr<Result> result) {
   DCHECK(initialized_);
   DCHECK(result->Finished());
-
+  TRACE_EVENT_ASYNC_END1("browser", "BrowsingDataCounter::Restart", this,
+                         "data_type", GetPrefName());
   switch (state_) {
     case State::RESTARTED:
     case State::READY_TO_REPORT_RESULT:
