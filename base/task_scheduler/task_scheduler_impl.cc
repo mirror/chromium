@@ -189,6 +189,10 @@ void TaskSchedulerImpl::FlushForTesting() {
   task_tracker_->Flush();
 }
 
+void TaskSchedulerImpl::FlushAsyncForTesting(OnceClosure flush_callback) {
+  task_tracker_->FlushAsyncForTesting(std::move(flush_callback));
+}
+
 void TaskSchedulerImpl::JoinForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(!join_for_testing_returned_.IsSet());
