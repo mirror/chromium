@@ -41,7 +41,8 @@ GLSurfacePresentationHelper::~GLSurfacePresentationHelper() {
   bool has_context = gl_context_ && gl_context_->IsCurrent(surface_);
   for (auto& frame : pending_frames_) {
     frame.timer->Destroy(has_context);
-    frame.callback.Run(gfx::PresentationFeedback());
+    if (frame.callbck)
+      frame.callback.Run(gfx::PresentationFeedback());
   }
   pending_frames_.clear();
 }
@@ -61,7 +62,8 @@ void GLSurfacePresentationHelper::OnMakeCurrent(GLContext* context,
     gpu_timing_client_ = nullptr;
     for (auto& frame : pending_frames_) {
       frame.timer->Destroy(false /* has_context */);
-      frame.callback.Run(gfx::PresentationFeedback());
+      if (frame.callback)
+        frame.callback.Run(gfx::PresentationFeedback());
     }
     pending_frames_.clear();
   }
@@ -91,7 +93,8 @@ void GLSurfacePresentationHelper::PostSwapBuffers(gfx::SwapResult result) {
       bool has_context = gl_context_ && gl_context_->IsCurrent(surface_);
       frame.timer->Destroy(has_context);
     }
-    frame.callback.Run(gfx::PresentationFeedback());
+    if (frame.callback)
+      frame.callback.Run(gfx::PresentationFeedback());
   } else if (!waiting_for_vsync_parameters_) {
     CheckPendingFrames();
   }
@@ -119,7 +122,8 @@ void GLSurfacePresentationHelper::CheckPendingFrames() {
     for (auto& frame : pending_frames_) {
       if (frame.timer)
         frame.timer->Destroy(false /* has_context */);
-      frame.callback.Run(gfx::PresentationFeedback());
+      if (frame.callback)
+        frame.callback.Run(gfx::PresentationFeedback());
     }
     pending_frames_.clear();
     return;
@@ -131,8 +135,10 @@ void GLSurfacePresentationHelper::CheckPendingFrames() {
     // If GPUTimer is not avaliable or disjoint occurred, we just run
     // presentation callback with current system time.
     for (auto& frame : pending_frames_) {
-      frame.callback.Run(gfx::PresentationFeedback(
-          base::TimeTicks::Now(), vsync_interval_, 0 /* flags */));
+      if (frame.callback) {
+        frame.callback.Run(gfx::PresentationFeedback(
+            base::TimeTicks::Now(), vsync_interval_, 0 /* flags */));
+      }
     }
     pending_frames_.clear();
     return;
@@ -155,7 +161,8 @@ void GLSurfacePresentationHelper::CheckPendingFrames() {
     auto frame_presentation_callback =
         [this, &frame](const gfx::PresentationFeedback& feedback) {
           frame.timer->Destroy(true /* has_context */);
-          frame.callback.Run(feedback);
+          if (frame.callback)
+            frame.callback.Run(feedback);
           pending_frames_.pop_front();
         };
 
