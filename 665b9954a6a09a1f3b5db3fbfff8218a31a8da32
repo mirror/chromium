@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8eb4e19_ca977ada",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T17:01:26Z",
+      "side": 1,
+      "message": "nit: Missing a ) for this (",
+      "range": {
+        "startLine": 26,
+        "startChar": 86,
+        "endLine": 26,
+        "endChar": 87
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "653fdb72_13d59731",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
         "patchSetId": 1
@@ -133,6 +156,29 @@
         "startChar": 48,
         "endLine": 142,
         "endChar": 93
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de99063d_88708126",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T17:01:26Z",
+      "side": 1,
+      "message": "The only times this return false due to the scope check is if sLastReauthScope is null or if the last request was ONE_AT_A_TIME and the current request is BULK. Is that correct?",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 42
       },
       "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
