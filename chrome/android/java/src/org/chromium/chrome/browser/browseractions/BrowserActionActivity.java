@@ -78,7 +78,7 @@ public class BrowserActionActivity extends AsyncInitializationActivity {
             Log.e(TAG, "Url should only be HTTP or HTTPS scheme");
             return false;
         } else if (mCreatorPackageName == null) {
-            Log.e(TAG, "Missing creator's pacakge name");
+            Log.e(TAG, "Missing creator's package name");
             return false;
         } else if (!TextUtils.equals(mCreatorPackageName, getPackageName())
                 && (intent.getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) != 0) {
