@@ -20,6 +20,10 @@ message MediaPerception {
   // A single FramePerception message or array of perceptions (if reporting the
   // results from multiple frames).
   repeated FramePerception frame_perception = 2;
+
+  // A single AudioPerception message or array of audio perceptions (if
+  // reporting the results from multiple audio frames).
+  repeated AudioPerception audio_perception = 3;
 }
 
 // Used to transmit a history of image frames and their associated annotations.
@@ -72,8 +76,51 @@ message State {
 // This is the output of the MediaPerceptionSinkCalculator.
 message PerceptionSample {
   optional FramePerception frame_perception = 1;
+
   // The image frame data associated with the frame perception.
   optional ImageFrame image_frame = 2;
+
+  optional AudioPerception audio_perception = 3;
+}
+
+// Audio perception results for an audio frame.
+message AudioPerception {
+  // A timestamp in microseconds attached when this message was generated.
+  optional uint64 timestamp_us = 1;
+
+  // Audio localization results.
+  optional AudioLocalization audio_localization = 2;
+
+  // Audio human presence detection results.
+  optional AudioHumanPresenceDetection audio_human_presence_detection = 3;
+}
+
+// An estimate of the direction that the sound is coming from.
+message AudioLocalization {
+  // An angle in radians.
+  optional double azimuth_radians = 1;
+
+  // A probability distribution for the current snapshot in time that shows
+  // the likelihood of a sound source being at a particular angle.
+  repeated double azimuth_scores = 2;
+}
+
+// Detection of human presence close to the microphone.
+message AudioHumanPresenceDetection {
+  // Indicates probability that a human has caused a sound close to the
+  // microphone.
+  optional double human_presence_likelihood = 1;
+
+  // Estimate of the noise spectrogram.
+  optional AudioSpectrogram noise_spectrogram = 2;
+
+  // Spectrogram of an audio frame.
+  optional AudioSpectrogram frame_spectrogram = 3;
+}
+
+// Spectrogram of an audio frame.
+message AudioSpectrogram {
+  repeated double values = 1;
 }
 
 // This message stores the image frame along with the meta data.
