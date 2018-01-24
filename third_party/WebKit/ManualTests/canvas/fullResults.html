@@ -1,0 +1,81 @@
+<!doctype html>
+<style>
+body {
+}
+dl {
+  font-size: 24px;
+  line-height: 40px;
+  margin: 20px;
+}
+dt {
+  width: 400px;
+  float: left;
+  clear: left;
+
+dd {
+  float: left;
+}
+
+</style>
+<div id="i"></div>
+<script>
+function ntos(n) {
+  let unit = "s";
+  if (n < 1) {
+    unit = "ms";
+    n *= 1000;
+  }
+  const p = Math.floor(n);
+  let r = "" + Math.round((n-p)*100);
+  while (r.length < 2) r = "0" + r;
+  return p + "." + r + unit;
+}
+
+  function ntoserr(avg, std) {
+    let unit = "s";
+    if (avg < 1) {
+      unit = "ms";
+      avg *= 1000;
+      std *= 1000;
+    }
+    const p = Math.floor(avg);
+    let r = "" + Math.round((avg-p)*100);
+    while (r.length < 2) r = "0" + r;
+
+    const p2 = Math.floor(std);
+    let r2 = "" + Math.round((std-p2)*100);
+    while (r2.length < 2) r2 = "0" + r2;
+
+    return p + "." + r + "&plusmn;" + p2 + "." + r2 + unit;
+  }
+
+  const perf = JSON.parse(localStorage.getItem("perf")) || {};
+  const i = document.getElementById("i");
+
+  let total = 0;
+  const dl = document.createElement("dl");
+  dl.innerHTML = "<dt><a href='full.html'>rerun</a></dt><dd>&nbsp;</dd>";
+
+  for (let i = 0; i < perf.length; ++i) {
+    const p = perf[i];
+    const dt = document.createElement("dt");
+    const n = p[0];
+    dt.innerHTML = `<a href="${n}">${n}</a>`;
+    dl.appendChild(dt);
+    const dd = document.createElement("dd");
+    dd.innerHTML = ntoserr(p[1], p[2]);
+    total += p[1];
+    dl.appendChild(dd);
+
+  }
+
+  const dt = document.createElement("dt");
+  dt.innerHTML = "total";
+  dl.appendChild(dt);
+  const dd = document.createElement("dd");
+  dd.innerHTML = ntos(total);
+  dl.appendChild(dd);
+
+  i.appendChild(dl);
+
+</script>
