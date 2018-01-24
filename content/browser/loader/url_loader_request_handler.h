@@ -19,6 +19,7 @@ namespace content {
 class ResourceContext;
 struct ResourceRequest;
 struct SubresourceLoaderParams;
+class ThrottlingURLLoader;
 
 using StartLoaderCallback =
     base::OnceCallback<void(network::mojom::URLLoaderRequest request,
@@ -56,10 +57,13 @@ class CONTENT_EXPORT URLLoaderRequestHandler {
   // The URLLoader interface pointer is returned in the |loader| parameter.
   // The interface request for the URLLoaderClient is returned in the
   // |client_request| parameter.
+  // The passed |url_loader| can be used to unbind the current forwarding
+  // URLLoaderClient and the URLLoader and re-bind to get the body DataPipe.
   virtual bool MaybeCreateLoaderForResponse(
       const network::ResourceResponseHead& response,
       network::mojom::URLLoaderPtr* loader,
-      network::mojom::URLLoaderClientRequest* client_request);
+      network::mojom::URLLoaderClientRequest* client_request,
+      ThrottlingURLLoader* url_loader);
 };
 
 }  // namespace content
