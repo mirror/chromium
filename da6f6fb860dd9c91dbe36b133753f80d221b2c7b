@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba400065_d7fe9cee",
+        "filename": "content/public/test/test_download_http_response.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T05:57:02Z",
+      "side": 1,
+      "message": "nit: no {} needed",
+      "revId": "da6f6fb860dd9c91dbe36b133753f80d221b2c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcae6b48_d84ad1a2",
+        "filename": "content/public/test/test_download_http_response.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-24T05:57:02Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_) ?",
+      "revId": "da6f6fb860dd9c91dbe36b133753f80d221b2c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
