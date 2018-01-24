@@ -109,14 +109,6 @@ void IdentityTestEnvironment::SetAutomaticIssueOfAccessTokens(bool grant) {
       grant);
 }
 
-void IdentityTestEnvironment::WaitForAccessTokenRequestAndRespondWithToken(
-    const std::string& token,
-    const base::Time& expiration) {
-  WaitForAccessTokenRequest();
-  internals_->token_service()->IssueTokenForAllPendingRequests(token,
-                                                               expiration);
-}
-
 void IdentityTestEnvironment::WaitForAccessTokenRequestAndRespondWithError(
     const GoogleServiceAuthError& error) {
   WaitForAccessTokenRequest();
