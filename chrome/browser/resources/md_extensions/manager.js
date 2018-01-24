@@ -232,6 +232,7 @@ cr.define('extensions', function() {
      * @private
      */
     onItemStateChanged_: function(eventData) {
+      console.log('c', JSON.stringify(eventData, null, 2));
       const EventType = chrome.developerPrivate.EventType;
       switch (eventData.event_type) {
         case EventType.VIEW_REGISTERED:
@@ -242,6 +243,7 @@ cr.define('extensions', function() {
         case EventType.ERROR_ADDED:
         case EventType.ERRORS_REMOVED:
         case EventType.PREFS_CHANGED:
+        case EventType.WARNINGS_CHANGED:
           // |extensionInfo| can be undefined in the case of an extension
           // being unloaded right before uninstallation. There's nothing to do
           // here.
