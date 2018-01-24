@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_observer.h"
 
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
 #import "ios/chrome/browser/ui/fullscreen/test/fullscreen_model_test_util.h"
 #import "ios/chrome/browser/ui/fullscreen/test/test_fullscreen_controller.h"
@@ -21,7 +22,10 @@
 class FullscreenWebStateObserverTest : public PlatformTest {
  public:
   FullscreenWebStateObserverTest()
-      : PlatformTest(), controller_(&model_), observer_(&controller_, &model_) {
+      : PlatformTest(),
+        controller_(&model_),
+        mediator_(&controller_, &model_),
+        observer_(&controller_, &model_, &mediator_) {
     // Set up model.
     SetUpFullscreenModelForTesting(&model_, 100.0);
     // Set up a TestNavigationManager.
@@ -34,7 +38,7 @@ class FullscreenWebStateObserverTest : public PlatformTest {
   }
 
   ~FullscreenWebStateObserverTest() override {
-    // Stop observing the WebState.
+    mediator_.Disconnect();
     observer_.SetWebState(nullptr);
   }
 
@@ -47,6 +51,7 @@ class FullscreenWebStateObserverTest : public PlatformTest {
  private:
   FullscreenModel model_;
   TestFullscreenController controller_;
+  FullscreenMediator mediator_;
   web::TestWebState web_state_;
   web::TestNavigationManager* navigation_manager_;
   FullscreenWebStateObserver observer_;

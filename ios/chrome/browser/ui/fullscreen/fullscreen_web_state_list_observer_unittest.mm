@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_model.h"
 #import "ios/chrome/browser/ui/fullscreen/test/fullscreen_model_test_util.h"
 #import "ios/chrome/browser/ui/fullscreen/test/test_fullscreen_controller.h"
@@ -28,13 +29,14 @@ class FullscreenWebStateListObserverTest : public PlatformTest {
   FullscreenWebStateListObserverTest()
       : PlatformTest(),
         controller_(&model_),
+        mediator_(&controller_, &model_),
         web_state_list_(&web_state_list_delegate_),
-        observer_(&controller_, &model_, &web_state_list_) {
+        observer_(&controller_, &model_, &web_state_list_, &mediator_) {
     SetUpFullscreenModelForTesting(&model_, 100.0);
   }
 
   ~FullscreenWebStateListObserverTest() override {
-    // Stop observing the WebStateList.
+    mediator_.Disconnect();
     observer_.Disconnect();
   }
 
@@ -44,6 +46,7 @@ class FullscreenWebStateListObserverTest : public PlatformTest {
  private:
   FullscreenModel model_;
   TestFullscreenController controller_;
+  FullscreenMediator mediator_;
   FakeWebStateListDelegate web_state_list_delegate_;
   WebStateList web_state_list_;
   FullscreenWebStateListObserver observer_;
