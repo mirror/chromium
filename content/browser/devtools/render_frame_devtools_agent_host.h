@@ -97,11 +97,12 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   ~RenderFrameDevToolsAgentHost() override;
 
   // DevToolsAgentHostImpl overrides.
-  void AttachSession(DevToolsSession* session) override;
-  void DetachSession(DevToolsSession* session) override;
+  void OnAttached() override;
+  void OnDetached() override;
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+  CreateProtocolHandlers(DevToolsIOContext* io_context) override;
+  blink::mojom::DevToolsAgentAssociatedPtr* EnsureAgentPtr() override;
   void InspectElement(DevToolsSession* session, int x, int y) override;
-  void DispatchProtocolMessage(DevToolsSession* session,
-                               const std::string& message) override;
 
   // WebContentsObserver overrides.
   void DidStartNavigation(NavigationHandle* navigation_handle) override;
@@ -123,7 +124,6 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   void OnSwapCompositorFrame(const IPC::Message& message);
   void DestroyOnRenderFrameGone();
   void UpdateFrameHost(RenderFrameHostImpl* frame_host);
-  void MaybeReattachToRenderFrame();
   void GrantPolicy();
   void RevokePolicy();
 
@@ -133,7 +133,6 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
 
   void SynchronousSwapCompositorFrame(
       viz::CompositorFrameMetadata frame_metadata);
-  bool EnsureAgent();
 
   std::unique_ptr<DevToolsFrameTraceRecorder> frame_trace_recorder_;
 #if defined(OS_ANDROID)
