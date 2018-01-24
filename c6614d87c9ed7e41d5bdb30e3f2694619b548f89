@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a4758e_58c90324",
+        "filename": "tools/perf/page_sets/loading_desktop.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-24T11:46:36Z",
+      "side": 1,
+      "message": "To disable the stories, you can add them to tools/perf/expectations.config instead",
+      "revId": "c6614d87c9ed7e41d5bdb30e3f2694619b548f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
