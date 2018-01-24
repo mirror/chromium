@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233b235d_4415dbce",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-24T16:13:34Z",
+      "side": 1,
+      "message": "Could you mention \"Android\" here and in variable name? \n\nTo me, it is strange that we didn\u0027t do that for other Mobile features. \n\nThanks for implementing this. This is cool!",
+      "range": {
+        "startLine": 77,
+        "startChar": 40,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "1dbe80c7b64d892ef657c6ccbdc5eda9ca80ca54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
