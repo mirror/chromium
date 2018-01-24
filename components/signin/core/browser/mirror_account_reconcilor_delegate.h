@@ -5,9 +5,15 @@
 #ifndef COMPONENTS_SIGNIN_CORE_BROWSER_MIRROR_ACCOUNT_RECONCILOR_DELEGATE_H_
 #define COMPONENTS_SIGNIN_CORE_BROWSER_MIRROR_ACCOUNT_RECONCILOR_DELEGATE_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "components/signin/core/browser/account_reconcilor_delegate.h"
+#include "components/signin/core/browser/reconcilor_delegate_helper.h"
 #include "components/signin/core/browser/signin_manager_base.h"
+#include "google_apis/gaia/google_service_auth_error.h"
 
 namespace signin {
 
@@ -15,7 +21,10 @@ namespace signin {
 class MirrorAccountReconcilorDelegate : public AccountReconcilorDelegate,
                                         public SigninManagerBase::Observer {
  public:
-  MirrorAccountReconcilorDelegate(SigninManagerBase* signin_manager);
+  MirrorAccountReconcilorDelegate(
+      SigninManagerBase* signin_manager,
+      std::unique_ptr<ReconcilorDelegateHelper> helper,
+      bool is_child_account);
   ~MirrorAccountReconcilorDelegate() override;
 
  private:
@@ -28,6 +37,8 @@ class MirrorAccountReconcilorDelegate : public AccountReconcilorDelegate,
       const std::vector<gaia::ListedAccount>& gaia_accounts,
       const std::string& primary_account,
       bool first_execution) const override;
+  base::TimeDelta GetReconcileTimeout() const override;
+  void OnReconcileError(const GoogleServiceAuthError& error) override;
 
   // SigninManagerBase::Observer:
   void GoogleSigninSucceeded(const std::string& account_id,
@@ -36,6 +47,8 @@ class MirrorAccountReconcilorDelegate : public AccountReconcilorDelegate,
                        const std::string& username) override;
 
   SigninManagerBase* signin_manager_;
+  std::unique_ptr<ReconcilorDelegateHelper> helper_;
+  const bool is_child_account_;
 
   DISALLOW_COPY_AND_ASSIGN(MirrorAccountReconcilorDelegate);
 };
