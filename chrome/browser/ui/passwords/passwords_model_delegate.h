@@ -8,8 +8,14 @@
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
+#include "build/buildflag.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
+#include "components/signin/core/browser/signin_features.h"
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "components/signin/core/browser/account_info.h"
+#endif
 
 namespace autofill {
 struct PasswordForm;
@@ -109,6 +115,11 @@ class PasswordsModelDelegate {
   virtual void NavigateToPasswordManagerSettingsPage() = 0;
   // Starts the Chrome Sign in flow.
   virtual void NavigateToChromeSignIn() = 0;
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  // Called by the view when the "Sync to" button in the promo bubble is
+  // clicked.
+  virtual void EnableSync(const AccountInfo& account) = 0;
+#endif
 
   // Called from the dialog controller when the dialog is hidden.
   virtual void OnDialogHidden() = 0;
