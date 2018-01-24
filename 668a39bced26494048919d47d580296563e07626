@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1882c545_dce5510c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/PermissionUpdateInfobarTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-24T06:26:57Z",
+      "side": 1,
+      "message": "I think we can delete this test entirely",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 56
+      },
+      "revId": "668a39bced26494048919d47d580296563e07626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
