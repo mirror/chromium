@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59cb4ee1_7c057195",
+        "filename": "content/browser/web_contents/aura/overscroll_navigation_overlay_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-24T00:54:56Z",
+      "side": 0,
+      "message": "base::Optional\u003c\u003e has an inverted bool: storage_.is_null_.\nBy memset\u0027ing to 0, this is setting is_null_ to false. Removing double negatives, that means there IS a value in the base::Optional\u003c\u003e.\n\nbase::Optional\u003c\u003e ends up default constructing is_null_ to true. So setting it back to false causing the bot problems.\nhttps://cs.chromium.org/chromium/src/base/optional.h?l\u003d68\u0026rcl\u003d7af24b97fe4f69e15aa03ea2334be167355257c4\n\nThe unit tests would not set the optional but this memset would indicate that the optional was set. Later, we DCHECK() that the optional (if it is populated) is indeed valid. Since it was never ACTUALLY set, it was never valid.\n\n\nThe real solution here is probably to undo the inverted bool in base::Optional\u003c\u003e. Something like storage_.is_populated_. But for now, I\u0027ll just remove this memset.\n\n\nIPC_STRUCT_BEGIN (which is used in ViewHostMsg_ResizeOrRepaint_ACK_Params\u0027 creation) declares a default constructor. But it doesn\u0027t define it. I wanted to look at the definition to make sure members are correctly initialized to allow us to remove this memset. But the docs suggest the definition is generated and I couldn\u0027t find where: https://cs.chromium.org/chromium/src/ipc/ipc_message_macros.h?l\u003d8\u0026rcl\u003d6fd182f4f24b4d486e4f8ed67337691057c07ec7\n\nI looked in out/Release/gen/content/common for anything like view_messages.\nAny idea where this is generated? (Or if it is generated?)",
+      "revId": "6c602d4eb8a37e78a3ae81428b8981e58af807dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
