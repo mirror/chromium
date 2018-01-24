@@ -72,9 +72,6 @@ bool CacheStorageDispatcherHost::OnMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(CacheStorageDispatcherHost, message)
   IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheStorageHas, OnCacheStorageHas)
   IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheStorageOpen, OnCacheStorageOpen)
-  IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheStorageDelete,
-                      OnCacheStorageDelete)
-  IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheStorageKeys, OnCacheStorageKeys)
   IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheStorageMatch,
                       OnCacheStorageMatch)
   IPC_MESSAGE_HANDLER(CacheStorageHostMsg_CacheMatch, OnCacheMatch)
@@ -130,36 +127,38 @@ void CacheStorageDispatcherHost::OnCacheStorageOpen(
                      this, thread_id, request_id));
 }
 
-void CacheStorageDispatcherHost::OnCacheStorageDelete(
-    int thread_id,
-    int request_id,
+void CacheStorageDispatcherHost::Delete(
     const url::Origin& origin,
-    const base::string16& cache_name) {
+    const base::string16& cache_name,
+    blink::mojom::CacheStorage::DeleteCallback callback) {
   TRACE_EVENT0("CacheStorage",
                "CacheStorageDispatcherHost::OnCacheStorageDelete");
   if (!OriginCanAccessCacheStorage(origin)) {
+    // TODO(lucmult): Figure out the error handling here.
     bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
     return;
   }
   context_->cache_manager()->DeleteCache(
       origin.GetURL(), base::UTF16ToUTF8(cache_name),
       base::BindOnce(&CacheStorageDispatcherHost::OnCacheStorageDeleteCallback,
-                     this, thread_id, request_id));
+                     this, std::move(callback)));
 }
 
-void CacheStorageDispatcherHost::OnCacheStorageKeys(int thread_id,
-                                                    int request_id,
-                                                    const url::Origin& origin) {
+void CacheStorageDispatcherHost::Keys(
+    const url::Origin& origin,
+    blink::mojom::CacheStorage::KeysCallback callback) {
   TRACE_EVENT0("CacheStorage",
                "CacheStorageDispatcherHost::OnCacheStorageKeys");
+
   if (!OriginCanAccessCacheStorage(origin)) {
+    // TODO(lucmult): Check how to handle bad msg with Mojo, .reset() ?
     bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
     return;
   }
   context_->cache_manager()->EnumerateCaches(
       origin.GetURL(),
       base::BindOnce(&CacheStorageDispatcherHost::OnCacheStorageKeysCallback,
-                     this, thread_id, request_id));
+                     this, std::move(callback)));
 }
 
 void CacheStorageDispatcherHost::OnCacheStorageMatch(
@@ -353,27 +352,21 @@ void CacheStorageDispatcherHost::OnCacheStorageOpenCallback(
 }
 
 void CacheStorageDispatcherHost::OnCacheStorageDeleteCallback(
-    int thread_id,
-    int request_id,
-    bool deleted,
+    blink::mojom::CacheStorage::DeleteCallback callback,
     CacheStorageError error) {
-  if (!deleted || error != CacheStorageError::kSuccess) {
-    Send(new CacheStorageMsg_CacheStorageDeleteError(thread_id, request_id,
-                                                     error));
-    return;
-  }
-  Send(new CacheStorageMsg_CacheStorageDeleteSuccess(thread_id, request_id));
+  // |error| indicates success or error, value CacheStorageError::kSuccess
+  // signals a successful operation.
+  std::move(callback).Run(error);
 }
 
 void CacheStorageDispatcherHost::OnCacheStorageKeysCallback(
-    int thread_id,
-    int request_id,
+    blink::mojom::CacheStorage::KeysCallback callback,
     const CacheStorageIndex& cache_index) {
   std::vector<base::string16> string16s;
   for (const auto& metadata : cache_index.ordered_cache_metadata())
     string16s.push_back(base::UTF8ToUTF16(metadata.name));
-  Send(new CacheStorageMsg_CacheStorageKeysSuccess(thread_id, request_id,
-                                                   string16s));
+
+  std::move(callback).Run(string16s);
 }
 
 void CacheStorageDispatcherHost::OnCacheStorageMatchCallback(
@@ -515,6 +508,11 @@ void CacheStorageDispatcherHost::DropBlobDataHandle(const std::string& uuid) {
   it->second.pop_front();
   if (it->second.empty())
     blob_handle_store_.erase(it);
+}
+
+void CacheStorageDispatcherHost::AddBinding(
+    blink::mojom::CacheStorageRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 }  // namespace content

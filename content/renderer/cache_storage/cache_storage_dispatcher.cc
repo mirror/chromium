@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
@@ -16,18 +17,21 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_local.h"
+#include "content/child/child_thread_impl.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/common/cache_storage/cache_storage_messages.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/service_worker/service_worker_type_util.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 #include "url/origin.h"
-
 
 namespace content {
 
@@ -236,18 +240,12 @@ bool CacheStorageDispatcher::OnMessageReceived(const IPC::Message& message) {
                           OnCacheStorageHasSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageOpenSuccess,
                           OnCacheStorageOpenSuccess)
-      IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageDeleteSuccess,
-                          OnCacheStorageDeleteSuccess)
-      IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageKeysSuccess,
-                          OnCacheStorageKeysSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageMatchSuccess,
                           OnCacheStorageMatchSuccess)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageHasError,
                           OnCacheStorageHasError)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageOpenError,
                           OnCacheStorageOpenError)
-      IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageDeleteError,
-                          OnCacheStorageDeleteError)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheStorageMatchError,
                           OnCacheStorageMatchError)
       IPC_MESSAGE_HANDLER(CacheStorageMsg_CacheMatchSuccess,
@@ -296,21 +294,30 @@ void CacheStorageDispatcher::OnCacheStorageOpenSuccess(int thread_id,
   open_times_.erase(request_id);
 }
 
-void CacheStorageDispatcher::OnCacheStorageDeleteSuccess(int thread_id,
-                                                         int request_id) {
-  DCHECK_EQ(thread_id, CurrentWorkerId());
-  UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Delete",
-                      TimeTicks::Now() - delete_times_[request_id]);
-  WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
-      delete_callbacks_.Lookup(request_id);
-  callbacks->OnSuccess();
-  delete_callbacks_.Remove(request_id);
-  delete_times_.erase(request_id);
-}
-
-void CacheStorageDispatcher::OnCacheStorageKeysSuccess(
+void CacheStorageDispatcher::CacheStorageDeleteCallback(
     int thread_id,
     int request_id,
+    base::TimeTicks start_time,
+    blink::mojom::CacheStorageError result) {
+  DCHECK_EQ(thread_id, CurrentWorkerId());
+  UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Delete",
+                      TimeTicks::Now() - start_time);
+  WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
+      delete_callbacks_.Lookup(request_id);
+
+  if (result == blink::mojom::CacheStorageError::kSuccess) {
+    callbacks->OnSuccess();
+  } else {
+    callbacks->OnError(result);
+  }
+
+  delete_callbacks_.Remove(request_id);
+}
+
+void CacheStorageDispatcher::KeysCallback(
+    int thread_id,
+    int request_id,
+    base::TimeTicks start_time,
     const std::vector<base::string16>& keys) {
   DCHECK_EQ(thread_id, CurrentWorkerId());
   blink::WebVector<blink::WebString> web_keys(keys.size());
@@ -318,12 +325,11 @@ void CacheStorageDispatcher::OnCacheStorageKeysSuccess(
       keys.begin(), keys.end(), web_keys.begin(),
       [](const base::string16& s) { return WebString::FromUTF16(s); });
   UMA_HISTOGRAM_TIMES("ServiceWorkerCache.CacheStorage.Keys",
-                      TimeTicks::Now() - keys_times_[request_id]);
+                      TimeTicks::Now() - start_time);
   WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks* callbacks =
       keys_callbacks_.Lookup(request_id);
   callbacks->OnSuccess(web_keys);
   keys_callbacks_.Remove(request_id);
-  keys_times_.erase(request_id);
 }
 
 void CacheStorageDispatcher::OnCacheStorageMatchSuccess(
@@ -363,18 +369,6 @@ void CacheStorageDispatcher::OnCacheStorageOpenError(int thread_id,
   callbacks->OnError(reason);
   open_callbacks_.Remove(request_id);
   open_times_.erase(request_id);
-}
-
-void CacheStorageDispatcher::OnCacheStorageDeleteError(
-    int thread_id,
-    int request_id,
-    CacheStorageError reason) {
-  DCHECK_EQ(thread_id, CurrentWorkerId());
-  WebServiceWorkerCacheStorage::CacheStorageCallbacks* callbacks =
-      delete_callbacks_.Lookup(request_id);
-  callbacks->OnError(reason);
-  delete_callbacks_.Remove(request_id);
-  delete_times_.erase(request_id);
 }
 
 void CacheStorageDispatcher::OnCacheStorageMatchError(
@@ -520,21 +514,36 @@ void CacheStorageDispatcher::dispatchDelete(
     std::unique_ptr<WebServiceWorkerCacheStorage::CacheStorageCallbacks>
         callbacks,
     const url::Origin& origin,
-    const blink::WebString& cacheName) {
+    const blink::WebString& cacheName,
+    service_manager::InterfaceProvider* provider) {
   int request_id = delete_callbacks_.Add(std::move(callbacks));
-  delete_times_[request_id] = base::TimeTicks::Now();
-  Send(new CacheStorageHostMsg_CacheStorageDelete(CurrentWorkerId(), request_id,
-                                                  origin, cacheName.Utf16()));
+
+  setupInterface(provider);
+  cache_storage_ptr_->Delete(
+      origin, cacheName.Utf16(),
+      base::BindOnce(&CacheStorageDispatcher::CacheStorageDeleteCallback,
+                     base::Unretained(this), CurrentWorkerId(), request_id,
+                     base::TimeTicks::Now()));
+}
+
+void CacheStorageDispatcher::setupInterface(
+    service_manager::InterfaceProvider* provider) {
+  provider->GetInterface(mojo::MakeRequest(&cache_storage_ptr_));
 }
 
 void CacheStorageDispatcher::dispatchKeys(
     std::unique_ptr<WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks>
         callbacks,
-    const url::Origin& origin) {
+    const url::Origin& origin,
+    service_manager::InterfaceProvider* provider) {
   int request_id = keys_callbacks_.Add(std::move(callbacks));
-  keys_times_[request_id] = base::TimeTicks::Now();
-  Send(new CacheStorageHostMsg_CacheStorageKeys(CurrentWorkerId(), request_id,
-                                                origin));
+
+  setupInterface(provider);
+  // TODO(lucmult): How to detect errors to remove |keys_callbacks_| ?
+  cache_storage_ptr_->Keys(
+      origin, base::BindOnce(&CacheStorageDispatcher::KeysCallback,
+                             base::Unretained(this), CurrentWorkerId(),
+                             request_id, base::TimeTicks::Now()));
 }
 
 void CacheStorageDispatcher::dispatchMatch(
