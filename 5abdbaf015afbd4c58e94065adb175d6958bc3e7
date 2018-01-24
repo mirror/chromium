@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c0ad06dd_b2f2c3d9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 6213,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T19:53:10Z",
+      "side": 1,
+      "message": "Renamed it to DidNavigate.",
+      "parentUuid": "84027b54_5661590c",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7915fc07_0c6a060d",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 55
