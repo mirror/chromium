@@ -85,6 +85,7 @@
 #include "content/shell/browser/shell.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/test/content_browser_test_utils_internal.h"
+#include "content/test/did_commit_provisional_load_interceptor.h"
 #include "content/test/mock_overscroll_observer.h"
 #include "ipc/constants.mojom.h"
 #include "ipc/ipc_security_test_util.h"
@@ -13304,6 +13305,94 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
     // |point_in_nested_child| should hit test to |rwhv_grandchild|.
     ASSERT_EQ(rwhv_grandchild->GetFrameSinkId(), received_frame_sink_id);
   }
+}
+
+namespace {
+
+// Defers the DidCommitProvisionalLoad message for the given |slow_url| so that
+// it is dispatched right *after* DidCommitProvisionalLoad for the next
+// navigation that commits in the |web_contents|.
+//
+// This simulates a busy renderer that takes a very long time to actually commit
+// the navigation after receiving FrameNavigationControl::CommitNavigation.
+class SlowCommitSimulator : public DidCommitProvisionalLoadInterceptor {
+ public:
+  SlowCommitSimulator(WebContents* web_contents,
+                      const GURL& slow_url,
+                      base::OnceClosure slow_url_triggered_action)
+      : DidCommitProvisionalLoadInterceptor(web_contents),
+        slow_url_(slow_url),
+        slow_url_triggered_action_(std::move(slow_url_triggered_action)) {}
+  ~SlowCommitSimulator() override = default;
+
+  void SimulateAndWaitForSlowCommit() { outer_run_loop.Run(); }
+
+ protected:
+  void WillDispatchDidCommitProvisionalLoad(
+      RenderFrameHost* render_frame_host,
+      ::FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+      service_manager::mojom::InterfaceProviderRequest*
+          interface_provider_request) override {
+    if (params->url == slow_url_) {
+      std::move(slow_url_triggered_action_).Run();
+
+      base::MessageLoop::ScopedNestableTaskAllower allow(
+          base::MessageLoop::current());
+      base::RunLoop nested_run_loop;
+      nested_loop_quit_ = nested_run_loop.QuitClosure();
+      nested_run_loop.Run();
+      outer_run_loop.Quit();
+    } else if (nested_loop_quit_) {
+      std::move(nested_loop_quit_).Run();
+    }
+  }
+
+ private:
+  base::RunLoop outer_run_loop;
+  base::OnceClosure nested_loop_quit_;
+
+  const GURL slow_url_;
+  base::OnceClosure slow_url_triggered_action_;
+
+  DISALLOW_COPY_AND_ASSIGN(SlowCommitSimulator);
+};
+
+}  // namespace
+
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       InterfaceProviderRequestIsOptionalForRaceyFirstCommits) {
+  const GURL kMainFrameUrl(
+      embedded_test_server()->GetURL("a.com", "/empty.html"));
+  const GURL kSubframeSameSiteUrl(
+      embedded_test_server()->GetURL("a.com", "/title1.html"));
+  const GURL kCrossSiteSubframeUrl(
+      embedded_test_server()->GetURL("baz.com", "/title2.html"));
+
+  const auto kAddSameSiteDynamicSubframe = base::StringPrintf(
+      "var f = document.createElement(\"iframe\");"
+      "f.src=\"%s\";"
+      "document.body.append(f);",
+      kSubframeSameSiteUrl.spec().c_str());
+  const auto kNavigateSubframeCrossSite = base::StringPrintf(
+      "f.src = \"%s\";", kCrossSiteSubframeUrl.spec().c_str());
+  const std::string kExtractSubframeUrl =
+      "window.domAutomationController.send(f.src);";
+
+  ASSERT_TRUE(NavigateToURL(shell(), kMainFrameUrl));
+
+  SlowCommitSimulator slow_commit_simulator(
+      shell()->web_contents(), kSubframeSameSiteUrl,
+      base::BindLambdaForTesting([&]() {
+        ASSERT_TRUE(ExecuteScript(shell(), kNavigateSubframeCrossSite));
+      }));
+
+  ASSERT_TRUE(ExecuteScript(shell(), kAddSameSiteDynamicSubframe));
+  slow_commit_simulator.SimulateAndWaitForSlowCommit();
+
+  std::string subframe_url;
+  ASSERT_TRUE(ExecuteScriptAndExtractString(shell(), kExtractSubframeUrl,
+                                            &subframe_url));
+  EXPECT_EQ(kCrossSiteSubframeUrl.spec(), subframe_url);
 }
 
 }  // namespace content
