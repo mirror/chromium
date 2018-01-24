@@ -58,11 +58,6 @@ Polymer({
     profileName_: String,
 
     /**
-     * True if the current profile manages supervised users.
-     */
-    profileManagesSupervisedUsers_: Boolean,
-
-    /**
      * The profile deletion warning. The message indicates the number of
      * profile stats that will be deleted if a non-zero count for the profile
      * stats is returned from the browser.
@@ -150,12 +145,6 @@ Polymer({
     this.addWebUIListener(
         'profile-info-changed', this.handleProfileInfo_.bind(this));
 
-    profileInfoProxy.getProfileManagesSupervisedUsers().then(
-        this.handleProfileManagesSupervisedUsers_.bind(this));
-    this.addWebUIListener(
-        'profile-manages-supervised-users-changed',
-        this.handleProfileManagesSupervisedUsers_.bind(this));
-
     this.addWebUIListener(
         'profile-stats-count-ready', this.handleProfileStatsCount_.bind(this));
 
@@ -222,15 +211,6 @@ Polymer({
     // </if>
 
     this.profileIconUrl_ = info.iconUrl;
-  },
-
-  /**
-   * Handler for when the profile starts or stops managing supervised users.
-   * @private
-   * @param {boolean} managesSupervisedUsers
-   */
-  handleProfileManagesSupervisedUsers_: function(managesSupervisedUsers) {
-    this.profileManagesSupervisedUsers_ = managesSupervisedUsers;
   },
 
   /**
