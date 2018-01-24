@@ -545,6 +545,9 @@ void Canvas2DLayerBridge::FlushRecording() {
       sk_sp<PaintRecord> recording = recorder_->finishRecordingAsPicture();
       canvas->drawPicture(recording);
     }
+
+    GetOrCreateResourceProvider()->PurgeImageCache();
+
     if (is_deferral_enabled_)
       StartRecording();
     have_recorded_draw_commands_ = false;
