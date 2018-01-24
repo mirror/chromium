@@ -239,6 +239,24 @@
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f59882_171fe892",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-24T15:05:37Z",
+      "side": 1,
+      "message": "THanks for the details! It sounds like we understand how hardware-\u003emain thread delays affect the end to end delay. If it\u0027s painful to record both I am fine with just recording hardware as our start time, thanks!",
+      "parentUuid": "2bd18cbe_fc679a02",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
