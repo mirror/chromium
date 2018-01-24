@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "003160ff_4acd07a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-24T00:14:18Z",
+      "side": 1,
+      "message": "Added more description.",
+      "parentUuid": "0f8c2fac_c0acf0a5",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6407180f_129bd2f2",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c9c465_67e55dfe",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-24T00:14:18Z",
+      "side": 1,
+      "message": "changed to isToggleEnabled_()",
+      "parentUuid": "6407180f_129bd2f2",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a2d81b5_549da879",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-24T00:14:18Z",
+      "side": 1,
+      "message": "changed to isToggleEnabled_()",
+      "parentUuid": "f701e077_d44218b8",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5458e222_ce952010",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "947cfd5b_6e49813a",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-24T00:14:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5458e222_ce952010",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075cf7b8_16185b73",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef03075f_f8eddd64",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-24T00:14:18Z",
+      "side": 1,
+      "message": "\u003e Unfortunately the description for setAdapterState does not indicate when |callback| is invoked:\n\u003e https://cs.chromium.org/chromium/src/extensions/common/api/bluetooth_private.idl?q\u003dbluetooth_private.idl\u0026sq\u003dpackage:chromium\u0026l\u003d127\n\u003e \n\u003e We should fix that.\n\nAdded more information to the idl to clarify the callback.\n\u003e \n\u003e Looking at the bluez implementaiton, it looks like when \u0027powered\u0027 is changed it invokes this callback when the DBus powered.Set call completes; I\u0027m not sure how long that could take. I looks like this change is assuming that once the powerd.Set call completes it is OK to toggle the switch again? (Whereas currently we wait until onBluetoothAdapterStateChanged_ to get called to restore bluetoothToggleDisabled_ which I agree is incorrect).\n\npowered.Set dbus call usually takes hundreds of milliseconds, it takes a bit long because bluez actually waits until it gets the completion status from the hardware. So after dbus return, it is safe to issue another power change request.\n\n\u003e \n\u003e Setting this to |this.adapterState_.available| is confusing because it suggest that might have changed (persumably this should never be called if \u0027available\u0027 were false?) Is to protect against a case where toggling the state changed \u0027available\u0027? Unless that could actually happen, I would just set bluetoothToggleDisabled_ to \u0027false\u0027 here to be more clear.\n\nadapterState_.available being false means it\u0027s a bug in bluez and/or below layers, and when it happens it can happen anytime randomly. I restore the Disabled property to adapterState_.available because I can\u0027t trust that the adapter is always healthy even after success callback. But I agree that this is more readable if expressed using stateChangeInProgress_ and isToggleEnabled_().\n\n\u003e \n\u003e A better solution might be to introduce a second variable, \u0027stateChangeInProgress_\u0027, set that above and clear it here, and then make the disabled state of the toggle a function toggleIsEnabled_(available, inProgress).\n\nI also changed the flag bluetoothToggleDisabled_ to stateChangeInProgress_ and use the function toggleIsEnabled_() to determine if a button should be disabled.",
+      "parentUuid": "075cf7b8_16185b73",
+      "revId": "df30ccbfdef7cb93eca6f32b30b03327c97ec9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
