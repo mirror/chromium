@@ -210,7 +210,7 @@ struct Environment {
   Environment() {
     // Note, instead of LOG_FATAL, use a value at or below logging::LOG_VERBOSE
     // here to assist local debugging.
-    logging::SetMinLogLevel(logging::LOG_FATAL);
+    logging::SetMinLogLevel(logging::LOG_VERBOSE - 10);
   }
 };
 

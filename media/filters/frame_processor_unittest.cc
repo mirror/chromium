@@ -1563,6 +1563,46 @@ TEST_P(FrameProcessorTest,
   CheckReadsThenReadStalls(video_.get(), "100 110 120 130 240 250");
 }
 
+// BIG TODO trying things out... Uncertain if eventually this test case is best
+// here or in SBSTest.
+TEST_P(FrameProcessorTest, Sap2GopWithNonKeyframeAdjacentToEarlierRange) {
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(testing::_))
+      .Times(testing::AnyNumber());
+  EXPECT_MEDIA_LOG(ParsedDTSGreaterThanPTS()).Times(testing::AnyNumber());
+  EXPECT_CALL(callbacks_,
+              OnParseWarning(
+                  SourceBufferParseWarning::kKeyframeTimeGreaterThanDependant));
+  EXPECT_MEDIA_LOG(KeyframeTimeGreaterThanDependant("0.04", "0.011"));
+
+  AddTestTracks(HAS_VIDEO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  // Buffer a standalone GOP [10,20)
+  EXPECT_TRUE(ProcessFrames("", "10K"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [10,20) }");
+
+  // Following DTS discontinuity, buffer 2 new GOPs in a later range: a SAP-2
+  // GOP with a nonkeyframe nearer in PTS to the first range, and a subsequent
+  // minimal GOP.
+  // Make "sequence" mode buffering similar to "segments".
+  if (use_sequence_mode_) {
+    SetTimestampOffset(Milliseconds(40));
+  }
+  EXPECT_TRUE(ProcessFrames("", "40K 11|50"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [10,20) [40,50) }");
+  // BIG TODO: The following triggers DCHECK in SBRByPts l.90 (when buffering by
+  // PTS).
+  EXPECT_TRUE(ProcessFrames("", "50|60K"));
+  EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [10,20) [40,60) }");
+  SeekStream(video_.get(), Milliseconds(0));
+  CheckReadsThenReadStalls(video_.get(), "10");
+  SeekStream(video_.get(), Milliseconds(40));
+  CheckReadsThenReadStalls(video_.get(), "40 11 50");
+}
+
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
                         FrameProcessorTest,
                         Values(FrameProcessorTestParams(

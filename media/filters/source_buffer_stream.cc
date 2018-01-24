@@ -699,6 +699,11 @@ void SourceBufferStream<RangeClass>::RemoveInternal(
                  <<  " can't add to the current range.";
         range_for_next_append_ =
             FindExistingRangeFor(potential_next_append_timestamp);
+        DVLOG(4) << "MDW Updated range_for_next_append_ is "
+                 << (range_for_next_append_ == ranges_.end()
+                         ? "unset"
+                         : RangeToString(*(range_for_next_append_
+                                               ->get())));  // BIG TODO REMOVE
       }
     }
 
