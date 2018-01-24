@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2abafc_7567b762",
+        "filename": "chrome/browser/extensions/extension_service_test_base.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-24T18:54:59Z",
+      "side": 1,
+      "message": "is there a crbug you could reference? I wonder whether this happens for all tests deriving from ExtensionServiceTestBase, or whether we should only have this wait code in a few specific tests?",
+      "revId": "aecbebf9286fd22e40e67f4565e585c6000cb513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
