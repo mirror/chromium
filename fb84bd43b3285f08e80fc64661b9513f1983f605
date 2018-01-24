@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9408354_6ca0bf9b",
+        "filename": "skia/public/interfaces/test/struct_traits_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:36:06Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware that the stride must be in multiples of the bytes-per-pixel. +CC Mike Reed for sanity check. Consider \"// The extra bytes on each row must be in multiples of the bytes-per-pixel, to keep the content aligned.\" or similar.",
+      "revId": "fb84bd43b3285f08e80fc64661b9513f1983f605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0242a928_8de64eec",
+        "filename": "skia/public/interfaces/test/struct_traits_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-24T19:36:06Z",
+      "side": 1,
+      "message": "nit: Use info-\u003ebytesPerPixel() instead of |4|.",
+      "revId": "fb84bd43b3285f08e80fc64661b9513f1983f605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
