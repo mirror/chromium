@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1979fadd_ffdf3259",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T22:35:54Z",
+      "side": 1,
+      "message": "Yep. There were efforts a year or so ago to start enabling tab capture on android, but they were abandoned for logistical reasons.",
+      "parentUuid": "ba42cb0a_142555ae",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5499b24_786738ee",
         "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T16:48:20Z",
       "side": 1,
       "message": "It is a little bit confusing that there is a MEDIA_TAB_VIDEO_CAPTURE and a MEDIA_DESKTOP_VIDEO_CAPTURE with DesktopMediaID::TYPE_WEB_CONTENTS that both lead to DoStartTabCaptureOnDeviceThread. Is Tab capture a special case of WebContents capture? Would it make sense to rename the method to DoStartWebContentsCaptureOnDeviceThread()?",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6f6d4d_b0f64a5f",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T22:35:54Z",
+      "side": 1,
+      "message": "Agree that it\u0027s confusing. It actually is the exact same tab capture. The only difference is the activation path: MEDIA_DESKTOP_VIDEO_CAPTURE encompasses anything initiated from desktop capture APIs, while MEDIA_TAB_VIDEO_CAPTURE is specific to those initiated from tab capture-specific extension APIs.\n\nOne other difference, obviously, is that IncrementDesktopCaptureCounter() is being called only when the desktop API is used. I\u0027m not sure why (or if) this tracking needs to only encompass the desktop API use cases, but I didn\u0027t want to change that behavior since I don\u0027t have the background info.\n\nI wasn\u0027t part of the original discussion/design for why we went this route. Even if we want to restore semantics, this would be a lot to untangle to get it all cleaned up again--maybe a good \"second\" project for a new developer joining one of our teams? ;-)",
+      "parentUuid": "b5499b24_786738ee",
       "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd4229be_14769ded",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T22:35:54Z",
+      "side": 1,
+      "message": "Yes, if the device_id is invalid (e.g., the wrong format).",
+      "parentUuid": "618265c2_47aaa466",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3a59a41_28dd227b",
         "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9005a8be_9cfa849a",
+        "filename": "content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-24T22:35:54Z",
+      "side": 1,
+      "message": "Good idea. Done.\n\nBTW--At some point, we should try to clean-up the hacks we\u0027ve had to use throughout this file to support the GPU JPEG decoder. I had to add a 3rd argument to CreateDeviceClient() since it now needs both the unique_ptr\u003cVFROnTaskRunner\u003e (ref\u0027ed from any thread) *and* the original WeakPtr\u003cVFR\u003e (ref\u0027ed from GPU JPEG decoder on IO thread only). Is there a crbug to track this clean-up already?",
+      "parentUuid": "b3a59a41_28dd227b",
+      "revId": "ec7c82a8fac2b3980ba74eada50712152c7a3dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
