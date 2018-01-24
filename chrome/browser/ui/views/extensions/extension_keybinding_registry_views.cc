@@ -9,6 +9,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/extensions/accelerator_priority.h"
 #include "extensions/common/extension.h"
+#include "ui/base/accelerators/media_keys_listener.h"
 #include "ui/views/focus/focus_manager.h"
 
 ExtensionKeybindingRegistryViews::ExtensionKeybindingRegistryViews(
@@ -19,11 +20,39 @@ ExtensionKeybindingRegistryViews::ExtensionKeybindingRegistryViews(
     : ExtensionKeybindingRegistry(profile, extension_filter, delegate),
       profile_(profile),
       focus_manager_(focus_manager) {
+  media_keys_listener_ = ui::MediaKeysListener::Create(
+      base::BindRepeating(
+          &ExtensionKeybindingRegistryViews::OnMediaKeysAccelerator,
+          base::Unretained(this)),
+      ui::MediaKeysListener::Scope::kFocused);
   Init();
 }
 
 ExtensionKeybindingRegistryViews::~ExtensionKeybindingRegistryViews() {
   focus_manager_->UnregisterAccelerators(this);
+}
+
+bool ExtensionKeybindingRegistryViews::AcceleratorPressed(
+    const ui::Accelerator& accelerator) {
+  std::string extension_id, command_name;
+  GetFirstTarget(accelerator, &extension_id, &command_name);
+  const ui::AcceleratorManager::HandlerPriority priority =
+      GetAcceleratorPriorityById(accelerator, extension_id, browser_context());
+  // Normal priority shortcuts must be handled via standard browser commands to
+  // be processed at the proper time.
+  return (priority == ui::AcceleratorManager::kHighPriority) &&
+         ExtensionKeybindingRegistry::NotifyEventTargets(accelerator);
+}
+
+bool ExtensionKeybindingRegistryViews::CanHandleAccelerators() const {
+  return true;
+}
+
+void ExtensionKeybindingRegistryViews::OnMediaKeysAccelerator(
+    const ui::Accelerator& accelerator,
+    bool* was_handled) {
+  DCHECK(was_handled);
+  *was_handled = NotifyEventTargets(accelerator);
 }
 
 void ExtensionKeybindingRegistryViews::AddExtensionKeybindings(
@@ -55,6 +84,11 @@ void ExtensionKeybindingRegistryViews::AddExtensionKeybindings(
     }
 
     AddEventTarget(accelerator, extension->id(), iter->second.command_name());
+
+    if (media_keys_listener_ && !media_keys_listener_->IsWatchingMediaKeys() &&
+        IsAnyMediaKeyRegistered()) {
+      media_keys_listener_->StartWatchingMediaKeys();
+    }
   }
 }
 
@@ -62,25 +96,13 @@ void ExtensionKeybindingRegistryViews::RemoveExtensionKeybindingImpl(
     const ui::Accelerator& accelerator,
     const std::string& command_name) {
   focus_manager_->UnregisterAccelerator(accelerator, this);
+  if (media_keys_listener_ && media_keys_listener_->IsWatchingMediaKeys() &&
+      !IsAnyMediaKeyRegistered()) {
+    media_keys_listener_->StopWatchingMediaKeys();
+  }
 }
 
 void ExtensionKeybindingRegistryViews::OnShortcutHandlingSuspended(
     bool suspended) {
   focus_manager_->set_shortcut_handling_suspended(suspended);
-}
-
-bool ExtensionKeybindingRegistryViews::AcceleratorPressed(
-    const ui::Accelerator& accelerator) {
-  std::string extension_id, command_name;
-  GetFirstTarget(accelerator, &extension_id, &command_name);
-  const ui::AcceleratorManager::HandlerPriority priority =
-      GetAcceleratorPriorityById(accelerator, extension_id, browser_context());
-  // Normal priority shortcuts must be handled via standard browser commands to
-  // be processed at the proper time.
-  return (priority == ui::AcceleratorManager::kHighPriority) &&
-      ExtensionKeybindingRegistry::NotifyEventTargets(accelerator);
-}
-
-bool ExtensionKeybindingRegistryViews::CanHandleAccelerators() const {
-  return true;
 }

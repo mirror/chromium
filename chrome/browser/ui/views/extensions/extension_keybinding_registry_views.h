@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_VIEWS_H_
 #define CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_KEYBINDING_REGISTRY_VIEWS_H_
 
+#include <memory>
 #include <string>
 
 #include "base/compiler_specific.h"
@@ -16,6 +17,10 @@ class Profile;
 
 namespace extensions {
 class Extension;
+}
+
+namespace ui {
+class MediaKeysListener;
 }
 
 namespace views {
@@ -43,6 +48,9 @@ class ExtensionKeybindingRegistryViews
   bool CanHandleAccelerators() const override;
 
  private:
+  void OnMediaKeysAccelerator(const ui::Accelerator& accelerator,
+                              bool* was_handled);
+
   // Overridden from ExtensionKeybindingRegistry:
   void AddExtensionKeybindings(const extensions::Extension* extension,
                                const std::string& command_name) override;
@@ -59,6 +67,7 @@ class ExtensionKeybindingRegistryViews
 
   // The content notification registrar for listening to extension events.
   content::NotificationRegistrar registrar_;
+  std::unique_ptr<ui::MediaKeysListener> media_keys_listener_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionKeybindingRegistryViews);
 };
