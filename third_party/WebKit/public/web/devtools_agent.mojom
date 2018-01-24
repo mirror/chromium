@@ -67,6 +67,10 @@ interface DevToolsAgent {
                         associated DevToolsSession& session,
                         DevToolsSession& io_session,
                         string? reattach_state);
+
+  // Requests an element at specific position to be inspected in every
+  // attached session (or the next attached one if none yet).
+  InspectElement(gfx.mojom.Point point);
 };
 
 // Represents an attached session which exposes remote debugging protocol.
@@ -77,9 +81,6 @@ interface DevToolsSession {
   // |call_id| is a command id as defined in protocol, and is going to be
   // reported back to host in a response message (see DevToolsMessageChunk).
   DispatchProtocolMessage(int32 call_id, string method, string message);
-
-  // Requests an element at specific position to be inspected.
-  InspectElement(gfx.mojom.Point point);
 };
 
 // A peer of DevToolsSession representing a remote debugging client
