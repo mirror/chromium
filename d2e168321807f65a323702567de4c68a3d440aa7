@@ -34,6 +34,24 @@
       "revId": "d2e168321807f65a323702567de4c68a3d440aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc4a900_b54c358d",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-24T18:55:07Z",
+      "side": 1,
+      "message": "Gotcha, thanks!  Maybe even worth a comment in the code?\n\n// Error::DISABLED corresponds to the browser having disabled extension\n// updates. We don\u0027t include this in UMA, because we are only interested\n// in errors when the updater runs.\nOr something like that?",
+      "parentUuid": "87bad4fc_abb88f20",
+      "revId": "d2e168321807f65a323702567de4c68a3d440aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
