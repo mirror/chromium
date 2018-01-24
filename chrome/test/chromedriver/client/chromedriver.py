@@ -152,13 +152,15 @@ class ChromeDriver(object):
     elif chrome_binary:
       options['binary'] = chrome_binary
 
-    if sys.platform.startswith('linux') and android_package is None:
+    if sys.platform.startswith('linux') or sys.platform.startswith('mac') \
+        and android_package is None:
       if chrome_switches is None:
         chrome_switches = []
       # Workaround for crbug.com/611886.
       chrome_switches.append('no-sandbox')
       # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1695
       chrome_switches.append('disable-gpu')
+
 
     if chrome_switches:
       assert type(chrome_switches) is list
