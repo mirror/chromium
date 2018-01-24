@@ -218,7 +218,7 @@ public final class DownloadNotificationFactory {
                 break;
 
             case FAILED:
-                iconId = android.R.drawable.stat_sys_download_done;
+                iconId = R.drawable.ic_error_white;
                 contentText =
                         context.getResources().getString(R.string.download_notification_failed);
                 break;

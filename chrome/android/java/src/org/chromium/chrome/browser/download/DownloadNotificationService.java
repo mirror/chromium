@@ -259,7 +259,7 @@ public class DownloadNotificationService extends Service {
         final int pausedIcon = R.drawable.ic_download_pause;
         final int pendingIcon = R.drawable.ic_download_pending;
         final int completedIcon = R.drawable.offline_pin;
-        final int failedIcon = android.R.drawable.stat_sys_download_done;
+        final int failedIcon = R.drawable.ic_error_white;
 
         StatusBarNotification[] notifications = manager.getActiveNotifications();
 
@@ -307,7 +307,7 @@ public class DownloadNotificationService extends Service {
         } else if (pending) {
             newIcon = R.drawable.ic_download_pending;
         } else if (failed) {
-            newIcon = android.R.drawable.stat_sys_download_done;
+            newIcon = R.drawable.ic_error_white;
         } else if (paused) {
             newIcon = R.drawable.ic_download_pause;
         } else if (completed) {
@@ -1011,9 +1011,8 @@ public class DownloadNotificationService extends Service {
         }
 
         int notificationId = getNotificationId(id);
-        ChromeNotificationBuilder builder =
-                buildNotification(android.R.drawable.stat_sys_download_done, fileName,
-                        mContext.getResources().getString(R.string.download_notification_failed));
+        ChromeNotificationBuilder builder = buildNotification(R.drawable.ic_error_white, fileName,
+                mContext.getResources().getString(R.string.download_notification_failed));
         if (icon != null) builder.setLargeIcon(icon);
         builder.setDeleteIntent(buildSummaryIconIntent(notificationId));
         updateNotification(notificationId, builder.build(), id, null);
