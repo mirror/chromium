@@ -31,6 +31,10 @@ class OmniboxEditController {
   virtual ToolbarModel* GetToolbarModel() = 0;
   virtual const ToolbarModel* GetToolbarModel() const = 0;
 
+  // Gets the text that best represents the URL of the current page. This is
+  // considered the 'permanent' text because reverting edits restores this text.
+  base::string16 GetPermanentText();
+
  protected:
   OmniboxEditController();
   virtual ~OmniboxEditController();
