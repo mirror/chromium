@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409d7927_f758573e",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T00:40:57Z",
+      "side": 1,
+      "message": "nit:\n [killButton_ setTitle:\n     l10n_util::GetPluralNSStringF(IDS_BROWSER_HANGMONITOR_RENDERER_END, count)];\n\n\n(either works -- ChromeMac jury is out on which \"one\" we want -- but setTitle is consistent with the one on line 130)",
+      "revId": "e7f69630dae2f8c48e4f909bbfb364cabbef2c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
