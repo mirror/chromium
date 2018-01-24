@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abcd68f_2a892d08",
+        "filename": "components/url_formatter/url_fixer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-24T23:13:22Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t write comments about \"used to\" and \"now\" since the time horizons are unclear and it will be increasingly irrelevant what we \"used to do\".  I would just remove this comment entirely?  If we really need to say something about why these are here, I\u0027d simply say that we want to make sure even inputs that look like an FTP site are fixed up with http://.",
+      "revId": "59b3ba9db2fc258a7ad36c9b7e9112de84fed7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
