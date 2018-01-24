@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e69431_491e46f7",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-24T09:20:52Z",
+      "side": 1,
+      "message": "I suspect result.HasPseudoMatches() implies result.ComputeLength() \u003e 0\nSame on line 35.",
+      "revId": "5edd512dec57a725e3f616ece12abd88939a9d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
