@@ -74,6 +74,11 @@ class MockExtensionSystemFactory : public ExtensionSystemProvider {
       content::BrowserContext* context) const override {
     return new T(context);
   }
+  content::BrowserContext* GetBrowserContextToUse(
+      content::BrowserContext* context) const override {
+    // Separate instance in incognito.
+    return context;
+  }
 
   // ExtensionSystemProvider overrides:
   ExtensionSystem* GetForBrowserContext(
