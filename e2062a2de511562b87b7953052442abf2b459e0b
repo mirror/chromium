@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f349c66_77880f08",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T22:18:19Z",
+      "side": 1,
+      "message": "Admittedly there is some code duplication between Android and Mac, but unfortunately the code doesn\u0027t make sense for BlueZ and Windows. So I\u0027m not quite sure how we could factor this logic out.",
+      "parentUuid": "d14b944f_179b9b06",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5c1a7b1_80a80d91",
         "filename": "device/bluetooth/bluetooth_adapter_android.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-19T18:08:50Z",
       "side": 1,
       "message": "Is there a race condition here?  i.e., could OnAdapterStateChanged be called during this callback?",
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f990f201_8f615680",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T22:18:19Z",
+      "side": 1,
+      "message": "As OnAdapterStateChanged is called in response to the async android.bluetooth.BluetoothAdapter::enable or disable I don\u0027t think this can happen. Not clearing out the pending callbacks makes sure that a call to SetPowered in the error_callback will fail as well. This is the scenario we exercise in the BluetoothTest::TogglePowerFakeAdapter_DestroyWithPending test.",
+      "parentUuid": "a5c1a7b1_80a80d91",
       "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e29cc30_546c127e",
+        "filename": "device/bluetooth/test/bluetooth_test_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T22:18:19Z",
+      "side": 1,
+      "message": "Yeah, unfortunately it is. I left a comment to explain why.",
+      "parentUuid": "921e4a14_359e0bb1",
+      "revId": "e2062a2de511562b87b7953052442abf2b459e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27556163_dadb0dff",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-24T22:18:19Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure if this is the best place for this. Moving it in the parent class but only enabling it for a subset of the platforms seems a bit ugly to me. Maybe we should move it out into another header? We then could also move the related utility structs from BluetoothSocketMac  there: https://codesearch.chromium.org/chromium/src/device/bluetooth/bluetooth_socket_mac.h?l\u003d115-146",
+      "range": {
+        "startLine": 549,
+        "startChar": 0,
+        "endLine": 549,
+        "endChar": 45
+      },
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
