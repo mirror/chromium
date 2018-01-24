@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "6d39ddeb_e80b6638",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 27
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-24T17:37:04Z",
+      "side": 1,
+      "message": "Right:\n\n- The most recent review of the VirtualTestSuites-vs-another-test-step-decision is in https://crbug.com/786554#c22.\n\n- Since December site_per_process_webkit_layout_test step on linux_chromium_rel_ng helps provide OOPIF coverage to layout tests spanning multiple sites (e.g. tests under http/test spanning 127.0.0.1 vs localhost) and/or origins (e.g. tests under external/wpt that span www1.web-platform.test VS www2.web-platform.test - we include all WPT origins in an --isolate-origin cmdline flag).",
+      "parentUuid": "b9722682_672ca0c1",
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93479fee_212f921c",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 27
