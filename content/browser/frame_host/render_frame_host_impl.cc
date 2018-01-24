@@ -142,6 +142,7 @@
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
+#include "services/network/public/cpp/network_features.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/frame_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -3513,7 +3514,7 @@ void RenderFrameHostImpl::CommitNavigation(
 
   std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories;
   mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
-  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
     subresource_loader_factories =
         std::make_unique<URLLoaderFactoryBundleInfo>();
@@ -3610,7 +3611,7 @@ void RenderFrameHostImpl::CommitNavigation(
 
   // It is imperative that cross-document navigations always provide a set of
   // subresource ULFs when the Network Service is enabled.
-  DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService) ||
+  DCHECK(!base::FeatureList::IsEnabled(network::features::kNetworkService) ||
          is_same_document || !is_first_navigation ||
          subresource_loader_factories);
 
