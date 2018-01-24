@@ -34,6 +34,24 @@
       "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971d3b15_37c83dea",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-24T19:53:22Z",
+      "side": 0,
+      "message": "It\u0027s a regression, not an existing bug. The original CL is here https://chromium-review.googlesource.com/c/chromium/src/+/864630. The performance test toBlob_duration.html only use 2d rendering context on html canvas. This is the part that I changed--instead of delaying the initialization of canvas resource provider until needed, I make the initialization happen earlier in createImageBuffer. So I suspect this part is the reason of regression and want to turn it back to original shape. But I could not reproduce the regression on a local machine.",
+      "parentUuid": "8624afbb_3d37b076",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
