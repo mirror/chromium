@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "682878ee_654d4f44",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-24T21:08:26Z",
+      "side": 1,
+      "message": "I moved the calculation of the snapped bounds to BaseState. The other parts are not easy to integrate as the logic are not exactly the same.",
+      "parentUuid": "ea02c53d_5821c3a4",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5528abc5_cd047eb3",
         "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d1bd3b49_5b6125c3",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-24T21:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5528abc5_cd047eb3",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0cb11a_8770c8cd",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a83420_1c4f3699",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-24T21:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0cb11a_8770c8cd",
+      "revId": "6720fad60ad58ed06e1cc2ed361cbdb699fd34e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
