@@ -45,6 +45,30 @@
       "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c86b17_eb5a24fb",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-24T15:15:43Z",
+      "side": 1,
+      "message": "We defined the StorageAttached(const device::mojom::MtpStorageInfo*), and std::make_pair makes a copy from the const MtpStorageInfo\u0026. So they are different copies.",
+      "parentUuid": "902fe934_6d2a8463",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 37
+      },
+      "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
