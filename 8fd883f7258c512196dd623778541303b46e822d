@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "27197a94_b871db7e",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 24
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-24T16:54:22Z",
+      "side": 1,
+      "message": "1. This virtual suite specification will work exactly as you expect.\n2. WPT really only cares about if the feature is spec\u0027ed. It doesn\u0027t matter if it currently fails everywhere. And even if it is not yet spec\u0027ed but there\u0027s reasonable expectation that it will be, we can have .tentative tests as well.\n3. As for whether a tentative test is appropriate, it\u0027s usually up to the WG/CG/etc. Do remember to keep the tests up-to-date (i.e. remove .tentative once the feature is spec\u0027ed, or remove the test if the feature is ditched).",
+      "parentUuid": "ea37540a_c0817326",
+      "revId": "8fd883f7258c512196dd623778541303b46e822d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb6e4d05_b9247956",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 24
