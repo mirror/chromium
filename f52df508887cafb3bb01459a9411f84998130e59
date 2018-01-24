@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "903f4a0e_e03b3948",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-24T14:55:59Z",
+      "side": 1,
+      "message": "Optional: \"If |spdy_session_direct_| is false, then |proxy_info_| is guaranteed...\" for easier readability.",
+      "range": {
+        "startLine": 1234,
+        "startChar": 0,
+        "endLine": 1234,
+        "endChar": 77
+      },
+      "revId": "f52df508887cafb3bb01459a9411f84998130e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

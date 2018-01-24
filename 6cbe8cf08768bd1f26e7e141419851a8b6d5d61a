@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5cdc5692_68c73a23",
+        "filename": "net/base/proxy_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-24T14:55:59Z",
+      "side": 1,
+      "message": "Just confirming that SpdySession is not used for QUIC.",
+      "parentUuid": "231aecd9_83fbf08f",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "6cbe8cf08768bd1f26e7e141419851a8b6d5d61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "874de080_1bc7caee",
         "filename": "net/base/proxy_server.h",
         "patchSetId": 1
