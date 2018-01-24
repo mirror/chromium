@@ -139,16 +139,7 @@ void NGPaintFragment::PaintInlineBoxForDescendants(
     const LayoutPoint& paint_offset,
     const LayoutInline* layout_object,
     NGPhysicalOffset offset) const {
-  for (const auto& child : Children()) {
-    if (child->GetLayoutObject() == layout_object) {
-      NGBoxFragmentPainter(*child).PaintInlineBox(
-          paint_info, paint_offset + offset.ToLayoutPoint(), paint_offset);
-      continue;
-    }
-
-    child->PaintInlineBoxForDescendants(paint_info, paint_offset, layout_object,
-                                        offset + child->Offset());
-  }
+  // TODO(eae): Remove.
 }
 
 }  // namespace blink
