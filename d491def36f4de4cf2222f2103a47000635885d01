@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311ddf70_9367a0cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T17:25:01Z",
+      "side": 1,
+      "message": "nit: JavaDocs for these public methods",
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b9b53c_3a81d1c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataFetcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T17:25:01Z",
+      "side": 1,
+      "message": "JavaDocs for these methods too",
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
