@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f4912b_9f3fd635",
+        "filename": "third_party/WebKit/Source/core/fileapi/PublicURLManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-24T21:17:12Z",
+      "side": 1,
+      "message": "Would love a small description of why this is here, as I was confused why it only saved stuff when the origin was \u0027null\u0027.",
+      "revId": "cd94c63c23a807a625c262e072a773a2b0561e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
