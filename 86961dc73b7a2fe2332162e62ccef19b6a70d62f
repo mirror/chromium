@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121cb8a1_cedc1eae",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T22:31:12Z",
+      "side": 1,
+      "message": "tbh I expected this to become SINGLE_AND_MULTI_THREAD. What is initializing the root layer before commit, that doesn\u0027t sound possible to me?",
+      "revId": "86961dc73b7a2fe2332162e62ccef19b6a70d62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
