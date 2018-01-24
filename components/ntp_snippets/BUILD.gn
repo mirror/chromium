@@ -250,8 +250,6 @@ source_set("unit_tests") {
     "//components/web_resource:web_resource",
     "//google_apis/gcm",
     "//net:test_support",
-    "//services/identity/public/cpp",
-    "//services/identity/public/cpp:test_support",
     "//testing/gtest",
     "//third_party/icu/",
     "//ui/gfx:test_support",
