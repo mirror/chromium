@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "83d63ba0_d44151ce",
+        "filename": "chrome/browser/extensions/extension_keybinding_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "declare const?",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3ae07b_a1711b25",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "289e2eb4_144371a4",
         "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
         "patchSetId": 4
@@ -34,6 +68,24 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2bca1e5_8a126edf",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "perhaps MediaKeysListener::Delegate, which declares OnMediaKeysAccelerator for these owning classes to override.",
+      "parentUuid": "289e2eb4_144371a4",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -154,6 +206,40 @@
     },
     {
       "key": {
+        "uuid": "23144ca1_4556de05",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "nit: order before views",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02181ed9_89c00460",
+        "filename": "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "move before overrides",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ab080b_70021cd1",
         "filename": "ui/base/accelerators/media_keys_listener.h",
         "patchSetId": 4
@@ -198,6 +284,40 @@
       "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b9d3317_f2dc2e6a",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "nit: move into namespace below",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224a6680_7086ef78",
+        "filename": "ui/base/accelerators/media_keys_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-24T04:17:01Z",
+      "side": 1,
+      "message": "\"chrome\" concepts tend not to belong in ui/base. Perhaps \n\nkFocused  // Listener only works when application has focus?",
+      "revId": "3771ce08d1039d786a040143579b5ebeb0124cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
