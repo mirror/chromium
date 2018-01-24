@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e7aa13_a225f814",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-24T17:48:46Z",
+      "side": 0,
+      "message": "slangley: was there any particular reason this (and below) is using a lambda, rather than just binding directly? If there is it\u0027s not obvious to me what the difference would be, so a comment might have been helpful.",
+      "revId": "7fc5b7d5a23594c92cb70d7ddf27ed743e6bc2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
