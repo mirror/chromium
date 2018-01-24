@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c76b216_d0453c4d",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T01:18:03Z",
+      "side": 1,
+      "message": "target_url_",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec9c76b_a76c2083",
+        "filename": "chrome/browser/chrome_security_exploit_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-24T01:18:03Z",
+      "side": 1,
+      "message": "Instead of having this GetInstance method, can\u0027t the the instance be bound to the SetURLStoreCreationHookForTesting method on line 277, then it becomes parameter here and you don\u0027t need to store |this| in the actual BlobURLStoreInterceptor object?",
+      "revId": "ed45e66be26480bb9c3e6fb92be2198cc237bbff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
