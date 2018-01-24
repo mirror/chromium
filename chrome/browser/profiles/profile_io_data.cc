@@ -73,6 +73,8 @@
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/sync/base/pref_names.h"
 #include "components/url_formatter/url_fixer.h"
+#include "content/browser/permafill/browser_protocol.h"
+#include "content/common/permafill/constants.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_network_transaction_factory.h"
 #include "content/public/browser/network_service_instance.h"
@@ -773,6 +775,7 @@ bool ProfileIOData::IsHandledProtocol(const std::string& scheme) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     extensions::kExtensionScheme,
 #endif
+    permafill::kBrowserScheme,
     content::kChromeUIScheme,
     url::kDataScheme,
 #if defined(OS_CHROMEOS)
@@ -1306,6 +1309,9 @@ ProfileIOData::SetUpJobFactoryDefaults(
   DCHECK(set_protocol);
 #endif
   set_protocol = job_factory->SetProtocolHandler(
+      permafill::kBrowserScheme, permafill::CreateBrowserProtocolHandler());
+  DCHECK(set_protocol);
+  set_protocol = job_factory->SetProtocolHandler(
       url::kDataScheme, base::MakeUnique<net::DataProtocolHandler>());
   DCHECK(set_protocol);
 #if defined(OS_CHROMEOS)
@@ -1371,6 +1377,8 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
                               extensions::CreateExtensionProtocolHandler(
                                   is_incognito, extension_info_map_.get()));
 #endif
+  builder->SetProtocolHandler(permafill::kBrowserScheme,
+                              permafill::CreateBrowserProtocolHandler());
 #if defined(OS_CHROMEOS)
   if (profile_params_) {
     builder->SetProtocolHandler(
