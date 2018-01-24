@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9c53f2cd_4001fbe7",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-24T00:54:09Z",
+      "side": 1,
+      "message": "That helps.  Thanks.",
+      "parentUuid": "39a7f836_cbf5380f",
+      "revId": "b1c5ca11af47de389f876ee47ea618c1fc3edc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a1d1ee_06bbf3d6",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 5
