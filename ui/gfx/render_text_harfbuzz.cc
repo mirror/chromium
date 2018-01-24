@@ -1380,6 +1380,10 @@ void RenderTextHarfBuzz::DrawVisualText(internal::SkiaTextRenderer* renderer) {
   UndoCompositionAndSelectionStyles();
 }
 
+void RenderTextHarfBuzz::SetGlyphWidthForTest(float test_width) {
+  glyph_width_for_test_ = test_width;
+}
+
 size_t RenderTextHarfBuzz::GetRunContainingCaret(
     const SelectionModel& caret) {
   DCHECK(!update_display_run_list_);

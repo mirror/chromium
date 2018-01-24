@@ -50,6 +50,8 @@ class Font;
 
 namespace internal {
 
+class TextRunList;
+
 // Internal helper class used by derived classes to draw text through Skia.
 class GFX_EXPORT SkiaTextRenderer {
  public:
@@ -705,6 +707,14 @@ class GFX_EXPORT RenderText {
   // text cannot be retrieved, e.g. if the text is obscured.
   virtual bool GetDecoratedTextForRange(const Range& range,
                                         DecoratedText* decorated_text) = 0;
+
+  // Returns an implementation-specific run list, if implemented.
+  virtual internal::TextRunList* GetRunList();
+  virtual const internal::TextRunList* GetRunList() const;
+
+  // Specify the width of a glyph for testing, where supported, to avoid
+  // flakiness from platform-dependent and environment-dependent text layout.
+  virtual void SetGlyphWidthForTest(float test_width);
 
   // Logical UTF-16 string data to be drawn.
   base::string16 text_;

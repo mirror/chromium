@@ -194,11 +194,9 @@ class GFX_EXPORT RenderTextHarfBuzz : public RenderText {
   friend class RenderTextHarfBuzzTest;
 
   // Specify the width of a glyph for test. The width of glyphs is very
-  // platform-dependent and environment-dependent. Otherwise multiline test
+  // platform-dependent and environment-dependent. Otherwise multiline text
   // will become really flaky.
-  void set_glyph_width_for_test(float test_width) {
-    glyph_width_for_test_ = test_width;
-  }
+  void SetGlyphWidthForTest(float test_width) override;
 
   // Return the run index that contains the argument; or the length of the
   // |runs_| vector if argument exceeds the text length or width.
@@ -247,8 +245,8 @@ class GFX_EXPORT RenderTextHarfBuzz : public RenderText {
 
   // Returns the current run list, |display_run_list_| if the text is
   // elided, or |layout_run_list_| otherwise.
-  internal::TextRunList* GetRunList();
-  const internal::TextRunList* GetRunList() const;
+  internal::TextRunList* GetRunList() override;
+  const internal::TextRunList* GetRunList() const override;
 
   // RenderText:
   bool GetDecoratedTextForRange(const Range& range,
