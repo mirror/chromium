@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "a62b9a0f_731e8467",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-24T19:06:39Z",
+      "side": 1,
+      "message": "stdout defaults to PIPE, right?\n\nFrom the docs:\n\n\"Warning: This will deadlock when using stdout\u003dPIPE and/or stderr\u003dPIPE and the child process generates enough output to a pipe such that it blocks waiting for the OS pipe buffer to accept more data. Use communicate() to avoid that.\"\n\nThe \"and/or\" makes it sound like that would be enough to cause problems?\n\nI took a squint at /usr/lib/python2.7/subprocess.py and I believe what it\u0027s doing is that that communicate() calls wait() if there\u0027s \u003c\u003d 1 of in/out/err, but otherwise it flips over to _communicate() which spins up threads to drain the pipes.",
+      "parentUuid": "e9909457_5b530c9d",
+      "revId": "8c79860866aee5d452da9ec36c585c78e8eaf411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42b45b79_708edc35",
         "filename": "build/fuchsia/runner_v2/device_target.py",
         "patchSetId": 4
