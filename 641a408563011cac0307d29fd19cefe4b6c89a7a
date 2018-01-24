@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a504a200_86e221ce",
+        "filename": "base/trace_event/memory_usage_estimator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-24T11:09:06Z",
+      "side": 1,
+      "message": "Unfortunately one of the compilers (I don\u0027t recall if it was MSVS or Clang on Windows)\nhas issues with enable_if and functions.\n\nSo I use a struct.",
+      "revId": "641a408563011cac0307d29fd19cefe4b6c89a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
