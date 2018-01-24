@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3eb84b8_f06ae69b",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-24T22:31:39Z",
+      "side": 1,
+      "message": "Hm, I woulda said Invalidate is an Android WebView-specific behaviour which only uses multi-threaded compositor.\n\nI\u0027m not sure why the BeginMainFrame difference would happen or why it would affect this test, as it\u0027s not watching for them. Now I\u0027m curious... :)",
+      "revId": "86961dc73b7a2fe2332162e62ccef19b6a70d62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "121cb8a1_cedc1eae",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 31
