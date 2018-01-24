@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298babcc_8026fd02",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T07:28:24Z",
+      "side": 1,
+      "message": "I think I prefer removing IsValidSourceInfo() here, but if you prefer doing that in later CL (just read the previous comments) that\u0027s ok... but could we still remove this unnecessary branch?  Maybe just DCHECK(IsValidSourceInfo(source_info)) like the other place (though that DCHECK itself is a bit bogus too)?",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722f28db_221f4812",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-24T07:28:24Z",
+      "side": 1,
+      "message": "Can we have a lightweight-comment about when they can be null?",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
