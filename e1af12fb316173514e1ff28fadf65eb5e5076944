@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fb104c56_e1eb51b6",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-24T15:02:49Z",
+      "side": 1,
+      "message": "FixAccountConsistencyRequestHeader needs quite some refactoring, if we want to use that here: it\u0027s supposed to run on the IO thread (I see no reason here to go there), and most of the checks don\u0027t make sense: we don\u0027t have to care about incognito (AFAIU local new tab page is not showing the OneGoogleBar in incognito), and we always want to disable add account and incognito if this is set because of a requirement and not the platform (which is the only case currently to set account_consistency_mirror_required_ to true, I guess we don\u0027t want to change the behavior on mobile currently). We also know that the URL will be a google.com URL (so we don\u0027t need to call IsUrlEligibleForRequestHeader), and it won\u0027t be a drive/docs.google.com URL, so we don\u0027t have to send the account_id.\nI don\u0027t know about the DICE header, droger@, can you help us with that?",
+      "parentUuid": "aa3b28ca_2fd68d20",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
