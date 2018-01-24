@@ -1862,6 +1862,9 @@ enum WebFeature {
   kV8HTMLElement_Autocapitalize_AttributeGetter = 2349,
   kV8HTMLElement_Autocapitalize_AttributeSetter = 2350,
 
+  kSRISignatureCheck = 2351,
+  kSRISignatureSuccess = 2352,
+
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
   // Also, run update_use_counter_feature_enum.py in

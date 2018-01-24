@@ -149,11 +149,19 @@ bool SubresourceIntegrity::CheckSubresourceIntegrityImpl(
   // Check any of the "strongest" integrity constraints.
   IntegrityAlgorithm max_algorithm = FindBestAlgorithm(metadata_set);
   CheckFunction checker = GetCheckFunctionForAlgorithm(max_algorithm);
+  bool bReportEd25519 = max_algorithm == IntegrityAlgorithm::kEd25519;
+  if (bReportEd25519) {
+    report_info.AddUseCount(ReportInfo::UseCounterFeature::kSRISignatureCheck);
+  }
   for (const IntegrityMetadata& metadata : metadata_set) {
     if (metadata.Algorithm() == max_algorithm &&
         (*checker)(metadata, content, size, integrity_header)) {
       report_info.AddUseCount(ReportInfo::UseCounterFeature::
                                   kSRIElementWithMatchingIntegrityAttribute);
+      if (bReportEd25519) {
+        report_info.AddUseCount(
+            ReportInfo::UseCounterFeature::kSRISignatureSuccess);
+      }
       return true;
     }
   }
