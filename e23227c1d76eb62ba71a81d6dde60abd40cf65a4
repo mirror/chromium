@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "41cf922c_d94f28c1",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-24T04:34:26Z",
+      "side": 1,
+      "message": "I was expecting this to happen naturally as part of the RenderView/RenderWidget split. For now, we don\u0027t have widget messages and it is hard to partition them properly. That work should really be picked up again soon -- I had been thinking of resuming it in January, before all the Spectre stuff happened.",
+      "parentUuid": "8b9f9d80_91d7a707",
+      "range": {
+        "startLine": 739,
+        "startChar": 20,
+        "endLine": 739,
+        "endChar": 31
+      },
+      "revId": "e23227c1d76eb62ba71a81d6dde60abd40cf65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce4b9024_4115eec4",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 27
