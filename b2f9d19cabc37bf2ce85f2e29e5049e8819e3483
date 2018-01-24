@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b38549ac_a2d321c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-24T22:54:09Z",
+      "side": 1,
+      "message": "nit: \"IndexedDB: Remove Blob-acking\" ?",
+      "revId": "b2f9d19cabc37bf2ce85f2e29e5049e8819e3483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
