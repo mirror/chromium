@@ -369,10 +369,12 @@
 #include "extensions/browser/extension_navigation_throttle.h"
 #include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
+#include "extensions/browser/process_map_factory.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -805,6 +807,73 @@ chrome::mojom::PrerenderCanceler* GetPrerenderCanceller(
 
   return prerender::PrerenderContents::FromWebContents(web_contents);
 }
+
+class ExtensionFactoryHelper : public extensions::URLLoaderFactoryHelper {
+ public:
+  // |frame_host| is the RenderFrameHost which is either being navigated or
+  // loading a subresource.
+  explicit ExtensionFactoryHelper(content::RenderFrameHost* frame_host)
+      : frame_host_(frame_host),
+        browser_context_(frame_host->GetProcess()->GetBrowserContext()),
+        registry_(extensions::ExtensionRegistry::Get(browser_context_)) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  }
+  ~ExtensionFactoryHelper() override {}
+
+  bool IsWebViewRequest() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extensions::WebViewGuest::FromWebContents(
+               content::WebContents::FromRenderFrameHost(frame_host_)) !=
+           nullptr;
+  }
+
+  const extensions::Extension* GetByID(const std::string& id) const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return registry_->GetExtensionById(
+        id, extensions::ExtensionRegistry::EVERYTHING);
+  }
+
+  bool IsIncognitoEnabled(const std::string& extension_id) const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extensions::util::IsIncognitoEnabled(extension_id, browser_context_);
+  }
+
+  bool IsOffTheRecord() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return browser_context_->IsOffTheRecord();
+  }
+
+  const extensions::ExtensionSet& disabled_extensions() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return registry_->disabled_extensions();
+  }
+
+  const extensions::ExtensionSet& enabled_extensions() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return registry_->enabled_extensions();
+  }
+
+  const extensions::ProcessMap* process_map() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extensions::ProcessMapFactory::GetForBrowserContext(
+        browser_context_);
+  }
+
+  extensions::ContentVerifier* content_verifier() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extensions::ExtensionSystem::Get(browser_context_)
+        ->content_verifier();
+  }
+
+  int render_process_id() const override {
+    return frame_host_->GetProcess()->GetID();
+  }
+
+ private:
+  content::RenderFrameHost* frame_host_;
+  content::BrowserContext* browser_context_;
+  const extensions::ExtensionRegistry* registry_;
+};
 
 }  // namespace
 
@@ -3712,9 +3781,9 @@ void ChromeContentBrowserClient::RegisterNonNetworkNavigationURLLoaderFactories(
     content::RenderFrameHost* frame_host,
     NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  factories->emplace(
-      extensions::kExtensionScheme,
-      extensions::CreateExtensionNavigationURLLoaderFactory(frame_host));
+  factories->emplace(extensions::kExtensionScheme,
+                     extensions::CreateExtensionNavigationURLLoaderFactory(
+                         std::make_unique<ExtensionFactoryHelper>(frame_host)));
 #endif
 }
 
@@ -3724,10 +3793,9 @@ void ChromeContentBrowserClient::
         const GURL& frame_url,
         NonNetworkURLLoaderFactoryMap* factories) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  auto factory = extensions::MaybeCreateExtensionSubresourceURLLoaderFactory(
-      frame_host, frame_url);
-  if (factory)
-    factories->emplace(extensions::kExtensionScheme, std::move(factory));
+  auto factory = extensions::CreateExtensionSubresourceURLLoaderFactory(
+      frame_url, std::make_unique<ExtensionFactoryHelper>(frame_host));
+  factories->emplace(extensions::kExtensionScheme, std::move(factory));
 #endif
 }
 

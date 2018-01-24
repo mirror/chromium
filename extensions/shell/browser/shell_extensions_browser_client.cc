@@ -126,6 +126,16 @@ ShellExtensionsBrowserClient::MaybeCreateResourceBundleRequestJob(
   return NULL;
 }
 
+bool ShellExtensionsBrowserClient::MaybeLoadResourceFromResourceBundle(
+    const network::ResourceRequest& request,
+    network::mojom::URLLoaderRequest* loader,
+    const base::FilePath& directory_path,
+    const std::string& content_security_policy,
+    network::mojom::URLLoaderClientPtr* client,
+    bool send_cors_header) {
+  return false;
+}
+
 bool ShellExtensionsBrowserClient::AllowCrossRendererResourceLoad(
     const GURL& url,
     content::ResourceType resource_type,

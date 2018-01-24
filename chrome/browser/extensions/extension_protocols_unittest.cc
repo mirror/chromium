@@ -21,14 +21,19 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/crx_file/id_util.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "content/public/test/test_utils.h"
+#include "content/public/test/web_contents_tester.h"
 #include "extensions/browser/content_verifier.h"
 #include "extensions/browser/extension_protocols.h"
+#include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -42,10 +47,20 @@
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using content::BrowserThread;
 using content::ResourceType;
+using network::mojom::URLLoader;
 
 namespace extensions {
 namespace {
+
+enum class RequestHandlerType {
+  kURLLoader,
+  kURLRequest,
+};
+
+const RequestHandlerType kTestModes[] = {RequestHandlerType::kURLLoader,
+                                         RequestHandlerType::kURLRequest};
 
 base::FilePath GetTestPath(const std::string& name) {
   base::FilePath path;
@@ -172,12 +187,123 @@ class JobDelegate : public ContentVerifyJob::TestDelegate {
   DISALLOW_COPY_AND_ASSIGN(JobDelegate);
 };
 
+network::ResourceRequest CreateResourceRequest(const std::string& method,
+                                               ResourceType resource_type,
+                                               const GURL& url) {
+  network::ResourceRequest request;
+  request.method = method;
+  request.url = url;
+  request.site_for_cookies = url;  // bypass third-party cookie blocking.
+  request.request_initiator =
+      url::Origin::Create(url);  // ensure initiator set.
+  request.referrer_policy = content::Referrer::GetDefaultReferrerPolicy();
+  request.resource_type = resource_type;
+  request.is_main_frame = resource_type == content::RESOURCE_TYPE_MAIN_FRAME;
+  request.allow_download = true;
+  return request;
+}
+
+// The result of either a URLRequest of a URLLoader response (but not both)
+// depending on the on test type.
+class GetResult {
+ public:
+  GetResult(std::unique_ptr<net::URLRequest> request, int result)
+      : request_(std::move(request)), result_(result) {}
+  GetResult(const network::ResourceResponseHead& response, int result)
+      : resource_response_(response), result_(result) {}
+  GetResult(GetResult&& other)
+      : request_(std::move(other.request_)), result_(other.result_) {}
+  ~GetResult() = default;
+
+  std::string GetResponseHeaderByName(const std::string& name) const {
+    std::string value;
+    if (request_)
+      request_->GetResponseHeaderByName(name, &value);
+    else if (resource_response_.headers.get())
+      resource_response_.headers->GetNormalizedHeader(name, &value);
+    return value;
+  }
+
+  int result() const { return result_; }
+
+ private:
+  std::unique_ptr<net::URLRequest> request_;
+  const network::ResourceResponseHead resource_response_;
+  int result_;
+};
+
+class TestExtensionLoaderFactoryHelper : public URLLoaderFactoryHelper {
+ public:
+  TestExtensionLoaderFactoryHelper(scoped_refptr<InfoMap> extension_info_map,
+                                   TestingProfile* testing_profile,
+                                   content::RenderFrameHost* frame_host)
+      : extension_info_map_(extension_info_map),
+        testing_profile_(testing_profile),
+        frame_host_(frame_host) {}
+  ~TestExtensionLoaderFactoryHelper() override {}
+
+  bool IsWebViewRequest() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return WebViewGuest::FromWebContents(
+               content::WebContents::FromRenderFrameHost(frame_host_)) !=
+           nullptr;
+  }
+
+  const Extension* GetByID(const std::string& id) const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extension_info_map_->extensions().GetByID(id);
+  }
+
+  bool IsIncognitoEnabled(const std::string& extension_id) const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extension_info_map_->IsIncognitoEnabled(extension_id);
+  }
+
+  bool IsOffTheRecord() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return testing_profile_->IsOffTheRecord();
+  }
+
+  const ExtensionSet& disabled_extensions() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extension_info_map_->disabled_extensions();
+  }
+
+  const ExtensionSet& enabled_extensions() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    // TODO(cmumford): I think this is returning all extensions instead of only
+    // enabled extensions.
+    return extension_info_map_->extensions();
+  }
+
+  const ProcessMap* process_map() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return &extension_info_map_->process_map();
+  }
+
+  int render_process_id() const override {
+    return frame_host_->GetProcess()->GetID();
+  }
+
+  ContentVerifier* content_verifier() const override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    return extension_info_map_->content_verifier();
+  }
+
+ private:
+  scoped_refptr<InfoMap> extension_info_map_;
+  const TestingProfile* testing_profile_;
+  content::RenderFrameHost* frame_host_;
+};
+
 }  // namespace
 
 // This test lives in src/chrome instead of src/extensions because it tests
 // functionality delegated back to Chrome via ChromeExtensionsBrowserClient.
 // See chrome/browser/extensions/chrome_url_request_util.cc.
-class ExtensionProtocolsTest : public testing::Test {
+class ExtensionProtocolsTest
+    : public testing::Test,
+      public testing::WithParamInterface<RequestHandlerType> {
  public:
   ExtensionProtocolsTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
@@ -187,6 +313,7 @@ class ExtensionProtocolsTest : public testing::Test {
   void SetUp() override {
     testing::Test::SetUp();
     testing_profile_ = TestingProfile::Builder().Build();
+    contents_.reset(CreateTestWebContents());
     extension_info_map_ = new InfoMap();
     net::URLRequestContext* request_context =
         resource_context_.GetRequestContext();
@@ -198,12 +325,13 @@ class ExtensionProtocolsTest : public testing::Test {
         switches::kExtensionContentVerification,
         switches::kExtensionContentVerificationEnforce);
     content_verifier_ = new ContentVerifier(
-        testing_profile_.get(), std::make_unique<ChromeContentVerifierDelegate>(
-                                    testing_profile_.get()));
+        browser_context(),
+        std::make_unique<ChromeContentVerifierDelegate>(browser_context()));
     extension_info_map_->SetContentVerifier(content_verifier_.get());
   }
 
   void TearDown() override {
+    loader_factory_.reset();
     net::URLRequestContext* request_context =
         resource_context_.GetRequestContext();
     request_context->set_job_factory(old_factory_);
@@ -218,12 +346,76 @@ class ExtensionProtocolsTest : public testing::Test {
         CreateExtensionProtocolHandler(is_incognito,
                                        extension_info_map_.get()));
     request_context->set_job_factory(&job_factory_);
+    testing_profile_->ForceIncognito(is_incognito);
+    loader_factory_ = CreateExtensionNavigationURLLoaderFactory(
+        std::make_unique<TestExtensionLoaderFactoryHelper>(
+            extension_info_map_, testing_profile_.get(), main_rfh()));
   }
 
-  void StartRequest(net::URLRequest* request,
-                    ResourceType resource_type) {
+  GetResult RequestOrLoad(const GURL& url, ResourceType resource_type) {
+    if (request_handler() == RequestHandlerType::kURLLoader)
+      return LoadURL(url, resource_type);
+    if (request_handler() == RequestHandlerType::kURLRequest) {
+      return RequestURL(url, resource_type);
+    }
+    NOTREACHED();
+    return GetResult(nullptr, net::ERR_FAILED);
+  }
+
+  // Helper method to create a URL request/loader, call RequestOrLoad on it, and
+  // return the result. If |extension| hasn't already been added to
+  // |extension_info_map_|, this will add it.
+  GetResult DoRequestOrLoad(const Extension& extension,
+                            const std::string& relative_path) {
+    if (!extension_info_map_->extensions().Contains(extension.id())) {
+      extension_info_map_->AddExtension(&extension,
+                                        base::Time::Now(),
+                                        false,   // incognito_enabled
+                                        false);  // notifications_disabled
+    }
+    return RequestOrLoad(extension.GetResourceURL(relative_path),
+                         content::RESOURCE_TYPE_MAIN_FRAME);
+  }
+
+  content::BrowserContext* browser_context() { return testing_profile_.get(); }
+
+ protected:
+  content::TestBrowserThreadBundle thread_bundle_;
+  scoped_refptr<InfoMap> extension_info_map_;
+  net::URLRequestJobFactoryImpl job_factory_;
+  const net::URLRequestJobFactory* old_factory_;
+  std::unique_ptr<network::mojom::URLLoaderFactory> loader_factory_;
+  net::TestURLRequestContext test_url_request_context_;
+  content::MockResourceContext resource_context_;
+  scoped_refptr<ContentVerifier> content_verifier_;
+  std::unique_ptr<TestingProfile> testing_profile_;
+
+ private:
+  GetResult LoadURL(const GURL& url, ResourceType resource_type) {
+    constexpr int32_t kRoutingId = 81;
+    constexpr int32_t kRequestId = 28;
+
+    network::mojom::URLLoaderPtr loader;
+    content::TestURLLoaderClient client;
+    loader_factory_->CreateLoaderAndStart(
+        mojo::MakeRequest(&loader), kRoutingId, kRequestId,
+        network::mojom::kURLLoadOptionNone,
+        CreateResourceRequest("GET", resource_type, url),
+        client.CreateInterfacePtr(),
+        net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    client.RunUntilComplete();
+    return GetResult(client.response_head(),
+                     client.completion_status().error_code);
+  }
+
+  GetResult RequestURL(const GURL& url, ResourceType resource_type) {
+    auto request = resource_context_.GetRequestContext()->CreateRequest(
+        url, net::DEFAULT_PRIORITY, &test_delegate_,
+        TRAFFIC_ANNOTATION_FOR_TESTS);
+
     content::ResourceRequestInfo::AllocateForTesting(
-        request, resource_type, &resource_context_,
+        request.get(), resource_type, &resource_context_,
         /*render_process_id=*/-1,
         /*render_view_id=*/-1,
         /*render_frame_id=*/-1,
@@ -233,43 +425,32 @@ class ExtensionProtocolsTest : public testing::Test {
         /*navigation_ui_data*/ nullptr);
     request->Start();
     base::RunLoop().Run();
+    return GetResult(std::move(request), test_delegate_.request_status());
   }
 
-  // Helper method to create a URLRequest, call StartRequest on it, and return
-  // the result. If |extension| hasn't already been added to
-  // |extension_info_map_|, this will add it.
-  int DoRequest(const Extension& extension, const std::string& relative_path) {
-    if (!extension_info_map_->extensions().Contains(extension.id())) {
-      extension_info_map_->AddExtension(&extension,
-                                        base::Time::Now(),
-                                        false,   // incognito_enabled
-                                        false);  // notifications_disabled
-    }
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension.GetResourceURL(relative_path), net::DEFAULT_PRIORITY,
-            &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MAIN_FRAME);
-    return test_delegate_.request_status();
+  content::WebContents* CreateTestWebContents() {
+    auto site_instance = content::SiteInstance::Create(browser_context());
+    return content::WebContentsTester::CreateTestWebContents(
+        browser_context(), std::move(site_instance));
   }
 
- protected:
-  content::TestBrowserThreadBundle thread_bundle_;
-  scoped_refptr<InfoMap> extension_info_map_;
-  net::URLRequestJobFactoryImpl job_factory_;
-  const net::URLRequestJobFactory* old_factory_;
+  content::WebContents* web_contents() { return contents_.get(); }
+
+  content::RenderFrameHost* main_rfh() {
+    return web_contents()->GetMainFrame();
+  }
+
+  RequestHandlerType request_handler() const { return GetParam(); }
+
   net::TestDelegate test_delegate_;
-  net::TestURLRequestContext test_url_request_context_;
-  content::MockResourceContext resource_context_;
-  scoped_refptr<ContentVerifier> content_verifier_;
-  std::unique_ptr<TestingProfile> testing_profile_;
+  std::unique_ptr<content::WebContents> contents_;
 };
 
 // Tests that making a chrome-extension request in an incognito context is
 // only allowed under the right circumstances (if the extension is allowed
 // in incognito, and it's either a non-main-frame request or a split-mode
 // extension).
-TEST_F(ExtensionProtocolsTest, IncognitoRequest) {
+TEST_P(ExtensionProtocolsTest, IncognitoRequest) {
   // Register an incognito extension protocol handler.
   SetProtocolHandler(true);
 
@@ -300,17 +481,14 @@ TEST_F(ExtensionProtocolsTest, IncognitoRequest) {
       // It doesn't matter that the resource doesn't exist. If the resource
       // is blocked, we should see BLOCKED_BY_CLIENT. Otherwise, the request
       // should just fail because the file doesn't exist.
-      std::unique_ptr<net::URLRequest> request(
-          resource_context_.GetRequestContext()->CreateRequest(
-              extension->GetResourceURL("404.html"), net::DEFAULT_PRIORITY,
-              &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-      StartRequest(request.get(), content::RESOURCE_TYPE_MAIN_FRAME);
+      auto get_result = RequestOrLoad(extension->GetResourceURL("404.html"),
+                                      content::RESOURCE_TYPE_MAIN_FRAME);
 
       if (cases[i].should_allow_main_frame_load) {
-        EXPECT_EQ(net::ERR_FILE_NOT_FOUND, test_delegate_.request_status())
+        EXPECT_EQ(net::ERR_FILE_NOT_FOUND, get_result.result())
             << cases[i].name;
       } else {
-        EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, test_delegate_.request_status())
+        EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, get_result.result())
             << cases[i].name;
       }
     }
@@ -322,17 +500,14 @@ TEST_F(ExtensionProtocolsTest, IncognitoRequest) {
       // is tested in an integration test in
       // ExtensionResourceRequestPolicyTest.IframeNavigateToInaccessible.
       if (!content::IsBrowserSideNavigationEnabled()) {
-        std::unique_ptr<net::URLRequest> request(
-            resource_context_.GetRequestContext()->CreateRequest(
-                extension->GetResourceURL("404.html"), net::DEFAULT_PRIORITY,
-                &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-        StartRequest(request.get(), content::RESOURCE_TYPE_SUB_FRAME);
+        auto get_result = RequestOrLoad(extension->GetResourceURL("404.html"),
+                                        content::RESOURCE_TYPE_SUB_FRAME);
 
         if (cases[i].should_allow_sub_frame_load) {
-          EXPECT_EQ(net::ERR_FILE_NOT_FOUND, test_delegate_.request_status())
+          EXPECT_EQ(net::ERR_FILE_NOT_FOUND, get_result.result())
               << cases[i].name;
         } else {
-          EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, test_delegate_.request_status())
+          EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, get_result.result())
               << cases[i].name;
         }
       }
@@ -340,10 +515,10 @@ TEST_F(ExtensionProtocolsTest, IncognitoRequest) {
   }
 }
 
-void CheckForContentLengthHeader(net::URLRequest* request) {
-  std::string content_length;
-  request->GetResponseHeaderByName(net::HttpRequestHeaders::kContentLength,
-                                  &content_length);
+void CheckForContentLengthHeader(const GetResult& get_result) {
+  std::string content_length = get_result.GetResponseHeaderByName(
+      net::HttpRequestHeaders::kContentLength);
+
   EXPECT_FALSE(content_length.empty());
   int length_value = 0;
   EXPECT_TRUE(base::StringToInt(content_length, &length_value));
@@ -352,7 +527,7 @@ void CheckForContentLengthHeader(net::URLRequest* request) {
 
 // Tests getting a resource for a component extension works correctly, both when
 // the extension is enabled and when it is disabled.
-TEST_F(ExtensionProtocolsTest, ComponentResourceRequest) {
+TEST_P(ExtensionProtocolsTest, ComponentResourceRequest) {
   // Register a non-incognito extension protocol handler.
   SetProtocolHandler(false);
 
@@ -364,42 +539,32 @@ TEST_F(ExtensionProtocolsTest, ComponentResourceRequest) {
 
   // First test it with the extension enabled.
   {
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension->GetResourceURL("webstore_icon_16.png"),
-            net::DEFAULT_PRIORITY, &test_delegate_,
-            TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
-    EXPECT_EQ(net::OK, test_delegate_.request_status());
-    CheckForContentLengthHeader(request.get());
-    std::string mime_type;
-    request->GetResponseHeaderByName(net::HttpRequestHeaders::kContentType,
-                                     &mime_type);
-    EXPECT_EQ("image/png", mime_type);
+    auto get_result =
+        RequestOrLoad(extension->GetResourceURL("webstore_icon_16.png"),
+                      content::RESOURCE_TYPE_MEDIA);
+    EXPECT_EQ(net::OK, get_result.result());
+    CheckForContentLengthHeader(get_result);
+    EXPECT_EQ("image/png", get_result.GetResponseHeaderByName(
+                               net::HttpRequestHeaders::kContentType));
   }
 
   // And then test it with the extension disabled.
   extension_info_map_->RemoveExtension(extension->id(),
                                        UnloadedExtensionReason::DISABLE);
   {
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension->GetResourceURL("webstore_icon_16.png"),
-            net::DEFAULT_PRIORITY, &test_delegate_,
-            TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
-    EXPECT_EQ(net::OK, test_delegate_.request_status());
-    CheckForContentLengthHeader(request.get());
-    std::string mime_type;
-    request->GetResponseHeaderByName(net::HttpRequestHeaders::kContentType,
-                                     &mime_type);
-    EXPECT_EQ("image/png", mime_type);
+    auto get_result =
+        RequestOrLoad(extension->GetResourceURL("webstore_icon_16.png"),
+                      content::RESOURCE_TYPE_MEDIA);
+    EXPECT_EQ(net::OK, get_result.result());
+    CheckForContentLengthHeader(get_result);
+    EXPECT_EQ("image/png", get_result.GetResponseHeaderByName(
+                               net::HttpRequestHeaders::kContentType));
   }
 }
 
 // Tests that a URL request for resource from an extension returns a few
 // expected response headers.
-TEST_F(ExtensionProtocolsTest, ResourceRequestResponseHeaders) {
+TEST_P(ExtensionProtocolsTest, ResourceRequestResponseHeaders) {
   // Register a non-incognito extension protocol handler.
   SetProtocolHandler(false);
 
@@ -410,34 +575,29 @@ TEST_F(ExtensionProtocolsTest, ResourceRequestResponseHeaders) {
                                     false);
 
   {
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension->GetResourceURL("test.dat"), net::DEFAULT_PRIORITY,
-            &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
-    EXPECT_EQ(net::OK, test_delegate_.request_status());
+    auto get_result = RequestOrLoad(extension->GetResourceURL("test.dat"),
+                                    content::RESOURCE_TYPE_MEDIA);
+    EXPECT_EQ(net::OK, get_result.result());
 
     // Check that cache-related headers are set.
-    std::string etag;
-    request->GetResponseHeaderByName("ETag", &etag);
+    std::string etag = get_result.GetResponseHeaderByName("ETag");
     EXPECT_TRUE(base::StartsWith(etag, "\"", base::CompareCase::SENSITIVE));
     EXPECT_TRUE(base::EndsWith(etag, "\"", base::CompareCase::SENSITIVE));
 
-    std::string revalidation_header;
-    request->GetResponseHeaderByName("cache-control", &revalidation_header);
+    std::string revalidation_header =
+        get_result.GetResponseHeaderByName("cache-control");
     EXPECT_EQ("no-cache", revalidation_header);
 
     // We set test.dat as web-accessible, so it should have a CORS header.
-    std::string access_control;
-    request->GetResponseHeaderByName("Access-Control-Allow-Origin",
-                                    &access_control);
+    std::string access_control =
+        get_result.GetResponseHeaderByName("Access-Control-Allow-Origin");
     EXPECT_EQ("*", access_control);
   }
 }
 
 // Tests that a URL request for main frame or subframe from an extension
 // succeeds, but subresources fail. See http://crbug.com/312269.
-TEST_F(ExtensionProtocolsTest, AllowFrameRequests) {
+TEST_P(ExtensionProtocolsTest, AllowFrameRequests) {
   // Register a non-incognito extension protocol handler.
   SetProtocolHandler(false);
 
@@ -451,12 +611,9 @@ TEST_F(ExtensionProtocolsTest, AllowFrameRequests) {
   // explicitly listed in web_accesible_resources or same-origin to the parent
   // should not succeed.
   {
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension->GetResourceURL("test.dat"), net::DEFAULT_PRIORITY,
-            &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MAIN_FRAME);
-    EXPECT_EQ(net::OK, test_delegate_.request_status());
+    auto get_result = RequestOrLoad(extension->GetResourceURL("test.dat"),
+                                    content::RESOURCE_TYPE_MAIN_FRAME);
+    EXPECT_EQ(net::OK, get_result.result());
   }
   {
     // With PlzNavigate, the subframe navigation requests are blocked in
@@ -464,27 +621,21 @@ TEST_F(ExtensionProtocolsTest, AllowFrameRequests) {
     // tested in an integration test in
     // ExtensionResourceRequestPolicyTest.IframeNavigateToInaccessible.
     if (!content::IsBrowserSideNavigationEnabled()) {
-      std::unique_ptr<net::URLRequest> request(
-          resource_context_.GetRequestContext()->CreateRequest(
-              extension->GetResourceURL("test.dat"), net::DEFAULT_PRIORITY,
-              &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-      StartRequest(request.get(), content::RESOURCE_TYPE_SUB_FRAME);
-      EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, test_delegate_.request_status());
+      auto get_result = RequestOrLoad(extension->GetResourceURL("test.dat"),
+                                      content::RESOURCE_TYPE_SUB_FRAME);
+      EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, get_result.result());
     }
   }
 
   // And subresource types, such as media, should fail.
   {
-    std::unique_ptr<net::URLRequest> request(
-        resource_context_.GetRequestContext()->CreateRequest(
-            extension->GetResourceURL("test.dat"), net::DEFAULT_PRIORITY,
-            &test_delegate_, TRAFFIC_ANNOTATION_FOR_TESTS));
-    StartRequest(request.get(), content::RESOURCE_TYPE_MEDIA);
-    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, test_delegate_.request_status());
+    auto get_result = RequestOrLoad(extension->GetResourceURL("test.dat"),
+                                    content::RESOURCE_TYPE_MEDIA);
+    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, get_result.result());
   }
 }
 
-TEST_F(ExtensionProtocolsTest, MetadataFolder) {
+TEST_P(ExtensionProtocolsTest, MetadataFolder) {
   SetProtocolHandler(false);
 
   base::FilePath extension_dir = GetTestPath("metadata_folder");
@@ -495,25 +646,25 @@ TEST_F(ExtensionProtocolsTest, MetadataFolder) {
   ASSERT_NE(extension.get(), nullptr) << "error: " << error;
 
   // Loading "/test.html" should succeed.
-  EXPECT_EQ(net::OK, DoRequest(*extension, "test.html"));
+  EXPECT_EQ(net::OK, DoRequestOrLoad(*extension, "test.html").result());
 
   // Loading "/_metadata/verified_contents.json" should fail.
   base::FilePath relative_path =
       base::FilePath(kMetadataFolder).Append(kVerifiedContentsFilename);
   EXPECT_TRUE(base::PathExists(extension_dir.Append(relative_path)));
-  EXPECT_EQ(net::ERR_FAILED,
-            DoRequest(*extension, relative_path.AsUTF8Unsafe()));
+  EXPECT_NE(net::OK,
+            DoRequestOrLoad(*extension, relative_path.AsUTF8Unsafe()).result());
 
   // Loading "/_metadata/a.txt" should also fail.
   relative_path = base::FilePath(kMetadataFolder).AppendASCII("a.txt");
   EXPECT_TRUE(base::PathExists(extension_dir.Append(relative_path)));
-  EXPECT_EQ(net::ERR_FAILED,
-            DoRequest(*extension, relative_path.AsUTF8Unsafe()));
+  EXPECT_NE(net::OK,
+            DoRequestOrLoad(*extension, relative_path.AsUTF8Unsafe()).result());
 }
 
 // Tests that unreadable files and deleted files correctly go through
 // ContentVerifyJob.
-TEST_F(ExtensionProtocolsTest, VerificationSeenForFileAccessErrors) {
+TEST_P(ExtensionProtocolsTest, VerificationSeenForFileAccessErrors) {
   const char kFooJsContents[] = "hello world.";
   JobDelegate test_job_delegate(kFooJsContents);
   SetProtocolHandler(false);
@@ -543,30 +694,32 @@ TEST_F(ExtensionProtocolsTest, VerificationSeenForFileAccessErrors) {
   scoped_refptr<Extension> extension(builder.Build());
 
   ASSERT_TRUE(extension.get());
-  content_verifier_->OnExtensionLoaded(testing_profile_.get(), extension.get());
+  content_verifier_->OnExtensionLoaded(browser_context(), extension.get());
   // Wait for PostTask to ContentVerifierIOData::AddData() to finish.
   content::RunAllPendingInMessageLoop();
 
   // Valid and readable foo.js.
-  EXPECT_EQ(net::OK, DoRequest(*extension, kFooJs));
+  EXPECT_EQ(net::OK, DoRequestOrLoad(*extension, kFooJs).result());
   test_job_delegate.WaitForDoneReading(extension->id());
 
   // chmod -r foo.js.
   base::FilePath foo_path = temp_dir.GetPath().AppendASCII(kFooJs);
   ASSERT_TRUE(base::MakeFileUnreadable(foo_path));
   test_job_delegate.Reset();
-  EXPECT_EQ(net::ERR_ACCESS_DENIED, DoRequest(*extension, kFooJs));
+  EXPECT_EQ(net::ERR_ACCESS_DENIED,
+            DoRequestOrLoad(*extension, kFooJs).result());
   test_job_delegate.WaitForDoneReading(extension->id());
 
   // Delete foo.js.
   ASSERT_TRUE(base::DieFileDie(foo_path, false));
   test_job_delegate.Reset();
-  EXPECT_EQ(net::ERR_FILE_NOT_FOUND, DoRequest(*extension, kFooJs));
+  EXPECT_EQ(net::ERR_FILE_NOT_FOUND,
+            DoRequestOrLoad(*extension, kFooJs).result());
   test_job_delegate.WaitForDoneReading(extension->id());
 }
 
 // Tests that zero byte files correctly go through ContentVerifyJob.
-TEST_F(ExtensionProtocolsTest, VerificationSeenForZeroByteFile) {
+TEST_P(ExtensionProtocolsTest, VerificationSeenForZeroByteFile) {
   const char kFooJsContents[] = "";  // Empty.
   JobDelegate test_job_delegate(kFooJsContents);
   SetProtocolHandler(false);
@@ -602,13 +755,17 @@ TEST_F(ExtensionProtocolsTest, VerificationSeenForZeroByteFile) {
   scoped_refptr<Extension> extension(builder.Build());
 
   ASSERT_TRUE(extension.get());
-  content_verifier_->OnExtensionLoaded(testing_profile_.get(), extension.get());
+  content_verifier_->OnExtensionLoaded(browser_context(), extension.get());
   // Wait for PostTask to ContentVerifierIOData::AddData() to finish.
   content::RunAllPendingInMessageLoop();
 
   // Request foo.js.
-  EXPECT_EQ(net::OK, DoRequest(*extension, kFooJs));
+  EXPECT_EQ(net::OK, DoRequestOrLoad(*extension, kFooJs).result());
   test_job_delegate.WaitForDoneReading(extension->id());
 }
+
+INSTANTIATE_TEST_CASE_P(Extensions,
+                        ExtensionProtocolsTest,
+                        ::testing::ValuesIn(kTestModes));
 
 }  // namespace extensions
