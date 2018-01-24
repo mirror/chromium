@@ -74,8 +74,6 @@
 #pragma mark - ToolbarCoordinating
 
 - (void)updateToolbarState {
-  // TODO(crbug.com/803386): This call is needed for interstitials. Check if it
-  // is possible to remove it.
 }
 
 - (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
