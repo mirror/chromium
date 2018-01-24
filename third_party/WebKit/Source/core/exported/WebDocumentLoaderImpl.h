@@ -85,6 +85,8 @@ class CORE_EXPORT WebDocumentLoaderImpl final : public DocumentLoader,
   void SetSourceLocation(const WebSourceLocation&) override;
   void ResetSourceLocation() override;
   void SetUserActivated() override;
+  void BlockParser() override;
+  void ResumeParser() override;
 
   static WebNavigationType ToWebNavigationType(NavigationType);
 

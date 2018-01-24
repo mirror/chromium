@@ -1400,6 +1400,12 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
   DCHECK(!params.needs_resize_ack || next_paint_is_resize_ack());
+
+  if (!has_size_) {
+    has_size_ = true;
+    for (auto& frame : render_frames_)
+      frame.DidReceiveInitialSize();
+  }
 }
 
 void RenderWidget::SetScreenMetricsEmulationParameters(
