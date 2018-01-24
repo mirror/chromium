@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b3e0c2_6b7c0741",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/RejectedPromises.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-24T13:10:24Z",
+      "side": 1,
+      "message": "This is a speced task whose task source is not (yet) speced. Then should we use kMiskPlatformAPI?",
+      "revId": "02049e85b5efda16690285b4c47a739d135d2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb857ee2_4fdfbc50",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/RejectedPromises.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-24T13:10:24Z",
+      "side": 1,
+      "message": "This is a regression caused by this CL... right?\n\nWould it be hard to reorganize code so that one task processes all the messages? Before this CL, we had that behavior...",
+      "revId": "02049e85b5efda16690285b4c47a739d135d2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
