@@ -41,6 +41,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
@@ -62,6 +63,7 @@ import java.util.List;
 /**
  * Unit tests for {@link TileGroup}.
  */
+@DisabledTest(message = "https://crbug.com/805160")
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @DisableFeatures({ChromeFeatureList.NTP_MODERN_LAYOUT})

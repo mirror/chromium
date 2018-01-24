@@ -44,6 +44,7 @@ import org.robolectric.annotation.Config;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.DisableHistogramsRule;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
@@ -254,6 +255,7 @@ public class SuggestionsSectionTest {
         verify(mParent).onItemRangeRemoved(section, 2, 1);
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testRemoveUnknownSuggestion() {
@@ -336,6 +338,7 @@ public class SuggestionsSectionTest {
         verify(callback).onResult(section.getHeaderText());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testOfflineStatus() {
@@ -373,6 +376,7 @@ public class SuggestionsSectionTest {
         assertEquals(Long.valueOf(2L), snippets.get(2).getOfflinePageOfflineId());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testOfflineStatusIgnoredIfDetached() {
@@ -404,6 +408,7 @@ public class SuggestionsSectionTest {
         assertNull(suggestions.get(1).getOfflinePageOfflineId());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testViewAllAction() {
@@ -421,6 +426,7 @@ public class SuggestionsSectionTest {
         verifyAction(section, ContentSuggestionsAdditionalAction.VIEW_ALL);
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testFetchAction() {
@@ -438,6 +444,7 @@ public class SuggestionsSectionTest {
         verifyAction(section, ContentSuggestionsAdditionalAction.FETCH);
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testNoAction() {
@@ -452,6 +459,7 @@ public class SuggestionsSectionTest {
         verifyAction(section, ContentSuggestionsAdditionalAction.NONE);
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testFetchMoreProgressDisplay() {
@@ -484,6 +492,7 @@ public class SuggestionsSectionTest {
      * condition is that if a section is empty, we issue a fetch instead of a fetch-more. This means
      * we are using the 'updateSuggestions()' flow to append to the list the user is looking at.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testFetchMoreAfterDismissAll() {
@@ -528,6 +537,7 @@ public class SuggestionsSectionTest {
         assertFalse(section.isDataStale());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature("Ntp")
     public void testFetchMoreFailure() {
@@ -563,6 +573,7 @@ public class SuggestionsSectionTest {
         verify(sectionOnFailureRunnable, times(1)).run();
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature("Ntp")
     public void testFetchMoreNoSuggestions() {
@@ -600,6 +611,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI updates on updated suggestions.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionReplacesSuggestions() {
@@ -619,6 +631,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI does not update when updating is disabled by a parameter.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNothingWhenReplacingIsDisabled() {
@@ -643,6 +656,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI does not update the first item of the section if it has been viewed.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNotReplaceFirstSuggestionWhenSeen() {
@@ -675,6 +689,7 @@ public class SuggestionsSectionTest {
      * Tests that the UI does not update the first two items of the section if they have been
      * viewed.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNotReplaceFirstTwoSuggestionWhenSeen() {
@@ -707,6 +722,7 @@ public class SuggestionsSectionTest {
      * Tests that the UI does not update any items of the section if the new list is shorter than
      * what has been viewed.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNothingWhenNewListIsShorterThanItemsSeen() {
@@ -737,6 +753,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI updates items of the section if which have not been seen.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUiUpdatesNotSeenItems() {
@@ -779,6 +796,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI does not update when the section has been viewed.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNothingWhenAllSeen() {
@@ -803,6 +821,7 @@ public class SuggestionsSectionTest {
     /**
      * Tests that the UI does not update when anything has been appended.
      */
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testUpdateSectionDoesNothingWhenUserAppended() {
@@ -830,6 +849,7 @@ public class SuggestionsSectionTest {
         assertTrue(section.isDataStale());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testCardIsNotifiedWhenBecomingFirst() {
@@ -845,6 +865,7 @@ public class SuggestionsSectionTest {
                 same(section), eq(1), eq(1), any(PartialBindCallback.class));
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testCardIsNotifiedWhenBecomingLast() {
@@ -860,6 +881,7 @@ public class SuggestionsSectionTest {
                 same(section), eq(4), eq(1), any(PartialBindCallback.class));
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testCardIsNotifiedWhenBecomingSoleCard() {
@@ -875,6 +897,7 @@ public class SuggestionsSectionTest {
                 same(section), eq(1), eq(1), any(PartialBindCallback.class));
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testGetItemDismissalGroupWithSuggestions() {
@@ -905,6 +928,7 @@ public class SuggestionsSectionTest {
         assertThat(section.getItemDismissalGroup(1), contains(1));
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     public void testCardIsNotifiedWhenNotTheLastAnymore() {

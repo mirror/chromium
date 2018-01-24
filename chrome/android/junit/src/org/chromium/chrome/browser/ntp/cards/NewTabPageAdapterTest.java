@@ -53,6 +53,7 @@ import org.robolectric.shadows.ShadowResources;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -1018,6 +1019,7 @@ public class NewTabPageAdapterTest {
         assertEquals(0, preferenceManager.getNewTabPageSigninPromoSuppressionPeriodStart());
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     @EnableFeatures(ChromeFeatureList.CHROME_HOME)
@@ -1185,6 +1187,7 @@ public class NewTabPageAdapterTest {
                 mAdapter.getFirstPositionForType(ItemViewType.ALL_DISMISSED));
     }
 
+    @DisabledTest(message = "https://crbug.com/805160")
     @Test
     @Feature({"Ntp"})
     @EnableFeatures(ChromeFeatureList.CHROME_HOME)
