@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab818dd2_f7ac7fc0",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-24T14:56:57Z",
+      "side": 1,
+      "message": "Nice, that\u0027s much clearer and leads to a helpful explanation in the time.h comments.",
+      "revId": "af39af43ff6104b8cd1e9e4a570b612d2ce8b23f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
