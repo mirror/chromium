@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd98f60c_9d968b44",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "WasResized is being triggered where it wasn\u0027t triggered before. A screen is needed to get ScreenInfo.",
+      "parentUuid": "bfea9251_b1b0197c",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe1991f_100ebdf1",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 55
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T13:17:48Z",
       "side": 1,
       "message": "Wow at first glance it was totally not obvious to me that this would allocate a new LocalSurfaceId. I wonder if we can come up with a new name here? StartNewContentRendererTimeout does not say anything about allocating new surfaces...then again it doesn\u0027t do that without surface sync. Maybe a TODO to rename this once surface sync is on for all platforms?",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15cde8a_6127ff66",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 6213,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "Should I just call it DidNavigate?",
+      "parentUuid": "ffe1991f_100ebdf1",
       "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9c4232c4_7da47c70",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "Is it only webview? What about extensions? I already tested the extensions you suggested; should I test anything else?",
+      "parentUuid": "7915fc07_0c6a060d",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dcc5936_83e0fcc2",
         "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
         "patchSetId": 55
@@ -67,6 +121,24 @@
       "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59741fc_54b4b0fc",
+        "filename": "content/browser/screen_orientation/screen_orientation_browsertest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "The fake screen orientation that used to be sent here was being replaced by the real screen orientation sent in WasResized after navigation and tests were failing.",
+      "parentUuid": "0dcc5936_83e0fcc2",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8bd8fb0d_252a7b45",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "Added a TODO for you in the code.",
+      "parentUuid": "35942d96_b587ace2",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c4fdd20_7366330d",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 55
@@ -101,6 +191,24 @@
       "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1697a969_e316cbb1",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "I have tested some extensions. They all produce visual output, which means they received a new LocalSurfaceId after navigation. Is this enough?",
+      "parentUuid": "7c4fdd20_7366330d",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "516e9d21_93f3b3b6",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "Added the DCHECK at the beginning of this method.",
+      "parentUuid": "e62bf9c4_e90bde7c",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9314bf14_54f3885b",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 55
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "555d59eb_f098fab1",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "If I don\u0027t reset it here, we might hit the dcheck in Resize that says if there is an ack pending you don\u0027t receive another resize.",
+      "parentUuid": "9314bf14_54f3885b",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "946d2d12_77b1d687",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 55
@@ -152,6 +296,24 @@
       "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849e1712_e68899f9",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-24T15:51:27Z",
+      "side": 1,
+      "message": "I\u0027m resetting the ack so we can get the next ResizeParams with the new LocalSurfaceId. I\u0027ll add a comment here.",
+      "parentUuid": "946d2d12_77b1d687",
+      "revId": "5abdbaf015afbd4c58e94065adb175d6958bc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
