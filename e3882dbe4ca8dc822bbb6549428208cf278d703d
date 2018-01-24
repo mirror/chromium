@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a0810a_c1469528",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-24T03:38:46Z",
+      "side": 0,
+      "message": "I\u0027m not really familiar with this (tricky) code, but this comment makes it sound like the DCHECK shouldn\u0027t just be removed since the logic below depends on this assumption? Is the comment inaccurate and the logic works fine with the character included?",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
