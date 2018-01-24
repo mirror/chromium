@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a7c453_00a427ee",
+        "filename": "net/http/broken_alternative_services.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-24T23:49:35Z",
+      "side": 1,
+      "message": "nit: Can you add a comment?",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 16
+      },
+      "revId": "4e305542072b88da2a1ea24139bf1d6fcc89620f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1126ef41_a5ee9ef6",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-24T23:49:35Z",
+      "side": 1,
+      "message": "For a follow-up I think it would make more sense to have this constructor pass in  DefaultClock and DefaultTickClock to the two-arg constructor. And the two-arg constructor should DCHECK that the clocks are non-null.\n\nWhat do you think?",
+      "range": {
+        "startLine": 40,
+        "startChar": 51,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "4e305542072b88da2a1ea24139bf1d6fcc89620f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
