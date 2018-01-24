@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef7c6f48_0e72701e",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-24T22:21:56Z",
+      "side": 1,
+      "message": "Done? I added a new RenderFrameHostManagerTest test that mimics DeleteSpeculativeRFHPendingCommitOfPendingEntryOnInterrupted1 but does a DISABLE_PREVIEWS for the 2nd reload and tests that it does not crash. Does that cover the case you are concerned about?",
+      "parentUuid": "4b57b246_49f8f009",
+      "revId": "48faebfc7c32e38fd053bd4de4453ddc0a3742eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56e45f55_7f373351",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "48faebfc7c32e38fd053bd4de4453ddc0a3742eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c37be8_a985cb38",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-24T22:21:56Z",
+      "side": 1,
+      "message": "Done - attempted to briefly give sense of its case.",
+      "parentUuid": "56e45f55_7f373351",
+      "range": {
+        "startLine": 273,
+        "startChar": 12,
+        "endLine": 273,
+        "endChar": 33
+      },
+      "revId": "48faebfc7c32e38fd053bd4de4453ddc0a3742eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
