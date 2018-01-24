@@ -739,6 +739,11 @@ void WindowTreeHostManager::PostDisplayConfigurationChange() {
 
   for (auto& observer : observers_)
     observer.OnDisplayConfigurationChanged();
+  LOG(ERROR) << "on display configuration changed...";
+  LOG(ERROR) << "mirror mode: " << GetDisplayManager()->IsInMirrorMode();
+  for (auto& display : display::Screen::GetScreen()->GetAllDisplays()) {
+    LOG(ERROR) << "display bounds: " << display.bounds().ToString();
+  }
   UpdateMouseLocationAfterDisplayChange();
 
   // Enable cursor compositing, so that cursor could be mirrored to destination
