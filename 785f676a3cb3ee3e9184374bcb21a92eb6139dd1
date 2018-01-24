@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61fb8378_78d2ae72",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-24T05:48:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c6c0c2_9dd8f81b",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "785f676a3cb3ee3e9184374bcb21a92eb6139dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65f88978_33d0b877",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-int-properties.html",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-24T05:31:37Z",
       "side": 1,
       "message": "TODO in this CL or a later one?",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 7
+      },
+      "revId": "785f676a3cb3ee3e9184374bcb21a92eb6139dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f54a9a4_1bf9820b",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-int-properties.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-24T05:48:46Z",
+      "side": 1,
+      "message": "Well that depends, at the moment I\u0027m not sure that they are returning the right thing, so wasn\u0027t sure how to test them. You mentioned there may be some extra logic required?",
+      "parentUuid": "65f88978_33d0b877",
       "range": {
         "startLine": 72,
         "startChar": 3,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "6305f3ff_0c742ab3",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-24T05:48:46Z",
+      "side": 1,
+      "message": "It\u0027s how AccessibleNode does it. Seems to default to 0. It doesn\u0027t matter because its marked as null if N/A, but maybe just for completion? Regardless, see most recent patch. The int is now created in this method rather than passed in by reference.",
+      "parentUuid": "9daff004_dc81ee82",
+      "revId": "785f676a3cb3ee3e9184374bcb21a92eb6139dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b067c852_26ad603e",
         "filename": "third_party/WebKit/public/platform/WebComputedAXTree.h",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "785f676a3cb3ee3e9184374bcb21a92eb6139dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20f6629_88fc7cac",
+        "filename": "third_party/WebKit/public/platform/WebComputedAXTree.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-24T05:48:46Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b067c852_26ad603e",
+      "range": {
+        "startLine": 39,
+        "startChar": 49,
+        "endLine": 39,
+        "endChar": 57
+      },
+      "revId": "785f676a3cb3ee3e9184374bcb21a92eb6139dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
