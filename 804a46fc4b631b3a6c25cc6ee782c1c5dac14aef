@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4955b33f_b290b0b3",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-24T16:10:42Z",
+      "side": 0,
+      "message": "This is the hotspot. I could hardly find any other places in the original CL that I alter the  original behavior.",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
