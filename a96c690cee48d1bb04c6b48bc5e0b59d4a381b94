@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9f4425c_b0807600",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-24T23:35:38Z",
+      "side": 1,
+      "message": "do we need the net:: prefix here?",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 23
+      },
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20bc321_1cd69a7e",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-24T23:35:38Z",
+      "side": 1,
+      "message": "Can we use the existing |net_fetcher| variable?\n\n(It is already initialized with GetGlobalCertNetFetcher(), and also tries to consolidate the global dependencies to one place).",
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b1ea87_a05f9713",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-24T23:35:38Z",
+      "side": 1,
+      "message": "Note that we also need to instantiate this in io_thread if we want to it be used by Chrome --\n right now it is only being set for Android, but should be a simple matter of extending the ifdef https://cs.chromium.org/chromium/src/chrome/browser/io_thread.cc?type\u003dcs\u0026q\u003dSetGlobalCertNetFetcher\u0026sq\u003dpackage:chromium\u0026l\u003d821",
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
