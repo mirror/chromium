@@ -170,9 +170,6 @@ extern const char kDisableTabForDesktopShareDescription[];
 extern const char kDisallowDocWrittenScriptsUiName[];
 extern const char kDisallowDocWrittenScriptsUiDescription[];
 
-extern const char kDisplayList2dCanvasName[];
-extern const char kDisplayList2dCanvasDescription[];
-
 extern const char kDistanceFieldTextName[];
 extern const char kDistanceFieldTextDescription[];
 
@@ -840,6 +837,9 @@ extern const char kSpeculativeServiceWorkerStartOnQueryInputDescription[];
 
 extern const char kSpellingFeedbackFieldTrialName[];
 extern const char kSpellingFeedbackFieldTrialDescription[];
+
+extern const char kStackedTabStripName[];
+extern const char kStackedTabStripDescription[];
 
 extern const char kStopInBackgroundName[];
 extern const char kStopInBackgroundDescription[];
