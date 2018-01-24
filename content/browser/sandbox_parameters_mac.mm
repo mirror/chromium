@@ -12,6 +12,7 @@
 #include "base/mac/bundle_locations.h"
 #include "base/mac/mac_util.h"
 #include "base/numerics/checked_math.h"
+#include "base/path_service.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "content/public/browser/content_browser_client.h"
@@ -89,6 +90,20 @@ void SetupCommonSandboxParameters(sandbox::SeatbeltExecClient* client) {
       service_manager::SandboxMac::GetCanonicalPath(base::GetHomeDir()).value();
   CHECK(client->SetParameter(
       service_manager::SandboxMac::kSandboxHomedirAsLiteral, homedir));
+}
+
+void SetupPPAPISandboxParameters(sandbox::SeatbeltExecClient* client) {
+  SetupCommonSandboxParameters(client);
+
+  base::FilePath component_flash_dir;
+  CHECK(GetContentClient()->GetComponentUpdatedPepperFlashDir(
+      &component_flash_dir));
+
+  // The path cannot be canonicalized as it may not exist yet, so it should
+  // be in absolute path form already.
+  CHECK(
+      client->SetParameter(service_manager::SandboxMac::kSandboxComponentFlash,
+                           component_flash_dir.value()));
 }
 
 void SetupCDMSandboxParameters(sandbox::SeatbeltExecClient* client) {

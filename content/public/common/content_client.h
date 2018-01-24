@@ -19,6 +19,7 @@
 #include "url/url_util.h"
 
 namespace base {
+class FilePath;
 class RefCountedMemory;
 }
 
@@ -186,6 +187,8 @@ class CONTENT_EXPORT ContentClient {
 #endif  // OS_ANDROID
 
   virtual void OnServiceManagerConnected(ServiceManagerConnection* connection);
+
+  virtual bool GetComponentUpdatedPepperFlashDir(base::FilePath* path);
 
  private:
   friend class ContentClientInitializer;  // To set these pointers.

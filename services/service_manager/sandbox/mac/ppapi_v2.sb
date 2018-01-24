@@ -19,3 +19,7 @@
 (allow file-read-data
   (subpath "/System/Library/CoreServices/SystemAppearance.bundle")
   (path "/System/Library/Colors/System.clr/System.clr"))
+
+; Allow component updated Flash.
+(if (param-defined? component-flash)
+  (allow file-read-data (subpath (param component-flash))))

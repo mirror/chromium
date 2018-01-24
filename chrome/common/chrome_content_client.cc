@@ -754,3 +754,9 @@ void ChromeContentClient::OnServiceManagerConnected(
       profiling_client = LAZY_INSTANCE_INITIALIZER;
   profiling_client.Get().OnServiceManagerConnected(connection);
 }
+
+bool ChromeContentClient::GetComponentUpdatedPepperFlashDir(
+    base::FilePath* dir) {
+  return PathService::Get(chrome::DIR_COMPONENT_UPDATED_PEPPER_FLASH_PLUGIN,
+                          dir);
+}

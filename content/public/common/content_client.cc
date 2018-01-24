@@ -124,4 +124,8 @@ media::MediaDrmBridgeClient* ContentClient::GetMediaDrmBridgeClient() {
 void ContentClient::OnServiceManagerConnected(
     ServiceManagerConnection* connection) {}
 
+bool ContentClient::GetComponentUpdatedPepperFlashDir(base::FilePath* dir) {
+  return false;
+}
+
 }  // namespace content

@@ -13,6 +13,7 @@
 (define browser-pid "BROWSER_PID")
 (define bundle-id "BUNDLE_ID")
 (define bundle-path "BUNDLE_PATH")
+(define component-flash "COMPONENT_FLASH")
 (define component-path "COMPONENT_PATH")
 (define current-pid "CURRENT_PID")
 (define disable-sandbox-denial-logging "DISABLE_SANDBOX_DENIAL_LOGGING")
