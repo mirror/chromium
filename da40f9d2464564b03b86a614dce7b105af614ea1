@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9c8d16_37b48258",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "since it would add too much...",
+      "range": {
+        "startLine": 12,
+        "startChar": 68,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb74b3a0_160040e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "Is the backslash needed here?  Also, use backtics for this sort of thing.",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cdce09_b84ab7e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "On Chromium infrastructure, it is run using the `content_shell` executable.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44eeee4_fe249cec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "In the future, Chromium `src/device/bluetooth` may be refactored into a Mojo service.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f88d6e3_bb91c273",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "At this point, it would be possible to add the necessary testing hooks into stable Chrome without substantially increasing the binary size, similar to WebUSB.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78324da_a14aa4c1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right.  Other browser vendors may implement the testing api in their stable versions.  We need another way to tell if don\u0027t have the testing api, and it might not be best to make the check in this method.",
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab8e97a_2be0f718",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/resources/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-24T18:03:10Z",
+      "side": 1,
+      "message": "Are you able to add an anchor tag here?",
+      "revId": "da40f9d2464564b03b86a614dce7b105af614ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
