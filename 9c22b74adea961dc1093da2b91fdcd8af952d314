@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384d600d_aa7dcda8",
+        "filename": "content/browser/download/download_worker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-24T18:53:03Z",
+      "side": 1,
+      "message": "optional nit: pass url_loader_factory_getter directly? Well but it doesn\u0027t have too much difference.",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "9c22b74adea961dc1093da2b91fdcd8af952d314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
