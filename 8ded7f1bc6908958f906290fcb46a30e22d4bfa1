@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "bd721090_d077ffe8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "If there are no items in the viewport, tabbing should skip over the viewport. If there are items, tabbing should select the last item.",
+      "parentUuid": "0b45b308_7098a2f9",
+      "range": {
+        "startLine": 111,
+        "startChar": 104,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f19c9f_98a8e272",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 1
@@ -53,6 +77,24 @@
       "writtenOn": "2017-09-28T23:17:01Z",
       "side": 1,
       "message": "Could you add a comment explaining the logic here? Why does the blur event coming from selfOrAncestor mean the selected message should be the last one?",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd4c1ad_9ffef425",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "If the focus is coming from or going to outside the viewport, the selected message should be reset.\n\nAdded a comment.",
+      "parentUuid": "62f19c9f_98a8e272",
       "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "1fad42f1_ca4f0718",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "hasFocus() checks if you or your descendant is focused. I want to check specifically if focus is on the viewport, not in the console prompt or inside one of the messages.",
+      "parentUuid": "959413e4_2a2f5f19",
+      "range": {
+        "startLine": 154,
+        "startChar": 52,
+        "endLine": 154,
+        "endChar": 69
+      },
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cf16a0a_a5c38f30",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 1
@@ -116,6 +182,30 @@
       "writtenOn": "2017-09-29T19:25:00Z",
       "side": 1,
       "message": "Shouldn\u0027t this condition always be true if the previous condition on L156 is true, and selectedIndex !\u003d\u003d -1?",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 7
+      },
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e79f04a_ac06d1db",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "Yep, removed it.",
+      "parentUuid": "1cf16a0a_a5c38f30",
       "range": {
         "startLine": 158,
         "startChar": 6,
@@ -145,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "f540af02_caa78df0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "Yep. Done.",
+      "parentUuid": "c81d4760_6e2606d6",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a36966d6_3599b740",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 1
@@ -168,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "93b99f89_e1fea1e4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "Yep. Removed from refresh.",
+      "parentUuid": "a36966d6_3599b740",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 471,
+        "endChar": 8
+      },
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc24f021_f1862b87",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 1
@@ -179,6 +311,24 @@
       "writtenOn": "2017-09-28T23:17:01Z",
       "side": 1,
       "message": "How does this return something comparable to itemCount? Looks like it\u0027d return a number of pixels?",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e778ca9b_5115a33d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-24T01:12:20Z",
+      "side": 1,
+      "message": "lowerBound returns the index not the value. This code change got moved into Eric\u0027s patch.",
+      "parentUuid": "dc24f021_f1862b87",
       "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
