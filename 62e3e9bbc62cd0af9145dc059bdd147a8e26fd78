@@ -164,6 +164,30 @@
       "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a781195_665e9729",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-24T21:31:59Z",
+      "side": 1,
+      "message": "Done. Thanks for the pointers!\nIt turns out I just need to specify the Content-Length additionally so the code can get through the following condition:\n\n  // If the connection can\u0027t be reused, return\n  // ERR_UNABLE_TO_REUSE_CONNECTION_FOR_PROXY_AUTH.  The request will be retried\n  // at a higher layer.\n  if (!response_.headers-\u003eIsKeepAlive() ||\n      !http_stream_parser_-\u003eCanFindEndOfResponse() ||\n      !transport_-\u003esocket()-\u003eIsConnected()) {\n    transport_-\u003esocket()-\u003eDisconnect();\n    return ERR_UNABLE_TO_REUSE_CONNECTION_FOR_PROXY_AUTH;\n  }",
+      "parentUuid": "70722daf_69043bcc",
+      "range": {
+        "startLine": 436,
+        "startChar": 27,
+        "endLine": 436,
+        "endChar": 39
+      },
+      "revId": "62e3e9bbc62cd0af9145dc059bdd147a8e26fd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
