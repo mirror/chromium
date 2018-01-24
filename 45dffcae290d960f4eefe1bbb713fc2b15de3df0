@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "590bc353_babcd4eb",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-24T08:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00f0d60_f0110a12",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "45dffcae290d960f4eefe1bbb713fc2b15de3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cea7cab9_5c508b1d",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-24T08:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1a24d8_266ad4ae",
+      "revId": "45dffcae290d960f4eefe1bbb713fc2b15de3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d65cdf_30834604",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 22
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-24T06:27:57Z",
       "side": 1,
       "message": "All the implementations still runs |callback| synchronously. So in effect this CL doesn\u0027t actually change the existing behavior. This conflicts with the CL description, which makes it sound as though the implementation is asynchronous.\n\nFrom my reading of this CL, it refactors code to make it easier down the road the switch this to async by changing the way |callback| runs. This is still desirable. It just does not match how I interpreted the CL description.",
+      "range": {
+        "startLine": 116,
+        "startChar": 46,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "45dffcae290d960f4eefe1bbb713fc2b15de3df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9714351f_5a353d5f",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-24T08:57:37Z",
+      "side": 1,
+      "message": "The message has been updated. Any suggestions?",
+      "parentUuid": "c8d65cdf_30834604",
       "range": {
         "startLine": 116,
         "startChar": 46,
