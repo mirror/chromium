@@ -91,10 +91,14 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
 
   // A context object used for UpdateVisualObject() and PopulateDescendants().
   struct UpdateContext {
-    const LayoutObject* parent_box;
-    const NGPhysicalOffset offset_to_parent_box;
+    // |offset_to_container_box| is an accumulated offset to |container_box| to
+    // convert |NGPhysicalFragment::Offset| to the space for |VisualRect|.
+    // While |NGPhysicalFragment::Offset| is relative to its parent,
+    // |VisualRect| is in different space; see |DisplayItemClient| for more
+    // details.
+    const NGPhysicalOffset paint_offset;
   };
-  void UpdateVisualRectFromLayoutObject(const UpdateContext&);
+  void UpdateVisualRectFromLayoutObject(const NGPhysicalOffset&);
 
   scoped_refptr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
