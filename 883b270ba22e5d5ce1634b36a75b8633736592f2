@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5811c7d_43c26bd8",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:14:03Z",
+      "side": 1,
+      "message": "This is pretty hideous, and seems fragile, though not all that complicated.\n\nI\u0027m not sure of a better way to do this - refcounting the BodyReader may be marginally prettier, but tremendously so.  ScopedDataPipeConsumerHandle isn\u0027t documented well enough for it to be clear if we can delete it in the middle of a read data, but I think it\u0027s most consumer-friendly to keep it alive for the duration of the call.  Also, if an API is trying to be general, seems like it should prefer to put complexity in itself, instead of making consumers deal with its idiosyncrasies.\n\nOpen to suggestions.",
+      "range": {
+        "startLine": 465,
+        "startChar": 20,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9438c36_2f6afcb6",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-24T23:14:03Z",
+      "side": 1,
+      "message": "Any consumer that wants to stream data, and not treat 4xx/5xx responses as failure, will likely want ResponseInfo before we start streaming data to it.  I think we\u0027re safe leaving this for another day, though.  The main thing is I don\u0027t want to encourage consumers to try and get data that may or may not be available yet - URLRequest has a ton of fields that are available at very unclear times, and I would like to avoid that here.\n\nI think the simplest thing to do would be to either add a way to set an OnHeadersReceived callback, or add a callback for it to SimpleURLLoaderStreamHandler.  I\u0027d tend to favor the former, just because I could see doing the latter, only to discover some consumers that don\u0027t download responses as streams really want it, and having two callbacks introduces some ordering issues that I think it\u0027s simplest not to worry about.",
+      "range": {
+        "startLine": 1184,
+        "startChar": 25,
+        "endLine": 1184,
+        "endChar": 33
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
