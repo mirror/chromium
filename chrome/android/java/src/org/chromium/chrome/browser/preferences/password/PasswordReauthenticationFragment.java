@@ -22,6 +22,12 @@ public class PasswordReauthenticationFragment extends Fragment {
     // reauthentication prompt to the user.
     public static final String DESCRIPTION_ID = "description";
 
+    // The key for the scope, with values from ReauthenticationManager.ReauthScope. The scope enum
+    // value corresponds to what is indicated in the description message for the user (e.g., if the
+    // message mentions "export passwords", the scope should be BULK, but for "view password" it
+    // should be ONE_AT_A_TIME.
+    public static final String SCOPE_ID = "scope";
+
     protected static final int CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE = 2;
 
     protected static final String HAS_BEEN_SUSPENDED_KEY = "has_been_suspended";
@@ -54,7 +60,8 @@ public class PasswordReauthenticationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
-                ReauthenticationManager.setLastReauthTimeMillis(System.currentTimeMillis());
+                ReauthenticationManager.recordLastReauth(System.currentTimeMillis(),
+                        (ReauthenticationManager.ReauthScope) getArguments().get(SCOPE_ID));
             }
             mFragmentManager.popBackStack();
         }

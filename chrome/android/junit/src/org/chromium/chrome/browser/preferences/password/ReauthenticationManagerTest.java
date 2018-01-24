@@ -66,11 +66,15 @@ public class ReauthenticationManagerTest {
         FragmentManager fragmentManager = testActivity.getFragmentManager();
         addDummyPasswordEntryEditor(fragmentManager);
 
-        ReauthenticationManager.setLastReauthTimeMillis(0);
-        assertFalse(ReauthenticationManager.authenticationStillValid());
+        ReauthenticationManager.resetLastReauth();
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
 
         ReauthenticationManager.displayReauthenticationFragment(
-                R.string.lockscreen_description_view, View.NO_ID, fragmentManager);
+                R.string.lockscreen_description_view, View.NO_ID, fragmentManager,
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME);
         Fragment reauthFragment =
                 fragmentManager.findFragmentByTag(ReauthenticationManager.FRAGMENT_TAG);
         assertNotNull(reauthFragment);
@@ -80,7 +84,8 @@ public class ReauthenticationManagerTest {
                 testActivity.RESULT_OK, prepareDummyDataForActivityResult());
         fragmentManager.executePendingTransactions();
 
-        assertTrue(ReauthenticationManager.authenticationStillValid());
+        assertTrue(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
     }
 
     /**
@@ -95,11 +100,15 @@ public class ReauthenticationManagerTest {
         FragmentManager fragmentManager = testActivity.getFragmentManager();
         addDummyPasswordEntryEditor(fragmentManager);
 
-        ReauthenticationManager.setLastReauthTimeMillis(0);
-        assertFalse(ReauthenticationManager.authenticationStillValid());
+        ReauthenticationManager.resetLastReauth();
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
 
         ReauthenticationManager.displayReauthenticationFragment(
-                R.string.lockscreen_description_view, View.NO_ID, fragmentManager);
+                R.string.lockscreen_description_view, View.NO_ID, fragmentManager,
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME);
         Fragment reauthFragment =
                 fragmentManager.findFragmentByTag(ReauthenticationManager.FRAGMENT_TAG);
         assertNotNull(reauthFragment);
@@ -109,6 +118,83 @@ public class ReauthenticationManagerTest {
                 testActivity.RESULT_CANCELED, prepareDummyDataForActivityResult());
         fragmentManager.executePendingTransactions();
 
-        assertFalse(ReauthenticationManager.authenticationStillValid());
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
+    }
+
+    /**
+     * Ensure that displayReauthenticationFragment considers BULK scope to cover the ONE_AT_A_TIME
+     * scope as well.
+     */
+    @Test
+    public void testDisplayReauthenticationFragment_OneAtATimeCovered() {
+        Activity testActivity = Robolectric.setupActivity(Activity.class);
+        PasswordReauthenticationFragment.preventLockingForTesting();
+
+        FragmentManager fragmentManager = testActivity.getFragmentManager();
+        addDummyPasswordEntryEditor(fragmentManager);
+
+        ReauthenticationManager.resetLastReauth();
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
+
+        ReauthenticationManager.displayReauthenticationFragment(
+                R.string.lockscreen_description_export, View.NO_ID, fragmentManager,
+                ReauthenticationManager.ReauthScope.BULK);
+        Fragment reauthFragment =
+                fragmentManager.findFragmentByTag(ReauthenticationManager.FRAGMENT_TAG);
+        assertNotNull(reauthFragment);
+
+        reauthFragment.onActivityResult(
+                PasswordReauthenticationFragment.CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE,
+                testActivity.RESULT_OK, prepareDummyDataForActivityResult());
+        fragmentManager.executePendingTransactions();
+
+        // Both BULK and ONE_AT_A_TIME scopes should be covered by the BULK request above.
+        assertTrue(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertTrue(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
+    }
+
+    /**
+     * Ensure that displayReauthenticationFragment does not consider ONE_AT_A_TIME scope to cover
+     * the BULK scope.
+     */
+    @Test
+    public void testDisplayReauthenticationFragment_BulkNotCovered() {
+        Activity testActivity = Robolectric.setupActivity(Activity.class);
+        PasswordReauthenticationFragment.preventLockingForTesting();
+
+        FragmentManager fragmentManager = testActivity.getFragmentManager();
+        addDummyPasswordEntryEditor(fragmentManager);
+
+        ReauthenticationManager.resetLastReauth();
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
+
+        ReauthenticationManager.displayReauthenticationFragment(
+                R.string.lockscreen_description_view, View.NO_ID, fragmentManager,
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME);
+        Fragment reauthFragment =
+                fragmentManager.findFragmentByTag(ReauthenticationManager.FRAGMENT_TAG);
+        assertNotNull(reauthFragment);
+
+        reauthFragment.onActivityResult(
+                PasswordReauthenticationFragment.CONFIRM_DEVICE_CREDENTIAL_REQUEST_CODE,
+                testActivity.RESULT_OK, prepareDummyDataForActivityResult());
+        fragmentManager.executePendingTransactions();
+
+        // Only ONE_AT_A_TIME scope should be covered by the ONE_AT_A_TIME request above.
+        assertTrue(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.ONE_AT_A_TIME));
+        assertFalse(ReauthenticationManager.authenticationStillValid(
+                ReauthenticationManager.ReauthScope.BULK));
     }
 }

@@ -227,13 +227,14 @@ public class SavePasswordsPreferences
                         .show();
                 // Re-enable exporting, the current one was cancelled by Chrome.
                 mExportOptionSuspended = false;
-            } else if (ReauthenticationManager.authenticationStillValid()) {
+            } else if (ReauthenticationManager.authenticationStillValid(
+                               ReauthenticationManager.ReauthScope.BULK)) {
                 exportAfterReauth();
             } else {
                 mExportRequested = true;
                 ReauthenticationManager.displayReauthenticationFragment(
                         R.string.lockscreen_description_export, getView().getId(),
-                        getFragmentManager());
+                        getFragmentManager(), ReauthenticationManager.ReauthScope.BULK);
             }
             return true;
         }
@@ -355,7 +356,7 @@ public class SavePasswordsPreferences
     @Override
     public void onDetach() {
         super.onDetach();
-        ReauthenticationManager.setLastReauthTimeMillis(0);
+        ReauthenticationManager.resetLastReauth();
     }
 
     void rebuildPasswordLists() {
@@ -469,7 +470,8 @@ public class SavePasswordsPreferences
             mExportRequested = false;
             // Depending on the authentication result, either carry on with exporting or re-enable
             // the export menu for future attempts.
-            if (ReauthenticationManager.authenticationStillValid()) {
+            if (ReauthenticationManager.authenticationStillValid(
+                        ReauthenticationManager.ReauthScope.BULK)) {
                 exportAfterReauth();
             } else {
                 mExportOptionSuspended = false;
