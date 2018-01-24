@@ -18,6 +18,7 @@ class ChromeBrowserState;
 @protocol UrlLoader;
 @protocol ToolbarCoordinatorDelegate;
 class LocationBarControllerImpl;
+class WebStateList;
 
 @interface LocationBarCoordinator : NSObject<LocationBarURLLoader>
 
@@ -35,14 +36,13 @@ class LocationBarControllerImpl;
 // Delegate for this coordinator.
 // TODO(crbug.com/799446): Change this.
 @property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
-
+// The web state list this ToolbarCoordinator is handling.
+@property(nonatomic, assign) WebStateList* webStateList;
 // Start this coordinator.
 - (void)start;
 // Stop this coordinator.
 - (void)stop;
 
-// Updates omnibox state, including the displayed text and the cursor position.
-- (void)updateOmniboxState;
 
 @end
 

@@ -24,6 +24,8 @@
 - (void)currentPageLoadStarted;
 - (void)adjustToolbarHeight;
 - (CGRect)visibleOmniboxFrame;
+// ToolbarController public interface.
+- (void)updateToolbarState;
 
 @end
 
