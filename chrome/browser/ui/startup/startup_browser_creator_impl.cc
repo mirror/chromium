@@ -51,6 +51,7 @@
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/startup/startup_tab_provider.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/extension_metrics.h"
@@ -78,7 +79,7 @@
 #include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
 #endif
 
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+#if defined(OS_MACOSX)  // && !BUILDFLAG(MAC_VIEWS_BROWSER)
 #include "chrome/browser/ui/startup/session_crashed_infobar_delegate.h"
 #endif
 
@@ -776,7 +777,7 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
 
   if (HasPendingUncleanExit(browser->profile()) &&
       !SessionCrashedBubble::Show(browser)) {
-#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+#if defined(OS_MACOSX)  // && !BUILDFLAG(MAC_VIEWS_BROWSER)
     SessionCrashedInfoBarDelegate::Create(browser);
 #endif
   }
@@ -791,9 +792,16 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
   // These info bars are not shown when the browser is being controlled by
   // automated tests, so that they don't interfere with tests that assume no
   // info bars.
+#if defined(OS_MACOSX) && BUILDFLAG(MAC_VIEWS_BROWSER)
+  bool kNeverInfoBars = true;
+#else
+  bool kNeverInfoBars = false;
+#endif
+
   if (is_process_startup == chrome::startup::IS_PROCESS_STARTUP &&
       !command_line_.HasSwitch(switches::kTestType) &&
-      !command_line_.HasSwitch(switches::kEnableAutomation)) {
+      !command_line_.HasSwitch(switches::kEnableAutomation) &&
+      !kNeverInfoBars) {
     chrome::ShowBadFlagsPrompt(browser);
     InfoBarService* infobar_service = InfoBarService::FromWebContents(
         browser->tab_strip_model()->GetActiveWebContents());
