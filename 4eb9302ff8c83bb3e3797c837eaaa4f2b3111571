@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c745ea00_dabc7470",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:09:53Z",
+      "side": 1,
+      "message": "Oh, OK.\n\nshould we fix isNetworkPolicyControlled to something like\nif (typeof property.UserPolicy !\u003d \u0027undefined\u0027 ||\n    typeof property.DevicePolicy !\u003d \u0027undefined\u0027)\ninstead of if (property.UserPolicy || property.DevicePolicy)\n(https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_network_behavior.js?rcl\u003d32bff724cd465ee648b139dca392b6c30ab7e475\u0026l\u003d26)",
+      "parentUuid": "3a39639a_28b40007",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c80eda3_a359c37d",
         "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "For enforced policies (which is what we are testing for), UserEditable will be set to false:\nhttps://cs.chromium.org/chromium/src/extensions/browser/api/networking_private/networking_private_chromeos.cc?type\u003dcs\u0026q\u003dSetProxyEffectiveValue\u0026sq\u003dpackage:chromium\u0026l\u003d257\n\nI can make this:\nif (property.UserEditable \u003d\u003d\u003d false)\n  return false;\n\nif that would be more clear.",
       "parentUuid": "7c80eda3_a359c37d",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2770fb29_91ca35ae",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-24T20:09:53Z",
+      "side": 1,
+      "message": "no, let\u0027s keep it as is. I think the current code is clearer.",
+      "parentUuid": "32464638_cb5e147c",
       "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
