@@ -22,6 +22,30 @@
       "revId": "7d43db330f54c8adbed4c5aaa8563b02b03273af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3e2af4_7ce78af2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-24T22:10:37Z",
+      "side": 1,
+      "message": "BottomToolbarPhone has this method overriden to always return true. I thought I had added this for modern, but git blame says it was added for the tab switcher animation: https://codereview.chromium.org/2757753004\n\nIn my testing, this line doesn\u0027t make the location bar draw in the tab switcher. But the modernized toolbar works without this line removed, so removing seems like the right option right now (done).",
+      "parentUuid": "3fe66109_e24b76a1",
+      "range": {
+        "startLine": 1386,
+        "startChar": 25,
+        "endLine": 1386,
+        "endChar": 40
+      },
+      "revId": "7d43db330f54c8adbed4c5aaa8563b02b03273af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
