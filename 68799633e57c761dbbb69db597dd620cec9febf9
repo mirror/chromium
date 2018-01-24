@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa8979f_699d2506",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2201,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-24T15:28:19Z",
+      "side": 1,
+      "message": "Won\u0027t contentFrame change on layout changes between portrait and landscape?  What happens to an infobar when changing from landscape to portrait or portrait to landscape?",
+      "revId": "68799633e57c761dbbb69db597dd620cec9febf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
