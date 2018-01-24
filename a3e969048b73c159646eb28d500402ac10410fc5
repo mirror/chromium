@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "837c9219_6a041bf2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-24T06:49:19Z",
+      "side": 1,
+      "message": "I feel we need a comment to say why we don\u0027t call OnError().\nFor example:\n// OnError should not be called here since per spec the promise returned by skipWaiting() can never reject.",
+      "revId": "a3e969048b73c159646eb28d500402ac10410fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc154aab_037c26c8",
         "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
         "patchSetId": 2
