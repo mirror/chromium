@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e6a3c6e_d82bfcc8",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3506,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "1. why the cast to double?\n2. should we worry about overflow here? base::HistogramBase::Sample here is only int32_t (so it caps out at 2^31-1, or about 2 billion). Should this be instead doing a saturated_cast to base::HistogramBase::Sample or similar?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb2e0f9_865324d9",
+        "filename": "third_party/WebKit/Source/core/exported/WebDocumentLoaderImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "I assume the plan is to update this function\u0027s call site eventually? It\u0027s in content, so it actually goes from TimeTicks to double and then we\u0027re going back to TimeTicks again here. :)",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac2bf0e_0f0159d3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "This is getting a little long (and now wraps strangely). Maybe something like:\n\nDocumentLoader* document_loader \u003d\n    GetFrame() ? GetFrame()-\u003eLoader().GetDocumentLoader() : nullptr;\nif (document_loader \u0026\u0026\n    document_loader-\u003eGetTiming().LoadEventStart().is_null()) {\n  DocumentLoadTiming\u0026 timing \u003d document_loader-\u003eGetTiming();\n  // ... etc ...\n}",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85222f82_efe5efee",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit: variable should probably no longer be called \"InSeconds\" given TimeDelta implies its units; suggest \"kLongTaskSubTaskThreshold\". It also looks like milliseconds is the natural unit here, so WDYT of something like:\n\nconstexpr auto kLongTaskSubTaskThreshold \u003d TimeDelta::FromMilliseconds(12);",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a77f8a6_a7da2b12",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit: suggest removing \"Seconds\" as TimeDelta has implied units\nsuper-nit: suggest using FromSeconds since the number of seconds is integral",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13103822_356c7c51",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit: TimeDelta::FromMilliseconds(1), since the comment also describes it in terms of milliseconds?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b02cb97_a4ba2952",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "probably pre-existing, but what if this is over std::numeric_limits\u003cbase::HistogramBase::Sample\u003e::max()?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353f6df3_9db3cdfb",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "Does DCHECK_GE not work? We have an overload of operator\u003c\u003c that should make this work.",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85a3d37_b60c8188",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit: suggest doing these comparisons in terms of TimeTicks; we should have the necessary logging support for that to compile\n\n  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintRendered(), TimeTicks());\n\n(here and below)",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46610fb_76c00abb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit (but not new): overflow?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa88d61_2962561d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "nit: suggest instead having a similar one that converts directly from TimeTicks to DOMHighResTimeStamp, rather than chaining the conversions?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e56e22_7ab62611",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "ditto for TimeDelta, I guess",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747e852f_eacbf66d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceResourceTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "timing-\u003eDnsEnd() cannot be negative? Do you know what this is trying to achieve? The comment makes it look like it\u0027s trying to do std::max (but trying to handle zero meaning unset?).",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb215f4_cb303525",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "should this be made to be a TimeDelta constant, like:\n\n  static constexpr auto kLongTaskThreshold \u003d TimeDelta::FromMilliseconds(50);",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fa0e49_04a5c45d",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "EXPECT_EQ should work fine on TimeTicks, without converting",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3184cd_13de5211",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadTiming.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "Is \"in seconds\" still meaningful here, given it\u0027s now TimeTicks (which is really in microseconds)? Perhaps it should be described as being in the timeline given by WTF::CurrentTimeTicks, or something along those lines.",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0941c2b_600450c7",
+        "filename": "third_party/WebKit/Source/platform/probe/PlatformProbes.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-24T19:38:00Z",
+      "side": 1,
+      "message": "aside: this is...odd...these will change depending on when they are read? Not your problem, I guess, but do you know why this works this way?",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
