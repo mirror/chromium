@@ -22,6 +22,10 @@ class TestClientControlledStateDelegate
       ash::mojom::WindowStateType next_state) override;
   void HandleBoundsRequest(ash::wm::WindowState* window_state,
                            const gfx::Rect& bounds) override;
+  void HandleWindowStateAndBoundsRequest(
+      ash::wm::WindowState* window_state,
+      ash::mojom::WindowStateType requested_state,
+      const gfx::Rect& requested_bounds) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestClientControlledStateDelegate);
