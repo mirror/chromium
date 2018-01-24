@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "9abdd535_39e48203",
+        "filename": "base/time/time_override.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T12:15:16Z",
+      "side": 1,
+      "message": "Makes sense, done.",
+      "parentUuid": "a65a7d23_44089b84",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f6a07f_90e235ba",
         "filename": "base/time/time_win.cc",
         "patchSetId": 11
@@ -414,6 +438,30 @@
       "side": 1,
       "message": "Ideally, the overrides would be made while the process is still single-threaded. I think this is the case in base_unittests. Ideally, for headless, you\u0027ll be putting the overrides in-place near the starting point.",
       "parentUuid": "10327295_d242220e",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 43
+      },
+      "revId": "1a8af9c07697a49cc011d762b2479f139c69cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e729c6e2_9c3512c2",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-24T12:15:16Z",
+      "side": 1,
+      "message": "Sounds good. I expanded the comment for ScopedTimeClockOverrides to mention single-threadedness. For headless use, we\u0027ll probably add a command line flag that\u0027s handled right after renderer process fork, so we should still be single-threaded then too.",
+      "parentUuid": "cb51c4ea_6f9a13b1",
       "range": {
         "startLine": 588,
         "startChar": 0,
