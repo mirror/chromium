@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5492012_4c518026",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T08:15:03Z",
+      "side": 1,
+      "message": "This is deprecated on iOS 11.",
+      "range": {
+        "startLine": 1624,
+        "startChar": 56,
+        "endLine": 1624,
+        "endChar": 70
+      },
+      "revId": "65af44e8aecd8f14f69c7eacd63e74697f25902f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275e9d1f_b660c536",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T08:15:03Z",
+      "side": 1,
+      "message": "Same, topLayoutGuide is deprecated.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 53,
+        "endLine": 2034,
+        "endChar": 67
+      },
+      "revId": "65af44e8aecd8f14f69c7eacd63e74697f25902f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
