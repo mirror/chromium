@@ -274,7 +274,7 @@ function test_allowlists(expected_policy, policy, message) {
 //     disallowed_features: A list of features that should be disallowed in the
 //     frame.
 //     src: the URL to load in the frame.
-//     allow: the allow attribute (container policy) of the iframe
+//     allow: the allow attribute (container policy) of the iframe.
 function test_allowed_features_for_subframe(
     test, allowed_features, disallowed_features, src, allow) {
   let frame = document.createElement('iframe');
@@ -286,10 +286,10 @@ function test_allowed_features_for_subframe(
   window.addEventListener('message', test.step_func(function handler(evt) {
     if (evt.source === frame.contentWindow) {
       for (var feature of allowed_features) {
-        assert_true(evt.data.includes(feature), feature);
+        assert_true(evt.data.includes(feature), feature, feature + " is allowed");
       }
       for (var feature of disallowed_features) {
-        assert_false(evt.data.includes(feature), feature);
+        assert_false(evt.data.includes(feature), feature, feature + " is not allowed");
       }
       window.removeEventListener('message', handler);
       test.done();
@@ -297,4 +297,51 @@ function test_allowed_features_for_subframe(
   }));
 
  document.body.appendChild(frame);
+}
+
+// This function tests that a frame.policy allows and disallows features
+// correctly. A feature is allowed in a frame either through inherited policy or
+// specified by iframe allow attribute.
+// Arguments:
+//     allowed_features: A list of features that should be allowed by
+//     frame.policy
+//     disallowed_features: A list of features that should be disallowed by
+//     frame.policy
+//     src: the URL to load in the frame.
+//     allow: the allow attribute (container policy) of the iframe.
+//     allowfullscreen: boolean value of allowfullscreen attribute.
+//     allowpayment: boolean value of allowpaymentrequest attribute.
+
+function test_frame_policy(
+    allowed_features, disallowed_features, src, allow, allowfullscreen, allowpayment) {
+  let frame = document.createElement('iframe');
+  document.body.appendChild(frame);
+  var frame_policy_features = frame.policy.allowedFeatures();
+  var frame_policy = frame.policy;
+  if (typeof allow !== 'undefined') {
+    frame.allow = allow;
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allow updates frame.policy');
+  }
+  if (typeof allowfullscreen !== 'undefined') {
+    frame.setAttribute('allowfullscreen', allowfullscreen);
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allowfullscreen updates frame.policy');
+  }
+  if (typeof allowpaymentrequestned !== 'undefined') {
+    frame.setAttribute('allowpaymentrequest', allowpayment);
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allowfullscreen updates frame.policy');
+  }
+  frame.src = src;
+
+  for (var feature of allowed_features) {
+    assert_true(frame_policy.allowsFeature(feature), feature + " is allowed");
+  }
+  for (var feature of disallowed_features) {
+    assert_false(frame_policy.allowsFeature(feature), feature + " is not allowed");
+  }
 }
