@@ -90,14 +90,12 @@ LSSharedFileListItemRef GetLoginItemForApp() {
     return NULL;
   }
 
-  base::scoped_nsobject<NSArray> login_items_array(
+  base::scoped_nsobject<NSArray<LSSharedFileListItemRef>> login_items_array(
       CFToNSCast(LSSharedFileListCopySnapshot(login_items, NULL)));
 
   NSURL* url = [NSURL fileURLWithPath:[base::mac::MainBundle() bundlePath]];
 
-  for(NSUInteger i = 0; i < [login_items_array count]; ++i) {
-    LSSharedFileListItemRef item = reinterpret_cast<LSSharedFileListItemRef>(
-        [login_items_array objectAtIndex:i]);
+  for (LSSharedFileListItemRef item in login_items_array) {
     CFURLRef item_url_ref = NULL;
 
     // It seems that LSSharedFileListItemResolve() can return NULL in
