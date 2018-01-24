@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bac730d1_45b98f51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "Remove text?",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3feb81d_e932406e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "twice twice",
+      "range": {
+        "startLine": 90,
+        "startChar": 46,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826a06a7_51e0034d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "Should this be passed in or set as a setter/getter like some of the other properties?",
+      "range": {
+        "startLine": 117,
+        "startChar": 83,
+        "endLine": 117,
+        "endChar": 95
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b558de_23338a70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "We probably need the anchor rect too.  Should we pass that along as well as the new popup position?",
+      "range": {
+        "startLine": 304,
+        "startChar": 12,
+        "endLine": 304,
+        "endChar": 87
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842ebb73_1e98810c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "Will this eventually override a RectProvider (or AnchorProvider whatever) interface with the startObserving(), stopObserving() calls?  Then will AnchoredPopupWindow take a AnchorProvider as a parameter?",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b08d4a_8711f92e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "@NotNull if this can\u0027t be null, otherwise we could have null mean \"no visible representation on the screen.",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2c74a8_5e2a44a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-24T22:51:59Z",
+      "side": 1,
+      "message": "Should we assert mObserver \u003d\u003d null || mObserver \u003d\u003d observer?  Don\u0027t feel strongly on this though.",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
