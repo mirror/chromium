@@ -28,11 +28,6 @@ bool checkForBadKeyword(const uint8_t* data, size_t size) {
 }
 
 
-static int Progress(void *not_used_ptr) {
-  return 1;
-}
-
-
 // Entry point for LibFuzzer.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   if (size < 2)
@@ -52,12 +47,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   // Use first byte as random selector for other parameters.
   int selector = data[0];
-
-  // To cover both cases when progress_handler is used and isn't used.
-  if (selector & 1)
-    sqlite3_progress_handler(db, 4, &Progress, NULL);
-  else
-    sqlite3_progress_handler(db, 0, NULL, NULL);
 
   // Remove least significant bit to make further usage of selector independent.
   selector >>= 1;
