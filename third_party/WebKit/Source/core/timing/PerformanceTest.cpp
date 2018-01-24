@@ -4,6 +4,8 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/string_or_double.h"
+#include "bindings/core/v8/string_or_double_or_performance_measure_options.h"
 #include "core/timing/Performance.h"
 
 #include "core/frame/PerformanceMonitor.h"
@@ -225,14 +227,17 @@ TEST_F(PerformanceTest, EnsureEntryListOrder) {
 }
 
 TEST_F(PerformanceTest, ParameterHistogramForMeasure) {
+  V8TestingScope scope;
   HistogramTester histogram_tester;
   DummyExceptionStateForTesting exception_state;
 
   histogram_tester.ExpectTotalCount(kStartMarkForMeasureHistogram, 0);
   histogram_tester.ExpectTotalCount(kEndMarkForMeasureHistogram, 0);
 
-  performance_->measure("testMark", "unloadEventStart", "unloadEventEnd",
-                        exception_state);
+  performance_->measure(
+      scope.GetScriptState(), "testMark",
+      StringOrDoubleOrPerformanceMeasureOptions::FromString("unloadEventStart"),
+      StringOrDouble::FromString("unloadEventEnd"), exception_state);
 
   histogram_tester.ExpectBucketCount(
       kStartMarkForMeasureHistogram,
@@ -241,8 +246,10 @@ TEST_F(PerformanceTest, ParameterHistogramForMeasure) {
       kEndMarkForMeasureHistogram,
       static_cast<int>(PerformanceBase::kUnloadEventEnd), 1);
 
-  performance_->measure("testMark", "domInteractive", "[object Object]",
-                        exception_state);
+  performance_->measure(
+      scope.GetScriptState(), "testMark",
+      StringOrDoubleOrPerformanceMeasureOptions::FromString("domInteractive"),
+      StringOrDouble::FromString("[object Object]"), exception_state);
 
   histogram_tester.ExpectBucketCount(
       kStartMarkForMeasureHistogram,
@@ -251,8 +258,10 @@ TEST_F(PerformanceTest, ParameterHistogramForMeasure) {
       kEndMarkForMeasureHistogram,
       static_cast<int>(PerformanceBase::kObjectObject), 1);
 
-  performance_->measure("testMark", "[object Object]", "[object Object]",
-                        exception_state);
+  performance_->measure(
+      scope.GetScriptState(), "testMark",
+      StringOrDoubleOrPerformanceMeasureOptions::FromString("[object Object]"),
+      StringOrDouble::FromString("[object Object]"), exception_state);
 
   histogram_tester.ExpectBucketCount(
       kStartMarkForMeasureHistogram,

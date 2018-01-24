@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS measure entries' detail and start/end are customizable
+Harness: the test ran to completion.
+
