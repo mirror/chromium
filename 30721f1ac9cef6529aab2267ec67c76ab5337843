@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e9955c_8dce4bd6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-24T06:21:38Z",
+      "side": 1,
+      "message": "Adding a new method in CVC is now discouraged (see the warning above). You can get ImeAdapter instance by ImeAdapter.fromWebContents(WebContents) instead.",
+      "revId": "30721f1ac9cef6529aab2267ec67c76ab5337843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
