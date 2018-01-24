@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77abe6a4_d69f00d9",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-24T17:29:48Z",
+      "side": 1,
+      "message": "Are you sure you need to updateConsumer on every change? Does BVC actually updateToolbar on every callback?",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
