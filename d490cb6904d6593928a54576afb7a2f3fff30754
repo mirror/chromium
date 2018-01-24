@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "93366a6a_e7694f93",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T22:27:49Z",
+      "side": 1,
+      "message": "I think this makes sense, so sgtm but I think it\u0027d be valuable to talk with UI about what those values represent wrt the Harmony spec. By sharing \"constants\", we don\u0027t have to update the code when eg recommended padding values change and we get a bunch of things for free like proper font weight depending on the user\u0027s environment.\n\nOf course it makes sense to have them here if there\u0027s no Autofill Harmony spec but let\u0027s follow up to actually get that spec.",
+      "parentUuid": "b0585b42_80216096",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbcdb21_11b8a177",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Right now I\u0027m open to input on that point. Eventually I\u0027m thinking we\u0027d have subclasses for regular rows, separators, and warnings, and perhaps a factory that determines which implementation to use.\n\nMy intention was to tackle in a later CL when the need for subclasses is more apparent, but I\u0027m open to doing now if you think it\u0027d already be a significant improvement to the code.",
       "parentUuid": "7bbcdb21_11b8a177",
+      "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bf254d_40ef2151",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2018-01-24T22:27:49Z",
+      "side": 1,
+      "message": "No this is fine for now, I was just wondering if there was already a plan that needed to influence this CL\u0027s code now.\n\nFor what it\u0027s worth, I think it\u0027d be fine in the future to just have functions that return plain views::View objects filled with w/e they need. Subclasses seem a bit superfluous for just rendering but they could also simplify event handling so maybe a subclass for actual rows and plain views for separators and warnings.",
+      "parentUuid": "3486d962_5fcc2f84",
       "revId": "d490cb6904d6593928a54576afb7a2f3fff30754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
