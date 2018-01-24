@@ -281,6 +281,30 @@
       "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88db7c11_de42e8be",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-24T19:47:20Z",
+      "side": 1,
+      "message": "Oh, you are right. Done.",
+      "parentUuid": "875af047_a59499f5",
+      "range": {
+        "startLine": 765,
+        "startChar": 45,
+        "endLine": 765,
+        "endChar": 63
+      },
+      "revId": "85bbd16e437a8b55c7f09777a72ccc9d08a7d888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
