@@ -16,6 +16,24 @@
       "revId": "45c34d1ec69d4c4277b3044c9dbcf77a25d5e396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfc4336_b0f7aae5",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-24T01:12:55Z",
+      "side": 1,
+      "message": "No, actually. The bot itself doesn\u0027t need an NVIDIA GPU I think; it triggers swarming jobs which need NVIDIA GPUs though.",
+      "parentUuid": "5531283d_88ad7ac9",
+      "revId": "45c34d1ec69d4c4277b3044c9dbcf77a25d5e396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
