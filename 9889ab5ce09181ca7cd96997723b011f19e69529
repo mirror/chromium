@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edaa1f0_67470eb0",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "Can we use a different word instead of async? Technically fetching context menu info is async even now.",
+      "range": {
+        "startLine": 235,
+        "startChar": 19,
+        "endLine": 235,
+        "endChar": 24
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cb0bd7_b42593c0",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "Receiver should have a way to check that response belongs to a particular request. Can we pass an ID in the request and then check that ID when receiving response?",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e80be3_f55d4476",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "window.webkit can be overridden by a web page. See message.js for a workaround.",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc083681_f5b4c83a",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "ProperI think we need a collection of handlers here. fetchDOMElementAtPoint:completionHandler: can be called multiple times before first response is returned.",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080d30ec_c433312e",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "Same here. I think we need multiple timers. Consider creating a class to encapsulate handler and timer into a single object.",
+      "range": {
+        "startLine": 117,
+        "startChar": 18,
+        "endLine": 117,
+        "endChar": 43
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c15b403_b67b579c",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "Passing nil may lead to faster execution (I don\u0027t know about any optimizations in executeJavaScript:completionHandler:, but they may exist).",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 21
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ea1288_fcb5a052",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "No need for copping copy here. Property will copy this block.",
+      "range": {
+        "startLine": 376,
+        "startChar": 32,
+        "endLine": 376,
+        "endChar": 39
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9f7cba_35bd662e",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-24T21:15:49Z",
+      "side": 1,
+      "message": "I think we should call setScriptMessageHandler: only once, instead of overriding the handler for every call. Also we need to call removeScriptMessageHandlerForName: when this object is deallocated.",
+      "range": {
+        "startLine": 385,
+        "startChar": 42,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
