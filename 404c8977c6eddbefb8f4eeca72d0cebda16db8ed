@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7589170_7e1d4665",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-24T19:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af15952e_3af9169c",
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e55ba84_fb03daa5",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 8
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "74506768_c3ab6e05",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-24T19:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5db61810_63257c48",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 55
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53d2a154_ae7b9a3f",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-24T19:11:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we should exit VR if the creation fails since the user can still get around using voice search. Perhaps we should show some UI that tells the user that the keyboard could not be loaded, but that\u0027s a separate CL. We already have a bug to track out-of-date kb APK, I\u0027ve generalized it to all errors: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d799584",
+      "parentUuid": "1e55ba84_fb03daa5",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4699273a_e769eb91",
         "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-24T17:15:10Z",
       "side": 1,
       "message": "If we never silently fail to create the keyboard, you should make this a DCHECK, because we should also never try to destroy the keyboard without having created it first.",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1469f0_017ae1c5",
+        "filename": "chrome/browser/android/vr_shell/gvr_keyboard_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-24T19:11:54Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "4699273a_e769eb91",
       "range": {
         "startLine": 54,
         "startChar": 7,
@@ -102,6 +192,24 @@
       "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616db980_12eb0b45",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-24T19:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44693fb5_0ecb48b3",
+      "revId": "404c8977c6eddbefb8f4eeca72d0cebda16db8ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
