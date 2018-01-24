@@ -20,7 +20,7 @@ class PRCardUnmaskPromptViewBridge
  public:
   PRCardUnmaskPromptViewBridge(autofill::CardUnmaskPromptController* controller,
                                UIViewController* base_view_controller)
-      : autofill::CardUnmaskPromptViewBridge(controller),
+      : autofill::CardUnmaskPromptViewBridge(controller, base_view_controller),
         base_view_controller_(base_view_controller) {}
 
   // autofill::CardUnmaskPromptView:
