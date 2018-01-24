@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9341683_dd2d6bf4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-24T13:10:56Z",
+      "side": 1,
+      "message": "I tested it by forcing it into action bar and overflow menu. The inflated layout seems to contain the icon whether it\u0027s visible or not.\nI added two tests to check the field is available independently of whether search was moved to the overflow menu. Sadly, I cannot set it up before this method is called.",
+      "parentUuid": "eafab930_27cc7aee",
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0ef5cf_637953ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 25
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aa0908ec_aba194ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-24T13:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0ef5cf_637953ba",
+      "range": {
+        "startLine": 233,
+        "startChar": 25,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29912193_29781912",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 25
@@ -56,6 +98,24 @@
       "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248de74b_0db28949",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-24T13:10:56Z",
+      "side": 1,
+      "message": "Thanks for pointing that out: the intention is to show the message. Tested and fixed.",
+      "parentUuid": "29912193_29781912",
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c91204_fc3689ad",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-24T13:10:56Z",
+      "side": 1,
+      "message": "This entry has no user name so I can only search for the URL.\nI do not want to assign one so we keep that edge case in testing.",
+      "parentUuid": "cd426513_e52e2608",
+      "range": {
+        "startLine": 684,
+        "startChar": 53,
+        "endLine": 684,
+        "endChar": 59
+      },
+      "revId": "63e7c13d2f878803a7d863fffadaecafb39cc9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
