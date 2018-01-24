@@ -16,6 +16,24 @@
       "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9b2e3c_539de698",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-24T21:21:52Z",
+      "side": 1,
+      "message": "I don\u0027t know.\nWhen you look at MSDN documentations, every function that uses a stream index as an argument is supposed to accept value 0: [1]\n\n  Specifies which stream to query. The value can be any of the following.\n  0–0xFFFFFFFB\n  The zero-based index of a stream. To get the number of streams, call \n  IMFCaptureSource::GetDeviceStreamCount.\n\nI never saw a device without stream.\n\n[1] https://msdn.microsoft.com/en-us/library/windows/desktop/hh447893(v\u003dvs.85).aspx",
+      "parentUuid": "711f22c8_5c716c67",
+      "revId": "3dacb8c1de411372f9774ac0dccf16fb3dd461a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
