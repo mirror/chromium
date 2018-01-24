@@ -637,5 +637,15 @@
     "prefix": "unified-autoplay",
     "base": "external/wpt/feature-policy",
     "args": ["--autoplay-policy=document-user-activation-required"]
+  },
+  {
+    "prefix": "wpk",
+    "base": "http/tests/loading/wpk/",
+    "args": ["--enable-features=SignedHTTPExchange"]
+  },
+  {
+    "prefix": "wpk-with-network-service",
+    "base": "http/tests/loading/wpk/",
+    "args": ["--enable-features=SignedHTTPExchange,NetworkService"]
   }
 ]
