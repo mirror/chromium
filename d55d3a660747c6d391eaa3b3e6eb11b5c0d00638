@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd9567fd_420b1b64",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-24T16:10:03Z",
+      "side": 1,
+      "message": "So it\u0027s kinda a counterpart to the warning in SimpleFileTracker::Doom, but may be excessive/unneeded, since it\u0027s the same principle elsewhere, and was before this commit: entries_pending_doom_ ensures we don\u0027t get races on new things while we\u0027re in the middle of actually executing the doom and haven\u0027t gotten the old file out of the way.\n\nI am strongly leaning on removing this comment.\n\nAlso ops queued up before doom was called must have completed right now, since ops are run \nFIFO (modulo the unlink thing); ops queued up after doom will of course use new file names.",
+      "parentUuid": "b342953d_3572bb5e",
+      "range": {
+        "startLine": 1212,
+        "startChar": 47,
+        "endLine": 1214,
+        "endChar": 64
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be8dbbf8_1748eb62",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fdb8cb_43caabac",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-24T16:10:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be8dbbf8_1748eb62",
+      "range": {
+        "startLine": 1249,
+        "startChar": 0,
+        "endLine": 1251,
+        "endChar": 59
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "485685f7_8ce49041",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-24T16:10:03Z",
+      "side": 1,
+      "message": "Done (but not yet uploaded), pending comments discussion.",
+      "parentUuid": "9fc5a213_8246ebca",
+      "range": {
+        "startLine": 143,
+        "startChar": 25,
+        "endLine": 143,
+        "endChar": 63
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676cb813_fef37860",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 25
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-24T15:39:25Z",
       "side": 1,
       "message": "Where does this happen?",
+      "range": {
+        "startLine": 80,
+        "startChar": 64,
+        "endLine": 82,
+        "endChar": 50
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421d0441_4fa976e9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-24T16:10:03Z",
+      "side": 1,
+      "message": "For collision? https://cs.chromium.org/chromium/src/net/disk_cache/simple/simple_backend_impl.cc?rcl\u003d824149480c486c9d8369917599c45686575c0151\u0026l\u003d726 \n\nOf course this is used for normal dooms as well, so this comment focusing on the rare collision case is kinda weird. Also \"will eventually be used\" is of course-out-of-date.\n\nMaybe something like this:\n\"0 means this a non-doomed, active, entry, for its backend that will be checked on OpenEntry(key) where hash(key) \u003d entry_hash.  Other values of |doom_generation| are used to generate distinct file names for entries that have been Doom()ed, either by explicit API call by the client or internal operation (eviction, collisions, etc.)\"?",
+      "parentUuid": "676cb813_fef37860",
       "range": {
         "startLine": 80,
         "startChar": 64,
@@ -114,6 +210,30 @@
       "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ecefeb_e868456f",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-24T16:10:03Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s why there is a SimpleSynchronousEntry* owner thing all around. Probably should say \"for the backend\" --- folded into the above discussion.",
+      "parentUuid": "573b69dc_265fcc96",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 47
+      },
+      "revId": "d55d3a660747c6d391eaa3b3e6eb11b5c0d00638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
