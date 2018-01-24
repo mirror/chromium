@@ -46,6 +46,30 @@
       "revId": "360bb8793d94f4d5984430fec5e0070ddf524e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fa17a7_c07b0c40",
+        "filename": "content/shell/browser/shell_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-24T00:51:13Z",
+      "side": 1,
+      "message": "For completeness, I agree that this code isn\u0027t needed for linux/ozone builds.\n\nIn our branch for chromium/mus/ozone/wayland, we are solely using ScreenMus et al, hence any installation of a different Screen instance ins\u0027t needed.",
+      "parentUuid": "9253a204_2e9abd8d",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "360bb8793d94f4d5984430fec5e0070ddf524e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
