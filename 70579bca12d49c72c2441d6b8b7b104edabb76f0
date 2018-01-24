@@ -282,6 +282,30 @@
       "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aeb53169_61d7a4dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-24T11:46:59Z",
+      "side": 1,
+      "message": "\u003e (Currently, the user will see the generated name in the receiving app (such as Google Drive), but I plan to set a translated string following the mocks to the OpenableColumns.DISPLAY_NAME of the content URI in a follow-up CL.)\n\nHmm, actually if I understand this correctly, the deriving of DISPLAY_NAME is controlled by the content provider. So far I have not figured out a way to make DISPLAY_NAME different from the real file name.\n\nIn any case, I don\u0027t want to make the translated name to the file name, so this CL does the right thing, IMO. I\u0027ll need to deal with this later.",
+      "parentUuid": "83fa0829_0b0b1d21",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 27
+      },
+      "revId": "70579bca12d49c72c2441d6b8b7b104edabb76f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
