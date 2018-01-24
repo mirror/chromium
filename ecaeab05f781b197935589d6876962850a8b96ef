@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a56ba830_24f05558",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T13:39:32Z",
+      "side": 1,
+      "message": "Please order the forward declaration.",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "ecaeab05f781b197935589d6876962850a8b96ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f010b4_92ed2251",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-24T13:39:32Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "range": {
+        "startLine": 13,
+        "startChar": 37,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "ecaeab05f781b197935589d6876962850a8b96ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
