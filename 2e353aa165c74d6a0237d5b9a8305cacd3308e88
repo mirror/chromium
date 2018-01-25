@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91dc0725_431486b4",
+        "filename": "ash/display/resolution_notification_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T19:19:21Z",
+      "side": 1,
+      "message": "Nit: Change this to be more accurate, i.e. something like \"Introduce a timeout if we have a single external display when the device is not in kiosk mode ...etc.\".",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 22
+      },
+      "revId": "2e353aa165c74d6a0237d5b9a8305cacd3308e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
