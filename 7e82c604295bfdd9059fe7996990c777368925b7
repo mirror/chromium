@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "95c32d66_5622020f",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-25T17:56:01Z",
+      "side": 1,
+      "message": "Oh I get it, sorry, it wasn\u0027t obvious that the tempdir would go away at reboot.\n\nI expanded the comment in scoped_tmp_dir.h, tell me what you think.",
+      "parentUuid": "5a36ce92_67d9c0fd",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecf9895b_c88c6916",
         "filename": "chrome/browser/logging_chrome_unittest.cc",
         "patchSetId": 5
@@ -292,6 +310,24 @@
       "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9867757_9c28bc97",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-25T17:56:01Z",
+      "side": 1,
+      "message": "Right, actually I was wrong, the variable name in this case does not really convey any information.",
+      "parentUuid": "bb6e0ba9_9aedabbf",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
