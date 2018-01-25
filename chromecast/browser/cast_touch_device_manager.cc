@@ -17,7 +17,11 @@ namespace {
 ui::TouchDeviceTransform GetDeviceTransform(
     const ui::TouchscreenDevice& touchscreen,
     display::Display display) {
-  gfx::RectF display_bounds = gfx::RectF(display.bounds());
+  gfx::RectF display_bounds = gfx::RectF(
+      gfx::Rect(gfx::ScaleToFlooredPoint(display.bounds().origin(),
+                                         display.device_scale_factor()),
+                gfx::ScaleToFlooredSize(display.bounds().size(),
+                                        display.device_scale_factor())));
   gfx::SizeF touchscreen_size = gfx::SizeF(touchscreen.size);
 
   ui::TouchDeviceTransform touch_device_transform;
