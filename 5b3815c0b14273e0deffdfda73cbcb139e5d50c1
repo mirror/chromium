@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6238eb84_be34dfcb",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-25T09:46:43Z",
+      "side": 1,
+      "message": "Nit: contentInsetAdjustmentBehavior",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 224,
+        "endChar": 42
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0148078_d6b019ce",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-25T09:46:43Z",
+      "side": 1,
+      "message": "Optional nit: To avoid we, just remove \"we need to \".",
+      "range": {
+        "startLine": 225,
+        "startChar": 53,
+        "endLine": 225,
+        "endChar": 64
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
