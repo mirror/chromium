@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2e257a_631370f1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-25T23:38:57Z",
+      "side": 1,
+      "message": "I\u0027m really nervous about this change.  I think we\u0027ll end up having a current_match() at times we shouldn\u0027t.  (I think it\u0027ll follow us around tab changes and such.)  Can you please split this change off into a separate changelist so we can discuss in depth?\n\nFor one, I\u0027d like clear repro steps, e.g., a set of actions that cause more StartAutocomplete() actions that you\u0027d expect.  The current bug does not have them.  Please start a new bug for it, so we can discuss whether there is an issue, and then whether this simple fix is the right solution.",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fe19cc_3d73231a",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-25T23:38:57Z",
+      "side": 1,
+      "message": "This is confusing.  If this is the function that notifies observers, why does it need to return whether the state changed \"to avoid unnecessary notifications\".  This is the function that does the notifications, at least so the comment implies.\n\nI\u0027d suggest a different interface:\n  // Sets the state of user_input_in_progress_.  Returns whether the state changed.  If so, the caller should call NotifyObserversInputInProgress().\n  bool SetInputInProgress(bool in_progress);\n\nP.S.  No need to mention \"records time\".",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
