@@ -22,6 +22,30 @@
       "revId": "be80b5e0a89df743006ec0a4be1659a2160a4bfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93252d88_381caf27",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-25T22:49:34Z",
+      "side": 1,
+      "message": "I think it\u0027s suppose to be the latter right? Thanks. Fixed.",
+      "parentUuid": "9351e266_ca181637",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "be80b5e0a89df743006ec0a4be1659a2160a4bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
