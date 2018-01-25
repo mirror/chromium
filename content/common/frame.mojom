@@ -284,4 +284,7 @@ interface FrameHost {
   // Change the encoding name of the page in UI when the page has detected
   // proper encoding name. Sent for top-level frames.
   UpdateEncoding(string encoding_name);
+
+  // Sent when the frame rect changes.
+  FrameRectsChanged(gfx.mojom.Rect rect);
 };
