@@ -17,7 +17,7 @@ bool URLLoaderRequestHandler::MaybeCreateLoaderForResponse(
     const network::ResourceResponseHead& response,
     network::mojom::URLLoaderPtr* loader,
     network::mojom::URLLoaderClientRequest* client_request,
-    ThrottlingURLLoader* url_loader) {
+    std::unique_ptr<ThrottlingURLLoader>* url_loader) {
   return false;
 }
 

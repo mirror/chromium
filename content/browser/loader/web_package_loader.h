@@ -14,6 +14,7 @@
 namespace content {
 
 class SignedExchangeHandler;
+class ThrottlingURLLoader;
 
 // WebPackageLoader handles an origin-signed HTTP exchange response. It is
 // created when a WebPackageRequestHandler recieves an origin-signed HTTP
@@ -25,7 +26,7 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
  public:
   WebPackageLoader(const network::ResourceResponseHead& original_response,
                    network::mojom::URLLoaderClientPtr forwarding_client,
-                   network::mojom::URLLoaderClientEndpointsPtr endpoints);
+                   std::unique_ptr<ThrottlingURLLoader> url_loader);
   ~WebPackageLoader() override;
 
   // network::mojom::URLLoaderClient implementation
@@ -79,10 +80,7 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
   // This client is alive until OnHTTPExchangeFound() is called.
   network::mojom::URLLoaderClientPtr forwarding_client_;
 
-  // This |url_loader_| is the pointer of the network URL loader.
-  network::mojom::URLLoaderPtr url_loader_;
-  // This binding connects |this| with the network URL loader.
-  mojo::Binding<network::mojom::URLLoaderClient> url_loader_client_binding_;
+  std::unique_ptr<ThrottlingURLLoader> url_loader_;
 
   // This is pending until connected by ConnectToClient().
   network::mojom::URLLoaderClientPtr client_;

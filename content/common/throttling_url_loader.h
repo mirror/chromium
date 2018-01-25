@@ -71,6 +71,7 @@ class CONTENT_EXPORT ThrottlingURLLoader
 
   void FollowRedirect();
   void SetPriority(net::RequestPriority priority, int32_t intra_priority_value);
+  void ProceedWithResponse();
 
   // Disconnects the client connection and releases the URLLoader.
   void DisconnectClient();
