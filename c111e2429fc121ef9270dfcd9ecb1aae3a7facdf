@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54e0f215_45d58aa4",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-25T21:27:12Z",
+      "side": 1,
+      "message": "CSSLayoutDefinitions are typically \"equal\" in the usual sense, as they hold onto functions in different realms etc. An IsEqual there would only be for a subset of its members which might confused people. :/",
+      "parentUuid": "f65cb126_c77dc968",
+      "revId": "c111e2429fc121ef9270dfcd9ecb1aae3a7facdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a05f384_54df42b6",
         "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletTest.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-21T02:30:21Z",
       "side": 1,
       "message": "Evaluate() evaluates the source code as a classic script. It would be better to evaluate it as a module script like this:\nhttps://chromium.googlesource.com/chromium/src/+/c6abefd153ea09f3734a7f5d409e316a0accd9d2/third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScopeTest.cpp#129",
+      "revId": "c111e2429fc121ef9270dfcd9ecb1aae3a7facdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae54e3b_dda3648d",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-25T21:27:12Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "7a05f384_54df42b6",
       "revId": "c111e2429fc121ef9270dfcd9ecb1aae3a7facdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
