@@ -387,6 +387,9 @@ IN_PROC_BROWSER_TEST_F(DownloadsCounterTest, MAYBE_TimeRanges) {
   SetDeletionPeriodPref(browsing_data::TimePeriod::FOUR_WEEKS);
   EXPECT_EQ(8u, GetResult());
 
+  SetDeletionPeriodPref(browsing_data::TimePeriod::OLDER_THAN_30_DAYS);
+  EXPECT_EQ(3u, GetResult());
+
   SetDeletionPeriodPref(browsing_data::TimePeriod::ALL_TIME);
   EXPECT_EQ(11u, GetResult());
 }

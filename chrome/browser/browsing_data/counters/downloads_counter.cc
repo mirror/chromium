@@ -25,12 +25,13 @@ void DownloadsCounter::Count() {
   std::vector<content::DownloadItem*> downloads;
   download_manager->GetAllDownloads(&downloads);
   base::Time begin_time = GetPeriodStart();
+  base::Time end_time = GetPeriodEnd();
 
-  ReportResult(std::count_if(
-      downloads.begin(),
-      downloads.end(),
-      [begin_time](const content::DownloadItem* item) {
-        return item->GetStartTime() >= begin_time &&
-            DownloadHistory::IsPersisted(item);
-      }));
+  ReportResult(
+      std::count_if(downloads.begin(), downloads.end(),
+                    [begin_time, end_time](const content::DownloadItem* item) {
+                      return (item->GetStartTime() >= begin_time &&
+                              item->GetStartTime() < end_time) &&
+                             DownloadHistory::IsPersisted(item);
+                    }));
 }
