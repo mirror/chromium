@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3ca763_96e9e60c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "isn\u0027t this adding too much border to the bottom and right sides? I\u0027d have thought you wanted\n\nbounds.inset(-gfx::Insets(kPopupBorderThicknessDp));",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 65
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299903b8_bab08124",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "nit: I don\u0027t understand the use of \"spec\" here. All the values we use in UI are provided by some spec, so that term adds nothing. It also leads to a non-self-documenting function name \"RoundWidthToSpec\".",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf1942c_d4b4eb40",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "I\u0027m surprised this works. By my math, the outer parenthetical expression always evaluates to zero.\n\nkDropdownSpecMultiple % width \u003d kDropdownSpecMultiple for all width \u003e kDropdownSpecMultiple\nkDropdownSpecMultiple - kDropdownSpecMultiple \u003d 0\n\nI think you want something like\n\nif (width % kDropdownSpecMultiple)\n  width \u003d kDropdownSpecMultiple * (width / kDropdownSpecMultiple + 1);",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecb363f_af0295f5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "this indent is off (for the next ~100 lines)",
+      "range": {
+        "startLine": 92,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1301ea_30502237",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "single row grid layout --- why not box layout?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3179e14f_cf3b8a61",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "I think this GetNativeTheme() may fail in some cases because you\u0027re calling it before you\u0027ve been added to a widget, so it\u0027s just giving you the platform default, which may not be appropriate (e.g. would always use aura on Linux instead of selecting the GTK themed theme). It would be safer to set theme colors in OnNativeThemeChanged (ThemedSolidBackground takes care of this for you for backgrounds, but controls like this aren\u0027t as smart).",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9580ec_6d536db0",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "nit: inline the ColorIds instead of using a variable?",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 63
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1386b7f3_783d8261",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "nit: good place for auto (so you don\u0027t have \"views::Label\" twice in one line)",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 18
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4450f9_4d46336a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "I\u0027m confused. Are the width() and height() calls here supposed to be bounds.width() and bounds.height(), or are you intentionally ignoring the bounds from the delegate (aside from the origin)? worth a comment.",
+      "range": {
+        "startLine": 236,
+        "startChar": 36,
+        "endLine": 237,
+        "endChar": 30
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ba02ae_3d7d1dc7",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "It is confusing that in the base class the border is added in GetUpdatedBounds but in this class it\u0027s added here.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 65
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50097cb_e49dce33",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-25T18:04:17Z",
+      "side": 1,
+      "message": "nit: use this - https://cs.chromium.org/chromium/src/base/strings/string_util.h?rcl\u003db28cfe377348a3c08a8b8b4d9611f9b52eb10aed\u0026l\u003d160",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
