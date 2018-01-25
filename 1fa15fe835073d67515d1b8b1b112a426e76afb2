@@ -70,6 +70,24 @@
       "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d278d2b_f361b111",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-25T23:17:44Z",
+      "side": 1,
+      "message": "\u003eis the issue that without copying |pkg.deps| into |data_deps|, the package\u0027s deps aren\u0027t regarded as runtime dependencies?\n\nThat\u0027s right. A target\u0027s runtime deps is empty if \"data_deps\" and \"data\" are unspecified.\n\n\u003edon\u0027t we want to know the runtime_deps of the things on what we depend, rather than the write_manifest_target step\u0027s run-time dependencies?\n\nWe want to know both; we need to ship the build output in addition to the .far archive to trybots, for stacktrace symbolization and whatnot.\n\nI don\u0027t think we can selectively get runtime deps in the way you\u0027re suggesting, anyhow. There is no way in GN to ask for the generated manifest without also having the manifest\u0027s data/data deps come along for the ride. :\\\n\n\u003ebut presumably we don\u0027t expect that file to be listed inside itself? :)\n\nWe do, the v1 runner uses it to build the bootfs image.",
+      "parentUuid": "3564664e_50b75608",
+      "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
