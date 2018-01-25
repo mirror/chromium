@@ -9,6 +9,35 @@
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
 
+namespace {
+
+ui::AXIntAttribute GetCorrespondingAXAttribute(blink::WebAOMIntAttribute attr) {
+  switch (attr) {
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_COLUMN_COUNT:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_COLUMN_COUNT;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_COLUMN_INDEX:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_COLUMN_INDEX;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_COLUMN_SPAN:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_CELL_COLUMN_SPAN;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_HIERARCHICAL_LEVEL:
+      return ui::AXIntAttribute::AX_ATTR_HIERARCHICAL_LEVEL;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_POS_IN_SET:
+      return ui::AXIntAttribute::AX_ATTR_POS_IN_SET;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_ROW_COUNT:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_ROW_COUNT;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_ROW_INDEX:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_ROW_INDEX;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_ROW_SPAN:
+      return ui::AXIntAttribute::AX_ATTR_TABLE_CELL_ROW_SPAN;
+    case blink::WebAOMIntAttribute::WEB_AOM_ATTR_SET_SIZE:
+      return ui::AXIntAttribute::AX_ATTR_SET_SIZE;
+    default:
+      return ui::AXIntAttribute::AX_INT_ATTRIBUTE_NONE;
+  }
+}
+
+}  // namespace
+
 namespace content {
 
 AomContentAxTree::AomContentAxTree(RenderFrameImpl* render_frame)
@@ -45,6 +74,16 @@ blink::WebString AomContentAxTree::GetRoleForAXNode(int32_t axID) {
   // TODO(meredithl): Change to blink_ax_conversion.cc method once available.
   return (node) ? blink::WebString::FromUTF8(ui::ToString(node->data().role))
                 : blink::WebString();
+}
+
+bool AomContentAxTree::GetIntAttributeForAXNode(int32_t axID,
+                                                blink::WebAOMIntAttribute attr,
+                                                int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node)
+    return false;
+  ui::AXIntAttribute ax_attr = GetCorrespondingAXAttribute(attr);
+  return node->data().GetIntAttribute(ax_attr, out_param);
 }
 
 }  // namespace content
