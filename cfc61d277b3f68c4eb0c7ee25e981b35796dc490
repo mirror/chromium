@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "454362bd_d239dde0",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "Done, but I had to introduce overloaded operators in order to be able to write flags \u0026 LayoutSides::kTrailing and to write kTrailing|kLeading. Otherwise the implicit cast to int doesn\u0027t seem to happen. It looks a bit ugly, but I guess that\u0027s what the style guide tells me to do.",
+      "parentUuid": "d770a539_1c62400b",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfaf0223_5862c49a",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
         "patchSetId": 3
@@ -56,6 +74,24 @@
       "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef6f3f6_bdd0d731",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfaf0223_5862c49a",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "9844f55d_87eaf062",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "I agree this is not necessary, but UIKit includes a commonly used helper of UIEdgeInsetsMake and UIDirectionalEdgeInsetsMake and I would like to match this if possible. These UIKit helpers are used 76 times in ios/. WDYT?",
+      "parentUuid": "1fbbcb90_f17b3b43",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73c32ae6_20a53062",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
         "patchSetId": 3
@@ -90,6 +144,24 @@
       "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1d99c2_d94567a8",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c32ae6_20a53062",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "5743bcfb_79ed18bd",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "771ac95f_436484ff",
+      "range": {
+        "startLine": 158,
+        "startChar": 31,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed231e14_5bcc55af",
         "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
         "patchSetId": 3
@@ -130,6 +226,24 @@
       "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c7b302_0339a847",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed231e14_5bcc55af",
+      "revId": "cfc61d277b3f68c4eb0c7ee25e981b35796dc490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
