@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "201e7817_8e60c128",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T22:48:14Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s actually using the copy constructor here regardless. However, we can simplify this even further and just read directly into \u0026r-\u003eframe_sink_id: returning false ensures that the unpickled value won\u0027t ever be consumed.",
+      "range": {
+        "startLine": 160,
+        "startChar": 21,
+        "endLine": 160,
+        "endChar": 31
+      },
+      "revId": "d9dfaa9bf3be9aa827f726c317864381e8ee1999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
