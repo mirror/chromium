@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40be7efe_7920faf9",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T05:12:59Z",
+      "side": 1,
+      "message": "nit: please have a lightweight comment about |body|",
+      "revId": "e8feb803db149cc7fef198626cea2554c11cd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bd7a68_81b183be",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T05:12:59Z",
+      "side": 1,
+      "message": "Can we add a little more comment, say, \"We don\u0027t propagate the response to the navigation request and its throttles, therefore we need to call this here internally in order to move it forward.\"",
+      "revId": "e8feb803db149cc7fef198626cea2554c11cd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c215a21_529e208e",
+        "filename": "content/browser/loader/web_package_loader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T05:12:59Z",
+      "side": 1,
+      "message": "nit: lightweight class-level comment documenting the lifetime (i.e. initially owned by request handler, but once client is attached it\u0027s owned by the URLLoader mojo endpoint)",
+      "revId": "e8feb803db149cc7fef198626cea2554c11cd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848c52b7_3da85dcf",
+        "filename": "content/browser/loader/web_package_request_handler.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T05:12:59Z",
+      "side": 1,
+      "message": "// Valid after MaybeCreateLoaderForResponse intercepts the request and until the loader is re-bound to the new client for the redirected request in StartResponse.",
+      "revId": "e8feb803db149cc7fef198626cea2554c11cd06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
