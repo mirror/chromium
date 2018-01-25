@@ -8,6 +8,7 @@
 
 #include "content/child/blink_platform_impl.h"
 #include "content/child/child_process.h"
+#include "content/public/common/resource_usage_reporter.mojom.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
 #include "content/public/utility/content_utility_client.h"
@@ -17,6 +18,33 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace content {
+
+#if !defined(OS_ANDROID)
+class ResourceUsageReporterImpl : public mojom::ResourceUsageReporter {
+ public:
+  ResourceUsageReporterImpl() {}
+  ~ResourceUsageReporterImpl() override {}
+
+ private:
+  void GetUsageData(const GetUsageDataCallback& callback) override {
+    mojom::ResourceUsageDataPtr data = mojom::ResourceUsageData::New();
+    size_t total_heap_size = net::ProxyResolverV8::GetTotalHeapSize();
+    if (total_heap_size) {
+      data->reports_v8_stats = true;
+      data->v8_bytes_allocated = total_heap_size;
+      data->v8_bytes_used = net::ProxyResolverV8::GetUsedHeapSize();
+    }
+    callback.Run(std::move(data));
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(ResourceUsageReporterImpl);
+};
+
+void CreateResourceUsageReporter(mojom::ResourceUsageReporterRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<ResourceUsageReporterImpl>(),
+                          std::move(request));
+}
+#endif  // !defined(OS_ANDROID)
 
 UtilityThreadImpl::UtilityThreadImpl()
     : ChildThreadImpl(ChildThreadImpl::Options::Builder()
@@ -75,6 +103,13 @@ void UtilityThreadImpl::Init() {
       base::Bind(&UtilityThreadImpl::BindServiceFactoryRequest,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
+#if !defined(OS_ANDROID)
+  if (!command_line->HasSwitch(
+          service_manager::switches::kNoSandboxAndElevatedPrivileges))) {
+    registry->AddInterface(base::Bind(CreateResourceUsageReporter),
+                           base::ThreadTaskRunnerHandle::Get());
+  }
+#endif  // !defined(OS_ANDROID)
 
   content::ServiceManagerConnection* connection = GetServiceManagerConnection();
   if (connection) {

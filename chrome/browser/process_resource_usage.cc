@@ -14,7 +14,7 @@
 #include "chrome/common/resource_usage_reporter_type_converters.h"
 
 ProcessResourceUsage::ProcessResourceUsage(
-    chrome::mojom::ResourceUsageReporterPtr service)
+    content::mojom::ResourceUsageReporterPtr service)
     : service_(std::move(service)), update_in_progress_(false) {
   service_.set_connection_error_handler(
       base::Bind(&ProcessResourceUsage::RunPendingRefreshCallbacks,
@@ -52,7 +52,7 @@ void ProcessResourceUsage::Refresh(const base::Closure& callback) {
 }
 
 void ProcessResourceUsage::OnRefreshDone(
-    chrome::mojom::ResourceUsageDataPtr data) {
+    content::mojom::ResourceUsageDataPtr data) {
   DCHECK(thread_checker_.CalledOnValidThread());
   update_in_progress_ = false;
   stats_ = std::move(data);

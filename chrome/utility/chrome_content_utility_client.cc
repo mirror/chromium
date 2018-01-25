@@ -34,7 +34,6 @@
 #include "ui/base/ui_features.h"
 
 #if !defined(OS_ANDROID)
-#include "chrome/common/resource_usage_reporter.mojom.h"
 #include "chrome/utility/importer/profile_import_impl.h"
 #include "chrome/utility/importer/profile_import_service.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
@@ -88,35 +87,6 @@
 #endif
 
 namespace {
-
-#if !defined(OS_ANDROID)
-class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
- public:
-  ResourceUsageReporterImpl() {}
-  ~ResourceUsageReporterImpl() override {}
-
- private:
-  void GetUsageData(const GetUsageDataCallback& callback) override {
-    chrome::mojom::ResourceUsageDataPtr data =
-        chrome::mojom::ResourceUsageData::New();
-    size_t total_heap_size = net::ProxyResolverV8::GetTotalHeapSize();
-    if (total_heap_size) {
-      data->reports_v8_stats = true;
-      data->v8_bytes_allocated = total_heap_size;
-      data->v8_bytes_used = net::ProxyResolverV8::GetUsedHeapSize();
-    }
-    callback.Run(std::move(data));
-  }
-
-  DISALLOW_COPY_AND_ASSIGN(ResourceUsageReporterImpl);
-};
-
-void CreateResourceUsageReporter(
-    chrome::mojom::ResourceUsageReporterRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<ResourceUsageReporterImpl>(),
-                          std::move(request));
-}
-#endif  // !defined(OS_ANDROID)
 
 base::LazyInstance<ChromeContentUtilityClient::NetworkBinderCreationCallback>::
     Leaky g_network_binder_creation_callback = LAZY_INSTANCE_INITIALIZER;
@@ -179,10 +149,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   // If our process runs with elevated privileges, only add elevated Mojo
   // interfaces to the interface registry.
   if (!utility_process_running_elevated_) {
-#if !defined(OS_ANDROID)
-    registry->AddInterface(base::Bind(CreateResourceUsageReporter),
-                           base::ThreadTaskRunnerHandle::Get());
-#endif  // !defined(OS_ANDROID)
 #if defined(OS_WIN)
     // TODO(crbug.com/798782): remove when the Cloud print chrome/service is
     // removed.

@@ -5,7 +5,7 @@
 #ifndef CHROME_COMMON_RESOURCE_USAGE_REPORTER_TYPE_CONVERTERS_H_
 #define CHROME_COMMON_RESOURCE_USAGE_REPORTER_TYPE_CONVERTERS_H_
 
-#include "chrome/common/resource_usage_reporter.mojom.h"
+#include "content/public/common/resource_usage_reporter.mojom.h"
 #include "mojo/public/cpp/bindings/type_converter.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 
