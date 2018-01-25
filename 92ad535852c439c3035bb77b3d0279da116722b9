@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2360e1_1349d102",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "functions for getting",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa312a4_c6f053c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186b2af9_773457b9",
+        "filename": "components/storage_monitor/storage_info_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "Put this, and anything else not exposed in the header file, into an anonymous namespace.",
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91ac94a_a554decc",
+        "filename": "components/storage_monitor/storage_info_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "StorageInfostorage doesn\u0027t (yet) exist?",
+      "range": {
+        "startLine": 6,
+        "startChar": 48,
+        "endLine": 6,
+        "endChar": 66
+      },
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76774a25_f6d9d5de",
+        "filename": "components/storage_monitor/storage_info_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "Can we just #include device/media_transfer_protocol/public/interfaces/mtp_storage_info.mojom.h instead?",
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062d1fd8_cc43a7e7",
+        "filename": "components/storage_monitor/storage_info_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:06:07Z",
+      "side": 1,
+      "message": "Do we really need another namespace layer?",
+      "revId": "92ad535852c439c3035bb77b3d0279da116722b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
