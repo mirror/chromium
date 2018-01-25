@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4c8510_5fd74c5c",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "nit: move this below the title to improve context",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80eaab09_d06e5ba5",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "nit: behaviors: [ I18nBehavior ],",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e827443_583d7b07",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "One line: /** The error ... */",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22fa49d_97d522e2",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "elim trailing , -\u003e listeners: { \u0027cancel\u0027: \u0027close\u0027 },",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325002fd_d4d76d0c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "/** @private {function(...):void} */",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1693698_dd7c7645",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "@private {?number}",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626b1dcf_cd47352f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e890ae9_c7384cb2",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd4b466_f243f27e",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "|progressBarBlockMs",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1d069a_3dff5555",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "nit: (progress) \u003d\u003e",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eccf644_f54fa7f0",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "Move this to a separate function",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c0fbd9_b86b7f92",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "I seem to recall issues with closing a non open dialog, you may want/need to test if (this.$.dialog_start.open) here and below.",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f47b131_5f6ded7c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T19:18:59Z",
+      "side": 1,
+      "message": "@param {...} progress",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
