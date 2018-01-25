@@ -38,18 +38,20 @@ namespace {
 
 class AnimationWorkletTestPlatform : public TestingPlatformSupport {
  public:
-  AnimationWorkletTestPlatform()
-      : thread_(old_platform_->CreateThread(
-            WebThreadCreationParams("Compositor"))) {}
-
-  WebThread* CompositorThread() const override { return thread_.get(); }
+  AnimationWorkletTestPlatform() = default;
 
   WebCompositorSupport* CompositorSupport() override {
     return &compositor_support_;
   }
 
+  // Need to override the thread creating support so we can actually run
+  // Animation Worklet code that would usually go on a backing thread.
+  std::unique_ptr<WebThread> CreateThread(
+      const blink::WebThreadCreationParams& params) {
+    return old_platform_->CreateThread(params);
+  }
+
  private:
-  std::unique_ptr<WebThread> thread_;
   TestingCompositorSupport compositor_support_;
 };
 
@@ -77,9 +79,7 @@ class AnimationWorkletThreadTest : public PageTestBase {
     reporting_proxy_ = std::make_unique<WorkerReportingProxy>();
   }
 
-  void TearDown() override {
-    AnimationWorkletThread::ClearSharedBackingThread();
-  }
+  void TearDown() { AnimationWorkletThread::ClearSharedBackingThread(); }
 
   std::unique_ptr<AnimationWorkletThread> CreateAnimationWorkletThread() {
     WorkerClients* clients = WorkerClients::Create();
@@ -139,8 +139,6 @@ class AnimationWorkletThreadTest : public PageTestBase {
 };
 
 TEST_F(AnimationWorkletThreadTest, Basic) {
-  ScopedTestingPlatformSupport<AnimationWorkletTestPlatform> platform;
-
   std::unique_ptr<AnimationWorkletThread> worklet =
       CreateAnimationWorkletThread();
   CheckWorkletCanExecuteScript(worklet.get());

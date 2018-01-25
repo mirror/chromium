@@ -152,6 +152,8 @@ enum class TaskType : unsigned {
   // * //media
   kInternalMedia = 29,
 
+  // TODO(majidvp): Add an AnimationWorklet task type when the spec is final.
+
   kCount = 30,
 };
 
