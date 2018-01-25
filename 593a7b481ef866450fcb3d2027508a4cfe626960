@@ -56,6 +56,24 @@
       "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989bbbcc_df9febdb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-25T01:05:00Z",
+      "side": 1,
+      "message": "I don\u0027t think it actually matters if we block on connect.  However, you could return promise here instead of in a subsequent then...then you also wouldn\u0027t need to declare it above.",
+      "parentUuid": "6dcc710a_de966e01",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
