@@ -26,12 +26,14 @@
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/switches.h"
+#include "extensions/strings/grit/extensions_strings.h"
 #include "extensions/test/test_extensions_client.h"
 #include "services/data_decoder/public/cpp/test_data_decoder_service.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/zlib/google/zip.h"
+#include "ui/base/l10n/l10n_util.h"
 
 namespace extensions {
 
@@ -190,6 +192,12 @@ class SandboxedUnpackerTest : public ExtensionsTest {
 
   base::string16 GetInstallError() const { return client_->unpack_err(); }
 
+  void ExpectInstallErrorContains(const std::string& error) {
+    std::string full_error = base::UTF16ToUTF8(client_->unpack_err());
+    EXPECT_TRUE(full_error.find(error) != std::string::npos)
+        << "Error message " << full_error << " does not contain " << error;
+  }
+
  protected:
   data_decoder::TestDataDecoderService test_data_decoder_service_;
   base::ScopedTempDir extensions_dir_;
@@ -198,6 +206,47 @@ class SandboxedUnpackerTest : public ExtensionsTest {
   std::unique_ptr<content::InProcessUtilityThreadHelper>
       in_process_utility_thread_helper_;
 };
+
+TEST_F(SandboxedUnpackerTest, EmptyDefaultLocale) {
+  SetupUnpacker("empty_default_locale.crx", "");
+  ExpectInstallErrorContains(manifest_errors::kInvalidDefaultLocale);
+}
+
+TEST_F(SandboxedUnpackerTest, HasDefaultLocaleMissingLocalesFolder) {
+  SetupUnpacker("has_default_missing_locales.crx", "");
+  ExpectInstallErrorContains(manifest_errors::kLocalesTreeMissing);
+}
+
+TEST_F(SandboxedUnpackerTest, InvalidDefaultLocale) {
+  SetupUnpacker("invalid_default_locale.crx", "");
+  ExpectInstallErrorContains(manifest_errors::kInvalidDefaultLocale);
+}
+
+TEST_F(SandboxedUnpackerTest, MissingDefaultData) {
+  SetupUnpacker("missing_default_data.crx", "");
+  ExpectInstallErrorContains(manifest_errors::kLocalesNoDefaultMessages);
+}
+
+TEST_F(SandboxedUnpackerTest, MissingDefaultLocaleHasLocalesFolder) {
+  SetupUnpacker("missing_default_has_locales.crx", "");
+  ExpectInstallErrorContains(l10n_util::GetStringUTF8(
+      IDS_EXTENSION_LOCALES_NO_DEFAULT_LOCALE_SPECIFIED));
+}
+
+TEST_F(SandboxedUnpackerTest, MissingMessagesFile) {
+  SetupUnpacker("missing_messages_file.crx", "");
+  EXPECT_TRUE(base::MatchPattern(
+      GetInstallError(),
+      base::ASCIIToUTF16("*") +
+          base::ASCIIToUTF16(manifest_errors::kLocalesMessagesFileMissing) +
+          base::ASCIIToUTF16("*_locales?en_US?messages.json'.")))
+      << GetInstallError();
+}
+
+TEST_F(SandboxedUnpackerTest, NoLocaleData) {
+  SetupUnpacker("no_locale_data.crx", "");
+  ExpectInstallErrorContains(manifest_errors::kLocalesNoDefaultMessages);
+}
 
 TEST_F(SandboxedUnpackerTest, ImageDecodingError) {
   const char kExpected[] = "Could not decode image: ";
