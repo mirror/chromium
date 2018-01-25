@@ -52,6 +52,24 @@
       "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d048d09c_7703ec8d",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-25T07:47:47Z",
+      "side": 1,
+      "message": "Ah, that\u0027s interesting! Thanks! Do you propose that we differentiate favicons from sync as being expired?\n\nThis sounds reasonable as a general rule that we allow storing on-demand favicon if there is no direct conflict (for kTouchIcon) and all other icons are expired.\n\nIsn\u0027t there any other potential problem? Can we consistently store synced favicons as expired (even if there are many other icons stored for the page)? Wouldn\u0027t it force favicons to be refetched on every visit to such a page?\n\nAnother solution would be to mark it expired only if there is no other icon stored. How would this behave for sites that previously had an icon (which is stored in sync) but have no icon now. Wouldn\u0027t there be a icon war between no icon and the synced icon?\n\nIf we do not resolve it in a few more rounds, I propose to have an ad-hoc favicon gvc next Tuesday.",
+      "parentUuid": "f73815b7_105afe89",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
