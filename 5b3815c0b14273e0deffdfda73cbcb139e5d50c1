@@ -45,6 +45,29 @@
       "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd477dc5_e0d9b759",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-25T09:47:19Z",
+      "side": 1,
+      "message": "Nit: \"the horizontal insets\"?",
+      "range": {
+        "startLine": 226,
+        "startChar": 3,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
