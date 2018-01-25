@@ -308,6 +308,30 @@
       "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e8cbe2_36c68435",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:57:19Z",
+      "side": 1,
+      "message": "You might be surprised by how many users are still running old versions of Chrome \u003d(\n\nMoreover, the metrics dashboards have a (frustrating) limitation in that they assume that the labels provided at HEAD in enums.xml apply to all data, including historical data.  So, my biggest two concerns are (a) people looking at the data without filtering by milestone, which will slurp up old data; and (b) people looking at historical data, where M57 might have been a current version.  (I\u0027m actually not sure whether we have that much historical data stored, so that concern might not apply in practice.)\n\nIn any case, both of those concerns are relatively minor, so a brief note for the affected histograms is probably a sufficient bandaid for now.\n\nAnd, if you do pick up the work to unify the enums and introduce new metrics with the unified values, I\u0027d certainly appreciate it! \u003d)",
+      "parentUuid": "30e6dbee_6c485af6",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
