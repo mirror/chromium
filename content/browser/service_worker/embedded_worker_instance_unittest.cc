@@ -56,7 +56,7 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr CreateProviderInfoPtr() {
     DCHECK(!binding_.is_bound());
     DCHECK(!client_.is_bound());
-    // Just keep the endpoints.
+    // Just keep the endpoints
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
         mojom::ServiceWorkerProviderInfoForStartWorker::New();
     provider_info->registration =
