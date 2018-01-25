@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd1b1574_fcb32368",
+        "filename": "base/time/time_mac.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T08:07:44Z",
+      "side": 1,
+      "message": "See comment in time_win.cc.",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e173cf_5a9d78ed",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T08:07:44Z",
+      "side": 1,
+      "message": "I just realized: This should be TimeTicksNowIgnoringOverride(), right?\n\nAlso, in ActivateHighResolutionTimer() and a few other places. You should probably do a quick search to make sure there aren\u0027t any calls to TimeXYZ::Now() in any of the time_PLATFORM.* files, just in case.",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 37
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
