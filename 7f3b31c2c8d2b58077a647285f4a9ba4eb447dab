@@ -351,6 +351,30 @@
       "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09db848f_fd8e657d",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:14:40Z",
+      "side": 1,
+      "message": "Just as a note, when you made the suggestion earlier this made sense because we had \u003csync-account-section dice-enabled\u003d..\u003e as a sibling to \u003cpeople-page\u003e, but we\u0027ve since move those to be within \u003cpeople-page\u003e, which is why it appears to not make sense anymore.\n\nThat said, as mentioned in the above comments there will be more usage of this later, so do you think we can leave it here for now?",
+      "parentUuid": "fc0a4cda_7206b01c",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
