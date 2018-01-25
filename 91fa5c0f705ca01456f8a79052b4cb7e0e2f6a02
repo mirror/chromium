@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4775a7_56336ed6",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T21:49:22Z",
+      "side": 1,
+      "message": "kPrimary \u003d 0 since these are being casted... maybe just enum  was cleaner? If you decide to do plain enum feel free to leave a comment.",
+      "revId": "91fa5c0f705ca01456f8a79052b4cb7e0e2f6a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01910e0f_67c0218e",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T21:49:22Z",
+      "side": 1,
+      "message": "ExpectSecondaryVisible?\n\nIt might be better to keep these as one function?\n\n  ExpectVisible(SessionState::ACTIVE, kShelf /*primary*/, kNone /*secondary*/);",
+      "revId": "91fa5c0f705ca01456f8a79052b4cb7e0e2f6a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
