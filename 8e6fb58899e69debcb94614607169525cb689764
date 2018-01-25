@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82ea969c_933b1d10",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-25T19:04:08Z",
+      "side": 1,
+      "message": "Just making sure: is this span now styled to have a highlight (as opposed to setting a DOM selection)?",
+      "revId": "8e6fb58899e69debcb94614607169525cb689764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32719a60_b97d97d5",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-25T19:04:08Z",
+      "side": 1,
+      "message": "Perhaps a default of \"error\". Also, is this a placeholder? I don\u0027t see it getting populated anywhere. Finally, would it make sense to set focus to this span (e.g. tabindex\u003d-1) when you scroll to it below?",
+      "revId": "8e6fb58899e69debcb94614607169525cb689764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
