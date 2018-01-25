@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e271e0_1e9efce6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3162,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T18:20:25Z",
+      "side": 1,
+      "message": "--heap-sample-rate\u003d128 (KB)",
+      "revId": "82490e833af5e88a7b71532f75968c6ed8a8e249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13326466_45dc0e6a",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T18:20:25Z",
+      "side": 1,
+      "message": "Find some other place in the renderer init, right after command line (https://cs.chromium.org/chromium/src/content/renderer/renderer_main.cc?q\u003dRendererMain\u0026sq\u003dpackage:chromium\u0026l\u003d93)",
+      "revId": "82490e833af5e88a7b71532f75968c6ed8a8e249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
