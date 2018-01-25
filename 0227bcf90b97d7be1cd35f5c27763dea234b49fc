@@ -16,6 +16,24 @@
       "revId": "0227bcf90b97d7be1cd35f5c27763dea234b49fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad32dbda_4a21b736",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2018-01-25T23:19:09Z",
+      "side": 1,
+      "message": "I reversed the order so builder/tester comes before debug/release.",
+      "parentUuid": "a609eb30_6c0d6a0d",
+      "revId": "0227bcf90b97d7be1cd35f5c27763dea234b49fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
