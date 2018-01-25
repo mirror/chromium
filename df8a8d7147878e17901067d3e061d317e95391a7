@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "295c9ddb_fd4280ed",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-25T14:17:04Z",
+      "side": 1,
+      "message": "These are always paired, and must remain paired. The methods in this class should enforce that.\n\nSo remove AppendNames and AppendValues and instead implement AppendAttribute(const Attribute\u0026) and AppendNameWithValue(String name, String value).",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "df8a8d7147878e17901067d3e061d317e95391a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
