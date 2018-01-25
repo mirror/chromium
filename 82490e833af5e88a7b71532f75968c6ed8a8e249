@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70f7d2a7_e172113b",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3162,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-25T23:16:40Z",
+      "side": 1,
+      "message": "Added optional rate in KiB. Kept the original flag name as --heap-sample-rate without a value looks weird.",
+      "parentUuid": "21e271e0_1e9efce6",
+      "revId": "82490e833af5e88a7b71532f75968c6ed8a8e249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13326466_45dc0e6a",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "82490e833af5e88a7b71532f75968c6ed8a8e249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612fc7ee_f3a7c0c8",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-25T23:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13326466_45dc0e6a",
+      "revId": "82490e833af5e88a7b71532f75968c6ed8a8e249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
