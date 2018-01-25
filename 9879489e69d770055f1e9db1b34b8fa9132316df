@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96f45a7c_077396a6",
+        "filename": "components/history/core/browser/history_backend_notifier.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-25T18:37:15Z",
+      "side": 1,
+      "message": "Could you explain |time_range| in comment too?",
+      "revId": "9879489e69d770055f1e9db1b34b8fa9132316df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

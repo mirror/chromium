@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "821b3fac_47ed75d3",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-25T18:37:15Z",
+      "side": 0,
+      "message": "Ah, I see. Let\u0027s remove this DCHECK instead of changing it. Since the logic below doesn\u0027t really depends on this DCHECK.",
+      "parentUuid": "29fb0e9c_5ee22528",
+      "revId": "0d47ae362d4d7fdc14b2fb14b3988ef86e7512d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9823a637_fcfe07b1",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
         "patchSetId": 21
