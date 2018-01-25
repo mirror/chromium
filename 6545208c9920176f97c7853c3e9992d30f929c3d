@@ -212,6 +212,30 @@
       "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac0dab1_8f172cfc",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-25T21:46:26Z",
+      "side": 1,
+      "message": "to further complicate things, the browser watcher logs Stability.BrowserExitCodes which is of type WindowsExitCode which is also wrong. This also needs updating.\n\nin summary there\u0027s three metrics using these codes:\n Stability.BrowserExitCodes\n CrashExitCodes.Extension\n CrashExitCodes.Renderer\n\nI know this is kicking the can down the road (for when we want to add something to content/public/common/result_codes.h) but I do prefer this CL to update the codes to reflect reality (so at least data flowing right now from Chrome has the right labels on dashboard) and then we can come up with a plan in another CL to renumber, potentially landing a new histogram. When we do that, we can also consider consolidating the two enums into one-enum-to-rule-them-all.",
+      "parentUuid": "f4f98ef3_4a8f90e4",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
