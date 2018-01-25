@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85b48dfd_6bea2a42",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-25T01:08:15Z",
+      "side": 1,
+      "message": "I actually liked the CTAP in the name, could you restore this to GetCTAPResponseCodeList()?",
+      "range": {
+        "startLine": 97,
+        "startChar": 49,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "87a3acd94267e595c50d5fdff545529b11e2b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
