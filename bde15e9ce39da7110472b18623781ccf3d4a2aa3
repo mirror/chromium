@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45778bbb_941b57a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-25T15:54:21Z",
+      "side": 0,
+      "message": "Thanks! Would you please add 707804 to the Bug line in the CL description?",
+      "revId": "bde15e9ce39da7110472b18623781ccf3d4a2aa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
