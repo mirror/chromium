@@ -16,6 +16,24 @@
       "revId": "fedc4a22df11d90394a3ba6ec608f84d48ee44f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60ccdf9_d63b1bd9",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T18:12:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29f462cc_dc4abbd8",
+      "revId": "fedc4a22df11d90394a3ba6ec608f84d48ee44f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
