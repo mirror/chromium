@@ -31,6 +31,9 @@
 // The location bar view, containing the omnibox.
 @property(nonatomic, strong) UIView* locationBarView;
 
+// Container for the location bar.
+@property(nonatomic, strong, readonly) UIView* locationBarContainer;
+
 // Sets all the subviews and constraints of the view. The |topSafeAnchor| needs
 // to be set before calling this.
 - (void)setUp;

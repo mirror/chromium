@@ -10,6 +10,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
 #import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
+#import "ios/chrome/browser/ui/ntp/ntp_util.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
@@ -164,9 +165,25 @@
   return ![self isOmniboxFirstResponder] && ![self showingOmniboxPopup];
 }
 
-- (UIImage*)toolbarSideSwipeSnapshotForTab:(Tab*)tab {
-  // TODO(crbug.com/803371): Implement that.
-  return nil;
+#pragma mark - Protected override
+
+- (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {
+  [super updateToolbarForSideSwipeSnapshot:webState];
+
+  BOOL isNTP = IsVisibleUrlNewTabPage(webState);
+
+  // Don't do anything for a live non-ntp tab.
+  if (webState == self.webStateList->GetActiveWebState() && !isNTP) {
+    [self.locationBarCoordinator.locationBarView setHidden:NO];
+  } else {
+    self.viewController.view.hidden = NO;
+    [self.locationBarCoordinator.locationBarView setHidden:YES];
+  }
+}
+
+- (void)resetToolbarAfterSideSwipeSnapshot {
+  [super resetToolbarAfterSideSwipeSnapshot];
+  [self.locationBarCoordinator.locationBarView setHidden:NO];
 }
 
 #pragma mark - Private
