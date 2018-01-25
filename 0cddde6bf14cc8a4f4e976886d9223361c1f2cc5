@@ -22,6 +22,30 @@
       "revId": "0cddde6bf14cc8a4f4e976886d9223361c1f2cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61df0c6e_b3c4a1ff",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-25T18:11:46Z",
+      "side": 1,
+      "message": "The keyword here is \"attempt\". The extension system will attempt to update the delayed extension, there\u0027s no guarantee that the update will succeed (hence there\u0027s the return value).",
+      "parentUuid": "5b13c01d_e0d9da73",
+      "range": {
+        "startLine": 145,
+        "startChar": 29,
+        "endLine": 146,
+        "endChar": 22
+      },
+      "revId": "0cddde6bf14cc8a4f4e976886d9223361c1f2cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
