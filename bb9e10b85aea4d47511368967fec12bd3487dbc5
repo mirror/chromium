@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35349620_2579847c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-25T08:09:05Z",
+      "side": 1,
+      "message": "[nit] since this is a void function I suppose you can just delete this line (implicit return)",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "bb9e10b85aea4d47511368967fec12bd3487dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
