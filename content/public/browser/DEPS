@@ -1,4 +1,7 @@
 include_rules = [
+  # components/download are needed for providing the download feature.
+  # TODO(qinmin): move it to services/download when download becomes a service.
+  "+components/download/public/core",
   "+components/viz/common",
   "+device/geolocation/public/cpp",
   "+device/usb/public/interfaces",
@@ -9,7 +12,7 @@ include_rules = [
 ]
 
 specific_include_rules = {
-  ".*\.cc": [
+  ".*\.cc": [  
     "+content/browser",
     "-content/browser/loader",
 
