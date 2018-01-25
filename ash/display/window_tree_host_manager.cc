@@ -401,6 +401,7 @@ void WindowTreeHostManager::SetPrimaryDisplayId(int64_t id) {
   GetDisplayManager()->set_force_bounds_changed(true);
   GetDisplayManager()->UpdateDisplays();
   GetDisplayManager()->set_force_bounds_changed(false);
+  LOG(ERROR) << "*** set primary display id ***";
 }
 
 void WindowTreeHostManager::UpdateMouseLocationAfterDisplayChange() {

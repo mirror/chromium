@@ -255,6 +255,11 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
 
+  base::Optional<gfx::Rect> pre_display_window_bounds() const {
+    return pre_display_window_bounds_;
+  }
+  void SetPreDisplayWindowBounds(const gfx::Rect& bounds);
+
   // Layout related properties
 
   void AddObserver(WindowStateObserver* observer);
@@ -429,6 +434,8 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // A property which resets when bounds is changed by user and sets when it is
   // nullptr, and window is removing from a workspace.
   base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds_;
+
+  base::Optional<gfx::Rect> pre_display_window_bounds_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
