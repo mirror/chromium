@@ -1289,7 +1289,7 @@ static void UpdateFocusCandidateIfNeeded(WebFocusType type,
   // Ignore iframes that don't have a src attribute
   if (FrameOwnerElement(candidate) &&
       (!FrameOwnerElement(candidate)->ContentFrame() ||
-       candidate.rect.IsEmpty()))
+       candidate.rect_in_root_frame.IsEmpty()))
     return;
 
   // Ignore off screen child nodes of containers that do not scroll
@@ -1309,10 +1309,11 @@ static void UpdateFocusCandidateIfNeeded(WebFocusType type,
     return;
   }
 
-  LayoutRect intersection_rect = Intersection(candidate.rect, closest.rect);
+  LayoutRect intersection_rect =
+      Intersection(candidate.rect_in_root_frame, closest.rect_in_root_frame);
   if (!intersection_rect.IsEmpty() &&
       !AreElementsOnSameLine(closest, candidate) &&
-      intersection_rect == candidate.rect) {
+      intersection_rect == candidate.rect_in_root_frame) {
     // If 2 nodes are intersecting, do hit test to find which node in on top.
     LayoutUnit x = intersection_rect.X() + intersection_rect.Width() / 2;
     LayoutUnit y = intersection_rect.Y() + intersection_rect.Height() / 2;
@@ -1358,7 +1359,7 @@ void FocusController::FindFocusCandidateInContainer(
 
   Element* element = ElementTraversal::FirstWithin(container);
   FocusCandidate current;
-  current.rect = starting_rect;
+  current.rect_in_root_frame = starting_rect;
   current.focusable_node = focused_element;
   current.visible_node = focused_element;
 
@@ -1405,8 +1406,7 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
 
     LayoutRect heuristic_rect =
         starting_rect.IsEmpty()
-            ? VirtualRectForDirection(type,
-                                      NodeRectInAbsoluteCoordinates(container))
+            ? VirtualRectForDirection(type, NodeRectInRootFrame(container))
             : starting_rect;
 
     FocusCandidate candidate;
@@ -1479,8 +1479,8 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   LayoutRect starting_rect;
   if (focused_element) {
     if (!HasOffscreenRect(focused_element)) {
-      starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
-                                                    true /* ignore border */);
+      starting_rect =
+          NodeRectInRootFrame(focused_element, true /* ignore border */);
     } else if (auto* area = ToHTMLAreaElementOrNull(*focused_element)) {
       if (area->ImageElement()) {
         focused_element = area->ImageElement();
