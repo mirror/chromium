@@ -134,6 +134,24 @@
       "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baaa413f_ab1d84da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-25T18:56:02Z",
+      "side": 1,
+      "message": "My only concern is that the test wait until all operations on the device finish. Waiting or not waiting for disconnect() or connect() doesn\u0027t affect what the test is testing.",
+      "parentUuid": "006be310_185c1099",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
