@@ -16,6 +16,24 @@
       "revId": "8c19df098ce94fcd73b3a6ccad92f7a08c4b3b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effd5ee5_f6094230",
+        "filename": "device/bluetooth/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002562
+      },
+      "writtenOn": "2018-01-25T19:08:09Z",
+      "side": 1,
+      "message": "Ok, didn\u0027t see that section",
+      "parentUuid": "c71b9123_e319406a",
+      "revId": "8c19df098ce94fcd73b3a6ccad92f7a08c4b3b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
