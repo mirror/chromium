@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "f62a4ee1_fffa78a4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2172,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "Why change below to \"self.primaryToolbarCoordinator.viewController.view\" but not here?",
+      "range": {
+        "startLine": 2172,
+        "startChar": 22,
+        "endLine": 2172,
+        "endChar": 42
+      },
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3514e2bd_b5937257",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "followup: can you move those ivars declaration to the implementation?",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a28af3_6564fd15",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "followup: can you movethose ivars declaration to the implementation?",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13ae333a_f8dce70d",
         "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
         "patchSetId": 4
@@ -30,6 +87,103 @@
       "writtenOn": "2018-01-24T17:34:50Z",
       "side": 1,
       "message": "Is this comment needed?",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd091d10_8e7c7b62",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "followup: I see that you wrote this snippets at least twice in this CL, and I assume that we may want to have it in other location. I would suggest adding a helper method somewhere:\n\n  bool IsVisibleUrlNewTabPage(web::WebState* web_state) {\n    web::NavigationItem* item \u003d\n        webState-\u003eGetNavigationManager()-\u003eGetVisibleItem();\n    return item \u0026\u0026 item-\u003eGetURL().GetOrigin() \u003d\u003d kChromeUINewTabURL;\n  }",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0174125_8cadfe8f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "Should be\n\n  BOOL isNTP \u003d URL \u003d\u003d kChromeUINewTabURL;",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a15a39_be6e4a0e",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "Avoid using \"GURL(kSomething) \u003d\u003d variable)\" this is sub-optimal. GURL supports comparison with raw strings exactly for that case when comparing to a constant. Instead use \"variable \u003d\u003d kSomething\".\n\nFrom:\n\n  // Equality operator for comparing raw spec_. This should be used in place of\n  // url \u003d\u003d GURL(spec) where |spec| is known (i.e. constants). This is to prevent\n  // needlessly re-parsing |spec| into a temporary GURL.\n  URL_EXPORT bool operator\u003d\u003d(const GURL\u0026 x, const base::StringPiece\u0026 spec);\n\nSo your code should be:\n\n  BOOL isNTP \u003d URL \u003d\u003d kChromeUINewTabURL;",
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2a5ab7_352df1cb",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "typo: TestUpdateConsumerForWebState",
+      "range": {
+        "startLine": 470,
+        "startChar": 28,
+        "endLine": 470,
+        "endChar": 57
+      },
+      "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28548463_f3c79885",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:20:15Z",
+      "side": 1,
+      "message": "nit: you can generally change this to \"auto var \u003d std::make_unique\u003cType\u003e(...);\", so here\n\n  auto navigation_manager \u003d std::make_unique\u003cToolbarTestNavigationManager\u003e();\n  navigation_manager-\u003eset_can_go_forward(true);\n  ...",
+      "range": {
+        "startLine": 479,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 55
+      },
       "revId": "9717d6e77e21d5bcdd12bcc1948b35cd213046f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
