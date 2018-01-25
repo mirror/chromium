@@ -22,6 +22,30 @@
       "revId": "44a76bd7684f20599953adcb7d8f17d978a162e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbd6c86_18ea4d71",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-25T17:43:43Z",
+      "side": 1,
+      "message": "I will followup immediately with another CL.",
+      "parentUuid": "f551d3ce_cea15c06",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "44a76bd7684f20599953adcb7d8f17d978a162e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
