@@ -1016,7 +1016,10 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   // tab_capture_performancetest.cc.
   TRACE_EVENT0("gpu", "RenderWidget::DidCommitAndDrawCompositorFrame");
 
-  DidResizeOrRepaintAck();
+  // If we haven't commited yet, then this method was called as a response to a
+  // previous commit and should not be used to ack the resize.
+  if (did_commit_after_resize_)
+    DidResizeOrRepaintAck();
 
   for (auto& observer : render_frames_)
     observer.DidCommitAndDrawCompositorFrame();
@@ -1025,7 +1028,9 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   DidInitiatePaint();
 }
 
-void RenderWidget::DidCommitCompositorFrame() {}
+void RenderWidget::DidCommitCompositorFrame() {
+  did_commit_after_resize_ = true;
+}
 
 void RenderWidget::DidCompletePageScaleAnimation() {}
 
@@ -1313,6 +1318,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
   bool screen_info_changed = screen_info_ != params.screen_info;
 
   screen_info_ = params.screen_info;
+
+  did_commit_after_resize_ = false;
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (render_thread)
