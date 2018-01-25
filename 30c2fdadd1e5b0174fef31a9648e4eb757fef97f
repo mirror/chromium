@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7d5a5f7_1caa2b1a",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T21:30:32Z",
+      "side": 1,
+      "message": "I agree; this change confuses me. I was pretty sure that `-g0` meant *no* debug symbols, and that if you wanted stack traces you needed `-g1`. At least that\u0027s what the GCC docs say, and I thought Clang matched that?",
+      "parentUuid": "ea82d8f2_a04127df",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a03f3d_530568c1",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 63
