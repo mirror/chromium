@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceae03d6_84fa7704",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:13:16Z",
+      "side": 1,
+      "message": "This is potentially dangerous. Modifying any members of this class (or even accessing e.g. network_map_) on a different thread could be bad. We should make GetCachedNetworkProperties a non member function and pass any arguments it needs there.\n\nIt also looks like the first half of the function could just be done here.",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050f6d44_92167a1a",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:13:16Z",
+      "side": 1,
+      "message": "We should be using a WeakPtrFactory and weak_ptr_factory_.GetWeakPtr() here (but see previous comment).",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae555660_7cb4c2e2",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:13:16Z",
+      "side": 1,
+      "message": "Same proboem here and throughout this class.",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
