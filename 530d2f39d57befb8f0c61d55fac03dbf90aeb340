@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7724e3ad_3f906633",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-25T19:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344624dd_40047550",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a90474c2_10e02018",
         "filename": "chrome/common/extensions/docs/templates/articles/security.html",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1280b00_f9596708",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-25T19:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a90474c2_10e02018",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "58531ca1_d5e1c18b",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-25T19:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e9f63d_bf106abf",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 6
+      },
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f891dba_df3ee346",
         "filename": "chrome/common/extensions/docs/templates/articles/security.html",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43662e0f_f44df718",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-25T19:02:07Z",
+      "side": 1,
+      "message": "I can see why this would be contradictory - the thought for putting it in is to to ensure the code is not malicious, but I supposed it would make it easier for attackers to understand. Removed - will try to find a more appropriate place to mention it.",
+      "parentUuid": "1f891dba_df3ee346",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
