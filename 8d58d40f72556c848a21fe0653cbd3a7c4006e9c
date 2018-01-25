@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82638de8_7f667843",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T13:45:10Z",
+      "side": 1,
+      "message": "https://developer.apple.com/documentation/uikit/uiview/2891101-insetslayoutmarginsfromsafearea Try this instead.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "8d58d40f72556c848a21fe0653cbd3a7c4006e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

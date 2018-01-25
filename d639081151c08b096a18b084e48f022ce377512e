@@ -16,6 +16,24 @@
       "revId": "d639081151c08b096a18b084e48f022ce377512e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f5d48c_87133e05",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T13:45:10Z",
+      "side": 0,
+      "message": "Try visiting a page with a very long URL, then rotate the screen. This might cause the location bar to push out the buttons in the toolbar in order to fit the URL.\n\nCompression resistance and hugging do not require intrinsicContentSize. Intrinsic size is the size the view would take if it had no constraints attached to it; however this does not take into account any subviews and their constraints to the view. In the case of ClippingTextFieldContainer, there are subviews constrained to CTFC, so autolayout will try to expand CTFC to fit all of its subviews. One if its subviews is a UITextField that implements intrinsicContentSize to be (length of string) + (various padding).",
+      "parentUuid": "0a3cb279_d5555821",
+      "revId": "d639081151c08b096a18b084e48f022ce377512e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
