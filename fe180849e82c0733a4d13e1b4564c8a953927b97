@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a867816_f1d86b74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:18:13Z",
+      "side": 1,
+      "message": "Yes, I considered that (or maybe kNoSpecifier) and I think I like it better after all. I wanted to stay closer to DRM_FORMAT_MOD_INVALID, but we\u0027re really using it in a specific way to mean \"no modifier\".",
+      "parentUuid": "853f30b1_e16e93d7",
+      "revId": "fe180849e82c0733a4d13e1b4564c8a953927b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b447e789_0527eea3",
         "filename": "ui/gfx/native_pixmap_handle.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T22:00:26Z",
       "side": 1,
       "message": "Maybe add a comment explaining that it is the same value as DRM_FORMAT_MOD_INVALID?\n\nCan we move this to NativePixmapHandle::kInvalidModifier or GbmBuffer::kInvalidModifier, gfx::kInvalidModifier might be too generic.",
+      "revId": "fe180849e82c0733a4d13e1b4564c8a953927b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcf7187_4e1949f2",
+        "filename": "ui/gfx/native_pixmap_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:18:13Z",
+      "side": 1,
+      "message": "Yes and yes. NativePixmapHandle makes more sense, but it\u0027s quite a mouthful: \n\n  gfx::NativePixmapHandle::kNoModifier\n\nI also considered making the plane constructor not take a modifier and default to kNoModifier.",
+      "parentUuid": "b447e789_0527eea3",
       "revId": "fe180849e82c0733a4d13e1b4564c8a953927b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
