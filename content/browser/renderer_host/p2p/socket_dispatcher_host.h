@@ -23,6 +23,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/network_change_notifier.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -87,11 +88,13 @@ class P2PSocketDispatcherHost
   void OnAcceptIncomingTcpConnection(int listen_socket_id,
                                      const net::IPEndPoint& remote_address,
                                      int connected_socket_id);
-  void OnSend(int socket_id,
-              const net::IPEndPoint& socket_address,
-              const std::vector<char>& data,
-              const rtc::PacketOptions& options,
-              uint64_t packet_id);
+  void OnSend(
+      int socket_id,
+      const net::IPEndPoint& socket_address,
+      const std::vector<char>& data,
+      const rtc::PacketOptions& options,
+      uint64_t packet_id,
+      const net::MutableNetworkTrafficAnnotationTag& traffic_annotation);
   void OnSetOption(int socket_id, P2PSocketOption option, int value);
   void OnDestroySocket(int socket_id);
 
