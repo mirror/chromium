@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b513b0ab_7ab8e97d",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-25T06:08:14Z",
+      "side": 1,
+      "message": "nit: starts with \u0027P\u0027 and ends with period.",
+      "revId": "024f20da106a76f07d76ff8068dba3d5536bf934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f5f50a_544d11da",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-25T06:08:14Z",
+      "side": 1,
+      "message": "nit: |sync_all   \u003d\u003e   |sync_all|.\n\nI don\u0027t quite understand \u0027empty second set does what we need.\u0027 Could you add more explanation in the comment?",
+      "revId": "024f20da106a76f07d76ff8068dba3d5536bf934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b76003_ab48f63d",
+        "filename": "chrome/browser/ui/webui/chromeos/login/sync_consent_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-25T06:08:14Z",
+      "side": 1,
+      "message": "nit: remove \u0027implementation\u0027 to be consistent with other parts of this file.",
+      "revId": "024f20da106a76f07d76ff8068dba3d5536bf934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
