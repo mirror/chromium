@@ -791,6 +791,12 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
           info->website_settings_info()->type(), delete_begin_,
           HostContentSettingsMap::PatternSourcePredicate());
     }
+#if BUILDFLAG(ENABLE_PLUGINS)
+    host_content_settings_map_->ClearSettingsForOneTypeWithPredicate(
+        CONTENT_SETTINGS_TYPE_PLUGINS_DATA, base::Time(),
+        base::Bind(&WebsiteSettingsFilterAdapter, filter));
+#endif
+
 #if !defined(OS_ANDROID)
     content::HostZoomMap* zoom_map =
         content::HostZoomMap::GetDefaultForBrowserContext(profile_);
