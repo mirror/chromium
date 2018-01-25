@@ -16,6 +16,24 @@
       "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab6eb17_d68d110d",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-25T21:04:52Z",
+      "side": 1,
+      "message": "data_deps is needed for runtime deps file generation, which is an essential input for manifest generation. It\u0027s used in addition to \"deps\" which establishes the target build precedence.\n\nI used a print statement to verify that \"deps\" is being set properly. It points the executable() target, which seems correct. (e.g. [\":content_unittests__exec\"])",
+      "parentUuid": "76a82290_f6b07257",
+      "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
