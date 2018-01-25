@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "4f7510e2_342d4330",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T21:49:06Z",
+      "side": 1,
+      "message": "The use of content::RESULT_CODE_LAST_CODE as RESULT_CODE_CHROME_START means adding a content::ResultCode enum shifts all the chrome::ResultCode enum values by 1.\n\nThere\u0027s no enum value overlap within any Chrome version, but yes, Chrome NN-56 values overlap with 57-65 values. I didn\u0027t understand what you meant by overlapping.",
+      "parentUuid": "1e990d98_f76fa84f",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe38188_73baea23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
