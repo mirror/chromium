@@ -98,6 +98,7 @@ void NavigationCorrectionTabObserver::OnEnabledChanged() {
 
 void NavigationCorrectionTabObserver::UpdateNavigationCorrectionInfo(
     RenderFrameHost* render_frame_host) {
+  LOG(INFO) << "Updating navigation correction info";
   GURL google_base_url(UIThreadSearchTermsData(profile_).GoogleBaseURLValue());
   chrome::mojom::NavigationCorrectorAssociatedPtr client;
   render_frame_host->GetRemoteAssociatedInterfaces()->GetInterface(&client);

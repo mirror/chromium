@@ -655,6 +655,8 @@ void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
       static_cast<net::Error>(committed_error_page_info_->error.reason()));
 
   if (committed_error_page_info_->needs_load_navigation_corrections) {
+    LOG(INFO) << "Fetching navigation corrections at URL "
+              << committed_error_page_info_->navigation_correction_params->url;
     // If there is another pending error page load, |fix_url| should have been
     // cleared.
     DCHECK(!pending_error_page_info_);
