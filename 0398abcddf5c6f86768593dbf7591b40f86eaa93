@@ -81,6 +81,24 @@
       "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10475871_ae6a749f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-25T23:27:42Z",
+      "side": 1,
+      "message": "What about a simpler alternative. Just maintain a single cache entry last_url_check_ with the KURL, resource type, and load policy.\n\nFor most cases, after we check CanRequest, we\u0027ll immediately construct the Resource. In Resource constructor (or wherever), call back into SubresourceFilter::IsAdResource(KURL, ResourceType), which will consume the cache entry.",
+      "parentUuid": "3534b75f_880f7f42",
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
