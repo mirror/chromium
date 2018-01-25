@@ -59,7 +59,7 @@ class CHROMEOS_EXPORT PpdCache : public base::RefCounted<PpdCache> {
   // invoked on completion.
   virtual void Store(const std::string& key,
                      const std::string& contents,
-                     const base::Closure& cb) = 0;
+                     base::OnceClosure cb) = 0;
 
   // Store the given contents at the given key, and change the resulting
   // cache file's last modified date to be |age| before now.
