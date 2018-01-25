@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb15794d_d6839674",
+        "filename": "chrome/test/data/vr/e2e_test_files/html/test_presentation_promise_unresolved_during_don.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-25T01:49:13Z",
+      "side": 1,
+      "message": "It turns out that 1 second was short enough for the test to erroneously pass.",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 50
+      },
+      "revId": "ebe3ff0c2172f3e566dfb84e8a4ce258580ae348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
