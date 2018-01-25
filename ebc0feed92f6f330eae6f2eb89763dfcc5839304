@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "751b8143_095819cf",
+        "filename": "content/public/common/result_codes.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T22:20:38Z",
+      "side": 1,
+      "message": "I don\u0027t think that it\u0027s appropriate to append any entries so long as the other enum depends on this one.  Maybe document that this enum is frozen, and add a TODO for Will instead?",
+      "range": {
+        "startLine": 24,
+        "startChar": 73,
+        "endLine": 25,
+        "endChar": 65
+      },
+      "revId": "ebc0feed92f6f330eae6f2eb89763dfcc5839304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5486fc8b_f89d1c96",
+        "filename": "content/public/common/result_codes.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T22:20:38Z",
+      "side": 1,
+      "message": "I would add a stronger message for this particular assertion, since shifting RESULT_CODE_LAST_CODE will actually shift a bunch of other metric values.",
+      "range": {
+        "startLine": 48,
+        "startChar": 77,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "ebc0feed92f6f330eae6f2eb89763dfcc5839304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
