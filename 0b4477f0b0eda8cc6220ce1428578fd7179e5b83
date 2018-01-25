@@ -22,6 +22,30 @@
       "revId": "0b4477f0b0eda8cc6220ce1428578fd7179e5b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddc1e67_4426c1bc",
+        "filename": "chrome/browser/resources/media_router/extension/typecheck.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-01-25T00:59:21Z",
+      "side": 1,
+      "message": "yeah, i think this would be odd for some folks working on chrome (if they have java installed) to get a laggier build when this CL is submitted.\n\ncan we hide this behind a team-specific flag or something?  like remoting did?\nhttps://cs.chromium.org/chromium/src/remoting/webapp/build_template.gni?type\u003dcs\u0026q\u003denable_remoting_jscompile\u0026l\u003d58",
+      "parentUuid": "b2d26514_370af623",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "0b4477f0b0eda8cc6220ce1428578fd7179e5b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
