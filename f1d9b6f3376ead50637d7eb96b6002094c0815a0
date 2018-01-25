@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3968580_38120bd4",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7898c338_53d9cf13",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c1487a_2b3ed5ab",
         "filename": "base/time/time.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e0d5f4_ba2781ec",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this would work since time_[platform].cc files may choose a different default function.",
+      "parentUuid": "03c1487a_2b3ed5ab",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d3acb306_4ee7273f",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0660177c_b1e17d35",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d955a5b_d224f3c8",
         "filename": "base/time/time_fuchsia.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d86f3_b56dac51",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "Done, except for time_win.cc, where there\u0027s no \"namespace base { .. }\".",
+      "parentUuid": "3d955a5b_d224f3c8",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad116e5_3aa28df9",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "Can\u0027t use private constructor from outside base::Time implementation, same elsewhere. Yuri suggested this solution as it\u0027s used elsewhere, too. The compiler will simplify it (no overhead).",
+      "parentUuid": "5e029ce1_f661d185",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "51feb9ef_93b8250d",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "I need a clean function pointer to TimeOverride::Now(). Since I can\u0027t use base::Bind, I don\u0027t think I could bind an object of TimeOverride. Or is there a solution I\u0027m missing? :)",
+      "parentUuid": "08ffb800_96773623",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e3c935_abee59fc",
         "filename": "base/time/time_unittest.cc",
         "patchSetId": 17
@@ -171,6 +285,24 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8066c0a1_152165f4",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T11:29:27Z",
+      "side": 1,
+      "message": "Added a TimeTicks::Min() \u003c UnixEpoch() comparison.",
+      "parentUuid": "d9e3c935_abee59fc",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
