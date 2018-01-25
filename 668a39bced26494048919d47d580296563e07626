@@ -22,6 +22,30 @@
       "revId": "668a39bced26494048919d47d580296563e07626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865e1aba_f5fcc71f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/PermissionUpdateInfobarTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-25T00:16:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1882c545_dce5510c",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 56
+      },
+      "revId": "668a39bced26494048919d47d580296563e07626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
