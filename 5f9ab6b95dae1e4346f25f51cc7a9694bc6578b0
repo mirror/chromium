@@ -16,6 +16,24 @@
       "revId": "5f9ab6b95dae1e4346f25f51cc7a9694bc6578b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f631603_34027b33",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2018-01-25T19:16:01Z",
+      "side": 1,
+      "message": "Why not? If it\u0027s to prevent the use of exceptions in the STL, this macro doesn\u0027t affect whether libc++ uses exceptions, as I wrote in the comment. If it\u0027s to prevent the use of exceptions in other code, that code shouldn\u0027t be using _HAS_EXCEPTIONS (which is MSVC STL specific) but rather _CPPUNWIND (which is a compiler-predefined macro which is defined by cl and clang-cl if /EHsc is passed), and I am sending out CLs to change that code to use _CPPUNWIND instead.",
+      "parentUuid": "065b8750_955c54c6",
+      "revId": "5f9ab6b95dae1e4346f25f51cc7a9694bc6578b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
