@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "chromeos/components/tether/error_tolerant_ble_advertisement.h"
 #include "components/cryptauth/foreground_eid_generator.h"
@@ -46,10 +47,6 @@ class ErrorTolerantBleAdvertisementImpl
     static Factory* factory_instance_;
   };
 
-  ErrorTolerantBleAdvertisementImpl(
-      const std::string& device_id,
-      std::unique_ptr<cryptauth::DataWithTimestamp> advertisement_data,
-      BleSynchronizerBase* ble_synchronizer);
   ~ErrorTolerantBleAdvertisementImpl() override;
 
   // ErrorTolerantBleAdvertisement:
@@ -57,6 +54,11 @@ class ErrorTolerantBleAdvertisementImpl
   bool HasBeenStopped() override;
 
  protected:
+  ErrorTolerantBleAdvertisementImpl(
+      const std::string& device_id,
+      std::unique_ptr<cryptauth::DataWithTimestamp> advertisement_data,
+      BleSynchronizerBase* ble_synchronizer);
+
   // device::BluetoothAdvertisement::Observer
   void AdvertisementReleased(
       device::BluetoothAdvertisement* advertisement) override;

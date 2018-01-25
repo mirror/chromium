@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/crash_recovery_manager.h"
 
@@ -43,14 +44,16 @@ class CrashRecoveryManagerImpl : public CrashRecoveryManager {
     static Factory* factory_instance_;
   };
 
-  CrashRecoveryManagerImpl(NetworkStateHandler* network_state_handler,
-                           ActiveHost* active_host,
-                           HostScanCache* host_scan_cache);
   ~CrashRecoveryManagerImpl() override;
 
   // CrashRecoveryManager:
   void RestorePreCrashStateIfNecessary(
       const base::Closure& on_restoration_finished) override;
+
+ protected:
+  CrashRecoveryManagerImpl(NetworkStateHandler* network_state_handler,
+                           ActiveHost* active_host,
+                           HostScanCache* host_scan_cache);
 
  private:
   void RestoreConnectedState(const base::Closure& on_restoration_finished,

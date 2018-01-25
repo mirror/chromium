@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "components/cryptauth/remote_device.h"
 #include "components/cryptauth/remote_device_provider.h"
@@ -40,8 +41,6 @@ class TetherHostFetcherImpl : public TetherHostFetcher,
     static Factory* factory_instance_;
   };
 
-  explicit TetherHostFetcherImpl(
-      cryptauth::RemoteDeviceProvider* remote_device_provider);
   ~TetherHostFetcherImpl() override;
 
   // TetherHostFetcher:
@@ -52,6 +51,10 @@ class TetherHostFetcherImpl : public TetherHostFetcher,
 
   // cryptauth::RemoteDeviceProvider::Observer:
   void OnSyncDeviceListChanged() override;
+
+ protected:
+  explicit TetherHostFetcherImpl(
+      cryptauth::RemoteDeviceProvider* remote_device_provider);
 
  private:
   void CacheCurrentTetherHosts();
