@@ -38,7 +38,7 @@ IPC_ENUM_TRAITS_MAX_VALUE(cc::FilterOperation::FilterType,
                           cc::FilterOperation::FILTER_TYPE_LAST)
 // TODO(wutao): This trait belongs with skia code.
 IPC_ENUM_TRAITS_MAX_VALUE(SkBlurImageFilter::TileMode,
-                          SkBlurImageFilter::kMax_TileMode)
+                          SkBlurImageFilter::kLast_TileMode)
 IPC_ENUM_TRAITS_MAX_VALUE(viz::ResourceFormat, viz::RESOURCE_FORMAT_MAX)
 
 // TODO(fsamuel): This trait belongs with skia code.
