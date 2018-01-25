@@ -16,6 +16,24 @@
       "revId": "8e8443034f79254a6144fdd737ad34c945cd84ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eaa540a_2d34c709",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-25T04:05:30Z",
+      "side": 1,
+      "message": "OK, thanks, didn\u0027t realize that. The old bot was mis-specified, then. Fixing in https://chromium-review.googlesource.com/885505 .",
+      "parentUuid": "3b07f8d0_288847a0",
+      "revId": "8e8443034f79254a6144fdd737ad34c945cd84ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
