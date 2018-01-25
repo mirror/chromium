@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e67a9d_15c58cb2",
+        "filename": "remoting/host/input_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-25T22:58:12Z",
+      "side": 1,
+      "message": "Maybe also reset it here?",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "596505b165e365238ac16bd99861d54329e4f1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
