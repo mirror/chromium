@@ -372,7 +372,7 @@ Polymer({
 
     // Add the most recent destination
     this.recentDestinations.splice(0, 0, newDestination);
-    this.notifyPath('recentDestinations');
+    this.notifyPath('recentDestinations.0');
 
     // Persist sticky settings.
     this.stickySettingsChanged_();
