@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1e990d98_f76fa84f",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:44:55Z",
+      "side": 1,
+      "message": "Presumably they\u0027re off by 1 because previously they were correct, and then were shifted by 1, i.e. made overlapping (across different versions of Chrome).  Am I misunderstanding the history?",
+      "parentUuid": "bc767ab6_061d401a",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe38188_73baea23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
