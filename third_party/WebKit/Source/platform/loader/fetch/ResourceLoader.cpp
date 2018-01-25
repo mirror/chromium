@@ -614,9 +614,11 @@ void ResourceLoader::DidReceiveTransferSizeUpdate(int transfer_size_diff) {
 }
 
 void ResourceLoader::DidFinishLoadingFirstPartInMultipart() {
-  network_instrumentation::EndResourceLoad(
-      resource_->Identifier(),
-      network_instrumentation::RequestOutcome::kSuccess);
+  // Maxlg: Moved into HandleLoaderFinish
+  // network_instrumentation::EndResourceLoad(
+  //     resource_->Identifier(), resource_.Get(),
+  //     fetcher_->GetResourceTimingInfo(resource_.Get()),
+  //     network_instrumentation::RequestOutcome::kSuccess);
 
   fetcher_->HandleLoaderFinish(resource_.Get(), 0,
                                ResourceFetcher::kDidFinishFirstPartInMultipart,
@@ -636,10 +638,11 @@ void ResourceLoader::DidFinishLoading(double finish_time,
           ResourceLoadScheduler::TrafficReportHints(encoded_data_length,
                                                     decoded_body_length));
   loader_.reset();
-
-  network_instrumentation::EndResourceLoad(
-      resource_->Identifier(),
-      network_instrumentation::RequestOutcome::kSuccess);
+  // Maxlg: Moved into HandleLoaderFinish
+  // network_instrumentation::EndResourceLoad(
+  //     resource_->Identifier(), resource_.Get(),
+  //     fetcher_->GetResourceTimingInfo(resource_.Get()),
+  //     network_instrumentation::RequestOutcome::kSuccess);
 
   fetcher_->HandleLoaderFinish(
       resource_.Get(), finish_time, ResourceFetcher::kDidFinishLoading,
@@ -670,7 +673,9 @@ void ResourceLoader::HandleError(const ResourceError& error) {
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
-      resource_->Identifier(), network_instrumentation::RequestOutcome::kFail);
+      resource_->Identifier(), resource_.Get(),
+      fetcher_->GetResourceTimingInfo(resource_.Get()),
+      network_instrumentation::RequestOutcome::kFail);
 
   fetcher_->HandleLoaderError(resource_.Get(), error,
                               inflight_keepalive_bytes_);
