@@ -317,7 +317,8 @@ class EncryptedMediaTestBase : public MediaBrowserTest {
         if (support_experimental_cdm_interface) {
           scoped_feature_list_.InitWithFeatures(
               {media::kExternalClearKeyForTesting,
-               media::kSupportExperimentalCdmInterface, media::kMojoCdm},
+               media::kSupportExperimentalCdmInterface, media::kMojoCdm,
+               media::kMojoVideoDecoder},
               {});
         } else {
           scoped_feature_list_.InitWithFeatures(
@@ -399,8 +400,15 @@ class EncryptedMediaTestExperimentalCdmInterface
                             const std::string& expected_title) {
     // Since we do not test playback, arbitrarily choose a test file and source
     // type.
+    /*
     RunEncryptedMediaTest(kDefaultEmePlayer, "bear-a_enc-a.webm",
                           kWebMVorbisAudioOnly, key_system, SrcType::SRC,
+                          kNoSessionToLoad, false, PlayCount::ONCE,
+                          expected_title);
+                          */
+
+    RunEncryptedMediaTest(kDefaultEmePlayer, "bear-320x240-v_enc-v.webm",
+                          kWebMVP8VideoOnly, key_system, SrcType::MSE,
                           kNoSessionToLoad, false, PlayCount::ONCE,
                           expected_title);
   }

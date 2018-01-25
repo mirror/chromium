@@ -156,6 +156,7 @@ void MojoVideoDecoderService::Initialize(const VideoDecoderConfig& config,
   // Get CdmContext from cdm_id if the stream is encrypted.
   CdmContext* cdm_context = nullptr;
   if (config.is_encrypted()) {
+    DVLOG(1) << __func__ << "encrypted";
     cdm_context_ref_ = mojo_cdm_service_context_->GetCdmContextRef(cdm_id);
     if (!cdm_context_ref_) {
       DVLOG(1) << "CdmContextRef not found for CDM id: " << cdm_id;
@@ -165,6 +166,8 @@ void MojoVideoDecoderService::Initialize(const VideoDecoderConfig& config,
 
     cdm_context = cdm_context_ref_->GetCdmContext();
     DCHECK(cdm_context);
+  } else {
+    DVLOG(1) << __func__ << "clear";
   }
 
   decoder_->Initialize(

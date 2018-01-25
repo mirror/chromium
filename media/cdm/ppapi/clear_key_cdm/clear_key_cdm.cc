@@ -646,8 +646,10 @@ cdm::Status ClearKeyCdm::InitializeAudioDecoder(
 
 cdm::Status ClearKeyCdm::InitializeVideoDecoder(
     const cdm::VideoDecoderConfig& video_decoder_config) {
-  if (key_system_ == kExternalClearKeyDecryptOnlyKeySystem)
+  if (key_system_ == kExternalClearKeyDecryptOnlyKeySystem ||
+      key_system_ == kExternalClearKeyCdmProxyTestKeySystem) {
     return cdm::kInitializationError;
+  }
 
   if (video_decoder_ && video_decoder_->is_initialized()) {
     DCHECK(!video_decoder_->is_initialized());
@@ -1003,7 +1005,7 @@ void ClearKeyCdm::OnCdmProxyTestComplete(bool success) {
   DVLOG(1) << __func__;
   DCHECK(cdm_proxy_test_);
 
-  cdm_proxy_test_.reset();
+  // cdm_proxy_test_.reset();
   has_cdm_proxy_test_passed_ = success;
 
   // Ignore test result here. It will be reported in ReportCdmProxyTestResult().

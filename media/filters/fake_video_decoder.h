@@ -17,6 +17,7 @@
 #include "base/threading/thread_checker.h"
 #include "media/base/callback_holder.h"
 #include "media/base/decoder_buffer.h"
+#include "media/base/media_export.h"
 #include "media/base/pipeline_status.h"
 #include "media/base/video_decoder.h"
 #include "media/base/video_decoder_config.h"
@@ -29,7 +30,7 @@ namespace media {
 
 typedef base::Callback<void(int)> BytesDecodedCB;
 
-class FakeVideoDecoder : public VideoDecoder {
+class MEDIA_EXPORT FakeVideoDecoder : public VideoDecoder {
  public:
   // Constructs an object with a decoding delay of |decoding_delay| frames.
   // |bytes_decoded_cb| is called after each decode. The sum of the byte

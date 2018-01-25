@@ -22,7 +22,7 @@ namespace {
 // a CDM or CdmProxy. It will be used to locate the CDM by the media players
 // living in the same process.
 int GetNextCdmId() {
-  static int g_next_cdm_id = CdmContext::kInvalidCdmId + 1;
+  static int g_next_cdm_id = CdmContext::kInvalidCdmId + 104;
   return g_next_cdm_id++;
 }
 

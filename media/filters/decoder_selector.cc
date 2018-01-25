@@ -154,7 +154,8 @@ void DecoderSelector<StreamType>::DecryptingDecoderInitDone(bool success) {
 
   // When we get here decrypt-and-decode is not supported. Try to use
   // DecryptingDemuxerStream to do decrypt-only.
-  InitializeDecryptingDemuxerStream();
+  // InitializeDecryptingDemuxerStream();
+  InitializeDecoder();
 }
 #endif  // !defined(OS_ANDROID)
 
