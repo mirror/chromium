@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec0a685c_cc766e75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T02:44:34Z",
+      "side": 1,
+      "message": "Does this mean we should also check for a null LargeIconBridge during destruction?",
+      "range": {
+        "startLine": 370,
+        "startChar": 85,
+        "endLine": 371,
+        "endChar": 42
+      },
+      "revId": "d32c529f64d560845e9f851dec6ab6f46dfb7df7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
