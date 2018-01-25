@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40462e9e_451c1e79",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-25T23:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1b0884_8907f4df",
+      "revId": "8e8740f08c024175ccc928f4495023f151bd7757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc0efcc_22f31db8",
         "filename": "content/public/app/mojo/content_gpu_manifest.json",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "8e8740f08c024175ccc928f4495023f151bd7757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f640d8_8a348f6b",
+        "filename": "content/public/app/mojo/content_gpu_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-25T23:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc0efcc_22f31db8",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "8e8740f08c024175ccc928f4495023f151bd7757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
