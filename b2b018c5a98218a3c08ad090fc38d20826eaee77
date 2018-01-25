@@ -113,6 +113,24 @@
       "revId": "b2b018c5a98218a3c08ad090fc38d20826eaee77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f6428d_dc258b95",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 47
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T17:35:56Z",
+      "side": 1,
+      "message": "Yes, that would fit with the issue being kinda flaky.",
+      "parentUuid": "3d77d346_98aeb2a9",
+      "revId": "b2b018c5a98218a3c08ad090fc38d20826eaee77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
