@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd94e4a1_48a94d6b",
+        "filename": "content/public/browser/devtools_agent_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T20:08:26Z",
+      "side": 1,
+      "message": "Well, any frame in the same WebContents.",
+      "parentUuid": "88ea586c_e7291916",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5e28fa4_772ddcf1",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0db39da1_09be5391",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T20:08:26Z",
+      "side": 1,
+      "message": "InspectElement request comes before the AttachDevToolsSession request, so we save the node for future use.",
+      "parentUuid": "f5e28fa4_772ddcf1",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cda6b19c_473e68dc",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-25T08:05:16Z",
       "side": 1,
       "message": "So it\u0027s possible to inspect a WebViewImpl that\u0027s not attached to anything? That\u0027s a bit surprising…",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30952f47_ab91a47f",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T20:08:26Z",
+      "side": 1,
+      "message": "- That\u0027s just a code move.\n- We are inspecting a frame, and I remember these checks were needed to deal with provisional frames back at the time. It might be not needed anymore, but I\u0027d rather not touch it here.",
+      "parentUuid": "cda6b19c_473e68dc",
       "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1a17330e_d730592a",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T20:08:26Z",
+      "side": 1,
+      "message": "Good catch! I can fix this as a drive-by here.",
+      "parentUuid": "2eb8b478_cd5e4b12",
+      "range": {
+        "startLine": 606,
+        "startChar": 33,
+        "endLine": 606,
+        "endChar": 63
+      },
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ad5bdd_35abdd12",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
         "patchSetId": 7
@@ -87,6 +165,24 @@
       "writtenOn": "2018-01-25T08:05:16Z",
       "side": 1,
       "message": "I don\u0027t quite understand how the different devtools pieces work together: what\u0027s a session and how is it different than the agent? How would I be able to trigger an inspect element with no session (presumably an instance of devtools) open?",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41ec450_cb04e506",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T20:08:26Z",
+      "side": 1,
+      "message": "- Attached session means someone is debugging. Agent is just sitting there, so one can attach and start debugging.\n\n- \"Inspect Element\" comes from context menu on the page, when no DevTools is open yet. We capture the node to inspect for future use, before DevTools resizes the page and changes the layout.\n\nI have added more comments to the mojom file for future reference.",
+      "parentUuid": "54ad5bdd_35abdd12",
       "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
