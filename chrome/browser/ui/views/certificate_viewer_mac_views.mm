@@ -6,6 +6,7 @@
 
 #import "base/mac/scoped_nsobject.h"
 #include "chrome/browser/certificate_viewer.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "ui/views/widget/widget.h"
@@ -65,6 +66,8 @@ class CertificateAnchorWidgetDelegate : public views::WidgetDelegateView {
 void ShowCertificateViewer(content::WebContents* web_contents,
                            gfx::NativeWindow parent,
                            net::X509Certificate* cert) {
+  if (views_mode_controller::IsViewsBrowserCocoa())
+    ShowCertificateViewerCocoa(web_contents, parent, cert);
   // Shows a new widget, which owns the delegate.
   new CertificateAnchorWidgetDelegate(web_contents, cert);
 }

@@ -18,7 +18,7 @@
 @class NSString;
 
 class MediaGalleriesDialogBrowserTest;
-class MediaGalleriesDialogTest;
+class MediaGalleriesDialogCocoaTest;
 
 namespace ui {
 class MenuModel;
@@ -54,10 +54,10 @@ class MediaGalleriesDialogCocoa : public ConstrainedWindowMacDelegate,
 
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogBrowserTest, Close);
-  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, InitializeCheckboxes);
-  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, ToggleCheckboxes);
-  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, UpdateAdds);
-  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, ForgetDeletes);
+  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogCocoaTest, InitializeCheckboxes);
+  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogCocoaTest, ToggleCheckboxes);
+  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogCocoaTest, UpdateAdds);
+  FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogCocoaTest, ForgetDeletes);
 
   // MediaGalleriesDialog implementation:
   void AcceptDialogForTesting() override;

@@ -8,12 +8,14 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
+#include "build/buildflag.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/ui/cocoa/chrome_style.h"
 #include "chrome/browser/ui/cocoa/infobars/infobar_cocoa.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
+#include "ui/base/ui_features.h"
 #import "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
 #include "ui/base/window_open_disposition.h"
@@ -150,7 +152,7 @@
 
 @end
 
-std::unique_ptr<infobars::InfoBar> InfoBarService::CreateConfirmInfoBar(
+std::unique_ptr<infobars::InfoBar> InfoBarService::CreateConfirmInfoBarCocoa(
     std::unique_ptr<ConfirmInfoBarDelegate> delegate) {
   std::unique_ptr<InfoBarCocoa> infobar(new InfoBarCocoa(std::move(delegate)));
   base::scoped_nsobject<ConfirmInfoBarController> controller(
@@ -158,3 +160,10 @@ std::unique_ptr<infobars::InfoBar> InfoBarService::CreateConfirmInfoBar(
   infobar->set_controller(controller);
   return std::move(infobar);
 }
+
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
+std::unique_ptr<infobars::InfoBar> InfoBarService::CreateConfirmInfoBar(
+    std::unique_ptr<ConfirmInfoBarDelegate> delegate) {
+  return CreateConfirmInfoBarCocoa(std::move(delegate));
+}
+#endif
