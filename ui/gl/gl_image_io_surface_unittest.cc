@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/strings/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/mac/io_surface.h"
@@ -46,6 +47,22 @@ class GLImageIOSurfaceTestDelegate : public GLImageTestDelegateBase {
       corrected_color[1] = color[1];
       corrected_color[2] = color[0];
       corrected_color[3] = color[3];
+    } else if (format == gfx::BufferFormat::BGRX_1010102) {
+      // nVidia drivers swap B and R channels when reading pixels from a drawn
+      // GL_RGB10_A2 texture, so unswizzle the values here in advance for test
+      // purposes, see https://crbug.com/803473.
+      static const bool is_nvidia = base::StartsWith(
+          reinterpret_cast<const char*>(glGetString(GL_VENDOR)), "nvidia",
+          base::CompareCase::INSENSITIVE_ASCII);
+
+      if (is_nvidia) {
+        corrected_color[0] = color[2];
+        corrected_color[1] = color[1];
+        corrected_color[2] = color[0];
+        corrected_color[3] = color[3];
+      } else {
+        memcpy(corrected_color, color, arraysize(corrected_color));
+      }
     } else {
       memcpy(corrected_color, color, arraysize(corrected_color));
     }
@@ -109,11 +126,11 @@ INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
                               GLImageRGBTestTypes);
 
 using GLImageBindTestTypes = testing::Types<
-    // TODO(mcasas): enable BGRX_1010102, https://crbug.com/803473.
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRA_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_8888>,
     GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_8888>,
-    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_F16>>;
+    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::RGBA_F16>,
+    GLImageIOSurfaceTestDelegate<gfx::BufferFormat::BGRX_1010102>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageIOSurface,
                               GLImageBindTest,
