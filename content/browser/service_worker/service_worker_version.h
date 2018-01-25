@@ -578,9 +578,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
     std::set<InflightRequestTimeoutInfo>::iterator timeout_iter;
   };
 
-  using ServiceWorkerClientPtrs =
-      std::vector<blink::mojom::ServiceWorkerClientInfoPtr>;
-
   // The timeout timer interval.
   static constexpr base::TimeDelta kTimeoutTimerDelay =
       base::TimeDelta::FromSeconds(30);
@@ -694,9 +691,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnGetClientFinished(
       int request_id,
       blink::mojom::ServiceWorkerClientInfoPtr client_info);
-
-  void OnGetClientsFinished(GetClientsCallback callback,
-                            std::unique_ptr<ServiceWorkerClientPtrs> clients);
 
   // The timeout timer periodically calls OnTimeoutTimer, which stops the worker
   // if it is excessively idle or unresponsive to ping.
