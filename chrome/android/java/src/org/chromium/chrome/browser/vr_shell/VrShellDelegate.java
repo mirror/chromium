@@ -199,6 +199,7 @@ public class VrShellDelegate
             sInstance.mExpectPauseOrDonSucceeded.removeCallbacksAndMessages(null);
             sInstance.mVrClassesWrapper.setVrModeEnabled(sInstance.mActivity, true);
             if (DEBUG_LOGS) Log.i(TAG, "VrBroadcastReceiver onReceive");
+            sInstance.mActivity.getCompositorViewHolder().onEnterVr();
             sInstance.setWindowModeForVr();
             if (sInstance.mPaused) {
                 if (sInstance.mInVrAtChromeLaunch == null) sInstance.mInVrAtChromeLaunch = false;
@@ -826,6 +827,7 @@ public class VrShellDelegate
         mInVr = true;
         mVrClassesWrapper.setVrModeEnabled(mActivity, true);
 
+        sInstance.mActivity.getCompositorViewHolder().onEnterVr();
         setWindowModeForVr();
         boolean donSuceeded = mDonSucceeded;
         mDonSucceeded = false;
@@ -1458,12 +1460,11 @@ public class VrShellDelegate
         mAutopresentWebVr = false;
 
         if (!mInVr) return;
-        mInVr = false;
-
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;
         }
+        mInVr = false;
 
         // Some Samsung devices change the screen density after exiting VR mode which causes
         // us to restart Chrome with the VR intent that originally started it. We don't want to
@@ -1478,6 +1479,10 @@ public class VrShellDelegate
         removeVrViews();
         destroyVrShell();
         if (disableVrMode) mVrClassesWrapper.setVrModeEnabled(mActivity, false);
+
+        if (mActivity.getCompositorViewHolder() != null) {
+            mActivity.getCompositorViewHolder().onExitVr();
+        }
 
         promptForFeedbackIfNeeded(stayingInChrome);
 
