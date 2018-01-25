@@ -722,67 +722,47 @@ PositionWithAffinity LayoutText::PositionForPoint(const LayoutPoint& point) {
   return CreatePositionWithAffinity(0);
 }
 
-LayoutRect LayoutText::LocalCaretRect(
-    const InlineBox* inline_box,
-    int caret_offset,
-    LayoutUnit* extra_width_to_end_of_line) const {
-  if (!inline_box)
-    return LayoutRect();
-
-  DCHECK(inline_box->IsInlineTextBox());
-  if (!inline_box->IsInlineTextBox())
-    return LayoutRect();
-
-  const InlineTextBox* box = ToInlineTextBox(inline_box);
+static Optional<std::pair<int, int>> GetLocalCaretHeightAndTop(
+    const InlineBox* box,
+    int caret_offset) {
   // Find an InlineBox before caret position, which is used to get caret height.
-  const InlineBox* caret_box = box;
   if (box->GetLineLayoutItem().Style(box->IsFirstLineStyle())->Direction() ==
       TextDirection::kLtr) {
     if (box->PrevLeafChild() && caret_offset == 0)
-      caret_box = box->PrevLeafChild();
+      box = box->PrevLeafChild();
   } else {
     if (box->NextLeafChild() && caret_offset == 0)
-      caret_box = box->NextLeafChild();
+      box = box->NextLeafChild();
   }
 
   // Get caret height from a font of character.
   const ComputedStyle* style_to_use =
-      caret_box->GetLineLayoutItem().Style(caret_box->IsFirstLineStyle());
+      box->GetLineLayoutItem().Style(box->IsFirstLineStyle());
   if (!style_to_use->GetFont().PrimaryFont())
-    return LayoutRect();
+    return WTF::nullopt;
 
-  int height = style_to_use->GetFont().PrimaryFont()->GetFontMetrics().Height();
-  int top = caret_box->LogicalTop().ToInt();
+  const int height =
+      style_to_use->GetFont().PrimaryFont()->GetFontMetrics().Height();
+  const int top = box->LogicalTop().ToInt();
+  return std::make_pair(height, top);
+}
 
-  // Go ahead and round left to snap it to the nearest pixel.
-  LayoutUnit left = box->PositionForOffset(caret_offset);
-  LayoutUnit caret_width = GetFrameView()->CaretWidth();
+static LayoutUnit GetLocalCaretLeft(const InlineTextBox* box,
+                                    int caret_offset,
+                                    LayoutUnit caret_width) {
+  const LayoutUnit center = box->PositionForOffset(caret_offset);
 
-  // Distribute the caret's width to either side of the offset.
-  LayoutUnit caret_width_left_of_offset = caret_width / 2;
-  left -= caret_width_left_of_offset;
-  LayoutUnit caret_width_right_of_offset =
-      caret_width - caret_width_left_of_offset;
+  // Distribute the caret's width to either side of the offset, and go ahead and
+  // round left to snap it to the nearest pixel.
+  return LayoutUnit((center - caret_width / 2).Round());
+}
 
-  left = LayoutUnit(left.Round());
-
-  LayoutUnit root_left = box->Root().LogicalLeft();
-  LayoutUnit root_right = box->Root().LogicalRight();
-
-  // FIXME: should we use the width of the root inline box or the
-  // width of the containing block for this?
-  if (extra_width_to_end_of_line) {
-    *extra_width_to_end_of_line =
-        (box->Root().LogicalWidth() + root_left) - (left + 1);
-  }
-
-  LayoutBlock* cb = ContainingBlock();
+static LayoutUnit AdjustLocalCaretLeftByTextAlign(const InlineBox* box,
+                                                  const LayoutBlock* cb,
+                                                  UnicodeBidi unicode_bidi,
+                                                  LayoutUnit unadjusted_left,
+                                                  LayoutUnit caret_width) {
   const ComputedStyle& cb_style = cb->StyleRef();
-
-  LayoutUnit left_edge;
-  LayoutUnit right_edge;
-  left_edge = std::min(LayoutUnit(), root_left);
-  right_edge = std::max(cb->LogicalWidth(), root_right);
 
   bool right_aligned = false;
   switch (cb_style.GetTextAlign()) {
@@ -806,23 +786,67 @@ LayoutRect LayoutText::LocalCaretRect(
 
   // for unicode-bidi: plaintext, use inlineBoxBidiLevel() to test the correct
   // direction for the cursor.
-  if (right_aligned && Style()->GetUnicodeBidi() == UnicodeBidi::kPlaintext) {
-    if (inline_box->BidiLevel() % 2 != 1)
+  if (right_aligned && unicode_bidi == UnicodeBidi::kPlaintext) {
+    if (box->BidiLevel() % 2 != 1)
       right_aligned = false;
   }
 
+  const LayoutUnit root_left = box->Root().LogicalLeft();
+  const LayoutUnit root_right = box->Root().LogicalRight();
+  const LayoutUnit left_edge = std::min(LayoutUnit(), root_left);
+  const LayoutUnit right_edge = std::max(cb->LogicalWidth(), root_right);
+
+  LayoutUnit left = unadjusted_left;
   if (right_aligned) {
     left = std::max(left, left_edge);
     left = std::min(left, root_right - caret_width);
   } else {
+    const LayoutUnit caret_width_right_of_offset =
+        caret_width - caret_width / 2;
     left = std::min(left, right_edge - caret_width_right_of_offset);
     left = std::max(left, root_left);
   }
 
+  return left;
+}
+
+LayoutRect LayoutText::LocalCaretRect(
+    const InlineBox* inline_box,
+    int caret_offset,
+    LayoutUnit* extra_width_to_end_of_line) const {
+  if (!inline_box)
+    return LayoutRect();
+
+  DCHECK(inline_box->IsInlineTextBox());
+  if (!inline_box->IsInlineTextBox())
+    return LayoutRect();
+
+  const InlineTextBox* const box = ToInlineTextBox(inline_box);
+
+  const auto height_and_top = GetLocalCaretHeightAndTop(box, caret_offset);
+  if (!height_and_top.has_value())
+    return LayoutRect();
+  const int height = height_and_top->first;
+  const int top = height_and_top->second;
+
+  const LayoutUnit caret_width = GetFrameView()->CaretWidth();
+  const LayoutUnit left = GetLocalCaretLeft(box, caret_offset, caret_width);
+
+  // FIXME: should we use the width of the root inline box or the
+  // width of the containing block for this?
+  if (extra_width_to_end_of_line) {
+    *extra_width_to_end_of_line =
+        (box->Root().LogicalWidth() + box->Root().LogicalLeft()) - (left + 1);
+  }
+
+  const LayoutUnit adjusted_left = AdjustLocalCaretLeftByTextAlign(
+      inline_box, ContainingBlock(), Style()->GetUnicodeBidi(), left,
+      caret_width);
+
   return LayoutRect(
       Style()->IsHorizontalWritingMode()
-          ? IntRect(left.ToInt(), top, caret_width.ToInt(), height)
-          : IntRect(top, left.ToInt(), height, caret_width.ToInt()));
+          ? IntRect(adjusted_left.ToInt(), top, caret_width.ToInt(), height)
+          : IntRect(top, adjusted_left.ToInt(), height, caret_width.ToInt()));
 }
 
 ALWAYS_INLINE float LayoutText::WidthFromFont(
