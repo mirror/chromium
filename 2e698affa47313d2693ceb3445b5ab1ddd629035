@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f4835ba_bab6d915",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "14-19: Could we please use the definition from the correct zlib include file, rather than redefine it.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5918de0c_7206cfd8",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "#ifdef not needed: the build file rules exclude this file when this feature is disabled.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb897b4_119715a2",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Magic numbers. They can vary with arch (see below). Does #include \u003casm/hwcap.h\u003e not work for you?",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d0f5d5_132a728b",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "http://bit.ly/2CcoEsr talks about android CPU features, and refers a code change in AOSP that implemented the feature.\n\nUnder the hood, they use getauxval(AT_HWCAP) for aarch64, but they use getauxval(AT_HWCAP2) for aarch32. Reading into the linux kernel code, that looks correct and also in other code I\u0027ve searched that used getauxval detect at runtime in an arch-dependent way.\n\nCan you please check, or ask around it, so we can resolve which arch is being targeted here?  Can we support both by reading the correct getauxval(), AT_HWCAP vs AT_HWCAP2?",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659b95fa_586f305a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "#ifdef not needed: the build file rules exclude this file when this feature is disabled.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f9d76f_7b347ab9",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Not used.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2710ba_c14d405c",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Not used.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49e0685_a58234f5",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "bool.  The natural type of any CPU is int, and can also be and very useful aid in debugging (eg., AT_HWCAP/2 problem). Please use int here and below.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6782eaa_41394930",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Used anywhere?",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82afe030_1a7cce31",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Used anywhere?",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55dff0d_271f686c",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "4, what is 4?  I\u0027d understand 8 or 64, but not quite sure why the 4. Perhaps it\u0027s hangover from an earlier version of this code?",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda70ef2_0431ead1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "zlib solves with z_size_t, let\u0027s use that.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7f9828_7c6114e6",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "No need to check features here.  inflate calls crc32(0, Z_NULL,0) before ever using the crc32 routine right? (please check). And your crc32 automatically arm_check_features() when it does.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a593a099_b3e5bc44",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "#if not needed, like our other #include, you can #include these files without the #if guard I believe. If not, please make it so.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce84b146_f00fea3d",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "Nice attempt, but a little hard to read through here. To make it plain, cargo cult (copy) the if (buf ...) test into your feature define below.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6919b08d_521654c7",
+        "filename": "third_party/zlib/deflate.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-25T17:46:32Z",
+      "side": 1,
+      "message": "No need to check features here.  deflate calls crc32(0, Z_NULL,0) before ever using the crc32 routine right? (please check). And your crc32 automatically arm_check_features() when it does.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
