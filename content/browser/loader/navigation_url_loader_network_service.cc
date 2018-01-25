@@ -413,7 +413,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // to the child process. This is necessary for correctness in the cases
     // where, e.g. there's a controlling ServiceWorker that doesn't handle main
     // resource loading, but may still want to control the page and/or handle
-    // subresource loading. In that case we want to skip APpCache.
+    // subresource loading. In that case we want to skip AppCache.
     if (handler) {
       subresource_loader_params_ =
           handler->MaybeCreateSubresourceLoaderParams();
