@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b77e8a5_2accbe7c",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-25T15:42:35Z",
+      "side": 1,
+      "message": "Should we actually be returning here? This works in the case of the omnibox because its always a mode you enter by clicking the url bar, and it always starts off empty. For text_input in general, there could already be text (while you\u0027re not focused), and clicking on a portion of the field should start the cursor off at the right position?",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 15
+      },
+      "revId": "b7111f9dc730473c51610317133c0511794559b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e4f22b_7231461e",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-25T15:42:35Z",
+      "side": 1,
+      "message": "Should ResetCursorBlinkCycle happen in OnButtonUp?",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "b7111f9dc730473c51610317133c0511794559b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

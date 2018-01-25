@@ -93,6 +93,30 @@
       "revId": "6a8ca158aac792ed59da5d5fe80985a3fd19b730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b3eef3_3cf28506",
+        "filename": "chrome/browser/vr/text_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-25T15:42:35Z",
+      "side": 1,
+      "message": "Clarified what I meant by \"something like info.selection_end - 1\". It was just a suggestion and what you have is great!",
+      "parentUuid": "8617d569_e58ee245",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 20
+      },
+      "revId": "6a8ca158aac792ed59da5d5fe80985a3fd19b730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
