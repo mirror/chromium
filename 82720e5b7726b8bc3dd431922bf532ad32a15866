@@ -33,6 +33,24 @@
       "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b0ab54_bd823c7a",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-25T02:28:22Z",
+      "side": 1,
+      "message": "\u003e We also removed the logic to decide whether /usr/lib64/va1/drivers/ or /usr/lib64/va/drivers/ would be used and loading the correct version. How does this work if we let libva dlopen by itself with this?\n\nThis will work because the correct driver path (va or va1 or anything else) is hardcoded into libva at compile time, so it will always look at the correct location.",
+      "parentUuid": "16addf7a_9507bd54",
+      "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
