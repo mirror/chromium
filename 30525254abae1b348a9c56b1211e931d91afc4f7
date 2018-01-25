@@ -22,6 +22,30 @@
       "revId": "30525254abae1b348a9c56b1211e931d91afc4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb527dc_062c94a6",
+        "filename": "base/android/java/src/org/chromium/base/CommandLineInitUtil.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-25T18:54:37Z",
+      "side": 1,
+      "message": "I agree. Added a new interface to base to be able to do it without an exception.",
+      "parentUuid": "dc65c9ca_b4adacaa",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "30525254abae1b348a9c56b1211e931d91afc4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
