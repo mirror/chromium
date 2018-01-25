@@ -50,6 +50,11 @@ enum ProfileSignout {
   AUTHENTICATION_FAILED_WITH_FORCE_SIGNIN,
   // The user disables sync from the DICE UI.
   USER_TUNED_OFF_SYNC_FROM_DICE_UI,
+  // Child accounts on Chrome OS will be forcibly logged out if we detect that
+  // their credentials have been invalidated and we cannot successfully
+  // reconcile/re-mint new tokens for them. This is to ensure that Google
+  // Content Restrictions are not bypassed for child acounts.
+  FORCED_SIGNOUT,
   // Keep this as the last enum.
   NUM_PROFILE_SIGNOUT_METRICS,
 };
