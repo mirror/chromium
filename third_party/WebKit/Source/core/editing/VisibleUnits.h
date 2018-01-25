@@ -145,7 +145,7 @@ EndOfWordPosition(const VisiblePositionInFlatTree&,
 CORE_EXPORT VisiblePositionInFlatTree
 EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kNextWordIfOnBoundary);
 VisiblePosition PreviousWordPosition(const VisiblePosition&);
-VisiblePosition NextWordPosition(const VisiblePosition&);
+PositionWithAffinity NextWordPosition(const Position&);
 
 // sentences
 CORE_EXPORT VisiblePosition StartOfSentence(const VisiblePosition&);
@@ -289,9 +289,8 @@ typedef unsigned (*BoundarySearchFunction)(const UChar*,
                                            BoundarySearchContextAvailability,
                                            bool& need_more_context);
 
-CORE_EXPORT Position NextBoundary(const VisiblePosition&,
-                                  BoundarySearchFunction);
-PositionInFlatTree NextBoundary(const VisiblePositionInFlatTree&,
+CORE_EXPORT Position NextBoundary(const Position&, BoundarySearchFunction);
+PositionInFlatTree NextBoundary(const PositionInFlatTree&,
                                 BoundarySearchFunction);
 Position PreviousBoundary(const VisiblePosition&, BoundarySearchFunction);
 PositionInFlatTree PreviousBoundary(const VisiblePositionInFlatTree&,

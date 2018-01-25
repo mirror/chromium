@@ -401,12 +401,16 @@ static PositionTemplate<Strategy> PreviousBoundaryAlgorithm(
   return char_it.EndPosition();
 }
 
+// TODO(editing-dev): We should move an implementation of
+// |CharacterAfterAlgorithm<T>()| here to avoid forward declaration.
+template <typename Strategy>
+static UChar32 CharacterAfterAlgorithm(const PositionTemplate<Strategy>&);
+
 template <typename Strategy>
 static PositionTemplate<Strategy> NextBoundaryAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
+    const PositionTemplate<Strategy>& passed_position,
     BoundarySearchFunction search_function) {
-  DCHECK(c.IsValid()) << c;
-  PositionTemplate<Strategy> pos = c.DeepEquivalent();
+  PositionTemplate<Strategy> pos = passed_position;
   Node* boundary = ParentEditingBoundary(pos);
   if (!boundary)
     return PositionTemplate<Strategy>();
@@ -415,7 +419,7 @@ static PositionTemplate<Strategy> NextBoundaryAlgorithm(
   const PositionTemplate<Strategy> start(pos.ParentAnchoredEquivalent());
 
   BackwardsTextBuffer prefix_string;
-  if (RequiresContextForWordBoundary(CharacterAfter(c))) {
+  if (RequiresContextForWordBoundary(CharacterAfterAlgorithm<Strategy>(pos))) {
     SimplifiedBackwardsTextIteratorAlgorithm<Strategy> backwards_iterator(
         EphemeralRangeTemplate<Strategy>(
             PositionTemplate<Strategy>::FirstPositionInNode(d), start));
@@ -511,15 +515,14 @@ static PositionTemplate<Strategy> NextBoundaryAlgorithm(
   return pos;
 }
 
-Position NextBoundary(const VisiblePosition& visible_position,
+Position NextBoundary(const Position& position,
                       BoundarySearchFunction search_function) {
-  return NextBoundaryAlgorithm(visible_position, search_function);
+  return NextBoundaryAlgorithm(position, search_function);
 }
 
-PositionInFlatTree NextBoundary(
-    const VisiblePositionInFlatTree& visible_position,
-    BoundarySearchFunction search_function) {
-  return NextBoundaryAlgorithm(visible_position, search_function);
+PositionInFlatTree NextBoundary(const PositionInFlatTree& position,
+                                BoundarySearchFunction search_function) {
+  return NextBoundaryAlgorithm(position, search_function);
 }
 
 Position PreviousBoundary(const VisiblePosition& visible_position,
@@ -1237,13 +1240,12 @@ static VisiblePositionTemplate<Strategy> SkipToEndOfEditingBoundary(
 
 template <typename Strategy>
 static UChar32 CharacterAfterAlgorithm(
-    const VisiblePositionTemplate<Strategy>& visible_position) {
-  DCHECK(visible_position.IsValid()) << visible_position;
+    const PositionTemplate<Strategy>& passed_position) {
   // We canonicalize to the first of two equivalent candidates, but the second
   // of the two candidates is the one that will be inside the text node
   // containing the character after this visible position.
   const PositionTemplate<Strategy> pos =
-      MostForwardCaretPosition(visible_position.DeepEquivalent());
+      MostForwardCaretPosition(passed_position);
   if (!pos.IsOffsetInAnchor())
     return 0;
   Node* container_node = pos.ComputeContainerNode();
@@ -1259,11 +1261,13 @@ static UChar32 CharacterAfterAlgorithm(
 }
 
 UChar32 CharacterAfter(const VisiblePosition& visible_position) {
-  return CharacterAfterAlgorithm<EditingStrategy>(visible_position);
+  return CharacterAfterAlgorithm<EditingStrategy>(
+      visible_position.DeepEquivalent());
 }
 
 UChar32 CharacterAfter(const VisiblePositionInFlatTree& visible_position) {
-  return CharacterAfterAlgorithm<EditingInFlatTreeStrategy>(visible_position);
+  return CharacterAfterAlgorithm<EditingInFlatTreeStrategy>(
+      visible_position.DeepEquivalent());
 }
 
 template <typename Strategy>
