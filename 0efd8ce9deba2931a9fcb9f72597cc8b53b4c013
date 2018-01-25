@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81e96241_6a05610f",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-25T00:58:43Z",
+      "side": 1,
+      "message": "Please update https://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?rcl\u003d0941a32d0fe8820862a438e2dc3a1a19c0af41b2\u0026l\u003d35384",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
