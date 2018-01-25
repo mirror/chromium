@@ -564,16 +564,13 @@ Polymer({
    * @param {!CrOnc.NetworkProperties} networkProperties
    * @param {?CrOnc.NetworkStateProperties} defaultNetwork
    * @param {!chrome.networkingPrivate.GlobalPolicy} globalPolicy
-   * @param {boolean} networkPropertiesReceived
    * @return {boolean} Whether or not to enable the network connect button.
    * @private
    */
-  enableConnect_: function(
-      networkProperties, defaultNetwork, globalPolicy,
-      networkPropertiesReceived) {
+  enableConnect_: function(networkProperties, defaultNetwork, globalPolicy) {
     if (!this.showConnect_(networkProperties, globalPolicy))
       return false;
-    if (!networkPropertiesReceived)
+    if (!this.networkPropertiesReceived_)
       return false;
     if ((networkProperties.Type == CrOnc.Type.CELLULAR) &&
         (CrOnc.isSimLocked(networkProperties) ||
