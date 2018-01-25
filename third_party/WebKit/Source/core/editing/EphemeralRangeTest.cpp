@@ -226,4 +226,12 @@ TEST_F(EphemeralRangeTest, commonAncesstorFlatTree) {
             range.CommonAncestorContainer());
 }
 
+TEST_F(EphemeralRangeTest, IsCollapsedInEmptyElement) {
+  const Position start(GetDocument().body(), 0);
+  const Position end(GetDocument().body(), PositionAnchorType::kBeforeChildren);
+  EXPECT_TRUE(start.IsEquivalent(end));
+  const EphemeralRange range(start, end);
+  EXPECT_TRUE(range.IsCollapsed());
+}
+
 }  // namespace blink
