@@ -234,6 +234,8 @@ public abstract class ChromeFeatureList {
     public static final String OFFLINE_PAGES_DESCRIPTIVE_PENDING_STATUS =
             "OfflinePagesDescriptivePendingStatus";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";
+    public static final String OPEN_CUSTOM_CONTEXT_MENU_IN_LINK_TAB =
+            "OpenCustomContextMenuInLinkTab";
     public static final String PAY_WITH_GOOGLE_V1 = "PayWithGoogleV1";
     public static final String PROGRESS_BAR_THROTTLE = "ProgressBarThrottle";
     public static final String PWA_PERSISTENT_NOTIFICATION = "PwaPersistentNotification";
