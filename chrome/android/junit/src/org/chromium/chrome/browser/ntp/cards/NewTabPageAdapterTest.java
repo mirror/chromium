@@ -33,6 +33,7 @@ import android.view.View;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -1018,6 +1019,7 @@ public class NewTabPageAdapterTest {
         assertEquals(0, preferenceManager.getNewTabPageSigninPromoSuppressionPeriodStart());
     }
 
+    @Ignore // Disabled for new Chrome Home, see: https://crbug.com/805160
     @Test
     @Feature({"Ntp"})
     @EnableFeatures(ChromeFeatureList.CHROME_HOME)
@@ -1185,6 +1187,7 @@ public class NewTabPageAdapterTest {
                 mAdapter.getFirstPositionForType(ItemViewType.ALL_DISMISSED));
     }
 
+    @Ignore // Disabled for new Chrome Home, see: https://crbug.com/805160
     @Test
     @Feature({"Ntp"})
     @EnableFeatures(ChromeFeatureList.CHROME_HOME)
