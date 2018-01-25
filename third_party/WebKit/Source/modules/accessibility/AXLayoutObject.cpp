@@ -1910,12 +1910,24 @@ AXObject::AXRange AXLayoutObject::TextControlSelection() const {
                  ax_object, end, selection.VisibleEnd().Affinity());
 }
 
+static int IndexForVisiblePositionInternal(
+    const TextControlElement* text_control,
+    const VisiblePosition& pos) {
+  const Position index_position =
+      pos.DeepEquivalent().ParentAnchoredEquivalent();
+  if (EnclosingTextControl(index_position) != text_control)
+    return 0;
+  DCHECK(index_position.IsConnected()) << index_position;
+  return TextIterator::RangeLength(
+      Position(text_control->InnerEditorElement(), 0), index_position);
+}
+
 int AXLayoutObject::IndexForVisiblePosition(
     const VisiblePosition& position) const {
   if (GetLayoutObject() && GetLayoutObject()->IsTextControl()) {
     TextControlElement* text_control =
         ToLayoutTextControl(GetLayoutObject())->GetTextControlElement();
-    return text_control->IndexForVisiblePosition(position);
+    return IndexForVisiblePositionInternal(text_control, position);
   }
 
   if (!GetNode())

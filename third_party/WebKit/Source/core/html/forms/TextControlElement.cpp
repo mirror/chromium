@@ -489,18 +489,6 @@ VisiblePosition TextControlElement::VisiblePositionForIndex(int index) const {
   return CreateVisiblePosition(it.EndPosition(), TextAffinity::kUpstream);
 }
 
-// TODO(yosin): We should move |TextControlElement::indexForVisiblePosition()|
-// to "AXLayoutObject.cpp" since this funciton is used only there.
-int TextControlElement::IndexForVisiblePosition(
-    const VisiblePosition& pos) const {
-  Position index_position = pos.DeepEquivalent().ParentAnchoredEquivalent();
-  if (EnclosingTextControl(index_position) != this)
-    return 0;
-  DCHECK(index_position.IsConnected()) << index_position;
-  return TextIterator::RangeLength(Position(InnerEditorElement(), 0),
-                                   index_position);
-}
-
 unsigned TextControlElement::selectionStart() const {
   if (!IsTextControl())
     return 0;
