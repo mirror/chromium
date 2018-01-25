@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "5a36ce92_67d9c0fd",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T05:52:43Z",
+      "side": 1,
+      "message": "Sure, I think it\u0027s worth it. base::ScopedTempDir has hundreds of uses. It\u0027s not uncommon.\n\nI don\u0027t understand why you think this cleans itself up in case of a crash. If the test, as it exists, crashes before it reaches the SetUpSymlinkCleanUp() at end, wouldn\u0027t it litter some files in $PWD?\n\nIf the crash happens when $PWD is the Chromium source directory on a developer\u0027s machine, they will notice their source directory is no longer prestine. If the test litters some temp dir, it will likely get cleaned up on reboot, or by tmpreaper.\n\nUsing ScopedTempDir also means |bare_symlink_path_| and friends can be local variables.",
+      "parentUuid": "954e68db_ce413c6f",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecf9895b_c88c6916",
         "filename": "chrome/browser/logging_chrome_unittest.cc",
         "patchSetId": 5
@@ -253,6 +271,24 @@
       "side": 1,
       "message": "What for?  The variable name conveys some information, and if I combine the two lines I have to break it back into two lines again.",
       "parentUuid": "14d80eb4_a3039609",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6e0ba9_9aedabbf",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T05:52:43Z",
+      "side": 1,
+      "message": "Just a suggestion. My thought it that |target_path| immediately gets overwritten anyway. It\u0027s similar to:\n\nint x \u003d foo(); x \u003d bar(x); --\u003e int x \u003d bar(foo(x));",
+      "parentUuid": "5f3f9a04_26f2e8e3",
       "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
