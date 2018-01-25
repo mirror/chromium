@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c6686c_0f9bf91e",
+        "filename": "ui/file_manager/file_manager/background/js/media_scanner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T04:43:00Z",
+      "side": 1,
+      "message": "I\u0027m wondering if entry.getMetadata is sufficient as it\u0027s more simple. I\u0027m not familiar with the code, but is there any reason to keep using MetadataProxy? If so, it\u0027d be nice to have the reason in the description.",
+      "revId": "9c70f9930aab134ee7ca96e2e0cb17a6e52cd545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
