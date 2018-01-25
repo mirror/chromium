@@ -15,6 +15,7 @@
 #include "base/metrics/user_metrics.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/animation/tween.h"
@@ -30,6 +31,8 @@
 namespace ash {
 
 namespace {
+
+constexpr int kTouchableChromePadding = 8;
 
 // Duration of the animation of the position of |minimize_button_|.
 const int kPositionAnimationDurationMs = 500;
@@ -116,8 +119,20 @@ FrameCaptionButtonContainerView::FrameCaptionButtonContainerView(
       minimize_button_(NULL),
       size_button_(NULL),
       close_button_(NULL) {
+  // When the Touchable Chrome feature is enabled, the frame caption buttons
+  // in all window types will be aligned with those of Chrome's frame. However,
+  // the top and bottom paddings are added only for Chrome's frame when the tab-
+  // strip is visible. That's why we use zeros for the top and bottom insets of
+  // the BoxLayout below.
   auto layout =
-      std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+      ui::MaterialDesignController::IsTouchableChromeEnabled()
+          ? std::make_unique<views::BoxLayout>(
+                views::BoxLayout::kHorizontal,
+                gfx::Insets(0, kTouchableChromePadding, 0,
+                            kTouchableChromePadding),
+                kTouchableChromePadding /* between_child_spacing */)
+          : std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   SetLayoutManager(std::move(layout));

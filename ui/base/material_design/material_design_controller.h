@@ -39,6 +39,9 @@ class UI_BASE_EXPORT MaterialDesignController {
   // Returns the per-platform default material design variant.
   static Mode DefaultMode();
 
+  // Returns true if Touchable Chrome is enabled on Chrome OS.
+  static bool IsTouchableChromeEnabled();
+
   static bool is_mode_initialized() { return is_mode_initialized_; }
 
  private:

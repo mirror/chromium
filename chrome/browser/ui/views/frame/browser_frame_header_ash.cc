@@ -19,6 +19,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect.h"
@@ -39,6 +40,16 @@ const SkColor kIncognitoWindowTitleTextColor = SK_ColorWHITE;
 
 // Duration of crossfade animation for activating and deactivating frame.
 const int kActivationCrossfadeDurationMs = 200;
+
+constexpr int kTouchableChromePadding = 8;
+constexpr int kTouchableChromePaddingMaximizedFrame = 5;
+
+// Returns true if the frame header should follow the Touchable Chrome layout
+// style; that is when the feature is enabled and the tab strip is visible.
+bool IsTouchable(BrowserNonClientFrameViewAsh* header_view) {
+  return ui::MaterialDesignController::IsTouchableChromeEnabled() &&
+         header_view->browser_view()->IsTabStripVisible();
+}
 
 // Creates a path with rounded top corners.
 SkPath MakeRoundRectPath(const gfx::Rect& bounds,
@@ -196,19 +207,25 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
   UpdateCaptionButtons();
   caption_button_container_->Layout();
 
-  gfx::Size caption_button_container_size =
+  const gfx::Size caption_button_container_size =
       caption_button_container_->GetPreferredSize();
+  int capture_button_container_y = 0;
+  if (IsTouchable(view_)) {
+    capture_button_container_y =
+        (frame_->IsMaximized() || frame_->IsFullscreen())
+            ? kTouchableChromePaddingMaximizedFrame
+            : kTouchableChromePadding;
+  }
   caption_button_container_->SetBounds(
-      view_->width() - caption_button_container_size.width(), 0,
-      caption_button_container_size.width(),
+      view_->width() - caption_button_container_size.width(),
+      capture_button_container_y, caption_button_container_size.width(),
       caption_button_container_size.height());
 
   if (window_icon_) {
     // Vertically center the window icon with respect to the caption button
     // container.
-    gfx::Size icon_size(window_icon_->GetPreferredSize());
-    int icon_offset_y =
-        (caption_button_container_->height() - icon_size.height()) / 2;
+    const gfx::Size icon_size(window_icon_->GetPreferredSize());
+    const int icon_offset_y = (GetHeaderHeight() - icon_size.height()) / 2;
     window_icon_->SetBounds(ash::FrameHeaderUtil::GetLeftViewXInset(),
                             icon_offset_y, icon_size.width(),
                             icon_size.height());
@@ -216,7 +233,15 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeight() const {
-  return caption_button_container_->height();
+  const int caption_container_bottom =
+      caption_button_container_->bounds().bottom();
+  if (!IsTouchable(view_))
+    return caption_container_bottom;
+
+  if (frame_->IsMaximized() || frame_->IsFullscreen())
+    return caption_container_bottom + kTouchableChromePaddingMaximizedFrame;
+
+  return caption_container_bottom + kTouchableChromePadding;
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeightForPainting() const {

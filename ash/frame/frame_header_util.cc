@@ -68,7 +68,7 @@ gfx::Rect FrameHeaderUtil::GetAvailableTitleBounds(
   int height = title_font_list.GetHeight();
   // Floor when computing the center of |caption_button_container| and when
   // computing the center of the text.
-  int y = std::max(0, (right_view->height() / 2) - (height / 2));
+  int y = std::max(0, (right_view->bounds().bottom() / 2) - (height / 2));
   int width = std::max(0, right_view->x() - kTitleCaptionButtonSpacing - x);
   return gfx::Rect(x, y, width, height);
 }

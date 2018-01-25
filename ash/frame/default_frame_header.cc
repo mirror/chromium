@@ -13,6 +13,7 @@
 #include "base/debug/leak_annotations.h"
 #include "base/logging.h"  // DCHECK
 #include "third_party/skia/include/core/SkPath.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
@@ -43,6 +44,8 @@ const SkColor kHeaderContentSeparatorInactiveColor =
 const SkColor kDefaultFrameColor = SkColorSetRGB(242, 242, 242);
 // Duration of crossfade animation for activating and deactivating frame.
 const int kActivationCrossfadeDurationMs = 200;
+
+constexpr int kTouchableChromePadding = 8;
 
 // Tiles an image into an area, rounding the top corners.
 void TileRoundRect(gfx::Canvas* canvas,
@@ -172,8 +175,11 @@ void DefaultFrameHeader::LayoutHeader() {
   if (back_button_) {
     back_button_->set_use_light_images(ShouldUseLightImages());
     gfx::Size size = back_button_->GetPreferredSize();
-    back_button_->SetBounds(0, 0, size.width(),
-                            caption_button_container_size.height());
+    const int back_button_x =
+        ui::MaterialDesignController::IsTouchableChromeEnabled()
+            ? kTouchableChromePadding
+            : 0;
+    back_button_->SetBounds(back_button_x, 0, size.width(), size.height());
     origin = back_button_->bounds().right();
   }
 
