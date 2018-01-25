@@ -49,7 +49,7 @@ TEST_F(AudioDebugRecordingSessionImplTest,
   ::testing::InSequence seq;
 
   CreateAudioManager();
-  EXPECT_CALL(*mock_audio_manager_, EnableDebugRecording(file_path_));
+  EXPECT_CALL(*mock_audio_manager_, EnableDebugRecording(testing::_));
   CreateDebugRecordingSession();
 
   EXPECT_CALL(*mock_audio_manager_, DisableDebugRecording());
