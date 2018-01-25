@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6b3224dd_dc4859ee",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-25T23:29:14Z",
+      "side": 1,
+      "message": "I see.\n\nAnyway, I\u0027d like to speed up link time by dropping debug info in linux rel builders.\nWhich way do you prefer if you agree to drop debug info?\n* change :minimal_symbols not to have symbols for debug in BUILD.gn, done in current PS\n* change symbol_level from 1 to 0 for linux rel builders in mb_config.pyl.\n\nBoth of them have been showing function name in stacktrace.\nI\u0027ll follow you.",
+      "parentUuid": "ae8259f0_aef76444",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a03f3d_530568c1",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 63
