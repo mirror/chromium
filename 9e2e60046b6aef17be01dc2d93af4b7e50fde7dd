@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c960964b_69c05cd2",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T19:16:33Z",
+      "side": 1,
+      "message": "updateDestinations_() is only triggered after an event from this.destinationStore is fired, so this check seems unnecessary.",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "9e2e60046b6aef17be01dc2d93af4b7e50fde7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec5ed1a_0c44763e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T19:16:33Z",
+      "side": 1,
+      "message": "Can we avoid setting styling using the \"style\u003d\" attribute (see [1] from thy CSS styleguide)? How about the following?\n - Keep the .destination-list-item.stale CSS rule.\n - Modify the binding to be on class$\u003d\"destination-list-item [[getStaleCssClass_(...)]]\"\n\nwhere getStaleCssClass_() returns either \u0027stale\u0027 or \u0027\u0027.\n\n[1] https://google.github.io/styleguide/htmlcssguide.html#Separation_of_Concerns",
+      "range": {
+        "startLine": 179,
+        "startChar": 13,
+        "endLine": 179,
+        "endChar": 75
+      },
+      "revId": "9e2e60046b6aef17be01dc2d93af4b7e50fde7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
