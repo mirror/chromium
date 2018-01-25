@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3112ad9d_d85b9d91",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-25T23:17:25Z",
+      "side": 1,
+      "message": "I wondered about whether subframes navigations would go down this path when restoring a page after discard, but looks like you\u0027re right-- those go down NavigationRequest::CreateBrowserInitiated.  This seems reasonable.",
+      "revId": "9dd7e70a5b3ea66133ec5eef6aadb135e85208f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c013cc8_7dfd344b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5015,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-25T23:17:25Z",
+      "side": 1,
+      "message": "nit: Add comment for why we reset this in DidStopLoading.",
+      "revId": "9dd7e70a5b3ea66133ec5eef6aadb135e85208f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c12b9e3_4452f8f8",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-25T23:17:25Z",
+      "side": 1,
+      "message": "nit: Add comment.\n\nI assume \"discarding\" is now a concept known in the content module, given that we\u0027re exposing it in Blink and the web platform?",
+      "revId": "9dd7e70a5b3ea66133ec5eef6aadb135e85208f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607dbde7_75b06465",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-25T23:17:25Z",
+      "side": 1,
+      "message": "nit: Add comment.",
+      "revId": "9dd7e70a5b3ea66133ec5eef6aadb135e85208f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
