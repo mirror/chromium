@@ -85,6 +85,7 @@ class PLATFORM_EXPORT ResourceLoader final
 
   ResourceFetcher* Fetcher() { return fetcher_; }
   bool GetKeepalive() const;
+  bool ShouldBeKeptAliveWhenDetached() const;
 
   // WebURLLoaderClient
   //
