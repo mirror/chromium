@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd05412_0eff553b",
+        "filename": "third_party/WebKit/Source/core/frame/DOMWindow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-25T04:52:21Z",
+      "side": 1,
+      "message": "This was named incumbent in https://chromium-review.googlesource.com/c/chromium/src/+/595788, possibly in line with how https://html.spec.whatwg.org/#concept-incumbent-everything is used.\n\navi@, what is the intended behavior here if there are multiple windows involved on the calling stack. Is it the next one up, or the topmost one?",
+      "range": {
+        "startLine": 412,
+        "startChar": 14,
+        "endLine": 412,
+        "endChar": 15
+      },
+      "revId": "d3898b4b3a325318b6fa73e89f01c6f2d1637e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
