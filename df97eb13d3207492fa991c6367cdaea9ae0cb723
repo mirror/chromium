@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0df78aa_e4035b37",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "nit: delete is well-defined for nullptr, so remove this check and just blindly delete and zero below.",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617e0b57_7e0008d4",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "should this be in the test fixture\u0027s dtor or TearDown override?",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919e7b28_b719905f",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "should passing in nullptr for |event_handle| not close the hold handle (e.g., act as a \"unregister my old event\" call)?",
+      "range": {
+        "startLine": 244,
+        "startChar": 36,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1c3c1a_83e2cb2b",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "nit: false -\u003e FALSE since it\u0027s a win32 BOOL",
+      "range": {
+        "startLine": 248,
+        "startChar": 64,
+        "endLine": 248,
+        "endChar": 69
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f4c630_91aba397",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "DUPLICATE_SAME_ACCESS",
+      "range": {
+        "startLine": 248,
+        "startChar": 71,
+        "endLine": 248,
+        "endChar": 72
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169c0762_15c362d0",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 248,
+        "startChar": 41,
+        "endLine": 248,
+        "endChar": 62
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de93ab3_f5499bb7",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "move this out of the if{} body",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7da060_ed2299f3",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "how did this test pass given the bug on line 254 of whitelist_log.cc?",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3cccdf_c86166da",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T00:30:27Z",
+      "side": 1,
+      "message": "why does this take an event rather than a fn ptr? we\u0027re in-proc, after all. is the difficulty that it could be invoked on any thread at any time, so posting a task from the callback wouldn\u0027t be doable?",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
