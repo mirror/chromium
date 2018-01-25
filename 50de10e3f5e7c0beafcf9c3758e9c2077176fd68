@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321d10fd_12f1fd34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T21:42:42Z",
+      "side": 1,
+      "message": "This description left me quite confused.\n\nThese OnChannel methods should happen on the IO thread, right? So I don\u0027t understanding the posting part.\n\nAlso what is the exact scenario that this breaks? From the code, I assume something can cause OnChannelError but not OnChannelClosing? That on the surface looks like it should not happen, so is there an deeper issue here?",
+      "revId": "50de10e3f5e7c0beafcf9c3758e9c2077176fd68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
