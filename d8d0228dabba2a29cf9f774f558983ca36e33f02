@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "176a0ea4_ded3085f",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3e2281_4035d6df",
+      "range": {
+        "startLine": 480,
+        "startChar": 16,
+        "endLine": 480,
+        "endChar": 22
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d4847e_de4b2c2f",
         "filename": "extensions/browser/sandboxed_unpacker.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049da088_f304b7ce",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95d4847e_de4b2c2f",
+      "range": {
+        "startLine": 772,
+        "startChar": 23,
+        "endLine": 772,
+        "endChar": 34
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86c372af_899ea565",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b10082_60bf2f14",
+      "range": {
+        "startLine": 783,
+        "startChar": 9,
+        "endLine": 783,
+        "endChar": 26
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eacc061_9478a8e8",
         "filename": "extensions/utility/utility_handler.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8fecac_4b1879ec",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eacc061_9478a8e8",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 17
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e0faeaba_4bf3dfff",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Ah! Was looking for something like that in string_utils.h but didn\u0027t think of std_util.h.\nDone.",
+      "parentUuid": "392dc949_ef114b62",
+      "range": {
+        "startLine": 167,
+        "startChar": 11,
+        "endLine": 170,
+        "endChar": 71
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6dc4b2a_0fa6ec2b",
         "filename": "extensions/utility/utility_handler.h",
         "patchSetId": 5
@@ -131,6 +251,24 @@
       "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213f25a6_ab770b5f",
+        "filename": "extensions/utility/utility_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done for base::FilePath. Can\u0027t be done for service_manager::BinderRegistry which is defined with using in binder_registry.h and makes the compiler unhappy.",
+      "parentUuid": "c6dc4b2a_0fa6ec2b",
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c668258c_331b7fb0",
+        "filename": "extensions/utility/utility_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T20:40:31Z",
+      "side": 1,
+      "message": "Done, even though it\u0027s not really a new file (it\u0027s unpacker_unittest.cc split and renamed).",
+      "parentUuid": "2d8556b7_df5e210b",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "d8d0228dabba2a29cf9f774f558983ca36e33f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
