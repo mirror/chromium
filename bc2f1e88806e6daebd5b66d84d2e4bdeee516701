@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8000e7_4ba7b5f8",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T16:04:30Z",
+      "side": 1,
+      "message": "Don\u0027t we need to add an empty method to PartitionAllocator.h as well?",
+      "revId": "bc2f1e88806e6daebd5b66d84d2e4bdeee516701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
