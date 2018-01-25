@@ -22,6 +22,30 @@
       "revId": "ece63c7d92c6d354edbd243696842b7b83f150f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984ea71d_c99493ea",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T21:47:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "af1f7574_ada01acf",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 77
+      },
+      "revId": "ece63c7d92c6d354edbd243696842b7b83f150f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

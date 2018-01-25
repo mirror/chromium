@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aae6f238_328bb3f8",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataObjectItem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T21:47:00Z",
+      "side": 1,
+      "message": "That\u0027s what the data transfer API expects after all... And there is nothing file-specific about a web File thing of course, it\u0027s just a Blob with a filename and last changed attribute.",
+      "parentUuid": "5b2585af_774988e4",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d3d14bd_47c95180",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-25T20:43:09Z",
       "side": 1,
       "message": "Would this conversion from SerializedBlob to WebBlobInfo be useful elsewhere (in which case maybe it should be factored out)? Or is it likely not to live long enough for that to matter (per the comment in .mojom)?",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e52c289_11c9e055",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T21:47:00Z",
+      "side": 1,
+      "message": "It\u0027s a bit tricky.. First of all this case is a bit weird in that it is code in blink that for historical reasons still uses WebBlobInfo to pass around the blob. Normally I\u0027d expect internal-to-blink code to just use BlobDataHandle rather than the Web wrapper.\n\nOther than that, a WebBlobInfo constructor that takes a (non-blink-variant) SerializedBlobPtr might make sense, but that wouldn\u0027t help this case (since we get a blink variant SerializedBlobPtr).\n\nBut what might make sense is to typemap SerializedBlob to BlobDataHandle in the blink variant. Mind if I do that in a follow-up?",
+      "parentUuid": "3d3d14bd_47c95180",
       "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
