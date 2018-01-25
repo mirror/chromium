@@ -22,6 +22,30 @@
       "revId": "596505b165e365238ac16bd99861d54329e4f1c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd4ffa22_37388ec9",
+        "filename": "remoting/host/input_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-01-25T23:43:06Z",
+      "side": 1,
+      "message": "Deinitialize() is kind of a weird name as the object is still valid to use.  IMO I would have moved this stuff into the d\u0027tor since that is how it is used but I wanted a smallish change that is easy to merge.",
+      "parentUuid": "01e67a9d_15c58cb2",
+      "range": {
+        "startLine": 370,
+        "startChar": 36,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "596505b165e365238ac16bd99861d54329e4f1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
