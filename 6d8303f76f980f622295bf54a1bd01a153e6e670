@@ -16,6 +16,24 @@
       "revId": "6d8303f76f980f622295bf54a1bd01a153e6e670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9d5fff_6aea0b46",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 11
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-25T16:28:27Z",
+      "side": 0,
+      "message": "As discussed, that was because I was still using part of the old codepath (which short-circuits ipc to dispatch the event) even when my mojo flag was enabled. Fixed now, and reinstated the close tests that now fail.\n\nI don\u0027t know why the old codepath doesn\u0027t wait for the notification to be actually closed before firing the \u0027close\u0027 event. Is this behaviour we should worry about preserving? (I note the spec doesn\u0027t actually say anything about firing a close event for non-persistent notifications..)",
+      "parentUuid": "6876b068_d5dd78be",
+      "revId": "6d8303f76f980f622295bf54a1bd01a153e6e670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
