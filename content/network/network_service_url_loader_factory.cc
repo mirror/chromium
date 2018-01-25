@@ -14,12 +14,23 @@ namespace content {
 
 NetworkServiceURLLoaderFactory::NetworkServiceURLLoaderFactory(
     NetworkContext* context,
-    uint32_t process_id)
+    uint32_t process_id,
+    network::mojom::URLLoaderFactoryRequest request)
     : context_(context), process_id_(process_id) {
-  ignore_result(process_id_);
+  binding_set_.set_connection_error_handler(
+      base::BindRepeating(&NetworkServiceURLLoaderFactory::OnConnectionError,
+                          base::Unretained(this)));
+  binding_set_.AddBinding(this, std::move(request));
+  context->RegisterURLLoaderFactory(this);
 }
 
-NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() = default;
+NetworkServiceURLLoaderFactory::~NetworkServiceURLLoaderFactory() {
+  context->DeregisterURLLoaderFactory(this);
+}
+
+void NetworkServiceURLLoaderFactory::Cleanup() {
+  delete this;
+}
 
 void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
     network::mojom::URLLoaderRequest request,
@@ -45,7 +56,12 @@ void NetworkServiceURLLoaderFactory::CreateLoaderAndStart(
 
 void NetworkServiceURLLoaderFactory::Clone(
     network::mojom::URLLoaderFactoryRequest request) {
-  context_->CreateURLLoaderFactory(std::move(request), process_id_);
+  binding_set_.AddBinding(this, std::move(request));
+}
+
+void NetworkServiceURLLoaderFactory::OnConnectionError() {
+  if (binding_set_.empty())
+    delete this;
 }
 
 }  // namespace content
