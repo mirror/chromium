@@ -524,30 +524,6 @@ int GetMimeTypeMatch(const std::string& mime_type_string,
   return 0;
 }
 
-// NOTE: Keep in sync with DownloadContentType in
-// tools/metrics/histograms/enums.xml.
-enum DownloadContent {
-  DOWNLOAD_CONTENT_UNRECOGNIZED = 0,
-  DOWNLOAD_CONTENT_TEXT = 1,
-  DOWNLOAD_CONTENT_IMAGE = 2,
-  DOWNLOAD_CONTENT_AUDIO = 3,
-  DOWNLOAD_CONTENT_VIDEO = 4,
-  DOWNLOAD_CONTENT_OCTET_STREAM = 5,
-  DOWNLOAD_CONTENT_PDF = 6,
-  DOWNLOAD_CONTENT_DOCUMENT = 7,
-  DOWNLOAD_CONTENT_SPREADSHEET = 8,
-  DOWNLOAD_CONTENT_PRESENTATION = 9,
-  DOWNLOAD_CONTENT_ARCHIVE = 10,
-  DOWNLOAD_CONTENT_EXECUTABLE = 11,
-  DOWNLOAD_CONTENT_DMG = 12,
-  DOWNLOAD_CONTENT_CRX = 13,
-  DOWNLOAD_CONTENT_WEB = 14,
-  DOWNLOAD_CONTENT_EBOOK = 15,
-  DOWNLOAD_CONTENT_FONT = 16,
-  DOWNLOAD_CONTENT_APK = 17,
-  DOWNLOAD_CONTENT_MAX = 18,
-};
-
 static std::map<std::string, int> getMimeTypeToDownloadContentMap() {
   return {
       {"application/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
@@ -731,6 +707,8 @@ void RecordDownloadVideoType(const std::string& mime_type_string) {
                             DOWNLOAD_VIDEO_MAX);
 }
 
+}  // namespace
+
 DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
                                             bool record_content_subcategory) {
   DownloadContent download_content = DownloadContent(
@@ -767,11 +745,10 @@ DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
   return download_content;
 }
 
-}  // namespace
-
 void RecordDownloadMimeType(const std::string& mime_type_string) {
-  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType",
-                            DownloadContentFromMimeType(mime_type_string, true),
+  DownloadContent download_content =
+      DownloadContentFromMimeType(mime_type_string, true);
+  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType", download_content,
                             DOWNLOAD_CONTENT_MAX);
 }
 
