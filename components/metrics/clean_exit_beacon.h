@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "base/time/time.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -30,8 +31,16 @@ class CleanExitBeacon {
   // Returns the original value of the beacon.
   bool exited_cleanly() const { return initial_value_; }
 
-  // Writes the provided beacon value.
+  // Returns the original value of the last live timestamp.
+  base::Time browser_last_live_timestamp() const {
+    return initial_browser_last_live_timestamp_;
+  }
+
+  // Writes the provided beacon value and updates the last live timestamp.
   void WriteBeaconValue(bool exited_cleanly);
+
+  // Updates the last live timestamp.
+  void UpdateLastLiveTimestamp();
 
   // Registers local state prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
@@ -39,6 +48,7 @@ class CleanExitBeacon {
  private:
   PrefService* const local_state_;
   const bool initial_value_;
+  const base::Time initial_browser_last_live_timestamp_;
   const base::string16 backup_registry_key_;
 
   DISALLOW_COPY_AND_ASSIGN(CleanExitBeacon);
