@@ -18,6 +18,7 @@
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/content_export.h"
 #include "content/common/features.h"
+#include "content/public/common/drop_data.h"
 #include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_observer.h"
@@ -51,6 +52,16 @@ class CONTENT_EXPORT WebContentsViewAura
  public:
   WebContentsViewAura(WebContentsImpl* web_contents,
                       WebContentsViewDelegate* delegate);
+
+  // Write file system files to the pickle.
+  static void WriteDropDataFileSystemFilesToPickle(
+      const std::vector<DropData::FileSystemFileInfo>& file_system_files,
+      base::Pickle* pickle);
+
+  // Read file system files from the pickle.
+  static bool ReadDropDataFileSystemFilesFromPickle(
+      const base::Pickle& pickle,
+      std::vector<DropData::FileSystemFileInfo>* file_system_files);
 
   // Allow the WebContentsViewDelegate to be set explicitly.
   void SetDelegateForTesting(WebContentsViewDelegate* delegate);

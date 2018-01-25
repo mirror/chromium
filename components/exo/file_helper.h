@@ -38,6 +38,10 @@ class FileHelper {
   virtual bool GetUrlFromFileSystemUrl(const std::string& app_id,
                                        const GURL& file_system_url,
                                        GURL* out) = 0;
+
+  // Reads system file URLs from |pickle| constructed by web contents view.
+  virtual bool ReadFileSystemUrlsFromPickle(const base::Pickle& pickle,
+                                            std::vector<GURL>* urls) = 0;
 };
 
 }  // namespace exo

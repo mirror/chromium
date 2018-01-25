@@ -552,6 +552,20 @@ void WebContentsViewAura::SetDelegateForTesting(
   delegate_.reset(delegate);
 }
 
+// static
+void WebContentsViewAura::WriteDropDataFileSystemFilesToPickle(
+    const std::vector<DropData::FileSystemFileInfo>& file_system_files,
+    base::Pickle* pickle) {
+  WriteFileSystemFilesToPickle(file_system_files, pickle);
+}
+
+// static
+bool WebContentsViewAura::ReadDropDataFileSystemFilesFromPickle(
+    const base::Pickle& pickle,
+    std::vector<DropData::FileSystemFileInfo>* file_system_files) {
+  return ReadFileSystemFilesFromPickle(pickle, file_system_files);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WebContentsViewAura, private:
 
