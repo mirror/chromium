@@ -52,6 +52,24 @@
       "revId": "47a8e09675b79699878425aaf95d795b24e51981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a7dbd6_d186bf6b",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T21:36:36Z",
+      "side": 1,
+      "message": "Done, with bitmasks.",
+      "parentUuid": "7dc88606_27459cfe",
+      "revId": "47a8e09675b79699878425aaf95d795b24e51981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
