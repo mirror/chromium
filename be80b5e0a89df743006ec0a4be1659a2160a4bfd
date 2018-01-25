@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9351e266_ca181637",
+        "filename": "ui/ozone/platform/drm/host/drm_device_connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2018-01-25T16:08:05Z",
+      "side": 1,
+      "message": "nit: Rename to AmRunningInWSMode() ... or am_running_in_ws_mode()",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "be80b5e0a89df743006ec0a4be1659a2160a4bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
