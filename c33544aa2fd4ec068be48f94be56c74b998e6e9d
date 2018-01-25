@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c49920_ca76286c",
+        "filename": "WATCHLISTS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-25T14:57:15Z",
+      "side": 1,
+      "message": "From the other examples in the file, it look like \u0027.\u0027 will match the path separator, so having two .*\u0027s isn\u0027t necessary. You could probably simplify this to \n\nthird_party/Webkit/Source/(core|modules|platform)/.*\\.idl$",
+      "revId": "c33544aa2fd4ec068be48f94be56c74b998e6e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
