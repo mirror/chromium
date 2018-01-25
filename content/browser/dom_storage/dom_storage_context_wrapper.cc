@@ -261,9 +261,8 @@ void DOMStorageContextWrapper::SetSaveSessionStorageOnDisk() {
 
 scoped_refptr<SessionStorageNamespace>
 DOMStorageContextWrapper::RecreateSessionStorage(
-    const std::string& persistent_id) {
-  return scoped_refptr<SessionStorageNamespace>(
-      new SessionStorageNamespaceImpl(this, persistent_id));
+    const std::string& namespace_id) {
+  return SessionStorageNamespaceImpl::Create(this, namespace_id);
 }
 
 void DOMStorageContextWrapper::StartScavengingUnusedSessionStorage() {
@@ -343,7 +342,7 @@ void DOMStorageContextWrapper::OpenLocalStorage(
 }
 
 void DOMStorageContextWrapper::OpenSessionStorage(
-    int64_t namespace_id,
+    const std::string& namespace_id,
     const url::Origin& origin,
     mojom::LevelDBWrapperRequest request) {
   if (!mojo_session_state_)
