@@ -134,6 +134,10 @@ String HTMLScriptElement::SourceAttributeValue() const {
   return getAttribute(srcAttr).GetString();
 }
 
+String HTMLScriptElement::StdsrcAttributeValue() const {
+  return getAttribute(stdsrcAttr).GetString();
+}
+
 String HTMLScriptElement::CharsetAttributeValue() const {
   return getAttribute(charsetAttr).GetString();
 }

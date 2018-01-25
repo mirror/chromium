@@ -77,6 +77,7 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
 
   // ScriptElementBase overrides:
   String SourceAttributeValue() const override;
+  String StdsrcAttributeValue() const override;
   String CharsetAttributeValue() const override;
   String TypeAttributeValue() const override;
   String LanguageAttributeValue() const override;

@@ -63,6 +63,9 @@ net::URLRequestContextGetter* ShellBrowserContext::CreateRequestContext(
           CreateExtensionProtocolHandler(false /* is_incognito */,
                                          extension_info_map)
               .release());
+  (*protocol_handlers)[kBrowserScheme] =
+      linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
+          CreateBrowserProtocolHandler().release());
 
   set_url_request_context_getter(new ShellURLRequestContextGetter(
       this, IgnoreCertificateErrors(), GetPath(),
