@@ -19,5 +19,8 @@ const base::Feature kNewFileDownload{"NewFileDownload",
 const base::Feature kWKHTTPSystemCookieStore{"WKHTTPSystemCookieStore",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kNetworkService{"NetworkService",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace web

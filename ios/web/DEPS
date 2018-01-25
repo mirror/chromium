@@ -11,6 +11,9 @@ include_rules = [
   "+services/catalog",
   "+services/service_manager",
 
+  # Needed to embed the NetworkService in //ios/web.
+  "+services/network",
+
   # For tests.
   "+ios/testing",
   "+ios/third_party/earl_grey/src",

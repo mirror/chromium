@@ -13,3 +13,8 @@ const string kBrowserServiceName = "web_browser";
 // instance which packages other browser-wide services. This must match the name
 // in src/ios/web/public/app/mojo/web_packaged_services_manifest.json.
 const string kPackagedServicesServiceName = "web_packaged_services";
+
+// The service name used to identify the network service's singleton instance.
+// This must match the name in src/content/network/manifest.json.
+// TODO(crbug.com/803149): remove once the name is in //services/network.
+const string kNetworkServiceName = "network";
