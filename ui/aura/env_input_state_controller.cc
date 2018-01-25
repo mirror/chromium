@@ -16,7 +16,14 @@ void EnvInputStateController::UpdateStateForMouseEvent(
     const ui::MouseEvent& event) {
   switch (event.type()) {
     case ui::ET_MOUSE_PRESSED:
-      Env::GetInstance()->set_mouse_button_flags(event.button_flags());
+      // Do not set mouse flags, when clicking on the non-client area.
+      // Reason: when doing an interactive window drag or resize, we delegate
+      // to the host window manager to perform the action. It might happen that
+      // the window manager does not notify the action is ended (ie mouse
+      // release event), and browser gets stuck with non-zero
+      // aura::Env::mouse_button_flags_ until the next mouse down/up.
+      if (!(event.flags() & ui::EF_IS_NON_CLIENT))
+        Env::GetInstance()->set_mouse_button_flags(event.button_flags());
       break;
     case ui::ET_MOUSE_RELEASED:
       Env::GetInstance()->set_mouse_button_flags(
