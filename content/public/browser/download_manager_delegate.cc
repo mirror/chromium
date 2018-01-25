@@ -35,6 +35,14 @@ bool DownloadManagerDelegate::ShouldOpenDownload(
   return true;
 }
 
+bool DownloadManagerDelegate::InterceptDownloadIfApplicable(
+    const GURL& url,
+    const std::string& mime_type,
+    const std::string& request_origin,
+    WebContents* web_contents) {
+  return false;
+}
+
 bool DownloadManagerDelegate::IsMostRecentDownloadItemAtFilePath(
     DownloadItem* download) {
   return true;

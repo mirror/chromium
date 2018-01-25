@@ -79,7 +79,7 @@ std::unique_ptr<UrlDownloader> UrlDownloader::BeginDownload(
   // |started_callback|.
   std::unique_ptr<UrlDownloader> downloader(
       new UrlDownloader(std::move(request), delegate, is_parallel_request,
-                        params->download_source()));
+                        params->request_origin(), params->download_source()));
   downloader->Start();
 
   return downloader;
@@ -89,10 +89,15 @@ UrlDownloader::UrlDownloader(
     std::unique_ptr<net::URLRequest> request,
     base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
     bool is_parallel_request,
+    const std::string& request_origin,
     DownloadSource download_source)
     : request_(std::move(request)),
       delegate_(delegate),
-      core_(request_.get(), this, is_parallel_request, download_source),
+      core_(request_.get(),
+            this,
+            is_parallel_request,
+            request_origin,
+            download_source),
       weak_ptr_factory_(this) {}
 
 UrlDownloader::~UrlDownloader() {
