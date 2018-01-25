@@ -34,6 +34,24 @@
       "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ff5b30_70cf80a8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-25T07:57:44Z",
+      "side": 1,
+      "message": "\"For ServiceWorker case only passing direct network loader factory seems actually fine. \"\nThis is actually the only case where we need the Constraints parameter for SharedURLLoaderFactory::CreateLoaderAndStart (setting bypass_custom_network_loaders to true to get the direct network loader factory). If we only pass the direct network loader factory, we don\u0027t need Constraints anymore.\n\nDo you foresee other use cases of Constraints in the future? Shall I remove it?",
+      "parentUuid": "5e88f065_0d6bfd36",
+      "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
