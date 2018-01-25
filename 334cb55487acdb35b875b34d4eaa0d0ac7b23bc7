@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006ad763_fe174ee3",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-25T03:15:08Z",
+      "side": 1,
+      "message": "I feel a bit weird about this being different in style from GetIntAttributeForAXNode. I realise we don\u0027t strictly need to follow the same pattern, but I think it would be easier to follow if it was consistent, i.e. returning an \"is_null\" bool and taking an out param.\n\nWhat do you think?",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b66e407_b6127ff2",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-25T03:15:08Z",
+      "side": 1,
+      "message": "In that case, let\u0027s just make it a separate method.",
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543667a1_297bf26d",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-25T03:15:08Z",
+      "side": 1,
+      "message": "😍",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70231a47_2daaf45d",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-string-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-25T03:15:08Z",
+      "side": 1,
+      "message": "excellent",
+      "range": {
+        "startLine": 72,
+        "startChar": 47,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
