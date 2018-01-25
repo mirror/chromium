@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110f0594_e81dc85d",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-25T22:56:33Z",
+      "side": 1,
+      "message": "nit:  feature_can_be_enabled?",
+      "range": {
+        "startLine": 236,
+        "startChar": 27,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "d2619f5936faa5adcb0d3672a156861add78cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
