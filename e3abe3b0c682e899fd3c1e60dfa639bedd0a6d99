@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f80ed93_7af0ad4a",
+        "filename": "third_party/WebKit/Source/platform/heap/Persistent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:26:44Z",
+      "side": 1,
+      "message": "For consistency, maybe would it make more sense to introduce:\n\n  ProcessHeap::GetCrossThreadPersistentRegion();\n  ProcessHeap::GetCrossThreadWeakPersistentRegion();\n\ninstead of adding two regions to CrossThreadPersistentRegions?\n\nNote that thread-local regions are provided by:\n\n  ThreadState::GetPersistentRegion();\n  ThreadState::GetWeakPersistentRegion();\n\nThen you won\u0027t need to make CrossThreadPersistentRegions iterate two regions and duplicate code.",
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6c042d_f9257939",
+        "filename": "third_party/WebKit/Source/platform/heap/Persistent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:26:44Z",
+      "side": 1,
+      "message": "For consistency, we might want to write this as:\n\n  state-\u003eGetPersistentRegion()-\u003eFreePersistentNode();\n\ni.e. remove ThreadState::FreePersistentNode().",
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d461f22d_1bdc2472",
+        "filename": "third_party/WebKit/Source/platform/heap/PersistentNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:26:44Z",
+      "side": 1,
+      "message": "I think this method should support weak_persistent_region_ as well.\n\nHowever, as commented in the above, I\u0027d prefer not making CrossThreadPersistentRegions hold two regions. Then you won\u0027t need to write the same code twice.",
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0c0fbe_89ce779b",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:26:44Z",
+      "side": 1,
+      "message": "For consistency with VisitAllWeakPersistents, we should call ProcessHeap::GetCrossThreadPersistentRegions().TracePersistentNodes() in this method.",
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30f154b_5bbc751c",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:26:44Z",
+      "side": 1,
+      "message": "VisitWeakPersistents (for consistency with VisitPersistents)",
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
