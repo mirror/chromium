@@ -352,9 +352,10 @@ void PasswordStore::CheckReuse(const base::string16& input,
 #endif
 
 #if defined(SYNC_PASSWORD_REUSE_DETECTION_ENABLED)
-void PasswordStore::SaveSyncPasswordHash(const base::string16& password) {
-  // TODO(crbug.com/657041): Log success of saving password hash to UMA.
-  hash_password_manager_.SavePasswordHash(password);
+void PasswordStore::SaveSyncPasswordHash(
+    const base::string16& password,
+    metrics_util::SyncPasswordHashChange event) {
+  hash_password_manager_.SavePasswordHash(password, event);
   base::Optional<SyncPasswordData> sync_password_data =
       hash_password_manager_.RetrievePasswordHash();
   ScheduleTask(base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this,
@@ -362,8 +363,9 @@ void PasswordStore::SaveSyncPasswordHash(const base::string16& password) {
 }
 
 void PasswordStore::SaveSyncPasswordHash(
-    const SyncPasswordData& sync_password_data) {
-  hash_password_manager_.SavePasswordHash(sync_password_data);
+    const SyncPasswordData& sync_password_data,
+    metrics_util::SyncPasswordHashChange event) {
+  hash_password_manager_.SavePasswordHash(sync_password_data, event);
   ScheduleTask(base::BindRepeating(&PasswordStore::SaveSyncPasswordHashImpl,
                                    this, sync_password_data));
 }
