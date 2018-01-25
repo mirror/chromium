@@ -17,10 +17,8 @@ constexpr int kCursorBlinkHalfPeriodMs = 600;
 namespace vr {
 
 TextInput::TextInput(float font_height_meters,
-                     OnFocusChangedCallback focus_changed_callback,
                      OnInputEditedCallback input_edit_callback)
-    : focus_changed_callback_(focus_changed_callback),
-      input_edit_callback_(input_edit_callback) {
+    : input_edit_callback_(input_edit_callback) {
   auto text = base::MakeUnique<Text>(font_height_meters);
   text->SetType(kTypeTextInputHint);
   text->SetDrawPhase(kPhaseForeground);
@@ -81,6 +79,10 @@ void TextInput::OnFocusChanged(bool focused) {
 
   if (focus_changed_callback_)
     focus_changed_callback_.Run(focused);
+}
+
+void TextInput::SetFocusChangeCallback(OnFocusChangedCallback callback) {
+  focus_changed_callback_ = callback;
 }
 
 void TextInput::RequestFocus() {

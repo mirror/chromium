@@ -22,14 +22,20 @@ class PointF;
 
 namespace vr {
 
+struct TextInputInfo;
+
 class ContentInputForwarder {
  public:
   virtual ~ContentInputForwarder() {}
   virtual void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                             int content_id) = 0;
+  // Text input specific.
+  virtual void OnTextInputEdited(const TextInputInfo& info) = 0;
+  virtual void OnTextInputCommitted(const TextInputInfo& info) = 0;
 };
 
 class PlatformController;
+class TextInputDelegate;
 
 // Receives interaction events with the web content.
 class ContentInputDelegate {
@@ -37,11 +43,20 @@ class ContentInputDelegate {
   explicit ContentInputDelegate(ContentInputForwarder* content);
   virtual ~ContentInputDelegate();
 
+  void set_content_element_id(int id) { content_element_id_ = id; }
+
   void OnContentEnter(const gfx::PointF& normalized_hit_point);
   void OnContentLeave();
   void OnContentMove(const gfx::PointF& normalized_hit_point);
   void OnContentDown(const gfx::PointF& normalized_hit_point);
   void OnContentUp(const gfx::PointF& normalized_hit_point);
+
+  // Text Input specific.
+  void SetTextInputDelegate(TextInputDelegate* text_input_delegate);
+  void ShowSoftInput();
+  void HideSoftInput();
+  void OnTextInputEdited(const TextInputInfo& info);
+  void OnTextInputCommitted(const TextInputInfo& info);
 
   // The following functions are virtual so that they may be overridden in the
   // MockContentInputDelegate.
@@ -82,9 +97,11 @@ class ContentInputDelegate {
   int content_tex_css_height_ = 0;
   int content_id_ = 0;
   int locked_content_id_ = 0;
+  int content_element_id_ = 0;
 
   ContentInputForwarder* content_ = nullptr;
   PlatformController* controller_ = nullptr;
+  TextInputDelegate* text_input_delegate_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ContentInputDelegate);
 };

@@ -11,6 +11,8 @@
 
 namespace vr {
 
+struct TextInputInfo;
+
 // Represents the virtual keyboard. This element is a proxy to the
 // platform-specific keyboard implementation.
 class Keyboard : public UiElement {
@@ -21,6 +23,7 @@ class Keyboard : public UiElement {
   void SetKeyboardDelegate(KeyboardDelegate* keyboard_delegate);
   void HitTest(const HitTestRequest& request,
                HitTestResult* result) const final;
+  void UpdateInput(const TextInputInfo& info);
   void NotifyClientFloatAnimated(float value,
                                  int target_property_id,
                                  cc::Animation* animation) override;

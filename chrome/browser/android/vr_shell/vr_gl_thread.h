@@ -58,6 +58,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   // vr::ContentInputForwarder
   void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                     int content_id) override;
+  void OnTextInputEdited(const vr::TextInputInfo& info) override;
+  void OnTextInputCommitted(const vr::TextInputInfo& info) override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
@@ -94,6 +96,11 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void OnSpeechRecognitionStateChanged(int new_state) override;
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
+  void ShowSoftInput() override;
+  void HideSoftInput() override;
+  void UpdateSelection(int selection_start, int selection_end) override;
+  void UpdateComposition(int composition_start, int composition_end) override;
+  void UpdateText(const base::string16& text) override;
 
  protected:
   void Init() override;

@@ -148,6 +148,23 @@ class VrShell : device::GvrGamepadDataProvider,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       int mode);
+  void ShowSoftInput(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj);
+  void HideSoftInput(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj);
+  void UpdateSelection(JNIEnv* env,
+                       const base::android::JavaParamRef<jobject>& obj,
+                       int selection_start,
+                       int selection_end);
+  void UpdateComposition(JNIEnv* env,
+                         const base::android::JavaParamRef<jobject>& obj,
+                         int composition_start,
+                         int composition_end);
+  void UpdateText(JNIEnv* env,
+                  const base::android::JavaParamRef<jobject>& obj,
+                  jstring text);
+  void OnTextInputEdited(vr::TextInputInfo info);
+  void OnTextInputCommitted(vr::TextInputInfo info);
 
   void ContentWebContentsDestroyed();
   // Called when our WebContents have been hidden. Usually a sign that something

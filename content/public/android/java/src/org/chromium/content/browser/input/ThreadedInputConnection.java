@@ -37,9 +37,10 @@ import java.util.concurrent.LinkedBlockingQueue;
  * so 'extends' here should have no functional effect at all. See crbug.com/616334 for more
  * details.
  */
-class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
+public class ThreadedInputConnection
+        extends BaseInputConnection implements ChromiumBaseInputConnection {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final TextInputState UNBLOCKER = new TextInputState(
             "", new Range(0, 0), new Range(-1, -1), false, false /* notFromIme */) {
@@ -191,6 +192,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         if (textInputState == null) return;
         assertOnImeThread();
         if (mNumNestedBatchEdits != 0) return;
+        if (DEBUG_LOGS) Log.i(TAG, "updateSelection: %s", textInputState);
         Range selection = textInputState.selection();
         Range composition = textInputState.composition();
         // As per Guidelines in
@@ -200,7 +202,9 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         // you should be calling updateExtractedText(View, int, ExtractedText)
         // whenever you call updateSelection(View, int, int, int, int).
         if (mShouldUpdateExtractedText) {
-            final ExtractedText extractedText = convertToExtractedText(textInputState);
+            if (DEBUG_LOGS) Log.i(TAG, "updateExtractedText");
+            final ExtractedText extractedText =
+                    ChromiumBaseInputConnection.convertToExtractedText(textInputState);
             mImeAdapter.updateExtractedText(mCurrentExtractedTextRequestToken, extractedText);
         }
         mImeAdapter.updateSelection(
@@ -397,22 +401,9 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             mCurrentExtractedTextRequestToken = request != null ? request.token : 0;
         }
         TextInputState textInputState = requestAndWaitForTextInputState();
-        return convertToExtractedText(textInputState);
+        return ChromiumBaseInputConnection.convertToExtractedText(textInputState);
     }
 
-    private ExtractedText convertToExtractedText(TextInputState textInputState) {
-        if (textInputState == null) return null;
-        ExtractedText extractedText = new ExtractedText();
-        extractedText.text = textInputState.text();
-        extractedText.partialEndOffset = textInputState.text().length();
-        // Set the partial start offset to -1 because the content is the full text.
-        // See: Android documentation for ExtractedText#partialStartOffset
-        extractedText.partialStartOffset = -1;
-        extractedText.selectionStart = textInputState.selection().start();
-        extractedText.selectionEnd = textInputState.selection().end();
-        extractedText.flags = textInputState.singleLine() ? ExtractedText.FLAG_SINGLE_LINE : 0;
-        return extractedText;
-    }
 
     /**
      * @see InputConnection#beginBatchEdit()

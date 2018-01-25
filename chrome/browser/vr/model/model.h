@@ -78,10 +78,14 @@ struct Model {
   bool web_vr_autopresentation_enabled() const {
     return ui_modes.back() == kModeWebVrAutopresented;
   }
+  bool editing_enabled() const { return editing_input || editing_web_input; }
 
   // Focused text state.
   bool editing_input = false;
+  bool editing_web_input = false;
+  // Editable text field state.
   TextInputInfo omnibox_text_field_info;
+  TextInputInfo web_input_text_field_info;
 
   // Controller state.
   ControllerModel controller;

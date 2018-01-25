@@ -526,11 +526,33 @@ void UiSceneCreator::CreateContentQuad() {
       content_input_delegate_,
       base::BindRepeating(&UiBrowserInterface::OnContentScreenBoundsChanged,
                           base::Unretained(browser_)));
+  main_content->SetFocusChangeCallback(base::BindRepeating(
+      [](Model* model, ContentElement* e, bool focused) {
+        if (focused) {
+          e->UpdateInput(model->web_input_text_field_info);
+        } else {
+          e->UpdateInput(TextInputInfo());
+        }
+      },
+      model_, base::Unretained(main_content.get())));
   main_content->SetName(kContentQuad);
   main_content->SetDrawPhase(kPhaseForeground);
   main_content->SetSize(kContentWidth, kContentHeight);
   main_content->set_corner_radius(kContentCornerRadius);
   main_content->SetTransitionedProperties({BOUNDS});
+  main_content->SetTextInputDelegate(text_input_delegate_);
+  main_content->AddBinding(base::MakeUnique<Binding<bool>>(
+      VR_BIND_LAMBDA([](Model* m) { return m->editing_web_input; },
+                     base::Unretained(model_)),
+      VR_BIND_LAMBDA(
+          [](ContentElement* e, const bool& v) {
+            if (v) {
+              e->RequestFocus();
+            } else {
+              e->RequestUnfocus();
+            }
+          },
+          base::Unretained(main_content.get()))));
   main_content->AddBinding(VR_BIND(
       bool, Model, model_, fullscreen_enabled(), UiElement, main_content.get(),
       SetSize(value ? kFullscreenWidth : kContentWidth,
@@ -544,6 +566,12 @@ void UiSceneCreator::CreateContentQuad() {
   main_content->AddBinding(VR_BIND_FUNC(
       UiElementRenderer::TextureLocation, Model, model_, content_location,
       ContentElement, main_content.get(), SetTextureLocation));
+  main_content->AddBinding(base::MakeUnique<Binding<TextInputInfo>>(
+      VR_BIND_LAMBDA([](TextInputInfo* info) { return *info; },
+                     base::Unretained(&model_->web_input_text_field_info)),
+      VR_BIND_LAMBDA([](ContentElement* e,
+                        const TextInputInfo& value) { e->UpdateInput(value); },
+                     base::Unretained(main_content.get()))));
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
   // Limit reticle distance to a sphere based on content distance.
@@ -1095,13 +1123,23 @@ std::unique_ptr<TextInput> UiSceneCreator::CreateTextInput(
   auto text_input = base::MakeUnique<TextInput>(
       font_height_meters,
       base::BindRepeating(
-          [](Model* model, bool focused) { model->editing_input = focused; },
-          base::Unretained(model)),
-      base::BindRepeating(
           [](TextInputInfo* model, const TextInputInfo& text_input_info) {
             *model = text_input_info;
           },
           base::Unretained(text_input_model)));
+  text_input->SetFocusChangeCallback(base::BindRepeating(
+      [](Model* model, TextInput* text_input, TextInputInfo* text_input_info,
+         bool focused) {
+        if (focused) {
+          model->editing_input = true;
+          text_input->UpdateInput(*text_input_info);
+        } else {
+          model->editing_input = false;
+          text_input->UpdateInput(TextInputInfo());
+        }
+      },
+      base::Unretained(model), base::Unretained(text_input.get()),
+      base::Unretained(text_input_model)));
   text_input->SetDrawPhase(kPhaseNone);
   text_input->set_hit_testable(false);
   text_input->SetTextInputDelegate(text_input_delegate);
@@ -1119,7 +1157,7 @@ void UiSceneCreator::CreateKeyboard() {
       Create<UiElement>(kKeyboardVisibilityControlForVoice, kPhaseNone);
   visibility_control_root->set_hit_testable(false);
   BIND_VISIBILITY_CONTROL_FOR_VOICE(visibility_control_root.get(), model_,
-                                    editing_input);
+                                    editing_enabled());
 
   auto scaler = base::MakeUnique<ScaledDepthAdjuster>(kKeyboardDistance);
   scaler->SetName(kKeyboardDmmRoot);
@@ -1128,7 +1166,8 @@ void UiSceneCreator::CreateKeyboard() {
   keyboard->SetKeyboardDelegate(keyboard_delegate_);
   keyboard->SetDrawPhase(kPhaseForeground);
   keyboard->SetTranslate(0.0, kKeyboardVerticalOffsetDMM, 0.0);
-  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_, editing_input,
+  keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_,
+                                    editing_input || model->editing_web_input,
                                     UiElement, keyboard.get(), SetVisible));
   scaler->AddChild(std::move(keyboard));
   visibility_control_root->AddChild(std::move(scaler));

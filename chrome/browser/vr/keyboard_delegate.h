@@ -16,6 +16,7 @@ class Transform;
 namespace vr {
 
 struct CameraModel;
+struct TextInputInfo;
 
 class KeyboardDelegate {
  public:
@@ -29,6 +30,7 @@ class KeyboardDelegate {
                        gfx::Point3F* hit_position) = 0;
   virtual void OnBeginFrame() {}
   virtual void Draw(const CameraModel&) = 0;
+  virtual void UpdateInput(const TextInputInfo&) = 0;
 
   virtual void OnHoverEnter(const gfx::PointF& position) {}
   virtual void OnHoverLeave() {}
