@@ -100,20 +100,16 @@
         padding: 16px 0;
       }
     </style>
+    [[availableAccounts_.email]]
     <settings-animated-pages id="pages" section="people"
         focus-config="[[focusConfig_]]">
       <neon-animatable route-path="default">
 <if expr="not chromeos">
         <template is="dom-if" if="[[diceEnabled]]">
-          <template is="dom-if" if="[[!syncStatus.signedIn]]">
-            <div class="settings-box first two-line">
-              <div class="start">
-                <div>$i18n{peopleSignInPrompt}</div>
-                <div class="secondary">$i18n{peopleSignInPromptSecondary}</div>
-              </div>
-            </div>
-          </template>
-          <settings-sync-account-control></settings-sync-account-control>
+          <settings-sync-account-control
+              promo-label="$i18n{peopleSignInPrompt}"
+              promo-secondary-label="$i18n{peopleSignInPromptSecondary}">
+          </settings-sync-account-control>
         </template>
         <template is="dom-if" if="[[!diceEnabled]]">
 </if>

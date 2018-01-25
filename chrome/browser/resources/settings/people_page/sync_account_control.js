@@ -16,33 +16,40 @@ Polymer({
      */
     syncStatus: Object,
 
-    /** @private {!settings.ProfileInfo} */
-    profileInfo_: Object,
+    availableAccounts_: Object,
+
+    selectedAccount_: Object,
+
+    promoLabel: String,
+
+    promoSecondaryLabel: String,
+
+    hasAvailableAccounts_: {
+      type: Boolean,
+      value: false,
+      computed: 'computeHasAvailableAccounts_(availableAccounts_.*)'
+    }
   },
+
+  observers: ['onSignedInChanged_(syncStatus.signedIn, availableAccounts_.*)'],
 
   /** @private {?settings.SyncBrowserProxy} */
   syncBrowserProxy_: null,
 
   /** @override */
   attached: function() {
-    const profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
-    profileInfoProxy.getProfileInfo().then(this.handleProfileInfo_.bind(this));
-    this.addWebUIListener(
-        'profile-info-changed', this.handleProfileInfo_.bind(this));
     this.syncBrowserProxy_ = settings.SyncBrowserProxyImpl.getInstance();
     this.syncBrowserProxy_.getSyncStatus().then(
         this.handleSyncStatus_.bind(this));
     this.addWebUIListener(
         'sync-status-changed', this.handleSyncStatus_.bind(this));
-  },
 
-  /**
-   * Handler for when the profile's icon and name is updated.
-   * @private
-   * @param {!settings.ProfileInfo} info
-   */
-  handleProfileInfo_: function(info) {
-    this.profileInfo_ = info;
+    // TODO(scottchen): use sync browser proxy
+    // TODO(scottchen): needs to have webui-listener to update the list when
+    // more accounts are available
+    cr.sendWithPromise('SyncSetupGetAvailableAccounts').then(accounts => {
+      this.availableAccounts_ = accounts;
+    });
   },
 
   /**
@@ -54,9 +61,19 @@ Polymer({
     this.syncStatus = syncStatus;
   },
 
+  computeHasAvailableAccounts_: function() {
+    return this.availableAccounts_ && this.availableAccounts_.length > 0;
+  },
+
   /** @private */
   onSigninTap_: function() {
     this.syncBrowserProxy_.startSignIn();
+    /** @type {!CrActionMenuElement} */ (this.$$('#menu')).close();
+  },
+
+  onSyncButtonTap_: function() {
+    chrome.send(
+        'SyncSetupStartSyncingWithEmail', [this.selectedAccount_.email]);
   },
 
   /** @private */
@@ -65,21 +82,33 @@ Polymer({
     settings.navigateTo(settings.routes.SIGN_OUT);
   },
 
-  /**
-   * @param {string} iconUrl
-   * @return {string} A CSS image-set for multiple scale factors.
-   * @private
-   */
-  getIcon_: function(iconUrl) {
-    return cr.icon.getImage(iconUrl);
+  /** @private */
+  onMenuButtonTap_: function() {
+    const actionMenu =
+        /** @type {!CrActionMenuElement} */ (this.$$('#menu'));
+    actionMenu.showAt(assert(this.$$('#dots')));
   },
 
   /**
-   * @param {!settings.SyncStatus} syncStatus
-   * @return {boolean} Whether to show the "Sign in to Chrome" button.
+   * @param {!Event}
    * @private
    */
-  showSignin_: function(syncStatus) {
-    return !!syncStatus.signinAllowed && !syncStatus.signedIn;
+  onAccountTap_: function(e) {
+    this.selectedAccount_ = e.model.item;
+    /** @type {!CrActionMenuElement} */ (this.$$('#menu')).close();
   },
+
+  /** @private */
+  onSignedInChanged_: function() {
+    if (this.syncStatus.signedIn) {
+      this.selectedAccount_ = {
+        fullName: this.syncStatus.signedInFullName,
+        pictureUrl: this.syncStatus.signedInPictureUrl,
+        email: this.syncStatus.signedInUsername,
+      };
+    } else {
+      this.selectedAccount_ =
+          this.availableAccounts_ ? this.availableAccounts_[0] : null;
+    }
+  }
 });

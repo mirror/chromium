@@ -148,6 +148,8 @@ class PeopleHandler : public SettingsPageUIHandler,
 #if !defined(OS_CHROMEOS)
   // Displays the GAIA login form.
   void DisplayGaiaLogin(signin_metrics::AccessPoint access_point);
+  void HandleGetAvailableAccounts(const base::ListValue* args);
+  void HandleStartSyncingWithEmail(const base::ListValue* args);
 
   // When web-flow is enabled, displays the Gaia login form in a new tab.
   // This function is virtual so that tests can override.
