@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82d8df5d_486927ef",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-25T18:11:41Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/ash/ash_constants.h is a good candidate.",
+      "parentUuid": "aa159fd6_2ee3b719",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f567d9_d82551d3",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-25T03:27:42Z",
       "side": 1,
       "message": "Do we need this ifdef?",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a66cf85_fdf3d359",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-25T18:11:41Z",
+      "side": 1,
+      "message": "I dont see any use of this unless we want the feature enabled by default. In which case we can move the ifdef to ui_base_features.cc\n\nconst base::Feature kTouchableChrome \u003d {\"TouchableChrome\",\n#if defined(OS_CHROMEOS)\n                                        base::FEATURE_ENABLED_BY_DEFAULT};\n#else\n                                        base::FEATURE_DISABLED_BY_DEFAULT};\n#endif // defined(OS_CHROMEOS)",
+      "parentUuid": "87f567d9_d82551d3",
       "range": {
         "startLine": 122,
         "startChar": 12,
