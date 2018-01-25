@@ -438,7 +438,7 @@ class DownloadFileTest : public testing::Test {
   void VerifySourceStreamsStates(const SourceStreamTestData& data) {
     DCHECK(download_file_->source_streams_.find(data.offset) !=
            download_file_->source_streams_.end());
-    DownloadFileImpl::SourceStream* stream =
+    DownloadSourceStream* stream =
         download_file_->source_streams_[data.offset].get();
     DCHECK(stream);
     EXPECT_EQ(data.offset, stream->offset());

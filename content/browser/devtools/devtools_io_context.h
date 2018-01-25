@@ -20,6 +20,7 @@ class SequencedTaskRunner;
 }
 
 namespace content {
+class BrowserContext;
 class ChromeBlobStorageContext;
 class StoragePartition;
 
@@ -27,11 +28,7 @@ class DevToolsIOContext {
  public:
   class ROStream : public base::RefCountedDeleteOnSequence<ROStream> {
    public:
-    enum Status {
-      StatusSuccess,
-      StatusEOF,
-      StatusFailure
-    };
+    enum Status { StatusSuccess, StatusEOF, StatusFailure };
 
     using ReadCallback =
         base::OnceCallback<void(std::unique_ptr<std::string> data,
@@ -73,7 +70,9 @@ class DevToolsIOContext {
                                    StoragePartition*,
                                    const std::string& handle,
                                    const std::string& uuid);
-
+  scoped_refptr<ROStream> OpenDownload(BrowserContext*,
+                                       const std::string& handle,
+                                       const std::string& uuid);
   bool Close(const std::string& handle);
   void DiscardAllStreams();
   void OnBlobOpenComplete(const std::string& handle, bool success);
@@ -83,7 +82,6 @@ class DevToolsIOContext {
   StreamsMap streams_;
   base::WeakPtrFactory<DevToolsIOContext> weak_factory_;
 };
-
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_DEVTOOLS_DEVTOOLS_IO_CONTEXT_H_
