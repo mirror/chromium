@@ -11,10 +11,12 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/clock.h"
+#include "build/buildflag.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/statistics_table.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "ui/gfx/range/range.h"
 
 namespace content {
@@ -25,6 +27,7 @@ namespace password_manager {
 class PasswordFormMetricsRecorder;
 }
 
+struct AccountInfo;
 class PasswordsModelDelegate;
 class Profile;
 
@@ -93,6 +96,12 @@ class ManagePasswordsBubbleModel {
   // Called by the view when the "Sign in" button in the promo bubble is
   // clicked.
   void OnSignInToChromeClicked();
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  // Called by the view when the "Sync to" button in the promo bubble is
+  // clicked.
+  void OnEnableSyncClicked(const AccountInfo& account);
+#endif
 
   // Called by the view when the "No thanks" button in the promo bubble is
   // clicked.
