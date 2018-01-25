@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7167c3_2bba62a6",
+        "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-25T00:30:57Z",
+      "side": 1,
+      "message": "Does the root view\u0027s height include the top notification bar?  Since we get the height of the status bar from the appRect.top, I would assume it\u0027s height doesn\u0027t include that?\n\nMy thinking is that it would be nice to exclude the top and bottom in both heights and then compare the result and assume that is the keyboard.  I don\u0027t know if that is possible though.\n\nNaively, I think it would be nice to make sure the resulting delta is over some threshold to avoid a 1 off rounding error between the two numbers.",
+      "range": {
+        "startLine": 229,
+        "startChar": 44,
+        "endLine": 229,
+        "endChar": 52
+      },
+      "revId": "ecbfd3a3870a5384a4f888f1f6efc32c3817f274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
