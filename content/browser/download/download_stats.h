@@ -14,10 +14,10 @@
 #include <vector>
 
 #include "base/optional.h"
+#include "components/download/public/core/download_danger_type.h"
+#include "components/download/public/core/download_source.h"
 #include "content/common/content_export.h"
-#include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
-#include "content/public/browser/download_source.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -189,13 +189,13 @@ void RecordDownloadCount(DownloadCountTypes type);
 
 // Record download count with download source.
 void RecordDownloadCountWithSource(DownloadCountTypes type,
-                                   DownloadSource download_source);
+                                   download::DownloadSource download_source);
 
 // Record COMPLETED_COUNT and how long the download took.
 void RecordDownloadCompleted(const base::TimeTicks& start,
                              int64_t download_len,
                              bool is_parallelizable,
-                             DownloadSource download_source);
+                             download::DownloadSource download_source);
 
 // Record INTERRUPTED_COUNT, |reason|, |received| and |total| bytes.
 void RecordDownloadInterrupted(DownloadInterruptReason reason,
@@ -203,21 +203,20 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
                                int64_t total,
                                bool is_parallelizable,
                                bool is_parallel_download_enabled,
-                               DownloadSource download_source);
+                               download::DownloadSource download_source);
 
 // Record that a download has been classified as malicious.
-void RecordMaliciousDownloadClassified(DownloadDangerType danger_type);
+void RecordMaliciousDownloadClassified(
+    download::DownloadDangerType danger_type);
 
 // Record a dangerous download accept event.
-void RecordDangerousDownloadAccept(
-    DownloadDangerType danger_type,
-    const base::FilePath& file_path);
+void RecordDangerousDownloadAccept(download::DownloadDangerType danger_type,
+                                   const base::FilePath& file_path);
 
 // Record a dangerous download discard event.
-void RecordDangerousDownloadDiscard(
-    DownloadDiscardReason reason,
-    DownloadDangerType danger_type,
-    const base::FilePath& file_path);
+void RecordDangerousDownloadDiscard(DownloadDiscardReason reason,
+                                    download::DownloadDangerType danger_type,
+                                    const base::FilePath& file_path);
 
 // Records the mime type of the download.
 void RecordDownloadMimeType(const std::string& mime_type);
