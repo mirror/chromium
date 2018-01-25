@@ -22,6 +22,30 @@
       "revId": "98cfdecceb5e441fc5e8b82f3e57af78f0622680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb42a47_cefb0b8e",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2018-01-25T17:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae64bd9_5f5e809a",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 5
+      },
+      "revId": "98cfdecceb5e441fc5e8b82f3e57af78f0622680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
