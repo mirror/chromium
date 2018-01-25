@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9946065c_23491ce4",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:33:21Z",
+      "side": 1,
+      "message": "Yes, that\u0027s sounds good. Thanks! I also want to see if others prefer something more specific to Touchable Chrome like touchable_chrome_constants.h.",
+      "parentUuid": "82d8df5d_486927ef",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f567d9_d82551d3",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "844710c4_8c44fe83",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:33:21Z",
+      "side": 1,
+      "message": "We can do this when the feature is enabled by default on Chrome OS, but right now it\u0027s not.",
+      "parentUuid": "5a66cf85_fdf3d359",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ad0c59_5f598e4b",
         "filename": "ui/base/material_design/material_design_controller.h",
         "patchSetId": 1
@@ -116,6 +164,30 @@
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6985e57d_13538345",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:33:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54ad0c59_5f598e4b",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
