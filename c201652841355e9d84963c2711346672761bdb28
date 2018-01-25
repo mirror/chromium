@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1283c5bd_c029cfa5",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-25T07:01:30Z",
+      "side": 1,
+      "message": "I get how kIdleGC seems wrong and I should add a new GCReason, but do you think kNoHeapPointersOnStack and kGCWithoutSweep is wrong too? Technically IncrementalMarking GC doesn\u0027t trace the stack and and sweeping is lazy.",
+      "parentUuid": "b79cb174_0410f96d",
+      "revId": "c201652841355e9d84963c2711346672761bdb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7789c39d_3ae4f4d1",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
