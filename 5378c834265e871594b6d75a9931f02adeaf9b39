@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aefb610a_61bfc5fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-25T21:38:51Z",
+      "side": 1,
+      "message": "Why did this move?",
+      "revId": "5378c834265e871594b6d75a9931f02adeaf9b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
