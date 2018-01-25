@@ -1988,6 +1988,8 @@ config("symbols") {
 }
 
 # Minimal symbols.
+# This config guarantees to hold symbol for stack trace which are shown to user
+# when crash happens in unittests running on buildbot.
 config("minimal_symbols") {
   if (is_win) {
     # Linker symbols for backtraces only.
@@ -2000,7 +2002,17 @@ config("minimal_symbols") {
       # TODO(thakis): Remove this again once dump_syms is fixed.
       cflags += [ "-gdwarf-3" ]
     }
-    cflags += [ "-g1" ]
+    if (is_linux && is_clang && !using_sanitizer) {
+      # This is for speed up link time by reducing binary size,
+      # especially for buildbot.
+      # Some large binary (e.g. unit_tests) has neary GB size when containing
+      # debug symbols and writing such binary to disk taking time due to limited
+      # disk throughput in buildbot running on GCE.
+      # "-g0" does not remove function name for stack trace.
+      cflags += [ "-g0" ]
+    } else {
+      cflags += [ "-g1" ]
+    }
     ldflags = []
     if (is_android && is_clang) {
       # Android defaults to symbol_level=1 builds in production builds
