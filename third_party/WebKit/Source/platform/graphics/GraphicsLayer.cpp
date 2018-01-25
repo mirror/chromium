@@ -326,11 +326,18 @@ void GraphicsLayer::PaintRecursivelyInternal() {
 
 void GraphicsLayer::Paint(const IntRect* interest_rect,
                           GraphicsContext::DisabledMode disabled_mode) {
-  if (!PaintWithoutCommit(interest_rect, disabled_mode))
+  if (!PaintWithoutCommit(interest_rect, disabled_mode)) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+      EnsureRasterInvalidator().GenerateForPropertyChanges(AllChunkPointers());
     return;
+  }
 
-  DVLOG(2) << "Painted GraphicsLayer: " << DebugName()
-           << " interest_rect=" << InterestRect().ToString();
+#if DCHECK_IS_ON()
+  if (VLOG_IS_ON(2)) {
+    LOG(ERROR) << "Painted GraphicsLayer: " << DebugName()
+               << " interest_rect=" << InterestRect().ToString();
+  }
+#endif
 
   GetPaintController().CommitNewDisplayItems();
 
