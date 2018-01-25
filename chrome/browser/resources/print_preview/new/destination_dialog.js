@@ -15,7 +15,7 @@ Polymer({
     /** @type {!print_preview.UserInfo} */
     userInfo: Object,
 
-    /** @private {Array<!print_preview.Destination>} */
+    /** @private {!Array<!print_preview.Destination>} */
     destinations_: {
       type: Array,
       notify: true,
@@ -26,6 +26,24 @@ Polymer({
     loadingDestinations_: {
       type: Boolean,
       value: false,
+    },
+
+    /** @type {!Array<!print_preview.RecentDestination>} */
+    recentDestinations: Array,
+
+    /** @private {!Array<!print_preview.Destination>} */
+    recentDestinationList_: {
+      type: Array,
+      notify: true,
+      computed: 'computeRecentDestinationList_(' +
+          'destinationStore, recentDestinations, recentDestinations.*, ' +
+          'userInfo, destinations_.*)',
+    },
+
+    /** @private {?RegExp} */
+    searchQuery_: {
+      type: Object,
+      value: null,
     },
   },
 
@@ -56,6 +74,27 @@ Polymer({
   },
 
   /**
+   * @return {!Array<!print_preview.Destination>}
+   * @private
+   */
+  computeRecentDestinationList_: function() {
+    let recentDestinations = [];
+    const filterAccount = this.userInfo.activeUser;
+    this.recentDestinations.forEach((recentDestination) => {
+      const origin = recentDestination.origin;
+      const id = recentDestination.id;
+      const account = recentDestination.account || '';
+      const destination =
+          this.destinationStore.getDestination(origin, id, account);
+      if (destination &&
+          (!destination.account || destination.account == filterAccount)) {
+        recentDestinations.push(destination);
+      }
+    });
+    return recentDestinations;
+  },
+
+  /**
    * @return {string} The cloud print promotion HTML.
    * @private
    */
@@ -65,12 +104,38 @@ Polymer({
   },
 
   /** @private */
-  onCancelButtonTap_: function() {
+  onCancel_: function() {
+    this.$$('.search-box-input').value = '';
+    this.searchQuery_ = null;
+    Polymer.dom(this.root)
+        .querySelectorAll('print-preview-destination-list')
+        .forEach(list => list.reset());
     this.$.dialog.cancel();
   },
 
   show: function() {
-    this.loadingDestinations_ = true;
+    this.loadingDestinations_ =
+        this.destinationStore.isPrintDestinationSearchInProgress;
     this.$.dialog.showModal();
+  },
+
+  /**
+   * @param {!CustomEvent} e Event containing the selected destination.
+   * @private
+   */
+  onDestinationSelected_: function(e) {
+    this.destinationStore.selectDestination(
+        /** @type {!print_preview.Destination} */ (e.detail));
+    this.onCancel_();
+  },
+
+  onSearchBoxInput_: function() {
+    const query = this.$$('.search-box-input').value.trim();
+    if (query) {
+      const safeQuery = query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+      this.searchQuery_ = new RegExp('(' + safeQuery + ')', 'ig');
+    } else {
+      this.searchQuery_ = null;
+    }
   },
 });
