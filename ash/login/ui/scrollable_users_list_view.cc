@@ -16,6 +16,8 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_analysis.h"
 #include "ui/gfx/color_utils.h"
+#include "ui/views/controls/scrollbar/base_scroll_bar.h"
+#include "ui/views/controls/scrollbar/base_scroll_bar_thumb.h"
 #include "ui/views/layout/box_layout.h"
 
 namespace ash {
@@ -43,7 +45,61 @@ constexpr int kExtraSmallVerticalDistanceBetweenUsersDp = 32;
 // small display style.
 constexpr int kExtraSmallGradientHeightDp = 112;
 
+// Thickness of scroll bar thumb.
+constexpr int kScrollThumbThicknessDp = 6;
+// Padding on the right of scroll bar thumb.
+constexpr int kScrollThumbPaddingDp = 8;
+// Radius of the scroll bar thumb.
+constexpr int kScrollThumbRadiusDp = 8;
+// Alpha of scroll bar thumb (17%).
+constexpr int kScrollThumbAlpha = 43;
+
+class ScrollBarThumb : public views::BaseScrollBarThumb {
+ public:
+  explicit ScrollBarThumb(views::BaseScrollBar* scroll_bar)
+      : BaseScrollBarThumb(scroll_bar){};
+  ~ScrollBarThumb() override = default;
+
+  // views::BaseScrollBarThumb:
+  gfx::Size CalculatePreferredSize() const override {
+    return gfx::Size(kScrollThumbThicknessDp, kScrollThumbThicknessDp);
+  };
+
+  void OnPaint(gfx::Canvas* canvas) override {
+    cc::PaintFlags fill_flags;
+    fill_flags.setStyle(cc::PaintFlags::kFill_Style);
+    fill_flags.setColor(SkColorSetA(SK_ColorWHITE, kScrollThumbAlpha));
+    canvas->DrawRoundRect(GetLocalBounds(), kScrollThumbRadiusDp, fill_flags);
+  };
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ScrollBarThumb);
+};
+
 }  // namespace
+
+class ScrollBar : public views::BaseScrollBar {
+ public:
+  explicit ScrollBar(bool horizontal) : BaseScrollBar(horizontal) {
+    SetThumb(new ScrollBarThumb(this));
+  };
+
+  ~ScrollBar() override = default;
+
+  // views::BaseScrollBar:
+  gfx::Rect GetTrackBounds() const override { return GetLocalBounds(); }
+
+  bool OverlapsContent() const override { return true; };
+
+  int GetThickness() const override {
+    return kScrollThumbThicknessDp + kScrollThumbPaddingDp;
+  };
+
+  void SetThumbVisible(bool visible) { GetThumb()->SetVisible(visible); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ScrollBar);
+};
 
 ScrollableUsersListView::TestApi::TestApi(ScrollableUsersListView* view)
     : view_(view) {}
@@ -63,7 +119,7 @@ ScrollableUsersListView::ScrollableUsersListView(
   layout_params_ = GetLayoutParams(display_style);
   gradient_params_ = GetGradientParams(display_style);
 
-  auto* contents = new NonAccessibleView();
+  auto* contents = new NonAccessibleView("ScrollableUsersListContent");
   layout_ = contents->SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(),
       layout_params_.between_child_spacing));
@@ -84,6 +140,11 @@ ScrollableUsersListView::ScrollableUsersListView(
 
   SetContents(contents);
   SetBackgroundColor(SK_ColorTRANSPARENT);
+  set_draw_overflow_indicator(false);
+
+  scroll_bar_ = new ScrollBar(false);
+  SetVerticalScrollBar(scroll_bar_);
+  SetHorizontalScrollBar(new ScrollBar(true));
 }
 
 ScrollableUsersListView::~ScrollableUsersListView() = default;
@@ -114,6 +175,8 @@ void ScrollableUsersListView::Layout() {
                  parent_height);
   }
   ScrollView::Layout();
+  if (scroll_bar_)
+    scroll_bar_->SetThumbVisible(IsMouseHovered());
 }
 
 void ScrollableUsersListView::OnPaintBackground(gfx::Canvas* canvas) {
@@ -135,6 +198,19 @@ void ScrollableUsersListView::OnPaintBackground(gfx::Canvas* canvas) {
       SkShader::kClamp_TileMode));
   flags.setStyle(cc::PaintFlags::kFill_Style);
   canvas->DrawRect(GetLocalBounds(), flags);
+}
+
+void ScrollableUsersListView::OnMouseEntered(const ui::MouseEvent& event) {
+  // Only hide the scroll bar thumb, to allow scrolling with touch.
+  scroll_bar_->SetThumbVisible(true);
+}
+
+void ScrollableUsersListView::OnMouseExited(const ui::MouseEvent& event) {
+  // We get enter and exit and exit event for child vies. We do not want to
+  // hide scroll bar when mouse exits child view, but remians in the scroll
+  // area.
+  if (!IsMouseHovered())
+    scroll_bar_->SetThumbVisible(false);
 }
 
 ScrollableUsersListView::LayoutParams ScrollableUsersListView::GetLayoutParams(

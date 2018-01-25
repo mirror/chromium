@@ -21,6 +21,7 @@ class BoxLayout;
 namespace ash {
 
 class LoginUserView;
+class ScrollBar;
 
 // Scrollable list of the users. Stores the list of login user views. Can be
 // styled with GradientParams that define gradient tinting at the top and at the
@@ -55,6 +56,8 @@ class ASH_EXPORT ScrollableUsersListView : public views::ScrollView {
   // views::View:
   void Layout() override;
   void OnPaintBackground(gfx::Canvas* canvas) override;
+  void OnMouseEntered(const ui::MouseEvent& event) override;
+  void OnMouseExited(const ui::MouseEvent& event) override;
 
  private:
   struct GradientParams {
@@ -83,6 +86,9 @@ class ASH_EXPORT ScrollableUsersListView : public views::ScrollView {
   GradientParams GetGradientParams(LoginDisplayStyle style);
 
   views::BoxLayout* layout_ = nullptr;
+
+  // Owned by ScrollView.
+  ScrollBar* scroll_bar_ = nullptr;
 
   std::vector<LoginUserView*> user_views_;
 
