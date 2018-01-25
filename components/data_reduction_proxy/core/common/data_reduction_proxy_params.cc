@@ -71,12 +71,6 @@ std::string GetStringValueForVariationParamWithDefaultValue(
   return it->second;
 }
 
-bool IsIncludedInAndroidOnePromoFieldTrial(
-    base::StringPiece build_fingerprint) {
-  static const char kAndroidOneIdentifier[] = "sprout";
-  return build_fingerprint.find(kAndroidOneIdentifier) != std::string::npos;
-}
-
 bool CanShowAndroidLowMemoryDevicePromo() {
 #if defined(OS_ANDROID)
   return base::SysInfo::IsLowEndDevice() &&
@@ -96,12 +90,6 @@ bool IsIncludedInPromoFieldTrial() {
   if (IsIncludedInFieldTrial("DataCompressionProxyPromoVisibility"))
     return true;
 
-#if defined(OS_ANDROID)
-  base::StringPiece android_build_fingerprint =
-      base::android::BuildInfo::GetInstance()->android_build_fp();
-  if (IsIncludedInAndroidOnePromoFieldTrial(android_build_fingerprint))
-    return true;
-#endif
   return CanShowAndroidLowMemoryDevicePromo();
 }
 
@@ -109,18 +97,7 @@ bool IsIncludedInFREPromoFieldTrial() {
   if (IsIncludedInFieldTrial("DataReductionProxyFREPromo"))
     return true;
 
-#if defined(OS_ANDROID)
-  base::StringPiece android_build_fingerprint =
-      base::android::BuildInfo::GetInstance()->android_build_fp();
-  if (IsIncludedInAndroidOnePromoFieldTrial(android_build_fingerprint))
-    return true;
-#endif
   return CanShowAndroidLowMemoryDevicePromo();
-}
-
-bool IsIncludedInAndroidOnePromoFieldTrialForTesting(
-    base::StringPiece build_fingerprint) {
-  return IsIncludedInAndroidOnePromoFieldTrial(build_fingerprint);
 }
 
 bool IsIncludedInHoldbackFieldTrial() {
