@@ -141,8 +141,8 @@ class CORE_EXPORT ReferenceFilterOperation : public FilterOperation {
 
   const String& Url() const { return url_; }
 
-  Filter* GetFilter() const { return filter_.Get(); }
-  void SetFilter(Filter* filter) { filter_ = filter; }
+  blink::Filter* GetFilter() const { return filter_.Get(); }
+  void SetFilter(blink::Filter* filter) { filter_ = filter; }
 
   SVGElementProxy& ElementProxy() const { return *element_proxy_; }
 
@@ -164,7 +164,7 @@ class CORE_EXPORT ReferenceFilterOperation : public FilterOperation {
 
   String url_;
   Member<SVGElementProxy> element_proxy_;
-  Member<Filter> filter_;
+  Member<blink::Filter> filter_;
 };
 
 DEFINE_FILTER_OPERATION_TYPE_CASTS(ReferenceFilterOperation, REFERENCE);

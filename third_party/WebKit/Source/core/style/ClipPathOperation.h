@@ -103,9 +103,9 @@ class ShapeClipPathOperation final : public ClipPathOperation {
 
   const BasicShape* GetBasicShape() const { return shape_.get(); }
   bool IsValid() const { return shape_.get(); }
-  Path GetPath(const FloatRect& bounding_rect) const {
+  blink::Path GetPath(const FloatRect& bounding_rect) const {
     DCHECK(shape_);
-    Path path;
+    blink::Path path;
     shape_->GetPath(path, bounding_rect);
     path.SetWindRule(shape_->GetWindRule());
     return path;

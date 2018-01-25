@@ -62,7 +62,7 @@ class CORE_EXPORT BasicShape : public RefCounted<BasicShape> {
     return GetType() == other.GetType();
   }
 
-  virtual void GetPath(Path&, const FloatRect&) = 0;
+  virtual void GetPath(blink::Path&, const FloatRect&) = 0;
   virtual WindRule GetWindRule() const { return RULE_NONZERO; }
   virtual bool operator==(const BasicShape&) const = 0;
 
@@ -148,7 +148,7 @@ class CORE_EXPORT BasicShapeCircle final : public BasicShape {
   void SetCenterY(BasicShapeCenterCoordinate center_y) { center_y_ = center_y; }
   void SetRadius(BasicShapeRadius radius) { radius_ = radius; }
 
-  void GetPath(Path&, const FloatRect&) override;
+  void GetPath(blink::Path&, const FloatRect&) override;
   bool operator==(const BasicShape&) const override;
 
   ShapeType GetType() const override { return kBasicShapeCircleType; }
@@ -182,7 +182,7 @@ class BasicShapeEllipse final : public BasicShape {
   void SetRadiusX(BasicShapeRadius radius_x) { radius_x_ = radius_x; }
   void SetRadiusY(BasicShapeRadius radius_y) { radius_y_ = radius_y; }
 
-  void GetPath(Path&, const FloatRect&) override;
+  void GetPath(blink::Path&, const FloatRect&) override;
   bool operator==(const BasicShape&) const override;
 
   ShapeType GetType() const override { return kBasicShapeEllipseType; }
@@ -212,7 +212,7 @@ class BasicShapePolygon final : public BasicShape {
     values_.push_back(y);
   }
 
-  void GetPath(Path&, const FloatRect&) override;
+  void GetPath(blink::Path&, const FloatRect&) override;
   bool operator==(const BasicShape&) const override;
 
   WindRule GetWindRule() const override { return wind_rule_; }
@@ -260,7 +260,7 @@ class BasicShapeInset : public BasicShape {
     bottom_left_radius_ = radius;
   }
 
-  void GetPath(Path&, const FloatRect&) override;
+  void GetPath(blink::Path&, const FloatRect&) override;
   bool operator==(const BasicShape&) const override;
 
   ShapeType GetType() const override { return kBasicShapeInsetType; }
