@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_CERTIFICATE_VIEWER_H_
 #define CHROME_BROWSER_CERTIFICATE_VIEWER_H_
 
+#include "build/build_config.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace content {
@@ -18,5 +19,11 @@ class X509Certificate;
 void ShowCertificateViewer(content::WebContents* web_contents,
                            gfx::NativeWindow parent,
                            net::X509Certificate* cert);
+
+#if defined(OS_MACOSX)
+void ShowCertificateViewerCocoa(content::WebContents* web_contents,
+                                gfx::NativeWindow parent,
+                                net::X509Certificate* cert);
+#endif
 
 #endif  // CHROME_BROWSER_CERTIFICATE_VIEWER_H_

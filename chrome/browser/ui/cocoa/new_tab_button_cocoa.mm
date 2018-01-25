@@ -36,13 +36,12 @@ NSImage* GetMaskImageFromCell(NewTabButtonCell* aCell) {
 // factor.  This is similar to -[NSImage imageWithSize:flipped:drawingHandler:],
 // but this function always evaluates drawingHandler eagerly, and it works on
 // 10.6 and 10.7.
-NSImage* CreateImageWithSize(NSSize size,
-                             void (^drawingHandler)(NSSize)) {
+NSImage* CreateImageWithSize(NSSize size, void (^drawingHandler)(NSSize)) {
   base::scoped_nsobject<NSImage> result([[NSImage alloc] initWithSize:size]);
   [NSGraphicsContext saveGraphicsState];
   for (ui::ScaleFactor scale_factor : ui::GetSupportedScaleFactors()) {
     float scale = GetScaleForScaleFactor(scale_factor);
-    NSBitmapImageRep *bmpImageRep = [[[NSBitmapImageRep alloc]
+    NSBitmapImageRep* bmpImageRep = [[[NSBitmapImageRep alloc]
         initWithBitmapDataPlanes:NULL
                       pixelsWide:size.width * scale
                       pixelsHigh:size.height * scale
@@ -54,8 +53,9 @@ NSImage* CreateImageWithSize(NSSize size,
                      bytesPerRow:0
                     bitsPerPixel:0] autorelease];
     [bmpImageRep setSize:size];
-    [NSGraphicsContext setCurrentContext:
-        [NSGraphicsContext graphicsContextWithBitmapImageRep:bmpImageRep]];
+    [NSGraphicsContext
+        setCurrentContext:[NSGraphicsContext
+                              graphicsContextWithBitmapImageRep:bmpImageRep]];
     drawingHandler(size);
     [result addRepresentation:bmpImageRep];
   }
@@ -68,34 +68,32 @@ NSImage* CreateImageWithSize(NSSize size,
 // mask that has pixels from |image| but alpha information from |mask|.
 NSImage* ApplyMask(NSImage* image, NSImage* mask) {
   return [CreateImageWithSize([mask size], ^(NSSize size) {
-      // Skip a few pixels from the top of the tab background gradient, because
-      // the new tab button is not drawn at the very top of the browser window.
-      const int kYOffset = 10;
-      CGFloat width = size.width;
-      CGFloat height = size.height;
+    // Skip a few pixels from the top of the tab background gradient, because
+    // the new tab button is not drawn at the very top of the browser window.
+    const int kYOffset = 10;
+    CGFloat width = size.width;
+    CGFloat height = size.height;
 
-      // In some themes, the tab background image is narrower than the
-      // new tab button, so tile the background image.
-      CGFloat x = 0;
-      // The floor() is to make sure images with odd widths don't draw to the
-      // same pixel twice on retina displays. (Using NSDrawThreePartImage()
-      // caused a startup perf regression, so that cannot be used.)
-      CGFloat tileWidth = floor(std::min(width, [image size].width));
-      while (x < width) {
-        [image drawAtPoint:NSMakePoint(x, 0)
-                  fromRect:NSMakeRect(0,
-                                      [image size].height - height - kYOffset,
-                                      tileWidth,
-                                      height)
-                 operation:NSCompositeCopy
-                  fraction:1.0];
-        x += tileWidth;
-      }
+    // In some themes, the tab background image is narrower than the
+    // new tab button, so tile the background image.
+    CGFloat x = 0;
+    // The floor() is to make sure images with odd widths don't draw to the
+    // same pixel twice on retina displays. (Using NSDrawThreePartImage()
+    // caused a startup perf regression, so that cannot be used.)
+    CGFloat tileWidth = floor(std::min(width, [image size].width));
+    while (x < width) {
+      [image drawAtPoint:NSMakePoint(x, 0)
+                fromRect:NSMakeRect(0, [image size].height - height - kYOffset,
+                                    tileWidth, height)
+               operation:NSCompositeCopy
+                fraction:1.0];
+      x += tileWidth;
+    }
 
-      [mask drawAtPoint:NSZeroPoint
-               fromRect:NSMakeRect(0, 0, width, height)
-              operation:NSCompositeDestinationIn
-               fraction:1.0];
+    [mask drawAtPoint:NSZeroPoint
+             fromRect:NSMakeRect(0, 0, width, height)
+            operation:NSCompositeDestinationIn
+             fraction:1.0];
   }) autorelease];
 }
 
@@ -105,16 +103,16 @@ NSImage* Overlay(NSImage* ground, NSImage* overlay, CGFloat alpha) {
   DCHECK_EQ([ground size].height, [overlay size].height);
 
   return [CreateImageWithSize([ground size], ^(NSSize size) {
-      CGFloat width = size.width;
-      CGFloat height = size.height;
-      [ground drawAtPoint:NSZeroPoint
-                 fromRect:NSMakeRect(0, 0, width, height)
-                operation:NSCompositeCopy
-                 fraction:1.0];
-      [overlay drawAtPoint:NSZeroPoint
-                  fromRect:NSMakeRect(0, 0, width, height)
-                 operation:NSCompositeSourceOver
-                  fraction:alpha];
+    CGFloat width = size.width;
+    CGFloat height = size.height;
+    [ground drawAtPoint:NSZeroPoint
+               fromRect:NSMakeRect(0, 0, width, height)
+              operation:NSCompositeCopy
+               fraction:1.0];
+    [overlay drawAtPoint:NSZeroPoint
+                fromRect:NSMakeRect(0, 0, width, height)
+               operation:NSCompositeSourceOver
+                fraction:alpha];
   }) autorelease];
 }
 
@@ -127,10 +125,10 @@ CGFloat LineWidthFromContext(CGContextRef context) {
 }  // namespace
 
 @interface NewTabButtonCustomImageRep : NSCustomImageRep
-@property (assign, nonatomic) NSView* destView;
-@property (copy, nonatomic) NSColor* fillColor;
-@property (assign, nonatomic) NSPoint patternPhasePosition;
-@property (assign, nonatomic) OverlayOption overlayOption;
+@property(assign, nonatomic) NSView* destView;
+@property(copy, nonatomic) NSColor* fillColor;
+@property(assign, nonatomic) NSPoint patternPhasePosition;
+@property(assign, nonatomic) OverlayOption overlayOption;
 @end
 
 @implementation NewTabButtonCustomImageRep
@@ -168,7 +166,7 @@ CGFloat LineWidthFromContext(CGContextRef context) {
 
 @end
 
-@interface NewTabButton()
+@interface NewTabButton ()
 
 // Returns a new tab button image appropriate for the specified button state
 // (e.g. hover) and theme. In Material Design, the theme color affects the
@@ -208,10 +206,10 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   NSImage* buttonMask = GetMaskImageFromCell([self cell]);
   NSRect bounds = self.bounds;
   NSSize buttonMaskSize = [buttonMask size];
-  NSRect destinationRect = NSMakeRect(
-      (NSWidth(bounds) - buttonMaskSize.width) / 2,
-      (NSHeight(bounds) - buttonMaskSize.height) / 2,
-      buttonMaskSize.width, buttonMaskSize.height);
+  NSRect destinationRect =
+      NSMakeRect((NSWidth(bounds) - buttonMaskSize.width) / 2,
+                 (NSHeight(bounds) - buttonMaskSize.height) / 2,
+                 buttonMaskSize.width, buttonMaskSize.height);
   return [buttonMask hitTestRect:pointRect
         withImageDestinationRect:destinationRect
                          context:nil
@@ -331,9 +329,9 @@ CGFloat LineWidthFromContext(CGContextRef context) {
                       delegate:[NewTabButton class]]);
   [imageRep setDestView:self];
   [imageRep setFillColor:fillColor];
-  [imageRep setPatternPhasePosition:
-      [[self window]
-          themeImagePositionForAlignment:THEME_IMAGE_ALIGN_WITH_TAB_STRIP]];
+  [imageRep setPatternPhasePosition:[[self window]
+                                        themeImagePositionForAlignment:
+                                            THEME_IMAGE_ALIGN_WITH_TAB_STRIP]];
   [imageRep setOverlayOption:overlayOption];
 
   NSImage* newTabButtonImage =
@@ -347,33 +345,33 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   NSBezierPath* bezierPath = [NSBezierPath bezierPath];
 
   // This data comes straight from the SVG.
-  [bezierPath moveToPoint:NSMakePoint(15.2762236,30)];
+  [bezierPath moveToPoint:NSMakePoint(15.2762236, 30)];
 
-  [bezierPath curveToPoint:NSMakePoint(11.0354216,27.1770115)
-             controlPoint1:NSMakePoint(13.3667706,30)
-             controlPoint2:NSMakePoint(11.7297681,28.8344828)];
+  [bezierPath curveToPoint:NSMakePoint(11.0354216, 27.1770115)
+             controlPoint1:NSMakePoint(13.3667706, 30)
+             controlPoint2:NSMakePoint(11.7297681, 28.8344828)];
 
-  [bezierPath curveToPoint:NSMakePoint(7.28528951e-08,2.01431416)
-             controlPoint1:NSMakePoint(11.0354216,27.1770115)
-             controlPoint2:NSMakePoint(0.000412425082,3.87955717)];
+  [bezierPath curveToPoint:NSMakePoint(7.28528951e-08, 2.01431416)
+             controlPoint1:NSMakePoint(11.0354216, 27.1770115)
+             controlPoint2:NSMakePoint(0.000412425082, 3.87955717)];
 
-  [bezierPath curveToPoint:NSMakePoint(1.70510791,0)
-             controlPoint1:NSMakePoint(-0.000270516213,0.790325707)
-             controlPoint2:NSMakePoint(0.753255356,0)];
+  [bezierPath curveToPoint:NSMakePoint(1.70510791, 0)
+             controlPoint1:NSMakePoint(-0.000270516213, 0.790325707)
+             controlPoint2:NSMakePoint(0.753255356, 0)];
 
-  [bezierPath lineToPoint:NSMakePoint(48.7033642,0)];
+  [bezierPath lineToPoint:NSMakePoint(48.7033642, 0)];
 
-  [bezierPath curveToPoint:NSMakePoint(52.9464653,2.82643678)
-             controlPoint1:NSMakePoint(50.6151163,0)
-             controlPoint2:NSMakePoint(52.2521188,1.16666667)];
+  [bezierPath curveToPoint:NSMakePoint(52.9464653, 2.82643678)
+             controlPoint1:NSMakePoint(50.6151163, 0)
+             controlPoint2:NSMakePoint(52.2521188, 1.16666667)];
 
-  [bezierPath curveToPoint:NSMakePoint(64.0268555,27.5961914)
-             controlPoint1:NSMakePoint(52.9464653,2.82643678)
-             controlPoint2:NSMakePoint(64.0268555,27.4111339)];
+  [bezierPath curveToPoint:NSMakePoint(64.0268555, 27.5961914)
+             controlPoint1:NSMakePoint(52.9464653, 2.82643678)
+             controlPoint2:NSMakePoint(64.0268555, 27.4111339)];
 
-  [bezierPath curveToPoint:NSMakePoint(62.2756294,30)
-             controlPoint1:NSMakePoint(64.0268555,28.5502144)
-             controlPoint2:NSMakePoint(63.227482,29.9977011)];
+  [bezierPath curveToPoint:NSMakePoint(62.2756294, 30)
+             controlPoint1:NSMakePoint(64.0268555, 28.5502144)
+             controlPoint2:NSMakePoint(63.227482, 29.9977011)];
 
   [bezierPath closePath];
 
@@ -408,7 +406,7 @@ CGFloat LineWidthFromContext(CGContextRef context) {
               withHeavyStroke:(BOOL)heavyStroke {
   [[NSGraphicsContext currentContext]
       cr_setPatternPhase:[imageRep patternPhasePosition]
-      forView:[imageRep destView]];
+                 forView:[imageRep destView]];
 
   CGContextRef context = static_cast<CGContextRef>(
       [[NSGraphicsContext currentContext] graphicsPort]);
@@ -435,8 +433,8 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   const CGFloat kBottomEdgeY = 1.2825;
   const CGFloat kBottomEdgeWidth = 22;
   NSPoint bottomEdgeStart = NSMakePoint(kBottomEdgeX, kBottomEdgeY);
-  NSPoint bottomEdgeEnd = NSMakePoint(kBottomEdgeX + kBottomEdgeWidth,
-                                      kBottomEdgeY);
+  NSPoint bottomEdgeEnd =
+      NSMakePoint(kBottomEdgeX + kBottomEdgeWidth, kBottomEdgeY);
   if (isRTL) {
     bottomEdgeStart.x = buttonWidth - bottomEdgeStart.x;
     bottomEdgeEnd.x = buttonWidth - bottomEdgeEnd.x;

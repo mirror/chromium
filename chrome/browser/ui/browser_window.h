@@ -371,6 +371,11 @@ class BrowserWindow : public ui::BaseWindow {
   friend class BrowserCloseManager;
   friend class BrowserView;
   virtual void DestroyBrowser() = 0;
+
+#if defined(OS_MACOSX)
+  static BrowserWindow* CreateBrowserWindowCocoa(Browser* browser,
+                                                 bool user_gesture);
+#endif
 };
 
 #endif  // CHROME_BROWSER_UI_BROWSER_WINDOW_H_
