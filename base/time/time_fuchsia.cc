@@ -8,6 +8,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/numerics/checked_math.h"
+#include "base/time/time_override.h"
 
 namespace base {
 
@@ -25,27 +26,27 @@ ALWAYS_INLINE int64_t ZxTimeToMicroseconds(zx_time_t nanos) {
 
 // Time -----------------------------------------------------------------------
 
-// static
-Time Time::Now() {
+Time subtle::TimeNowIgnoringOverride() {
   const zx_time_t nanos_since_unix_epoch = zx_time_get(ZX_CLOCK_UTC);
   CHECK(nanos_since_unix_epoch != 0);
   // The following expression will overflow in the year 289938 A.D.:
-  return Time(ZxTimeToMicroseconds(nanos_since_unix_epoch) +
-              kTimeTToMicrosecondsOffset);
+  return Time() + TimeDelta::FromMicroseconds(
+                      ZxTimeToMicroseconds(nanos_since_unix_epoch) +
+                      Time::kTimeTToMicrosecondsOffset);
 }
 
-// static
-Time Time::NowFromSystemTime() {
-  return Now();
+Time subtle::TimeNowFromSystemTimeIgnoringOverride() {
+  // Just use TimeNowIgnoringOverride() because it returns the system time.
+  return TimeNowIgnoringOverride();
 }
 
 // TimeTicks ------------------------------------------------------------------
 
-// static
-TimeTicks TimeTicks::Now() {
+TimeTicks subtle::TimeTicksNowIgnoringOverride() {
   const zx_time_t nanos_since_boot = zx_time_get(ZX_CLOCK_MONOTONIC);
   CHECK(nanos_since_boot != 0);
-  return TimeTicks(ZxTimeToMicroseconds(nanos_since_boot));
+  return TimeTicks() +
+         TimeDelta::FromMicroseconds(ZxTimeToMicroseconds(nanos_since_boot));
 }
 
 // static
@@ -74,11 +75,13 @@ zx_time_t TimeTicks::ToZxTime() const {
   return result.ValueOrDie();
 }
 
-// static
-ThreadTicks ThreadTicks::Now() {
+// ThreadTicks ----------------------------------------------------------------
+
+ThreadTicks subtle::ThreadTicksNowIgnoringOverride() {
   const zx_time_t nanos_since_thread_started = zx_time_get(ZX_CLOCK_THREAD);
   CHECK(nanos_since_thread_started != 0);
-  return ThreadTicks(ZxTimeToMicroseconds(nanos_since_thread_started));
+  return ThreadTicks() + TimeDelta::FromMicroseconds(
+                             ZxTimeToMicroseconds(nanos_since_thread_started));
 }
 
 }  // namespace base
