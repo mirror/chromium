@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853f30b1_e16e93d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T22:00:26Z",
+      "side": 1,
+      "message": "What about renaming gfx::kInvalidModifier to kUnspecifiedModifier?\nThe first one, being invalid, might not seem something you want to pass when you initialize a native pixmap, since it might look like it\u0027d make the whole pixmap invalid.",
+      "revId": "fe180849e82c0733a4d13e1b4564c8a953927b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b447e789_0527eea3",
+        "filename": "ui/gfx/native_pixmap_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T22:00:26Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining that it is the same value as DRM_FORMAT_MOD_INVALID?\n\nCan we move this to NativePixmapHandle::kInvalidModifier or GbmBuffer::kInvalidModifier, gfx::kInvalidModifier might be too generic.",
+      "revId": "fe180849e82c0733a4d13e1b4564c8a953927b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
