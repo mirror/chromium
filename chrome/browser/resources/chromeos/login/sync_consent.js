@@ -22,6 +22,23 @@ Polymer({
     },
 
     /**
+     * False until initial profile sync is finished (i.e. current user
+     * preference is known).
+     */
+    syncCompleted_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
+     * True when sync preferences are managed.
+     */
+    isManaged_: {
+      type: Boolean,
+      value: true,
+    },
+
+    /**
      * Name of currently active section.
      */
     activeSection_: {
@@ -70,7 +87,11 @@ Polymer({
    * @private
    */
   onSyncAllEnabledChanged_: function(event) {
+    if (this.syncAllEnabled_ == event.currentTarget.checked)
+      return;
+
     this.syncAllEnabled_ = event.currentTarget.checked;
+    chrome.send('syncEverythingChanged', [this.syncAllEnabled_]);
   },
 
   /**
@@ -79,5 +100,11 @@ Polymer({
    */
   onSettingsSaveAndContinue_: function() {
     chrome.send('login.SyncConsentScreen.userActed', ['save-and-continue']);
+  },
+
+  profileSyncCompleted: function(sync_all_enabled, is_managed) {
+    this.isManaged_ = is_managed;
+    this.syncAllEnabled_ = sync_all_enabled;
+    this.syncCompleted_ = true;
   },
 });
