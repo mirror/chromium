@@ -41,3 +41,31 @@ if (is_android) {
     flag_name = "--chromium-output-directory"
   }
 }
+
+group("perf_experimental") {
+  testonly = true
+
+  data = [
+    "//tools/perf/",
+
+    # Field trial config
+    "//tools/variations/",
+    "//testing/variations/",
+
+    # Field trial dependencies
+    "//tools/json_comment_eater/",
+    "//tools/json_to_struct/",
+
+    # For blink_perf benchmarks.
+    "//third_party/WebKit/PerformanceTests/",
+
+    # For smoothness.tough_canvas_cases
+    "//chrome/test/data/perf/",
+
+    # For image_decoding.measurement
+    "//chrome/test/data/image_decoding/",
+
+    # For Pylib used by VR tests
+    "//build/android/pylib/",
+  ]
+}
