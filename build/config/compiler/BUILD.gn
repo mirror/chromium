@@ -100,7 +100,7 @@ declare_args() {
   use_cxx11 = false
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
-  strip_debug_info = false
+  strip_debug_info = symbol_level == 1 && !using_sanitizer
 
   # Path to an AFDO profile to use while building with clang, if any. Empty
   # implies none.
@@ -1988,6 +1988,8 @@ config("symbols") {
 }
 
 # Minimal symbols.
+# This config guarantees to hold symbol for stack trace which are shown to user
+# when crash happens in unittests running on buildbot.
 config("minimal_symbols") {
   if (is_win) {
     # Linker symbols for backtraces only.
@@ -2014,6 +2016,16 @@ config("minimal_symbols") {
       if (strip_debug_info) {
         ldflags += [ "-Wl,--strip-debug" ]
       }
+    } else if (is_linux && is_clang && strip_debug_info) {
+      assert(!using_sanitizer,
+             "Strip debug info drops file path/line number from sanitizer.")
+
+      # This is for speed up link time by reducing binary size,
+      # especially for buildbot.
+      # Some large binary (e.g. unit_tests) has neary GB size and
+      # writing such binary to disk taking time due to limited disk throughput
+      # in buildbot running on GCE.
+      ldflags += [ "-Wl,--strip-debug" ]
     }
 
     # Note: -gsplit-dwarf implicitly turns on -g2 with clang, so don't pass it.
