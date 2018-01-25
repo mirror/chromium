@@ -39491,6 +39491,12 @@ Called by update_net_trust_anchors.py.-->
   <int value="8" label="User turned off sync from DICE UI.">
     User turned off sync from the Desktop Identity Consistency internals UI.
   </int>
+  <int value="9" label="User was forcibly signed out">
+    Child accounts on Chrome OS will be forcibly logged out if we detect that
+    their credentials have been invalidated and we cannot successfully
+    reconcile/re-mint new tokens for them. This is to ensure that Google Content
+    Restrictions are not bypassed for child acounts.
+  </int>
 </enum>
 
 <enum name="SigninSource">

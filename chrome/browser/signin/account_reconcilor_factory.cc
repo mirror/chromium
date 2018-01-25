@@ -22,8 +22,10 @@
 #include "components/signin/core/browser/signin_features.h"
 
 #if defined(OS_CHROMEOS)
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "components/signin/core/browser/signin_metrics.h"
 #include "components/user_manager/user_manager.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 #endif
@@ -48,6 +50,11 @@ class ChromeOSChildAccountReconcilorDelegate
 
   void OnReconcileError(const GoogleServiceAuthError& error) override {
     if (error.state() == GoogleServiceAuthError::CONNECTION_FAILED) {
+      // Report metrics
+      UMA_HISTOGRAM_ENUMERATION(
+          "Signin.SignoutProfile",
+          signin_metrics::ProfileSignout::FORCED_SIGNOUT,
+          signin_metrics::ProfileSignout::NUM_PROFILE_SIGNOUT_METRICS);
       // Mark the account to require an online sign in.
       const user_manager::User* primary_user =
           user_manager::UserManager::Get()->GetPrimaryUser();
