@@ -3413,7 +3413,8 @@ public class Tab
             });
         }
 
-        mDownloadIPHBubble.setPreferredOrientation(AnchoredPopupWindow.Orientation.BELOW);
+        mDownloadIPHBubble.setPreferredVerticalOrientation(
+                AnchoredPopupWindow.VERTICAL_ORIENTATION_BELOW);
         mDownloadIPHBubble.show();
         createPulse(rect);
     }
