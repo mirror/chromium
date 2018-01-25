@@ -123,6 +123,24 @@
       "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee3cfafe_61ac58ee",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-25T05:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac428662_ad89c2e4",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
