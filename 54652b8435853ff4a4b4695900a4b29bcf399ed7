@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b2db34_258f4353",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T20:56:30Z",
+      "side": 1,
+      "message": "nit: set a local and use it in line 141.",
+      "revId": "54652b8435853ff4a4b4695900a4b29bcf399ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
