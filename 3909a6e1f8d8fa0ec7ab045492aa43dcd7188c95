@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a52ba0e_6326c4c0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4685,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-25T23:57:00Z",
+      "side": 1,
+      "message": "This string is present in my mocks, if you consciously switched away from this or prefer \"Sign In\" I can change it back, it makes the action slightly clearer but also repeats text in the promo. No strong opinions here.",
+      "range": {
+        "startLine": 4685,
+        "startChar": 21,
+        "endLine": 4685,
+        "endChar": 27
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
