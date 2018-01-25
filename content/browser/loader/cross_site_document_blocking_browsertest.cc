@@ -17,6 +17,7 @@
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -44,31 +45,10 @@ class CrossSiteDocumentBlockingBaseTest : public ContentBrowserTest {
   ~CrossSiteDocumentBlockingBaseTest() override {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    // EmbeddedTestServer::InitializeAndListen() initializes its |base_url_|
-    // which is required below. This cannot invoke Start() however as that kicks
-    // off the "EmbeddedTestServer IO Thread" which then races with
-    // initialization in ContentBrowserTest::SetUp(), http://crbug.com/674545.
-    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
-
-    // Add a host resolver rule to map all outgoing requests to the test server.
-    // This allows us to use "real" hostnames and standard ports in URLs (i.e.,
-    // without having to inject the port number into all URLs), which we can use
-    // to create arbitrary SiteInstances.
-    command_line->AppendSwitchASCII(
-        network::switches::kHostResolverRules,
-        "MAP * " + embedded_test_server()->host_port_pair().ToString() +
-            ",EXCLUDE localhost");
-
     // To test that the renderer process does not receive blocked documents, we
     // disable the same origin policy to let it see cross-origin fetches if they
     // are received.
     command_line->AppendSwitch(switches::kDisableWebSecurity);
-  }
-
-  void SetUpOnMainThread() override {
-    // Complete the manual Start() after ContentBrowserTest's own
-    // initialization, ref. comment on InitializeAndListen() above.
-    embedded_test_server()->StartAcceptingConnections();
   }
 
   // Ensure the correct histograms are incremented for blocking events.
@@ -131,16 +111,53 @@ class CrossSiteDocumentBlockingBaseTest : public ContentBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentBlockingBaseTest);
 };
 
+class CrossSiteDocumentBlockingRedirectingTest : public CrossSiteDocumentBlockingBaseTest {
+ public:
+  CrossSiteDocumentBlockingRedirectingTest() {}
+  ~CrossSiteDocumentBlockingRedirectingTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    // EmbeddedTestServer::InitializeAndListen() initializes its |base_url_|
+    // which is required below. This cannot invoke Start() however as that kicks
+    // off the "EmbeddedTestServer IO Thread" which then races with
+    // initialization in ContentBrowserTest::SetUp(), http://crbug.com/674545.
+    ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
+
+    // Add a host resolver rule to map all outgoing requests to the test server.
+    // This allows us to use "real" hostnames and standard ports in URLs (i.e.,
+    // without having to inject the port number into all URLs), which we can use
+    // to create arbitrary SiteInstances.
+    command_line->AppendSwitchASCII(
+        network::switches::kHostResolverRules,
+        "MAP * " + embedded_test_server()->host_port_pair().ToString() +
+            ",EXCLUDE localhost");
+
+    // To test that the renderer process does not receive blocked documents, we
+    // disable the same origin policy to let it see cross-origin fetches if they
+    // are received.
+    command_line->AppendSwitch(switches::kDisableWebSecurity);
+  }
+
+  void SetUpOnMainThread() override {
+    // Complete the manual Start() after ContentBrowserTest's own
+    // initialization, ref. comment on InitializeAndListen() above.
+    embedded_test_server()->StartAcceptingConnections();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentBlockingRedirectingTest);
+};
+
 // Most tests here use --site-per-process, which enables document blocking
 // everywhere.
-class CrossSiteDocumentBlockingTest : public CrossSiteDocumentBlockingBaseTest {
+class CrossSiteDocumentBlockingTest : public CrossSiteDocumentBlockingRedirectingTest {
  public:
   CrossSiteDocumentBlockingTest() {}
   ~CrossSiteDocumentBlockingTest() override {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     IsolateAllSitesForTesting(command_line);
-    CrossSiteDocumentBlockingBaseTest::SetUpCommandLine(command_line);
+    CrossSiteDocumentBlockingRedirectingTest::SetUpCommandLine(command_line);
   }
 
  private:
@@ -154,7 +171,7 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockDocuments) {
   // possible since we run the browser without the same origin policy, allowing
   // it to see the response body if it makes it to the renderer (even if the
   // renderer would normally block access to it).
-  GURL foo_url("http://foo.com/cross_site_document_request.html");
+  GURL foo_url("http://foo.com/cross_site_document_blocking/request.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo_url));
 
   // The following are files under content/test/data/site_isolation. All
@@ -258,7 +275,7 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockDocuments) {
 // be a problem for script files mislabeled as HTML/XML/JSON/text (i.e., the
 // reason for sniffing), since script tags won't send Range headers.
 IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, RangeRequest) {
-  GURL foo_url("http://foo.com/cross_site_document_request.html");
+  GURL foo_url("http://foo.com/cross_site_document_blocking/request.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo_url));
 
   {
@@ -310,12 +327,84 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockForVariousTargets) {
 
   // TODO(nick): Split up these cases, and add positive assertions here about
   // what actually happens in these various resource-block cases.
-  GURL foo("http://foo.com/cross_site_document_request_target.html");
+  GURL foo("http://foo.com/cross_site_document_blocking/request_target.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo));
-  WaitForLoadStop(shell()->web_contents());
 
   // TODO(creis): Wait for all the subresources to load and ensure renderer
   // process is still alive.
+}
+
+class CrossSiteDocumentBlockingServiceWorkerTest : public CrossSiteDocumentBlockingBaseTest {
+ public:
+  CrossSiteDocumentBlockingServiceWorkerTest() :
+      https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
+  ~CrossSiteDocumentBlockingServiceWorkerTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    IsolateAllSitesForTesting(command_line);
+    CrossSiteDocumentBlockingBaseTest::SetUpCommandLine(command_line);
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    SetupCrossSiteRedirector(embedded_test_server());
+
+    https_server_.ServeFilesFromSourceDirectory("content/test/data");
+    ASSERT_TRUE(https_server_.Start());
+    ASSERT_TRUE(embedded_test_server()->Start());
+  }
+
+  void SetUpServiceWorker() {
+    GURL url = https_server_.GetURL("/title1.html");
+    LOG(ERROR) << "; url = " << url;
+    ASSERT_TRUE(NavigateToURL(shell(), url));
+
+    bool is_script_done;
+    std::string script = R"(
+    navigator.serviceWorker
+        .register('/cross_site_document_blocking/service_worker.js')
+        .then(function(registration) {
+            console.log('registration-success');
+            domAutomationController.send(true);
+        }).catch(function(e) {
+            console.log('registration-failure');
+            domAutomationController.send(false);
+        }); )";
+    ASSERT_TRUE(ExecuteScriptAndExtractBool(shell(), script, &is_script_done));
+    ASSERT_TRUE(is_script_done);
+  }
+
+ private:
+  net::EmbeddedTestServer https_server_;
+
+  DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentBlockingServiceWorkerTest);
+};
+
+IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingServiceWorkerTest, Opaque) {
+  SetUpServiceWorker();
+
+  {
+    // Verify that a response which would have been allowed by MIME type anyway
+    // is still allowed for range requests.
+    base::HistogramTester histograms;
+    std::string response;
+    std::string script = R"(
+        url = 'https://bar.com/data_from_service_worker';
+        options = { mode: 'no-cors' };
+        fetch(url, options).then(function(response) {
+            console.log('fetch-success');
+            domAutomationController.send(response.text());
+        }).catch(function(e) {
+            console.log('fetch-failure');
+            domAutomationController.send("error: " + e);
+        });
+        )";
+    EXPECT_TRUE(ExecuteScriptAndExtractString(shell(), script, &response));
+    EXPECT_EQ("", response);
+    InspectHistograms(histograms, true /* should_be_blocked */,
+                      true /* should_be_sniffed */, "valid.js",
+                      RESOURCE_TYPE_XHR);
+  }
 }
 
 class CrossSiteDocumentBlockingKillSwitchTest
@@ -339,7 +428,7 @@ class CrossSiteDocumentBlockingKillSwitchTest
 IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingKillSwitchTest,
                        NoBlockingWithKillSwitch) {
   // Load a page that issues illegal cross-site document requests to bar.com.
-  GURL foo_url("http://foo.com/cross_site_document_request.html");
+  GURL foo_url("http://foo.com/cross_site_document_blocking/request.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo_url));
 
   bool was_blocked;
@@ -350,13 +439,13 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingKillSwitchTest,
 
 // Without any Site Isolation (in the base test class), there should be no
 // document blocking.
-IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingBaseTest,
+IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingRedirectingTest,
                        DontBlockDocumentsByDefault) {
   if (AreAllSitesIsolatedForTesting())
     return;
 
   // Load a page that issues illegal cross-site document requests to bar.com.
-  GURL foo_url("http://foo.com/cross_site_document_request.html");
+  GURL foo_url("http://foo.com/cross_site_document_blocking/request.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo_url));
 
   bool was_blocked;
@@ -367,7 +456,7 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingBaseTest,
 
 // Test class to verify that documents are blocked for isolated origins as well.
 class CrossSiteDocumentBlockingIsolatedOriginTest
-    : public CrossSiteDocumentBlockingBaseTest {
+    : public CrossSiteDocumentBlockingRedirectingTest {
  public:
   CrossSiteDocumentBlockingIsolatedOriginTest() {}
   ~CrossSiteDocumentBlockingIsolatedOriginTest() override {}
@@ -375,7 +464,7 @@ class CrossSiteDocumentBlockingIsolatedOriginTest
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(switches::kIsolateOrigins,
                                     "http://bar.com");
-    CrossSiteDocumentBlockingBaseTest::SetUpCommandLine(command_line);
+    CrossSiteDocumentBlockingRedirectingTest::SetUpCommandLine(command_line);
   }
 
  private:
@@ -389,7 +478,7 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingIsolatedOriginTest,
 
   // Load a page that issues illegal cross-site document requests to the
   // isolated origin.
-  GURL foo_url("http://foo.com/cross_site_document_request.html");
+  GURL foo_url("http://foo.com/cross_site_document_blocking/request.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo_url));
 
   bool was_blocked;

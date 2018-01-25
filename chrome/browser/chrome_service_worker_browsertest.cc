@@ -33,6 +33,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ppapi/shared_impl/ppapi_switches.h"
 
@@ -717,6 +718,82 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest, NoFetchHandler) {
       "/scope/",
       content::StartServiceWorkerForNavigationHintResult::NO_FETCH_HANDLER,
       false);
+}
+
+class CrossSiteDocumentBlockingServiceWorkerTest : public InProcessBrowserTest {
+ public:
+  CrossSiteDocumentBlockingServiceWorkerTest() :
+      https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
+  ~CrossSiteDocumentBlockingServiceWorkerTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    content::IsolateAllSitesForTesting(command_line);
+    InProcessBrowserTest::SetUpCommandLine(command_line);
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    content::SetupCrossSiteRedirector(embedded_test_server());
+
+    https_server_.ServeFilesFromSourceDirectory("content/test/data");
+    ASSERT_TRUE(https_server_.Start());
+    ASSERT_TRUE(embedded_test_server()->Start());
+  }
+
+  void SetUpServiceWorker() {
+    content::WebContents* web_contents = browser()->tab_strip_model()->GetActiveWebContents();
+    GURL url = https_server_.GetURL("/title1.html");
+    LOG(ERROR) << "; url = " << url;
+    ui_test_utils::NavigateToURL(browser(), url);
+
+    bool is_script_done;
+    std::string script = R"(
+        console.log('sw1: ' + navigator.serviceWorker.controller);
+
+    navigator.serviceWorker
+        .register('/cross_site_document_blocking/service_worker.js')
+        .then(function(registration) {
+            console.log('registration-success');
+            console.log('sw2: ' + navigator.serviceWorker.controller);
+            domAutomationController.send(true);
+        }).catch(function(e) {
+            console.log('registration-failure');
+            domAutomationController.send(false);
+        }); )";
+    ASSERT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, script, &is_script_done));
+    ASSERT_TRUE(is_script_done);
+  }
+
+ private:
+  net::EmbeddedTestServer https_server_;
+
+  DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentBlockingServiceWorkerTest);
+};
+
+IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingServiceWorkerTest, LukaszA) {
+  SetUpServiceWorker();
+
+    content::WebContents* web_contents = browser()->tab_strip_model()->GetActiveWebContents();
+    std::string response;
+    std::string script = R"(
+        url = 'https://bar.com/data_from_service_worker';
+        console.log('sw3: ' + navigator.serviceWorker.controller);
+
+        //options = { mode: 'no-cors' };
+        options = { };
+        fetch(url, options).then(function(response) {
+            console.log('fetch-success');
+            domAutomationController.send(response.text());
+        }).catch(function(e) {
+            console.log('fetch-failure');
+            domAutomationController.send("error: " + e);
+        });
+        )";
+    EXPECT_TRUE(ExecuteScriptAndExtractString(web_contents, script, &response));
+    EXPECT_EQ("", response);
+
+  LOG(ERROR) << "Starting message loop for interactive UI...";
+  (new content::MessageLoopRunner)->Run();
 }
 
 }  // namespace
