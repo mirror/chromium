@@ -138,6 +138,9 @@ class PageHandler : public DevToolsDomainHandler,
   Response SetDownloadBehavior(const std::string& behavior,
                                Maybe<std::string> download_path) override;
 
+  Response GetZoomLevel(double* level) override;
+  Response SetZoomLevel(double level) override;
+
   void GetAppManifest(
       std::unique_ptr<GetAppManifestCallback> callback) override;
 

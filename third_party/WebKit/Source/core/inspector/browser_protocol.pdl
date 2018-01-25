@@ -4793,6 +4793,16 @@ domain Page
   # Force the page stop all navigations and pending resource fetches.
   command stopLoading
 
+  # Returns page zoom level.
+  experimental command getZoomLevel
+    returns
+      number level
+
+  # Set page zoom level.
+  experimental command setZoomLevel
+    parameters
+      number level
+
   # Crashes renderer on the IO thread, generates minidumps.
   experimental command crash
 

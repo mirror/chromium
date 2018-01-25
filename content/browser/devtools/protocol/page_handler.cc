@@ -37,6 +37,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_manager.h"
+#include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/javascript_dialog_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
@@ -743,6 +744,22 @@ Response PageHandler::SetDownloadBehavior(const std::string& behavior,
     download_helper->SetDownloadPath(download_path.fromJust());
   }
 
+  return Response::OK();
+}
+
+Response PageHandler::GetZoomLevel(double* level) {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
+  *level = HostZoomMap::GetZoomLevel(web_contents);
+  return Response::OK();
+}
+
+Response PageHandler::SetZoomLevel(double level) {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
+  HostZoomMap::SetZoomLevel(web_contents, level);
   return Response::OK();
 }
 

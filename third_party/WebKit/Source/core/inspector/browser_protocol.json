@@ -10482,6 +10482,28 @@
                     "description": "Force the page stop all navigations and pending resource fetches."
                 },
                 {
+                    "name": "getZoomLevel",
+                    "description": "Returns page zoom level.",
+                    "experimental": true,
+                    "returns": [
+                        {
+                            "name": "level",
+                            "type": "number"
+                        }
+                    ]
+                },
+                {
+                    "name": "setZoomLevel",
+                    "description": "Set page zoom level.",
+                    "experimental": true,
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number"
+                        }
+                    ]
+                },
+                {
                     "name": "crash",
                     "description": "Crashes renderer on the IO thread, generates minidumps.",
                     "experimental": true
