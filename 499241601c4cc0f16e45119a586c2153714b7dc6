@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b9c589f_ed6a0808",
+        "filename": "base/time/time_override.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T12:35:37Z",
+      "side": 1,
+      "message": "ugh, thanks!",
+      "parentUuid": "385bdb87_4c5f6fcf",
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba10a7ca_d364b8b8",
         "filename": "base/time/time_win.cc",
         "patchSetId": 21
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a5ed0987_37167224",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T12:35:37Z",
+      "side": 1,
+      "message": "There were using declarations at the top :)\n\nI\u0027m still wondering if the bots will uncover some fundamental issue with having the namespace base {} in this file - someone must have explicitly chosen not to add it at some point...",
+      "parentUuid": "ba10a7ca_d364b8b8",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 9
+      },
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "845af7eb_77d5992a",
         "filename": "base/time/time_win.cc",
         "patchSetId": 21
@@ -56,6 +98,24 @@
       "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0561c0d7_1d70012e",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T12:35:37Z",
+      "side": 1,
+      "message": "I was considering this too. Fundamentally, it\u0027s not necessary to change the pointer from \u0026TimeTicksNowIgnoringOverride for correct functionality. Windows updates it here to avoid one additional indirection. That will make it (a tiny little bit) faster in the case where we never set an override (which should be the default). When setting an override and undoing it, we reset it to \u0026TimeTicksNowIgnoringOverride, which will make it a little less efficient but still correct. That\u0027s probably fine?",
+      "parentUuid": "845af7eb_77d5992a",
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
