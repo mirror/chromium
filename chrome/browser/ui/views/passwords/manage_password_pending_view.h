@@ -20,6 +20,7 @@ class ToggleImageButton;
 
 class DesktopIOSPromotionBubbleView;
 class ManagePasswordSignInPromoView;
+class PasswordBubbleSyncPromoDelegate;
 
 // A view offering the user the ability to save credentials. Contains a
 // username and password field, along with a "Save Passwords" button and a
@@ -45,6 +46,7 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
 #endif
 
  private:
+  friend class PasswordBubbleSyncPromoDelegate;
   ~ManagePasswordPendingView() override;
 
   // views::ButtonListener:
@@ -58,6 +60,7 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
   // ManagePasswordsBubbleDelegateViewBase:
   gfx::Size CalculatePreferredSize() const override;
   views::View* GetInitiallyFocusedView() override;
+  int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   void AddedToWidget() override;
   gfx::ImageSkia GetWindowIcon() override;
@@ -79,6 +82,7 @@ class ManagePasswordPendingView : public ManagePasswordsBubbleDelegateViewBase,
   // active.
   ManagePasswordSignInPromoView* sign_in_promo_;
   DesktopIOSPromotionBubbleView* desktop_ios_promo_;
+  std::unique_ptr<PasswordBubbleSyncPromoDelegate> dice_sync_promo_delegate_;
 
   views::View* username_field_;
   views::ToggleImageButton* password_view_button_;
