@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "89a6ef17_385779b3",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T20:29:25Z",
+      "side": 1,
+      "message": "Using bool helps to document the purpose and the possible states of this flag.\n\nPlease check:\nhttps://softwareengineering.stackexchange.com/questions/145323/when-should-you-use-bools-in-c\n\nQuote: \"When choosing variable types and variable names you want your intent to be as clear as possible. If you choose a bool (boolean) type, it is clear there are only two acceptable values: true or false. If you use an int (integer) type, it is no longer clear that the intent of that variable can only be 1 or 0 or whatever values you chose to mean true and false\".\n\nIn the end everything will treated using an \u0027rn\u0027 register, no to mention that the number of instructions used are the same:\nhttps://godbolt.org/g/UJvQ9a",
+      "parentUuid": "f49e0685_a58234f5",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6782eaa_41394930",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
@@ -155,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "8a778352_229ec8e6",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6782eaa_41394930",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82afe030_1a7cce31",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
@@ -169,6 +205,24 @@
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91c8424_069397ab",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T20:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82afe030_1a7cce31",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
