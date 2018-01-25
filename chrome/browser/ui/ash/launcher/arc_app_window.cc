@@ -5,12 +5,15 @@
 #include "chrome/browser/ui/ash/launcher/arc_app_window.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_icon.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.h"
 #include "components/exo/shell_surface.h"
 #include "extensions/common/constants.h"
+#include "ui/app_list/app_list_constants.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -24,7 +27,12 @@ ArcAppWindow::ArcAppWindow(int task_id,
     : task_id_(task_id),
       app_shelf_id_(app_shelf_id),
       widget_(widget),
-      owner_(owner) {}
+      owner_(owner) {
+  app_icon_ = std::make_unique<ArcAppIcon>(owner->observed_profile(),
+                                           app_shelf_id_.app_id(),
+                                           app_list::kGridIconDimension, this);
+  OnIconUpdated(app_icon_.get());
+}
 
 ArcAppWindow::~ArcAppWindow() {
   ImageDecoder::Cancel(this);
@@ -156,6 +164,11 @@ void ArcAppWindow::SetAlwaysOnTop(bool always_on_top) {
   NOTREACHED();
 }
 
+void ArcAppWindow::OnIconUpdated(ArcAppIcon* icon) {
+  GetNativeWindow()->SetProperty(aura::client::kWindowIconKey,
+                                 new gfx::ImageSkia(icon->image_skia()));
+}
+
 void ArcAppWindow::SetIcon(const gfx::ImageSkia& icon) {
   if (!exo::ShellSurface::GetMainSurface(GetNativeWindow())) {
     // Support unit tests where we don't have exo system initialized.
@@ -164,11 +177,9 @@ void ArcAppWindow::SetIcon(const gfx::ImageSkia& icon) {
         icon /* app_icon */);
     return;
   }
-  exo::ShellSurface* shell_surface = static_cast<exo::ShellSurface*>(
-      widget_->widget_delegate()->GetContentsView());
-  if (!shell_surface)
-    return;
-  shell_surface->SetIcon(icon);
+
+  GetNativeWindow()->SetProperty(aura::client::kAppIconKey,
+                                 new gfx::ImageSkia(icon));
 }
 
 void ArcAppWindow::OnImageDecoded(const SkBitmap& decoded_image) {
