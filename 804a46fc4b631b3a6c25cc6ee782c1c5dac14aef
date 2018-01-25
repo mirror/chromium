@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2824d86e_79c1e094",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-25T00:06:53Z",
+      "side": 0,
+      "message": "Sorry for being tardy here, but I\u0027m having a hard time following the code that determines all these flags...\n\nMy question is - if the problem is indeed due to device ONC proxies being sometimes dependent on the checkbox state (due to [1]), then why would this old check against isNetworkPolicyEnforce() not handle that case correctly?\n\nI.e., suppose (following the crbug comment [2]) we are in the case of *un*affiliated user with a device-wide shared network that comes with some proxies. And assume that the \"use_shared_proxies\" pref is unset, because that\u0027s what the bugreport was about (as the users complained about not having the checkbox). Then ProxyConfigServiceImpl::IgnoreProxy() would return true for that device-policy-configured proxy. Consequently, no proxy would be enforced for that network, and isNetworkPolicyEnforced() would return false. So shouldShowAllowShared_() would end up with true, so the checkbox show be there.\n\nI\u0027m probably missing something?\n\n[1] https://cs.chromium.org/chromium/src/chromeos/network/proxy/proxy_config_service_impl.cc?l\u003d164\u0026rcl\u003dae4243ad0674163805c58540aece0538b1842e37\n[2] http://crbug.com/798553#c17",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

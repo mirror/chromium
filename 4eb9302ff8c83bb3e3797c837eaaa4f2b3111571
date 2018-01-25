@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ed7e283_2cab7120",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-25T00:06:53Z",
+      "side": 1,
+      "message": "nit: Typo.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b01c2341_6cce8a91",
         "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
         "patchSetId": 2
