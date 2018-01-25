@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8defc3e2_073c4ba2",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-01-25T12:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5378b11d_77645755",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ba4c62_9dafa380",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 1
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "1b668c03_2f78680a",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-01-25T12:41:55Z",
+      "side": 1,
+      "message": "Then, user would not see when sensors are in-use. Blocked image model is useful only to notify when usage is blocked.",
+      "parentUuid": "03194e31_15dd4583",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53b630c2_89c5df73",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
         "patchSetId": 1
@@ -84,6 +120,24 @@
       "revId": "e1616592255b10c97827f5f906980b9179dbd043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618b1eba_cd7a0bb9",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2018-01-25T12:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b630c2_89c5df73",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
