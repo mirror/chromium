@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3eec7f4f_f6b766d9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3506,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-25T15:29:36Z",
+      "side": 1,
+      "message": "We should probably allow base/numeric/ throughout Blink (it\u0027s currently scoped to a few places, but it\u0027s generally useful). Lacking that, std::max(x, std::numeric_limits\u003cbase::HistogramBase::Sample\u003e::max()) works (possibly also min, if negative could happen).\n\nSince this issue doesn\u0027t appear to be new to this CL (which I missed the first time), that doesn\u0027t have to be dealt with in this CL (but it would be nice if it were eventually fixed, not that I expect 30+ min unload to be common).",
+      "parentUuid": "402a5a63_01b57114",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbb2e0f9_865324d9",
         "filename": "third_party/WebKit/Source/core/exported/WebDocumentLoaderImpl.cpp",
         "patchSetId": 4
@@ -346,6 +364,24 @@
       "side": 1,
       "message": "Probably not needed (or not as needed as the one in Document). Will add the cast here and in Document once we have a suitable replacement for saturated_cast.",
       "parentUuid": "b46610fb_76c00abb",
+      "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac7dc1a_b097687f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-25T15:29:36Z",
+      "side": 1,
+      "message": "Fair enough. :)",
+      "parentUuid": "ce42614f_d119b720",
       "revId": "e6265ff0ce818197e05cc4251b552447e09b9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
