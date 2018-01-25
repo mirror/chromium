@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dadae533_7a58a607",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-25T13:40:10Z",
+      "side": 1,
+      "message": "The reason we used to check against the WebContents is that the PageLoadMetrics is global, so the PageLoadMetricsObserver will be called for all page load events for all WebContents while we only want to be notified for our WebContents.\n\nFor a CCT there will only ever be 1 Tab, which will always use its single WebContents. The only reason I changed storing a WebContents to storing a Tab was because we want to use the Tab in onFirstMeaningfulPaint and you can get the WebContents from the Tab and not the other way around.",
+      "parentUuid": "4475f504_d1a73407",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2e27bf_c1e0a0e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 6
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "That sounds about right.",
       "parentUuid": "0793cd9e_3682c597",
+      "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff9b7ac_3e514bbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-25T13:40:10Z",
+      "side": 1,
+      "message": "FMP won\u0027t be exposed directly to CCTs. We\u0027re using the FMP as a signal for when to send navigation information to CCTs, so from an API point of view we\u0027re not adding anything specific to FMP, just being clever about when we trigger something.",
+      "parentUuid": "86415545_7ca03cf0",
       "revId": "32197fa24af55378ae90420ac72a2dc0ee4fb145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
