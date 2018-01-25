@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5211bc8c_287fbc9b",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T18:42:53Z",
+      "side": 1,
+      "message": "Use base::Callback instead.\n\nSee commets about using std::function in https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "6477335fd5a8756ef58fbfa746fef3238caf2108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacdc258_4b777581",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T18:42:53Z",
+      "side": 1,
+      "message": "fyi, you can base::Bind a capture-less closure.\n\nSomething like:\n\n  base::Bind([](base::WeakPtr\u003cAppListSyncableService\u003e self,\n                ChromeAppListItem* oem_folder) {\n    if (!self)\n      return;\n    ....\n  }, weak_ptr_factory.GetWeakPtr());",
+      "revId": "6477335fd5a8756ef58fbfa746fef3238caf2108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eaaf31_0cc19a9d",
+        "filename": "chrome/browser/ui/app_list/search/app_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T18:42:53Z",
+      "side": 1,
+      "message": "We probably should move the block into a function. It is too long for a closure.",
+      "revId": "6477335fd5a8756ef58fbfa746fef3238caf2108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
