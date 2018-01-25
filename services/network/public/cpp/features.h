@@ -6,13 +6,15 @@
 #define SERVICES_NETWORK_PUBLIC_CPP_FEATURES_H_
 
 #include "base/feature_list.h"
+#include "services/network/public/cpp/export.h"
 
 namespace network {
 namespace features {
 
-extern const base::Feature kNetworkService;
-extern const base::Feature kOutOfBlinkCORS;
-extern const base::Feature kRendererSideResourceScheduler;
+SERVICES_NETWORK_EXPORT extern const base::Feature kNetworkService;
+SERVICES_NETWORK_EXPORT extern const base::Feature kOutOfBlinkCORS;
+SERVICES_NETWORK_EXPORT extern const base::Feature
+    kRendererSideResourceScheduler;
 
 }  // namespace features
 }  // namespace network
