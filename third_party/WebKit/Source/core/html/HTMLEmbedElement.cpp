@@ -147,7 +147,6 @@ void HTMLEmbedElement::UpdatePluginInternal() {
   DCHECK(!GetLayoutEmbeddedObject()->ShowsUnavailablePluginIndicator());
   DCHECK(NeedsPluginUpdate());
   SetNeedsPluginUpdate(false);
-
   if (url_.IsEmpty() && service_type_.IsEmpty())
     return;
 
@@ -174,7 +173,6 @@ void HTMLEmbedElement::UpdatePluginInternal() {
     url_ = overriden_url.GetString();
     service_type_ = "text/html";
   }
-
   RequestObject(param_names, param_values);
 }
 
