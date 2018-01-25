@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a38d878_62d02a1e",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-25T16:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6238eb84_be34dfcb",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 224,
+        "endChar": 42
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0148078_d6b019ce",
         "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4e1cb357_2c5e9380",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-25T16:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0148078_d6b019ce",
+      "range": {
+        "startLine": 225,
+        "startChar": 53,
+        "endLine": 225,
+        "endChar": 64
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd477dc5_e0d9b759",
         "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c226d11_9708dffd",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-25T16:20:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd477dc5_e0d9b759",
+      "range": {
+        "startLine": 226,
+        "startChar": 3,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "5b3815c0b14273e0deffdfda73cbcb139e5d50c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
