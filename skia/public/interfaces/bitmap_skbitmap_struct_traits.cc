@@ -75,6 +75,11 @@ skia::mojom::ColorType SkColorTypeToMojo(SkColorType type) {
     case kGray_8_SkColorType:
       return skia::mojom::ColorType::GRAY_8;
     case kRGBA_F16_SkColorType:
+#ifdef SK_EXTENDED_COLOR_TYPES
+    case kRGB_888x_SkColorType:
+    case kRGBA_1010102_SkColorType:
+    case kRGB_101010x_SkColorType:
+#endif
       // these are unsupported
       break;
   }
