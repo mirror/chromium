@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8fe766_2edac0de",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "I understand why you chose to return this value here but this looks very odd and can confuse others reading this code.\n\nA cleaner option would be to explicitly return a bool signaling that the move happened. So you could use something like this instead of the enum:\n\nstruct MovePageTaskResult {\n   bool success \u003d false;\n   bool file_was_moved \u003d false;\n}",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "f4e49a3829e94ec6f0f3c6c055007544903331ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cda2a8f_8ec0c325",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "I am uncertain about returning this information as it also causes the SQL data encapsulation to \"leak\" the task scope. The following task that would need this information should also query for it in its turn. \nI\u0027ll add dimich@ as a reviewer to double check if this actually needs changing.",
+      "range": {
+        "startLine": 86,
+        "startChar": 35,
+        "endLine": 86,
+        "endChar": 57
+      },
+      "revId": "f4e49a3829e94ec6f0f3c6c055007544903331ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde98bd7_1980bce5",
+        "filename": "components/offline_pages/core/model/move_page_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "nit: this also looks odd and confusing. but addressing the previous comments should also improve this.",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "f4e49a3829e94ec6f0f3c6c055007544903331ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

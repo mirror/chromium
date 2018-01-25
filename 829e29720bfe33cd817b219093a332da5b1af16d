@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "09a0fa3d_fd7a207b",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b696bf53_4258394f",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2167eceb_c61f7a7c",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "60f23538_638f1b04",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "Because of the if-check in line 30 this code would always return false in line 33 in case the move failed. But this doesn\u0027t apply anymore anyway.",
+      "parentUuid": "9f85fe4b_0211808b",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d984776_37cedff2",
         "filename": "components/offline_pages/core/model/move_page_task.cc",
         "patchSetId": 1
@@ -210,6 +258,30 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f03650e_55837fe6",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "This still goes against the SQL encapsulation we\u0027re trying to establish in the taskified model. If the path is available from before that\u0027s probably because the previous task/operation is also not following the pattern. \n\nMoreover there\u0027s no guarantee that the DB data was not changed between that information being queried, passed into this task and it being run. Querying for the information within the *Sync method makes these non-issues.",
+      "parentUuid": "c1ffdae2_23a87e65",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -292,6 +364,30 @@
       "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8deeebb9_9850b749",
+        "filename": "components/offline_pages/core/model/move_page_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-01-25T08:06:57Z",
+      "side": 1,
+      "message": "In that case, why have this check at all? The path being empty seems like a very peculiar case that wouldn\u0027t need to be special-cased or optimized for. Why not just let the operation fail when the move is attempted?",
+      "parentUuid": "91d01205_b7cb5412",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "829e29720bfe33cd817b219093a332da5b1af16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
