@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd40f255_3e052583",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4cce79e_f003ed5f",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b2a4620_b30b4bff",
         "filename": "ash/login/login_screen_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba964735_db49c9fb",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b2a4620_b30b4bff",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c331129c_b23dafa7",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c53553_a6b633df",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8bbea8_035f4374",
         "filename": "ash/login/login_screen_controller_unittest.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16b181f_3122a23d",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf8bbea8_035f4374",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "158170ec_90e730d0",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0cc05a8_fb02cf5e",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5027a526_0c95e538",
         "filename": "ash/login/login_screen_controller_unittest.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49552740_db1413ac",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5027a526_0c95e538",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4c7ad61b_158985b6",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "When I change line 249 in a clean branch to SetState(SHELF_HIDDEN) the status area (not shelf) will not show on web UI lock screen. \n\nThat was surprising, so I made this comment. I don\u0027t know if that is by design or a bug. Is there web UI version of status area that should be shown then? \n\nIt is happening because visibility of status area is modified according to shelf visibility:\nhttps://cs.chromium.org/chromium/src/ash/shelf/shelf_layout_manager.cc?rcl\u003de795b2b132af96a8ec87b187901255fa50f12e03\u0026l\u003d633\n\nhttps://cs.chromium.org/chromium/src/ash/shelf/shelf_layout_manager.cc?rcl\u003de795b2b132af96a8ec87b187901255fa50f12e03\u0026l\u003d671",
+      "parentUuid": "899a5251_5e0bda3b",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e0c1e03_ddf28840",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3eeaa6_75c50760",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T20:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e0c1e03_ddf28840",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
