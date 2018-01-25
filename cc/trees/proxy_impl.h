@@ -18,6 +18,7 @@
 namespace cc {
 class LayerTreeHost;
 class ProxyMain;
+class RenderFrameMetadataObserver;
 
 // This class aggregates all the interactions that the main side of the
 // compositor needs to have with the impl side.
@@ -55,6 +56,9 @@ class CC_EXPORT ProxyImpl : public LayerTreeHostImplClient,
                                  bool hold_commit_for_activation);
   void SetURLForUkm(const GURL& url);
   void ClearHistoryOnNavigation();
+  void SetEnableRenderFrameObserver(
+      bool enabled,
+      scoped_refptr<RenderFrameMetadataObserver> observer);
 
   void MainFrameWillHappenOnImplForTesting(CompletionEvent* completion,
                                            bool* main_frame_will_happen);

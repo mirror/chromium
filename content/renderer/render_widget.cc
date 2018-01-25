@@ -27,6 +27,8 @@
 #include "cc/input/touch_action.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
+#include "cc/trees/render_frame_metadata.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "content/common/content_switches_internal.h"
@@ -334,6 +336,32 @@ ui::TextInputMode ConvertWebTextInputMode(blink::WebTextInputMode mode) {
   DCHECK_LE(mode, static_cast<int>(ui::TEXT_INPUT_MODE_MAX))
       << "blink::WebTextInputMode and ui::TextInputMode not synchronized";
   return static_cast<ui::TextInputMode>(mode);
+}
+
+class RenderFrameMetadataObserverImpl : public cc::RenderFrameMetadataObserver {
+ public:
+  RenderFrameMetadataObserverImpl(int32_t routing_id)
+      : routing_id_(routing_id) {
+    sync_message_filter_ = RenderThreadImpl::current()->sync_message_filter();
+  }
+
+  void OnRenderFrameSubmission(cc::RenderFrameMetadata* metadata) override;
+
+ protected:
+  ~RenderFrameMetadataObserverImpl() override {}
+
+ private:
+  int32_t routing_id_;
+
+  scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderFrameMetadataObserverImpl);
+};
+
+void RenderFrameMetadataObserverImpl::OnRenderFrameSubmission(
+    cc::RenderFrameMetadata* metadata) {
+  sync_message_filter_->Send(
+      new ViewHostMsg_OnRenderFrameSubmitted(routing_id_, *metadata));
 }
 
 }  // namespace
@@ -2494,6 +2522,10 @@ void RenderWidget::UnregisterBrowserPlugin(BrowserPlugin* browser_plugin) {
 void RenderWidget::OnWaitNextFrameForTests(int routing_id) {
   QueueMessage(new ViewHostMsg_WaitForNextFrameForTests_ACK(routing_id),
                MESSAGE_DELIVERY_POLICY_WITH_VISUAL_STATE);
+  render_frame_metadata_observer_ =
+      new RenderFrameMetadataObserverImpl(routing_id);
+  compositor_->SetEnableRenderFrameObserver(true,
+                                            render_frame_metadata_observer_);
 }
 
 float RenderWidget::GetOriginalDeviceScaleFactor() const {

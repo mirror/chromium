@@ -19,6 +19,7 @@ class LayerTreeFrameSink;
 class LayerTreeHost;
 class LayerTreeMutator;
 class ProxyImpl;
+class RenderFrameMetadataObserver;
 
 // This class aggregates all interactions that the impl side of the compositor
 // needs to have with the main side.
@@ -94,6 +95,9 @@ class CC_EXPORT ProxyMain : public Proxy {
   void RequestBeginMainFrameNotExpected(bool new_state) override;
   void SetURLForUkm(const GURL& url) override;
   void ClearHistoryOnNavigation() override;
+  void SetEnableRenderFrameObserver(
+      bool enabled,
+      scoped_refptr<RenderFrameMetadataObserver> observer) override;
 
   // Returns |true| if the request was actually sent, |false| if one was
   // already outstanding.
