@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f21ca3d_6b9403bc",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:55:22Z",
+      "side": 1,
+      "message": "This is incorrect, the ScopedTaskEnvironment should not be a local variable, but a member variable, otherwise code may have dangling pointers to the TaskScheduler.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 55
+      },
+      "revId": "b255ac45682feacb934d011298208e4e38bf01c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083d960b_e9ab0e51",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:55:22Z",
+      "side": 1,
+      "message": "nit: you do not have to heap allocate the WebStateList, you can just initialize it in the constructor:\n\n  class LocationBarCoordinatorTest : public PlatformTest {\n   protected:\n    LocationBarCoordinatorTest()\n        : web_state_list_(\u0026web_state_list_delegate_) {}\n\n    void SetUp() override() {\n      ...\n\n      coordinator_.webStateList \u003d \u0026web_state_list_;\n    }\n \n    FakeWebStateListDelegate web_state_list_delegate_;\n    WebStateList web_state_list_;\n  };",
+      "revId": "b255ac45682feacb934d011298208e4e38bf01c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab466794_6a0b7904",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:55:22Z",
+      "side": 1,
+      "message": "As discussed offline, I think you can do without using a member variable for this.",
+      "range": {
+        "startLine": 86,
+        "startChar": 39,
+        "endLine": 86,
+        "endChar": 54
+      },
+      "revId": "b255ac45682feacb934d011298208e4e38bf01c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
