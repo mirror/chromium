@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a82f5c1_915c3277",
+        "filename": "third_party/WebKit/Source/platform/heap/Persistent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-25T07:00:51Z",
+      "side": 1,
+      "message": "While you are here: This should be Trace(). I am currently going through all use cases that have marking knowledge and they should all be converted to Trace or RegisterXXX.",
+      "range": {
+        "startLine": 211,
+        "startChar": 15,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "e3abe3b0c682e899fd3c1e60dfa639bedd0a6d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f80ed93_7af0ad4a",
         "filename": "third_party/WebKit/Source/platform/heap/Persistent.h",
         "patchSetId": 5
