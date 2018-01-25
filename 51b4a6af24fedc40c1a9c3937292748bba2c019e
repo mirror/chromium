@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f12c5ff6_9c3f71bf",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-25T01:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc2e286_e17b875a",
+      "revId": "51b4a6af24fedc40c1a9c3937292748bba2c019e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06e5fde_0d3a7bd6",
         "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "51b4a6af24fedc40c1a9c3937292748bba2c019e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b04e386_75484623",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-25T01:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06e5fde_0d3a7bd6",
+      "revId": "51b4a6af24fedc40c1a9c3937292748bba2c019e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
