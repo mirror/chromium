@@ -6,7 +6,6 @@
 
 #include <stdlib.h>
 
-#include "base/base_paths_fuchsia.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/path_service.h"
@@ -47,10 +46,10 @@ bool PathProviderFuchsia(int key, FilePath* result) {
     case DIR_CACHE:
       *result = FilePath("/data");
       return true;
-    case DIR_FUCHSIA_RESOURCES:
+    case DIR_ASSETS:
       *result = GetPackageRoot();
       if (result->empty()) {
-        PathService::Get(DIR_EXE, result);
+        return PathService::Get(DIR_MODULE, result);
       }
       return true;
   }
