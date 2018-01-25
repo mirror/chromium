@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c207ab03_9ccdd568",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2018-01-25T18:52:53Z",
+      "side": 1,
+      "message": "Maybe rename \"Founds\". ExtensionUpdaterUpdateFoundCount or something.",
+      "revId": "b8c9bc24f8c09b6636cd99092d871201e97a23a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
