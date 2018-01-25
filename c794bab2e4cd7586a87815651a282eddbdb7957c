@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "be43636c_c8d2103e",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleGradientValue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-25T18:14:39Z",
+      "side": 1,
+      "message": "This is probably fine. The CSSGradientValue::GetImage does GradientGeneratedImage::Create(), and the GradientGeneratedImage maintains a Gradient, I don\u0027t think Gradient is accelerated.",
+      "parentUuid": "d9eb9cd5_f587188f",
+      "revId": "c794bab2e4cd7586a87815651a282eddbdb7957c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "785a5f9b_e61e35b9",
         "filename": "third_party/WebKit/Source/core/css/cssom/StylePropertyMapReadOnly.h",
         "patchSetId": 1
