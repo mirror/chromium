@@ -104,6 +104,41 @@
       "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "640a1702_15e932a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T01:36:55Z",
+      "side": 1,
+      "message": "We should try to get rid of unnecessary calls, because they slow GN down, but there will always be some uses for them that we can\u0027t really get rid of.",
+      "parentUuid": "8511d92a_be290d9d",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ffc9a0d_c68d548d",
+        "filename": "tools/gn/function_exec_script.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T01:36:55Z",
+      "side": 1,
+      "message": "s/GnExecScript/ExecScript/ ?",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
