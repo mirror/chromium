@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd428275_3cbe9a15",
+        "filename": "base/files/scoped_temp_dir.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T21:17:08Z",
+      "side": 1,
+      "message": "Well, there\u0027s no guarantees. Something like \"that is more likely to be\" is more accurate.",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "7943fb015fda1728c11071c9290f1703a5008a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd09425d_d08fa1bd",
+        "filename": "chrome/common/logging_chrome.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T21:17:08Z",
+      "side": 1,
+      "message": "Another: // defined(OS_CHROMEOS)",
+      "revId": "7943fb015fda1728c11071c9290f1703a5008a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
