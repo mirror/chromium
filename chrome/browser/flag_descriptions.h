@@ -1562,6 +1562,9 @@ extern const char kEnableAndroidWallpapersAppDescription[];
 extern const char kEnableChromevoxArcSupportName[];
 extern const char kEnableChromevoxArcSupportDescription[];
 
+extern const char kEnableDisplayZoomSettingName[];
+extern const char kEnableDisplayZoomSettingDescription[];
+
 extern const char kEnableEhvInputName[];
 extern const char kEnableEhvInputDescription[];
 
