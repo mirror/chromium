@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "66bee8b1_daf35ff7",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-25T22:00:17Z",
+      "side": 1,
+      "message": "Hmm, then can I change the no_symbol to strip all symbols?\nI want to guarantee followings in each symbol_level.\nno_symbols: no guarantee of amount of symbol.\nminimal_symbols: include symbols to show function name in stack trace.\nsymbols: include symbols used for debugger.\n\n-g0 means no debug symbol, but here I think what the range of \u0027no symbols\u0027.\nEven when we specify -g0, obj and binary has symbol table for functions.\n\nIf symbol_level is used to control the amount of debug symbol only, then what is the expected difference between \u0027minimal_symbols\u0027 and \u0027symbols\u0027 config?",
+      "parentUuid": "d7d5a5f7_1caa2b1a",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a03f3d_530568c1",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 63
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-25T21:29:51Z",
       "side": 1,
       "message": "I wonder if doing this on Linux will give us full stacks with line numbers for tests.",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b172d81_bdb24f39",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-25T22:00:17Z",
+      "side": 1,
+      "message": "If we want to see line number for crash on tests.\nI guess we need to implement such feature in base/debug/stack_trace used to show stack trace in test crash.",
+      "parentUuid": "e5a03f3d_530568c1",
       "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
