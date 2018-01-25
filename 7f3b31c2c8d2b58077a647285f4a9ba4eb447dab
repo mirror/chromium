@@ -151,6 +151,30 @@
     },
     {
       "key": {
+        "uuid": "c7610838_b3314836",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T17:37:27Z",
+      "side": 1,
+      "message": "Ignore this comment. The \u003cif expr\u003e statements are not in this file.",
+      "parentUuid": "8039da80_21449af8",
+      "range": {
+        "startLine": 713,
+        "startChar": 25,
+        "endLine": 713,
+        "endChar": 73
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703f0f80_2e35c15f",
         "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
         "patchSetId": 12
