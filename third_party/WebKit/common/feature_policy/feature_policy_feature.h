@@ -59,7 +59,9 @@ enum class FeaturePolicyFeature {
   kAmbientLightSensor,
   kGyroscope,
   kMagnetometer,
-  LAST_FEATURE = kMagnetometer
+  // Controls access to Picture in Picture.
+  kPictureInPicture,
+  LAST_FEATURE = kPictureInPicture
 };
 
 }  // namespace blink
