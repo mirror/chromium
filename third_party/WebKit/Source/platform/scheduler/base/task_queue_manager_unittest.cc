@@ -144,11 +144,12 @@ class TaskQueueManagerTest : public ::testing::Test {
     return manager_->ComputeDelayTillNextTaskLocked(lazy_now);
   }
 
-  void PostDoWorkContinuation(base::Optional<NextTaskDelay> next_delay,
-                              LazyNow* lazy_now) {
+  internal::Sequence::MoreWork MaybePostDoWorkContinuation(
+      base::Optional<NextTaskDelay> next_delay,
+      LazyNow* lazy_now) {
     MoveableAutoLock lock(manager_->any_thread_lock_);
-    return manager_->PostDoWorkContinuationLocked(next_delay, lazy_now,
-                                                  std::move(lock));
+    return manager_->MaybePostDoWorkContinuationLocked(next_delay, lazy_now,
+                                                       std::move(lock));
   }
 
   int immediate_do_work_posted_count() const {
@@ -157,14 +158,14 @@ class TaskQueueManagerTest : public ::testing::Test {
   }
 
   base::TimeTicks next_delayed_do_work_time() const {
-    return manager_->next_delayed_do_work_.run_time();
+    return manager_->main_thread_only().next_delayed_do_work.run_time();
   }
 
   EnqueueOrder GetNextSequenceNumber() const {
     return manager_->GetNextSequenceNumber();
   }
 
-  void MaybeScheduleImmediateWorkLocked(const base::Location& from_here) {
+  void MaybeScheduleImmediateWork(const base::Location& from_here) {
     MoveableAutoLock lock(manager_->any_thread_lock_);
     manager_->MaybeScheduleImmediateWorkLocked(from_here, std::move(lock));
   }
@@ -175,7 +176,7 @@ class TaskQueueManagerTest : public ::testing::Test {
   void RunUntilIdle(base::Closure per_run_time_callback) {
     for (;;) {
       // Advance time if we've run out of immediate work to do.
-      if (manager_->selector_.EnabledWorkQueuesEmpty()) {
+      if (manager_->main_thread_only().selector.EnabledWorkQueuesEmpty()) {
         base::TimeTicks run_time;
         if (manager_->real_time_domain()->NextScheduledRunTime(&run_time)) {
           now_src_.SetNowTicks(run_time);
@@ -243,9 +244,8 @@ TEST_F(TaskQueueManagerTest,
 
   base::RunLoop().RunUntilIdle();
   // Now is called each time a task is queued, when first task is started
-  // running, and when a task is completed.
-  // With 6 tasks that means that 6 + 1 + 6 = 13 calls are expected.
-  EXPECT_EQ(13, test_count_uses_time_source.now_calls_count());
+  // running, and when a task is completed. 6 * 3 = 18 calls.
+  EXPECT_EQ(18, test_count_uses_time_source.now_calls_count());
 }
 
 TEST_F(TaskQueueManagerTest, NowNotCalledForNestedTasks) {
@@ -1512,24 +1512,6 @@ void PostAndQuitFromNestedRunloop(base::RunLoop* run_loop,
   runner->PostTask(FROM_HERE, run_loop->QuitClosure());
   runner->PostTask(FROM_HERE, base::BindRepeating(&CheckIsNested, was_nested));
   run_loop->Run();
-}
-
-TEST_F(TaskQueueManagerTest, QuitWhileNested) {
-  // This test makes sure we don't continue running a work batch after a nested
-  // run loop has been exited in the middle of the batch.
-  InitializeWithRealMessageLoop(1u);
-  manager_->SetWorkBatchSize(2);
-
-  bool was_nested = true;
-  base::RunLoop run_loop;
-  runners_[0]->PostTask(FROM_HERE,
-                        base::BindRepeating(&PostAndQuitFromNestedRunloop,
-                                            base::Unretained(&run_loop),
-                                            base::RetainedRef(runners_[0]),
-                                            base::Unretained(&was_nested)));
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(was_nested);
 }
 
 class SequenceNumberCapturingTaskObserver
@@ -2870,53 +2852,57 @@ TEST_F(TaskQueueManagerTest, ComputeDelayTillNextTask_DelayedTaskReady) {
   EXPECT_EQ(base::TimeDelta(), ComputeDelayTillNextTask(&lazy_now)->delay());
 }
 
-TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_NoMoreWork) {
+TEST_F(TaskQueueManagerTest, MaybePostDoWorkContinuation_NoMoreWork) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(base::Optional<NextTaskDelay>(), &lazy_now);
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+      MaybePostDoWorkContinuation(base::Optional<NextTaskDelay>(), &lazy_now));
 
   EXPECT_EQ(0u, test_task_runner_->NumPendingTasks());
   EXPECT_EQ(0, immediate_do_work_posted_count());
   EXPECT_TRUE(next_delayed_do_work_time().is_null());
 }
 
-TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_ImmediateWork) {
+TEST_F(TaskQueueManagerTest, MaybePostDoWorkContinuation_ImmediateWork) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(), &lazy_now);
+  EXPECT_EQ(internal::Sequence::MoreWork::kImmediateWorkRemaining,
+            MaybePostDoWorkContinuation(NextTaskDelay(), &lazy_now));
 
-  EXPECT_EQ(1u, test_task_runner_->NumPendingTasks());
-  EXPECT_EQ(base::TimeDelta(), test_task_runner_->DelayToNextTaskTime());
+  EXPECT_EQ(0u, test_task_runner_->NumPendingTasks());
   EXPECT_EQ(1, immediate_do_work_posted_count());
   EXPECT_TRUE(next_delayed_do_work_time().is_null());
 }
 
-TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWorkInThePast) {
+TEST_F(TaskQueueManagerTest, MaybePostDoWorkContinuation_DelayedWorkInThePast) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
   // Note this isn't supposed to happen in practice.
-  PostDoWorkContinuation(
-      NextTaskDelay(base::TimeDelta::FromSeconds(-1),
-                    runners_[0]->GetTimeDomain(),
-                    NextTaskDelay::AllowAnyDelayForTesting()),
-      &lazy_now);
+  EXPECT_EQ(internal::Sequence::MoreWork::kImmediateWorkRemaining,
+            MaybePostDoWorkContinuation(
+                NextTaskDelay(base::TimeDelta::FromSeconds(-1),
+                              runners_[0]->GetTimeDomain(),
+                              NextTaskDelay::AllowAnyDelayForTesting()),
+                &lazy_now));
 
-  EXPECT_EQ(1u, test_task_runner_->NumPendingTasks());
-  EXPECT_EQ(base::TimeDelta(), test_task_runner_->DelayToNextTaskTime());
+  EXPECT_EQ(0u, test_task_runner_->NumPendingTasks());
   EXPECT_EQ(1, immediate_do_work_posted_count());
   EXPECT_TRUE(next_delayed_do_work_time().is_null());
 }
 
-TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWork) {
+TEST_F(TaskQueueManagerTest, MaybePostDoWorkContinuation_DelayedWork) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
-                                       runners_[0]->GetTimeDomain()),
-                         &lazy_now);
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+      MaybePostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
+                                                runners_[0]->GetTimeDomain()),
+                                  &lazy_now));
 
   EXPECT_EQ(1u, test_task_runner_->NumPendingTasks());
   EXPECT_EQ(base::TimeDelta::FromSeconds(1),
@@ -2927,18 +2913,20 @@ TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWork) {
 }
 
 TEST_F(TaskQueueManagerTest,
-       PostDoWorkContinuation_DelayedWorkButImmediateDoWorkAlreadyPosted) {
+       MaybePostDoWorkContinuation_DelayedWorkButImmediateDoWorkAlreadyPosted) {
   Initialize(1u);
 
-  MaybeScheduleImmediateWorkLocked(FROM_HERE);
+  MaybeScheduleImmediateWork(FROM_HERE);
   EXPECT_EQ(1u, test_task_runner_->NumPendingTasks());
   EXPECT_EQ(base::TimeDelta(), test_task_runner_->DelayToNextTaskTime());
   EXPECT_EQ(1, immediate_do_work_posted_count());
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
-                                       runners_[0]->GetTimeDomain()),
-                         &lazy_now);
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+      MaybePostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
+                                                runners_[0]->GetTimeDomain()),
+                                  &lazy_now));
 
   // Test that a delayed task didn't get posted.
   EXPECT_EQ(1u, test_task_runner_->NumPendingTasks());
@@ -2947,13 +2935,16 @@ TEST_F(TaskQueueManagerTest,
   EXPECT_TRUE(next_delayed_do_work_time().is_null());
 }
 
-TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWorkTimeChanges) {
+TEST_F(TaskQueueManagerTest,
+       MaybePostDoWorkContinuation_DelayedWorkTimeChanges) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
-                                       runners_[0]->GetTimeDomain()),
-                         &lazy_now);
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+      MaybePostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
+                                                runners_[0]->GetTimeDomain()),
+                                  &lazy_now));
 
   EXPECT_TRUE(test_task_runner_->HasPendingTasks());
   EXPECT_EQ(0, immediate_do_work_posted_count());
@@ -2962,9 +2953,11 @@ TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWorkTimeChanges) {
   EXPECT_EQ(lazy_now.Now() + base::TimeDelta::FromSeconds(1),
             next_delayed_do_work_time());
 
-  PostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(10),
-                                       runners_[0]->GetTimeDomain()),
-                         &lazy_now);
+  EXPECT_EQ(internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+            MaybePostDoWorkContinuation(
+                NextTaskDelay(base::TimeDelta::FromSeconds(10),
+                              runners_[0]->GetTimeDomain()),
+                &lazy_now));
 
   // This should have resulted in the previous task getting canceled and a new
   // one getting posted.
@@ -2979,17 +2972,22 @@ TEST_F(TaskQueueManagerTest, PostDoWorkContinuation_DelayedWorkTimeChanges) {
 }
 
 TEST_F(TaskQueueManagerTest,
-       PostDoWorkContinuation_ImmediateWorkButDelayedDoWorkPending) {
+       MaybePostDoWorkContinuation_ImmediateWorkButDelayedDoWorkPending) {
   Initialize(1u);
 
   LazyNow lazy_now(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
-                                       runners_[0]->GetTimeDomain()),
-                         &lazy_now);
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kNoImmediateWorkRemaining,
+      MaybePostDoWorkContinuation(NextTaskDelay(base::TimeDelta::FromSeconds(1),
+                                                runners_[0]->GetTimeDomain()),
+                                  &lazy_now));
 
   now_src_.Advance(base::TimeDelta::FromSeconds(1));
   lazy_now = LazyNow(&now_src_);
-  PostDoWorkContinuation(NextTaskDelay(), &lazy_now);
+
+  EXPECT_EQ(
+      internal::Sequence::MoreWork::kImmediateWorkRemainingDelayedTaskPending,
+      MaybePostDoWorkContinuation(NextTaskDelay(), &lazy_now));
 
   // Because the delayed DoWork was pending we don't expect an immediate DoWork
   // to get posted.

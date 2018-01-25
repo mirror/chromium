@@ -302,6 +302,7 @@ TEST_F(WebViewSchedulerImplTest,
        RepeatingTimer_PageInBackground_MeansNothingForVirtualTime) {
   web_view_scheduler_->EnableVirtualTime();
   web_view_scheduler_->SetPageVisible(false);
+  scheduler_->GetSchedulerHelperForTesting()->SetWorkBatchSizeForTesting(1);
   base::TimeTicks initial_real_time = scheduler_->tick_clock()->NowTicks();
 
   int run_count = 0;
@@ -311,7 +312,7 @@ TEST_F(WebViewSchedulerImplTest,
 
   mock_task_runner_->RunTasksWhile(mock_task_runner_->TaskRunCountBelow(2000));
   // Virtual time means page visibility is ignored.
-  EXPECT_EQ(1999, run_count);
+  EXPECT_EQ(2000, run_count);
 
   // The global tick clock has not moved, yet we ran a large number of "delayed"
   // tasks despite calling setPageVisible(false).

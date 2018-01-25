@@ -22,9 +22,19 @@ class Sequence {
   // TODO(altimin): Do not pass |work_type| here.
   virtual base::Optional<base::PendingTask> TakeTask(WorkType work_type) = 0;
 
+  enum class MoreWork {
+    // A continuation is needed/
+    kImmediateWorkRemaining,
+
+    // Don't exit the work batch, but an explicit continuation is not needed.
+    kImmediateWorkRemainingDelayedTaskPending,
+
+    // Exit the work batch, there is no more immediate work to do.
+    kNoImmediateWorkRemaining
+  };
+
   // Notify a sequence that a taken task has been completed.
-  // Returns true if sequence has more work to do.
-  virtual bool DidRunTask() = 0;
+  virtual MoreWork DidRunTask() = 0;
 };
 
 }  // namespace internal
