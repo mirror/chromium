@@ -2,6 +2,16 @@
   "layers": [
     {
       "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "Scrolling Layer",
+      "bounds": [800, 600],
+      "drawsContent": false
+    },
+    {
+      "name": "Scrolling Contents Layer",
       "bounds": [800, 2016],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
@@ -9,22 +19,22 @@
         {
           "object": "LayoutBlockFlow (positioned) DIV class='absolute red'",
           "rect": [250, 230, 100, 100],
-          "reason": "disappeared"
+          "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='moveMe' class='absolute clipped'",
           "rect": [250, 230, 100, 100],
-          "reason": "full"
+          "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow (relative positioned) DIV class='relative reflected'",
           "rect": [250, 230, 100, 100],
-          "reason": "appeared"
+          "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow DIV class='green'",
           "rect": [250, 230, 100, 100],
-          "reason": "appeared"
+          "reason": "subtree"
         }
       ],
       "transform": 1
@@ -38,25 +48,26 @@
         [0, 1, 0, 0],
         [0, 0, 1, 0],
         [0, -180, 0, 1]
-      ]
+      ],
+      "flattenInheritedTransform": false
     }
   ],
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow (positioned) DIV id='moveMe' class='absolute clipped'",
-      "reason": "full"
+      "reason": "subtree"
     },
     {
       "object": "LayoutBlockFlow (relative positioned) DIV class='relative reflected'",
-      "reason": "appeared"
+      "reason": "subtree"
     },
     {
       "object": "LayoutBlockFlow DIV class='green'",
-      "reason": "appeared"
+      "reason": "subtree"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV class='absolute red'",
-      "reason": "disappeared"
+      "reason": "subtree"
     }
   ]
 }
