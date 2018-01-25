@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde10833_c5fba4aa",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-25T13:28:36Z",
+      "side": 0,
+      "message": "The definition of RequestContextProducer should stay in some public location since it needs to be used by the embedder of the Device Service. Maybe we leave it in //device/geolocation/geolocation_provider.h where it is for now and we figure out where to move it to when we\u0027re ready to eliminate the GeolocationProvider interface entirely? At that point we can see what (if any) other public CPP interfaces there are and where this fits in with those.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d47713_f32f63ef",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-25T13:28:36Z",
+      "side": 0,
+      "message": "Can we separate out this change into its own CL? If I\u0027m understanding correctly, it\u0027s unrelated to the other changes and much more trivial than those ones.",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb207fe_b367327c",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-25T13:28:36Z",
+      "side": 0,
+      "message": "This is now the only remaining API for this class, it looks like? I assume that the followup plan is to remove this API, remove the GeolocationProvider interface entirely, and rename GeolocationProviderImpl to GeolocationProvider?",
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
