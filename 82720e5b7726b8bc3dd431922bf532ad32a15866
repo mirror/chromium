@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c49c04d_40afea13",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-25T02:57:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86fbf2ae_72b3e2ab",
+      "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16addf7a_9507bd54",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 9
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "\u003e We also removed the logic to decide whether /usr/lib64/va1/drivers/ or /usr/lib64/va/drivers/ would be used and loading the correct version. How does this work if we let libva dlopen by itself with this?\n\nThis will work because the correct driver path (va or va1 or anything else) is hardcoded into libva at compile time, so it will always look at the correct location.",
       "parentUuid": "16addf7a_9507bd54",
+      "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47288cb_c93b5184",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-25T02:57:07Z",
+      "side": 1,
+      "message": "Yes, libva can pick this info up at compile time.",
+      "parentUuid": "e7b0ab54_bd823c7a",
       "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
