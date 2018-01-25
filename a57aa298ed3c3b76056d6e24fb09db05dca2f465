@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "050c00f5_2933add3",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-25T21:08:35Z",
+      "side": 1,
+      "message": "@acourbot: Since I am moving this code I wanted to fix this as well. libva-x11 is required with USE_X11 enabled.",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
