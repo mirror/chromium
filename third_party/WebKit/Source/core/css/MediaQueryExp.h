@@ -34,7 +34,6 @@
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSValue.h"
 #include "core/css/media_feature_names.h"
-#include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {

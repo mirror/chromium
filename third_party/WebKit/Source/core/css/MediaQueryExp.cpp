@@ -30,6 +30,7 @@
 #include "core/css/MediaQueryExp.h"
 
 #include "core/css/parser/CSSParserTokenRange.h"
+#include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "platform/Decimal.h"
 #include "platform/runtime_enabled_features.h"
@@ -37,6 +38,8 @@
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
+
+class CSSParserTokenRange;
 
 using namespace MediaFeatureNames;
 
