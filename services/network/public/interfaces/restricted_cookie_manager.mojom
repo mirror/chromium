@@ -30,3 +30,7 @@ interface RestrictedCookieManager {
                      url.mojom.Url url,
                      url.mojom.Url site_for_cookies) => (bool success);
 };
+
+interface RestrictedCookieChangesListener {
+
+}

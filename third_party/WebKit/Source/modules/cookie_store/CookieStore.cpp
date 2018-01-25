@@ -10,9 +10,11 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/event_type_names.h"
 #include "modules/cookie_store/CookieListItem.h"
 #include "modules/cookie_store/CookieStoreGetOptions.h"
 #include "modules/cookie_store/CookieStoreSetOptions.h"
+#include "modules/event_target_modules_names.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
@@ -274,6 +276,37 @@ void CookieStore::ContextDestroyed(ExecutionContext* execution_context) {
   backend_.reset();
 }
 
+const AtomicString& CookieStore::InterfaceName() const {
+  return EventTargetNames::CookieStore;
+}
+
+ExecutionContext* CookieStore::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
+}
+
+void CookieStore::RemoveAllEventListeners() {
+  EventTargetWithInlineData::RemoveAllEventListeners();
+  DCHECK(!HasEventListeners());
+  StopObserving();
+}
+
+void CookieStore::AddedEventListener(
+    const AtomicString& event_type,
+    RegisteredEventListener& registered_listener) {
+  EventTargetWithInlineData::AddedEventListener(event_type,
+                                                registered_listener);
+  StartObserving();
+}
+
+void CookieStore::RemovedEventListener(
+    const AtomicString& event_type,
+    const RegisteredEventListener& registered_listener) {
+  EventTargetWithInlineData::RemovedEventListener(event_type,
+                                                  registered_listener);
+  if (!HasEventListeners())
+    StopObserving();
+}
+
 CookieStore::CookieStore(
     ExecutionContext* execution_context,
     network::mojom::blink::RestrictedCookieManagerPtr backend)
@@ -404,5 +437,9 @@ void CookieStore::OnSetCanonicalCookieResult(ScriptPromiseResolver* resolver,
   }
   resolver->Resolve();
 }
+
+void CookieStore::StartObvserving() {}
+
+void CookieStore::StopObserving() {}
 
 }  // namespace blink
