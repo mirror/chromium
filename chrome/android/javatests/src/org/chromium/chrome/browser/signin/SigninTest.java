@@ -309,6 +309,41 @@ public class SigninTest {
         });
     }
 
+    @Test
+    @MediumTest
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_GOOGLE_PLAY_SERVICES)
+    public void testConsentDescription() {
+        SigninTestUtil.addTestAccount();
+
+        // Open the preferences UI.
+        final Preferences prefActivity = mActivityTestRule.startPreferences(null);
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        // Create a monitor to catch the AccountSigninActivity when it is created.
+        ActivityMonitor monitor = InstrumentationRegistry.getInstrumentation().addMonitor(
+                AccountSigninActivity.class.getName(), null, false);
+
+        // Click sign in.
+        ThreadUtils.runOnUiThreadBlocking(() -> clickSigninPreference(prefActivity));
+
+        // Pick the mock account.
+        AccountSigninActivity signinActivity =
+                (AccountSigninActivity) InstrumentationRegistry.getInstrumentation().waitForMonitor(
+                        monitor);
+        Button positiveButton = (Button) signinActivity.findViewById(R.id.positive_button);
+        // Press 'sign in'.
+        TestTouchUtils.performClickOnMainSync(
+                InstrumentationRegistry.getInstrumentation(), positiveButton);
+
+        AccountSigninView view =
+                (AccountSigninView) signinActivity.getWindow().getDecorView().getRootView();
+
+        // TODO Verify view.getConsentDescription() values.
+        // TODO Verify that PrefServiceBridge.recordConsent() is called after confirming.
+
+        prefActivity.finish();
+    }
+
     private void signInToSingleAccount() {
         // Verify that we aren't signed in yet.
         Assert.assertFalse(ChromeSigninController.get().isSignedIn());

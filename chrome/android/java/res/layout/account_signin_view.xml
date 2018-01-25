@@ -4,6 +4,11 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file.
 -->
+
+<!-- Tags in this file are used to cache consent string resource names.
+     Keep them in sync with the respective text attributes. Do not use
+     tags for any other purpose. This is enforced by AccountSigninViewTest.
+-->
 <org.chromium.chrome.browser.signin.AccountSigninView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:chrome="http://schemas.android.com/apk/res-auto"
@@ -121,6 +126,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="@string/sync_confirmation_chrome_sync_title"
+                    android:tag="consent_desc=sync_confirmation_chrome_sync_title"
                     android:textAppearance="@style/BlackTitle2"
                     android:drawableStart="@drawable/chrome_sync_logo"
                     android:drawablePadding="16dp"/>
@@ -133,6 +139,7 @@
                     android:paddingEnd="16dp"
                     android:lineSpacingMultiplier="1.4"
                     android:text="@string/sync_confirmation_chrome_sync_message"
+                    android:tag="consent_desc=sync_confirmation_chrome_sync_message"
                     android:textColor="@color/descriptive_text_color"
                     android:textSize="@dimen/text_size_medium" />
 
@@ -149,6 +156,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="@string/sync_confirmation_personalize_services_title"
+                    android:tag="consent_desc=sync_confirmation_personalize_services_title"
                     android:textAppearance="@style/BlackTitle2"
                     android:drawableStart="@drawable/googleg"
                     android:drawablePadding="16dp"/>
@@ -162,6 +170,7 @@
                     android:paddingEnd="16dp"
                     android:lineSpacingMultiplier="1.4"
                     android:text="@string/sync_confirmation_personalize_services_body"
+                    android:tag="consent_desc=sync_confirmation_personalize_services_body"
                     android:textColor="@color/descriptive_text_color"
                     android:textSize="@dimen/text_size_medium"/>
 
@@ -174,6 +183,7 @@
                     android:paddingBottom="36dp"
                     android:lineSpacingMultiplier="1.4"
                     android:text="@string/signin_signed_in_settings_description"
+                    android:tag="consent_desc=signin_signed_in_settings_description"
                     android:textColor="@color/descriptive_text_color"
                     android:textSize="@dimen/text_size_medium" />
             </LinearLayout>
