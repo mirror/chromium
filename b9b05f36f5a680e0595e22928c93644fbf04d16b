@@ -16,6 +16,57 @@
       "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e947e736_a786ebf9",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-25T22:38:03Z",
+      "side": 1,
+      "message": "callers already check this, i don\u0027t think we need to add it again",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b709c01_db06ee62",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-25T22:38:03Z",
+      "side": 1,
+      "message": "can you add a comment explaining why the lock is here for the future?",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a44bef7_69704a6f",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-25T22:38:03Z",
+      "side": 1,
+      "message": "these braces aren\u0027t doing anything for us anymore",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
