@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a683d5_ca81b779",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:33:04Z",
+      "side": 1,
+      "message": "Should also be skipped on shutdown (i.e. TaskShutdownBehavior::SKIP_ON_SHUTDOWN). And ideally TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN (don\u0027t block shutdown even if task is already started).\n\n+asvitkine is CONTINUE_ON_SHUTDOWN okay with histogram primitives (i.e. are they leaked on shutdown and hence fine to call into even after main() unwinds -- don\u0027t care about histogram being recorded at that point, just not crashing)",
+      "range": {
+        "startLine": 575,
+        "startChar": 69,
+        "endLine": 575,
+        "endChar": 70
+      },
+      "revId": "3355fef3ad66a07deac294a957058fb460886401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
