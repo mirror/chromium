@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "731a606a_09248c5b",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621596b6_b6816a09",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed90a37_24bf5e0c",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "please reach out to eng review to find out where OWNERS would like this directory to live. i\u0027m not sure that it should be its own top-level directory. maybe chrome/chrome_server?",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c822dfd8_f6fded0d",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "I will find it out.",
+      "parentUuid": "5ed90a37_24bf5e0c",
       "range": {
         "startLine": 8,
         "startChar": 12,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e2dfe1a8_c2a195c1",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77237dba_b8c78c3c",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea8462f_1da8d509",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
@@ -79,6 +145,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119567de_fdfef7d2",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "No, we need switches::kUserDataDir in chrome_server.cc. switches::kUserDataDir is declared in chrome/common/chrome_switches.h, which is only in common:constants.",
+      "parentUuid": "6ea8462f_1da8d509",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6133bca1_13ca2d5d",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de82a29_252fe6bf",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4cacca9_a720d1d3",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
@@ -113,6 +215,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e9fc5f_8c75e51a",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "b4cacca9_a720d1d3",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "795c8fc4_48e5deb6",
+        "filename": "chrome_server/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "93d5228a_110505ec",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a25df8f9_56535301",
         "filename": "chrome_server/DEPS",
         "patchSetId": 29
@@ -144,6 +282,24 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "think this should only allow content/public/common/content_switches.h based on the comment in content/public/common/BUILD.gn (\"This is only for use without content...\")",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c7ef38_938e6c43",
+        "filename": "chrome_server/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "I need content/public/common/content_switches.h to be included in chrome_server.cc. Am I misunderstanding anything?",
+      "parentUuid": "a25df8f9_56535301",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "dd79ff99_b96763a5",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "e20044b9_ef394455",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fabed9d_ad1887aa",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 29
@@ -181,6 +355,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8715effb_b703c116",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fabed9d_ad1887aa",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "36ab4da7_cfae4007",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Changed to AtlTrace.",
+      "parentUuid": "9e9f32ad_7b324eec",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 7
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9f1f3b8_591f62ab",
         "filename": "chrome_server/chrome_server.rc",
         "patchSetId": 29
@@ -221,6 +437,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53ef06e_ac698107",
+        "filename": "chrome_server/chrome_server.rc",
+        "patchSetId": 29
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "e9f1f3b8_591f62ab",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "561aff8b_59f034fe",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ed93e5b_8dd1c08d",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a01777c1_77aa3059",
         "filename": "chrome_server/chrome_util.cc",
         "patchSetId": 29
@@ -255,6 +507,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bebb972_c305e78a",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a01777c1_77aa3059",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -275,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "29392261_9156ab1a",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bfa3c7a_206001fc",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a194a786_180d4bce",
         "filename": "chrome_server/chrome_util.cc",
         "patchSetId": 29
@@ -289,6 +577,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c16c35_a0629bca",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a194a786_180d4bce",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -309,6 +615,24 @@
     },
     {
       "key": {
+        "uuid": "f12777be_fbb1a5af",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Added",
+      "parentUuid": "5194630c_97260140",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7130fba_1346a79f",
         "filename": "chrome_server/chrome_util.cc",
         "patchSetId": 29
@@ -323,6 +647,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad61b826_37850afc",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "f7130fba_1346a79f",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +685,24 @@
     },
     {
       "key": {
+        "uuid": "ab64b463_8ce17113",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b11ad8_e590a4ea",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fef3ccb_bc46f4fc",
         "filename": "chrome_server/chrome_util.h",
         "patchSetId": 29
@@ -360,6 +720,24 @@
     },
     {
       "key": {
+        "uuid": "626c7af7_cbbe27a0",
+        "filename": "chrome_server/chrome_util.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fef3ccb_bc46f4fc",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde40536_360cd88f",
         "filename": "chrome_server/notification_activator.cc",
         "patchSetId": 29
@@ -371,6 +749,24 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "does the call to Activate contain useful data, such as an URL to which Chrome should navigate or something? if chrome is running, shouldn\u0027t this bring it to the foreground and navigate it somewhere? i confess to not understanding what the goal is here. launching Chrome with no info only if it\u0027s not running doesn\u0027t seem like the right thing to me.",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ba895f_853c2b9f",
+        "filename": "chrome_server/notification_activator.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "This Activate method is not fully implemented yet. I have added TODO.\n\nWhen chrome is running, OnActivated (in notification_platform_bridge_win.cc) will be triggered after this function call finishes, as we have added ToastActivatedHandler to each toast when we display it. I agree that bring chrome.exe to foreground is desirable. I will use another CL if we decide to do so.\n\nWhen chrome is not running, I don\u0027t see OnActivated is triggered in my local testing. I am not sure if this is expected yet. If it is, I think we need to grab data in the input arguments of Activate and launch chrome accordingly. I will do it in another CL.",
+      "parentUuid": "bde40536_360cd88f",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -394,6 +790,24 @@
     },
     {
       "key": {
+        "uuid": "da8ab010_acf2a76b",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "I am not able to find any information on __WRL_CLASSIC_COM_STRICT__ in Google search. Could you provide more info?",
+      "parentUuid": "51aff7f1_0235e410",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27188b08_4e24b26e",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -405,6 +819,24 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "i wonder if WRL is needed. it looks like INotificationActivationCallback is plain-old COM. can you get rid of WRL and use ATL? the use of stuff in the Details:: namespace below concerns me since we\u0027re taking a dependency on an implementation detail of WRL.",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2575a6c0_3146dd70",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Hmm, we do need to play the clsid trick in Details:: namespace below. Even if we don\u0027t need to deal with the clsid stuff, we need to rewrite that piece of code from module.h as it is not in clang format. I agree with the extra dependency.",
+      "parentUuid": "27188b08_4e24b26e",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -428,6 +860,24 @@
     },
     {
       "key": {
+        "uuid": "b31924d4_73a35fc8",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9fc993_ad42d15d",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423432f8_5f56bb4e",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -439,6 +889,24 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "please move the implementation here into the .cc file",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eaa4f06_4fb383ce",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Sure, I will move it later if we decide to stick with WRL.",
+      "parentUuid": "423432f8_5f56bb4e",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -468,6 +936,30 @@
     },
     {
       "key": {
+        "uuid": "8184410a_b5e866f0",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b89375_e506c5e5",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55a1acef_b7520c0b",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -485,6 +977,24 @@
     },
     {
       "key": {
+        "uuid": "19a10935_312cbb86",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a1acef_b7520c0b",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1140c8_3d27142f",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -496,6 +1006,30 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "if i squint at module.h just right, it appears that this param is unused. what happens if you pass nullptr here and get rid of |entry| altogether?",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620219c8_6a8db531",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "|entry| contains the info of clsid obtained via install_static::GetToastActivatorClsid(), right?",
+      "parentUuid": "3e1140c8_3d27142f",
       "range": {
         "startLine": 74,
         "startChar": 37,
@@ -525,6 +1059,24 @@
     },
     {
       "key": {
+        "uuid": "2af0f656_ba77e428",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f109a493_35fd6000",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4281da_fa69ea0c",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -542,6 +1094,24 @@
     },
     {
       "key": {
+        "uuid": "cb6bdc53_8e18efb1",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4281da_fa69ea0c",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e464641_13881edc",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -553,6 +1123,24 @@
       "writtenOn": "2018-01-25T00:09:07Z",
       "side": 1,
       "message": "where\u0027s the message loop?",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb78e622_a71183fa",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "In delegate_execute, CAtlExeModuleT has a message loop. Registration takes place in PreMessageLoop while unregistration is in PostMessageLoop. Other than that, I don\u0027t see the message loop is used for other purposes. If we move the registration/unregistration into winMain, do we still need the message loop?",
+      "parentUuid": "2e464641_13881edc",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -582,6 +1170,30 @@
     },
     {
       "key": {
+        "uuid": "50edd2f6_00c654f0",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b87623c5_d63c168d",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ef0679_1e718be6",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -599,6 +1211,24 @@
     },
     {
       "key": {
+        "uuid": "f7816b76_fdcb18b8",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ef0679_1e718be6",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360670fb_95a8e9ea",
         "filename": "chrome_server/resource.h",
         "patchSetId": 29
@@ -613,6 +1243,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0670b7_e8007bce",
+        "filename": "chrome_server/resource.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-25T07:01:33Z",
+      "side": 1,
+      "message": "Done. resource.h removed.",
+      "parentUuid": "360670fb_95a8e9ea",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
