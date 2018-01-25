@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da54d679_77ed9f6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57c1338_f2dbd783",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91e8d474_c0e5b722",
         "filename": "content/browser/loader/signed_exchange_handler.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836615a1_747f2eb9",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91e8d474_c0e5b722",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a35997fb_0054ce3d",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90d7acf8_34b827c5",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806b9465_d4604e91",
         "filename": "content/browser/loader/url_loader_request_handler.h",
         "patchSetId": 26
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3bb0a908_164ebc0f",
+        "filename": "content/browser/loader/url_loader_request_handler.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806b9465_d4604e91",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabece03_28b3184b",
         "filename": "content/browser/loader/web_package_loader.cc",
         "patchSetId": 26
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-24T16:08:40Z",
       "side": 1,
       "message": "I suspect this will just let us ignore all navigation throttles...? this ProceedWithResponse plumbing with NavigationMojoResponse case seems tricky, but I do want to be careful not to introduce the code that could be risky.",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21305955_ef1edb51",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "I think we need to call ProceedWithResponse here to receive the body from the network.\nWe have to implement WebPackageLoader::ProceedWithResponse() to support the throttles.\n\nImplemented.",
+      "parentUuid": "dabece03_28b3184b",
       "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f43e4bf3_a0bedea2",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4687cdf0_45694484",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb46987_09d96f1a",
         "filename": "content/browser/loader/web_package_loader.cc",
         "patchSetId": 26
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-24T16:08:40Z",
       "side": 1,
       "message": "I don\u0027t think it\u0027s guaranteed that this is never called after OnReceiveResponse. (Some impl actually calls it after that)",
+      "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac4ad62_7134641d",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-25T04:00:22Z",
+      "side": 1,
+      "message": "Yes.\nUpdated comments.",
+      "parentUuid": "fcb46987_09d96f1a",
       "revId": "ef75f97e8c5d73990ab1d170b23b83895e190bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
