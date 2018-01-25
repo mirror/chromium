@@ -24,7 +24,7 @@ const base::TimeDelta LocationArbitrator::kFixStaleTimeoutTimeDelta =
 
 LocationArbitrator::LocationArbitrator(
     const CustomLocationProviderCallback& custom_location_provider_getter,
-    GeolocationProvider::RequestContextProducer request_context_producer,
+    GeolocationProviderImpl::RequestContextProducer request_context_producer,
     const std::string& api_key)
     : custom_location_provider_getter_(custom_location_provider_getter),
       request_context_producer_(request_context_producer),

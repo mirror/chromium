@@ -24,25 +24,25 @@ namespace device {
 namespace {
 base::LazyInstance<CustomLocationProviderCallback>::Leaky
     g_custom_location_provider_callback = LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<GeolocationProvider::RequestContextProducer>::Leaky
+base::LazyInstance<GeolocationProviderImpl::RequestContextProducer>::Leaky
     g_request_context_producer = LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<std::string>::Leaky g_api_key = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
 // static
-GeolocationProvider* GeolocationProvider::GetInstance() {
-  return GeolocationProviderImpl::GetInstance();
-}
-
-// static
-void GeolocationProvider::SetRequestContextProducer(
-    GeolocationProvider::RequestContextProducer request_context_producer) {
+void GeolocationProviderImpl::SetRequestContextProducer(
+    RequestContextProducer request_context_producer) {
   g_request_context_producer.Get() = request_context_producer;
 }
 
 // static
-void GeolocationProvider::SetApiKey(const std::string& api_key) {
+void GeolocationProviderImpl::SetApiKey(const std::string& api_key) {
   g_api_key.Get() = api_key;
+}
+
+// static
+GeolocationProvider* GeolocationProvider::GetInstance() {
+  return GeolocationProviderImpl::GetInstance();
 }
 
 // static
@@ -51,12 +51,12 @@ void GeolocationProviderImpl::SetCustomLocationProviderCallback(
   g_custom_location_provider_callback.Get() = callback;
 }
 
-std::unique_ptr<GeolocationProvider::Subscription>
+std::unique_ptr<GeolocationProviderImpl::Subscription>
 GeolocationProviderImpl::AddLocationUpdateCallback(
     const LocationUpdateCallback& callback,
     bool enable_high_accuracy) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  std::unique_ptr<GeolocationProvider::Subscription> subscription;
+  std::unique_ptr<GeolocationProviderImpl::Subscription> subscription;
   if (enable_high_accuracy) {
     subscription = high_accuracy_callbacks_.Add(callback);
   } else {

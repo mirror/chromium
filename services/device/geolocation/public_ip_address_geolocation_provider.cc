@@ -9,7 +9,7 @@
 namespace device {
 
 PublicIpAddressGeolocationProvider::PublicIpAddressGeolocationProvider(
-    GeolocationProvider::RequestContextProducer request_context_producer,
+    GeolocationProviderImpl::RequestContextProducer request_context_producer,
     const std::string& api_key) {
   // Bind sequence_checker_ to the initialization sequence.
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

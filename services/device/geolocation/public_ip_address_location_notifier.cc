@@ -17,7 +17,7 @@ constexpr base::TimeDelta kNetworkChangeReactionDelay =
 }  // namespace
 
 PublicIpAddressLocationNotifier::PublicIpAddressLocationNotifier(
-    GeolocationProvider::RequestContextProducer request_context_producer,
+    GeolocationProviderImpl::RequestContextProducer request_context_producer,
     const std::string& api_key)
     : network_changed_since_last_request_(true),
       api_key_(api_key),

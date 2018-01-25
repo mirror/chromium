@@ -105,7 +105,7 @@ class TestingLocationArbitrator : public LocationArbitrator {
   TestingLocationArbitrator(
       const LocationProviderUpdateCallback& callback,
       const CustomLocationProviderCallback& provider_getter,
-      GeolocationProvider::RequestContextProducer request_context_producer)
+      GeolocationProviderImpl::RequestContextProducer request_context_producer)
       : LocationArbitrator(provider_getter,
                            request_context_producer,
                            std::string() /* api_key */),
@@ -145,7 +145,8 @@ class GeolocationLocationArbitratorTest : public testing::Test {
   // Initializes |arbitrator_| with the specified |provider|, which may be null.
   void InitializeArbitrator(
       const CustomLocationProviderCallback& provider_getter,
-      GeolocationProvider::RequestContextProducer request_context_producer) {
+      GeolocationProviderImpl::RequestContextProducer
+          request_context_producer) {
     const LocationProvider::LocationProviderUpdateCallback callback =
         base::Bind(&MockLocationObserver::OnLocationUpdate,
                    base::Unretained(observer_.get()));
