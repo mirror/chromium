@@ -466,11 +466,20 @@ void ExtensionInstallDialogView::AddedToWidget() {
   constexpr int icon_size = extension_misc::EXTENSION_ICON_SMALL;
   column_set->AddColumn(views::GridLayout::CENTER, views::GridLayout::LEADING,
                         0, views::GridLayout::FIXED, icon_size, 0);
+
+  const gfx::Insets dialog_insets =
+      provider->GetInsetsMetric(views::INSETS_DIALOG);
   // Equalize padding on the left and the right of the icon.
-  column_set->AddPaddingColumn(
-      0, provider->GetInsetsMetric(views::INSETS_DIALOG).left());
+  const int icon_title_padding = dialog_insets.left();
+  column_set->AddPaddingColumn(0, icon_title_padding);
+
+  // Constrain the title label to the remaining width.
+  const int title_width = ChromeLayoutProvider::Get()->GetDistanceMetric(
+                              DISTANCE_MODAL_DIALOG_PREFERRED_WIDTH) -
+                          icon_size - icon_title_padding -
+                          dialog_insets.width();
   column_set->AddColumn(views::GridLayout::LEADING, views::GridLayout::LEADING,
-                        0, views::GridLayout::USE_PREF, 0, 0);
+                        0, views::GridLayout::FIXED, title_width, 0);
 
   // Scale down to icon size, but allow smaller icons (don't scale up).
   const gfx::ImageSkia* image = prompt_->icon().ToImageSkia();
@@ -532,6 +541,10 @@ void ExtensionInstallDialogView::AddedToWidget() {
   views::BubbleFrameView* frame_view = static_cast<views::BubbleFrameView*>(
       GetWidget()->non_client_view()->frame_view());
   frame_view->SetTitleView(std::move(title_container));
+}
+
+bool ExtensionInstallDialogView::ShouldShowCloseButton() const {
+  return false;
 }
 
 void ExtensionInstallDialogView::VisibilityChanged(views::View* starting_from,
