@@ -65,6 +65,9 @@ fuzzer_test("pdfium_fuzzer") {
   ]
   dict = "dicts/pdf.dict"
   seed_corpus = "//third_party/pdfium/testing/resources"
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs += [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_cmap_fuzzer") {
@@ -72,6 +75,9 @@ fuzzer_test("pdf_cmap_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_cmap_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_codec_a85_fuzzer") {
@@ -79,6 +85,9 @@ fuzzer_test("pdf_codec_a85_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_codec_a85_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_codec_fax_fuzzer") {
@@ -86,6 +95,9 @@ fuzzer_test("pdf_codec_fax_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_codec_fax_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_codec_rle_fuzzer") {
@@ -93,6 +105,9 @@ fuzzer_test("pdf_codec_rle_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_codec_rle_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_codec_icc_fuzzer") {
@@ -101,6 +116,9 @@ fuzzer_test("pdf_codec_icc_fuzzer") {
     "//third_party/pdfium/testing/libfuzzer:pdf_codec_icc_fuzzer",
   ]
   dict = "dicts/pdf_codec_icc.dict"
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_codec_jbig2_fuzzer") {
@@ -108,6 +126,9 @@ fuzzer_test("pdf_codec_jbig2_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_codec_jbig2_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_hint_table_fuzzer") {
@@ -115,6 +136,9 @@ fuzzer_test("pdf_hint_table_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_hint_table_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_jpx_fuzzer") {
@@ -123,6 +147,9 @@ fuzzer_test("pdf_jpx_fuzzer") {
     "//third_party/pdfium/testing/libfuzzer:pdf_jpx_fuzzer",
   ]
   seed_corpus = "corpora/pdf_jpx"
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_font_fuzzer") {
@@ -130,6 +157,9 @@ fuzzer_test("pdf_font_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_font_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_psengine_fuzzer") {
@@ -137,6 +167,9 @@ fuzzer_test("pdf_psengine_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_psengine_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 fuzzer_test("pdf_streamparser_fuzzer") {
@@ -144,6 +177,9 @@ fuzzer_test("pdf_streamparser_fuzzer") {
   deps = [
     "//third_party/pdfium/testing/libfuzzer:pdf_streamparser_fuzzer",
   ]
+
+  # Temporarily disabled because of chromium:803330.
+  additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
 if (pdf_enable_xfa) {
@@ -162,6 +198,9 @@ if (pdf_enable_xfa) {
     ]
     dict = "dicts/pdf_codec_gif.dict"
     seed_corpus = "corpora/pdf_codec_gif"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_codec_jpeg_fuzzer") {
@@ -171,6 +210,9 @@ if (pdf_enable_xfa) {
     ]
     dict = "dicts/pdf_codec_jpeg.dict"
     seed_corpus = "corpora/pdf_codec_jpeg"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_codec_png_fuzzer") {
@@ -185,6 +227,9 @@ if (pdf_enable_xfa) {
       "//third_party/WebKit/LayoutTests/images/png-suite/samples",
       "//third_party/WebKit/LayoutTests/images/resources/pngfuzz",
     ]
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_codec_tiff_fuzzer") {
@@ -194,6 +239,9 @@ if (pdf_enable_xfa) {
     ]
     dict = "dicts/pdf_codec_tiff.dict"
     seed_corpus = "corpora/pdf_codec_tiff"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_css_fuzzer") {
@@ -202,6 +250,9 @@ if (pdf_enable_xfa) {
       "//third_party/pdfium/testing/libfuzzer:pdf_css_fuzzer",
     ]
     dict = "dicts/pdf_css.dict"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_fm2js_fuzzer") {
@@ -210,6 +261,9 @@ if (pdf_enable_xfa) {
       "//third_party/pdfium/testing/libfuzzer:pdf_fm2js_fuzzer",
     ]
     dict = "dicts/pdf_formcalc.dict"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_formcalc_fuzzer") {
@@ -218,6 +272,9 @@ if (pdf_enable_xfa) {
       "//third_party/pdfium/testing/libfuzzer:pdf_formcalc_fuzzer",
     ]
     dict = "dicts/pdf_formcalc.dict"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_lzw_fuzzer") {
@@ -225,6 +282,9 @@ if (pdf_enable_xfa) {
     deps = [
       "//third_party/pdfium/testing/libfuzzer:pdf_lzw_fuzzer",
     ]
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_xml_fuzzer") {
@@ -233,6 +293,9 @@ if (pdf_enable_xfa) {
       "//third_party/pdfium/testing/libfuzzer:pdf_xml_fuzzer",
     ]
     dict = "dicts/pdf_xml.dict"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_cfx_barcode_fuzzer") {
@@ -240,6 +303,9 @@ if (pdf_enable_xfa) {
     deps = [
       "//third_party/pdfium/testing/libfuzzer:pdf_cfx_barcode_fuzzer",
     ]
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdf_cfx_saxreader_fuzzer") {
@@ -248,6 +314,9 @@ if (pdf_enable_xfa) {
       "//third_party/pdfium/testing/libfuzzer:pdf_cfx_saxreader_fuzzer",
     ]
     dict = "dicts/pdf_xml.dict"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 
   fuzzer_test("pdfium_xfa_fuzzer") {
@@ -268,5 +337,8 @@ if (pdf_enable_xfa) {
     ]
     dict = "dicts/pdf.dict"
     seed_corpus = "//third_party/pdfium/testing/resources"
+
+    # Temporarily disabled because of chromium:803330.
+    additional_configs += [ "//testing/libfuzzer:no_clusterfuzz" ]
   }
 }
