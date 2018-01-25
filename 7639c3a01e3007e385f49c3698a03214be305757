@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d01c18_2052e618",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-25T02:38:39Z",
+      "side": 1,
+      "message": "Can path_ be null?",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806b7fa1_51a14f2d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-25T02:38:39Z",
+      "side": 1,
+      "message": "Please update ToJSON. It may be enough to just indicate whether there is a clip.",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
