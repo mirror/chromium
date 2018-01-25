@@ -58,8 +58,9 @@ class CONTENT_EXPORT ResolveProxyMsgHelper : public BrowserMessageFilter {
   // A PendingRequest is a resolve request that is in progress, or queued.
   struct PendingRequest {
    public:
-    PendingRequest(const GURL& url, IPC::Message* reply_msg)
-        : url(url), reply_msg(reply_msg), request(NULL) {}
+    PendingRequest(const GURL& url, IPC::Message* reply_msg);
+    PendingRequest(const PendingRequest& req);
+    ~PendingRequest();
 
     // The URL of the request.
     GURL url;
@@ -68,7 +69,7 @@ class CONTENT_EXPORT ResolveProxyMsgHelper : public BrowserMessageFilter {
     IPC::Message* reply_msg;
 
     // Handle for cancelling the current request if it has started (else NULL).
-    net::ProxyResolutionService::Request* request;
+    scoped_refptr<net::ProxyResolutionService::Request> request;
   };
 
   // Info about the current outstanding proxy request.
