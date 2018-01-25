@@ -22,6 +22,30 @@
       "revId": "559f930f073da75a43cfc5b19cef2bc8c4e00b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2876748_9d2bb0aa",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-25T22:42:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05219807_e9410054",
+      "range": {
+        "startLine": 1540,
+        "startChar": 29,
+        "endLine": 1540,
+        "endChar": 36
+      },
+      "revId": "559f930f073da75a43cfc5b19cef2bc8c4e00b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
