@@ -73,9 +73,6 @@
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
-#include "ui/display/win/screen_win.h"
-#include "ui/gfx/win/hwnd_util.h"
-#include "ui/views/win/hwnd_util.h"
 #endif
 
 using base::UserMetricsAction;
