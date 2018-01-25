@@ -184,6 +184,9 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplsWithDeadlines) {
       2, base::UnguessableToken::Create());
   viz::SurfaceId surface_id2(kArbitraryFrameSinkId, kArbitraryLocalSurfaceId2);
 
+  gfx::Size viewport_size(1000, 1000);
+  impl.CalcDrawProps(viewport_size);
+
   gfx::Size layer_size(400, 100);
 
   surface_layer_impl->SetBounds(layer_size);
