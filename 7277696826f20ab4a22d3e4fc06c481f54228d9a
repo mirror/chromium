@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "7620066a_d54e68e8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T14:45:30Z",
+      "side": 1,
+      "message": "\u003e TapDismabiguator is now backed by WebContentsUserData, it cannot be accessed if mWebContents is null. Same goes for |onFocusChanged| case. But it won\u0027t be left shown/open if mWebContent is null, which is when CVC is being destroyed. They are all made sure to get closed in |destroy| before mWebContents is nulled out.\n\nbut onFocusChanged no longer calls this anymore",
+      "parentUuid": "709efea6_328e3ec1",
+      "revId": "7277696826f20ab4a22d3e4fc06c481f54228d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efdc8a2c_bc719129",
         "filename": "content/public/android/java/src/org/chromium/content/browser/TapDisambiguator.java",
         "patchSetId": 9

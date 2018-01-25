@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b834708e_61c7a6fa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T14:45:30Z",
+      "side": 1,
+      "message": "that comment actually implies we don\u0027t need this line here..",
+      "revId": "66ebb5e9efaa31fec1de7d047f9ab1c26db4ee67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
