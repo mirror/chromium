@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "565c74a3_4fe62296",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-25T16:57:11Z",
+      "side": 1,
+      "message": "This is a simplified and faster version of Generate().",
+      "revId": "c11607cf57bdaf1288d954719d7df334337a89f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
