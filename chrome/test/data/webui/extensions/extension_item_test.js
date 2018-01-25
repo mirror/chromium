@@ -220,50 +220,47 @@ cr.define('extension_item_tests', function() {
     });
 
     test(assert(TestNames.Warnings), function() {
-      var hasCorruptedWarning = function() {
-        return extension_test_util.isVisible(item, '#corrupted-warning');
-      };
-      var hasSuspiciousWarning = function() {
-        return extension_test_util.isVisible(item, '#suspicious-warning');
-      };
-      var hasBlacklistedWarning = function() {
-        return extension_test_util.isVisible(item, '#blacklisted-warning');
-      };
+      function assertWarnings(
+          corrupt, suspicious, blacklisted, runtime) {
+        assertEquals(
+            corrupt, extension_test_util.isVisible(item, '#corrupted-warning'));
+        assertEquals(
+            suspicious,
+            extension_test_util.isVisible(item, '#suspicious-warning'));
+        assertEquals(
+            blacklisted,
+            extension_test_util.isVisible(item, '#blacklisted-warning'));
+        assertEquals(
+            runtime, extension_test_util.isVisible(item, '#runtime-warnings'));
+      }
 
-      expectFalse(hasCorruptedWarning());
-      expectFalse(hasSuspiciousWarning());
-      expectFalse(hasBlacklistedWarning());
+      assertWarnings(false, false, false, false);
 
       item.set('data.disableReasons.corruptInstall', true);
       Polymer.dom.flush();
-      expectTrue(hasCorruptedWarning());
-      expectFalse(hasSuspiciousWarning());
-      expectFalse(hasBlacklistedWarning());
+      assertWarnings(true, false, false, false);
 
       item.set('data.disableReasons.suspiciousInstall', true);
       Polymer.dom.flush();
-      expectTrue(hasCorruptedWarning());
-      expectTrue(hasSuspiciousWarning());
-      expectFalse(hasBlacklistedWarning());
+      assertWarnings(true, true, false, false);
 
       item.set('data.blacklistText', 'This item is blacklisted');
       Polymer.dom.flush();
-      expectTrue(hasCorruptedWarning());
-      expectTrue(hasSuspiciousWarning());
-      expectTrue(hasBlacklistedWarning());
+      assertWarnings(true, true, true, false);
 
       item.set('data.blacklistText', undefined);
       Polymer.dom.flush();
-      expectTrue(hasCorruptedWarning());
-      expectTrue(hasSuspiciousWarning());
-      expectFalse(hasBlacklistedWarning());
+      assertWarnings(true, true, false, false);
+
+      item.set('data.runtimeWarnings', ['Dummy warning']);
+      Polymer.dom.flush();
+      assertWarnings(true, true, false, true);
 
       item.set('data.disableReasons.corruptInstall', false);
       item.set('data.disableReasons.suspiciousInstall', false);
+      item.set('data.runtimeWarnings', []);
       Polymer.dom.flush();
-      expectFalse(hasCorruptedWarning());
-      expectFalse(hasSuspiciousWarning());
-      expectFalse(hasBlacklistedWarning());
+      assertWarnings(false, false, false, false);
     });
 
     test(assert(TestNames.SourceIndicator), function() {
