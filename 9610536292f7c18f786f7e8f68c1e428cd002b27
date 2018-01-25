@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "44767ffc_a65a8cb0",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-25T09:39:58Z",
+      "side": 1,
+      "message": "Ack. As a side not on this: maybe we in general should test more with those sample rates, if they are fairly common (we have stats for this). I\u0027ll follow up on this.",
+      "parentUuid": "98dffebe_ca482713",
+      "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5aeb58_465a4221",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 9
