@@ -32,6 +32,8 @@ bindings_core_v8_files =
                     "core/v8/BindingSecurity.cpp",
                     "core/v8/BindingSecurity.h",
                     "core/v8/CallbackPromiseAdapter.h",
+                    "core/v8/ClassParserHelper.cpp",
+                    "core/v8/ClassParserHelper.h",
                     "core/v8/Dictionary.cpp",
                     "core/v8/Dictionary.h",
                     "core/v8/DictionaryHelperForCore.cpp",

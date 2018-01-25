@@ -4,6 +4,7 @@
 
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
 
+#include "bindings/core/v8/ClassParserHelper.h"
 #include "bindings/core/v8/IDLTypes.h"
 #include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
@@ -25,40 +26,6 @@
 namespace blink {
 
 namespace {
-
-bool ParseInputProperties(v8::Isolate* isolate,
-                          v8::Local<v8::Context> context,
-                          v8::Local<v8::Function> constructor,
-                          Vector<CSSPropertyID>& native_invalidation_properties,
-                          Vector<AtomicString>& custom_invalidation_properties,
-                          ExceptionState& exception_state,
-                          v8::TryCatch& block) {
-  v8::Local<v8::Value> input_properties_value;
-  if (!constructor->Get(context, V8AtomicString(isolate, "inputProperties"))
-           .ToLocal(&input_properties_value)) {
-    exception_state.RethrowV8Exception(block.Exception());
-    return false;
-  }
-
-  if (!input_properties_value->IsNullOrUndefined()) {
-    Vector<String> properties =
-        NativeValueTraits<IDLSequence<IDLString>>::NativeValue(
-            isolate, input_properties_value, exception_state);
-
-    if (exception_state.HadException())
-      return false;
-
-    for (const auto& property : properties) {
-      CSSPropertyID property_id = cssPropertyID(property);
-      if (property_id == CSSPropertyVariable) {
-        custom_invalidation_properties.push_back(std::move(property));
-      } else if (property_id != CSSPropertyInvalid) {
-        native_invalidation_properties.push_back(std::move(property_id));
-      }
-    }
-  }
-  return true;
-}
 
 bool ParseInputArguments(v8::Isolate* isolate,
                          v8::Local<v8::Context> context,
@@ -112,57 +79,6 @@ bool ParsePaintRenderingContext2DSettings(
                                             context_settings, exception_state);
   if (exception_state.HadException())
     return false;
-  return true;
-}
-
-bool ParsePaintFunction(v8::Isolate* isolate,
-                        v8::Local<v8::Context> context,
-                        v8::Local<v8::Function> constructor,
-                        v8::Local<v8::Function>& paint,
-                        ExceptionState& exception_state,
-                        v8::TryCatch& block) {
-  v8::Local<v8::Value> prototype_value;
-  if (!constructor->Get(context, V8AtomicString(isolate, "prototype"))
-           .ToLocal(&prototype_value)) {
-    exception_state.RethrowV8Exception(block.Exception());
-    return false;
-  }
-
-  if (prototype_value->IsNullOrUndefined()) {
-    exception_state.ThrowTypeError(
-        "The 'prototype' object on the class does not exist.");
-    return false;
-  }
-
-  if (!prototype_value->IsObject()) {
-    exception_state.ThrowTypeError(
-        "The 'prototype' property on the class is not an object.");
-    return false;
-  }
-
-  v8::Local<v8::Object> prototype =
-      v8::Local<v8::Object>::Cast(prototype_value);
-
-  v8::Local<v8::Value> paint_value;
-  if (!prototype->Get(context, V8AtomicString(isolate, "paint"))
-           .ToLocal(&paint_value)) {
-    exception_state.RethrowV8Exception(block.Exception());
-    return false;
-  }
-
-  if (paint_value->IsNullOrUndefined()) {
-    exception_state.ThrowTypeError(
-        "The 'paint' function on the prototype does not exist.");
-    return false;
-  }
-
-  if (!paint_value->IsFunction()) {
-    exception_state.ThrowTypeError(
-        "The 'paint' property on the prototype is not a function.");
-    return false;
-  }
-
-  paint = v8::Local<v8::Function>::Cast(paint_value);
   return true;
 }
 
@@ -224,17 +140,20 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 
   v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
   v8::Local<v8::Context> context = ScriptController()->GetContext();
+
   DCHECK(ctor_value.V8Value()->IsFunction());
   v8::Local<v8::Function> constructor =
       v8::Local<v8::Function>::Cast(ctor_value.V8Value());
 
+  v8::TryCatch block(isolate);
+
   Vector<CSSPropertyID> native_invalidation_properties;
   Vector<AtomicString> custom_invalidation_properties;
 
-  v8::TryCatch block(isolate);
-  if (!ParseInputProperties(
-          isolate, context, constructor, native_invalidation_properties,
-          custom_invalidation_properties, exception_state, block))
+  if (!ParseCSSPropertyList(isolate, context, constructor, "inputProperties",
+                            &native_invalidation_properties,
+                            &custom_invalidation_properties, &exception_state,
+                            &block))
     return;
 
   // Get input argument types. Parse the argument type values only when
@@ -250,9 +169,14 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
                                             block))
     return;
 
+  v8::Local<v8::Object> prototype;
+  if (!ParsePrototype(isolate, context, constructor, &prototype,
+                      &exception_state, &block))
+    return;
+
   v8::Local<v8::Function> paint;
-  if (!ParsePaintFunction(isolate, context, constructor, paint, exception_state,
-                          block))
+  if (!ParseFunction(isolate, context, prototype, "paint", &paint,
+                     &exception_state, &block))
     return;
 
   CSSPaintDefinition* definition = CSSPaintDefinition::Create(
