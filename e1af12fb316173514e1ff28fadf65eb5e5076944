@@ -312,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "190fe77b_2a91cf3a",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-25T15:32:43Z",
+      "side": 1,
+      "message": "Yup, that\u0027s fine with me - agreed that we don\u0027t want to pipe the profile through all the way.\nThanks for checking!",
+      "parentUuid": "58760925_157ae34b",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
