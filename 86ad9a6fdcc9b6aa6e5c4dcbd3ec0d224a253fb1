@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf84da11_a08ef042",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T00:04:11Z",
+      "side": 1,
+      "message": "Right, once you started an animation worklet it would tick every frame - but - this now means once we have a mutator. This is fine though since I tested, and we only create the mutator at the point where you import an animation worklet script. So this shouldn\u0027t happen on regular sites.",
+      "parentUuid": "b6455fa8_8b536d20",
+      "revId": "86ad9a6fdcc9b6aa6e5c4dcbd3ec0d224a253fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3bebdd2_76bcaa1d",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 48
