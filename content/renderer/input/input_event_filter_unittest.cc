@@ -413,6 +413,7 @@ TEST_F(InputEventFilterTest, PreserveRelativeOrder) {
   messages.push_back(InputMsg_SelectRange(kTestRoutingID,
                                          gfx::Point(), gfx::Point()));
   messages.push_back(InputMsg_MoveCaret(kTestRoutingID, gfx::Point()));
+  messages.push_back(InputMsg_DismissTouchHandles(kTestRoutingID));
 
   messages.push_back(InputMsg_HandleInputEvent(
       kTestRoutingID, &mouse_up, std::vector<const WebInputEvent*>(),

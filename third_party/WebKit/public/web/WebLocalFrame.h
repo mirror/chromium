@@ -548,6 +548,7 @@ class WebLocalFrame : public WebFrame {
       const WebPoint& extent,
       WebFrame::TextGranularity = kCharacterGranularity) = 0;
   virtual void MoveCaretSelection(const WebPoint&) = 0;
+  virtual void DismissTouchHandles() = 0;
 
   virtual bool SetEditableSelectionOffsets(int start, int end) = 0;
   virtual bool SetCompositionFromExistingText(

@@ -41,6 +41,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientChildFrame
   bool SupportsAnimation() const override;
   void SetNeedsAnimate() override;
   void MoveCaret(const gfx::PointF& position) override;
+  void DismissTouchHandles() override;
   void MoveRangeSelectionExtent(const gfx::PointF& extent) override;
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent) override;

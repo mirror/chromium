@@ -1327,6 +1327,15 @@ void WebLocalFrameImpl::MoveCaretSelection(const WebPoint& point_in_viewport) {
   GetFrame()->Selection().MoveCaretSelection(point_in_contents);
 }
 
+void WebLocalFrameImpl::DismissTouchHandles() {
+  TRACE_EVENT0("blink", "WebLocalFrameImpl::DismissTouchHandles");
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  see http://crbug.com/590369 for more details.
+  GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  GetFrame()->Selection().DismissTouchHandles();
+}
+
 bool WebLocalFrameImpl::SetEditableSelectionOffsets(int start, int end) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::setEditableSelectionOffsets");
 

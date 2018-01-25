@@ -35,6 +35,7 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionControllerClient {
   virtual void OnSelectionEvent(SelectionEventType event) = 0;
   virtual std::unique_ptr<TouchHandleDrawable> CreateDrawable() = 0;
   virtual void DidScroll() = 0;
+  virtual void DismissTouchHandles() = 0;
 };
 
 // Controller for manipulating text selection via touch input.
@@ -99,9 +100,8 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionController
   // long-press drag.
   void OnScrollBeginEvent();
 
-  // Hide the handles and suppress bounds updates until the next explicit
-  // showing allowance.
-  void HideAndDisallowShowingAutomatically();
+  // Dismiss the touch handles.
+  void DismissTouchHandles();
 
   // Override the handle visibility according to |hidden|.
   void SetTemporarilyHidden(bool hidden);
@@ -221,8 +221,6 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionController
 
   // Determines whether the entire touch sequence should be consumed or not.
   bool consume_touch_sequence_;
-
-  bool show_touch_handles_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchSelectionController);
 };

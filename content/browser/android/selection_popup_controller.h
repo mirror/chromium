@@ -49,6 +49,8 @@ class SelectionPopupController : public RenderWidgetHostConnector {
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent);
 
+  void DismissTouchHandles();
+
  private:
   ~SelectionPopupController() override {}
   base::android::ScopedJavaLocalRef<jobject> GetContext() const;

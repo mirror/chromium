@@ -649,7 +649,7 @@ void WebContentsViewAura::CompleteOverscrollNavigation(OverscrollMode mode) {
   navigation_overlay_->relay_delegate()->OnOverscrollComplete(mode);
   ui::TouchSelectionController* selection_controller = GetSelectionController();
   if (selection_controller)
-    selection_controller->HideAndDisallowShowingAutomatically();
+    selection_controller->DismissTouchHandles();
 }
 
 ui::TouchSelectionController* WebContentsViewAura::GetSelectionController()
@@ -1020,7 +1020,7 @@ void WebContentsViewAura::StartDragging(
 
   ui::TouchSelectionController* selection_controller = GetSelectionController();
   if (selection_controller)
-    selection_controller->HideAndDisallowShowingAutomatically();
+    selection_controller->DismissTouchHandles();
   std::unique_ptr<ui::OSExchangeData::Provider> provider =
       ui::OSExchangeDataProviderFactory::CreateProvider();
   PrepareDragData(drop_data, provider.get(), web_contents_);

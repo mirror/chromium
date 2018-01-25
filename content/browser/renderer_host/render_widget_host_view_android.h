@@ -223,6 +223,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void MoveRangeSelectionExtent(const gfx::PointF& extent) override;
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent) override;
+  void DismissTouchHandles() override;
   void OnSelectionEvent(ui::SelectionEventType event) override;
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override;
   void DidScroll() override;

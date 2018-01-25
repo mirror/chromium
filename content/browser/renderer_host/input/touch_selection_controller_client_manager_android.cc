@@ -133,6 +133,10 @@ void TouchSelectionControllerClientManagerAndroid::SelectBetweenCoordinates(
   active_client_->SelectBetweenCoordinates(scaled_base, scaled_extent);
 }
 
+void TouchSelectionControllerClientManagerAndroid::DismissTouchHandles() {
+  active_client_->DismissTouchHandles();
+}
+
 void TouchSelectionControllerClientManagerAndroid::OnSelectionEvent(
     ui::SelectionEventType event) {
   // Always defer to the top-level RWHV TSC for this.

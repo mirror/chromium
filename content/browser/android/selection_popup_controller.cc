@@ -88,6 +88,14 @@ void SelectionPopupController::SelectBetweenCoordinates(
   web_contents_impl->SelectRange(base_point, extent_point);
 }
 
+void SelectionPopupController::DismissTouchHandles() {
+  auto* web_contents_impl = static_cast<WebContentsImpl*>(web_contents());
+  if (!web_contents_impl)
+    return;
+
+  web_contents_impl->DismissTouchHandles();
+}
+
 void SelectionPopupController::UpdateRenderProcessConnection(
     RenderWidgetHostViewAndroid* old_rwhva,
     RenderWidgetHostViewAndroid* new_rwhva) {

@@ -1799,7 +1799,7 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
     // handle this, just in case it stomps on a new highlight in another view
     // that has just become focused? So far it doesn't appear to be a problem,
     // but we should keep an eye on it.
-    selection_controller_->HideAndDisallowShowingAutomatically();
+    selection_controller_->DismissTouchHandles();
 
     if (overscroll_controller_)
       overscroll_controller_->Cancel();

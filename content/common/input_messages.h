@@ -308,6 +308,8 @@ IPC_MESSAGE_ROUTED1(InputMsg_MoveRangeSelectionExtent,
 IPC_MESSAGE_ROUTED1(InputMsg_MoveCaret,
                     gfx::Point /* location */)
 
+IPC_MESSAGE_ROUTED0(InputMsg_DismissTouchHandles)
+
 #if defined(OS_ANDROID)
 // Request from browser to update text input state.
 IPC_MESSAGE_ROUTED0(InputMsg_RequestTextInputStateUpdate)

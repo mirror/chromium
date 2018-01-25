@@ -376,6 +376,20 @@ void FrameInputHandlerImpl::MoveCaret(const gfx::Point& point) {
       render_view->ConvertWindowPointToViewport(point));
 }
 
+void FrameInputHandlerImpl::DismissTouchHandles() {
+  if (!main_thread_task_runner_->BelongsToCurrentThread()) {
+    main_thread_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&FrameInputHandlerImpl::DismissTouchHandles,
+                                  weak_this_));
+    return;
+  }
+
+  if (!render_frame_)
+    return;
+
+  render_frame_->GetWebFrame()->DismissTouchHandles();
+}
+
 void FrameInputHandlerImpl::GetWidgetInputHandler(
     mojom::WidgetInputHandlerAssociatedRequest interface_request,
     mojom::WidgetInputHandlerHostPtr host) {

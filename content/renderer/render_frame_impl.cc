@@ -1733,6 +1733,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(InputMsg_Replace, OnReplace)
     IPC_MESSAGE_HANDLER(InputMsg_ReplaceMisspelling, OnReplaceMisspelling)
     IPC_MESSAGE_HANDLER(InputMsg_MoveCaret, OnMoveCaret)
+    IPC_MESSAGE_HANDLER(InputMsg_DismissTouchHandles, OnDismissTouchHandles)
     IPC_MESSAGE_HANDLER(InputMsg_ScrollFocusedEditableNodeIntoRect,
                         OnScrollFocusedEditableNodeIntoRect)
     IPC_MESSAGE_HANDLER(FrameMsg_CopyImageAt, OnCopyImageAt)
@@ -2019,6 +2020,10 @@ void RenderFrameImpl::OnCustomContextMenuAction(
 void RenderFrameImpl::OnMoveCaret(const gfx::Point& point) {
   Send(new InputHostMsg_MoveCaret_ACK(render_view_->GetRoutingID()));
   frame_->MoveCaretSelection(render_view_->ConvertWindowPointToViewport(point));
+}
+
+void RenderFrameImpl::OnDismissTouchHandles() {
+  frame_->DismissTouchHandles();
 }
 
 void RenderFrameImpl::OnScrollFocusedEditableNodeIntoRect(

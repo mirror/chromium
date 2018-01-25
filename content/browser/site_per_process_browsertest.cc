@@ -12400,6 +12400,8 @@ class TouchSelectionControllerClientTestWrapper
     client_->SelectBetweenCoordinates(base, extent);
   }
 
+  void DismissTouchHandles() override { client_->DismissTouchHandles(); }
+
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override {
     return client_->CreateDrawable();
   }

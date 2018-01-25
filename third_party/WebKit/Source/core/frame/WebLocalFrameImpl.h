@@ -200,6 +200,7 @@ class CORE_EXPORT WebLocalFrameImpl final
       const WebPoint& extent,
       WebFrame::TextGranularity = kCharacterGranularity) override;
   void MoveCaretSelection(const WebPoint&) override;
+  void DismissTouchHandles() override;
   bool SetEditableSelectionOffsets(int start, int end) override;
   bool SetCompositionFromExistingText(
       int composition_start,

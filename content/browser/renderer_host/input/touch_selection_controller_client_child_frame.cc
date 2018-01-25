@@ -119,6 +119,13 @@ void TouchSelectionControllerClientChildFrame::MoveCaret(
     host_delegate->MoveCaret(ConvertFromRoot(position));
 }
 
+void TouchSelectionControllerClientChildFrame::DismissTouchHandles() {
+  RenderWidgetHostDelegate* host_delegate =
+      rwhv_->GetRenderWidgetHostImpl()->delegate();
+  if (host_delegate)
+    host_delegate->DismissTouchHandles();
+}
+
 void TouchSelectionControllerClientChildFrame::MoveRangeSelectionExtent(
     const gfx::PointF& extent) {
   RenderWidgetHostDelegate* host_delegate =
@@ -174,8 +181,7 @@ bool TouchSelectionControllerClientChildFrame::IsCommandIdEnabled(
 
 void TouchSelectionControllerClientChildFrame::ExecuteCommand(int command_id,
                                                               int event_flags) {
-  manager_->GetTouchSelectionController()
-      ->HideAndDisallowShowingAutomatically();
+  manager_->GetTouchSelectionController()->DismissTouchHandles();
   RenderWidgetHostDelegate* host_delegate =
       rwhv_->GetRenderWidgetHostImpl()->delegate();
   if (!host_delegate)
@@ -212,8 +218,7 @@ void TouchSelectionControllerClientChildFrame::RunContextMenu() {
   // Hide selection handles after getting rect-between-bounds from touch
   // selection controller; otherwise, rect would be empty and the above
   // calculations would be invalid.
-  manager_->GetTouchSelectionController()
-      ->HideAndDisallowShowingAutomatically();
+  manager_->GetTouchSelectionController()->DismissTouchHandles();
 }
 
 }  // namespace content
