@@ -34,6 +34,24 @@
       "revId": "7f6dc689807646fbdc36341fff6e28be7b6f4301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f881656c_b416a497",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 34
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-25T21:11:16Z",
+      "side": 1,
+      "message": "\u003e Main point: We need to get symbolized stacks (with source files and line numbers) on bots. As long as we get that, we can omit as much debug info as possible there.\n\nsymbolized stack with files and line numbers are only shown in lsan/asan builder.\nOther builder shows function name when crashes, but not files and line number currently.\n\n\u003e lld supports --strip-debug, yes?\n\nyes. But changed to use -g0.\nhttps://github.com/llvm-project/llvm-project-20170507/blob/dbf426fb962ca71c6a7ee2fb77b89743034fd858/lld/ELF/Options.td#L285\n\n\u003e My high-level reading here is that we tell the compiler to build with debug info (but only -g1, which I think includes line tables only (?)), only to then tell the linker to strip it. That seems a bit roundabout -- why is this necessary? If we really don\u0027t want debug info, we could tell the compiler to not write it in the first place. And if we do want it, why should the linker remove it? (I probably don\u0027t really understand what exactly --strip-debug does.)\n\nIn clang, g1 looks to contain full debug symbol.\nhttps://clang.llvm.org/docs/UsersManual.html#controlling-size-of-debug-information\nI checked binary size of components_unittests with -gline-tables-only instead of -g1.\nIt becomes 911MB, yet to be large.\n\nBut I found that -g0 keeps function name for stacktrace, changed to use it instead.\n\n\u003e I thought we used fission, which means the debug info doesn\u0027t make it to the binary; why does this do anything? (...oooh I vaguely remember dblaikie@ telling me that line tables still go in the main executable for reasons. I think he also said something about that possibly being changeable? It might be worth to send an email to dblaikie@ describing in detail what we do, what we want, and ask him what our options are, assuming that we control the entire toolchain.)\n\nfission is enabled at least when is_debug\u003dtrue and symbole_level\u003d2 in current config.\nBut linux builder uses symbol_level\u003d1 now.\nAlso linux_chromium_rel_ng with is_debug\u003d2 and symbol_level\u003d2 generates 2.1GB components_unittests binary.\nI wonder fission config is working correctly now.\n\nAnyway, I want to use -g0 here, not to generate unused information.\n\n\u003e This is only done for non-component builds, but all the debug bots use component builds (?)\n\nlinux_chromium_rel_ng has symbol_level\u003d1, and it turns on \"-g1\". So the obj files contain a lot of debug infos.\n\n\u003e Why is mac special?\n\nChanged to drop debug info only in linux.\n\n\u003e in the android branch above, we have\n\u003e\n\u003e      if (strip_debug_info) {\n\u003e        ldflags +\u003d [ \"-Wl,--strip-debug\" ]\n\u003e      }\n\u003e\n\u003e  should we just do that in the linux branch too? Being consistent seems nice.\n\nChanged to use -g0.",
+      "parentUuid": "ad6429a8_4f2c8f00",
+      "revId": "7f6dc689807646fbdc36341fff6e28be7b6f4301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
