@@ -314,6 +314,8 @@ int Main(const MainParams& params) {
   MainDelegate* delegate = params.delegate;
   DCHECK(delegate);
 
+  LOG(ERROR) << "ServiceManager Main";
+
 #if defined(OS_MACOSX) && BUILDFLAG(USE_ALLOCATOR_SHIM)
   base::allocator::InitializeAllocatorShim();
 #endif
@@ -394,6 +396,7 @@ int Main(const MainParams& params) {
     std::string type_switch =
         command_line.GetSwitchValueASCII(switches::kProcessType);
     if (type_switch == switches::kProcessTypeServiceManager) {
+      LOG(ERROR) << "Service manager process is the broker";
       mojo_config.is_broker_process = true;
       process_type = ProcessType::kServiceManager;
     } else if (type_switch == switches::kProcessTypeService) {

@@ -67,6 +67,7 @@
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
+#include "content/browser/external_process_connection_dispatcher.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/compositor_util.h"
@@ -1503,6 +1504,13 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
   InitializeMojo();
+
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+  external_process_connection_dispatcher_ =
+      std::make_unique<ExternalProcessConnectionDispatcher>();
+  external_process_connection_dispatcher_
+      ->StartListeningForIncomingConnection();
+#endif
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {

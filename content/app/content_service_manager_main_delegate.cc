@@ -68,8 +68,12 @@ void ContentServiceManagerMainDelegate::OverrideMojoConfiguration(
   // will serve as the global Mojo broker.
   if (!service_manager::ServiceManagerIsRemote() &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kProcessType))
+          switches::kProcessType)) {
+    LOG(ERROR) << "Browser Process is the broker";
     config->is_broker_process = true;
+  } else {
+    LOG(ERROR) << "This process is not the broker";
+  }
 }
 
 std::unique_ptr<base::Value>
