@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bf4090a_360612dd",
+        "filename": "third_party/WebKit/Source/core/layout/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-25T17:07:01Z",
+      "side": 1,
+      "message": "Does this need fonts/FontVerticalPositionType?",
+      "revId": "6b45cd6155d554734213f0e4226aaf63deb16117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafe8ebb_b1e36f49",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-25T17:07:01Z",
+      "side": 1,
+      "message": "Do you need this include at all?",
+      "revId": "6b45cd6155d554734213f0e4226aaf63deb16117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
