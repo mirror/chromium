@@ -107,7 +107,13 @@ void URLRequestRedirectJob::StartAsync() {
         "\n"
         "Access-Control-Allow-Origin: %s\n"
         "Access-Control-Allow-Credentials: true",
-        http_origin.c_str());
+        "*" /* http_origin.c_str() */);
+    // TODO(hiroshige): the redirect from browser: URL to chrome-extension: URL
+    // sometimes fails due to CORS failure, mismatch between
+    // "Access-Control-Allow-Origin: null" (i.e. browser: URL's origin) and
+    // expected origin (the original HTTP(S) origin?). Tentatively return
+    // "Access-Control-Allow-Origin: *". This issue will disappear when we
+    // implement permafills without redirecting to chrome-extension.
   }
 
   fake_headers_ = new HttpResponseHeaders(
