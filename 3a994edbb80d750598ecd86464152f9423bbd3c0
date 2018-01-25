@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5300b855_bd391a60",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-25T00:13:25Z",
+      "side": 0,
+      "message": "chrishtr: Can we remove this DCHECK? It triggers when I make the CSS changes described in this CL.\n\nRepro steps: \n\n1. Patch in this CL and re-add the DCHECK.\n2. Enable chrome://flags/#click-to-open-pdf\n3. Turn on \"Download PDF files...\" at chrome://settings/content/pdfDocuments\n4. Visit http://chrome-pdf-test.appspot.com/object_no_fallback.html\n5. Mouseover the blue button. There\u0027s a CSS animation this CL adds that wasn\u0027t there before.\n6. Observer this DCHECK fire.\n\nStacktrace:\n\n[1:1:0124/154815.857875:FATAL:webview_plugin.cc(334)] Check failed: !plugin_-\u003eis_painting_. \n#0 0x7fd3afc173ec base::debug::StackTrace::StackTrace()\n#1 0x7fd3afc41dbc logging::LogMessage::~LogMessage()\n#2 0x56441aff687d WebViewPlugin::WebViewHelper::ScheduleAnimation()\n#3 0x7fd3a8a6e290 blink::WebViewFrameWidget::ScheduleAnimation()\n#4 0x7fd3a8fd193f blink::ChromeClientImpl::ScheduleAnimation()\n#5 0x7fd3a8a03baf blink::LocalFrameView::ScheduleAnimation()\n#6 0x7fd3a8433e55 blink::DocumentTimeline::DocumentTimelineTiming::ServiceOnNextFrame()\n#7 0x7fd3a8433d20 blink::DocumentTimeline::ScheduleNextService()\n#8 0x7fd3a8432896 blink::DocumentAnimations::UpdateAnimations()\n#9 0x7fd3a90f1ffb blink::PaintLayerCompositor::UpdateIfNeededRecursiveInternal()\n#10 0x7fd3a90f19d3 blink::PaintLayerCompositor::UpdateIfNeededRecursive()\n#11 0x7fd3a8a04868 blink::LocalFrameView::UpdateLifecyclePhasesInternal()\n#12 0x7fd3a8a050b7 blink::LocalFrameView::UpdateAllLifecyclePhasesExceptPaint()\n#13 0x7fd3a8ffbac5 blink::PaintInternal()\n#14 0x7fd3a8976861 blink::WebViewImpl::Paint()\n#15 0x56441aff5b63 WebViewPlugin::Paint()\n#16 0x7fd3a895e0c4 blink::WebPluginContainerImpl::Paint()\n#17 0x7fd3a903e78c blink::EmbeddedContentPainter::PaintContents()\n#18 0x7fd3a8dc0905 blink::LayoutEmbeddedContent::PaintContents()\n#19 0x7fd3a8dc12a5 blink::LayoutEmbeddedObject::PaintContents()\n#20 0x7fd3a903e121 blink::EmbeddedContentPainter::Paint()\n(and more that you probably don\u0027t need)",
+      "revId": "3a994edbb80d750598ecd86464152f9423bbd3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
