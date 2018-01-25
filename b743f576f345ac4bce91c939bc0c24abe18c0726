@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7489cf2b_cafe9f81",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T00:01:37Z",
+      "side": 1,
+      "message": "Another option besides putting this here would be to fold this logic directly into ToolbarModelImpl::GetURLForDisplay(), that is, have that return the \"full\" URL when the experiment is off and the \"elided\" one when it\u0027s on.  That would save adding this API, but wouldn\u0027t work if you needed to use the \"elided\" version in some other context than this experiment.",
+      "revId": "b743f576f345ac4bce91c939bc0c24abe18c0726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b68b43b_f7cfab86",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T00:01:37Z",
+      "side": 1,
+      "message": "I worry about ambiguity with \"best represents\", and the API name here is also misleading, since this _isn\u0027t_ necessarily the permanent text (at least, not all the time).\n\nI would name this GetUrlForDisplay(), since that matches the toolbar model name and seems like a more accurate descriptor.  The comment could be something like \"Returns the text to display in the steady state, when the omnibox does not have focus.  This may be transformed from the true current URL by unescaping or eliding.\"",
+      "revId": "b743f576f345ac4bce91c939bc0c24abe18c0726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
