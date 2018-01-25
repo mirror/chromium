@@ -22,6 +22,30 @@
       "revId": "f7ee8ba3f0a6a3f98463f6efa934a6915cff82a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1143d530_2a6324fa",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T10:38:28Z",
+      "side": 1,
+      "message": "I\u0027ll TAL at this in the future, for now I want to get rid of LBC in TC",
+      "parentUuid": "9599884f_b6149049",
+      "range": {
+        "startLine": 145,
+        "startChar": 15,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "f7ee8ba3f0a6a3f98463f6efa934a6915cff82a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
