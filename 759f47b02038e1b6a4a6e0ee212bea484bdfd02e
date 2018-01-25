@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fcdda741_2b7b9ffe",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-25T00:50:12Z",
+      "side": 1,
+      "message": "\u003e Because I\u0027m not very confident w/ cocoa / objc, and your screenshots of this looked decent, can we remove this file completely later as it\u0027s irrelevant with Harmony launching on Mac?\n\nYeah the whole file should become dead code as m66 rolls out. Setting an empty string looked fine - let\u0027s go with that. Particularly since we\u0027re now past branch.",
+      "parentUuid": "952b869f_8c2413ed",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b0b265_a8084279",
         "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
         "patchSetId": 2
@@ -125,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "36006441_5dc52ca5",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-25T00:50:12Z",
+      "side": 1,
+      "message": "nah",
+      "parentUuid": "0efe7890_da251744",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1114103_fc407e30",
         "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
         "patchSetId": 2
@@ -154,6 +190,24 @@
       "side": 1,
       "message": "Per your screenshots this looked alright.",
       "parentUuid": "a1114103_fc407e30",
+      "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60738997_d5c0863a",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-25T00:50:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d16e1c1_f91c9598",
       "revId": "759f47b02038e1b6a4a6e0ee212bea484bdfd02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

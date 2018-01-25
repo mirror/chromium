@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca73ada_9788ff50",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 9225,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-25T00:50:12Z",
+      "side": 1,
+      "message": "we should check with UX about whether we want title-case strings for these on Mac. (I suspect we do, but a follow-up is fine -- there may run into the same weirdness around hostnames which don\u0027t get capitalized and look weird).",
+      "revId": "235a3c15e58e55570b04a56d07e8f06476a9a7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
