@@ -12,6 +12,33 @@
 
 namespace blink {
 
+LayoutUnit NGPhysicalTextFragment::VerticalPosition(
+    LineVerticalPositionType position_type,
+    FontBaseline baseline_type) const {
+  switch (position_type) {
+    case LineVerticalPositionType::TopOfEmHeight:
+      if (const SimpleFontData* font_data = Style().GetFont().PrimaryFont()) {
+        // Use Ascent, not FixedAscent, to match to how painter computes the
+        // baseline position.
+        return font_data->GetFontMetrics().Ascent(baseline_type) -
+               font_data->EmHeightAscent(baseline_type);
+      }
+    // Fall through.
+    case LineVerticalPositionType::TextTop:
+      return LayoutUnit();
+    case LineVerticalPositionType::BottomOfEmHeight:
+      if (const SimpleFontData* font_data = Style().GetFont().PrimaryFont()) {
+        return font_data->GetFontMetrics().Ascent(baseline_type) +
+               font_data->EmHeightDescent(baseline_type);
+      }
+    // Fall through.
+    case LineVerticalPositionType::TextBottom:
+      return IsHorizontal() ? Size().height : Size().width;
+  }
+  NOTREACHED();
+  return LayoutUnit();
+}
+
 NGPhysicalOffsetRect NGPhysicalTextFragment::SelfVisualRect() const {
   if (!shape_result_)
     return {};
