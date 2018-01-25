@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "799d92a4_15dbb56f",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-25T16:59:11Z",
+      "side": 1,
+      "message": "something that I realized only now:\nvery likely some allocations will happen before you install the shim.\nSo some allocations might be made before is intercepted by your functions.\nWhat happens in this case? I mean if you get passed a pointer of something that was allocated by the real malloc, ptr-1 might point before the beginning of the malloc arena and crash.",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 60
+      },
+      "revId": "1f0d4dce5bd2db3c21468c40257ce966f3f5c8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
