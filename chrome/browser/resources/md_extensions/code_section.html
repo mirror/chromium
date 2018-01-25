@@ -54,10 +54,16 @@
       .more-code {
         color: var(--paper-grey-500);
       }
+
+      #a11yDesc {
+        height: 0;
+        overflow: hidden;
+      }
     </style>
-    <div id="scroll-container" hidden="[[!codeText_]]">
+    <div id="scroll-container" hidden="[[!highlighted_]]">
       <div id="main">
-        <div id="line-numbers">
+        <!-- Line numbers are not useful to a screenreader -->
+        <div id="line-numbers" aria-hidden="true">
           <div class="more-code before" hidden="[[!truncatedBefore_]]">
             ...
           </div>
@@ -73,7 +79,14 @@
                 '$i18nPolymer{errorLinesNotShownSingular}',
                 '$i18nPolymer{errorLinesNotShownPlural}')]]
           </div>
-          <span>[[codeText_]]</span>
+          <span><!-- Whitespace is preserved in this span. Ignore new lines.
+          --><span>[[before_]]</span><!--
+            --><mark aria-label$="[[highlighted_]]"
+                   aria-describedby="a11yDesc"><!--
+              --><span aria-hidden="true">[[highlighted_]]</span><!--
+            --></mark><!--
+            --><span>[[after_]]</span><!--
+          --></span>
           <div class="more-code after" hidden="[[!truncatedAfter_]]">
             [[getLinesNotShownLabel_(
                 truncatedAfter_,
@@ -83,7 +96,8 @@
         </div>
       </div>
     </div>
-    <div id="no-code" hidden="[[codeText_]]">[[couldNotDisplayCode]]</div>
+    <div id="no-code" hidden="[[highlighted_]]">[[couldNotDisplayCode]]</div>
+    <div id="a11yDesc" aria-hidden="true">Super important info</div>
   </template>
   <script src="code_section.js"></script>
 </dom-module>
