@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ee650e_80f78fec",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-25T23:40:47Z",
+      "side": 1,
+      "message": "Did you intend to leave these ellipses unfilled?",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb01ad9c_1f84e32e",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-25T23:40:47Z",
+      "side": 1,
+      "message": "I don\u0027t understand the meaning of this section. Can you explain (or point me at some documentation)?",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
