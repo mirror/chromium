@@ -6,6 +6,10 @@
 
 #include "components/autofill/core/common/password_form.h"
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "components/signin/core/browser/account_info.h"
+#endif
+
 PasswordsModelDelegateMock::PasswordsModelDelegateMock() = default;
 
 PasswordsModelDelegateMock::~PasswordsModelDelegateMock() = default;

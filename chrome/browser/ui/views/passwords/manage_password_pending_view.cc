@@ -4,14 +4,19 @@
 
 #include "chrome/browser/ui/views/passwords/manage_password_pending_view.h"
 
+#include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "build/buildflag.h"
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
 #include "chrome/browser/ui/views/passwords/manage_password_sign_in_promo_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/signin_features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/combobox_model.h"
 #include "ui/base/models/combobox_model_observer.h"
@@ -29,6 +34,10 @@
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
+#endif
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.h"
 #endif
 
 namespace {
@@ -123,6 +132,35 @@ std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
   return combobox;
 }
 }  // namespace
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+// Delegate for the personalized sync promo view used when desktop identity
+// consistency is enabled. Handles sign in and enable sync for existing
+// accounts requests.
+class PasswordBubbleSyncPromoDelegate : public BubbleSyncPromoDelegate {
+ public:
+  explicit PasswordBubbleSyncPromoDelegate(ManagePasswordPendingView* owner)
+      : owner_(owner) {
+    DCHECK(owner_);
+  }
+  ~PasswordBubbleSyncPromoDelegate() override = default;
+
+  void ShowBrowserSignin() override {
+    owner_->model()->OnSignInToChromeClicked();
+    owner_->CloseBubble();
+  }
+
+  void EnableSync(const AccountInfo& account) override {
+    owner_->model()->OnEnableSyncClicked(account);
+    owner_->CloseBubble();
+  };
+
+ private:
+  ManagePasswordPendingView* owner_;
+
+  DISALLOW_COPY_AND_ASSIGN(PasswordBubbleSyncPromoDelegate);
+};
+#endif
 
 ManagePasswordPendingView::ManagePasswordPendingView(
     content::WebContents* web_contents,
@@ -224,6 +262,11 @@ views::View* ManagePasswordPendingView::GetInitiallyFocusedView() {
   return ManagePasswordsBubbleDelegateViewBase::GetInitiallyFocusedView();
 }
 
+int ManagePasswordPendingView::GetDialogButtons() const {
+  if (dice_sync_promo_delegate_)
+    return ui::DIALOG_BUTTON_NONE;
+  return ManagePasswordsBubbleDelegateViewBase::GetDialogButtons();
+}
 base::string16 ManagePasswordPendingView::GetDialogButtonLabel(
     ui::DialogButton button) const {
   if (sign_in_promo_)
@@ -334,8 +377,25 @@ void ManagePasswordPendingView::ReplaceWithPromo() {
   initially_focused_view_ = nullptr;
   SetLayoutManager(std::make_unique<views::FillLayout>());
   if (model()->state() == password_manager::ui::CHROME_SIGN_IN_PROMO_STATE) {
+    base::RecordAction(
+        base::UserMetricsAction("Signin_Impression_FromPasswordBubble"));
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+    Profile* profile = model()->GetProfile();
+    if (AccountConsistencyModeManager::IsDiceEnabledForProfile(profile)) {
+      dice_sync_promo_delegate_ =
+          std::make_unique<PasswordBubbleSyncPromoDelegate>(this);
+      AddChildView(new DiceBubbleSyncPromoView(
+          profile, dice_sync_promo_delegate_.get(),
+          IDS_PASSWORD_MANAGER_DICE_PROMO_SIGNIN_MESSAGE,
+          IDS_PASSWORD_MANAGER_DICE_PROMO_SYNC_MESSAGE));
+    } else {
+      sign_in_promo_ = new ManagePasswordSignInPromoView(model());
+      AddChildView(sign_in_promo_);
+    }
+#else
     sign_in_promo_ = new ManagePasswordSignInPromoView(model());
     AddChildView(sign_in_promo_);
+#endif
 #if defined(OS_WIN)
   } else if (model()->state() ==
              password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
