@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "9f065083_dad16357",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T14:12:32Z",
+      "side": 1,
+      "message": "Because self.topAnchor is the top of the screen.\nIt used to be: [self.locationBarContainer.topAnchor constraintEqualToAnchor:self.topSafeAnchor constant:kLocationBarVerticalMargin]\n\nBut it doesn\u0027t work with fullscreen as the safeAnchor is moved. The other added on line 188 isn\u0027t the final solution, we are working to find a solution such as the toolbar is correctly sized (its height) wrt safeArea and working with fullscreen.",
+      "parentUuid": "b35aea0d_a3263556",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68f3c99_67526257",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
         "patchSetId": 2
