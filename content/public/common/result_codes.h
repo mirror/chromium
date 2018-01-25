@@ -19,6 +19,11 @@ namespace content {
 //
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.content_public.common
+//
+// IMPORTANT: This needs to stay in sync with <enum name="CrashExitCodes"> in
+// tools/metrics/histograms/enums.xml. So do not remove any entries, and always
+// append entries to the bottom just above RESULT_CODE_CHROME_LAST_CODE.
+
 enum ResultCode {
   // Process terminated normally.
   RESULT_CODE_NORMAL_EXIT,
@@ -38,6 +43,9 @@ enum ResultCode {
   // Last return code (keep this last).
   RESULT_CODE_LAST_CODE
 };
+
+static_assert(RESULT_CODE_LAST_CODE == 5,
+              "Please make sure the enum values are in sync with enums.xml");
 
 }  // namespace content
 
