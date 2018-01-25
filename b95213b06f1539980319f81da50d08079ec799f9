@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd39c1fb_aaf27feb",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-25T08:46:36Z",
+      "side": 1,
+      "message": "Nit: you can remove the \"else\" clause.\nI.e:\n\n  if (AccountConsistencyModeManager::IsMirrorEnabledForProfile(profile)) {\n#if defined(OS_CHROMEOS)\n    // Only for child accounts on Chrome OS, use the specialized Mirror\n    // delegate.\n    if (profile-\u003eIsChild()) {\n      return std::make_unique\u003cChromeOSChildAccountReconcilorDelegate\u003e(\n              SigninManagerFactory::GetForProfile(profile));\n    }\n#endif\n    return std::make_unique\u003csignin::MirrorAccountReconcilorDelegate\u003e(\n        SigninManagerFactory::GetForProfile(profile));\n  }",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 6
+      },
+      "revId": "b95213b06f1539980319f81da50d08079ec799f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
