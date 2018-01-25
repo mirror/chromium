@@ -6,6 +6,13 @@ Polymer({
         Polymer.PaperRippleBehavior
       ],
 
+      properties: {
+        title: {
+          type: String,
+          value: ''
+        },
+      },
+
       listeners: {
         'down': '_rippleDown',
         'up': '_rippleUp',
@@ -19,6 +26,10 @@ Polymer({
 
       _rippleUp: function() {
         this.getRipple().uiUpAction();
+      },
+
+      hasTitle: function() {
+        return this.title ? 'true' : 'false';  // Needs to be a string!
       },
 
       /**

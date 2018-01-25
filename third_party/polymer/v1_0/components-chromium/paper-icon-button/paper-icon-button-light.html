@@ -54,7 +54,9 @@ Custom property | Description | Default
         @apply(--paper-icon-button-light-ripple);
       }
     </style>
-    <content></content>
+    <span aria-hidden$="[[hasTitle(title)]]">
+      <content></content>
+    </span>
   </template>
   </dom-module>
 <script src="paper-icon-button-light-extracted.js"></script></body></html>
