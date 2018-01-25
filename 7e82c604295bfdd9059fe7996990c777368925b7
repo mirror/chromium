@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b58e41_f45c58f1",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "No spaces, see existing examples. https://cs.chromium.org/search/?q\u003d%5C/%5C*recursive%3D\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 64
+      },
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f1c1f4_568c4294",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "Declare closer to first use?",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf212db0_4c0fc9b7",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "Here\u0027s another idea to avoid needing SetUpSymlinkCleanUp() - can you put these in a temp dir created with base::ScopedTempDir instead?",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf9895b_c88c6916",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "Remove this variable, which is always set to true, and just inline it like the recursive argument to base::DeleteFile()?",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23245f8a_a6b6a0df",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "// defined(OS_CHROMEOS)",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d80eb4_a3039609",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T00:33:31Z",
+      "side": 1,
+      "message": "Combine with next line?",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
