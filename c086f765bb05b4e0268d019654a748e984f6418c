@@ -82,6 +82,47 @@
     },
     {
       "key": {
+        "uuid": "c68c9aac_ae87afad",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-25T14:55:33Z",
+      "side": 1,
+      "message": "+1. The word \"renderer\" means too many things at once. Could I suggest SetSchedulerKeepAlive?",
+      "parentUuid": "41801360_2815f7e3",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb40bb0_2bed8de9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-25T14:55:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure that the \"renderer_\" part of the name helps to understand it\u0027s purpose. I\u0027d prefer something like keep_alive_due_to_fetch_or_service_worker, but it may be too long. I wonder if you have any better suggestions.",
+      "range": {
+        "startLine": 369,
+        "startChar": 6,
+        "endLine": 369,
+        "endChar": 25
+      },
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "419595ff_af359a8c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
         "patchSetId": 7
