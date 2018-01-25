@@ -53,8 +53,6 @@ class NetworkConnectImpl : public NetworkConnect {
   // NetworkConnect
   void ConnectToNetworkId(const std::string& network_id) override;
   void DisconnectFromNetworkId(const std::string& network_id) override;
-  bool MaybeShowConfigureUI(const std::string& network_id,
-                            const std::string& connect_error) override;
   void SetTechnologyEnabled(const NetworkTypePattern& technology,
                             bool enabled_state) override;
   void ShowMobileSetup(const std::string& network_id) override;
@@ -411,12 +409,6 @@ void NetworkConnectImpl::DisconnectFromNetworkId(
   NetworkHandler::Get()->network_connection_handler()->DisconnectNetwork(
       network->path(), base::Bind(&base::DoNothing),
       base::Bind(&IgnoreDisconnectError));
-}
-
-bool NetworkConnectImpl::MaybeShowConfigureUI(
-    const std::string& network_id,
-    const std::string& connect_error) {
-  return MaybeShowConfigureUIImpl(network_id, connect_error);
 }
 
 void NetworkConnectImpl::SetTechnologyEnabled(
