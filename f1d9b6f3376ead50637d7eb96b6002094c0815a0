@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0dfdeb07_4c295793",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T11:57:26Z",
+      "side": 1,
+      "message": "Ah right, then put all the |overrides_active_| code behind\n\n#if DCHECK_IS_ON()\n ...\n#endif\n\nblocks.\n\n(and use DCHECK not CHECK -- always check contracts with DCHECKs, CHECK is only for insecure user provided data : https://chromium.googlesource.com/chromium/src/+/lkgr/styleguide/c++/c++.md#check_dcheck_and-notreached)",
+      "parentUuid": "37e0d5f4_ba2781ec",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0660177c_b1e17d35",
         "filename": "base/time/time.cc",
         "patchSetId": 17
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "48372785_89386991",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T11:57:26Z",
+      "side": 1,
+      "message": "Hmm, should also wrap all of time_win.cc in namespace base{} (and remove redundant base::)",
+      "parentUuid": "665d86f3_b56dac51",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e029ce1_f661d185",
         "filename": "base/time/time_fuchsia.cc",
         "patchSetId": 17
@@ -177,6 +213,30 @@
       "side": 1,
       "message": "Can\u0027t use private constructor from outside base::Time implementation, same elsewhere. Yuri suggested this solution as it\u0027s used elsewhere, too. The compiler will simplify it (no overhead).",
       "parentUuid": "5e029ce1_f661d185",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b0bc4d8_a82d59fc",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T11:57:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ad116e5_3aa28df9",
       "range": {
         "startLine": 33,
         "startChar": 16,
@@ -265,6 +325,24 @@
       "side": 1,
       "message": "I need a clean function pointer to TimeOverride::Now(). Since I can\u0027t use base::Bind, I don\u0027t think I could bind an object of TimeOverride. Or is there a solution I\u0027m missing? :)",
       "parentUuid": "08ffb800_96773623",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52225a8_bf3bd670",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T11:57:26Z",
+      "side": 1,
+      "message": "Ah my bad, hadn\u0027t noticed Now() was also static.",
+      "parentUuid": "51feb9ef_93b8250d",
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
