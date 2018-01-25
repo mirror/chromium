@@ -214,7 +214,9 @@ class BASE_EXPORT TimeDelta {
   }
   constexpr TimeDelta operator-() const { return TimeDelta(-delta_); }
 
-  // Computations with numeric types.
+  // Computations with numeric types. operator*() isn't constexpr because of a
+  // limitation around __builtin_mul_overflow (but operator/(1.0/a) works for
+  // |a|'s of "reasonable" size -- i.e. that don't risk overflow).
   template <typename T>
   TimeDelta operator*(T a) const {
     CheckedNumeric<int64_t> rv(delta_);
@@ -227,7 +229,7 @@ class BASE_EXPORT TimeDelta {
     return TimeDelta(std::numeric_limits<int64_t>::max());
   }
   template <typename T>
-  TimeDelta operator/(T a) const {
+  constexpr TimeDelta operator/(T a) const {
     CheckedNumeric<int64_t> rv(delta_);
     rv /= a;
     if (rv.IsValid())
@@ -243,7 +245,7 @@ class BASE_EXPORT TimeDelta {
     return *this = (*this * a);
   }
   template <typename T>
-  TimeDelta& operator/=(T a) {
+  constexpr TimeDelta& operator/=(T a) {
     return *this = (*this / a);
   }
 
