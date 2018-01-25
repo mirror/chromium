@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc2dbcd_17c9d001",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-25T18:19:15Z",
+      "side": 1,
+      "message": "This comment is confusing.\n\"for testing\" usually means it\u0027s for unit tests.\nBut the next comment states that this feature is meant to be enabled by default eventually. I assume that means you\u0027ll be running a finch experiment with this feature and then enabling it globally at some point.",
+      "range": {
+        "startLine": 254,
+        "startChar": 38,
+        "endLine": 254,
+        "endChar": 45
+      },
+      "revId": "220a158c2bf53a20554235c59398c200ef48faec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
