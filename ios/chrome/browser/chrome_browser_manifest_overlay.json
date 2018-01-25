@@ -4,7 +4,12 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "requires": {
-        "identity": [ "identity_manager" ]
+        "identity": [ "identity_manager" ],
+        "network": [
+          "network_service",
+          "test",
+          "url_loader"
+        ]
       }
     }
   }

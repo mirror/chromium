@@ -18,6 +18,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ios/web/grit/ios_web_resources.h"
+#include "ios/web/public/features.h"
 #include "ios/web/public/service_manager_connection.h"
 #include "ios/web/public/service_names.mojom.h"
 #include "ios/web/public/web_client.h"
@@ -46,6 +47,12 @@ struct ManifestInfo {
   const char* name;
   int resource_id;
 };
+
+// TODO(crbug.com/803149): build a real NetworkService when code is moved
+// from //content/network to //services/network/public/cpp.
+std::unique_ptr<service_manager::Service> CreateNetworkService() {
+  return std::make_unique<service_manager::Service>();
+}
 
 // A ManifestProvider which resolves application names to builtin manifest
 // resources for the catalog service to consume.
@@ -187,6 +194,14 @@ ServiceManagerContext::ServiceManagerContext() {
   pid_receiver->SetPID(base::GetCurrentProcId());
 
   // Embed any services from //ios/web here.
+  if (base::FeatureList::IsEnabled(web::features::kNetworkService)) {
+    service_manager::EmbeddedServiceInfo network_service_info;
+    network_service_info.factory = base::BindRepeating(&CreateNetworkService);
+    network_service_info.task_runner =
+        WebThread::GetTaskRunnerForThread(WebThread::IO);
+    packaged_services_connection_->AddEmbeddedService(
+        web::mojom::kNetworkServiceName, network_service_info);
+  }
 
   // Embed services from the client of //ios/web.
   WebClient::StaticServiceMap services;

@@ -39,6 +39,7 @@ ios_eg_test("ios_web_shell_egtests") {
     "//ios/web/shell",
     "//ios/web/shell:shell_interfaces",
     "//net",
+    "//services/network/public/interfaces",
     "//services/service_manager/public/cpp",
     "//services/test/echo/public/interfaces",
     "//services/test/user_id/public/interfaces",

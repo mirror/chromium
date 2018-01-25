@@ -22,6 +22,11 @@ extern const base::Feature kNewFileDownload;
 // Used to enable using WKHTTPSystemCookieStore in main context URL requests.
 extern const base::Feature kWKHTTPSystemCookieStore;
 
+// Used to enable mojo network service (always in-process on iOS).
+// TODO(crbug.com/803149): replace by network::features::kNetworkService
+// once it is moved from //content/network to //services/network/public/cpp.
+extern const base::Feature kNetworkService;
+
 }  // namespace features
 }  // namespace web
 

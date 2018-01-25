@@ -35,9 +35,16 @@ source_set("app") {
 service_manifest("packaged_services_manifest") {
   name = "web_packaged_services"
   source = "mojo/web_packaged_services_manifest.json"
+  packaged_services = [ ":network_manifest" ]
 }
 
 service_manifest("browser_manifest") {
   name = "web_browser"
   source = "mojo/web_browser_manifest.json"
+}
+
+# TODO(crbug.com/803149): remove once it is moved to //services/network.
+service_manifest("network_manifest") {
+  name = "network"
+  source = "//content/network/manifest.json"
 }

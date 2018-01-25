@@ -4,7 +4,12 @@
     "service_manager:connector": {
       "requires": {
         "echo": [ "echo" ],
-        "user_id": [ "user_id" ]
+        "user_id": [ "user_id" ],
+        "network": [
+          "network_service",
+          "test",
+          "url_loader"
+        ]
       }
     }
   }

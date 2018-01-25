@@ -4,15 +4,19 @@
 
 #import <EarlGrey/EarlGrey.h>
 
+#include "base/feature_list.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #import "ios/testing/wait_util.h"
 #include "ios/web/public/browser_state.h"
+#include "ios/web/public/features.h"
 #include "ios/web/public/service_manager_connection.h"
+#include "ios/web/public/service_names.mojom.h"
 #import "ios/web/shell/test/app/web_shell_test_util.h"
 #import "ios/web/shell/test/earl_grey/shell_earl_grey.h"
 #import "ios/web/shell/test/earl_grey/web_shell_test_case.h"
 #import "ios/web/shell/web_usage_controller.mojom.h"
+#include "services/network/public/interfaces/network_service_test.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/test/echo/public/interfaces/echo.mojom.h"
 #include "services/test/user_id/public/interfaces/user_id.mojom.h"
@@ -22,7 +26,7 @@
 #endif
 
 namespace {
-const char* kTestInput = "Livingston, I presume";
+const char kTestInput[] = "Livingston, I presume";
 
 // Callback passed to echo::mojom::Echo::EchoString(). Verifies that the echoed
 // string has the expected value and sets |echo_callback_called_flag| to true
@@ -62,6 +66,18 @@ void OnGotUserId(user_id::mojom::UserIdPtr user_id,
              @"Unexpected User ID passed to user_id callback: %s",
              received_user_id.c_str());
   *user_id_callback_called_flag = true;
+}
+
+// Callback passed to
+// network::mojom::NetworkServiceTest::SimulateConnectionChange(). Sets
+// |simulate_network_change_callback_called} to true to indicate that the
+// callback was invoked. |network_service_test| is passed simply to ensure that
+// our connection to the NetworkServiceTest implementation remains alive long
+// enough for the callback to reach us.
+void OnSimulateNetworkChange(
+    network::mojom::NetworkServiceTestPtr network_service_test,
+    bool* simulate_network_change_callback_called) {
+  *simulate_network_change_callback_called = true;
 }
 
 // Waits until a given callback is invoked (as signalled by that callback
@@ -154,6 +170,35 @@ void WaitForCallback(const std::string& callback_name,
   // Verify that the call altered |webState| as expected.
   GREYAssert(webState->IsWebUsageEnabled(),
              @"WebState did not have expected final state");
+}
+
+// Tests that it is possible to connect to the NetworkServiceTest (and thus
+// to the NetworkService that embeds it).
+- (void)testConnectionToNetworkServiceTest {
+  if (!base::FeatureList::IsEnabled(web::features::kNetworkService))
+    return;
+
+  // Connects to the network service and bind a NetworkServiceTest interface.
+  network::mojom::NetworkServiceTestPtr networkServiceTest;
+  web::ServiceManagerConnection* connection =
+      web::ServiceManagerConnection::Get();
+  DCHECK(connection);
+  connection->GetConnector()->BindInterface(
+      web::mojom::kNetworkServiceName, mojo::MakeRequest(&networkServiceTest));
+
+  // Call SimulateNetworkChange, making sure to keep our end of the
+  // connection alive until the callback is received.
+  network::mojom::NetworkServiceTest* rawNetworkServiceTest =
+      networkServiceTest.get();
+  bool simulateNetworkChangeCallbackCalled = false;
+  rawNetworkServiceTest->SimulateNetworkChange(
+      network::mojom::ConnectionType::CONNECTION_4G,
+      base::BindOnce(&OnSimulateNetworkChange,
+                     base::Passed(&networkServiceTest),
+                     &simulateNetworkChangeCallbackCalled));
+
+  WaitForCallback("SimulateNetworkChange",
+                  &simulateNetworkChangeCallbackCalled);
 }
 
 @end
