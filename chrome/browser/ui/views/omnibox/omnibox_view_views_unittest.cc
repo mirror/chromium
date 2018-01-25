@@ -231,7 +231,7 @@ void OmniboxViewViewsTest::SetAndEmphasizeText(const std::string& new_text,
     // We don't need to actually navigate in this case (and doing so in a test
     // would be difficult); it's sufficient to mark input as "no longer in
     // progress", and the edit model will assume the current text is a URL.
-    omnibox_view()->model()->SetInputInProgress(false);
+    omnibox_view()->model()->SetInputInProgress(false, true);
   }
   omnibox_view()->EmphasizeURLComponents();
 }

@@ -59,6 +59,9 @@ class OmniboxController : public AutocompleteControllerDelegate {
 
   const AutocompleteMatch& current_match() const { return current_match_; }
 
+  // Non-const version. Make hard to call accidentally.
+  AutocompleteMatch& nc_current_match() { return current_match_; }
+
   // Turns off keyword mode for the current match.
   void ClearPopupKeywordMode() const;
 

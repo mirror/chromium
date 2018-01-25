@@ -194,7 +194,7 @@ void OmniboxEditModel::RestoreState(const base::string16& url,
 AutocompleteMatch OmniboxEditModel::CurrentMatch(
     GURL* alternate_nav_url) const {
   // If we have a valid match use it. Otherwise get one for the current text.
-  AutocompleteMatch match = omnibox_controller_->current_match();
+  AutocompleteMatch& match = omnibox_controller_->nc_current_match();
 
   if (!match.destination_url.is_valid()) {
     GetInfoForCurrentText(&match, alternate_nav_url);
@@ -232,7 +232,7 @@ GURL OmniboxEditModel::PermanentURL() const {
 }
 
 void OmniboxEditModel::SetUserText(const base::string16& text) {
-  SetInputInProgress(true);
+  SetInputInProgress(true, true);
   keyword_.clear();
   is_keyword_hint_ = false;
   InternalSetUserText(text);
@@ -354,7 +354,7 @@ void OmniboxEditModel::AdjustTextForCopy(int sel_min,
   }
 }
 
-void OmniboxEditModel::SetInputInProgress(bool in_progress) {
+bool OmniboxEditModel::SetInputInProgress(bool in_progress, bool notify) {
   if (in_progress && !user_input_since_focus_) {
     base::TimeTicks now = base::TimeTicks::Now();
     DCHECK(last_omnibox_focus_ <= now);
@@ -363,7 +363,7 @@ void OmniboxEditModel::SetInputInProgress(bool in_progress) {
   }
 
   if (user_input_in_progress_ == in_progress)
-    return;
+    return false;
 
   user_input_in_progress_ = in_progress;
   if (user_input_in_progress_) {
@@ -371,7 +371,12 @@ void OmniboxEditModel::SetInputInProgress(bool in_progress) {
     base::RecordAction(base::UserMetricsAction("OmniboxInputInProgress"));
     autocomplete_controller()->ResetSession();
   }
+  if (notify)
+    NotifyObserversInputInProgress(in_progress);
+  return true;
+}
 
+void OmniboxEditModel::NotifyObserversInputInProgress(bool in_progress) {
   controller_->OnInputInProgress(in_progress);
 
   if (user_input_in_progress_ || !in_revert_)
@@ -379,7 +384,7 @@ void OmniboxEditModel::SetInputInProgress(bool in_progress) {
 }
 
 void OmniboxEditModel::Revert() {
-  SetInputInProgress(false);
+  SetInputInProgress(false, true);
   input_.Clear();
   paste_state_ = NONE;
   InternalSetUserText(base::string16());
