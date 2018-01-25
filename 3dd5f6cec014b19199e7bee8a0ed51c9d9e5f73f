@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5d0cb4a_be612ff1",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T17:16:05Z",
+      "side": 1,
+      "message": "Instead of doing this, try forward declaring all the \nnecessary symbols in sdk_forward_declarations.h [1],\nthen use the @available(macOS 10.13, *) in the face\ndetection provider. \n\n[1] https://cs.chromium.org/chromium/src/base/mac/sdk_forward_declarations.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d5",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a20647_a5ea63e8",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T17:16:05Z",
+      "side": 1,
+      "message": "This CL is a tad too large: I suggest land first\nthe face_detection_provider_mac.*, which is relatively\nstraightforward and covered by bots, and then in another\nCL add the Vision framework. Feel free to leave this\nCL as a \"playground\" to demonstrate the whole idea.\n\nThere seems to be at least a 10.13 FYI bot [1] but I\ncannot seem to find it in the waterfall [2]. Anyway,\nwe should file a bug to have a 10.13 bot (or enable\nit for service_unittests, if there\u0027s one), so we can\nrefer to it in a potential TODO().  Take a look at this\nhotlist:\nhttps://bugs.chromium.org/p/chromium/issues/list?q\u003dlabel:Hotlist-HighSierra\n\n[1] https://cs.chromium.org/chromium/src/testing/buildbot/chromium.fyi.json?type\u003dcs\u0026q\u003d%22Chromium+Mac+10.13%22\u0026sq\u003dpackage:chromium\u0026l\u003d2029\n[2] https://ci.chromium.org/p/chromium/g/chromium.fyi/console",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
