@@ -298,6 +298,30 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52501f74_e125b183",
+        "filename": "components/arc/test/fake_arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-25T04:18:06Z",
+      "side": 1,
+      "message": "\u003e With the change, starting mini instance won\u0027t cause fail.\n\nIt won\u0027t cause a failure synchronously, just as how the real ArcSession works. It will however cause a failure later, we simulate this with the EmulateMiniContainerStart.\n\n\u003e I found that it changes the test meaning of\n\u003e https://cs.chromium.org/chromium/src/components/arc/arc_session_runner_unittest.cc?type\u003dcs\u0026q\u003dEnableBootFailureEmulation\u0026sq\u003dpackage:chromium\u0026l\u003d228\n\u003e though the test still passes. (Sorry, I overlooked this in the previous iteration).\n\nWhy does it change the meaning? We still test the mini container start failure, it\u0027s just that this time,the failure occurs after we call EmulateMiniContainerStart.",
+      "parentUuid": "120a655a_fc75c0cd",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
