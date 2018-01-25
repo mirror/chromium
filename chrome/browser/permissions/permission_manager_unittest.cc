@@ -505,17 +505,22 @@ TEST_F(PermissionManagerTest, GetCanonicalOrigin) {
   const GURL other_chrome_search = GURL("chrome-search://not-local-ntp");
 
   // "Normal" URLs are not affected by GetCanonicalOrigin.
-  EXPECT_EQ(google_com, GetPermissionManager()->GetCanonicalOrigin(google_com));
-  EXPECT_EQ(google_de, GetPermissionManager()->GetCanonicalOrigin(google_de));
-  EXPECT_EQ(other_url, GetPermissionManager()->GetCanonicalOrigin(other_url));
-  EXPECT_EQ(google_base,
-            GetPermissionManager()->GetCanonicalOrigin(google_base));
+  EXPECT_EQ(google_com,
+            GetPermissionManager()->GetCanonicalOrigin(google_com, google_com));
+  EXPECT_EQ(google_de,
+            GetPermissionManager()->GetCanonicalOrigin(google_de, google_de));
+  EXPECT_EQ(other_url,
+            GetPermissionManager()->GetCanonicalOrigin(other_url, other_url));
+  EXPECT_EQ(google_base, GetPermissionManager()->GetCanonicalOrigin(
+                             google_base, google_base));
 
   // The local NTP URL gets mapped to the Google base URL.
-  EXPECT_EQ(google_base, GetPermissionManager()->GetCanonicalOrigin(local_ntp));
+  EXPECT_EQ(google_base,
+            GetPermissionManager()->GetCanonicalOrigin(local_ntp, local_ntp));
   // However, other chrome-search:// URLs, including the remote NTP URL, are
   // not affected.
-  EXPECT_EQ(remote_ntp, GetPermissionManager()->GetCanonicalOrigin(remote_ntp));
-  EXPECT_EQ(other_chrome_search,
-            GetPermissionManager()->GetCanonicalOrigin(other_chrome_search));
+  EXPECT_EQ(remote_ntp,
+            GetPermissionManager()->GetCanonicalOrigin(remote_ntp, remote_ntp));
+  EXPECT_EQ(other_chrome_search, GetPermissionManager()->GetCanonicalOrigin(
+                                     other_chrome_search, other_chrome_search));
 }

@@ -325,6 +325,13 @@ void PermissionContextBase::DecidePermission(
     const BrowserPermissionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  // Under permission delegation, when we display a permission prompt, the
+  // origin displayed in the prompt should never differ from the top-level
+  // origin.
+  DCHECK(!base::FeatureList::IsEnabled(
+             features::kUseFeaturePolicyForPermissions) ||
+         requesting_origin == embedding_origin);
+
   PermissionRequestManager* permission_request_manager =
       PermissionRequestManager::FromWebContents(web_contents);
   // TODO(felt): sometimes |permission_request_manager| is null. This check is
