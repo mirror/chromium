@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "83e71522_085bf694",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T04:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1b19e0_fc0f16ee",
+      "revId": "8f12f4c314ade48aab7f0646ac35f6a00a2d17d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8197e2b_d9a08964",
         "filename": "chrome/common/chrome_result_codes.h",
         "patchSetId": 7
@@ -83,6 +101,24 @@
       "writtenOn": "2018-01-25T01:35:10Z",
       "side": 1,
       "message": "We need to:\n\n- Add this to the end\n- Add an entry in tools/metrics/histograms/enums.xml",
+      "revId": "8f12f4c314ade48aab7f0646ac35f6a00a2d17d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c3bf90_325e0a5b",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T04:09:10Z",
+      "side": 1,
+      "message": "Instead I went for not changing this at all and using the same error code as before. Probably better that way as I suspect we don\u0027t really need to differentiate not able to load resource bundle.",
+      "parentUuid": "b8197e2b_d9a08964",
       "revId": "8f12f4c314ade48aab7f0646ac35f6a00a2d17d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
