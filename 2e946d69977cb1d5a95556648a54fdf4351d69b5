@@ -16,6 +16,24 @@
       "revId": "2e946d69977cb1d5a95556648a54fdf4351d69b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81a5829_8b1f0d0d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-25T11:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57c0aed_38267f6d",
+      "revId": "2e946d69977cb1d5a95556648a54fdf4351d69b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
