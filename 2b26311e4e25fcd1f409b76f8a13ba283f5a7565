@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "49f614b3_a4bcf7d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-25T01:57:40Z",
+      "side": 1,
+      "message": "The \u0027global\u0027 gesture-provider should also move into the window-server, and I don\u0027t think we can ship mash with the behaviour of blocking on ash for every touch/gesture events before dispatch.",
+      "parentUuid": "b9d8fcb7_995e0e60",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "452b6d81_e5b0a184",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -191,6 +209,24 @@
       "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d120a019_af3143af",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-25T01:57:40Z",
+      "side": 1,
+      "message": "zoom-level and pinch-to-zoom are different things though, right?",
+      "parentUuid": "b89523ba_0866889c",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
