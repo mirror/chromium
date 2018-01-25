@@ -1,0 +1,37 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef TEST_WEBSOCKET_HANDSHAKE_THROTTLE_H_
+#define TEST_WEBSOCKET_HANDSHAKE_THROTTLE_H_
+
+#include "base/timer/timer.h"
+#include "third_party/WebKit/public/platform/WebCallbacks.h"
+#include "third_party/WebKit/public/platform/WebSocketHandshakeThrottle.h"
+
+namespace blink {
+class WebLocalFrame;
+class WebString;
+class WebURL;
+}  // namespace blink
+
+namespace content {
+
+// A simple WebSocketHandshakeThrottle that calls callbacks->IsSuccess() after n
+// milli-seconds if the URL query contains throttle-delay-ms=n. Otherwise it
+// calls IsSuccess() immediately.
+class TestWebSocketHandshakeThrottle
+    : public blink::WebSocketHandshakeThrottle {
+ public:
+  void ThrottleHandshake(
+      const blink::WebURL&,
+      blink::WebLocalFrame*,
+      blink::WebCallbacks<void, const blink::WebString&>* callbacks) override;
+
+ private:
+  base::OneShotTimer timer_;
+};
+
+}  // namespace content
+
+#endif
