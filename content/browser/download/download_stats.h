@@ -15,6 +15,7 @@
 
 #include "base/optional.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/download_content.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_source.h"
@@ -219,7 +220,12 @@ void RecordDangerousDownloadDiscard(
     DownloadDangerType danger_type,
     const base::FilePath& file_path);
 
+// Returns the type of download.
+DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
+                                            bool record_content_subcategory);
+
 // Records the mime type of the download.
+// Returns the int value of the mime type as defined by DownloadContent enum.
 void RecordDownloadMimeType(const std::string& mime_type);
 
 // Records the mime type of the download for normal profile.
