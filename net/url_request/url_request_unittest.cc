@@ -148,7 +148,7 @@
 #include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
 #include "net/cert/cert_net_fetcher.h"
 #include "net/cert_net/cert_net_fetcher_impl.h"
 #endif
@@ -10398,7 +10398,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
     CHECK_NE(static_cast<X509Certificate*>(NULL), root_cert.get());
     test_root_.reset(new ScopedTestRoot(root_cert.get()));
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
     SetGlobalCertNetFetcherForTesting(net::CreateCertNetFetcher(&context_));
 #endif
 
@@ -10447,7 +10447,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
   }
 
   ~HTTPSOCSPTest() override {
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
     ShutdownGlobalCertNetFetcher();
 #endif
 
@@ -11195,7 +11195,7 @@ INSTANTIATE_TEST_CASE_P(OCSPVerify,
 
 static bool SystemSupportsAIA() {
 #if defined(OS_ANDROID)
-  return false;
+  return true;
 #else
   return true;
 #endif
