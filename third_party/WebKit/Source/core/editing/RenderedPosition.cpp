@@ -304,27 +304,25 @@ static GraphicsLayer* GetGraphicsLayerBacking(
       &paint_invalidation_container);
 }
 
-std::pair<LayoutPoint, LayoutPoint> static GetLocalSelectionEndpoints(
-    bool selection_start,
+std::pair<LayoutPoint, LayoutPoint> static GetLocalSelectionStartpoints(
     const LocalCaretRect& local_caret_rect) {
   const LayoutRect rect = local_caret_rect.rect;
-  if (local_caret_rect.layout_object->Style()->IsHorizontalWritingMode()) {
-    const LayoutPoint edge_top_in_layer = rect.MinXMinYCorner();
-    const LayoutPoint edge_bottom_in_layer = rect.MinXMaxYCorner();
-    return {edge_top_in_layer, edge_bottom_in_layer};
-  }
-  LayoutPoint edge_top_in_layer = rect.MinXMinYCorner();
-  LayoutPoint edge_bottom_in_layer = rect.MaxXMinYCorner();
+  if (local_caret_rect.layout_object->Style()->IsHorizontalWritingMode())
+    return {rect.MinXMinYCorner(), rect.MinXMaxYCorner()};
 
   // When text is vertical, it looks better for the start handle baseline to
   // be at the starting edge, to enclose the selection fully between the
   // handles.
-  if (selection_start) {
-    LayoutUnit x_swap = edge_bottom_in_layer.X();
-    edge_bottom_in_layer.SetX(edge_top_in_layer.X());
-    edge_top_in_layer.SetX(x_swap);
-  }
-  return {edge_top_in_layer, edge_bottom_in_layer};
+  return {rect.MaxXMinYCorner(), rect.MinXMinYCorner()};
+}
+
+std::pair<LayoutPoint, LayoutPoint> static GetLocalSelectionEndpoints(
+    const LocalCaretRect& local_caret_rect) {
+  const LayoutRect rect = local_caret_rect.rect;
+  if (local_caret_rect.layout_object->Style()->IsHorizontalWritingMode())
+    return {rect.MinXMinYCorner(), rect.MinXMaxYCorner()};
+
+  return {rect.MinXMinYCorner(), rect.MaxXMinYCorner()};
 }
 
 static LayoutPoint GetSamplePointForVisibility(
@@ -341,12 +339,10 @@ static LayoutPoint GetSamplePointForVisibility(
 
 // Returns whether this position is not visible on the screen (because
 // clipped out).
-static bool IsVisible(bool selection_start,
-                      const LocalCaretRect& local_caret_rect) {
-  if (!local_caret_rect.layout_object)
-    return false;
-
-  Node* const node = local_caret_rect.layout_object->GetNode();
+static bool IsVisible(const LayoutObject& layout_object,
+                      LayoutPoint edge_top_in_layer,
+                      LayoutPoint edge_bottom_in_layer) {
+  Node* const node = layout_object.GetNode();
   if (!node)
     return true;
   TextControlElement* text_control = EnclosingTextControl(node);
@@ -355,51 +351,62 @@ static bool IsVisible(bool selection_start,
   if (!IsHTMLInputElement(text_control))
     return true;
 
-  LayoutObject* layout_object = text_control->GetLayoutObject();
-  if (!layout_object || !layout_object->IsBox())
+  LayoutObject* text_layout_object = text_control->GetLayoutObject();
+  if (!text_layout_object || !text_layout_object->IsBox())
     return true;
-
-  LayoutPoint edge_top_in_layer, edge_bottom_in_layer;
-  std::tie(edge_top_in_layer, edge_bottom_in_layer) =
-      GetLocalSelectionEndpoints(selection_start, local_caret_rect);
-  LayoutPoint sample_point =
+  LayoutBox* const layout_box = ToLayoutBox(text_layout_object);
+  const LayoutPoint sample_point =
       GetSamplePointForVisibility(edge_top_in_layer, edge_bottom_in_layer);
-
-  LayoutBox* text_control_object = ToLayoutBox(layout_object);
-  LayoutPoint position_in_input(
-      local_caret_rect.layout_object->LocalToAncestorPoint(
-          FloatPoint(sample_point), text_control_object,
-          kTraverseDocumentBoundaries));
-  if (!text_control_object->BorderBoxRect().Contains(position_in_input))
-    return false;
-
-  return true;
+  const LayoutPoint position_in_input(layout_object.LocalToAncestorPoint(
+      FloatPoint(sample_point), layout_box, kTraverseDocumentBoundaries));
+  return layout_box->BorderBoxRect().Contains(position_in_input);
 }
 
-static CompositedSelectionBound PositionInGraphicsLayerBacking(
-    bool selection_start,
+CompositedSelectionBound ComputeSelectionBound(
+    const LayoutObject& layout_object,
+    LayoutPoint edge_top_in_layer,
+    LayoutPoint edge_bottom_in_layer) {
+  CompositedSelectionBound bound;
+  // Flipped blocks writing mode is not only vertical but also right to left.
+  bound.is_text_direction_rtl =
+      !layout_object.Style()->IsHorizontalWritingMode() &&
+      layout_object.HasFlippedBlocksWritingMode();
+  bound.edge_top_in_layer =
+      LocalToInvalidationBackingPoint(edge_top_in_layer, layout_object);
+  bound.edge_bottom_in_layer =
+      LocalToInvalidationBackingPoint(edge_bottom_in_layer, layout_object);
+  bound.layer = GetGraphicsLayerBacking(layout_object);
+  bound.hidden =
+      !IsVisible(layout_object, edge_top_in_layer, edge_bottom_in_layer);
+  return bound;
+}
+
+static CompositedSelectionBound StartPositionInGraphicsLayerBacking(
     const PositionWithAffinity& position) {
   const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
   const LayoutObject* const layout_object = local_caret_rect.layout_object;
   if (!layout_object)
     return CompositedSelectionBound();
 
-  CompositedSelectionBound bound;
-  // Flipped blocks writing mode is not only vertical but also right to left.
-  if (!layout_object->Style()->IsHorizontalWritingMode()) {
-    bound.is_text_direction_rtl = layout_object->HasFlippedBlocksWritingMode();
-  }
+  LayoutPoint edge_top_in_layer, edge_bottom_in_layer;
+  std::tie(edge_top_in_layer, edge_bottom_in_layer) =
+      GetLocalSelectionStartpoints(local_caret_rect);
+  return ComputeSelectionBound(*layout_object, edge_top_in_layer,
+                               edge_bottom_in_layer);
+}
+
+static CompositedSelectionBound EndPositionInGraphicsLayerBacking(
+    const PositionWithAffinity& position) {
+  const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
+  const LayoutObject* const layout_object = local_caret_rect.layout_object;
+  if (!layout_object)
+    return CompositedSelectionBound();
 
   LayoutPoint edge_top_in_layer, edge_bottom_in_layer;
   std::tie(edge_top_in_layer, edge_bottom_in_layer) =
-      GetLocalSelectionEndpoints(selection_start, local_caret_rect);
-  bound.edge_top_in_layer =
-      LocalToInvalidationBackingPoint(edge_top_in_layer, *layout_object);
-  bound.edge_bottom_in_layer =
-      LocalToInvalidationBackingPoint(edge_bottom_in_layer, *layout_object);
-  bound.layer = GetGraphicsLayerBacking(*layout_object);
-  bound.hidden = !IsVisible(selection_start, local_caret_rect);
-  return bound;
+      GetLocalSelectionEndpoints(local_caret_rect);
+  return ComputeSelectionBound(*layout_object, edge_top_in_layer,
+                               edge_bottom_in_layer);
 }
 
 bool LayoutObjectContainsPosition(LayoutObject* target,
@@ -428,13 +435,13 @@ CompositedSelection RenderedPosition::ComputeCompositedSelection(
   CompositedSelection selection;
   PositionWithAffinity position_start(visible_selection.Start(),
                                       visible_selection.Affinity());
-  selection.start = PositionInGraphicsLayerBacking(true, position_start);
+  selection.start = StartPositionInGraphicsLayerBacking(position_start);
   if (!selection.start.layer)
     return {};
 
   PositionWithAffinity position_end(visible_selection.End(),
                                     visible_selection.Affinity());
-  selection.end = PositionInGraphicsLayerBacking(false, position_end);
+  selection.end = EndPositionInGraphicsLayerBacking(position_end);
   if (!selection.end.layer)
     return {};
 
