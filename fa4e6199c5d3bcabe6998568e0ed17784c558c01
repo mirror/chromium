@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7e663fba_de46a9cf",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 49
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T02:15:27Z",
+      "side": 1,
+      "message": "My preference is to check the event on construction since we should always get one.",
+      "parentUuid": "e4a15af9_77b51a8b",
+      "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2f9e22_91c68984",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 49
