@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2f171b7_a06e60f5",
+        "filename": "content/shell/renderer/layout_test/layout_test_content_renderer_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T13:53:43Z",
+      "side": 1,
+      "message": "Yes, I\u0027m pretty sure we\u0027re supposed to follow include-what-you-use principles, but I can\u0027t find it written down anywhere either.\n\nI fixed up some other headers that were recommended by cpplint.",
+      "parentUuid": "1220b3cd_c04633a1",
+      "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b80aaa7f_9218490f",
         "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T07:55:04Z",
       "side": 1,
       "message": "are you intentionally passing only the query portion of the URL to the url argument as only that part is scanned even when the whole URL string is passed to the url argument and the query portion is specified by the |query| Component argument?\n\nlooks ok, though it took a bit of time to understand this is correct.",
+      "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093babec_7202a938",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T13:53:43Z",
+      "side": 1,
+      "message": "Yes, looking at it again it\u0027s unnecessarily confusing.\n\nI changed it a bit to hopefully make more sense. PTAL.",
+      "parentUuid": "b80aaa7f_9218490f",
       "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6ec6e74_ff8107d4",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T13:53:43Z",
+      "side": 1,
+      "message": "Sorry. I expected that presubmit would run lint and it would give me the correct include guard to use. But that didn\u0027t happen.",
+      "parentUuid": "1584a531_42f06f1c",
+      "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0599bcdd_7eeabf0d",
         "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b115d7de_a0702e6d",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T13:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0599bcdd_7eeabf0d",
+      "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70973bbf_422b8e45",
         "filename": "third_party/WebKit/LayoutTests/http/tests/websocket/throttling.html",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-25T07:55:04Z",
       "side": 1,
       "message": "lkcr than master intentionally?",
+      "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bb24fc_830c342b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/websocket/throttling.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T13:53:43Z",
+      "side": 1,
+      "message": "No, I found the URL on Google and didn\u0027t notice it was lkcr. Fixed.",
+      "parentUuid": "70973bbf_422b8e45",
       "revId": "85a507dac5dea8b1c2c62344ed53f2e9d8eddc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
