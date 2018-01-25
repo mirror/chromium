@@ -2780,9 +2780,6 @@ void Document::Shutdown() {
     ClearImportsController();
   }
 
-  timers_.SetTimerTaskRunner(
-      Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner());
-
   if (media_query_matcher_)
     media_query_matcher_->DocumentDetached();
 
