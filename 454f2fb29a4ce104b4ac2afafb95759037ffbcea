@@ -16,6 +16,24 @@
       "revId": "454f2fb29a4ce104b4ac2afafb95759037ffbcea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73b4432_01be1afb",
+        "filename": "base/android/library_loader/library_prefetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-01-25T13:32:30Z",
+      "side": 1,
+      "message": "Couldn\u0027t find logcat there, but this was confirmed in a few ways:\n- Looking at traces, the prefetch task is \u003c1ms, which indicates that prefetch didn\u0027t happen\n- Extracting the build used by the bot, and looking at libchrome.map.gz within it, the code there is not ordered, with the function used to check ordering after the start of text function.\n- Symmetric improvements / regressions on internal bots with the ranges matching the initial CL / revert.",
+      "parentUuid": "5058a962_76b8efe1",
+      "revId": "454f2fb29a4ce104b4ac2afafb95759037ffbcea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
