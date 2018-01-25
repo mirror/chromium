@@ -40,8 +40,6 @@
 #include "modules/filesystem/FileWriter.h"
 #include "modules/filesystem/FileWriterBaseCallback.h"
 #include "modules/filesystem/FileWriterCallback.h"
-#include "modules/filesystem/MetadataCallback.h"
-#include "platform/FileMetadata.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/text/StringBuilder.h"

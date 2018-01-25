@@ -39,7 +39,6 @@
 #include "modules/filesystem/EntrySync.h"
 #include "modules/filesystem/FileEntry.h"
 #include "modules/filesystem/FileSystemCallbacks.h"
-#include "modules/filesystem/MetadataCallback.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -135,8 +134,6 @@ struct EmptyType : public GarbageCollected<EmptyType> {
   void Trace(blink::Visitor* visitor) {}
 };
 
-typedef SyncCallbackHelper<MetadataCallback, Metadata*, Metadata>
-    MetadataSyncCallbackHelper;
 typedef SyncCallbackHelper<VoidCallback, EmptyType*, EmptyType>
     VoidSyncCallbackHelper;
 
@@ -220,6 +217,10 @@ using EntryCallbacksSyncHelper =
 using FileSystemCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
     FileSystemCallbacks::OnDidOpenFileSystemCallback,
     DOMFileSystem>;
+
+using MetadataCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
+    MetadataCallbacks::OnDidReadMetadataCallback,
+    Metadata>;
 
 }  // namespace blink
 
