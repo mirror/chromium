@@ -154,7 +154,7 @@ const MockTransaction* FindMockTransaction(const GURL& url) {
 
   // look for builtins:
   for (size_t i = 0; i < arraysize(kBuiltinMockTransactions); ++i) {
-    if (url == GURL(kBuiltinMockTransactions[i]->url))
+    if (url == kBuiltinMockTransactions[i]->url)
       return kBuiltinMockTransactions[i];
   }
   return nullptr;
