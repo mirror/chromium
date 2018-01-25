@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "aaa2452a_506d27ff",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1154069
+      },
+      "writtenOn": "2018-01-25T08:07:38Z",
+      "side": 1,
+      "message": "Webrtc cl now landed.",
+      "range": {
+        "startLine": 1343,
+        "startChar": 0,
+        "endLine": 1343,
+        "endChar": 57
+      },
+      "revId": "b65af11c8157c23aa7172ffaf912f19dedeabc49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce325ee_a527a336",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1154069
+      },
+      "writtenOn": "2018-01-25T08:07:38Z",
+      "side": 1,
+      "message": "In local testing, it seems this call returns false, when I\u0027m starting chrome like\n\n./out/Release/chrome --enable-new-encode-cpu-load-estimator --logs \u0027https://appr.tc?debug\u003dloopback\u0027\n\nI\u0027m probably misunderstanding how options are handled and set.",
+      "range": {
+        "startLine": 1345,
+        "startChar": 46,
+        "endLine": 1346,
+        "endChar": 52
+      },
+      "revId": "b65af11c8157c23aa7172ffaf912f19dedeabc49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7073f4f8_2a92377c",
         "filename": "media/base/media_switches.cc",
         "patchSetId": 2
