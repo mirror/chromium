@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f391706_0143784b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:07:24Z",
+      "side": 1,
+      "message": "Actually this is also the height of the shadow on iPhone. I have renamed the other method.",
+      "parentUuid": "59a457ed_8681e386",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0405b46_c8e9010d",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "592532959fca7dd854843e7f16bd417526f214f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7169b8d0_f6727bb4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0405b46_c8e9010d",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d23737d6_38004302",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416cb416_6da471d0",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "035c61bd_39bd14fe",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "592532959fca7dd854843e7f16bd417526f214f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1e3a37_abd64a8e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:07:24Z",
+      "side": 1,
+      "message": "I will land this one today, so you will have to expose it on your CL.",
+      "parentUuid": "035c61bd_39bd14fe",
+      "revId": "592532959fca7dd854843e7f16bd417526f214f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
