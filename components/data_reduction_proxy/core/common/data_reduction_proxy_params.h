@@ -47,12 +47,6 @@ bool IsIncludedInHoldbackFieldTrial();
 // not included in a group.
 std::string HoldbackFieldTrialGroup();
 
-// Returns true if this client is part of the field trial that should display
-// a promotion for the data reduction proxy on Android One devices. This is for
-// testing purposes and should not be called outside of tests.
-bool IsIncludedInAndroidOnePromoFieldTrialForTesting(
-    base::StringPiece build_fingerprint);
-
 // Returns the name of the Lo-Fi field trial.
 // TODO(ryansturm): crbug.com/759052 Cleanup once fully cutover to new blacklist
 const char* GetLoFiFieldTrialName();
