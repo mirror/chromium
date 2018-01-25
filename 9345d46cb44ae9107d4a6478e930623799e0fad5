@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41c18d3c_7d59713f",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-25T18:44:21Z",
+      "side": 1,
+      "message": "Yes, I discovered this and fixed in the follow-up, but forgot to pull the change up to this CL. Fixed.",
+      "parentUuid": "740cd3dd_98c33c16",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "9345d46cb44ae9107d4a6478e930623799e0fad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895f21f6_7d77b726",
         "filename": "chrome/browser/resources/print_preview/new/destination_settings.js",
         "patchSetId": 13
@@ -39,6 +63,24 @@
       "revId": "9345d46cb44ae9107d4a6478e930623799e0fad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6981e406_e01fceec",
+        "filename": "chrome/browser/resources/print_preview/new/destination_settings.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-25T18:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895f21f6_7d77b726",
+      "revId": "9345d46cb44ae9107d4a6478e930623799e0fad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
