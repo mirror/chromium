@@ -54,6 +54,7 @@ class ExtensionInstallDialogView : public views::DialogDelegateView,
  private:
   // views::DialogDelegateView:
   void AddedToWidget() override;
+  bool ShouldShowCloseButton() const override;
   void VisibilityChanged(views::View* starting_from, bool is_visible) override;
   int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
