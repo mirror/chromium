@@ -16,6 +16,24 @@
       "revId": "a9c0ad90bb57ded7ddc3ce5091b2d7aaf0e61b1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11482b8_3f5e7801",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-25T06:51:04Z",
+      "side": 0,
+      "message": "Oops, this is unintentional change. It was made for experiment.\nReverted this change.\n\nIt seems LayoutNG misses updating node inline layout data, maybe not\nre-layout for dirty tree. Two crash tests hit DCHECK(!HasNgInlineNdoeData)\nafter or during layout. Filed an issue http://crbug.com/805784\n\nBTW, LayoutObject::EnclosingBlockFlowFragment() checks\nHasNGInlineNodeData() instead of ChildrenInline().\n\nhttp://crrev.com/c/885542 changes to use ChildrenInline().\nThere are no crashes for fast/inline and fast/text.",
+      "parentUuid": "a2e933c4_85664089",
+      "revId": "a9c0ad90bb57ded7ddc3ce5091b2d7aaf0e61b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
