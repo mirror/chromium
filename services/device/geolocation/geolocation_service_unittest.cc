@@ -11,12 +11,20 @@
 #include "services/device/device_service_test_base.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/geolocation.mojom.h"
+#include "services/device/public/interfaces/geolocation_config.mojom.h"
 #include "services/device/public/interfaces/geolocation_context.mojom.h"
 #include "services/device/public/interfaces/geolocation_control.mojom.h"
 
 namespace device {
 
 namespace {
+
+void CheckReturnValue(base::OnceClosure quit_closure,
+                      bool expect,
+                      bool result) {
+  EXPECT_EQ(expect, result);
+  std::move(quit_closure).Run();
+}
 
 // Observer that waits until a TestURLFetcher with the specified fetcher_id
 // starts, after which it is made available through .fetcher().
@@ -77,9 +85,14 @@ class GeolocationServiceUnitTest : public DeviceServiceTestBase {
     base::RunLoop().RunUntilIdle();
   }
 
+  void BindGeolocationConfig() {
+    connector()->BindInterface(mojom::kServiceName, &geolocation_config_);
+  }
+
   mojom::GeolocationControlPtr geolocation_control_;
   mojom::GeolocationContextPtr geolocation_context_;
   mojom::GeolocationPtr geolocation_;
+  mojom::GeolocationConfigPtr geolocation_config_;
 
   DISALLOW_COPY_AND_ASSIGN(GeolocationServiceUnitTest);
 };
@@ -107,6 +120,24 @@ TEST_F(GeolocationServiceUnitTest, UrlWithApiKey) {
   EXPECT_EQ(expected_url, observer.fetcher()->GetOriginalURL());
 }
 #endif
+
+TEST_F(GeolocationServiceUnitTest, GeolocationConfig) {
+  BindGeolocationConfig();
+  {
+    base::RunLoop run_loop;
+    geolocation_config_->IsHighAccuracyLocationBeingCaptured(base::BindOnce(
+        &CheckReturnValue, run_loop.QuitClosure(), false /*expect false*/));
+    run_loop.Run();
+  }
+
+  geolocation_->SetHighAccuracy(true);
+  {
+    base::RunLoop run_loop;
+    geolocation_config_->IsHighAccuracyLocationBeingCaptured(base::BindOnce(
+        &CheckReturnValue, run_loop.QuitClosure(), true /*expect false*/));
+    run_loop.Run();
+  }
+}
 
 }  // namespace
 
