@@ -107,20 +107,20 @@ NSString* PageForTagTemplateAndContent(NSString* tag_template,
 
 - (NSString*)resourceForURL:(const GURL&)resourceURL {
   // Resource for BuildSimplePage.
-  if (resourceURL == GURL(kSimplePageUrl))
+  if (resourceURL == kSimplePageUrl)
     return [NSString stringWithFormat:kPageTemplate, @""];
   // Resources for BuildPageWithJSSubresource.
-  if (resourceURL == GURL(kJsPageUrl))
+  if (resourceURL == kJsPageUrl)
     return [self pageWithTagTemplate:kJsTagTemplate URL:kJsResourceUrl];
-  if (resourceURL == GURL(kJsResourceUrl))
+  if (resourceURL == kJsResourceUrl)
     return kJsContent;
   // Resources for BuildPageWithCSSSubresource.
-  if (resourceURL == GURL(kCssPageUrl))
+  if (resourceURL == kCssPageUrl)
     return [self pageWithTagTemplate:kCssTagTemplate URL:kCssResourceUrl];
-  if (resourceURL == GURL(kCssResourceUrl))
+  if (resourceURL == kCssResourceUrl)
     return kCssContent;
   // Resource for BuildPageWithMultipleSubresources.
-  if (resourceURL == GURL(kMultipleResourcesPageUrl)) {
+  if (resourceURL == kMultipleResourcesPageUrl) {
     NSString* JSTag =
         [NSString stringWithFormat:kJsTagTemplate,
                                    base::SysUTF8ToNSString(kJsResourceUrl)];
@@ -135,10 +135,10 @@ NSString* PageForTagTemplateAndContent(NSString* tag_template,
     return [NSString stringWithFormat:kPageTemplate, tags];
   }
   // Resources for BuildPageWithCSSNestedSubresource.
-  if (resourceURL == GURL(kCssImportPageUrl)) {
+  if (resourceURL == kCssImportPageUrl) {
     return [self pageWithTagTemplate:kCssTagTemplate URL:kCssImportResourceUrl];
   }
-  if (resourceURL == GURL(kCssImportResourceUrl)) {
+  if (resourceURL == kCssImportResourceUrl) {
     return [NSString stringWithFormat:kCssImportTemplate,
                                       base::SysUTF8ToNSString(kCssResourceUrl)];
   }
@@ -151,7 +151,7 @@ NSString* PageForTagTemplateAndContent(NSString* tag_template,
   if (resourceURL == cssRelativeResourceURL)
     return kRelativeCssContent;
   // Resource for BuildPageWithWebUIJS.
-  if (resourceURL == GURL(kCoreJsPageUrl))
+  if (resourceURL == kCoreJsPageUrl)
     return [self pageWithTagTemplate:kJsTagTemplate URL:kCoreJsResourceUrl];
 
   NOTREACHED();
