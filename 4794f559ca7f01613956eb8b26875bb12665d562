@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c03665_a4ea6b9a",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T05:22:03Z",
+      "side": 1,
+      "message": "It looks like this would break CopyOutputRequests that originate from within VIZ (e.g., viz::FrameSinkVideoCapturerImpl). Even if it doesn\u0027t, we really don\u0027t want to perfom coordinate translation this deep in the stack.",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 7
+      },
+      "revId": "4794f559ca7f01613956eb8b26875bb12665d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
