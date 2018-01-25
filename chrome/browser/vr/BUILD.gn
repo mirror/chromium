@@ -68,6 +68,8 @@ static_library("vr_common") {
     "elements/linear_layout.h",
     "elements/omnibox_formatting.cc",
     "elements/omnibox_formatting.h",
+    "elements/procedural_controller.cc",
+    "elements/procedural_controller.h",
     "elements/rect.cc",
     "elements/rect.h",
     "elements/render_text_wrapper.cc",
