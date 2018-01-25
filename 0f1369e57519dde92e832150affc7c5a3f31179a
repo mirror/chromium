@@ -34,6 +34,24 @@
       "revId": "0f1369e57519dde92e832150affc7c5a3f31179a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d056e835_c5bc6774",
+        "filename": "net/websockets/websocket_basic_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-25T09:46:54Z",
+      "side": 1,
+      "message": "I was hoping for a comment here:\n\nhttps://cs.chromium.org/chromium/src/net/websockets/websocket_stream.cc?q\u003d\"DefineNetworkTrafficAnnotation(\"websocket_stream\",\"\n\nOther changes look good.",
+      "parentUuid": "f8561978_87507033",
+      "revId": "0f1369e57519dde92e832150affc7c5a3f31179a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
