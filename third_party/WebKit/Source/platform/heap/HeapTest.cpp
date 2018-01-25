@@ -5776,7 +5776,7 @@ class DestructorLockingObject
   }
 
   virtual ~DestructorLockingObject() {
-    MutexLocker lock(GetRecursiveMutex());
+    RecursiveMutexLocker lock(GetRecursiveMutex());
     ++destructor_calls_;
   }
 
@@ -6470,7 +6470,7 @@ TEST(HeapTest, CrossThreadWeakPersistent) {
       cross_thread_weak_persistent(object);
   object = nullptr;
   {
-    MutexLocker recursive_mutex_locker(GetRecursiveMutex());
+    RecursiveMutexLocker recursive_mutex_locker(GetRecursiveMutex());
     EXPECT_EQ(0, DestructorLockingObject::destructor_calls_);
   }
 
@@ -6483,7 +6483,7 @@ TEST(HeapTest, CrossThreadWeakPersistent) {
   // Step 5: Make sure the weak persistent is cleared.
   EXPECT_FALSE(cross_thread_weak_persistent.Get());
   {
-    MutexLocker recursive_mutex_locker(GetRecursiveMutex());
+    RecursiveMutexLocker recursive_mutex_locker(GetRecursiveMutex());
     EXPECT_EQ(1, DestructorLockingObject::destructor_calls_);
   }
 
