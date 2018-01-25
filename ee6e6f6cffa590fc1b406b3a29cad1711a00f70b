@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbaec531_ed5a3e10",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-25T18:42:23Z",
+      "side": 1,
+      "message": "All frames within a surface have the same size.\n\ncurrent_surface-\u003esize_in_pixels() should be sufficient.",
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ba68d0_f8b4968e",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 5
