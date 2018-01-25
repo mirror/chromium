@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/screen_layout_observer.h"
@@ -137,7 +138,11 @@ ResolutionNotificationController::ResolutionChangeInfo::ResolutionChangeInfo(
       timeout_count(0) {
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
   if (!display::Display::HasInternalDisplay() &&
-      display_manager->num_connected_displays() == 1u) {
+      display_manager->num_connected_displays() == 1u &&
+      Shell::Get()->session_controller()->login_status() !=
+          LoginStatus::KIOSK_APP) {
+    // The resolution change notification is invisible in Kiosk mode, so do not
+    // assign timeout.
     timeout_count = kTimeoutInSec;
   }
 }
