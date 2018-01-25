@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f876ca8_645132f7",
+        "filename": "base/files/scoped_temp_dir.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-25T21:48:28Z",
+      "side": 1,
+      "message": "Yes.  Rephrased.",
+      "parentUuid": "cd428275_3cbe9a15",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "7943fb015fda1728c11071c9290f1703a5008a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd09425d_d08fa1bd",
         "filename": "chrome/common/logging_chrome.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "7943fb015fda1728c11071c9290f1703a5008a73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902f31f5_51ce3a92",
+        "filename": "chrome/common/logging_chrome.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-25T21:48:28Z",
+      "side": 1,
+      "message": "Thanks.  I hunted down other potential omissions.",
+      "parentUuid": "fd09425d_d08fa1bd",
+      "revId": "7943fb015fda1728c11071c9290f1703a5008a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
