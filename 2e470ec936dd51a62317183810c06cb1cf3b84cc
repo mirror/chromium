@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74f07cf4_4aef6caa",
+        "filename": "chrome/browser/exo_parts.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T03:35:20Z",
+      "side": 1,
+      "message": "Added IsArc check above.\nSince we only have ARC container currently, this method is supposed to be called only on Arc apps currently, but this assumption may be changed in the future.",
+      "parentUuid": "650a652d_a15ee655",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3d0794c_215afb95",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T20:01:38Z",
       "side": 1,
       "message": "should this code live there instead?",
+      "range": {
+        "startLine": 56,
+        "startChar": 57,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72a20e3_3d839e9c",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T03:35:20Z",
+      "side": 1,
+      "message": "I may be wrong, but I suspect we are not allowed to import //content/browser/* from //components/exo/*\n\n(DEPS doesn\u0027t allow it currently https://cs.chromium.org/chromium/src/components/exo/DEPS )",
+      "parentUuid": "c3d0794c_215afb95",
       "range": {
         "startLine": 56,
         "startChar": 57,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3e9a4c78_320cfa09",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T03:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0de28a2_45384f31",
+      "range": {
+        "startLine": 88,
+        "startChar": 40,
+        "endLine": 88,
+        "endChar": 46
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f568a2_bb5a978b",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "094ad6aa_f96fd785",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T03:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f568a2_bb5a978b",
+      "range": {
+        "startLine": 113,
+        "startChar": 9,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe8c2405_5980fad6",
         "filename": "components/exo/data_offer_unittest.cc",
         "patchSetId": 9
@@ -105,6 +201,24 @@
       "writtenOn": "2018-01-23T20:01:38Z",
       "side": 1,
       "message": "should we check app id before we return a org.chromium.arc url here? ideally we\u0027d use a non-arc app id here to so we\u0027re convinced that this works with other app ids..",
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dc6824_2a69197f",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T03:35:20Z",
+      "side": 1,
+      "message": "That sounds reasonable.\nThere is a TODO in data_offer.cc for filling app_id, and we\u0027re thinking of addressing it in a separate CL. Leaving a TODO here as well.",
+      "parentUuid": "fe8c2405_5980fad6",
       "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
