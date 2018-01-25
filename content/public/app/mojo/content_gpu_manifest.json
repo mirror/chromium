@@ -11,9 +11,11 @@
           "content::mojom::ChildHistogramFetcherFactory",
           "IPC::mojom::ChannelBootstrap",
           "service_manager::mojom::ServiceFactory",
-          "viz::mojom::CompositingModeReporter",
+          "ui::ozone::mojom::DeviceCursor",
+          "ui::ozone::mojom::DrmDevice",
+         "viz::mojom::CompositingModeReporter",
           "viz::mojom::VizMain"
-        ],
+         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
         ]
