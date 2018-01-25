@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a908c728_5ed2b3b4",
+        "filename": "gpu/command_buffer/service/raster_cmd_decoder_autogen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-25T02:05:56Z",
+      "side": 1,
+      "message": "nit: included by raster_decoder.cc?",
+      "revId": "384fe2d94893d253583188730201d1fad2cada4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db547b7_4512e1b3",
+        "filename": "gpu/command_buffer/service/raster_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-25T02:05:56Z",
+      "side": 1,
+      "message": "nit: These are the same but, add a RasterCommand constant?",
+      "revId": "384fe2d94893d253583188730201d1fad2cada4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
