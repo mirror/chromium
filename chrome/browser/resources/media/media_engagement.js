@@ -121,7 +121,8 @@ function renderConfigTable(config) {
 function renderTable() {
   clearTable();
   sortInfo();
-  info.forEach(rowInfo => engagementTableBody.appendChild(createRow(rowInfo)));
+  info.filter(rowInfo => (rowInfo.mediaPlaybacks > 0))
+      .forEach(rowInfo => engagementTableBody.appendChild(createRow(rowInfo)));
 }
 
 /**
