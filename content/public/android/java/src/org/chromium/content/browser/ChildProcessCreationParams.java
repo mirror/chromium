@@ -54,7 +54,7 @@ public class ChildProcessCreationParams {
         extras.putInt(EXTRA_LIBRARY_PROCESS_TYPE, mLibraryProcessType);
     }
 
-    public static String getPackageNameForSandboxedService() {
+    public static String getPackageNameForService() {
         ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
         return params != null ? params.mPackageNameForSandboxedService
                               : ContextUtils.getApplicationContext().getPackageName();
