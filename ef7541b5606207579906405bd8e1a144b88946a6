@@ -22,6 +22,30 @@
       "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94bcf36_f16f5463",
+        "filename": "base/time/time.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T19:48:13Z",
+      "side": 1,
+      "message": "I\u0027m curious as to why this would lead to a size increase. Perhaps, for non-const cases, the compiler is more-aggressively inlining the code when constexpr is present? If that\u0027s the case, perhaps these should be moved to time.cc? And then, I wonder what the size diff is between the regular and constexpr variants?",
+      "parentUuid": "731205ea_e4b63dd9",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 0
+      },
+      "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
