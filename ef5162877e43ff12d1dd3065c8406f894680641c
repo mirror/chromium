@@ -296,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "6bbc9186_06996bba",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-25T16:09:59Z",
+      "side": 1,
+      "message": "I like AutoSignal - it speaks directly to what it does.  Done.",
+      "parentUuid": "7d370e6b_467e1bb0",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0706db46_9bc2f708",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimator.h",
         "patchSetId": 47
