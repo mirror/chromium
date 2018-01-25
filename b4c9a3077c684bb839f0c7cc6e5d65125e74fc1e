@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84743c6a_bd235f82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T02:08:43Z",
+      "side": 1,
+      "message": "Sanity check: will this work correctly for a cross-process navigation?  Such a navigation will commit in a new process and new RenderFrameHost (which is a pending RFH at this point), but this line will send the hasReceivedUserGesture to the old RenderFrameHost.\n\nLooks like there\u0027s some logic to transfer UG state to the new frame - I noticed https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/WebFrame.cpp?l\u003d125\u0026rcl\u003d59c4139680eeda1589badde1d9d964d8efd3b24d, but that seems to be restricted to subframes, so I\u0027m not sure whether something else will do this for main frames.\n\nYou can test this by doing a cross-site main frame navigation with --site-per-process.",
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80004ca8_cd33e51f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T02:08:43Z",
+      "side": 1,
+      "message": "Just a note, no need to do anything in this CL.  IIUC, this will set the hasReceivedUG on the RenderFrame, which will trigger another IPC back to the browser to replicate it to proxies for site isolation/OOPIF-related cases - it\u0027ll go into RFHI::OnSetHasReceivedUserGesture.  In the future, it\u0027d be nice to avoid that extra roundtrip and just initiate that replication from here, but that probably needs some cleanup on the renderer side as well, to know when not to send the IPC.",
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba88d15_1da34753",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T02:08:43Z",
+      "side": 1,
+      "message": "Since this isn\u0027t assigning the returned UserGestureIndicator to anything, is there value in doing this rather than just GetFrame()-\u003eNotifyUserActivation()?  Similarly for WebRemoteFrameImpl above.",
+      "range": {
+        "startLine": 2182,
+        "startChar": 4,
+        "endLine": 2182,
+        "endChar": 74
+      },
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31440400_6b83bdf9",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T02:08:43Z",
+      "side": 1,
+      "message": "Is this part of the comment still accurate?  I see it came from WebLocalFrame::SetHasReceivedUserGesture, which isn\u0027t used outside of a test.  The comment was added in japhet@\u0027s https://codereview.chromium.org/2445193005, but the ancestor walk from that CL doesn\u0027t seem to exist anymore.",
+      "range": {
+        "startLine": 207,
+        "startChar": 67,
+        "endLine": 208,
+        "endChar": 60
+      },
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
