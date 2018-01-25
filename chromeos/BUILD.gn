@@ -217,6 +217,8 @@ component("chromeos") {
     "dbus/fake_sms_client.h",
     "dbus/fake_system_clock_client.cc",
     "dbus/fake_system_clock_client.h",
+    "dbus/fake_update_engine_client.cc",
+    "dbus/fake_update_engine_client.h",
     "dbus/fake_upstart_client.cc",
     "dbus/fake_upstart_client.h",
     "dbus/fake_virtual_file_provider_client.cc",
@@ -614,7 +616,7 @@ static_library("test_support_without_gmock") {
     "dbus/fake_cros_disks_client.cc",
     "dbus/fake_cros_disks_client.h",
 
-    # TODO(crbug.com/799071) remove fake_session_manager_client and fix build rules.
+    # TODO(crbug.com/799071) remove fake_session_manager_client, fake_update_engine_client and fix build rules.
     "dbus/fake_session_manager_client.cc",
     "dbus/fake_session_manager_client.h",
     "dbus/fake_shill_manager_client.cc",

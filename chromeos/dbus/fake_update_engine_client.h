@@ -85,6 +85,10 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int can_rollback_call_count() const { return can_rollback_call_count_; }
 
  private:
+  void StateTransition();
+
+  Status last_status_;
+
   base::ObserverList<Observer> observers_;
   base::queue<UpdateEngineClient::Status> status_queue_;
   UpdateEngineClient::Status default_status_;
@@ -94,6 +98,11 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   int request_update_check_call_count_;
   int rollback_call_count_;
   int can_rollback_call_count_;
+
+  std::string current_channel_;
+  std::string target_channel_;
+
+  base::WeakPtrFactory<FakeUpdateEngineClient> weak_factory_;
 };
 
 }  // namespace chromeos

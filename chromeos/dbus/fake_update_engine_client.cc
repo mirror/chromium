@@ -9,18 +9,79 @@
 
 namespace chromeos {
 
+// Delay between successive state transitions during AU.
+const int kStateTransitionDefaultDelayMs = 3000;
+
+// Delay between successive notifications about downloading progress
+// during fake AU.
+const int kStateTransitionDownloadingDelayMs = 250;
+
+// Size of parts of a "new" image which are downloaded each
+// |kStateTransitionDownloadingDelayMs| during fake AU.
+const int64_t kDownloadSizeDelta = 1 << 19;
+
+const char kReleaseChannelBeta[] = "beta-channel";
+
 FakeUpdateEngineClient::FakeUpdateEngineClient()
     : update_check_result_(UpdateEngineClient::UPDATE_RESULT_SUCCESS),
       can_rollback_stub_result_(false),
       reboot_after_update_call_count_(0),
       request_update_check_call_count_(0),
       rollback_call_count_(0),
-      can_rollback_call_count_(0) {}
+      can_rollback_call_count_(0),
+      current_channel_(kReleaseChannelBeta),
+      target_channel_(kReleaseChannelBeta),
+      weak_factory_(this) {}
 
 FakeUpdateEngineClient::~FakeUpdateEngineClient() = default;
 
-void FakeUpdateEngineClient::Init(dbus::Bus* bus) {
+void FakeUpdateEngineClient::StateTransition() {
+  UpdateStatusOperation next_status = UPDATE_STATUS_ERROR;
+  int delay_ms = kStateTransitionDefaultDelayMs;
+  switch (last_status_.status) {
+    case UPDATE_STATUS_ERROR:
+    case UPDATE_STATUS_IDLE:
+    case UPDATE_STATUS_UPDATED_NEED_REBOOT:
+    case UPDATE_STATUS_REPORTING_ERROR_EVENT:
+    case UPDATE_STATUS_ATTEMPTING_ROLLBACK:
+    case UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE:
+      return;
+    case UPDATE_STATUS_CHECKING_FOR_UPDATE:
+      next_status = UPDATE_STATUS_UPDATE_AVAILABLE;
+      break;
+    case UPDATE_STATUS_UPDATE_AVAILABLE:
+      next_status = UPDATE_STATUS_DOWNLOADING;
+      break;
+    case UPDATE_STATUS_DOWNLOADING:
+      if (last_status_.download_progress >= 1.0) {
+        next_status = UPDATE_STATUS_VERIFYING;
+      } else {
+        next_status = UPDATE_STATUS_DOWNLOADING;
+        last_status_.download_progress += 0.01;
+        last_status_.new_size = kDownloadSizeDelta;
+        delay_ms = kStateTransitionDownloadingDelayMs;
+      }
+      break;
+    case UPDATE_STATUS_VERIFYING:
+      next_status = UPDATE_STATUS_FINALIZING;
+      break;
+    case UPDATE_STATUS_FINALIZING:
+      next_status = UPDATE_STATUS_IDLE;
+      break;
+  }
+  last_status_.status = next_status;
+  for (auto& observer : observers_)
+    observer.UpdateStatusChanged(last_status_);
+  if (last_status_.status != UPDATE_STATUS_IDLE) {
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(&FakeUpdateEngineClient::StateTransition,
+                       weak_factory_.GetWeakPtr()),
+        base::TimeDelta::FromMilliseconds(delay_ms));
+  }
 }
+
+void FakeUpdateEngineClient::Init(dbus::Bus* bus) {}
 
 void FakeUpdateEngineClient::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);
@@ -36,8 +97,25 @@ bool FakeUpdateEngineClient::HasObserver(const Observer* observer) const {
 
 void FakeUpdateEngineClient::RequestUpdateCheck(
     const UpdateCheckCallback& callback) {
+  if (last_status_.status != UPDATE_STATUS_IDLE) {
+    callback.Run(UPDATE_RESULT_FAILED);
+    return;
+  }
   request_update_check_call_count_++;
-  callback.Run(update_check_result_);
+  callback.Run(UPDATE_RESULT_SUCCESS);
+  last_status_.status = UPDATE_STATUS_CHECKING_FOR_UPDATE;
+  last_status_.download_progress = 0.0;
+  last_status_.last_checked_time = 0;
+  last_status_.new_size = 0;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&FakeUpdateEngineClient::StateTransition,
+                     weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromMilliseconds(kStateTransitionDefaultDelayMs));
+}
+
+void FakeUpdateEngineClient::FakeUpdateEngineClient::RebootAfterUpdate() {
+  reboot_after_update_call_count_++;
 }
 
 void FakeUpdateEngineClient::Rollback() {
@@ -50,13 +128,9 @@ void FakeUpdateEngineClient::CanRollbackCheck(
   callback.Run(can_rollback_stub_result_);
 }
 
-void FakeUpdateEngineClient::RebootAfterUpdate() {
-  reboot_after_update_call_count_++;
-}
-
 UpdateEngineClient::Status FakeUpdateEngineClient::GetLastStatus() {
   if (status_queue_.empty())
-    return default_status_;
+    return last_status_;
 
   UpdateEngineClient::Status last_status = status_queue_.front();
   status_queue_.pop();
@@ -77,12 +151,20 @@ void FakeUpdateEngineClient::
 
 void FakeUpdateEngineClient::SetChannel(const std::string& target_channel,
                                         bool is_powerwash_allowed) {
+  VLOG(1) << "Requesting to set channel: "
+          << "target_channel=" << target_channel << ", "
+          << "is_powerwash_allowed=" << is_powerwash_allowed;
+  target_channel_ = target_channel;
 }
 
 void FakeUpdateEngineClient::GetChannel(bool get_current_channel,
                                         const GetChannelCallback& callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, std::string()));
+  VLOG(1) << "Requesting to get channel, get_current_channel="
+          << get_current_channel;
+  if (get_current_channel)
+    callback.Run(current_channel_);
+  else
+    callback.Run(target_channel_);
 }
 
 void FakeUpdateEngineClient::GetEolStatus(
