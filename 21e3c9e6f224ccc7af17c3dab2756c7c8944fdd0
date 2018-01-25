@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "ea8901e0_20db10b6",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T23:50:27Z",
+      "side": 1,
+      "message": "It leaves trace that might be useful in the future.",
+      "parentUuid": "5d75ba3d_5b0f7b2c",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e0c1e03_ddf28840",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1

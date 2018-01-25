@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73da3f58_82ce2822",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T23:50:27Z",
+      "side": 1,
+      "message": "Going back to plain enum then. It is cleaner in that case.\n\nOn the other hand I upgraded SystemTrayVisibility enum to enum class.",
+      "parentUuid": "ad4775a7_56336ed6",
+      "revId": "91fa5c0f705ca01456f8a79052b4cb7e0e2f6a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01910e0f_67c0218e",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "91fa5c0f705ca01456f8a79052b4cb7e0e2f6a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24d9f08_16147132",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-25T23:50:27Z",
+      "side": 1,
+      "message": "Good catch.\n\nI changed to single method, but if I put comments in the invocations the line becomes pretty long and it doesn\u0027t read too well, so I keep them only in first call in the test.",
+      "parentUuid": "01910e0f_67c0218e",
+      "revId": "91fa5c0f705ca01456f8a79052b4cb7e0e2f6a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
