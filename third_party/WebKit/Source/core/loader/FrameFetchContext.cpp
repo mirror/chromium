@@ -548,8 +548,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   }
 
   if (response.IsLegacySymantecCert()) {
-    GetLocalFrameClient()->ReportLegacySymantecCert(
-        response.Url(), response.CertValidityStart());
+    GetLocalFrameClient()->ReportLegacySymantecCert(response.Url());
   }
 
   GetFrame()->Loader().Progress().IncrementProgress(identifier, response);
