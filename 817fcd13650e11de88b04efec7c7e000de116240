@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab7054c2_967936a3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d327d8d0_1a7d6d14",
+      "range": {
+        "startLine": 4707,
+        "startChar": 21,
+        "endLine": 4707,
+        "endChar": 58
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "333b99be_1dc04196",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 8
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0d93dcbd_254965f0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32e4dac0_fb1eac28",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 564,
+        "endChar": 25
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14cb1c0b_c8ae2928",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 8
@@ -91,6 +139,30 @@
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1074394_97fcb5de",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14cb1c0b_c8ae2928",
+      "range": {
+        "startLine": 565,
+        "startChar": 3,
+        "endLine": 565,
+        "endChar": 34
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "df023211_d98bafca",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51358b09_c2bfc0b3",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591f96b6_7cb03afc",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 8
@@ -128,6 +224,30 @@
       "writtenOn": "2018-01-24T23:46:45Z",
       "side": 1,
       "message": "So I can have a handle on context, why is this effort behind a build flag and not a feature flag? Especially if this is intended to launch soon (the linked doc says 67?)",
+      "range": {
+        "startLine": 103,
+        "startChar": 14,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cce41b_cc10ed4a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "DICE is desktop identity consistency, so it is only on desktop platforms (not ChromeOS. nor on mobile). We have added a build flag (ENABLE_DICE_SUPPORT) to exclude building DICE-releated code on mobile and ChromeOS.\n\nThere is also a feature flag that controls DICE. The function AccountConsistencyModeManager::IsDiceEnabledForProfile(profile) is based on that feature flag.",
+      "parentUuid": "591f96b6_7cb03afc",
       "range": {
         "startLine": 103,
         "startChar": 14,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "536dd2f8_a84db248",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "This header defines the ENABLE_DICE_SUPPORT macro - see https://cs.chromium.org/chromium/src/out/Debug/gen/components/signin/core/browser/signin_features.h?q\u003dcomponents/signin/core/browser/signin_features.h\u0026sq\u003dpackage:chromium\u0026dr\n\nI need both #include \"build/buildflag.h\" and \"components/signin/core/browser/signin_features.h\" for #if BUILDFLAG(ENABLE_DICE_SUPPORT)",
+      "parentUuid": "e98423f2_3b1b4bfc",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e626c49e_cbfcb099",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -183,6 +327,30 @@
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263f6c1b_ad5b6612",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e626c49e_cbfcb099",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 32
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "b0dc83ff_08ffd7a1",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "It does not matter here.",
+      "parentUuid": "fd9b9989_1b99d3f7",
+      "range": {
+        "startLine": 430,
+        "startChar": 23,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5399e8_912e4a4e",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 8
@@ -229,6 +421,30 @@
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cce79b_f941c17b",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5399e8_912e4a4e",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "d540689c_52797ce0",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate_mock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "366a38f1_d306833c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cd59fa_7ec2ca02",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "427cf0f3_0a578cf7",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84cd59fa_7ec2ca02",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 78
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c607bbbe_d9a14c15",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -289,6 +553,24 @@
       "writtenOn": "2018-01-24T19:19:22Z",
       "side": 1,
       "message": "Can you pass a pointer to the model inside here like the sync promo bubble does?",
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0539191_e2cdb405",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "I cannot as I need to close the bubble when the user presses the sign-in or the sync button. Enabling sync takes a bit of time before the sync confirmation dialog is shown.",
+      "parentUuid": "c607bbbe_d9a14c15",
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -318,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "906a8ca5_0a1481a7",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c8ce6b_88ad77c6",
+      "range": {
+        "startLine": 263,
+        "startChar": 34,
+        "endLine": 263,
+        "endChar": 36
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb8b287_33072fe5",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -341,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "310ee7fe_e2ec9b8e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb8b287_33072fe5",
+      "range": {
+        "startLine": 264,
+        "startChar": 11,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8097c00_02915fad",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -352,6 +682,30 @@
       "writtenOn": "2018-01-24T16:53:04Z",
       "side": 1,
       "message": "I think we want a separate state for \"Enable sync\" vs. the current \"Sign in to Chrome. Then you don\u0027t need AccountConsistencyModeManager below.",
+      "range": {
+        "startLine": 378,
+        "startChar": 26,
+        "endLine": 378,
+        "endChar": 74
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e122d99e_7f429480",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Conceptually, this is the same promo - we are asking user to enable Chrome sync (only that in the past enabling sync meant signing in to Chrome).\n\nWe want to base the sync promo on the same logic as the sign-in promo (using the same prefs and metrics). That is why I believe keeping the same state here (CHROME_SIGN_IN_PROMO_STATE) makes sense.\n\nHowever, I will defer this to your decision as you own this code - if you believe that is better, then i am willing to change the code as you suggested (this change is a bit large, so I prefer double checking before actually doing it).",
+      "parentUuid": "f8097c00_02915fad",
       "range": {
         "startLine": 378,
         "startChar": 26,
@@ -387,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "cb1cf01d_8f3ac484",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94ab40c8_bce75343",
+      "range": {
+        "startLine": 388,
+        "startChar": 10,
+        "endLine": 388,
+        "endChar": 56
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79f9b7e_e8974feb",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -410,6 +788,30 @@
     },
     {
       "key": {
+        "uuid": "fb1ee986_7a8bc5e7",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79f9b7e_e8974feb",
+      "range": {
+        "startLine": 386,
+        "startChar": 7,
+        "endLine": 389,
+        "endChar": 57
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edebfc91_6576cf45",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -421,6 +823,30 @@
       "writtenOn": "2018-01-24T19:19:22Z",
       "side": 1,
       "message": "Can we make sure that the sign_in_promo_, desktop_ios_promo_ and this bubble all inherit from the same class? (You can add a getter for which buttons the framework need to support (ui::BUTTON_OK | ui::BUTTON_CANCEL normally) and have this promo dialog button declare no buttons on its own. Then you can use a custom button inside it.",
+      "range": {
+        "startLine": 391,
+        "startChar": 6,
+        "endLine": 391,
+        "endChar": 21
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e2a0b0_5fd40dc3",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "The DiceBubbleSyncPromoView is used in bookmarks and in installed extensions as the footer view of the bubble. I do not see how I could make it inherit something that is specific to the password saved bubble.\n\nI could however have a custom view for the ManagePasswordPendingView that has a label and a button if you prefer that and that would duplicate the logic in the DiceBubbleSyncPromoView. I personally prefer reusing the same code for the dice sync promo.\n\nNote that ManagePasswordSignInPromoView is not a view and after checking with Vasilii I\u0027m removing it in CL https://chromium-review.googlesource.com/c/chromium/src/+/883781 (let me know if this is not good).",
+      "parentUuid": "edebfc91_6576cf45",
       "range": {
         "startLine": 391,
         "startChar": 6,
@@ -456,6 +882,30 @@
     },
     {
       "key": {
+        "uuid": "98c1ea12_47012e12",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "The advantage of the current approach is that I can avoid including build/buildflag.h and components/signin/core/browser/signin_features.h in the header file as I no longer need if defined(ENABLE_DICE_SUPPORT).",
+      "parentUuid": "1ac54a99_33776d2a",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6e9ea3d_86a6eab3",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
         "patchSetId": 8
@@ -479,6 +929,30 @@
     },
     {
       "key": {
+        "uuid": "263b7e9e_e7276481",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e9ea3d_86a6eab3",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "972e1382_4460375f",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
         "patchSetId": 8
@@ -499,6 +973,30 @@
       "revId": "817fcd13650e11de88b04efec7c7e000de116240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48109440_edc20125",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-25T12:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972e1382_4460375f",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
