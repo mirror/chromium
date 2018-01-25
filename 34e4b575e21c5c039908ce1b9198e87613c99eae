@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a58ebe4_2b3fbd84",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T22:47:08Z",
+      "side": 1,
+      "message": "could make this GetFilter instead I think?",
+      "revId": "34e4b575e21c5c039908ce1b9198e87613c99eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99887b57_23378b2a",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T22:47:08Z",
+      "side": 1,
+      "message": "hmm, what can we DCHECK here..?\n\nDCHECK(frame_futures_.empty())\nDCHECK(!window_android_in_vsync_)",
+      "revId": "34e4b575e21c5c039908ce1b9198e87613c99eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377d4330_0326f033",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T22:47:08Z",
+      "side": 1,
+      "message": "oh, this needs to be defensive I think? kill the renderer if begin_frame_response_valid_ is already true",
+      "revId": "34e4b575e21c5c039908ce1b9198e87613c99eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
