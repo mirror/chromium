@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1e60d28_81480aff",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-25T18:44:48Z",
+      "side": 1,
+      "message": "Yes, because it is the destructor -- that means that all references are gone (thanks to scoped_refptr) and this thread is the only one working with this object.",
+      "parentUuid": "297da3a8_09017687",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a7fed6_9999c24b",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d089202_a0c618e4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-25T18:44:48Z",
+      "side": 1,
+      "message": "base::WeakPtr already has this check built in.",
+      "parentUuid": "10a7fed6_9999c24b",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c7077c_7f1fad07",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d9061d_bcc1fdf9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-25T18:44:48Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "93c7077c_7f1fad07",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
