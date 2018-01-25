@@ -39,8 +39,30 @@
 #include "public/web/WebDocument.h"
 #include "public/web/WebFrame.h"
 #include "public/web/WebSerializedScriptValue.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 
 namespace blink {
+
+namespace {
+
+scoped_refptr<SerializedScriptValue>
+SerializedScriptValueFromTransferableMessage(TransferableMessage* message) {
+  auto result = SerializedScriptValue::Create(
+      reinterpret_cast<const char*>(message->encoded_message.data()),
+      message->encoded_message.length());
+  for (auto& blob : message->blobs) {
+    result->BlobDataHandles().Set(
+        WebString::FromUTF8(blob->uuid),
+        BlobDataHandle::Create(
+            WebString::FromUTF8(blob->uuid),
+            WebString::FromUTF8(blob->content_type), blob->size,
+            mojom::blink::BlobPtrInfo(blob->blob.PassHandle(),
+                                      mojom::Blob::Version_)));
+  }
+  return result;
+}
+
+}  // namespace
 
 WebDOMMessageEvent::WebDOMMessageEvent(
     const WebSerializedScriptValue& message_data,
@@ -68,17 +90,37 @@ WebDOMMessageEvent::WebDOMMessageEvent(
                                            "" /*lastEventId*/, window, ports);
 }
 
-WebSerializedScriptValue WebDOMMessageEvent::Data() const {
-  return WebSerializedScriptValue(
-      ConstUnwrap<MessageEvent>()->DataAsSerializedScriptValue());
-}
+WebDOMMessageEvent::WebDOMMessageEvent(TransferableMessage message,
+                                       const WebString& origin,
+                                       const WebFrame* source_frame,
+                                       const WebDocument& target_document)
+    : WebDOMMessageEvent(SerializedScriptValueFromTransferableMessage(&message),
+                         origin,
+                         source_frame,
+                         target_document,
+                         message.ports) {}
 
 WebString WebDOMMessageEvent::Origin() const {
   return WebString(ConstUnwrap<MessageEvent>()->origin());
 }
 
-WebVector<MessagePortChannel> WebDOMMessageEvent::ReleaseChannels() {
-  return Unwrap<MessageEvent>()->ReleaseChannels();
+TransferableMessage WebDOMMessageEvent::ReleaseMessage() {
+  TransferableMessage result;
+  SerializedScriptValue* value =
+      Unwrap<MessageEvent>()->DataAsSerializedScriptValue();
+  result.encoded_message = value->GetWireData();
+  auto ports = Unwrap<MessageEvent>()->ReleaseChannels();
+  result.ports.assign(ports.begin(), ports.end());
+  result.blobs.reserve(value->BlobDataHandles().size());
+  for (const auto& blob : value->BlobDataHandles()) {
+    result.blobs.push_back(mojom::SerializedBlob::New(
+        WebString(blob.value->Uuid()).Utf8(),
+        WebString(blob.value->GetType()).Utf8(), blob.value->size(),
+        mojom::BlobPtrInfo(
+            blob.value->CloneBlobPtr().PassInterface().PassHandle(),
+            mojom::Blob::Version_)));
+  }
+  return result;
 }
 
 }  // namespace blink
