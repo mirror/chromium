@@ -22,6 +22,30 @@
       "revId": "8544c5c2897b50c002ac7284b456c8c0afbbac30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b18550_9bd441ed",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T17:21:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae28a191_9202e3ff",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "8544c5c2897b50c002ac7284b456c8c0afbbac30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
