@@ -238,7 +238,6 @@ using blink::WebSecurityPolicy;
 using blink::WebSettings;
 using blink::WebSize;
 using blink::WebString;
-using blink::WebTappedInfo;
 using blink::WebTextDirection;
 using blink::WebTouchEvent;
 using blink::WebURL;
@@ -1746,11 +1745,6 @@ void RenderViewImpl::SetToolTipText(const blink::WebString& text,
 
 void RenderViewImpl::SetTouchAction(blink::WebTouchAction touchAction) {
   RenderWidget::SetTouchAction(touchAction);
-}
-
-void RenderViewImpl::ShowUnhandledTapUIIfNeeded(
-    const blink::WebTappedInfo& tappedInfo) {
-  RenderWidget::ShowUnhandledTapUIIfNeeded(tappedInfo);
 }
 
 blink::WebWidgetClient* RenderViewImpl::WidgetClient() {

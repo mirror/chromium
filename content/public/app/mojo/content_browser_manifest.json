@@ -141,6 +141,7 @@
           "blink::mojom::PermissionService",
           "blink::mojom::PresentationService",
           "blink::mojom::TextSuggestionHost",
+          "blink::mojom::UnhandledTapNotifier",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",
 
