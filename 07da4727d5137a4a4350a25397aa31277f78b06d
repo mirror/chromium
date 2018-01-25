@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abde9f5_9c4a2a39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-25T15:04:57Z",
+      "side": 1,
+      "message": "Nit: implementation",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "07da4727d5137a4a4350a25397aa31277f78b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16b0eb3_f04115ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-25T15:04:57Z",
+      "side": 1,
+      "message": "What does it means?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "07da4727d5137a4a4350a25397aa31277f78b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d19e41e_40a789f3",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-25T15:04:57Z",
+      "side": 1,
+      "message": "I think we should no more use a NavigationThrottle. That\u0027s because of UpgradeInsecureRequest.\n\nHere is the interaction between CSP and UpgradeInsecureRequest:\n1) Check CSP and report violations if needed, but do not block the request.\n2) Upgrade the URL.\n3) Check CSP and block the request if needed.\n\n+CC estark (FYI).\nPart of Upgrade Insecure Request was moved to the browser process and the old AncestorResourceThrottle was removed and replaced by code in the NavigationRequest.\nYou can take a look at this CL and do the same:\nhttps://codereview.chromium.org/2909513002/",
+      "revId": "07da4727d5137a4a4350a25397aa31277f78b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37c128c_f8a31ba0",
+        "filename": "content/browser/frame_host/navigation_to_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-25T15:04:57Z",
+      "side": 1,
+      "message": "This is not necessary wrong. It depends on the specification.\nI hope the specification will say the CSP used are the one from the navigating frame, by opposition to the frame that has initiated the navigation.\nI think it make sense.",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "07da4727d5137a4a4350a25397aa31277f78b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb1b34c_ba2ff51e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/navigation-to/support/form_action_navigation.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-25T15:04:57Z",
+      "side": 1,
+      "message": "I think it is not necessary. It think it is the default behavior.\n\nI am thinking, maybe we should have tests using target\u003d\u0027frame_name\u0027.\nFor instance:\n\n#1\n```html\n\u003ca target\u003d\"my_window\" id\u003d\"my_link\" href\u003d\"/simple_page\"\u003eClick Me\u003c/a\u003e\n```\n\n```javascript\nwindow.open(\"/simple_page\", \"my_window\")\nsetTimeout(function() {\n  AddCSP(\"navigate-to: \u0027none\u0027\")\n  getElementById(\"my_link\").click().\n},3000)\n```\nDoes the window navigate?\n\n#2\nIn an iframe:\n```javascript\nAddCSP(\"navigate-to: \u0027none\u0027\")\nwindow.top.href \u003d \"/simple_page\";\n```\nDoes the main frame navigate?\n\n#3\n```javascript\nAddCSP(\"navigate-to: \u0027none\u0027\")\nwindow.open(\"/simple_page\")\n```\nDoes it open a new window? \n\n----\n\nI hope the specification will allow #1, #2 to navigate.\nI am not sure about #3.",
+      "range": {
+        "startLine": 14,
+        "startChar": 31,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "07da4727d5137a4a4350a25397aa31277f78b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
