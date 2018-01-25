@@ -79,8 +79,12 @@ void NotificationManager::HideUnresponsiveNotification(int id) {
   if (callbacks_.size()) {
     ShowNotification();
   } else {
-    NotificationDisplayService::GetForProfile(profile_)->Close(
-        NotificationHandler::Type::TRANSIENT, GetNotificationId());
+    // The NDS can be null in tests.
+    auto* display_service = NotificationDisplayService::GetForProfile(profile_);
+    if (display_service) {
+      display_service->Close(NotificationHandler::Type::TRANSIENT,
+                             GetNotificationId());
+    }
   }
 }
 
@@ -103,6 +107,10 @@ std::string NotificationManager::GetNotificationId() {
 }
 
 void NotificationManager::ShowNotification() {
+  // The NDS can be null in tests.
+  if (!NotificationDisplayService::GetForProfile(profile_))
+    return;
+
   if (!extension_icon_.get())
     icon_loader_->FetchImage(file_system_info_.provider_id().GetExtensionId());
 
