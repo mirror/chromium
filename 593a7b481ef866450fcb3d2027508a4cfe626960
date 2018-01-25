@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a722cb_38430f94",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/invalid-characteristic-name.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-25T00:55:08Z",
+      "side": 1,
+      "message": "This is a case where it would be good to avoid many escaped quotation marks.",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49567f15_726b62f5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-25T00:55:08Z",
+      "side": 1,
+      "message": ".then(service \u003d\u003e {",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcc710a_de966e01",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-25T00:55:08Z",
+      "side": 1,
+      "message": "return device.gatt.connect();\n\nJavascript won\u0027t automatically return the value of the last statement in a block.",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
