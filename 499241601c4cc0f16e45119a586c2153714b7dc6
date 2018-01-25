@@ -116,6 +116,24 @@
       "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf4738b0_263b557a",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T12:55:35Z",
+      "side": 1,
+      "message": "Ah ok yeah, I guess that\u0027s fine. But I was uncomfortable with the generic comment in time_override.h that these \"may be overridden at will be impls\", it\u0027s okay in this case but not okay in a generic replacement case.\n\nUpdate that comment?",
+      "parentUuid": "0561c0d7_1d70012e",
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
