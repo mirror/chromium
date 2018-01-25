@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
 #include "content/browser/loader/signed_exchange_handler.h"
+#include "content/common/throttling_url_loader.h"
 #include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
 
@@ -62,14 +63,14 @@ class WebPackageLoader::ResponseTimingInfo {
 WebPackageLoader::WebPackageLoader(
     const network::ResourceResponseHead& original_response,
     network::mojom::URLLoaderClientPtr forwarding_client,
-    network::mojom::URLLoaderClientEndpointsPtr endpoints)
+    std::unique_ptr<ThrottlingURLLoader> url_loader)
     : original_response_timing_info_(
           base::MakeUnique<ResponseTimingInfo>(original_response)),
       forwarding_client_(std::move(forwarding_client)),
-      url_loader_client_binding_(this),
+      url_loader_(std::move(url_loader)),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
-  url_loader_.Bind(std::move(endpoints->url_loader));
+  url_loader_->set_forwarding_client(this);
 
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // We don't propagate the response to the navigation request and its
@@ -79,9 +80,6 @@ WebPackageLoader::WebPackageLoader(
     // enabled by default.
     url_loader_->ProceedWithResponse();
   }
-
-  // Bind the endpoint with |this| to get the body DataPipe.
-  url_loader_client_binding_.Bind(std::move(endpoints->url_loader_client));
 
   // |client_| will be bound with a forwarding client by ConnectToClient().
   pending_client_request_ = mojo::MakeRequest(&client_);
