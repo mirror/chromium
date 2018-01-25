@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38867e3_6ae9cc85",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T20:13:22Z",
+      "side": 1,
+      "message": "Nit: why do we need this function at all? chrome_new_window_client can call directly into KeyboardShortcutView::Show().",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafd3791_767e467d",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T20:13:22Z",
+      "side": 1,
+      "message": "Nit: Please add a short comment explaining what this is.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
