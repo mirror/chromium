@@ -117,6 +117,12 @@ const CGFloat kTextFieldTrailingOffset = 3;
       // the omnibox background's visible frame.
       self.layoutMargins = UIEdgeInsetsMake(3, 3, 3, 3);
 
+      // The location bar is expected to sometimes be outside of the safe area
+      // when it is scrolled offscreen for fullscreen mode.
+      if (@available(iOS 11, *)) {
+        self.insetsLayoutMarginsFromSafeArea = NO;
+      }
+
       _textFieldContainer = [[ClippingTextFieldContainer alloc]
           initWithClippingTextField:_textField];
       [self addSubview:_textFieldContainer];
