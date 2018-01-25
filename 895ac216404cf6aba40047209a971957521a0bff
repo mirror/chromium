@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd67b7fe_cec6a1a3",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "following -\u003e the following",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41f62a8_90babc82",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "an -\u003e the",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b828ea74_def0665b",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "Praser -\u003e Parser",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272280c9_45848c6d",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "sorry if you\u0027ve already explained it and I\u0027ve overlooked/forgot the doc (or chat we had).\n\ndid you implement this from scratch so that it would validate the input against the Content-Type ABNF? it\u0027s ok. just checking.",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2177a6_f117e3b7",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "let\u0027s create a std::string from both data() and length() to make sure we don\u0027t let something with null char pass the checks unexpectedly",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4f11a_48da3a87",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505e9525_3719e738",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2018-01-25T10:56:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
