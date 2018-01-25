@@ -22,6 +22,30 @@
       "revId": "e7362a6c649b51d7d2fd8a5c301a49b7f3c2c6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab30ff5_dedb626a",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-25T01:30:13Z",
+      "side": 1,
+      "message": "I discussed this offline with Caleb, and we decided to add the explanation to the commit message. Since not running the tests on debug build is due to a limitation of the debug build, explaining it in the commit message appears to be more appropriate than in a bug.",
+      "parentUuid": "579910c5_197f3983",
+      "range": {
+        "startLine": 1397,
+        "startChar": 46,
+        "endLine": 1397,
+        "endChar": 50
+      },
+      "revId": "e7362a6c649b51d7d2fd8a5c301a49b7f3c2c6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
