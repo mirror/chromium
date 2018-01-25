@@ -19,6 +19,8 @@
 
 namespace gfx {
 
+constexpr uint64_t kInvalidModifier = 0x00ffffffffffffffULL;
+
 // NativePixmapPlane is used to carry the plane related information for GBM
 // buffer. More fields can be added if they are plane specific.
 struct GFX_EXPORT NativePixmapPlane {

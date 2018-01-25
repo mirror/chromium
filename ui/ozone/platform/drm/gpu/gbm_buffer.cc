@@ -31,6 +31,8 @@
 #define DRM_FORMAT_MOD_INVALID	fourcc_mod_code(NONE, DRM_FORMAT_RESERVED)
 #endif
 
+static_assert(gfx::kInvalidModifier == DRM_FORMAT_MOD_INVALID, "mismatch");
+
 namespace ui {
 
 GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
