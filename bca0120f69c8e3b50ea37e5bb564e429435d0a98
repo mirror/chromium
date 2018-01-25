@@ -70,6 +70,30 @@
       "revId": "bca0120f69c8e3b50ea37e5bb564e429435d0a98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccdac23_785bbdb1",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-25T19:59:52Z",
+      "side": 1,
+      "message": "These are legacy formats in older GPU drivers that almost no one uses. I guess our WebGL conformance tests fail to cover them.",
+      "parentUuid": "3a307c45_7102dc88",
+      "range": {
+        "startLine": 1386,
+        "startChar": 6,
+        "endLine": 1386,
+        "endChar": 12
+      },
+      "revId": "bca0120f69c8e3b50ea37e5bb564e429435d0a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
