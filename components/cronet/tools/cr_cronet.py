@@ -81,6 +81,8 @@ def main():
                       help='name of the build directory')
   parser.add_argument('-i', '--iphoneos', action='store_true',
                       help='build for physical iphone')
+  parser.add_argument('-x', '--x86', action='store_true',
+                      help='build for Intel x86 architecture')
   parser.add_argument('-r', '--release', action='store_true',
                       help='use release configuration')
   parser.add_argument('-a', '--asan', action='store_true',
@@ -111,9 +113,14 @@ def main():
     target_os = 'android'
     test_target = 'cronet_test_instrumentation_apk'
     unit_target = 'cronet_unittests'
-    gn_args = 'use_errorprone_java_compiler=true arm_use_neon=false '
+    gn_args = 'use_errorprone_java_compiler=true '
     gn_extra = ''
     out_dir_suffix = ''
+    if options.x86:
+      gn_args += 'target_cpu="x86" '
+      out_dir_suffix = '-x86'
+    else:
+      gn_args += 'arm_use_neon=false '
     if options.asan:
       # ASAN on Android requires one-time setup described here:
       # https://www.chromium.org/developers/testing/addresssanitizer
