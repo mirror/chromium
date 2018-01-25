@@ -22,6 +22,7 @@
 
 #include "platform/LayoutUnit.h"
 #include "platform/fonts/FontBaseline.h"
+#include "platform/fonts/FontVerticalPositionType.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/MathExtras.h"
 
