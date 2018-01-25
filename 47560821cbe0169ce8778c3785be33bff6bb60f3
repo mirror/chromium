@@ -70,6 +70,24 @@
       "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7fef83_dbaf1e9e",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-25T16:23:21Z",
+      "side": 1,
+      "message": "I am not suggesting differentiating icons from sync as \"expired icons\".\n- HistoryBackend::MergeFavicon() has non-sync callers.\n- An icon might be expired because the user has not visited the page for a long time \n  FaviconRawBitmapResult has a field indicating whether an icon is expired but it does not\n  have a field with the last_updated value from the database (and it should not have it) \n\nI do think that checking whether the favicon data is expired prior to calling LargeIconService::GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache() is a way for the client of LargeIconService to:\n- guess whether the user has navigated to the page\n- throttle GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache() downloads to at\n  most once every 7 days (kFaviconRefetchDays)\n\nFor the sake of clarity:\nIn MergeFavicon() I am suggesting expiring icons from sync\nIn this case:\nline 1675\nthumbnail_db_-\u003eAddFaviconBitmap(favicon_id, bitmap_data,\n                                FaviconBitmapType::ON_VISIT,\n                                base::Time::Now(), pixel_size);\nBut not this case:\nline 1637\nif (IsFaviconBitmapDataEqual(bitmap_id_sizes[i].bitmap_id, bitmap_data))\n\nI am happy to have a GVC next Tuesday if you think that it would speed things up :)",
+      "parentUuid": "d048d09c_7703ec8d",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
