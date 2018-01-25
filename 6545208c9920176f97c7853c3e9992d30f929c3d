@@ -260,6 +260,30 @@
       "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba2413_b97ceb50",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:50:12Z",
+      "side": 1,
+      "message": "I suppose that, given how long this enum has been inaccurate, we might as well do that.  I would ask that we also add a note to each affected histogram in histograms.xml to warn anyone viewing the data that any data from before M57 (or whichever milestone is appropriate) will have inaccurate labels.",
+      "parentUuid": "5ac0dab1_8f172cfc",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
