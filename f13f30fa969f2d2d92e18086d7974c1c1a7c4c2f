@@ -16,6 +16,24 @@
       "revId": "f13f30fa969f2d2d92e18086d7974c1c1a7c4c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf36bfb_e316de34",
+        "filename": "cc/benchmarks/micro_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-25T23:04:53Z",
+      "side": 1,
+      "message": "I realize that std::move() works. The doc for ResetAndReturn [1] makes me think this is the safer version to use when the callback is stored in a member variable. But perhaps that\u0027s not the case? Do you know what purpose ResetAndReturn() has?\n\n[1] https://cs.chromium.org/chromium/src/base/callback_helpers.h?l\u003d10",
+      "parentUuid": "e1c5d5f7_85cd2c79",
+      "revId": "f13f30fa969f2d2d92e18086d7974c1c1a7c4c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
