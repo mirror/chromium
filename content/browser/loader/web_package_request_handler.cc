@@ -50,7 +50,7 @@ bool WebPackageRequestHandler::MaybeCreateLoaderForResponse(
     const network::ResourceResponseHead& response,
     network::mojom::URLLoaderPtr* loader,
     network::mojom::URLLoaderClientRequest* client_request,
-    ThrottlingURLLoader* url_loader) {
+    std::unique_ptr<ThrottlingURLLoader>* url_loader) {
   std::string mime_type;
   if (response.was_fetched_via_service_worker || !response.headers ||
       !response.headers->GetMimeType(&mime_type) ||
@@ -65,7 +65,7 @@ bool WebPackageRequestHandler::MaybeCreateLoaderForResponse(
   // or reusing the existing ThrottlingURLLoader by reattaching URLLoaderClient,
   // to support SafeBrowsing checking of the content of the WebPackage.
   web_package_loader_ = base::MakeUnique<WebPackageLoader>(
-      response, std::move(client), url_loader->Unbind());
+      response, std::move(client), std::move(*url_loader));
   return true;
 }
 

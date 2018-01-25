@@ -27,7 +27,7 @@ class WebPackageRequestHandler final : public URLLoaderRequestHandler {
       const network::ResourceResponseHead& response,
       network::mojom::URLLoaderPtr* loader,
       network::mojom::URLLoaderClientRequest* client_request,
-      ThrottlingURLLoader* url_loader) override;
+      std::unique_ptr<ThrottlingURLLoader>* url_loader) override;
 
  private:
   void StartResponse(network::mojom::URLLoaderRequest request,
