@@ -53,6 +53,8 @@ import org.chromium.ui.base.WindowAndroid.PermissionCallback;
 import org.chromium.ui.display.DisplayAndroid;
 import org.chromium.ui.display.VirtualDisplayAndroid;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * This view extends from GvrLayout which wraps a GLSurfaceView that renders VR shell.
  */
@@ -104,6 +106,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
     private Surface mContentSurface;
     private VrViewContainer mNonVrViews;
+    private VrViewContainer mUiViews;
+    private final ReentrantLock mLock = new ReentrantLock();
 
     public VrShellImpl(
             ChromeActivity activity, VrShellDelegate delegate, TabModelSelector tabModelSelector) {
@@ -505,6 +509,16 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         if (mVrBrowsingEnabled) mNonVrViews.setSurface(surface);
     }
 
+    @CalledByNative
+    public void uiSurfaceChanged(Surface surface) {
+        if (mUiViews != null)
+            mUiViews.setSurface(surface);
+        else {
+            mUiViews = new VrViewContainer(mActivity);
+            mUiViews.setSurface(surface);
+        }
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         boolean parentConsumed = super.dispatchTouchEvent(event);
@@ -561,6 +575,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     public void shutdown() {
         if (mVrBrowsingEnabled) {
             mNonVrViews.destroy();
+            mUiViews.destroy();
             removeVrRootView();
         }
 
@@ -615,6 +630,28 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     @Override
     public void teardown() {
         shutdown();
+    }
+
+    @Override
+    public View setDialogView(View view) {
+        mLock.lock();
+        if (view == null) {
+            mLock.unlock();
+            return null;
+        }
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+        if (mUiViews != null) {
+            mUiViews.removeAllViews();
+            mUiViews.addView(view);
+        } else {
+            VrViewContainer viewContainer = new VrViewContainer(mActivity);
+            viewContainer.addView(view);
+            mUiViews = viewContainer;
+        }
+        mLock.unlock();
+        return mUiViews;
     }
 
     @Override

@@ -273,7 +273,9 @@ void TabWebContentsDelegateAndroid::FindMatchRectsReply(
 content::JavaScriptDialogManager*
 TabWebContentsDelegateAndroid::GetJavaScriptDialogManager(
     WebContents* source) {
-  if (vr::VrTabHelper::IsInVr(source)) {
+  if (vr::VrTabHelper::IsInVr(source) &&
+      !base::FeatureList::IsEnabled(
+          chrome::android::kVrBrowsingNativeAndroidUi)) {
     vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kJavascriptDialog);
     return nullptr;
   }

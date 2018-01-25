@@ -245,36 +245,47 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 
-  unsigned int textures[3];
-  glGenTextures(3, textures);
+  unsigned int textures[4];
+  glGenTextures(4, textures);
   webvr_texture_id_ = textures[0];
   unsigned int content_texture_id = textures[1];
   unsigned int content_overlay_texture_id = textures[2];
+  unsigned int ui_texture_id = textures[3];
 
   content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id);
   content_overlay_surface_texture_ =
       gl::SurfaceTexture::Create(content_overlay_texture_id);
+  ui_surface_texture_ = gl::SurfaceTexture::Create(ui_texture_id);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
 
   content_surface_ =
-      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
+      std::make_unique<gl::ScopedJavaSurface>(content_surface_texture_.get());
   browser_->ContentSurfaceCreated(content_surface_->j_surface().obj());
+  // browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
+
   content_overlay_surface_ = base::MakeUnique<gl::ScopedJavaSurface>(
       content_overlay_surface_texture_.get());
   browser_->ContentOverlaySurfaceCreated(
       content_overlay_surface_->j_surface().obj());
+
+  ui_surface_ =
+      base::MakeUnique<gl::ScopedJavaSurface>(ui_surface_texture_.get());
+  browser_->UiSurfaceChanged(ui_surface_->j_surface().obj());
 
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnContentFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
   content_overlay_surface_texture_->SetFrameAvailableCallback(
       base::BindRepeating(&VrShellGl::OnContentOverlayFrameAvailable,
                           weak_ptr_factory_.GetWeakPtr()));
-  webvr_surface_texture_->SetFrameAvailableCallback(base::BindRepeating(
-      &VrShellGl::OnWebVRFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+  ui_surface_texture_->SetFrameAvailableCallback(base::Bind(
+      &VrShellGl::OnUiFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+
   content_surface_texture_->SetDefaultBufferSize(
       content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
   content_overlay_surface_texture_->SetDefaultBufferSize(
       content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
+  ui_surface_texture_->SetDefaultBufferSize(content_tex_buffer_size_.width(),
+                                            content_tex_buffer_size_.height());
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -300,10 +311,10 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   if (!reinitializing)
     InitializeRenderer();
 
-  ui_->OnGlInitialized(content_texture_id,
-                       vr::UiElementRenderer::kTextureLocationExternal,
-                       content_overlay_texture_id,
-                       vr::UiElementRenderer::kTextureLocationExternal, true);
+  ui_->OnGlInitialized(
+      content_texture_id, vr::UiElementRenderer::kTextureLocationExternal,
+      content_overlay_texture_id,
+      vr::UiElementRenderer::kTextureLocationExternal, ui_texture_id, true);
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -455,6 +466,10 @@ void VrShellGl::OnContentFrameAvailable() {
 
 void VrShellGl::OnContentOverlayFrameAvailable() {
   content_overlay_surface_texture_->UpdateTexImage();
+}
+
+void VrShellGl::OnUiFrameAvailable() {
+  ui_surface_texture_->UpdateTexImage();
 }
 
 void VrShellGl::OnWebVRFrameAvailable() {
@@ -1244,12 +1259,18 @@ void VrShellGl::BufferBoundsChanged(const gfx::Size& content_buffer_size,
   if (content_surface_texture_.get()) {
     content_surface_texture_->SetDefaultBufferSize(
         content_buffer_size.width(), content_buffer_size.height());
+    ui_surface_texture_->SetDefaultBufferSize(content_buffer_size.width(),
+                                              content_buffer_size.height());
   }
   if (content_overlay_surface_texture_.get()) {
     content_overlay_surface_texture_->SetDefaultBufferSize(
         overlay_buffer_size.width(), overlay_buffer_size.height());
   }
   content_tex_buffer_size_ = content_buffer_size;
+}
+
+void VrShellGl::UpdateUiTextureSize(int width, int height) {
+  ui_surface_texture_->SetDefaultBufferSize(width, height);
 }
 
 base::WeakPtr<VrShellGl> VrShellGl::GetWeakPtr() {
