@@ -656,7 +656,7 @@ void RenderFrameProxy::ForwardPostMessage(
     if (source_render_frame)
       params.source_routing_id = source_render_frame->GetRoutingID();
   }
-
+  CHECK(0) << "Is this code tested?";
   Send(new FrameHostMsg_RouteMessageEvent(routing_id_, params));
 }
 
