@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf168844_067dec68",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T04:14:30Z",
+      "side": 1,
+      "message": "Thanks for adding this!",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 79
+      },
+      "revId": "eba97e22ed7eaf67e41ff655be6d5977081a7ecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
