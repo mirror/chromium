@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa4beb0_99e37e07",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "Does s/0px/0 also work here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da894684_08851f7a",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "@private {...}",
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3a54e6_1d565edd",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "I tried this locally and it seems that the observer is only invoked once (when the value changes from undefined to the destination store instance). Could we do the following?\n\n1) Remove this check as it seems unnecessary\n2) Add an assertion to ensure this method observer is only ever called once.\n\nassert(!this.destination);\n\nthis.tracker_.add(...);\n...",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a999852c_f8a14d4e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "Can we remove this check? How can it happen? Presumably when one clicks on the \"select destination\" button, the modal dialog is shown, which disallows further clicks to the same button.",
+      "range": {
+        "startLine": 73,
+        "startChar": 3,
+        "endLine": 73,
+        "endChar": 28
+      },
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8196634b_95ab0986",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "@type {number}",
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491e8d27_2242a688",
+        "filename": "chrome/browser/resources/print_preview/new/destination_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "Can we make this button disabled until destinationStore is set? Instead of allowing it to be clicked but do nothing?",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd8c4f1_9b3284b7",
+        "filename": "chrome/browser/resources/print_preview/new/destination_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:49:25Z",
+      "side": 1,
+      "message": "Let\u0027s add a link to the Blink bug that this works around.",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "e698909d628354a9ddd0be79e056f31ca1f439a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
