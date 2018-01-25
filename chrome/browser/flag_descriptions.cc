@@ -2100,6 +2100,12 @@ const char kOffliningRecentPagesDescription[] =
     "Enable storing recently visited pages locally for offline use. Requires "
     "Offline Pages to be enabled.";
 
+const char kOpenCustomContextMenuInLinkTabName[] =
+    "Open custom context menu in LINK tab";
+const char kOpenCustomContextMenuInLinkTabDescription[] =
+    "Enables such switching tab order in context menu that it "
+    "always opens in LINK tab.";
+
 const char kPayWithGoogleV1Name[] = "Pay with Google v1";
 const char kPayWithGoogleV1Description[] =
     "Enable Pay with Google integration into Web Payments with API version "
