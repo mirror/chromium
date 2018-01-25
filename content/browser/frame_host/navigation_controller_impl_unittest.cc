@@ -2891,8 +2891,9 @@ TEST_F(NavigationControllerTest, EnforceMaxNavigationCount) {
 
   // We should have got a pruned navigation.
   EXPECT_EQ(1U, navigation_list_pruned_counter_);
-  EXPECT_TRUE(last_navigation_entry_pruned_details_.from_front);
-  EXPECT_EQ(1, last_navigation_entry_pruned_details_.count);
+  EXPECT_EQ(content::PrunedPosition::FRONT,
+            last_navigation_entry_pruned_details_.position);
+  EXPECT_EQ(1, last_navigation_entry_pruned_details_.countOrIndex);
 
   // We expect http://www.a.com/0 to be gone.
   EXPECT_EQ(controller.GetEntryCount(), kMaxEntryCount);
@@ -4365,8 +4366,9 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneMaxEntries) {
 
   // We should have received a pruned notification.
   EXPECT_EQ(1U, navigation_list_pruned_counter_);
-  EXPECT_TRUE(last_navigation_entry_pruned_details_.from_front);
-  EXPECT_EQ(1, last_navigation_entry_pruned_details_.count);
+  EXPECT_EQ(content::PrunedPosition::FRONT,
+            last_navigation_entry_pruned_details_.position);
+  EXPECT_EQ(1, last_navigation_entry_pruned_details_.countOrIndex);
 
   // other_controller should now contain only 3 urls: url2, url3 and url4.
 
