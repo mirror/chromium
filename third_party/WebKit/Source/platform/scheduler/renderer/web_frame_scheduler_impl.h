@@ -15,6 +15,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/scheduler/base/task_queue.h"
+#include "platform/scheduler/child/worker_scheduler_proxy.h"
 #include "platform/scheduler/util/tracing_helper.h"
 
 namespace base {
@@ -77,12 +78,21 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   std::unique_ptr<ActiveConnectionHandle> OnActiveConnectionCreated() override;
   void AsValueInto(base::trace_event::TracedValue* state) const;
   bool IsExemptFromBudgetBasedThrottling() const override;
+  std::unique_ptr<WorkerSchedulerProxyHandle> CreateWorkerSchedulerProxy()
+      override;
+
+  scoped_refptr<TaskQueue> ControlTaskQueue();
+
+  void UnregisterWorkerSchedulerProxy(
+      scoped_refptr<internal::WorkerSchedulerProxy> proxy);
 
   bool has_active_connection() const { return active_connection_count_; }
 
   void OnTraceLogEnabled() {
     tracing_controller_.OnTraceLogEnabled();
   }
+
+  base::WeakPtr<WebFrameSchedulerImpl> GetWeakPtr();
 
  private:
   friend class WebViewSchedulerImpl;
@@ -119,8 +129,6 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   scoped_refptr<TaskQueue> PausableTaskQueue();
   scoped_refptr<TaskQueue> UnpausableTaskQueue();
 
-  base::WeakPtr<WebFrameSchedulerImpl> AsWeakPtr();
-
   TraceableVariableController tracing_controller_;
   scoped_refptr<MainThreadTaskQueue> loading_task_queue_;
   scoped_refptr<MainThreadTaskQueue> loading_control_task_queue_;
@@ -147,6 +155,7 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   TraceableState<bool, kTracingCategoryNameInfo> cross_origin_;
   WebFrameScheduler::FrameType frame_type_;
   int active_connection_count_;
+  std::set<scoped_refptr<internal::WorkerSchedulerProxy>> worker_proxies_;
 
   base::WeakPtrFactory<WebFrameSchedulerImpl> weak_factory_;
 

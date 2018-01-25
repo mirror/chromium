@@ -10,7 +10,9 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
+#include "platform/scheduler/child/default_params.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
+#include "platform/scheduler/child/worker_scheduler_proxy_handle.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
@@ -64,7 +66,7 @@ bool StopNonTimersInBackgroundEnabled() {
 
 WebFrameSchedulerImpl::ActiveConnectionHandleImpl::ActiveConnectionHandleImpl(
     WebFrameSchedulerImpl* frame_scheduler)
-    : frame_scheduler_(frame_scheduler->AsWeakPtr()) {
+    : frame_scheduler_(frame_scheduler->GetWeakPtr()) {
   frame_scheduler->DidOpenActiveConnection();
 }
 
@@ -83,36 +85,31 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
       throttling_state_(WebFrameScheduler::ThrottlingState::kNotThrottled),
-      frame_visible_(
-          true,
-          "WebFrameScheduler.FrameVisible",
-          this,
-          &tracing_controller_,
-          VisibilityStateToString),
-      page_visible_(
-          true,
-          "WebFrameScheduler.PageVisible",
-          this,
-          &tracing_controller_,
-          VisibilityStateToString),
-      page_stopped_(
-          false,
-          "WebFrameScheduler.PageStopped",
-          this,
-          &tracing_controller_,
-          StoppedStateToString),
-      frame_paused_(
-          false,
-          "WebFrameScheduler.FramePaused",
-          this,
-          &tracing_controller_,
-          PausedStateToString),
-      cross_origin_(
-          false,
-          "WebFrameScheduler.Origin",
-          this,
-          &tracing_controller_,
-          CrossOriginStateToString),
+      frame_visible_(true,
+                     "WebFrameScheduler.FrameVisible",
+                     this,
+                     &tracing_controller_,
+                     VisibilityStateToString),
+      page_visible_(kDefaultPageVisibility,
+                    "WebFrameScheduler.PageVisible",
+                    this,
+                    &tracing_controller_,
+                    VisibilityStateToString),
+      page_stopped_(false,
+                    "WebFrameScheduler.PageStopped",
+                    this,
+                    &tracing_controller_,
+                    StoppedStateToString),
+      frame_paused_(false,
+                    "WebFrameScheduler.FramePaused",
+                    this,
+                    &tracing_controller_,
+                    PausedStateToString),
+      cross_origin_(false,
+                    "WebFrameScheduler.Origin",
+                    this,
+                    &tracing_controller_,
+                    CrossOriginStateToString),
       frame_type_(frame_type),
       active_connection_count_(0),
       weak_factory_(this) {
@@ -391,6 +388,11 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::UnpausableTaskQueue() {
   return unpausable_task_queue_;
 }
 
+scoped_refptr<TaskQueue> WebFrameSchedulerImpl::ControlTaskQueue() {
+  DCHECK(parent_web_view_scheduler_);
+  return renderer_scheduler_->ControlTaskQueue();
+}
+
 blink::WebViewScheduler* WebFrameSchedulerImpl::GetWebViewScheduler() const {
   return parent_web_view_scheduler_;
 }
@@ -477,6 +479,9 @@ void WebFrameSchedulerImpl::SetPageVisible(bool page_visible) {
     page_stopped_ = false;  // visible page must not be stopped.
   UpdateThrottling(was_throttled);
   UpdateThrottlingState();
+  for (const auto& proxy : worker_proxies_) {
+    proxy->OnPageVisible(page_visible);
+  }
 }
 
 bool WebFrameSchedulerImpl::IsPageVisible() const {
@@ -561,12 +566,25 @@ void WebFrameSchedulerImpl::UpdateThrottling(bool was_throttled) {
   }
 }
 
-base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
+base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::GetWeakPtr() {
   return weak_factory_.GetWeakPtr();
 }
 
 bool WebFrameSchedulerImpl::IsExemptFromBudgetBasedThrottling() const {
   return has_active_connection();
+}
+
+void WebFrameSchedulerImpl::UnregisterWorkerSchedulerProxy(
+    scoped_refptr<internal::WorkerSchedulerProxy> proxy) {
+  worker_proxies_.erase(proxy);
+}
+
+std::unique_ptr<WorkerSchedulerProxyHandle>
+WebFrameSchedulerImpl::CreateWorkerSchedulerProxy() {
+  scoped_refptr<internal::WorkerSchedulerProxy> proxy =
+      base::MakeRefCounted<internal::WorkerSchedulerProxy>(this);
+  worker_proxies_.insert(proxy);
+  return std::make_unique<WorkerSchedulerProxyHandle>(std::move(proxy));
 }
 
 }  // namespace scheduler
