@@ -52,6 +52,24 @@
       "revId": "5bc544cfb9c6aa72cb53d6491e2e64c4a38d2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4bbe75_ad8607fa",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T22:37:52Z",
+      "side": 0,
+      "message": "I might be missing something, but this should still work with const\u0026: it just means that BindState retains ownership of the bound vector (which will be valid as long as the callback object itself is)\n\nconst\u0026 is usually slightly more efficient if we don\u0027t actually transfer ownership, since the compiler is often unable to optimize out the dtor of moved types that are passed by value.",
+      "parentUuid": "f5399d4a_c8727f2f",
+      "revId": "5bc544cfb9c6aa72cb53d6491e2e64c4a38d2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
