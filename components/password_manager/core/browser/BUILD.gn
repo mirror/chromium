@@ -229,13 +229,18 @@ static_library("hash_password_manager") {
   sources = [
     "hash_password_manager.cc",
     "hash_password_manager.h",
+    "password_manager_metrics_util.cc",
+    "password_manager_metrics_util.h",
+    "password_reuse_defines.h",
   ]
   deps = [
     "//base:base",
+    "//components/autofill/core/common:common",
     "//components/os_crypt",
     "//components/password_manager/core/common",
     "//components/prefs",
     "//crypto",
+    "//url",
   ]
 }
 

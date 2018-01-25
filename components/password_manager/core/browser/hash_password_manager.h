@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 
 class PrefService;
 
@@ -36,8 +37,10 @@ class HashPasswordManager {
   explicit HashPasswordManager(PrefService* prefs);
   ~HashPasswordManager() = default;
 
-  bool SavePasswordHash(const base::string16& password);
-  bool SavePasswordHash(const SyncPasswordData& sync_password_data);
+  bool SavePasswordHash(const base::string16& password,
+                        metrics_util::SyncPasswordHashChange event);
+  bool SavePasswordHash(const SyncPasswordData& sync_password_data,
+                        metrics_util::SyncPasswordHashChange event);
   void ClearSavedPasswordHash();
 
   // Returns empty if no hash is available.
