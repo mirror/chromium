@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "c0234fd8_c888c460",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:36:21Z",
+      "side": 1,
+      "message": "My understanding is that we reached a state where the enums were overlapping, so some values have ambiguous semantics.  Do you have a suggestion for how to handle this, both now and going forward, without renumbering?\n\nOne possibility is to temporarily record two histograms: One with the new numbering scheme, and one with the old one.  Once the new one builds up a sufficient amount of history, we can stop recording the old one.",
+      "parentUuid": "1a57a8fa_b0590aa5",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6781623_9fec7c75",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:36:21Z",
+      "side": 1,
+      "message": "nit: If we do keep the renumbering, please add a brief comment explaining why this enum starts at 54.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 32
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe38188_73baea23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -36,6 +83,30 @@
       "writtenOn": "2018-01-25T17:50:53Z",
       "side": 1,
       "message": "also, I don\u0027t think we can go and update these until any code changes have perculated all the way through channels. I think I would prefer just fixing the values to reflect current code reality, and adding the static_assert...",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a744bcf_400ce619",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T21:36:21Z",
+      "side": 1,
+      "message": "I agree, at least partially: We should keep the previous values mapped, and update their labels to indicate which, if any, store ambiguous data.\n\nSince this conflicts with allowing the content enum space to grow, I would recommend forking off a new histogram to record the values with the new label semantics.  In order to preserve continuity, we could record both metrics in parallel for a time (as I also suggested in a separate comment).  I\u0027m certainly open to other ideas as well!",
+      "parentUuid": "ebe38188_73baea23",
       "range": {
         "startLine": 7214,
         "startChar": 14,
