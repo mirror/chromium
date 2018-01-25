@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "7898c338_53d9cf13",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Put in internal namespace in .cc instead of prefixing member",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c1487a_2b3ed5ab",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Don\u0027t need |overrides_active_| just DCHECK (not CHECK) before overriding that the g_function still points to the default.",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0660177c_b1e17d35",
+        "filename": "base/time/time.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Put this in time_override.cc? (keep storage in time.cc)",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d955a5b_d224f3c8",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Put in subtle namespace in .cc instead of prefixing method (apply this to all files)",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e029ce1_f661d185",
+        "filename": "base/time/time_fuchsia.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Why this? Extract to separate CL if it matters (doesn\u0027t look related) -- ditto elsewhere in this CL",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1b1574_fcb32368",
         "filename": "base/time/time_mac.cc",
         "patchSetId": 17
@@ -46,6 +137,40 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08ffb800_96773623",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Why is this static? non-static isolates this better?",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e3c935_abee59fc",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T10:55:44Z",
+      "side": 1,
+      "message": "Compare to TimeTicks::Min() as well since that\u0027s a precondition for your tests below? per using it for the time override",
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
