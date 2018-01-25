@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa12cd91_b608f445",
+        "filename": "base/time/time_mac.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T10:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd1b1574_fcb32368",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e173cf_5a9d78ed",
         "filename": "base/time/time_win.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89859719_12f1b7e1",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-25T10:38:50Z",
+      "side": 1,
+      "message": "True. Replaced in all time_xx.cc.",
+      "parentUuid": "b1e173cf_5a9d78ed",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 37
+      },
+      "revId": "f1d9b6f3376ead50637d7eb96b6002094c0815a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
