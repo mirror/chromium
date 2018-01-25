@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b2585af_774988e4",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataObjectItem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-01-25T20:51:46Z",
+      "side": 1,
+      "message": "Interesting that we\u0027re creating a file from this memory backed blob.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d3d14bd_47c95180",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 6
