@@ -217,6 +217,13 @@ per-file foo.*=a@chromium.org
 per-file readme.txt=*
 ```
 
+Note that `per-file` directives cannot directly specify subdirectories, e.g.
+```
+per-file foo/bar.cc=a@chromium.org
+```
+
+is not OK; a `per-file` directive instead needs to be placed in `foo/OWNERS`.
+
 Other `OWNERS` files can be included by reference by listing the path to the
 file with `file://...`. This example indicates that only the people listed in
 `//ipc/SECURITY_OWNERS` can review the messages files:
