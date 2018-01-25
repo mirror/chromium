@@ -6,7 +6,6 @@ package org.chromium.base;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.chromium.base.annotations.MainDex;
 
@@ -29,6 +28,11 @@ import java.util.concurrent.atomic.AtomicReference;
 **/
 @MainDex
 public abstract class CommandLine {
+    private static final String TAG = "CommandLine";
+    private static final String SWITCH_PREFIX = "--";
+    private static final String SWITCH_TERMINATOR = SWITCH_PREFIX;
+    private static final String SWITCH_VALUE_SEPARATOR = "=";
+
     // Public abstract interface, implemented in derived classes.
     // All these methods reflect their native-side counterparts.
     /**
@@ -136,6 +140,7 @@ public abstract class CommandLine {
      * @param file The fully qualified command line file.
      */
     public static void initFromFile(String file) {
+        Log.i(TAG, "Initializing command line from %s", file);
         // Just field trials can take up to 10K of command line.
         char[] buffer = readUtf8FileFullyCrashIfTooBig(file, 64 * 1024);
         init(buffer == null ? null : tokenizeQuotedArguments(buffer));
@@ -194,11 +199,6 @@ public abstract class CommandLine {
         }
         return args.toArray(new String[args.size()]);
     }
-
-    private static final String TAG = "CommandLine";
-    private static final String SWITCH_PREFIX = "--";
-    private static final String SWITCH_TERMINATOR = SWITCH_PREFIX;
-    private static final String SWITCH_VALUE_SEPARATOR = "=";
 
     public static void enableNativeProxy() {
         // Make a best-effort to ensure we make a clean (atomic) switch over from the old to
