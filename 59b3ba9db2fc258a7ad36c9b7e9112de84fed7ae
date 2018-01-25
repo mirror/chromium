@@ -16,6 +16,24 @@
       "revId": "59b3ba9db2fc258a7ad36c9b7e9112de84fed7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9483992_c3e5eba3",
+        "filename": "components/url_formatter/url_fixer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-25T03:31:27Z",
+      "side": 1,
+      "message": "That makes sense in general. But my reasoning here was that I wanted to keep the 6 lines below to test for regressions. But now that they don\u0027t test for the special behavior, it\u0027s rather unclear what the point of them is. Alternatively, I could just remove these tests. I can\u0027t honestly imagine what sort of regression would accidentally re-introduce the ftp:// behavior other than rolling back my cl.",
+      "parentUuid": "1abcd68f_2a892d08",
+      "revId": "59b3ba9db2fc258a7ad36c9b7e9112de84fed7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
