@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<title>Permafills (Syntax G.3) - please open on Chrome.</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+    window.log = [];
+</script>
+
+<!-- non-supported permafill + valid fallback URL w/ CORS header => load the fallback. -->
+<!--
+Currently .js extension is needed in this syntax. Skipping.
+<script type="module" onload="log.push('load1a')" onerror="log.push('error1a')"
+    src="http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/none.py"></script>
+-->
+
+<!-- non-supported permafill + valid fallback URL w/o CORS header
+     => load the fallback because no cross-origin redirect is involved. -->
+<script type="module" onload="log.push('load1b')" onerror="log.push('error1b')"
+    src="http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/none.js"></script>
+
+<!-- The fallback URL w/o CORS header only => we cannot enforce the fallback
+     in this syntax. -->
+
+<!-- non-supported permafill + no fallback URL => N/A in this syntax. -->
+
+<!-- Supported permafill + valid fallback URL w/ CORS header => load the permafill. -->
+<script type="module" onload="log.push('load2a')" onerror="log.push('error2a')"
+    src="http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/test.js"></script>
+
+<!-- Supported permafill + no fallback URL => N/A in this syntax. -->
+
+<script type="module">
+    test(() => {
+        console.log(log);
+
+        // See the comments above for what is expected.
+        assert_array_equals(log, [
+          "fallback", "load1b",
+          "permafill(test)", "load2a"
+        ]);
+      }, "Load permafills by <script> elements");
+
+    promise_test(
+      () => fetch('http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/none.js')
+        .then(r => {
+            assert_equals(
+              r.url,
+              'http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/none.js',
+              'Response URL should be the fallback URL');
+            return r.text();
+          })
+        .then(text => {
+            assert_equals(text, 'window.log.push("fallback");');
+          }),
+        "fetch() + non-supported permafill w/ fallback");
+
+
+    promise_test(
+      () => fetch('http://localhost:{{ports[http][0]}}/permafill/.well-known/permafill/test.js')
+        .then(r => {
+            assert_equals(
+              r.url,
+              'chrome-extension://acihfchgdiicfpkconamoakocligclao/test/index.js',
+              // TODO(hiroshige): should be 'browser://test'
+              'Response URL should be the permafill URL');
+            return r.text();
+          })
+        .then(text => {
+            assert_equals(text, 'window.log.push("permafill(test)");');
+          }),
+        "fetch() + supported permafill w/ fallback");
+</script>
