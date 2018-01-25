@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e3ac3d_b4df7e27",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T21:12:49Z",
+      "side": 1,
+      "message": "#include \"base/callback_forward.h\"",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11b2129_5188072f",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T21:12:49Z",
+      "side": 1,
+      "message": "Check |self| and bail in case the callback was invoked after the object it is released. \ni.e.\n  if (!self)\n    return;\n\nIt works now since the callback is invoked synchronously. But this would not be the case when we switch to mojo. So better be prepared.",
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d16710_f1889a4d",
+        "filename": "chrome/browser/ui/app_list/search/app_search_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T21:12:49Z",
+      "side": 1,
+      "message": "This can stay in UpdateResults(). Get rid of this and L392 and keep it where it was.",
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
