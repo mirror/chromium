@@ -84,9 +84,13 @@ void SessionTabHelper::NavigationListPruned(
   if (!session_service)
     return;
 
-  if (pruned_details.from_front) {
-    session_service->TabNavigationPathPrunedFromFront(window_id(), session_id(),
-                                                      pruned_details.count);
+  if (pruned_details.position == content::PrunedPosition::INDEX) {
+    session_service->TabNavigationPathPrunedAtIndex(
+        window_id(), session_id(), pruned_details.countOrIndex);
+
+  } else if (pruned_details.position == content::PrunedPosition::FRONT) {
+    session_service->TabNavigationPathPrunedFromFront(
+        window_id(), session_id(), pruned_details.countOrIndex);
   } else {
     session_service->TabNavigationPathPrunedFromBack(
         window_id(), session_id(),
