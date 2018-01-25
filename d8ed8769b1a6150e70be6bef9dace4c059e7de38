@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac0e8b9_513266aa",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "It seems like you\u0027re not exposing the new roles in the automation API,\nand if so why are you adding them to automation.idl?\n\nIs this just temporary until ChromeVox is updated?",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c02c4b0_a51d280b",
+        "filename": "content/test/data/accessibility/html/landmark.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "role\u003d\"none\" is a bit different, since it actually hides it from the accessibility tree.\n\nHow about role\u003d\"group\", for at least some of the tests?",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddafff2_1cddca56",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "I\u0027d get rid of the \"No mapping to ARIA role\" comment on the new roles.",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d0a408_e831148f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "Where do we check if they set the role to table or grid?",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c81d235_34d04811",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove before submitting",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bd6dc2_86f2dcb8",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T17:34:29Z",
+      "side": 1,
+      "message": "Does this go only on the table, and not rows or cells?\nJust worth checking in comparison to FF",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
