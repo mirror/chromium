@@ -1,0 +1,20 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef MEDIA_MOJO_SERVICES_MIRROR_FACTORY_H_
+#define MEDIA_MOJO_SERVICES_MIRROR_FACTORY_H_
+
+#include <memory>
+
+#include "media/mojo/services/media_mojo_export.h"
+#include "services/service_manager/public/cpp/service.h"
+
+namespace media {
+
+std::unique_ptr<service_manager::Service> MEDIA_MOJO_EXPORT
+CreateMirrorService();
+
+}  // namespace media
+
+#endif  // MEDIA_MOJO_SERVICES_MIRROR_FACTORY_H_

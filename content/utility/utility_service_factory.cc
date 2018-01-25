@@ -20,6 +20,7 @@
 #include "content/public/utility/utility_thread.h"
 #include "content/utility/utility_thread_impl.h"
 #include "media/media_features.h"
+#include "media/mojo/services/mirror/factory.h"
 #include "services/data_decoder/data_decoder_service.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
@@ -168,6 +169,10 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
     services->insert(
         std::make_pair(content::mojom::kNetworkServiceName, network_info));
   }
+
+  service_manager::EmbeddedServiceInfo mirror_info;
+  mirror_info.factory = base::Bind(&media::CreateMirrorService);
+  services->insert(std::make_pair("mirror", mirror_info));
 }
 
 void UtilityServiceFactory::OnServiceQuit() {

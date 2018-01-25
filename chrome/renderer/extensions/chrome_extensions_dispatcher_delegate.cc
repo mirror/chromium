@@ -269,6 +269,8 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
       IDR_MEDIA_STATUS_MOJOM_JS);
   source_map->RegisterSource("media_router_bindings",
                              IDR_MEDIA_ROUTER_BINDINGS_JS);
+  source_map->RegisterSource("mirror_service_bindings",
+                             IDR_MIRROR_SERVICE_BINDINGS_JS);
   source_map->RegisterSource("mojo/common/time.mojom", IDR_MOJO_TIME_MOJOM_JS);
   source_map->RegisterSource("net/interfaces/ip_address.mojom",
                              IDR_MOJO_IP_ADDRESS_MOJOM_JS);
@@ -281,6 +283,8 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   source_map->RegisterSource(
       "media/mojo/interfaces/mirror_service_remoting.mojom",
       IDR_MEDIA_REMOTING_JS);
+  source_map->RegisterSource("media/mojo/interfaces/mirror_service.mojom",
+                             IDR_MIRROR_SERVICE_MOJOM_JS);
 
   // These bindings are unnecessary with native bindings enabled.
   if (!extensions::FeatureSwitch::native_crx_bindings()->IsEnabled()) {
