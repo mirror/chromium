@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c14c127b_cad8cbbe",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "That seems more correct (though I\u0027m not sure why it was even ostensibly working in the non-Views version before this patch).\n\nI\u0027ve made the suggested change, and moved this into a helper function so that both this and the View subclass can use this logic appropriately.",
+      "parentUuid": "7e3ca763_96e9e60c",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 65
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299903b8_bab08124",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-25T18:04:17Z",
       "side": 1,
       "message": "nit: I don\u0027t understand the use of \"spec\" here. All the values we use in UI are provided by some spec, so that term adds nothing. It also leads to a non-self-documenting function name \"RoundWidthToSpec\".",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5d5387_0f75176e",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Agreed, this was a spot where I was struggling with good names. I\u0027ve changed them to refer to \"mutliple\" more clearly and not to use \"spec\". PTAL and suggest better options if you\u0027ve got them :)",
+      "parentUuid": "299903b8_bab08124",
       "range": {
         "startLine": 46,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "201c4c27_ffbb7122",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Ah, that\u0027s a good catch; the inner parenthetical is backwards. I\u0027ll change it to:\n\nwidth \u003d width + (kDropdownSpecMultiple - (width % kDropdownSpecMultiple))\n\nAs an example to double-check my math, if we have width \u003d 20, we get\n\n20 + (16 - (20 % 16)) \u003d 32.\n\nI\u0027ll also add the if-check you used so that we aren\u0027t needlessly adding to widths that are already multiples.\n\n(I chose this way over the division you suggested, because I find code that relies on integer division/truncation to generally be hard to read.)",
+      "parentUuid": "baf1942c_d4b4eb40",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ecb363f_af0295f5",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fc038a88_8b047595",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Yuck, there seems to be a git cl format bug here. Closing braces don\u0027t get properly unindented to match the opening line, and subsequent blocks are aligned with the prior closing brace.\n\nAnyway, this should be fixed.",
+      "parentUuid": "3ecb363f_af0295f5",
+      "range": {
+        "startLine": 92,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd1301ea_30502237",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-25T18:04:17Z",
       "side": 1,
       "message": "single row grid layout --- why not box layout?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f4e65b_0cfe4afd",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "The grid layout here is putting all the extra available width into the middle column to create a justified layout with the text aligned to the left edge and the subtext aligned to the right edge.\n\nAFAIK box layout can\u0027t do this--that\u0027s what I tried initially before switching to grid. There seems to be a TODO saying box layout should someday support this, but it doesn\u0027t appear to do so today: https://cs.chromium.org/chromium/src/ui/views/layout/box_layout.h?q\u003dbox_layout.h\u0026dr\u003dCSs\u0026l\u003d43",
+      "parentUuid": "dd1301ea_30502237",
       "range": {
         "startLine": 139,
         "startChar": 4,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7d9663d8_66e8ceb1",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Done, thanks for calling this discrepancy to my attention.",
+      "parentUuid": "3179e14f_cf3b8a61",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d9580ec_6d536db0",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -160,6 +304,30 @@
       "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9d9546_67347111",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d9580ec_6d536db0",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 63
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f267044a_f1a78970",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "n/a; these had to become members for use in OnNativeThemeChanged.",
+      "parentUuid": "1386b7f3_783d8261",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 18
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f4450f9_4d46336a",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -206,6 +398,30 @@
       "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855676c3_f578461e",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "It\u0027s intentional. I\u0027ve added a comment.",
+      "parentUuid": "9f4450f9_4d46336a",
+      "range": {
+        "startLine": 236,
+        "startChar": 36,
+        "endLine": 237,
+        "endChar": 30
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "532e28c9_d9891ebf",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "True. I actually got rid of GetUpdatedBounds, which no longer served the purpose that it had when I was making tweaks and which was only called once-per-implementation anyway. Now both border adjustments happen at the appropriate time in the respective version of DoUpdateBoundsAndRedrawPopup, and share code.",
+      "parentUuid": "a3ba02ae_3d7d1dc7",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 65
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c50097cb_e49dce33",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
         "patchSetId": 14
@@ -252,6 +492,30 @@
       "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa92155f_1c77d953",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-25T23:20:41Z",
+      "side": 1,
+      "message": "Nifty, thanks.",
+      "parentUuid": "c50097cb_e49dce33",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
