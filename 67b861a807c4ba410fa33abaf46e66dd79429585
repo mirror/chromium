@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f437992_d59b0837",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T19:48:13Z",
+      "side": 1,
+      "message": "Nit: This comment is confusing.  I don\u0027t know what \"which might have a destination\" means.\n\nDid you consider (and reject) ensuring we don\u0027t create an alternate nav match at all in this case?  Since this is the only purpose of that match, and the code that creates it already needs to consider if the navigation would be \"valid\" in some sense, it seems like it\u0027d be nice to reject there instead of later.",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134864f0_2446b958",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T19:48:13Z",
+      "side": 1,
+      "message": "Rather than adding this method, you may want to consider if GetRegistryLengthImpl() can just be changed so it returns 0 only in the case where the host \"is a registry\", and npos in other \"error\" cases like \"host is only dots\", \"multiple trailing dots\", etc.  I think this is probably possible because most callers treat 0 and npos equivalently today.  Then you could just use that functionality and look for \"returns 0\" rather than adding something new.",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbdd208_4d85ec37",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T19:48:13Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right.\n\nGetRegistryLengthImpl() does this, but it\u0027s only a first-pass filter before doing some more checks.  I think you need those checks as well.  Basically, it looks like you want to catch the cases where that function says something like \"the host is the registry itself, so return 0\".\n\n(Along the way, I\u0027d add tests for the sorts of inputs that would have made this version return true, but will make that one return false.)\n\nHopefully with some clever refactoring, you can write a function that that method can call (instead of copying all its code), even if that means modifying the signature here to be a little less directly targeted at \"is a TLD\".  If the signature becomes _really_ cumbersome we could provide a wrapper, but since only one site is calling this right now that\u0027s probably not necessary.",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f053218e_0be9ed90",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T19:48:13Z",
+      "side": 1,
+      "message": "Nit: Based on terminology in this file, seems like this should be \"IsRegistry()\", and should have a comment.\n\nIt should also probably take a StringPiece instead of a string.\n\nI\u0027d list it just below GetRegistryLength().",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
