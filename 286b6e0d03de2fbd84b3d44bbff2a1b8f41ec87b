@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3e6b0c9_8a65c39d",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:34:01Z",
+      "side": 1,
+      "message": "Yes :)\nI don\u0027t think I need it for the progress updates though.",
+      "parentUuid": "77abe6a4_d69f00d9",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e5b7d38_67cd0df1",
         "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fa8290_0c61f50c",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:34:01Z",
+      "side": 1,
+      "message": "Yes, I forgot to update the initialization of the coordinator.\nDone.",
+      "parentUuid": "6e5b7d38_67cd0df1",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6023de0_3894543d",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05495d93_8510ae5d",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2115da49_4b1de449",
         "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "23ca88c5_3fb683cf",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:34:01Z",
+      "side": 1,
+      "message": "I don\u0027t know why this is here.\nRemoved.",
+      "parentUuid": "2115da49_4b1de449",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291a0f55_828793b3",
         "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105ddc2e_7e16b824",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-25T10:34:01Z",
+      "side": 1,
+      "message": "You cannot set the WebState directly on the mediator or coordinator. So the code won\u0027t work if the WebState is not in a WebStateList.\n\nAs you say, this is not a use case supported in production.",
+      "parentUuid": "291a0f55_828793b3",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
