@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include "base/strings/string_util.h"
+#include "content/common/permafill/constants.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/url_constants.h"
 #include "url/url_util.h"
@@ -46,6 +47,8 @@ void RegisterContentSchemes(bool lock_schemes) {
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kGuestScheme, url::SCHEME_WITHOUT_PORT);
 
+  url::AddStandardScheme(permafill::kBrowserScheme, url::SCHEME_WITHOUT_PORT);
+
   for (auto& scheme : schemes.standard_schemes)
     url::AddStandardScheme(scheme.c_str(), url::SCHEME_WITHOUT_PORT);
 
@@ -54,6 +57,7 @@ void RegisterContentSchemes(bool lock_schemes) {
 
   schemes.secure_schemes.push_back(kChromeUIScheme);
   schemes.secure_schemes.push_back(kChromeErrorScheme);
+  schemes.secure_schemes.push_back(permafill::kBrowserScheme);
   for (auto& scheme : schemes.secure_schemes)
     url::AddSecureScheme(scheme.c_str());
 
@@ -65,6 +69,7 @@ void RegisterContentSchemes(bool lock_schemes) {
     url::AddNoAccessScheme(scheme.c_str());
 
   schemes.cors_enabled_schemes.push_back(kChromeUIScheme);
+  schemes.cors_enabled_schemes.push_back(permafill::kBrowserScheme);
   for (auto& scheme : schemes.cors_enabled_schemes)
     url::AddCORSEnabledScheme(scheme.c_str());
 
