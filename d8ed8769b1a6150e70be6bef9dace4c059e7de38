@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b070d12_d94adefc",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "David Tseng asked me to do this ... he didn\u0027t want to write new output rules. His preference was actually that there was a new boolean property for layout guess, but I explained that this was 1) easier to map in browser_accessibility, and 2) we don\u0027t have to deal with the new boolean property being set on roles it doesn\u0027t belong on, and 3) this matches our strategy for other things like the 3 types of combobox roles.\n\nI don\u0027t particularly like having this remap here myself, and would prefer altering Chromevox. Do you want to check in with him?",
+      "parentUuid": "5ac0e8b9_513266aa",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c02c4b0_a51d280b",
         "filename": "content/test/data/accessibility/html/landmark.html",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T17:34:29Z",
       "side": 1,
       "message": "role\u003d\"none\" is a bit different, since it actually hides it from the accessibility tree.\n\nHow about role\u003d\"group\", for at least some of the tests?",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7182544_930a93de",
+        "filename": "content/test/data/accessibility/html/landmark.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "I\u0027ll look into it, thanks.",
+      "parentUuid": "2c02c4b0_a51d280b",
       "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "210c83ce_ac23ee0b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXEnums.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "I was going for consistency? But ok.",
+      "parentUuid": "9ddafff2_1cddca56",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51d0a408_e831148f",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115084a0_4587d7d9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp?q\u003daxobjectcacheimpl\u0026sq\u003dpackage:chromium\u0026l\u003d318",
+      "parentUuid": "51d0a408_e831148f",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b97959ab_405308e8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c81d235_34d04811",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72bd6dc2_86f2dcb8",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584eb20d_d597ee15",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2018-01-25T18:19:45Z",
+      "side": 1,
+      "message": "Correct. Only on the table.",
+      "parentUuid": "72bd6dc2_86f2dcb8",
+      "revId": "d8ed8769b1a6150e70be6bef9dace4c059e7de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
