@@ -54,6 +54,42 @@ class WebViewAutofillTest : public WebViewIntTest {
     GURL url = GetUrlForPageWithHtmlBody(html);
     ASSERT_TRUE(test::LoadUrl(web_view_, net::NSURLWithGURL(url)));
   }
+
+  void SubmitForm() {
+    NSString* submit_script =
+        [NSString stringWithFormat:@"document.getElementById('%@').click();",
+                                   kTestSubmitID];
+    NSError* submit_error = nil;
+    test::EvaluateJavaScript(web_view_, submit_script, &submit_error);
+    ASSERT_NSEQ(nil, submit_error);
+  }
+
+  void SetFormFieldValue(NSString* value) {
+    NSString* set_value_script = [NSString
+        stringWithFormat:@"document.getElementById('%@').value = '%@';",
+                         kTestFieldID, value];
+    NSError* set_value_error = nil;
+    test::EvaluateJavaScript(web_view_, set_value_script, &set_value_error);
+    ASSERT_NSEQ(nil, set_value_error);
+  }
+
+  NSArray<CWVAutofillSuggestion*>* FetchSuggestions() {
+    __block bool suggestions_fetched = false;
+    __block NSArray<CWVAutofillSuggestion*>* fetched_suggestions = nil;
+    id fetch_completion_handler =
+        ^(NSArray<CWVAutofillSuggestion*>* suggestions) {
+          fetched_suggestions = suggestions;
+          suggestions_fetched = true;
+        };
+    [[web_view_ autofillController]
+        fetchSuggestionsForFormWithName:kTestFormName
+                              fieldName:kTestFieldName
+                      completionHandler:fetch_completion_handler];
+    EXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForActionTimeout, ^bool {
+      return suggestions_fetched;
+    }));
+    return fetched_suggestions;
+  }
 };
 
 // Tests that CWVAutofillControllerDelegate receives callbacks.
@@ -125,30 +161,13 @@ TEST_F(WebViewAutofillTest, TestDelegateCallbacks) {
 
 // Tests that CWVAutofillController can fetch, fill, and clear suggestions.
 TEST_F(WebViewAutofillTest, TestSuggestionFetchFillClear) {
-  NSString* click_script =
-      [NSString stringWithFormat:
-                    @"document.getElementById('%@').click();"
-                     "document.getElementById('%@').value = '';",
-                    kTestSubmitID, kTestFieldID];
-  NSError* click_error = nil;
-  test::EvaluateJavaScript(web_view_, click_script, &click_error);
-  ASSERT_NSEQ(nil, click_error);
+  SetFormFieldValue(kTestFieldValue);
+  SubmitForm();
+  SetFormFieldValue(@"");
 
-  __block bool suggestions_fetched = false;
-  __block CWVAutofillSuggestion* fetched_suggestion = nil;
-  id fetch_completion_handler =
-      ^(NSArray<CWVAutofillSuggestion*>* suggestions) {
-        EXPECT_EQ(1U, suggestions.count);
-        fetched_suggestion = suggestions.firstObject;
-        suggestions_fetched = true;
-      };
-  [[web_view_ autofillController]
-      fetchSuggestionsForFormWithName:kTestFormName
-                            fieldName:kTestFieldName
-                    completionHandler:fetch_completion_handler];
-  EXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForActionTimeout, ^bool {
-    return suggestions_fetched;
-  }));
+  NSArray<CWVAutofillSuggestion*>* fetched_suggestions = FetchSuggestions();
+  EXPECT_EQ(1U, fetched_suggestions.count);
+  CWVAutofillSuggestion* fetched_suggestion = fetched_suggestions.firstObject;
   EXPECT_NSEQ(kTestFieldValue, fetched_suggestion.value);
   EXPECT_NSEQ(kTestFormName, fetched_suggestion.formName);
   EXPECT_NSEQ(kTestFieldName, fetched_suggestion.fieldName);
@@ -193,6 +212,23 @@ TEST_F(WebViewAutofillTest, TestSuggestionFetchFillClear) {
       test::EvaluateJavaScript(web_view_, cleared_script, &cleared_error);
   ASSERT_NSEQ(nil, cleared_error);
   EXPECT_NSEQ(@"", current_value);
+}
+
+// Tests that CWVAutofillController can remove a suggestion.
+TEST_F(WebViewAutofillTest, TestSuggestionFetchRemoveFetch) {
+  SetFormFieldValue(kTestFieldValue);
+  SubmitForm();
+  SetFormFieldValue(@"");
+
+  NSArray* fetched_suggestions_after_creating = FetchSuggestions();
+  EXPECT_EQ(1U, fetched_suggestions_after_creating.count);
+
+  CWVAutofillSuggestion* suggestion_to_remove =
+      fetched_suggestions_after_creating.firstObject;
+  [[web_view_ autofillController] removeSuggestion:suggestion_to_remove];
+
+  NSArray* fetched_suggestions_after_removing = FetchSuggestions();
+  EXPECT_EQ(0U, fetched_suggestions_after_removing.count);
 }
 
 }  // namespace ios_web_view
