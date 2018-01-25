@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3f5ce2f4_c6235beb",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dddabab_a9b2be12",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe456a59_64df24bd",
         "filename": "ui/gfx/render_text_harfbuzz.h",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "09d3937de05d10655911a31f726639a56f1b7026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7e0fe2_98adca42",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe456a59_64df24bd",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d9c7bbe8_170f651e",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870504af_63e60855",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d03d28a0_10275f9f",
         "filename": "ui/gfx/render_text_test_api.h",
         "patchSetId": 4
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "6c06c371_1a4c1890",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03d28a0_10275f9f",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089157bf_87a8a371",
         "filename": "ui/gfx/render_text_test_api.h",
         "patchSetId": 4
@@ -102,6 +174,24 @@
       "revId": "09d3937de05d10655911a31f726639a56f1b7026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13a09fd_7f01460a",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "089157bf_87a8a371",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "63e7abe7_bd08987b",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done.  I was wrong; the BUILD exclusion is all we needed.",
+      "parentUuid": "51ffa67d_4255c280",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e86c02b2_eca14015",
         "filename": "ui/gfx/render_text_test_api.h",
         "patchSetId": 4
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "cbfc4b63_a7e15dbd",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e86c02b2_eca14015",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef50f902_d04f809d",
         "filename": "ui/gfx/render_text_test_api.h",
         "patchSetId": 4
@@ -171,6 +297,24 @@
       "revId": "09d3937de05d10655911a31f726639a56f1b7026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbca9634_1de45fbd",
+        "filename": "ui/gfx/render_text_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-25T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef50f902_d04f809d",
+      "revId": "09d3937de05d10655911a31f726639a56f1b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
