@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03d590c1_4e03e5e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f4af8d_5160b5c5",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e059c814_95be589f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "85114663_2e69eefe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 1,
+      "message": "Hi Mounir, I had cc-ed you and Anita in https://chromium-review.googlesource.com/c/chromium/src/+/879093. I did not know who\u0027s the owner since people who was working on this file left the team. Also, I have been discussing with Peter about this change.\n\nFrom testing locally I did not find any lag in updating the notification icon.\nThe wall time it usually takes from the time the bridge is called to the time we get notified back with icon is less than 50ms after testing on 10 websites. But, all of them had page media image. So, I had to edit code to try and obtain favicon.",
+      "parentUuid": "d16b84a1_8d741c9d",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeced039_e283ebd5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 3
@@ -86,6 +122,24 @@
       "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17671137_44435e5b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeced039_e283ebd5",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f4be2cae_67dedbe0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2bd2f93_aef90ff0",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0224dff_8fd538f4",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 3
@@ -120,6 +192,24 @@
       "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d2772f_44511409",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0224dff_8fd538f4",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

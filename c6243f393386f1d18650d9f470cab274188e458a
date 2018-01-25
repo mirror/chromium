@@ -22,6 +22,30 @@
       "revId": "c6243f393386f1d18650d9f470cab274188e458a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b596bf74_bdc60426",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-25T23:19:13Z",
+      "side": 0,
+      "message": "Sorry this was some rebase error. fixed.",
+      "parentUuid": "a6b25b52_8365a3dd",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "c6243f393386f1d18650d9f470cab274188e458a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
