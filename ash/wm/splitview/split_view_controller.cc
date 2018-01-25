@@ -195,8 +195,8 @@ void SplitViewController::SnapWindow(aura::Window* window,
   StartObserving(window);
   const wm::WMEvent event((snap_position == LEFT) ? wm::WM_EVENT_SNAP_LEFT
                                                   : wm::WM_EVENT_SNAP_RIGHT);
-  wm::GetWindowState(window)->OnWMEvent(&event);
   wm::ActivateWindow(window);
+  wm::GetWindowState(window)->OnWMEvent(&event);
 
   // Stack the other snapped window below the current active window so that
   // the snapped two windows are always the top two windows while resizing.
