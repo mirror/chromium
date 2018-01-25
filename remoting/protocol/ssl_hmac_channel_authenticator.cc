@@ -49,6 +49,33 @@ namespace protocol {
 
 namespace {
 
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("ssl_hmac_channel_authenticator",
+                                        R"(
+        semantics {
+          sender: "Ssl Hmac Channel Authenticator"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: OTHER
+          destination_other:
+            "The data is sent to the ..."
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "This request cannot be stopped in settings, but will not be sent "
+            "if user does not use Chrome Remote Desktop."
+          chrome_policy {
+            RemoteAccessHostClientDomainList {
+              RemoteAccessHostClientDomainList: {}
+            }
+            RemoteAccessHostDomainList {
+              RemoteAccessHostDomainList: {}
+            }
+          }
+        })");
+
 // A CertVerifier which rejects every certificate.
 class FailingCertVerifier : public net::CertVerifier {
  public:
@@ -364,12 +391,11 @@ void SslHmacChannelAuthenticator::OnConnected(int result) {
 void SslHmacChannelAuthenticator::WriteAuthenticationBytes(
     bool* callback_called) {
   while (true) {
-    // TODO(crbug.com/656607): Add proper network traffic annotation.
     int result = socket_->Write(
         auth_write_buf_.get(), auth_write_buf_->BytesRemaining(),
         base::Bind(&SslHmacChannelAuthenticator::OnAuthBytesWritten,
                    base::Unretained(this)),
-        NO_TRAFFIC_ANNOTATION_BUG_656607);
+        kTrafficAnnotation);
     if (result == net::ERR_IO_PENDING)
       break;
     if (!HandleAuthBytesWritten(result, callback_called))
