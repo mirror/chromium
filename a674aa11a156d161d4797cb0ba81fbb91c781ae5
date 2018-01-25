@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493d566f_2c81e24c",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T07:54:59Z",
+      "side": 1,
+      "message": "Hard to parse this text, can you add a comma (after one of or) or split this into multiple sentences?\n\nAlso: could/should this method itself be split into two, where one of them could have RuntimeEnabled\u003dCustomUserTiming?",
+      "revId": "a674aa11a156d161d4797cb0ba81fbb91c781ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
