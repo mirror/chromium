@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d4d96e_07fa0370",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T22:26:43Z",
+      "side": 1,
+      "message": "Given you had to move this around, please add a comment as to why the order matters here.",
+      "range": {
+        "startLine": 117,
+        "startChar": 3,
+        "endLine": 117,
+        "endChar": 62
+      },
+      "revId": "319da87a4e4ad4b3d485f12db73cab7e3404cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
