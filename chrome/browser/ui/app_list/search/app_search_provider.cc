@@ -7,9 +7,9 @@
 #include <stddef.h>
 
 #include <algorithm>
-#include <map>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 
@@ -348,34 +348,51 @@ void AppSearchProvider::UpdateResults() {
   new_results.reserve(apps_size);
   if (show_recommendations) {
     // Build a map of app ids to their position in the app list.
-    std::map<std::string, size_t> id_to_app_list_index =
-        model_updater_->GetIdToAppListIndexMap();
+    model_updater_->GetIdToAppListIndexMap(
+        [this](const std::unordered_map<std::string, size_t>&
+                   id_to_app_list_index) {
+          SearchProvider::Results new_results;
+          std::set<std::string> seen_or_filtered_apps;
+          const size_t apps_size = apps_.size();
+          new_results.reserve(apps_size);
 
-    for (auto& app : apps_) {
-      std::unique_ptr<AppResult> result =
-          app->data_source()->CreateResult(app->id(), list_controller_, true);
-      result->set_title(app->name());
+          for (auto& app : apps_) {
+            std::unique_ptr<AppResult> result =
+                app->data_source()->CreateResult(app->id(), list_controller_,
+                                                 true);
+            result->set_title(app->name());
 
-      // Use the app list order to tiebreak apps that have never been launched.
-      // The apps that have been installed or launched recently should be
-      // more relevant than other apps.
-      const base::Time time = app->GetLastActivityTime();
-      if (time.is_null()) {
-        const auto& it = id_to_app_list_index.find(app->id());
-        // If it's in a folder, it won't be in |id_to_app_list_index|. Rank
-        // those as if they are at the end of the list.
-        const size_t app_list_index = (it == id_to_app_list_index.end())
-                                          ? apps_size
-                                          : std::min(apps_size, it->second);
+            // Use the app list order to tiebreak apps that have never been
+            // launched. The apps that have been installed or launched recently
+            // should be more relevant than other apps.
+            const base::Time time = app->GetLastActivityTime();
+            if (time.is_null()) {
+              const auto& it = id_to_app_list_index.find(app->id());
+              // If it's in a folder, it won't be in |id_to_app_list_index|.
+              // Rank those as if they are at the end of the list.
+              const size_t app_list_index =
+                  (it == id_to_app_list_index.end())
+                      ? apps_size
+                      : std::min(apps_size, it->second);
 
-        result->set_relevance(kUnlaunchedAppRelevanceStepSize *
-                              (apps_size - app_list_index));
-      } else {
-        result->UpdateFromLastLaunchedOrInstalledTime(clock_->Now(), time);
-      }
-      MaybeAddResult(&new_results, std::move(result), &seen_or_filtered_apps);
-    }
+              result->set_relevance(kUnlaunchedAppRelevanceStepSize *
+                                    (apps_size - app_list_index));
+            } else {
+              result->UpdateFromLastLaunchedOrInstalledTime(clock_->Now(),
+                                                            time);
+            }
+            MaybeAddResult(&new_results, std::move(result),
+                           &seen_or_filtered_apps);
+          }
+          SwapResults(&new_results);
+          update_results_factory_.InvalidateWeakPtrs();
+        });
   } else {
+    SearchProvider::Results new_results;
+    std::set<std::string> seen_or_filtered_apps;
+    const size_t apps_size = apps_.size();
+    new_results.reserve(apps_size);
+
     const TokenizedString query_terms(query_);
     for (auto& app : apps_) {
       std::unique_ptr<AppResult> result =
@@ -388,11 +405,10 @@ void AppSearchProvider::UpdateResults() {
       result->UpdateFromMatch(*indexed_name, match);
       MaybeAddResult(&new_results, std::move(result), &seen_or_filtered_apps);
     }
+
+    SwapResults(&new_results);
+    update_results_factory_.InvalidateWeakPtrs();
   }
-
-  SwapResults(&new_results);
-
-  update_results_factory_.InvalidateWeakPtrs();
 }
 
 void AppSearchProvider::RefreshAppsAndUpdateResults(bool force_inline) {
