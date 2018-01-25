@@ -121,6 +121,7 @@
 #include "content/renderer/media/media_stream_device_observer.h"
 #include "content/renderer/media/user_media_client_impl.h"
 #include "content/renderer/mojo/blink_interface_registry_impl.h"
+#include "content/renderer/navigation_client_impl.h"
 #include "content/renderer/navigation_state_impl.h"
 #include "content/renderer/pepper/pepper_audio_controller.h"
 #include "content/renderer/pepper/plugin_instance_throttler_impl.h"
@@ -6743,8 +6744,20 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           is_form_submission, searchable_form_url, searchable_form_encoding,
           initiator_origin, client_side_redirect_url);
 
+  WebDocumentLoader* document_loader = frame_->GetProvisionalDocumentLoader();
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(document_loader);
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+
+  mojom::NavigationClientPtr navigation_client;
+  std::unique_ptr<NavigationClientImpl> navigation_client_impl(
+      new NavigationClientImpl(mojo::MakeRequest(&navigation_client)));
+  navigation_state->set_navigation_client(std::move(navigation_client_impl));
+
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
-                                  std::move(begin_navigation_params));
+                                  std::move(begin_navigation_params),
+                                  std::move(navigation_client));
 }
 
 void RenderFrameImpl::LoadDataURL(

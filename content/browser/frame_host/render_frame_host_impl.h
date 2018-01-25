@@ -855,7 +855,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       service_manager::mojom::InterfaceProviderRequest
           interface_provider_request) override;
   void BeginNavigation(const CommonNavigationParams& common_params,
-                       mojom::BeginNavigationParamsPtr begin_params) override;
+                       mojom::BeginNavigationParamsPtr begin_params,
+                       mojom::NavigationClientPtr navigation_client) override;
   void SubresourceResponseStarted(const GURL& url,
                                   const GURL& referrer,
                                   const std::string& method,
