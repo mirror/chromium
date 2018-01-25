@@ -1334,6 +1334,12 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (!GetWebWidget())
     return;
 
+  if (!params.local_surface_id) {
+    DCHECK(!compositor_ || !compositor_->IsSurfaceSynchronizationEnabled() ||
+           !params.needs_resize_ack);
+    local_surface_id_ = viz::LocalSurfaceId();
+  }
+
   // If the content_source_id of ResizeParams doesn't match
   // |current_content_source_id_|, then the given LocalSurfaceId was generated
   // before the navigation. Continue with the resize but don't use the
