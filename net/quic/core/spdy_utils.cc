@@ -129,26 +129,41 @@ bool SpdyUtils::CopyAndValidateTrailers(const QuicHeaderList& header_list,
 
 // static
 string SpdyUtils::GetUrlFromHeaderBlock(const SpdyHeaderBlock& headers) {
-  SpdyHeaderBlock::const_iterator it = headers.find(":scheme");
-  if (it == headers.end()) {
-    return "";
+  // RFC 7540, Section 8.1.2.3: All HTTP/2 requests MUST include exactly
+  // one valid value for the ":method", ":scheme", and ":path" pseudo-header
+  // fields, unless it is a CONNECT request.
+  SpdyHeaderBlock::const_iterator it = headers.find(":method");
+  if (it == headers.end() || it->second.empty() || it->second == "CONNECT") {
+    return string();
   }
-  std::string url = it->second.as_string();
 
-  url.append("://");
+  it = headers.find(":scheme");
+  if (it == headers.end() || it->second.empty()) {
+    return string();
+  }
+  QuicStringPiece scheme = it->second;
 
+  // RFC 7540, Section 8.2: The server MUST include a value in the
+  // ":authority" pseudo-header field for which the server is authoritative
+  // (see Section 10.1).
   it = headers.find(":authority");
-  if (it == headers.end()) {
-    return "";
+  if (it == headers.end() || it->second.empty()) {
+    return string();
   }
-  url.append(it->second.as_string());
+  QuicStringPiece authority = it->second;
 
+  // RFC 7540, Section 8.1.2.3 requires that the ":path" pseudo-header MUST
+  // NOT be empty for "http" or "https" URIs;
+  //
+  // However, to ensure the scheme is consistently canonicalized, that check
+  // is deferred to implementations in QuicUrlUtils::GetPushPromiseUrl().
   it = headers.find(":path");
   if (it == headers.end()) {
-    return "";
+    return string();
   }
-  url.append(it->second.as_string());
-  return url;
+  QuicStringPiece path = it->second;
+
+  return QuicUrlUtils::GetPushPromiseUrl(scheme, authority, path);
 }
 
 // static
