@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f6b532_2c0ba13a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:58:21Z",
+      "side": 1,
+      "message": "webmediaplayer_impl.cc begs to differ :)",
+      "revId": "93d0cc5dbca8615f6f14618a6a94349fd137fbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
