@@ -297,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "5a09754f_c1e3eb27",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T20:34:16Z",
+      "side": 1,
+      "message": "Yep, a leftover (but not a hangover).\n:-P",
+      "parentUuid": "f55dff0d_271f686c",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bda70ef2_0431ead1",
         "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
         "patchSetId": 13
