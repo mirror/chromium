@@ -38,6 +38,8 @@ Core* GetCore() { return g_core; }
 }  // namespace internal
 
 void Init(const Configuration& configuration) {
+  CHECK(!internal::g_core) << "mojo::edk::Init() called more than once.";
+
   MojoSystemThunks thunks = MakeSystemThunks();
   size_t expected_size = MojoEmbedderSetSystemThunks(&thunks);
   DCHECK_EQ(expected_size, sizeof(thunks));
