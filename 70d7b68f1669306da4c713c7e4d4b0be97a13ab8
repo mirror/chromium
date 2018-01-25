@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4003af9_d48a5fc5",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-25T13:05:56Z",
+      "side": 0,
+      "message": "MarkNoTracing is what I would like to refactor away.",
+      "range": {
+        "startLine": 1979,
+        "startChar": 15,
+        "endLine": 1979,
+        "endChar": 28
+      },
+      "revId": "70d7b68f1669306da4c713c7e4d4b0be97a13ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

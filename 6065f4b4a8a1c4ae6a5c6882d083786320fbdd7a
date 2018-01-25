@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c4613be_65965bea",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-25T13:05:56Z",
+      "side": 1,
+      "message": "Replacing the same call in Deque will allow us to get rid of HeapAllocator::RegisterBackingStoreReference.",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 32
+      },
+      "revId": "6065f4b4a8a1c4ae6a5c6882d083786320fbdd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
