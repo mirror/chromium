@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a5691c_2c9df427",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T22:58:09Z",
+      "side": 1,
+      "message": "Looking at other C++ handlers this is usually done as \nCHECK_EQ(1U, args-\u003eGetSize());",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212e78b0_bee8f2c7",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T22:58:09Z",
+      "side": 1,
+      "message": "Similar comment here. Looking elsewhere this is usually done as follows:\n\nbool tpm_firmware_update_requested \u003d false;\nCHECK(args-\u003eGetBoolean(1, \u0026tpm_firmware_update_requested));\n\nIs the CHECK useful here? Would it have prevented the problem in the first place?",
+      "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
