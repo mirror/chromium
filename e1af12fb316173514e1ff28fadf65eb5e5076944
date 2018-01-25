@@ -307,6 +307,30 @@
       "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fe65908_2879474e",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T10:52:09Z",
+      "side": 1,
+      "message": "This is not a new feature - this is a bugfix of enabling Mirror for child accounts (DD: https://docs.google.com/document/d/1zMgN8NBGyswYZLYMn_ey8bjaLxc9yffyzOduatH9bMQ/edit). That feature should apply to all sites, but it turned out it doesn\u0027t apply for the local new tab page (because that uses this different code path to get the OneGoogleBar). See crbug.com/790970 for details.\n\nA parallel effort by sinhak@ is to make this feature (same restriction which is applied to the child account) also settable by policy (DD: https://docs.google.com/document/d/1es_DqrYzNA6yiQghAF-n-_frerF26c7i7BeUuYzbd3k/edit). This is not fully done yet (e.g. account reconciliation is not tested for the policy case, only the child account case). That\u0027s why AccountConsistencyModeManager::IsMirrorEnabledForProfile currently only returns true for child accounts on Chrome OS.\n\nSince that method will probably change soon to also return true for the policy case, I can use that for now, if that\u0027s fine with you, and don\u0027t support the policy case on the local new tab page until AccountConsistencyModeManager::IsMirrorEnabledForProfile is changed by sinhak@ - it\u0027s still better to support mirror for child accounts on the NTP than don\u0027t supporting anything, and the main goal of this CL is to fix this bug for the child accounts.",
+      "parentUuid": "4875bc65_8162e094",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
