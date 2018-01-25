@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "860f63e5_144a51cd",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-25T10:17:45Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right. Double-checked by modifying and running the MSAP unit tests.\nIt\u0027ll also trigger on bad channel counts or sample rates.",
+      "parentUuid": "2ee03c35_8aeff3bf",
+      "revId": "eb0b57f7be7d2426e7adbefe1b952256d778aa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd534e59_e9633fed",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "eb0b57f7be7d2426e7adbefe1b952256d778aa18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba282479_8fe370c5",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-25T10:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd534e59_e9633fed",
+      "revId": "eb0b57f7be7d2426e7adbefe1b952256d778aa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
