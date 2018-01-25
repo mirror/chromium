@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4cce79e_f003ed5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "nit: secondary",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2a4620_b30b4bff",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "I don\u0027t think we ever need/want to use this, right? So we could remove it?",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c53553_a6b633df",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "nit: no auto unless type is obvious",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8bbea8_035f4374",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "prefer enum class",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cc05a8_fb02cf5e",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "nit: no auto",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5027a526_0c95e538",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "nit: no auto",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899a5251_5e0bda3b",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "Do you mean views lock screen? webui lock screen does not show the native shelf (so I\u0027d expect SetState(SHELF_HIDDEN))",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0c1e03_ddf28840",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-25T19:28:49Z",
+      "side": 1,
+      "message": "nit: no auto",
+      "revId": "21e3c9e6f224ccc7af17c3dab2756c7c8944fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
