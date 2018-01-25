@@ -253,6 +253,30 @@
       "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20c23bbf_8b2dcf52",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-25T21:25:00Z",
+      "side": 1,
+      "message": "Aha. You were right! There is some inconsistency in how timestamps are logged. There is a timestamp for the UserEventSpecifics proto (which is computed since Windows epoch), then there is the timestamp for TabNavigation, which is computing since Unix epoch (see https://cs.chromium.org/chromium/src/components/sessions/core/serialized_navigation_entry.cc?type\u003dcs\u0026q\u003dTabNavigation+set_timestamp_msec\u0026l\u003d466). \n\nWith the latest patch, both the contextual suggestion service and SerializedNavigationEntry::ToSyncData() are using syncer::TimeToProtoTime on the same base::Time object (coming from the navigation entry), therefore they are guaranteed to match. Even if the user\u0027s clock may change between the navigation and the omnibox request, the base::Time object associated with the navigation is the same - we are guaranteed to log the same thing.",
+      "parentUuid": "9b9e8e5f_64d7fdf8",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
