@@ -85,10 +85,13 @@ std::unique_ptr<DeviceInfoSpecifics> ModelToSpecifics(
 DeviceInfoSyncBridge::DeviceInfoSyncBridge(
     LocalDeviceInfoProvider* local_device_info_provider,
     const ModelTypeStoreFactory& store_factory,
-    const ChangeProcessorFactory& change_processor_factory)
+    const ChangeProcessorFactory& change_processor_factory,
+    base::Clock* clock)
     : ModelTypeSyncBridge(change_processor_factory, DEVICE_INFO),
-      local_device_info_provider_(local_device_info_provider) {
+      local_device_info_provider_(local_device_info_provider),
+      clock_(clock) {
   DCHECK(local_device_info_provider);
+  DCHECK(clock);
 
   // This is not threadsafe, but presuably the provider initializes on the same
   // thread as us so we're okay.
@@ -293,7 +296,7 @@ void DeviceInfoSyncBridge::RemoveObserver(Observer* observer) {
 }
 
 int DeviceInfoSyncBridge::CountActiveDevices() const {
-  return CountActiveDevices(Time::Now());
+  return CountActiveDevices(clock_->Now());
 }
 
 void DeviceInfoSyncBridge::NotifyObservers() {
@@ -382,7 +385,7 @@ void DeviceInfoSyncBridge::OnReadAllMetadata(
     base::Optional<ModelError> error,
     std::unique_ptr<MetadataBatch> metadata_batch) {
   if (error) {
-    change_processor()->ReportError(error.value());
+    change_processor()->ReportModelError(error.value());
     return;
   }
 
@@ -422,7 +425,7 @@ void DeviceInfoSyncBridge::ReconcileLocalAndStored() {
   if (iter != all_data_.end() &&
       current_info->Equals(*SpecificsToModel(*iter->second))) {
     const TimeDelta pulse_delay(DeviceInfoUtil::CalculatePulseDelay(
-        GetLastUpdateTime(*iter->second), Time::Now()));
+        GetLastUpdateTime(*iter->second), clock_->Now()));
     if (!pulse_delay.is_zero()) {
       pulse_timer_.Start(FROM_HERE, pulse_delay,
                          base::Bind(&DeviceInfoSyncBridge::SendLocalData,
@@ -440,19 +443,7 @@ void DeviceInfoSyncBridge::SendLocalData() {
   // the user signs out. No-op this pulse, but keep the timer going in case sync
   // is enabled later.
   if (local_device_info_provider_->GetLocalDeviceInfo() != nullptr) {
-    std::unique_ptr<DeviceInfoSpecifics> specifics =
-        ModelToSpecifics(*local_device_info_provider_->GetLocalDeviceInfo(),
-                         TimeToProtoTime(Time::Now()));
-    std::unique_ptr<WriteBatch> batch = store_->CreateWriteBatch();
-
-    if (change_processor()->IsTrackingMetadata()) {
-      change_processor()->Put(specifics->cache_guid(),
-                              CopyToEntityData(*specifics),
-                              batch->GetMetadataChangeList());
-    }
-
-    StoreSpecifics(std::move(specifics), batch.get());
-    CommitAndNotify(std::move(batch), true);
+    StoreDeviceInfo(*local_device_info_provider_->GetLocalDeviceInfo());
   }
 
   pulse_timer_.Start(
@@ -476,6 +467,31 @@ int DeviceInfoSyncBridge::CountActiveDevices(const Time now) const {
                          return DeviceInfoUtil::IsActive(
                              GetLastUpdateTime(*pair.second), now);
                        });
+}
+
+void DeviceInfoSyncBridge::StoreDeviceInfo(const DeviceInfo& device_info) {
+  CHECK(has_provider_initialized_);
+
+  std::unique_ptr<DeviceInfoSpecifics> specifics =
+      ModelToSpecifics(device_info, TimeToProtoTime(clock_->Now()));
+  std::unique_ptr<WriteBatch> batch = store_->CreateWriteBatch();
+
+  if (change_processor()->IsTrackingMetadata()) {
+    change_processor()->Put(specifics->cache_guid(),
+                            CopyToEntityData(*specifics),
+                            batch->GetMetadataChangeList());
+  }
+
+  StoreSpecifics(std::move(specifics), batch.get());
+  CommitAndNotify(std::move(batch), true);
+}
+
+std::unique_ptr<ModelTypeStore> DeviceInfoSyncBridge::StealStoreForTest() {
+  return std::move(store_);
+}
+
+void DeviceInfoSyncBridge::SendLocalDataForTest() {
+  SendLocalData();
 }
 
 }  // namespace syncer

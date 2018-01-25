@@ -20,6 +20,7 @@ using EntityMetadataMap = std::map<std::string, sync_pb::EntityMetadata>;
 class MetadataBatch {
  public:
   MetadataBatch();
+  MetadataBatch(MetadataBatch&&);
   virtual ~MetadataBatch();
 
   // Allows the caller to take ownership of the entire metadata map. This is

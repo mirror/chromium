@@ -14,6 +14,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
+#include "base/time/clock.h"
+#include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/sync/device_info/device_info_tracker.h"
@@ -36,7 +38,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
  public:
   DeviceInfoSyncBridge(LocalDeviceInfoProvider* local_device_info_provider,
                        const ModelTypeStoreFactory& store_factory,
-                       const ChangeProcessorFactory& change_processor_factory);
+                       const ChangeProcessorFactory& change_processor_factory,
+                       base::Clock* clock = base::DefaultClock::GetInstance());
   ~DeviceInfoSyncBridge() override;
 
   // ModelTypeSyncBridge implementation.
@@ -61,6 +64,11 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
   int CountActiveDevices() const override;
+
+  // Exposed publicly for testing.
+  void StoreDeviceInfo(const DeviceInfo& device_info);
+  std::unique_ptr<ModelTypeStore> StealStoreForTest();
+  void SendLocalDataForTest();
 
  private:
   friend class DeviceInfoSyncBridgeTest;
@@ -118,6 +126,8 @@ class DeviceInfoSyncBridge : public ModelTypeSyncBridge,
 
   // |local_device_info_provider_| isn't owned.
   const LocalDeviceInfoProvider* const local_device_info_provider_;
+
+  base::Clock* const clock_;
 
   ClientIdToSpecifics all_data_;
 

@@ -547,3 +547,10 @@ syncer::ModelTypeSyncBridge* ReadingListModelImpl::GetModelTypeSyncBridge() {
 ReadingListModelStorage* ReadingListModelImpl::StorageLayer() {
   return storage_layer_.get();
 }
+
+// static
+std::unique_ptr<ReadingListModelStorage>
+ReadingListModelImpl::DestroyAndStealStorageForTest(
+    std::unique_ptr<ReadingListModelImpl> model) {
+  return std::move(model->storage_layer_);
+}

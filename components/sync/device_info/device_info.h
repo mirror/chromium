@@ -78,7 +78,7 @@ class DeviceInfo {
  private:
   const std::string guid_;
 
-  const std::string client_name_;
+  std::string client_name_;
 
   const std::string chrome_version_;
 
