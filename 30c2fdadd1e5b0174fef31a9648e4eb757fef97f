@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea82d8f2_a04127df",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-25T21:17:16Z",
+      "side": 1,
+      "message": "This makes this config effectively identical to no_symbols below. If we want to make this change (up to dpranke), then we should do it in tools/mb/mb_config.pyl instead (replace all the _minimal_symbol configs with _no_symbol configs on the linux master).",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
