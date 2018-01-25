@@ -52,7 +52,7 @@ ErrorTolerantBleAdvertisementImpl::Factory::BuildInstance(
     const std::string& device_id,
     std::unique_ptr<cryptauth::DataWithTimestamp> advertisement_data,
     BleSynchronizerBase* ble_synchronizer) {
-  return std::make_unique<ErrorTolerantBleAdvertisementImpl>(
+  return ErrorTolerantBleAdvertisementImpl::Factory::NewInstance(
       device_id, std::move(advertisement_data), ble_synchronizer);
 }
 
