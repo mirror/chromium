@@ -11,12 +11,21 @@
 #include "base/memory/weak_ptr.h"
 #include "media/base/media_export.h"
 
+namespace base {
+class File;
+class FilePath;
+}  // namespace base
+
 namespace media {
 
 class AudioManager;
 
 class MEDIA_EXPORT AudioDebugRecordingSession {
  public:
+  using CreateFileCallback = base::RepeatingCallback<void(
+      const base::FilePath&,
+      base::OnceCallback<void(base::File)> reply_callback)>;
+
   virtual ~AudioDebugRecordingSession();
   static std::unique_ptr<AudioDebugRecordingSession> CreateSession(
       const base::FilePath&);

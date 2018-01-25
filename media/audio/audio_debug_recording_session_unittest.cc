@@ -22,7 +22,7 @@ class AudioDebugRecordingSessionImplTest : public testing::Test {
     base::FilePath file_path(kFilePath);
     mock_audio_manager_ =
         std::make_unique<MockAudioManager>(std::make_unique<TestAudioThread>());
-    EXPECT_CALL(*mock_audio_manager_, EnableDebugRecording(file_path));
+    EXPECT_CALL(*mock_audio_manager_, EnableDebugRecording(testing::_));
     audio_debug_recording_session_impl_ =
         std::make_unique<media::AudioDebugRecordingSessionImpl>(
             mock_audio_manager_.get(), file_path);
