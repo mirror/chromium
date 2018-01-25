@@ -16,6 +16,24 @@
       "revId": "d12b2b6fef1bd9b7e88b721d1a9b50be67a59918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb1ec60_a53d96f5",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-25T02:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9249711d_7a80843d",
+      "revId": "d12b2b6fef1bd9b7e88b721d1a9b50be67a59918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
