@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5d25ee8e_ec50b150",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-25T23:02:21Z",
+      "side": 1,
+      "message": "I think Noel is suggesting to use the ZLIB_INTERNAL which is already defined in zutil.h\nhttps://cs.chromium.org/chromium/src/third_party/zlib/zutil.h?type\u003dcs\u0026q\u003dzlib+HAVE_HIDDEN\u0026sq\u003dpackage:chromium\u0026l\u003d17\n\nAs opposed to trying to find a zlib-provided replacement for USE_ARMV8_CRC32. I think perhaps that caused some confusion/miscommunication here?\n\nI think using zutil.h\u0027s ZLIB_INTERNAL makes sense.\n\nIf they change ZLIB_INTERNAL (unlikely) we\u0027ll have to change as well. But I think that makes sense. Similarly, if ZLIB changes the inner workings of zlib/crc32.c we\u0027ll also need to reflect those changes.",
+      "parentUuid": "e2b3574e_9d05c0b0",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5918de0c_7206cfd8",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "157eddb8_1619821d",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-25T23:02:21Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say this is a magic number. It has a name (flag_crc32) which makes the meaning clear.\n\n\nThe asm/hwcap.h thing looks useful though. More on that below.",
+      "parentUuid": "33c23f7b_a8435b3b",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72d0f5d5_132a728b",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "It is a good point and it is a bit unclear really.\n\nLet\u0027s breakdown the problem: this would be used only for ChromeOS (CrOS) or ARM Linux (as in android we use getCpuFeatures()).\n\nThe article suggests using AT_HWCAP for aarch64. I tested this standalone as a 64bits binary and it works fine in a 64bits kernel.\n\nI haven\u0027t tested the scenario of running in 32bits@ARMv8.\n\nIIRC, Chrome ships as a 32bits binary in ChromeOS (even though the kernel is 64bits).\n\nGiven that this is disabled for now for CrOS because it seems that its scripts will bypass the needed compiler flag to enable the use of the crc32 instruction (i.e. -march\u003darmv8-a+crc), I think we are safe.\n\nWhen I enable this for CrOS I can double check this scenario (i.e. 32bits binary running in a 64bits kernel).",
       "parentUuid": "72d0f5d5_132a728b",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8336680_07fd8a78",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-25T23:02:21Z",
+      "side": 1,
+      "message": "I wouldn\u0027t focus on just Chromium\u0027s builds and CrOS. Since this is going to be upstreamed this needs to be generic.\n\n\nIf asm/hwcap.h provides a clear CRC32 / PMULL define I strongly prefer it.\nIt looks like those exist sometimes but not always.\nLooking here:\nhttp://elixir.free-electrons.com/linux/v2.6.39.4/source/arch/arm/include/asm/hwcap.h\nThe PMULL define is \"FAST_MULT\" and CRC32 is \"EDSP\". That doesn\u0027t seem right. But that\u0027s for an old kernel version.\n\nA newer kernel version:\nhttp://elixir.free-electrons.com/linux/latest/source/arch/arm/include/uapi/asm/hwcap.h#L39\nhas HWCAP2_PMULL and HWCAP2_CRC32. But notice it doesn\u0027t have HWCAP_CRC32 and HWCAP_PMULL.\n\nThis might be the reason why Skia and boringssl wouldn\u0027t use these?\n\n\nIf the defines are available:\n- when we build for AArch32, we want to use AT_HWCAP2 and HWCAP2_PMULL / HWCAP2_CRC32.\n- When we build for AArch64, we want to use AT_HWCAP and HWCAP_CRC32 and HWCAP_PMULL.\n\nCan we try that?",
+      "parentUuid": "5a43f9e1_e6583d67",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "411dbaad_cb2970ab",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-25T23:02:21Z",
+      "side": 1,
+      "message": "If we plan to be built using an old C standard, bool may not be available.\nBut if we are using an old C standard, we might not have access to a new-enough libc to use HWCAP_CRC32 / HWCAP2_CRC32 anyway.\n\nNevertheless, we should probably use a BOOL to attempt to support as much as possible. The x86 feature detection does this:\nhttps://cs.chromium.org/chromium/src/third_party/zlib/x86.c?l\u003d66\u0026rcl\u003dca112b210e77187e6d64158c3a3e5a2365f4231f\n\n\nThey should probably also have a more bool-y name.\nIdeally, it could be something like is_crc32_supported. But in an attempt to minimize name collision, these have all been prefixed with \"arm_\". I think that prefix makes sense -- we\u0027re inside contrib/optimizations/arm.\nSo maybe arm_is_crc32_supported.\n\nThey should probably be ZLIB_INTERNAL. All of this should be, really.",
+      "parentUuid": "89a6ef17_385779b3",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6782eaa_41394930",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 13
@@ -416,6 +488,24 @@
       "side": 1,
       "message": "I rather not because we lack any control on what zlib will ship or define in the future.\n\nAnother advantage is that in this way this code can be easily tested standalone.\n\nFinally, I know for sure what is going to be the real size of a \u0027size_t\u0027 (something important while using NEON).",
       "parentUuid": "bda70ef2_0431ead1",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fdce62_45852e05",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-25T23:02:21Z",
+      "side": 1,
+      "message": "I think I agree with Noel.\n\nIf we need a specific size, we should use a fixed-size type.\nIf we need a specific size for different targets, we probably want our own define.\nBut if we are using it for a length (for this API, I think we are) we probably do want to use z_size_t. We\u0027ll need to manually convert to a fixed-sized type but I think that is the correct thing to do.",
+      "parentUuid": "018ad4f4_e1782e25",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
