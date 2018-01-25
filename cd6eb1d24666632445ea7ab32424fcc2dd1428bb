@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e742e6_48336c1a",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T08:09:39Z",
+      "side": 1,
+      "message": "bryan, kinuko: I\u0027m assuming there is not a material difference between OnCommit and OnParseStart... is that reasonable? I think eventually I can plumb the controller info to NavigationHandle, but it would be a while more. If/when that happens, would it be reasonable\nto continue using this histogram name or would we need a new one?",
+      "revId": "cd6eb1d24666632445ea7ab32424fcc2dd1428bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
