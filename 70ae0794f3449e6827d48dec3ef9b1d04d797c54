@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297da3a8_09017687",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-25T12:47:21Z",
+      "side": 1,
+      "message": "I know these are just dchecks but is it actually thread safe to access these like this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a7fed6_9999c24b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-25T12:47:21Z",
+      "side": 1,
+      "message": "maybe add an accessor to enforce this.",
+      "range": {
+        "startLine": 61,
+        "startChar": 39,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c7077c_7f1fad07",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2018-01-25T12:47:21Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "70ae0794f3449e6827d48dec3ef9b1d04d797c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
