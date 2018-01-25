@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "588f3766_4f3ba8fc",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T00:20:47Z",
+      "side": 1,
+      "message": "Is it worth updating this comment to mention that this also applies to blob/filesystem URLs where nested origins have HTTP(S) schemes?",
+      "revId": "d317958957b7060128deeed90dbee4f68edf6d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2770ff74_baaf9ad5",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T00:20:47Z",
+      "side": 1,
+      "message": "Presumably, this will also fix blob: URLs?  Would it be desirable to test those as well?",
+      "revId": "d317958957b7060128deeed90dbee4f68edf6d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
