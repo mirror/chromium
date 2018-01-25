@@ -2597,6 +2597,9 @@ const DatagramClientSocket* QuicChromiumClientSession::GetDefaultSocket()
 }
 
 bool QuicChromiumClientSession::IsAuthorized(const std::string& hostname) {
+  if (hostname.empty())
+    return false;
+
   bool result = CanPool(hostname, server_id_.privacy_mode());
   if (result)
     streams_pushed_count_++;
