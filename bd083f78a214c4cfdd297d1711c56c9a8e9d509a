@@ -16,6 +16,24 @@
       "revId": "bd083f78a214c4cfdd297d1711c56c9a8e9d509a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f52deb_072bbbd4",
+        "filename": "ui/base/resource/resource_bundle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-25T17:25:53Z",
+      "side": 0,
+      "message": "Thank you very much for catching this! Removed",
+      "parentUuid": "3e40c17a_2f93cb74",
+      "revId": "bd083f78a214c4cfdd297d1711c56c9a8e9d509a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
