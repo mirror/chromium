@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c376fe0d_e86b079e",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-25T22:10:52Z",
+      "side": 1,
+      "message": "Good idea. Otherwise it sounds like we\u0027re evicting everything.",
+      "parentUuid": "1561b1cf_6687285d",
+      "range": {
+        "startLine": 391,
+        "startChar": 44,
+        "endLine": 391,
+        "endChar": 49
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a495e5d_a791a05b",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b2ab64_47a3646f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-25T22:10:52Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "6a495e5d_a791a05b",
+      "range": {
+        "startLine": 323,
+        "startChar": 11,
+        "endLine": 323,
+        "endChar": 31
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4ebf8c84_328773fc",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-25T22:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ef15f4_4314a823",
+      "range": {
+        "startLine": 385,
+        "startChar": 29,
+        "endLine": 385,
+        "endChar": 44
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da81ce2f_8be7ece2",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417535db_8d02616d",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-25T22:10:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da81ce2f_8be7ece2",
+      "range": {
+        "startLine": 387,
+        "startChar": 28,
+        "endLine": 387,
+        "endChar": 33
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
