@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86fbf2ae_72b3e2ab",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-25T00:09:06Z",
+      "side": 1,
+      "message": "Please move this to the beginning of the method.",
+      "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16addf7a_9507bd54",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-25T00:09:06Z",
+      "side": 1,
+      "message": "I believe dlopen for libva*.so happens in InitializeStubs() above, while this will result in opening only the required driver *.so files?\n\nWe also removed the logic to decide whether /usr/lib64/va1/drivers/ or /usr/lib64/va/drivers/ would be used and loading the correct version. How does this work if we let libva dlopen by itself with this?",
+      "revId": "82720e5b7726b8bc3dd431922bf532ad32a15866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
