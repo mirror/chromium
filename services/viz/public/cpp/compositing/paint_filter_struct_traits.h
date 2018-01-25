@@ -26,6 +26,8 @@ struct StructTraits<viz::mojom::PaintFilterDataView, sk_sp<cc::PaintFilter>> {
     writer.Write(filter.get());
     if (writer.size() == 0)
       return base::nullopt;
+
+    memory.resize(writer.size());
     return memory;
   }
 
@@ -51,6 +53,13 @@ struct StructTraits<viz::mojom::PaintFilterDataView, sk_sp<cc::PaintFilter>> {
       return false;
     }
 
+    // We must have consumed all bytes writen when reading this filter.
+    if (reader.remaining_bytes() != 0u) {
+      *out = nullptr;
+      return false;
+    }
+
+    DCHECK_EQ(reader.remaining_bytes(), 0u);
     *out = std::move(filter);
     return true;
   }
