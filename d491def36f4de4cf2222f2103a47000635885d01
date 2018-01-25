@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d787552f_a477d4a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T02:39:31Z",
+      "side": 1,
+      "message": "Since this should only be needed by the  ClearBrowsingData*, it would be great to locate the getters/setters for the ClearBrowsingDataFetcher in one of those classes instead of the main Preferences.java.\n\nIt looks like this is just used in ClearBrowsingDataPreference and ClearBrowsingDataTabsFragment. ClearBrowsingDataTabsFragment creates the ClearBrowsingDataPreferences*. I think ClearBrowsingDataFetcher could be passed in during construction of ClearBrowsingDataPreferencesBasic and ClearBrowsingDataPreferencesAdvanced and set on the abstract super class via some method.",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311ddf70_9367a0cb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
         "patchSetId": 1
