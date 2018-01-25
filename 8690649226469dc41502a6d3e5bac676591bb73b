@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec750d79_fb9ec90a",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-25T17:03:33Z",
+      "side": 1,
+      "message": "Missed this one",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 31
+      },
+      "revId": "8690649226469dc41502a6d3e5bac676591bb73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
