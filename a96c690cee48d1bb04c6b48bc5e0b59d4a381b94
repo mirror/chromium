@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "568bd553_ecfdfa63",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-25T00:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f4425c_b0807600",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 23
+      },
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20bc321_1cd69a7e",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "928c5b37_684bc9ab",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-25T00:22:19Z",
+      "side": 1,
+      "message": "oops, done.",
+      "parentUuid": "c20bc321_1cd69a7e",
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5b1ea87_a05f9713",
         "filename": "net/cert/cert_verify_proc_builtin.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-24T23:35:38Z",
       "side": 1,
       "message": "Note that we also need to instantiate this in io_thread if we want to it be used by Chrome --\n right now it is only being set for Android, but should be a simple matter of extending the ifdef https://cs.chromium.org/chromium/src/chrome/browser/io_thread.cc?type\u003dcs\u0026q\u003dSetGlobalCertNetFetcher\u0026sq\u003dpackage:chromium\u0026l\u003d821",
+      "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bed2e72_d8b36ba3",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-25T00:22:19Z",
+      "side": 1,
+      "message": "Ah, yeah, I was modifying that in my dual verification CL, but I guess I should at least set it for OS_FUCSHIA in this CL.",
+      "parentUuid": "a5b1ea87_a05f9713",
       "revId": "a96c690cee48d1bb04c6b48bc5e0b59d4a381b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
