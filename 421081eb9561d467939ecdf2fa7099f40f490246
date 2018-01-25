@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5de7bf_63593eb6",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-25T12:04:03Z",
+      "side": 1,
+      "message": "nit: include order is wrong, this should go above gogole_*",
+      "range": {
+        "startLine": 19,
+        "startChar": 74,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a479ba_d214e5a3",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-25T12:04:03Z",
+      "side": 1,
+      "message": "nit: Braces please, since the body doesn\u0027t fit on one line.",
+      "range": {
+        "startLine": 216,
+        "startChar": 53,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efe6c64_ed45dfae",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2018-01-25T12:04:03Z",
+      "side": 1,
+      "message": "IIUC, \"mode\" corresponds to the PROFILE_MODE_* flags, so it says to disable incognito and \"add account\". I guess that just happens to get ignored at the server side if enable_account_consistency is false? If so, then it feels wrong to always send it: If something changes on the server, then things might be. And even if that doesn\u0027t happen, it\u0027s still confusing: Why are we specifying things that we don\u0027t actually want?\nThe solution might just be to only specify the PROFILE_MODE_* flags if account_consistency_mirror_required_ is true. Does that make sense?",
+      "range": {
+        "startLine": 324,
+        "startChar": 13,
+        "endLine": 324,
+        "endChar": 19
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
