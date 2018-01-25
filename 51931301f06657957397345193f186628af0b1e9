@@ -16,6 +16,24 @@
       "revId": "51931301f06657957397345193f186628af0b1e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb9daed_91949ea7",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-25T23:37:16Z",
+      "side": 1,
+      "message": "I don\u0027t know, partially because I don\u0027t know what the error code is.\nIt\u0027s not what happens in a release build though.",
+      "parentUuid": "cf5376e6_a02f942b",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
