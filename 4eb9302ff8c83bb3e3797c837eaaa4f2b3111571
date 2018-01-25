@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "079eb927_c18fcb1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T00:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ed7e283_2cab7120",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01c2341_6cce8a91",
         "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
         "patchSetId": 2
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "Oh, OK.\n\nshould we fix isNetworkPolicyControlled to something like\nif (typeof property.UserPolicy !\u003d \u0027undefined\u0027 ||\n    typeof property.DevicePolicy !\u003d \u0027undefined\u0027)\ninstead of if (property.UserPolicy || property.DevicePolicy)\n(https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_network_behavior.js?rcl\u003d32bff724cd465ee648b139dca392b6c30ab7e475\u0026l\u003d26)",
       "parentUuid": "3a39639a_28b40007",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa0bedb_f6670a0a",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T00:27:34Z",
+      "side": 1,
+      "message": "Yes, yes we should. Good catch. Done.",
+      "parentUuid": "c745ea00_dabc7470",
       "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +170,24 @@
       "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8286b044_1764be00",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T00:27:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2770fb29_91ca35ae",
+      "revId": "4eb9302ff8c83bb3e3797c837eaaa4f2b3111571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

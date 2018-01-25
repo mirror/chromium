@@ -16,6 +16,24 @@
       "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a5cf83_e9df2e17",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T00:27:34Z",
+      "side": 0,
+      "message": "In the case you describe, isNetworkPolicyEnforced() would return true if the device policy is enforced, regardless of user affiliation, even though ProxyConfigServiceImpl::IgnoreProxy() makes an exception for unaffiliated users:\n\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_network_behavior.js?type\u003dcs\u0026q\u003disNetworkPolicyEnforced()\u0026sq\u003dpackage:chromium\u0026l\u003d65\n\nIn the new code we only check for user enforced proxies.",
+      "parentUuid": "2824d86e_79c1e094",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
