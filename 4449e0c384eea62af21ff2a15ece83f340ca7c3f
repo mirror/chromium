@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac538c6_5854812b",
+        "filename": "sandbox/linux/services/libc_interceptor.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-25T00:13:36Z",
+      "side": 1,
+      "message": "Maybe name this SetLibcInterceptionEnabled because //sandbox shouldn\u0027t know about zygotes and stuff? I\u0027m not feeling picky today though, so this is fine.",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "4449e0c384eea62af21ff2a15ece83f340ca7c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
