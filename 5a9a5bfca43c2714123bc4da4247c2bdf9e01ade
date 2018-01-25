@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fd76ccd0_32b17129",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:05:56Z",
+      "side": 1,
+      "message": "Sorry, I mean\n\n  We can use forward declaration like L21-25 and avoind including image_button.h here.",
+      "parentUuid": "d94ff12b_ef034175",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee55a605_95ee2ada",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 1
