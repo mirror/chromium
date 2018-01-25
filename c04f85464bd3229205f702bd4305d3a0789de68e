@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7de3f61_bc79bec9",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-25T18:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152ee0d8_d7745268",
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b141885_e07f2477",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "99e1a0c6_1b4215e5",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-25T18:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b141885_e07f2477",
+      "range": {
+        "startLine": 154,
+        "startChar": 41,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de2131b8_c9f349af",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
         "patchSetId": 10
@@ -62,6 +104,30 @@
       "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1241f7e8_4c98a586",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-25T18:42:54Z",
+      "side": 1,
+      "message": "Added a new test.",
+      "parentUuid": "de2131b8_c9f349af",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 70
+      },
+      "revId": "c04f85464bd3229205f702bd4305d3a0789de68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
