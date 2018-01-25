@@ -322,6 +322,30 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9399c966_a547701c",
+        "filename": "components/arc/test/fake_arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-25T04:48:08Z",
+      "side": 1,
+      "message": "Thank you for the offline discussion.\nAs we agreed, let\u0027s move forward with TODO here.\n\nAlso, could you add comment to EmulateMiniContainerStart() that;\n\nCurrently, this is just for emulating boot failure on mini container start.\nConceptually this should be called for each StartMiniInstance(),\nand upgrading should be blocked even if RequestUpgrade is called until this is called.\nHowever, these are not implemented.\nAlso, there is some overlapping semantics with |boot_suspended_|.\nTODO(cmtm,hidehiko): Clean up them, and tests using this.",
+      "parentUuid": "52501f74_e125b183",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
