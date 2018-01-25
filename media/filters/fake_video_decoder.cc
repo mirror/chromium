@@ -6,7 +6,8 @@
 
 #include "base/location.h"
 #include "media/base/bind_to_current_loop.h"
-#include "media/base/test_helpers.h"
+#include "media/base/cdm_context.h"
+//#include "media/base/test_helpers.h"
 
 namespace media {
 
@@ -76,10 +77,15 @@ void FakeVideoDecoder::Initialize(const VideoDecoderConfig& config,
     decoded_frames_.clear();
   }
 
+  EnableEncryptedConfigSupport();
   if (config.is_encrypted() && (!supports_encrypted_config_ || !cdm_context)) {
     DVLOG(1) << "Encrypted config not supported.";
     fail_to_initialize_ = true;
   }
+
+  DCHECK(cdm_context) << "null CdmContext";
+  int cdm_id = cdm_context->GetCdmId();
+  DVLOG(1) << __func__ << ": cdm_id = " << cdm_id;
 
   if (fail_to_initialize_) {
     DVLOG(1) << decoder_name_ << ": Initialization failed.";
@@ -116,7 +122,7 @@ void FakeVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   if (buffer->end_of_stream()) {
     state_ = STATE_END_OF_STREAM;
   } else {
-    DCHECK(VerifyFakeVideoBufferForTest(buffer, current_config_));
+    // DCHECK(VerifyFakeVideoBufferForTest(buffer, current_config_));
     scoped_refptr<VideoFrame> video_frame = VideoFrame::CreateColorFrame(
         current_config_.coded_size(), 0, 0, 0, buffer->timestamp());
     decoded_frames_.push_back(video_frame);

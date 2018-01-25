@@ -12,6 +12,7 @@
 #include "media/base/audio_decoder.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/video_decoder.h"
+#include "media/filters/fake_video_decoder.h"
 #include "media/gpu/features.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
 
@@ -106,6 +107,8 @@ std::unique_ptr<AudioDecoder> GpuMojoMediaClient::CreateAudioDecoder(
 #endif  // defined(OS_ANDROID)
 }
 
+static void OnBytesDecoded(int bytes_decoded) {}
+
 std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     MediaLog* media_log,
@@ -130,7 +133,8 @@ std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
                           command_buffer_id->channel_token,
                           command_buffer_id->route_id));
 #else
-  return nullptr;
+  return std::make_unique<FakeVideoDecoder>(
+      "FakeVideoDecoder", 1, 1, base::BindRepeating(&OnBytesDecoded));
 #endif  // BUILDFLAG(ENABLE_{MEDIA_CODEC | D3D11}_VIDEO_DECODER)
 }
 
