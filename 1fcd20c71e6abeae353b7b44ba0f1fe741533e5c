@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6d9b7e_8c8e3a4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:22:04Z",
+      "side": 1,
+      "message": "I moved this method to avoid updatePopupLayout() from getting called twice in a row. The first time the anchor bounds are calculated, the observer will be null so it won\u0027t get notified.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "1fcd20c71e6abeae353b7b44ba0f1fe741533e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "496cb6aa_5fd6181d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:22:04Z",
+      "side": 1,
+      "message": "Pulled in this early return logic from ViewPositionObserver to avoid unnecessary popup updates.",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 9
+      },
+      "revId": "1fcd20c71e6abeae353b7b44ba0f1fe741533e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
