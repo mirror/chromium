@@ -88,6 +88,11 @@ class ChromeMetricsServiceClient : public metrics::MetricsServiceClient,
   bool IsUMACellularUploadLogicEnabled() override;
   bool IsHistorySyncEnabledOnAllProfiles() override;
 
+  // TODO: place in interface
+  bool FailedToRegisterUKMObservers() override {
+    return failed_to_register_observers_;
+  }
+
   // ukm::HistoryDeleteObserver:
   void OnHistoryDeleted() override;
 
@@ -162,6 +167,10 @@ class ChromeMetricsServiceClient : public metrics::MetricsServiceClient,
 
   // Weak pointer to the MetricsStateManager.
   metrics::MetricsStateManager* const metrics_state_manager_;
+
+  // Indicates that we were unable to attach a listener for history or sync on
+  // some profile. We should disable the service in such cases.
+  bool failed_to_register_observers_;
 
   // The MetricsService that |this| is a client of.
   std::unique_ptr<metrics::MetricsService> metrics_service_;

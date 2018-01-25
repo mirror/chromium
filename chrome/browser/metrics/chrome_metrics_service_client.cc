@@ -386,6 +386,7 @@ ChromeMetricsServiceClient::ChromeMetricsServiceClient(
     : metrics_state_manager_(state_manager),
       waiting_for_collect_final_metrics_step_(false),
       num_async_histogram_fetches_in_progress_(0),
+      failed_to_register_observers_(false),
 #if BUILDFLAG(ENABLE_PLUGINS)
       plugin_metrics_provider_(nullptr),
 #endif
@@ -863,11 +864,20 @@ void ChromeMetricsServiceClient::RegisterForProfileEvents(Profile* profile) {
   history::HistoryService* history_service =
       HistoryServiceFactory::GetForProfile(profile,
                                            ServiceAccessType::IMPLICIT_ACCESS);
+  if (!history_service) {
+    failed_to_register_observers_ = true;
+    return;
+  }
+
   ObserveServiceForDeletions(history_service);
+
   browser_sync::ProfileSyncService* sync =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
-  if (sync)
-    ObserveServiceForSyncDisables(static_cast<syncer::SyncService*>(sync));
+  if (!sync) {
+    failed_to_register_observers_ = true;
+    return;
+  }
+  ObserveServiceForSyncDisables(static_cast<syncer::SyncService*>(sync));
 }
 
 void ChromeMetricsServiceClient::Observe(
