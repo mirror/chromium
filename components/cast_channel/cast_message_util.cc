@@ -12,6 +12,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "components/cast_channel/cast_auth_util.h"
 #include "components/cast_channel/proto/cast_channel.pb.h"
+#include "components/version_info/version_info.h"
+#include "content/public/common/user_agent.h"
 
 using base::Value;
 
@@ -26,10 +28,6 @@ constexpr char kConnectionNamespace[] =
     "urn:x-cast:com.google.cast.tp.connection";
 constexpr char kReceiverNamespace[] = "urn:x-cast:com.google.cast.receiver";
 
-// Sender and receiver IDs to use for platform messages.
-constexpr char kPlatformSenderId[] = "sender-0";
-constexpr char kPlatformReceiverId[] = "receiver-0";
-
 // Text payload keys.
 constexpr char kTypeNodeId[] = "type";
 constexpr char kRequestIdNodeId[] = "requestId";
@@ -39,6 +37,15 @@ constexpr char kKeepAlivePingType[] = "PING";
 constexpr char kKeepAlivePongType[] = "PONG";
 constexpr char kGetAppAvailabilityRequestType[] = "GET_APP_AVAILABILITY";
 constexpr char kConnectionRequestType[] = "CONNECT";
+
+// The value used for "sdkType" in a virtual connect request. Historically, this
+// value is used in the Media Router extension, but here it is reused in Chrome.
+// desktop Chrome.
+constexpr int kVirtualConnectSdkType = 2;
+
+// The value used for "connectionType" in a virtual connect request. This value
+// stands for CONNECTION_TYPE_LOCAL, which is the only type used in Chrome.
+constexpr int kVirtualConnectTypeLocal = 1;
 
 void FillCommonCastMessageFields(CastMessage* message,
                                  const std::string& source_id,
@@ -61,6 +68,23 @@ CastMessage CreateKeepAliveMessage(const char* keep_alive_type) {
   type_dict.SetString(kTypeNodeId, keep_alive_type);
   CHECK(base::JSONWriter::Write(type_dict, output.mutable_payload_utf8()));
   return output;
+}
+
+// Returns the value to be set as the "platform" value in a virtual connect
+// request. The value is platform-dependent and is taken from the Platform enum
+// defined in third_party/metrics_proto/cast_logs.proto.
+int GetVirtualConnectPlatformValue() {
+#if defined(OS_WIN)
+  return 3;
+#elif defined(OS_MACOSX)
+  return 4;
+#elif defined(OS_CHROMEOS)
+  return 5;
+#elif defined(OS_LINUX)
+  return 6;
+#else
+  return 0;
+#endif
 }
 
 }  // namespace
@@ -193,17 +217,40 @@ CastMessage CreateKeepAlivePongMessage() {
   return CreateKeepAliveMessage(kKeepAlivePongType);
 }
 
-CastMessage CreateVirtualConnectionRequest(const std::string& source_id,
-                                           const std::string& destination_id) {
+CastMessage CreateVirtualConnectionRequest(
+    const std::string& source_id,
+    const std::string& destination_id,
+    VirtualConnectionType connection_type) {
+  DCHECK(destination_id != kPlatformReceiverId || connection_type == kStrong);
+
   CastMessage output;
   FillCommonCastMessageFields(&output, source_id, destination_id,
                               kConnectionNamespace);
   output.set_payload_type(
       CastMessage::PayloadType::CastMessage_PayloadType_STRING);
 
+  static std::string system_version = content::BuildPlatformAndOSCpuInfo();
+  static std::string product =
+      version_info::GetProductNameAndVersionForUserAgent();
+  static std::string user_agent =
+      content::BuildUserAgentFromOSAndProduct(system_version, product);
+
   Value dict(Value::Type::DICTIONARY);
   dict.SetKey(kTypeNodeId, Value(kConnectionRequestType));
-  // TODO(crbug.com/698940): Populate other optional fields.
+  dict.SetKey("userAgent", Value(user_agent));
+  dict.SetKey("connType", Value(connection_type));
+
+  Value sender_info(Value::Type::DICTIONARY);
+  static std::string version_number = version_info::GetVersionNumber();
+
+  sender_info.SetKey("sdkType", Value(kVirtualConnectSdkType));
+  sender_info.SetKey("version", Value(version_number));
+  sender_info.SetKey("browserVersion", Value(version_number));
+  sender_info.SetKey("platform", Value(GetVirtualConnectPlatformValue()));
+  sender_info.SetKey("systemVersion", Value(system_version));
+  sender_info.SetKey("connectionType", Value(kVirtualConnectTypeLocal));
+
+  dict.SetKey("senderInfo", std::move(sender_info));
   CHECK(base::JSONWriter::Write(dict, output.mutable_payload_utf8()));
   return output;
 }

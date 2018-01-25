@@ -19,6 +19,9 @@ CONTENT_EXPORT std::string GetWebKitRevision();
 // Builds a User-agent compatible string that describes the OS and CPU type.
 CONTENT_EXPORT std::string BuildOSCpuInfo();
 
+// Similar to |BuildOSCpuInfo()|, but prefixed with the user agent platform.
+CONTENT_EXPORT std::string BuildPlatformAndOSCpuInfo();
+
 // Helper function to generate a full user agent string from a short
 // product name.
 CONTENT_EXPORT std::string BuildUserAgentFromProduct(
