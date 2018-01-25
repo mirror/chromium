@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13bc5eef_9cb5d3cb",
+        "filename": "chrome_server/chrome_util.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "\"via chrome_server.exe\" isn\u0027t needed here. delegate_execute.exe had \"via shortcut\" in the log message because lpFile was the path to Chrome\u0027s start menu shortcut. In your case, you appear to be launching directly via the .exe, so that part of the comment isn\u0027t needed.",
+      "range": {
+        "startLine": 87,
+        "startChar": 32,
+        "endLine": 87,
+        "endChar": 53
+      },
+      "revId": "e3370c2c2148c66b07365e55d614001132164626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

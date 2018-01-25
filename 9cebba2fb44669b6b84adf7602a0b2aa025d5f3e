@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "86de0caf_6612c847",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "i think it\u0027s best not to pull the common code into this small .exe. in a new CL, would you please move the three functions in chrome_switches.* into another .cc,h pair and then move chrome_switches.{cc,h} into non_code_constants?",
+      "parentUuid": "119567de_fdfef7d2",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de82a29_252fe6bf",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
@@ -300,6 +318,24 @@
       "side": 1,
       "message": "I need content/public/common/content_switches.h to be included in chrome_server.cc. Am I misunderstanding anything?",
       "parentUuid": "a25df8f9_56535301",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dde2523_7ac8246c",
+        "filename": "chrome_server/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "yes. i\u0027m suggesting changing this from \"+content/public/common\" to \"+content/public/common/content_switches.h\" so that future code in this directory will fail checkdeps if anything else from content is included.",
+      "parentUuid": "50c7ef38_938e6c43",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -773,6 +809,24 @@
     },
     {
       "key": {
+        "uuid": "8d8c7f77_56002a46",
+        "filename": "chrome_server/notification_activator.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "are you saying that you don\u0027t see NotificationActivator::Activate being invoked in your local testing? this is what i would expect, as the server exits immediately. you need to keep the process alive after registering the class object so that COM can ask it for an instance of NotificationActivator.",
+      "parentUuid": "71ba895f_853c2b9f",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51aff7f1_0235e410",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -808,6 +862,24 @@
     },
     {
       "key": {
+        "uuid": "224aadc5_09295fcd",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "nor am i. :-)  it\u0027s used in wrl/module.h to control various things here and there. it looks like the intent is that you define it before including module.h to tell module.h that you\u0027re only using the COM functionality in there. since it seems that WinRT isn\u0027t being used, maybe it makes sense to optimize for COM-only.",
+      "parentUuid": "da8ab010_acf2a76b",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27188b08_4e24b26e",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -837,6 +909,24 @@
       "side": 1,
       "message": "Hmm, we do need to play the clsid trick in Details:: namespace below. Even if we don\u0027t need to deal with the clsid stuff, we need to rewrite that piece of code from module.h as it is not in clang format. I agree with the extra dependency.",
       "parentUuid": "27188b08_4e24b26e",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbe639f_f2c227ca",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "we need to get the clsid dynamically regardless of whether we use WRL or ATL to do some of the COM heavy-lifting for us. that\u0027s orthogonal. i just observe that we\u0027re using wrl/module.h for pure-COM, so we\u0027re not really reaping any of its benefits.",
+      "parentUuid": "2575a6c0_3146dd70",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1042,6 +1132,30 @@
     },
     {
       "key": {
+        "uuid": "faa72252_3e478367",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "well, yes, it does in your current code, but why? is the CreatorMap entry even used? yes, the clsid is needed for the class factory below (you\u0027ll still need to call CreateClassFactory), but i don\u0027t see any need for |entry| itself. it\u0027s possible that i\u0027m missing something because it\u0027s quite difficult to follow Module\u0027s implementation due to all of the conditional code in module.h.",
+      "parentUuid": "620219c8_6a8db531",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f109a493_35fd6000",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -1141,6 +1255,24 @@
       "side": 1,
       "message": "In delegate_execute, CAtlExeModuleT has a message loop. Registration takes place in PreMessageLoop while unregistration is in PostMessageLoop. Other than that, I don\u0027t see the message loop is used for other purposes. If we move the registration/unregistration into winMain, do we still need the message loop?",
       "parentUuid": "2e464641_13881edc",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0de4c6_e507c390",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-25T15:13:51Z",
+      "side": 1,
+      "message": "ah, i see that the main thread is in the MTA. in that case you don\u0027t need to pump window messages, but i think you do need to keep the server alive while objects are outstanding. i must be missing something, as i don\u0027t see how what you have here works at all. you register the class factory and then exit the process, no? what keeps the process alive while the client (the notification center) asks the class factory to hand out a NotificationActivator instance?\n\ni\u0027ve never written an MTA COM server, so maybe there\u0027s something i\u0027m not seeing, but i would expect that Run() would do something like wait on an event until all objects have been destroyed. now i see why one would call Module::Create with a callback -- the callback is run when all references on the module have been released. this is where you would signal the event, allowing the process to terminate.",
+      "parentUuid": "eb78e622_a71183fa",
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
