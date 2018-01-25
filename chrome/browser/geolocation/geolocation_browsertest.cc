@@ -24,6 +24,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/browser/content_settings_usages_state.h"
@@ -430,6 +431,12 @@ std::string GeolocationBrowserTest::WatchPositionAndRespondToPermissionRequest(
   return RunScript(render_frame_host_, "geoStartWithAsyncResponse()");
 }
 
+bool GeolocationBrowserTest::WatchPosition() {
+  std::string result = WatchPositionAndRespondToPermissionRequest(
+      PermissionRequestManager::NONE);
+  return "request-callback-success" == result;
+}
+
 void GeolocationBrowserTest::WatchPositionAndObservePermissionRequest(
     bool request_should_display) {
   PermissionRequestObserver observer(
@@ -679,26 +686,31 @@ IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, IFramesWithCachedPosition) {
 }
 
 IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, CancelPermissionForFrame) {
-  set_html_for_tests("/geolocation/two_iframes.html");
-  ASSERT_NO_FATAL_FAILURE(Initialize(INITIALIZATION_DEFAULT));
-  LoadIFrames();
+  // When permission delegation is removed, iframe requests are made for the top
+  // level frame. Navigating the iframe should not cancel the request. This
+  // test can be removed after the feature is enabled by default.
+  if (!base::FeatureList::IsEnabled(features::kPermissionDelegation)) {
+    set_html_for_tests("/geolocation/two_iframes.html");
+    ASSERT_NO_FATAL_FAILURE(Initialize(INITIALIZATION_DEFAULT));
+    LoadIFrames();
 
-  SetFrameForScriptExecution("iframe_0");
-  ASSERT_TRUE(WatchPositionAndGrantPermission());
-  ExpectPosition(fake_latitude(), fake_longitude());
+    SetFrameForScriptExecution("iframe_0");
+    ASSERT_TRUE(WatchPositionAndGrantPermission());
+    ExpectPosition(fake_latitude(), fake_longitude());
 
-  // Test second iframe from a different origin with a cached position will
-  // create the prompt.
-  SetFrameForScriptExecution("iframe_1");
-  WatchPositionAndObservePermissionRequest(true);
+    // Test second iframe from a different origin with a cached position will
+    // create the prompt.
+    SetFrameForScriptExecution("iframe_1");
+    WatchPositionAndObservePermissionRequest(true);
 
-  // Navigate the iframe, and ensure the prompt is gone.
-  content::WebContents* web_contents =
-      current_browser()->tab_strip_model()->GetActiveWebContents();
-  IFrameLoader change_iframe_1(current_browser(), 1, current_url());
-  int num_requests_after_cancel = GetRequestQueueSize(
-      PermissionRequestManager::FromWebContents(web_contents));
-  EXPECT_EQ(0, num_requests_after_cancel);
+    // Navigate the iframe, and ensure the prompt is gone.
+    content::WebContents* web_contents =
+        current_browser()->tab_strip_model()->GetActiveWebContents();
+    IFrameLoader change_iframe_1(current_browser(), 1, current_url());
+    int num_requests_after_cancel = GetRequestQueueSize(
+        PermissionRequestManager::FromWebContents(web_contents));
+    EXPECT_EQ(0, num_requests_after_cancel);
+  }
 }
 
 IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, InvalidUrlRequest) {
