@@ -34,6 +34,24 @@
       "revId": "d639081151c08b096a18b084e48f022ce377512e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373e0a6e_c2cd141f",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T20:17:25Z",
+      "side": 0,
+      "message": "Yeah, I didn\u0027t consider the fact that the subviews have an intrinsicContentSize.  This is added back in.",
+      "parentUuid": "c6f5d48c_87133e05",
+      "revId": "d639081151c08b096a18b084e48f022ce377512e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
