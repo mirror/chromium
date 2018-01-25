@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2f1e6a1_cfcb4ab7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "nit: a running service worker\n\n(\"active\" has a particular meaning about the installation state. for keepalive we\u0027re just concerned about whether there is a running service worker, even if it\u0027s in the \"installing\" or \"waiting\" state)",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2713e40_4e9d7278",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "nit: \"a shared worker that\u0027s connected to an external process\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302e2901_eb58be41",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "I think we should have a comment similar to the one below in renderer_scheduler.h",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419595ff_af359a8c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2623,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "Would it make sense to document/make a constant for 1100? It seems used in other tests, and as I\u0027m not familiar with this mechanism I\u0027m not sure how it was chosen.",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaee1826_d8851e0c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "kind of similar here and below, not sure why adding 1 second changes things",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45497200_7da2a0ec",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "can be from",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e0c052_5d13d572",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:24:33Z",
+      "side": 1,
+      "message": "For correctness, it could be:\n\"a running service worker, a shared worker connected to an external process, or an unfinished fetch keep-alive\"\n\nFor simplicity, maybe it can just be:\n\"can be due to service workers, shared workers, or fetch keep-alive\"",
+      "revId": "c086f765bb05b4e0268d019654a748e984f6418c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
