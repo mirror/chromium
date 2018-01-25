@@ -49,7 +49,6 @@ class CORE_EXPORT NGPhysicalFragment
   };
   enum NGBoxType {
     kNormalBox,
-    kAnonymousBox,
     kInlineBlock,
     kFloating,
     kOutOfFlowPositioned,
@@ -85,9 +84,6 @@ class CORE_EXPORT NGPhysicalFragment
   }
   bool IsBlockFlow() const;
 
-  // A box fragment that do not exist in LayoutObject tree. Its LayoutObject is
-  // co-owned by other fragments.
-  bool IsAnonymousBox() const { return BoxType() == NGBoxType::kAnonymousBox; }
   // A block sub-layout starts on this fragment. Inline blocks, floats, out of
   // flow positioned objects are such examples. This is also true on NG/legacy
   // boundary.
@@ -183,7 +179,7 @@ class CORE_EXPORT NGPhysicalFragment
   scoped_refptr<NGBreakToken> break_token_;
 
   unsigned type_ : 2;  // NGFragmentType
-  unsigned box_type_ : 3;  // NGBoxType
+  unsigned box_type_ : 2;  // NGBoxType
   unsigned is_old_layout_root_ : 1;
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
