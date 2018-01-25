@@ -1385,6 +1385,7 @@ TEST(IncrementalMarkingTest, HeapHashMapCopyValuesToVectorMember) {
 TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
   ThreadState* state = ThreadState::Current();
   state->SetGCState(ThreadState::kIncrementalMarkingStartScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
   state->SetGCState(ThreadState::kIncrementalMarkingStepScheduled);
   Persistent<Object> obj1 = Object::Create();
   NormalPageArena* arena = static_cast<NormalPageArena*>(
@@ -1414,8 +1415,50 @@ TEST(IncrementalMarkingTest, WeakHashMapPromptlyFreeDisabled) {
     // Non-weak hash table backings should be promptly freed.
     EXPECT_GT(after, before);
   }
-  state->SetGCState(ThreadState::kIncrementalMarkingFinalizeScheduled);
+  state->SetGCState(ThreadState::kGCRunning);
+  state->SetGCState(ThreadState::kSweeping);
   state->SetGCState(ThreadState::kNoGCScheduled);
+}
+
+TEST(IncrementalMarkingTest, AbortEphemeronIterationDoneCallback) {
+  ThreadState* state = ThreadState::Current();
+  Persistent<Object> obj = Object::Create();
+  using WeakMap = HeapHashMap<WeakMember<Object>, Member<Object>>;
+  Persistent<WeakMap> map = new WeakMap();
+  map->insert(obj, obj);
+  bool callback_called = false;
+
+  state->IncrementalMarkingStart();
+  {
+    state->SetGCState(ThreadState::kGCRunning);
+    // Weak HashMap should register a EphemeronIterationDoneCallback.
+    EXPECT_FALSE(state->Heap().EphemeronIterationDoneStack()->IsEmpty());
+    HeapAllocator::RegisterWeakTable(
+        state->CurrentVisitor(), &callback_called, [](Visitor*, void*) {},
+        [](Visitor*, void* p) { *static_cast<bool*>(p) = true; });
+    state->SetGCState(ThreadState::kIncrementalMarkingStepScheduled);
+  }
+  state->IncrementalMarkingAbort();
+  // EphemeronIterationDoneCallbacks should be invoked when aborting.
+  EXPECT_TRUE(callback_called);
+}
+
+// TODO(keishi): Crashes when sweeping.
+TEST(IncrementalMarkingTest, DISABLED_AddReferenceWhileIncrementalMarking) {
+  ThreadState* state = ThreadState::Current();
+  Persistent<Object> obj1 = Object::Create();
+  state->IncrementalMarkingStart();
+  EXPECT_TRUE(obj1->IsMarked());
+  Object* obj2 = Object::Create();
+  obj1->set_next(obj2);
+  while (state->GcState() !=
+         ThreadState::kIncrementalMarkingFinalizeScheduled) {
+    state->IncrementalMarkingStep();
+  }
+  // Write barrier should fire to mark obj2.
+  EXPECT_TRUE(obj2->IsMarked());
+  state->IncrementalMarkingFinalize();
+  state->CompleteSweep();
 }
 
 }  // namespace incremental_marking_test
