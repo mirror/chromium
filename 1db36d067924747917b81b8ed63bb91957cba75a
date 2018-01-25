@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef5c96b_3fd09f4f",
+        "filename": "chrome/browser/signin/account_reconcilor_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-25T16:25:35Z",
+      "side": 1,
+      "message": "You should use signin_metrics::LogSignout instead.\n\nHowever I don\u0027t think this is the right histogram here.\nThis metric is intended to be called in SigninManager::DoSignOut(). Here you are not signing the user out (from the signin component perspective). I guess you\u0027re doing some kind of OS-level signout, which the signin component does not know about, and thus should not be recorded in signin metrics.",
+      "revId": "1db36d067924747917b81b8ed63bb91957cba75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
