@@ -18,6 +18,7 @@
 #include "ui/views/view_targeter_delegate.h"
 
 namespace views {
+class ImageButton;
 class Label;
 class LabelButton;
 class ProgressBar;
@@ -154,6 +155,8 @@ class NotificationInputTextfieldMD : public views::Textfield,
   void set_index(size_t index) { index_ = index; }
   void set_placeholder(const base::string16& placeholder);
 
+  size_t index() const { return index_; };
+
  private:
   NotificationInputDelegate* const delegate_;
 
@@ -164,16 +167,22 @@ class NotificationInputTextfieldMD : public views::Textfield,
   DISALLOW_COPY_AND_ASSIGN(NotificationInputTextfieldMD);
 };
 
-class NotificationInputContainerMD : public views::View {
+class NotificationInputContainerMD : public views::View,
+                                     public views::ButtonListener {
  public:
   NotificationInputContainerMD(NotificationInputDelegate* delegate);
   ~NotificationInputContainerMD() override;
 
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
   NotificationInputTextfieldMD* textfield() const { return textfield_; };
+  views::ImageButton* button() const { return button_; };
 
  private:
+  NotificationInputDelegate* const delegate_;
+
   NotificationInputTextfieldMD* const textfield_;
-  views::ImageView* const button_;
+  views::ImageButton* const button_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationInputContainerMD);
 };
