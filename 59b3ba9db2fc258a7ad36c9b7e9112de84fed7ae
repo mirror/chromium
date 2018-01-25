@@ -34,6 +34,24 @@
       "revId": "59b3ba9db2fc258a7ad36c9b7e9112de84fed7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552bee1f_599fd277",
+        "filename": "components/url_formatter/url_fixer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-25T06:12:19Z",
+      "side": 1,
+      "message": "Right.  Like I said, I think if you want to keep them and want to say why, I would just say that you want to ensure \"ftp.foo.com\" is fixed up with http:// and not ftp://.  That\u0027s a reasonable thing to say in the abstract.\n\nRemoving the testcases as well is also OK with me.",
+      "parentUuid": "c9483992_c3e5eba3",
+      "revId": "59b3ba9db2fc258a7ad36c9b7e9112de84fed7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
