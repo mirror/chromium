@@ -141,6 +141,8 @@ class CC_EXPORT LayerTreeSettings {
 
   // Whether to use edge anti-aliasing for all layer types that supports it.
   bool enable_edge_anti_aliasing = true;
+
+  bool is_renderer = false;
 };
 
 }  // namespace cc

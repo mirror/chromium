@@ -352,6 +352,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     const ScreenInfo& screen_info,
     bool is_threaded) {
   cc::LayerTreeSettings settings;
+  settings.is_renderer = true;
 
   settings.resource_settings.use_r16_texture =
       base::FeatureList::IsEnabled(media::kUseR16Texture);
