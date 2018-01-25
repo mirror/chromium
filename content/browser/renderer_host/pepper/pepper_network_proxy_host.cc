@@ -51,7 +51,8 @@ PepperNetworkProxyHost::~PepperNetworkProxyHost() {
     // If the proxy_resolution_service_ is NULL, we shouldn't have any outstanding
     // requests.
     DCHECK(proxy_resolution_service_);
-    net::ProxyResolutionService::Request* request = pending_requests_.front();
+    scoped_refptr<net::ProxyResolutionService::Request> request =
+        pending_requests_.front();
     proxy_resolution_service_->CancelRequest(request);
     pending_requests_.pop();
   }
@@ -139,7 +140,8 @@ void PepperNetworkProxyHost::TryToSendUnsentRequests() {
     } else {
       // Everything looks valid, so try to resolve the proxy.
       net::ProxyInfo* proxy_info = new net::ProxyInfo;
-      net::ProxyResolutionService::Request* pending_request = nullptr;
+      scoped_refptr<net::ProxyResolutionService::Request> pending_request =
+          nullptr;
       base::Callback<void(int)> callback =
           base::Bind(&PepperNetworkProxyHost::OnResolveProxyCompleted,
                      weak_factory_.GetWeakPtr(),

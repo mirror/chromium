@@ -776,161 +776,109 @@ class ProxyResolutionService::ProxyScriptDeciderPoller {
 const ProxyResolutionService::PacPollPolicy*
     ProxyResolutionService::ProxyScriptDeciderPoller::poll_policy_ = NULL;
 
-// ProxyResolutionService::Request --------------------------------------------
+ProxyResolutionService::Request::Request(
+    ProxyResolutionService* service,
+    const GURL& url,
+    const std::string& method,
+    ProxyDelegate* proxy_delegate,
+    ProxyInfo* results,
+    const CompletionCallback& user_callback,
+    const NetLogWithSource& net_log)
+    : service_(service),
+      user_callback_(user_callback),
+      results_(results),
+      url_(url),
+      method_(method),
+      proxy_delegate_(proxy_delegate),
+      resolve_job_(nullptr),
+      config_id_(ProxyConfig::kInvalidConfigID),
+      config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
+      net_log_(net_log),
+      creation_time_(base::TimeTicks::Now()) {
+  DCHECK(!user_callback.is_null());
+}
 
-class ProxyResolutionService::Request
-    : public base::RefCounted<ProxyResolutionService::Request> {
- public:
-  Request(ProxyResolutionService* service,
-          const GURL& url,
-          const std::string& method,
-          ProxyDelegate* proxy_delegate,
-          ProxyInfo* results,
-          const CompletionCallback& user_callback,
-          const NetLogWithSource& net_log)
-      : service_(service),
-        user_callback_(user_callback),
-        results_(results),
-        url_(url),
-        method_(method),
-        proxy_delegate_(proxy_delegate),
-        resolve_job_(nullptr),
-        config_id_(ProxyConfig::kInvalidConfigID),
-        config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
-        net_log_(net_log),
-        creation_time_(TimeTicks::Now()) {
-    DCHECK(!user_callback.is_null());
+ProxyResolutionService::Request::~Request() = default;
+
+// Starts the resolve proxy request.
+int ProxyResolutionService::Request::Start() {
+  DCHECK(!was_cancelled());
+  DCHECK(!is_started());
+
+  DCHECK(service_->config_.is_valid());
+
+  config_id_ = service_->config_.id();
+  config_source_ = service_->config_.source();
+
+  return resolver()->GetProxyForURL(
+      url_, results_,
+      base::Bind(&Request::QueryComplete, base::Unretained(this)),
+      &resolve_job_, net_log_);
+}
+
+void ProxyResolutionService::Request::StartAndCompleteCheckingForSynchronous() {
+  int rv =
+      service_->TryToCompleteSynchronously(url_, proxy_delegate_, results_);
+  if (rv == ERR_IO_PENDING)
+    rv = Start();
+  if (rv != ERR_IO_PENDING)
+    QueryComplete(rv);
+}
+
+void ProxyResolutionService::Request::Cancel() {
+  net_log_.AddEvent(NetLogEventType::CANCELLED);
+
+  if (is_started())
+    CancelResolveJob();
+
+  // Mark as cancelled, to prevent accessing this again later.
+  service_ = NULL;
+  user_callback_.Reset();
+  results_ = NULL;
+
+  net_log_.EndEvent(NetLogEventType::PROXY_SERVICE);
+}
+
+// Helper to call after ProxyResolver completion (both synchronous and
+// asynchronous). Fixes up the result that is to be returned to user.
+int ProxyResolutionService::Request::QueryDidComplete(int result_code) {
+  DCHECK(!was_cancelled());
+
+  // Clear |resolve_job_| so is_started() returns false while
+  // DidFinishResolvingProxy() runs.
+  resolve_job_.reset();
+
+  // Note that DidFinishResolvingProxy might modify |results_|.
+  int rv = service_->DidFinishResolvingProxy(url_, method_, proxy_delegate_,
+                                             results_, result_code, net_log_);
+
+  // Make a note in the results which configuration was in use at the
+  // time of the resolve.
+  results_->config_id_ = config_id_;
+  results_->config_source_ = config_source_;
+  results_->did_use_pac_script_ = true;
+  results_->proxy_resolve_start_time_ = creation_time_;
+  results_->proxy_resolve_end_time_ = TimeTicks::Now();
+
+  // Reset the state associated with in-progress-resolve.
+  config_id_ = ProxyConfig::kInvalidConfigID;
+  config_source_ = PROXY_CONFIG_SOURCE_UNKNOWN;
+
+  return rv;
+}
+
+// Callback for when the ProxyResolver request has completed.
+void ProxyResolutionService::Request::QueryComplete(int result_code) {
+  result_code = QueryDidComplete(result_code);
+
+  // Remove this completed Request from the service's pending list.
+  /// (which will probably cause deletion of |this|).
+  if (!user_callback_.is_null()) {
+    CompletionCallback callback = user_callback_;
+    service_->RemovePendingRequest(scoped_refptr<Request>(this));
+    callback.Run(result_code);
   }
-
-  // Starts the resolve proxy request.
-  int Start() {
-    DCHECK(!was_cancelled());
-    DCHECK(!is_started());
-
-    DCHECK(service_->config_.is_valid());
-
-    config_id_ = service_->config_.id();
-    config_source_ = service_->config_.source();
-
-    return resolver()->GetProxyForURL(
-        url_, results_,
-        base::Bind(&Request::QueryComplete, base::Unretained(this)),
-        &resolve_job_, net_log_);
-  }
-
-  bool is_started() const {
-    // Note that !! casts to bool. (VS gives a warning otherwise).
-    return !!resolve_job_.get();
-  }
-
-  void StartAndCompleteCheckingForSynchronous() {
-    int rv =
-        service_->TryToCompleteSynchronously(url_, proxy_delegate_, results_);
-    if (rv == ERR_IO_PENDING)
-      rv = Start();
-    if (rv != ERR_IO_PENDING)
-      QueryComplete(rv);
-  }
-
-  void CancelResolveJob() {
-    DCHECK(is_started());
-    // The request may already be running in the resolver.
-    resolve_job_.reset();
-    DCHECK(!is_started());
-  }
-
-  void Cancel() {
-    net_log_.AddEvent(NetLogEventType::CANCELLED);
-
-    if (is_started())
-      CancelResolveJob();
-
-    // Mark as cancelled, to prevent accessing this again later.
-    service_ = NULL;
-    user_callback_.Reset();
-    results_ = NULL;
-
-    net_log_.EndEvent(NetLogEventType::PROXY_SERVICE);
-  }
-
-  // Returns true if Cancel() has been called.
-  bool was_cancelled() const {
-    return user_callback_.is_null();
-  }
-
-  // Helper to call after ProxyResolver completion (both synchronous and
-  // asynchronous). Fixes up the result that is to be returned to user.
-  int QueryDidComplete(int result_code) {
-    DCHECK(!was_cancelled());
-
-    // Clear |resolve_job_| so is_started() returns false while
-    // DidFinishResolvingProxy() runs.
-    resolve_job_.reset();
-
-    // Note that DidFinishResolvingProxy might modify |results_|.
-    int rv = service_->DidFinishResolvingProxy(url_, method_, proxy_delegate_,
-                                               results_, result_code, net_log_);
-
-    // Make a note in the results which configuration was in use at the
-    // time of the resolve.
-    results_->config_id_ = config_id_;
-    results_->config_source_ = config_source_;
-    results_->did_use_pac_script_ = true;
-    results_->proxy_resolve_start_time_ = creation_time_;
-    results_->proxy_resolve_end_time_ = TimeTicks::Now();
-
-    // Reset the state associated with in-progress-resolve.
-    config_id_ = ProxyConfig::kInvalidConfigID;
-    config_source_ = PROXY_CONFIG_SOURCE_UNKNOWN;
-
-    return rv;
-  }
-
-  NetLogWithSource* net_log() { return &net_log_; }
-
-  LoadState GetLoadState() const {
-    if (is_started())
-      return resolve_job_->GetLoadState();
-    return LOAD_STATE_RESOLVING_PROXY_FOR_URL;
-  }
-
- private:
-  friend class base::RefCounted<ProxyResolutionService::Request>;
-
-  ~Request() = default;
-
-  // Callback for when the ProxyResolver request has completed.
-  void QueryComplete(int result_code) {
-    result_code = QueryDidComplete(result_code);
-
-    // Remove this completed Request from the service's pending list.
-    /// (which will probably cause deletion of |this|).
-    if (!user_callback_.is_null()) {
-      CompletionCallback callback = user_callback_;
-      service_->RemovePendingRequest(this);
-      callback.Run(result_code);
-    }
-  }
-
-  ProxyResolver* resolver() const { return service_->resolver_.get(); }
-
-  // Note that we don't hold a reference to the ProxyResolutionService.
-  // Outstanding requests are cancelled during ~ProxyResolutionService, so this
-  // is guaranteed to be valid throughout our lifetime.
-  ProxyResolutionService* service_;
-  CompletionCallback user_callback_;
-  ProxyInfo* results_;
-  GURL url_;
-  std::string method_;
-  ProxyDelegate* proxy_delegate_;
-  std::unique_ptr<ProxyResolver::Request> resolve_job_;
-  ProxyConfig::ID config_id_;  // The config id when the resolve was started.
-  ProxyConfigSource config_source_;  // The source of proxy settings.
-  NetLogWithSource net_log_;
-  // Time when the request was created.  Stored here rather than in |results_|
-  // because the time in |results_| will be cleared.
-  TimeTicks creation_time_;
-};
+}
 
 // ProxyResolutionService -----------------------------------------------------
 
@@ -1027,7 +975,7 @@ int ProxyResolutionService::ResolveProxy(const GURL& raw_url,
                                          const std::string& method,
                                          ProxyInfo* result,
                                          const CompletionCallback& callback,
-                                         Request** pac_request,
+                                         scoped_refptr<Request>* pac_request,
                                          ProxyDelegate* proxy_delegate,
                                          const NetLogWithSource& net_log) {
   DCHECK(!callback.is_null());
@@ -1040,7 +988,7 @@ int ProxyResolutionService::ResolveProxyHelper(
     const std::string& method,
     ProxyInfo* result,
     const CompletionCallback& callback,
-    Request** pac_request,
+    scoped_refptr<Request>* pac_request,
     ProxyDelegate* proxy_delegate,
     const NetLogWithSource& net_log) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -1088,13 +1036,13 @@ int ProxyResolutionService::ResolveProxyHelper(
   }
 
   DCHECK_EQ(ERR_IO_PENDING, rv);
-  DCHECK(!ContainsPendingRequest(req.get()));
+  DCHECK(!ContainsPendingRequest(req));
   pending_requests_.insert(req);
 
   // Completion will be notified through |callback|, unless the caller cancels
   // the request using |pac_request|.
   if (pac_request)
-    *pac_request = req.get();
+    *pac_request = req;
   return rv;  // ERR_IO_PENDING
 }
 
@@ -1266,7 +1214,7 @@ int ProxyResolutionService::ReconsiderProxyAfterError(
     int net_error,
     ProxyInfo* result,
     const CompletionCallback& callback,
-    Request** pac_request,
+    scoped_refptr<Request>* pac_request,
     ProxyDelegate* proxy_delegate,
     const NetLogWithSource& net_log) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -1339,25 +1287,28 @@ void ProxyResolutionService::ReportSuccess(const ProxyInfo& result,
   }
 }
 
-void ProxyResolutionService::CancelRequest(Request* req) {
+void ProxyResolutionService::CancelRequest(scoped_refptr<Request> req) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(req);
   req->Cancel();
   RemovePendingRequest(req);
 }
 
-LoadState ProxyResolutionService::GetLoadState(const Request* req) const {
+LoadState ProxyResolutionService::GetLoadState(
+    scoped_refptr<Request> req) const {
   CHECK(req);
   if (current_state_ == STATE_WAITING_FOR_INIT_PROXY_RESOLVER)
     return init_proxy_resolver_->GetLoadState();
   return req->GetLoadState();
 }
 
-bool ProxyResolutionService::ContainsPendingRequest(Request* req) {
+bool ProxyResolutionService::ContainsPendingRequest(
+    const scoped_refptr<Request> req) {
   return pending_requests_.count(req) == 1;
 }
 
-void ProxyResolutionService::RemovePendingRequest(Request* req) {
+void ProxyResolutionService::RemovePendingRequest(
+    const scoped_refptr<Request> req) {
   DCHECK(ContainsPendingRequest(req));
   pending_requests_.erase(req);
 }

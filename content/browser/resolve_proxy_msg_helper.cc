@@ -100,4 +100,13 @@ void ResolveProxyMsgHelper::StartPendingRequest() {
     OnResolveProxyCompleted(result);
 }
 
+ResolveProxyMsgHelper::PendingRequest::PendingRequest(const GURL& url,
+                                                      IPC::Message* reply_msg)
+    : url(url), reply_msg(reply_msg), request(NULL) {}
+
+ResolveProxyMsgHelper::PendingRequest::PendingRequest(
+    const ResolveProxyMsgHelper::PendingRequest& req) = default;
+
+ResolveProxyMsgHelper::PendingRequest::~PendingRequest() = default;
+
 }  // namespace content

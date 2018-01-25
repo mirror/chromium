@@ -22,8 +22,10 @@
 #include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/proxy_server.h"
+#include "net/log/net_log_with_source.h"
 #include "net/proxy_resolution/proxy_config_service.h"
 #include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_resolver.h"
 #include "url/gurl.h"
 
 class GURL;
@@ -37,9 +39,7 @@ namespace net {
 
 class DhcpProxyScriptFetcher;
 class NetLog;
-class NetLogWithSource;
 class ProxyDelegate;
-class ProxyResolver;
 class ProxyResolverFactory;
 class ProxyResolverScriptData;
 class ProxyScriptFetcher;
@@ -150,7 +150,7 @@ class NET_EXPORT ProxyResolutionService
                    const std::string& method,
                    ProxyInfo* results,
                    const CompletionCallback& callback,
-                   Request** request,
+                   scoped_refptr<Request>* request,
                    ProxyDelegate* proxy_delegate,
                    const NetLogWithSource& net_log);
 
@@ -181,7 +181,7 @@ class NET_EXPORT ProxyResolutionService
                                 int net_error,
                                 ProxyInfo* results,
                                 const CompletionCallback& callback,
-                                Request** request,
+                                scoped_refptr<Request>* request,
                                 ProxyDelegate* proxy_delegate,
                                 const NetLogWithSource& net_log);
 
@@ -209,10 +209,10 @@ class NET_EXPORT ProxyResolutionService
                      ProxyDelegate* proxy_delegate);
 
   // Call this method with a non-null |request| to cancel the PAC request.
-  void CancelRequest(Request* request);
+  void CancelRequest(scoped_refptr<Request> request);
 
   // Returns the LoadState for this |request| which must be non-NULL.
-  LoadState GetLoadState(const Request* request) const;
+  LoadState GetLoadState(const scoped_refptr<Request> request) const;
 
   // Sets the ProxyScriptFetcher and DhcpProxyScriptFetcher dependencies. This
   // is needed if the ProxyResolver is of type ProxyResolverWithoutFetch.
@@ -365,7 +365,7 @@ class NET_EXPORT ProxyResolutionService
                          const std::string& method,
                          ProxyInfo* results,
                          const CompletionCallback& callback,
-                         Request** request,
+                         scoped_refptr<Request>* request,
                          ProxyDelegate* proxy_delegate,
                          const NetLogWithSource& net_log);
 
@@ -378,10 +378,10 @@ class NET_EXPORT ProxyResolutionService
   void SetReady();
 
   // Returns true if |pending_requests_| contains |req|.
-  bool ContainsPendingRequest(Request* req);
+  bool ContainsPendingRequest(const scoped_refptr<Request> req);
 
   // Removes |req| from the list of pending requests.
-  void RemovePendingRequest(Request* req);
+  void RemovePendingRequest(const scoped_refptr<Request> req);
 
   // Called when proxy resolution has completed (either synchronously or
   // asynchronously). Handles logging the result, and cleaning out
@@ -484,6 +484,81 @@ class NET_EXPORT ProxyResolutionService
   THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ProxyResolutionService);
+};
+
+// ProxyResolutionService::Request --------------------------------------------
+
+class ProxyResolutionService::Request
+    : public base::RefCounted<ProxyResolutionService::Request> {
+ public:
+  Request(ProxyResolutionService* service,
+          const GURL& url,
+          const std::string& method,
+          ProxyDelegate* proxy_delegate,
+          ProxyInfo* results,
+          const CompletionCallback& user_callback,
+          const NetLogWithSource& net_log);
+
+  // Starts the resolve proxy request.
+  int Start();
+
+  bool is_started() const {
+    // Note that !! casts to bool. (VS gives a warning otherwise).
+    return !!resolve_job_.get();
+  }
+
+  void StartAndCompleteCheckingForSynchronous();
+
+  void CancelResolveJob() {
+    DCHECK(is_started());
+    // The request may already be running in the resolver.
+    resolve_job_.reset();
+    DCHECK(!is_started());
+  }
+
+  void Cancel();
+
+  // Returns true if Cancel() has been called.
+  bool was_cancelled() const { return user_callback_.is_null(); }
+
+  // Helper to call after ProxyResolver completion (both synchronous and
+  // asynchronous). Fixes up the result that is to be returned to user.
+  int QueryDidComplete(int result_code);
+
+  NetLogWithSource* net_log() { return &net_log_; }
+
+  LoadState GetLoadState() const {
+    if (is_started())
+      return resolve_job_->GetLoadState();
+    return LOAD_STATE_RESOLVING_PROXY_FOR_URL;
+  }
+
+ private:
+  friend class base::RefCounted<ProxyResolutionService::Request>;
+
+  ~Request();
+
+  // Callback for when the ProxyResolver request has completed.
+  void QueryComplete(int result_code);
+
+  ProxyResolver* resolver() const { return service_->resolver_.get(); }
+
+  // Note that we don't hold a reference to the ProxyResolutionService.
+  // Outstanding requests are cancelled during ~ProxyResolutionService, so this
+  // is guaranteed to be valid throughout our lifetime.
+  ProxyResolutionService* service_;
+  CompletionCallback user_callback_;
+  ProxyInfo* results_;
+  GURL url_;
+  std::string method_;
+  ProxyDelegate* proxy_delegate_;
+  std::unique_ptr<ProxyResolver::Request> resolve_job_;
+  ProxyConfig::ID config_id_;  // The config id when the resolve was started.
+  ProxyConfigSource config_source_;  // The source of proxy settings.
+  NetLogWithSource net_log_;
+  // Time when the request was created.  Stored here rather than in |results_|
+  // because the time in |results_| will be cleared.
+  base::TimeTicks creation_time_;
 };
 
 }  // namespace net
