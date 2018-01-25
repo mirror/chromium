@@ -50,6 +50,23 @@
       "revId": "34e4b575e21c5c039908ce1b9198e87613c99eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f92721_298de018",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T22:50:41Z",
+      "side": 1,
+      "message": "oh, one more important thing, we need to signal everything on the IO thread I think?\n\nand a bunch of the OnUIThread things should DCHECK(bound_to_filter_)",
+      "revId": "34e4b575e21c5c039908ce1b9198e87613c99eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
