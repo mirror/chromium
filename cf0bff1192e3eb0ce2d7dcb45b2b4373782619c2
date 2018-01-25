@@ -16,6 +16,24 @@
       "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9004d70a_4d4ff578",
+        "filename": "media/mojo/interfaces/renderer.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-25T21:02:41Z",
+      "side": 1,
+      "message": "BTW, are you planning to add a third type of \"HostedRendererType\"? What would that look like? I am not sure whether my suggestion will cover that case, but we can discuss.",
+      "parentUuid": "4294b55e_d8dae33a",
+      "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
