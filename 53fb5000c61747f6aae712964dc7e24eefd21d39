@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf16014_9451e529",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-25T00:12:32Z",
+      "side": 1,
+      "message": "nit: just use window_selector_bounds_ instead?",
+      "revId": "53fb5000c61747f6aae712964dc7e24eefd21d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e73af7b_7a38060e",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-25T00:12:32Z",
+      "side": 1,
+      "message": "nit: Inset here too?",
+      "revId": "53fb5000c61747f6aae712964dc7e24eefd21d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
