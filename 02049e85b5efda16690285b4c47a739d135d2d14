@@ -141,6 +141,24 @@
       "revId": "02049e85b5efda16690285b4c47a739d135d2d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8296da79_aad5397e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/RejectedPromises.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2018-01-25T07:02:53Z",
+      "side": 1,
+      "message": "Batching event firing into a single task is common throughout the platform. That is why it is specced like it is at the moment.\n\nI do not understand the assertion that \"the current wording of the spec require to post one task to handle all promises, including ones from different contexts.\" The spec\u0027s algorithm at https://html.spec.whatwg.org/#notify-about-rejected-promises runs per environment settings object (\u003d context). In https://html.spec.whatwg.org/#event-loop-processing-model:notify-about-rejected-promises it loops through all environment settings objects on the event loop, and calls the algorithm for each of them.\n\nSo I think the spec already prefers \"post a task to each context with a queue of promises to each context\". And I think that is better than one task per promise, since it seems more consistent with what I remember elsewhere on the platform. (But, I do not insist it is better; if someone wants to argue one task per promise is better, I am open to discussion.)",
+      "parentUuid": "444ac1f6_8ee43b98",
+      "revId": "02049e85b5efda16690285b4c47a739d135d2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
