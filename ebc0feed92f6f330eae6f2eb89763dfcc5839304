@@ -93,6 +93,30 @@
       "revId": "ebc0feed92f6f330eae6f2eb89763dfcc5839304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17f2176_f5104230",
+        "filename": "content/public/common/result_codes.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-25T22:58:00Z",
+      "side": 1,
+      "message": "Mebbe something like \"This enum is frozen – see the IMPORTANT note above.\"?",
+      "parentUuid": "64016d71_05d07a89",
+      "range": {
+        "startLine": 48,
+        "startChar": 77,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "ebc0feed92f6f330eae6f2eb89763dfcc5839304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
