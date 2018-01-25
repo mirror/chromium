@@ -507,9 +507,7 @@ def main(argv):
       '-target', options.java_version,
     ])
 
-  if options.chromium_code:
-    javac_cmd.extend(['-Xlint:unchecked', '-Xlint:deprecation'])
-  else:
+  if not options.chromium_code:
     # XDignore.symbol.file makes javac compile against rt.jar instead of
     # ct.sym. This means that using a java internal package/class will not
     # trigger a compile warning or error.
