@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d50bd69_63365a77",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-25T05:36:44Z",
+      "side": 1,
+      "message": "This code searches attributes for autocapitalizeAttr twice.\n\nif (!FastGetAttribute(autocapitalizeAttr).IsEmpty())\n\nis enough because FastGetAttribute() returns a null string if the attribute is missing.",
+      "revId": "3a61ee201ce2cf8325ca2bd94a4926d4a06cc550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
