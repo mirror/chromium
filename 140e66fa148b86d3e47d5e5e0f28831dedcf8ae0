@@ -22,6 +22,30 @@
       "revId": "140e66fa148b86d3e47d5e5e0f28831dedcf8ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1832a34_b3334f70",
+        "filename": "ios/chrome/browser/autofill/autofill_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-25T22:48:09Z",
+      "side": 1,
+      "message": "Yeah, I considered that and had originally done it that way. I have a slight preference for not having a readable property in this case, but I don\u0027t feel strongly about it. The rationale goes like this: 1) There is no need for any user of this class to read the base view controller from this class. 2) Setting the baseVC is a pass-through method, so there is no need for an ivar to hold the baseVC in this class. I would want the getter to mirror the setter and be a pass-through method. In order to do that, we would need to cascade the getter implementation to objects further down the line. And that object has no need for a getter either. And lastly, 3) It is extra boilerplate code across two classes that is not necessary.",
+      "parentUuid": "b150769e_d396d871",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "140e66fa148b86d3e47d5e5e0f28831dedcf8ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
