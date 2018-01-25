@@ -15,6 +15,7 @@
 #include "cc/paint/paint_recorder.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "printing/print_settings.h"
+#include "third_party/skia/include/core/SkSerialProcs.h"
 #include "third_party/skia/include/core/SkStream.h"
 // Note that headers in third_party/skia/src are fragile.  This is
 // an experimental, fragile, and diagnostic-only document type.
@@ -60,11 +61,14 @@ struct Page {
   sk_sp<cc::PaintRecord> content_;
 };
 
+// TODO(weili): Remove pdf from struct name and field names since it is used for
+//              other formats as well.
 struct PdfMetafileSkiaData {
   cc::PaintRecorder recorder_;  // Current recording
 
   std::vector<Page> pages_;
   std::unique_ptr<SkStreamAsset> pdf_data_;
+  ContentToProxyIdMap subframe_content_info;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -168,7 +172,8 @@ bool PdfMetafileSkia::FinishDocument() {
       doc = MakePdfDocument(printing::GetAgent(), &stream);
       break;
     case SkiaDocumentType::MSKP:
-      doc = SkMakeMultiPictureDocument(&stream);
+      SkSerialProcs procs;
+      doc = SkMakeMultiPictureDocument(&stream, &procs);
       break;
   }
 
@@ -181,6 +186,28 @@ bool PdfMetafileSkia::FinishDocument() {
   doc->close();
 
   data_->pdf_data_ = stream.detachAsStream();
+  return true;
+}
+
+bool PdfMetafileSkia::FinishFrameContent() {
+  // If we've already set the data in InitFromData, leave it be.
+  if (data_->pdf_data_)
+    return false;
+
+  if (data_->recorder_.getRecordingCanvas())
+    FinishPage();
+
+  if (data_->pages_.size() != 1) {
+    NOTREACHED();
+    return false;
+  }
+  SkDynamicMemoryWStream stream;
+  sk_sp<SkPicture> pic = ToSkPicture(data_->pages_[0].content_,
+                                     SkRect::MakeSize(data_->pages_[0].size_));
+  SkSerialProcs procs;
+  pic->serialize(&stream, &procs);
+  data_->pdf_data_ = stream.detachAsStream();
+  data_->subframe_content_info.clear();
   return true;
 }
 
@@ -275,6 +302,10 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   } while (!asset->isAtEnd());
 
   return true;
+}
+
+ContentToProxyIdMap& PdfMetafileSkia::GetSubframeContentInfo() const {
+  return data_->subframe_content_info;
 }
 
 std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
