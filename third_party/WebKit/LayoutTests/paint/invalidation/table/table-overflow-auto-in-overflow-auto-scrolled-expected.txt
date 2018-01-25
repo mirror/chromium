@@ -3,23 +3,53 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "Scrolling Layer",
+      "bounds": [800, 600],
+      "drawsContent": false
+    },
+    {
+      "name": "Scrolling Contents Layer",
+      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='innerDiv'",
           "rect": [8, 8, 769, 300],
-          "reason": "full"
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutTable TABLE",
+          "rect": [8, 8, 306, 300],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutTableRow TR",
+          "rect": [8, 8, 306, 300],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutTableRow TR",
+          "rect": [8, 8, 306, 300],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutTableSection TBODY",
+          "rect": [8, 8, 306, 300],
+          "reason": "subtree"
         },
         {
           "object": "LayoutTableCell TD",
           "rect": [10, 8, 302, 300],
-          "reason": "appeared"
+          "reason": "subtree"
         },
         {
           "object": "LayoutTableCell TD",
           "rect": [10, 8, 302, 300],
-          "reason": "disappeared"
+          "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow DIV id='innerDiv'",
@@ -32,7 +62,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow DIV id='innerDiv'",
-      "reason": "full"
+      "reason": "subtree"
     },
     {
       "object": "VerticalScrollbar",
@@ -40,27 +70,27 @@
     },
     {
       "object": "LayoutTable TABLE",
-      "reason": "geometry"
+      "reason": "subtree"
     },
     {
       "object": "LayoutTableSection TBODY",
-      "reason": "geometry"
+      "reason": "subtree"
     },
     {
       "object": "LayoutTableRow TR",
-      "reason": "geometry"
+      "reason": "subtree"
     },
     {
       "object": "LayoutTableCell TD",
-      "reason": "disappeared"
+      "reason": "subtree"
     },
     {
       "object": "LayoutTableRow TR",
-      "reason": "geometry"
+      "reason": "subtree"
     },
     {
       "object": "LayoutTableCell TD",
-      "reason": "appeared"
+      "reason": "subtree"
     }
   ]
 }
