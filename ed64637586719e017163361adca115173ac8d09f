@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d333a61_dbe05f6c",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T19:19:53Z",
+      "side": 1,
+      "message": "IIUC, this is std::move()ing a std::string into a base::StringPiece - doesn\u0027t that mean that the compiler can choose to initialise the StringPiece parameter from the move()\u0027d std::string and then free it, leaving the StringPiece pointing at freed memory?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "ed64637586719e017163361adca115173ac8d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
