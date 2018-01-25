@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac96d136_0ac21e2c",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-25T04:58:41Z",
+      "side": 1,
+      "message": "This returns false if frame is null, so it looks like frame is now required for DidAddEventListener to work, which seems like a behavior change wrt what we had before.. Not sure if this is an issue (do we ever add a listener when frame\u003d\u003dnull?). Alternatively you could use the \"if frame \u0026\u0026 Check..\" construction like before..",
+      "revId": "4cfd37ff289d43580f746682ff5fc0201479df4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

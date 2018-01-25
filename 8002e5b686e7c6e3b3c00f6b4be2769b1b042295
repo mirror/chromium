@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "33203e60_7ca11b4e",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-25T04:58:41Z",
+      "side": 1,
+      "message": "Yeah, there is also the case with macOS where we only use accelerometer I think to get the orientation events.. And confirm the fallback.. might need a TODO+crbug or so.",
+      "parentUuid": "558863eb_1aa6e211",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b41e0c2b_bd6bae95",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
         "patchSetId": 4
