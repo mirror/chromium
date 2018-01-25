@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1a0481_a9569eba",
+        "filename": "ui/gfx/mojo/ca_layer_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T09:08:45Z",
+      "side": 1,
+      "message": "No need to make this nullable—presumably we won\u0027t set this if it\u0027s a null handle?",
+      "revId": "223731de8dee28ceef54baa3926989cc31c06cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7098d0_9f2fde2c",
+        "filename": "ui/gfx/mojo/ca_layer_params_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T09:08:45Z",
+      "side": 1,
+      "message": "Consider switching on the tag: https://cs.chromium.org/chromium/src/content/common/presentation/presentation_struct_traits.h?rcl\u003ddd9f5030ff04b33707cc2e94952db450dae9c814\u0026l\u003d177 for an example of using the tag (though in the context of UnionTraits). Here, we could just do:\n\nswitch (content_data.tag()) {\n  case ...:\n  case ...:\n}",
+      "revId": "223731de8dee28ceef54baa3926989cc31c06cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
