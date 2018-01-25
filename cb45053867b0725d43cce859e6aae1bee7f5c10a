@@ -45,6 +45,30 @@
       "revId": "cb45053867b0725d43cce859e6aae1bee7f5c10a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8417edd_091bd44b",
+        "filename": "buildbucket.config",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-25T18:14:05Z",
+      "side": 1,
+      "message": "The contents of this file were auto-generated via the \"--gerrit-buildbucket-config\" option in https://chromium.googlesource.com/chromium/src/+/master/tools/mb/mb.py\n\nIf you\u0027d rather it not list certain trybots, I\u0027d ask dpranke@ how to get the script to ignore them.",
+      "parentUuid": "2d9e4e4a_a0b1c915",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 45
+      },
+      "revId": "cb45053867b0725d43cce859e6aae1bee7f5c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
