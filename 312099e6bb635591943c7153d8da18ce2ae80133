@@ -16,6 +16,24 @@
       "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fc9a35_98812fea",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T00:26:34Z",
+      "side": 1,
+      "message": "Maybe I get the question, maybe not. Let me try :-)\n\ngles3.0 says (and opengl 4.2 too)\n format  type                         internal_format\n RGBA    UNSIGNED_INT_2_10_10_10_REV  RGB10_A2\n\nso that\u0027s what we need to use here to satisfy glTexImage2D().\n\nMac, special as it is, needs for CGLTexImageIOSurface2D() [1]\n format  type                         internal_format\n BGRA    UNSIGNED_INT_2_10_10_10_REV  RGB10_A2\n\nwhich has a different |format| type.\n\nIn both cases, IIUC, we use an unsized internal format, so ISO \nRGB10_A2 we just say GL_RGBA and it \"just works\".\n\nIn both cases, 2_10_10_10 is (should be) interpreted as \n2A:10B:10G:10R in decreasing bit index (bit 31..bit 0).\n\nDoes this make sense...?\n\n[1] https://github.com/phracker/MacOSX-SDKs/blob/HEAD/MacOSX10.12.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/CGLIOSurface.h#L102",
+      "parentUuid": "bf933294_1cc4fd86",
+      "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
