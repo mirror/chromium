@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "df63734c_9135f019",
+        "filename": "chrome/common/chrome_result_codes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T21:37:56Z",
+      "side": 1,
+      "message": "Ack. Will revert.",
+      "parentUuid": "1a57a8fa_b0590aa5",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe38188_73baea23",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -106,6 +130,30 @@
       "writtenOn": "2018-01-25T21:36:21Z",
       "side": 1,
       "message": "I agree, at least partially: We should keep the previous values mapped, and update their labels to indicate which, if any, store ambiguous data.\n\nSince this conflicts with allowing the content enum space to grow, I would recommend forking off a new histogram to record the values with the new label semantics.  In order to preserve continuity, we could record both metrics in parallel for a time (as I also suggested in a separate comment).  I\u0027m certainly open to other ideas as well!",
+      "parentUuid": "ebe38188_73baea23",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f98ef3_4a8f90e4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T21:37:56Z",
+      "side": 1,
+      "message": "My thought was, since these are already wrong, just give up and do something futureproof. But I\u0027m not really the stakeholder here, so I\u0027ll be happy to change these to reflect the current reality.",
       "parentUuid": "ebe38188_73baea23",
       "range": {
         "startLine": 7214,
