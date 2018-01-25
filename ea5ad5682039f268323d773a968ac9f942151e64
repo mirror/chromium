@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af5b9107_b29c2fa4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/matches.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-01-25T05:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc077ea4_9ce28742",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291f643d_c65339cc",
         "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3dd873_57d2c4cb",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-01-25T05:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291f643d_c65339cc",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +122,24 @@
       "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3a63e6_8945f6f4",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1253058
+      },
+      "writtenOn": "2018-01-25T05:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cac903c_1b713b0c",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
