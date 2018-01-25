@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "002d6e52_21d775b1",
+        "filename": "content/browser/android/synchronous_compositor_browser_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Good catch. ya there is a cycle. But I had the UnregisterHost call in the wrong function; it should be in the HostDestroyed function not in the dtor. Moving that I think makes this all well.",
+      "parentUuid": "1aacb4e5_fa9670bd",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ef291ad_dacf10f7",
         "filename": "content/browser/android/synchronous_compositor_host.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T20:39:09Z",
       "side": 1,
       "message": "can we avoid creating the helper until the filter ready? that way can have a bunch of nice properties like it only happens once, and have a place to do null checks for all the synchronous calls and early out",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f68cdc_577d77a9",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "For mojo we\u0027ll need to bind something to the Control channel that can get us back to the Host object. And we need to pass the mojo channel here at creation time so I really don\u0027t see a way to create it lazily.",
+      "parentUuid": "5ef291ad_dacf10f7",
       "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "89f92141_b95049f2",
+        "filename": "content/browser/android/synchronous_compositor_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8161d9e4_35562e73",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c24c761_0995a5fe",
         "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2018-01-24T20:39:09Z",
       "side": 1,
       "message": "is this different from just passing this?",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0b368e_dbb1eb1d",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "this is a raw ptr. And you can\u0027t pass a raw ptr into a BindOnce.",
+      "parentUuid": "7c24c761_0995a5fe",
       "range": {
         "startLine": 39,
         "startChar": 34,
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "64f538d1_93fad2b8",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446c345d_4f4886a4",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08eb0ea6_a1e6ddf9",
         "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f896eb_c0b1db9f",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08eb0ea6_a1e6ddf9",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "f7749a0c_12f62990",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "130a6cc5_23baa26f",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f85e2729_f267f963",
         "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8400629c_e69c5662",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85e2729_f267f963",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "5fcb1030_6c31969f",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b254313_87f640df",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7d5747_b5ba8942",
         "filename": "content/browser/android/synchronous_compositor_host_helper.h",
         "patchSetId": 2
@@ -181,6 +355,24 @@
       "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3c750a_af187401",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7d5747_b5ba8942",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "c9735202_d777b95b",
+        "filename": "content/browser/android/synchronous_compositor_host_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf5c379_569e29a3",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be7b65f_7d67039c",
         "filename": "content/browser/web_contents/web_contents_view_android.cc",
         "patchSetId": 2
@@ -215,6 +425,24 @@
       "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13d7af0_c20617b9",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-25T20:59:00Z",
+      "side": 1,
+      "message": "Yes because I removed it from the header file in one of the classes. This class actually implements the SynchronousCompositor::SetClientForWebContents(WebContents* contents,\n    SynchronousCompositorClient* client); static API on line 79.  So it seems reasonable to #include here.",
+      "parentUuid": "4be7b65f_7d67039c",
+      "revId": "7233bebf0b611870496a1c236fdfd1676411ea6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
