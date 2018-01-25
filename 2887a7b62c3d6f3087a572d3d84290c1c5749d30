@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd7ed9b1_4bd11fff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-25T15:38:19Z",
+      "side": 1,
+      "message": "nit: If it fits the line length I would suggest to use \"Add policyname1 and policyname2 Policies for PhishGuard\" instead so that it will be more easily discoverable in one-line logs.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221de3b0_0a1a7327",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10957,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-25T15:38:19Z",
+      "side": 1,
+      "message": "comment: Just to make sure you are aware of this. This option will only make a difference if you plan to expose this setting to the user in the UI or as a command line flag. If the only way you ever envision to trigger this on or off is policy then there will be no difference if it is set as recommended or mandatory.",
+      "range": {
+        "startLine": 10957,
+        "startChar": 8,
+        "endLine": 10957,
+        "endChar": 35
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9153ad_e30b28f4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10965,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-25T15:38:19Z",
+      "side": 1,
+      "message": "Maybe write one more sentence here what is password protection.",
+      "range": {
+        "startLine": 10965,
+        "startChar": 57,
+        "endLine": 10965,
+        "endChar": 85
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccb6957_42fe3230",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10971,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-25T15:38:19Z",
+      "side": 1,
+      "message": "What do you mean with this sentence? Does this mean that there is no UI or that when the policy is set it can not be changed. If the latter it doesn\u0027t have to be mentioned it is the expected behavior of every policy.",
+      "range": {
+        "startLine": 10971,
+        "startChar": 6,
+        "endLine": 10971,
+        "endChar": 97
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c237719_52c5d766",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11007,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-25T15:38:19Z",
+      "side": 1,
+      "message": "Same as above please write one sentence what does it mean to flag account as being at risk. I know it might be hard to provide full description but the jist of it in a few words can go a long way to avoid admin confusion. :)",
+      "range": {
+        "startLine": 11007,
+        "startChar": 77,
+        "endLine": 11007,
+        "endChar": 102
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
