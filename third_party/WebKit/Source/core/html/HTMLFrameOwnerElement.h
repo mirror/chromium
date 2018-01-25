@@ -114,6 +114,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   // For unit tests, manually trigger the UpdateContainerPolicy method.
   void UpdateContainerPolicyForTests() { UpdateContainerPolicy(); }
 
+  virtual bool CanNavigateToPluginNone() const { return false; }
+
   virtual void Trace(blink::Visitor*);
 
  protected:

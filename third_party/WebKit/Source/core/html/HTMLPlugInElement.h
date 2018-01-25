@@ -89,6 +89,8 @@ class CORE_EXPORT HTMLPlugInElement
       Vector<String>* /* messages */,
       bool* /* old_syntax */) const;
 
+  bool CanNavigateToPluginNone() const override;
+
  protected:
   HTMLPlugInElement(const QualifiedName& tag_name,
                     Document&,
@@ -122,6 +124,8 @@ class CORE_EXPORT HTMLPlugInElement
   void DispatchErrorEvent();
   bool IsErrorplaceholder();
   void LazyReattachIfNeeded();
+
+  bool waiting_for_frame_detach() const { return update_plugin_after_detach_; }
 
   String service_type_;
   String url_;
@@ -185,7 +189,12 @@ class CORE_EXPORT HTMLPlugInElement
 
   bool RequestObjectInternal(const Vector<String>& param_names,
                              const Vector<String>& param_values);
+  // Returns true when a currently existing ContentFrame() needs to be detached
+  // before requesting object. For example, going from an object type of frame
+  // to plugin should detach current content frame.
+  bool NeedsToDetachFrame();
 
+  bool update_plugin_after_detach_ = false;
   v8::Global<v8::Object> plugin_wrapper_;
   bool needs_plugin_update_;
   bool should_prefer_plug_ins_for_images_;
