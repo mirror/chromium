@@ -34,6 +34,24 @@
       "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73815b7_105afe89",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-25T05:59:49Z",
+      "side": 1,
+      "message": "I thought some more about \"favicon wars\". I had not thought about this previously. One way of mitigating \"favicon wars\" is by checking whether the existing icon in the database is expired prior to calling LargeIconService::GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache()\n\nCurrently, HistoryBackend::MergeFavicon() does not always set the merged in icon as expired. We can change this.\n\nWe should definitely make HistoryBackend::SetOnDemandFavicons() fail if there are any touch icons mapped to the URL.\nI am unsure whether we should make HistoryBackend::SetOnDemandFavicons() fail if there is favicon of type kFavicon but which is unexpired. My gut instinct is no. The caller of LargeIconService::GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache() is responsible for doing this check. The caller is the one who suffers by doing needless downloads (sky@ will likely have an opinion on this point)\n\nI would rather not have special handling for 16x16 icons because it makes the behavior of HistoryBackend::SetOnDemandFavicons() subtle and harder to understand. (and in my opinion makes the API less clean)\n\nI hope that this comment is helpful",
+      "parentUuid": "4047e02c_14c79b70",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
