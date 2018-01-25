@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7bf3823_4ec82943",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/invalid-characteristic-name.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T18:46:06Z",
+      "side": 1,
+      "message": "Thanks. I had missed this file.",
+      "parentUuid": "81a722cb_38430f94",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49567f15_726b62f5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb6396b_62fcde94",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T18:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49567f15_726b62f5",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -74,6 +116,24 @@
       "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006be310_185c1099",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T18:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "989bbbcc_df9febdb",
+      "revId": "593a7b481ef866450fcb3d2027508a4cfe626960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
