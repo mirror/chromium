@@ -2075,6 +2075,57 @@ TEST_P(SourceBufferStreamTest, Overlap_OneByOne_TrackBuffer6) {
   CheckNoNextBuffer();
 }
 
+TEST_P(SourceBufferStreamTest, Multiple_Overlap_763518_Minimized) {
+  SetAudioStream();
+  Seek(0);
+
+  NewCodedFrameGroupAppend("10D10K");
+
+  // Note: fuzzer did a config change to new ID 1
+
+  NewCodedFrameGroupAppend("9D10K 10D10K");
+
+  // Note fuzzer did a config change back to ID 0 here.
+  // **NO** new coded frame group signalled even in new config in this fuzzer
+  // case.
+
+  AppendBuffers("10D10K");
+
+  //**** OLD NOTES
+  // DVLOG(1) << "TEST NOTE: Track Buffer should have one buffer (a 10D10K)
+  // currently..."; This is where it gets weird (note the interval overlap, but
+  // distinct ranges): CheckExpectedRangesByTimestamp("{ [9,19) [10,20) }"); But
+  // test log shows coalescing: Append AUDIO: done. ranges_=[0.009;0.009(0.019)]
+  // [0.01;0.01(0.02)]
+  // ../../media/filters/source_buffer_stream_unittest.cc:263: Failure
+  //       Expected: expected
+  //             Which is: "{ [9,19) [10,20) }"
+  //             To be equal to: ss.str()
+  //                   Which is: "{ [9,20) }"
+
+  // **** Current NOTES: Though the overlap append of the seeked-to frame 10D10K
+  // is done twice, the track buffer is only temporarily populated but then
+  // fully pruned because we're dealing only with keyframes. The resulting read
+  // of the 10K, below, is for the most recently appended 10D10K, above. (This
+  // is correct behavior.)
+  CheckExpectedRangesByTimestamp("{ [9,20) }");
+
+  // Mark EOS reached.
+  STREAM_OP(MarkEndOfStream());
+
+  // **** OLD NOTES
+  // And hits DCHECK in bug 763518 (second buffer's read here indicates the
+  // timestamp due to current broken/DCHECK-hitting implementation...).
+  // Release mode version of this test passes. Debug hits the DCHECK in
+  // https://crbug.com/763518
+
+  // **** Current NOTES: This line reads 10K then that's it (test fails due to
+  // no 9K read afterward, but no crash/DCHECK hit). Current is correct
+  // behavior.
+  CheckExpectedBuffers("10K 9K");
+  CheckNoNextBuffer();
+}
+
 TEST_P(SourceBufferStreamTest, Seek_Keyframe) {
   // Append 6 buffers at positions 0 through 5.
   NewCodedFrameGroupAppend(0, 6);
