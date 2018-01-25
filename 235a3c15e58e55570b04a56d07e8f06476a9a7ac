@@ -16,6 +16,24 @@
       "revId": "235a3c15e58e55570b04a56d07e8f06476a9a7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59df570c_72b53974",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 9225,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-25T01:24:03Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll do a title-case pass at all IDS_MANAGE_PASSWORDS separately.",
+      "parentUuid": "aca73ada_9788ff50",
+      "revId": "235a3c15e58e55570b04a56d07e8f06476a9a7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
