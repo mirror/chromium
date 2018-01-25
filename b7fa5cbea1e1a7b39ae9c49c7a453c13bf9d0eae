@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3bfd858_85cae13e",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T02:47:57Z",
+      "side": 1,
+      "message": "So, this is scoped to the OOPIF we are inspecting. I was expecting root to be main frame. Should not matter though.",
+      "revId": "b7fa5cbea1e1a7b39ae9c49c7a453c13bf9d0eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b40319_84cb1f02",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T02:47:57Z",
+      "side": 1,
+      "message": "Calling this for each ftn seems incorrect.",
+      "revId": "b7fa5cbea1e1a7b39ae9c49c7a453c13bf9d0eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
