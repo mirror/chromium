@@ -5,6 +5,7 @@
 module blink.mojom;
 
 import "third_party/WebKit/common/blob/blob.mojom";
+import "skia/public/interfaces/bitmap.mojom";
 
 // A MessagePort is represented as a raw mojo message pipe, as such no interface
 // definition exists for it here. Messages on this pipe are serialized versions
@@ -35,6 +36,8 @@ struct TransferableMessage {
   CloneableMessage message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  array<SerializedArrayBufferContents> array_buffer_contents_array;
+  array<skia.mojom.Bitmap> image_bitmap_contents_array;
 };
 
 // Struct wrapping a Blob interface pointer.
@@ -46,4 +49,8 @@ struct SerializedBlob {
   string content_type;
   uint64 size;
   Blob blob;
+};
+
+struct SerializedArrayBufferContents {
+        array<uint8> contents;
 };
