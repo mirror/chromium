@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb9a4de_4cf4ec58",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "static_cast should be sufficient https://stackoverflow.com/a/332086",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b281d4_b5896ace",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "static_cast should be sufficient https://stackoverflow.com/a/332086",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2743beb3_e1f3b842",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "Equivalent to\n\nDCHECK(base::ContainsKey(page_data_, page_cu));\nreturn \u0026page_data_[page_cu];",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 19
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba22120_d25b04cc",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "Make PageCoordinationUnitImpl::GetMainFrameCoordinationUnit() public and use it here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 3
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b4a161_90bb7134",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "A helper function in coordination_unit_base.h would make this code more readable:\n\nint64_t GetPropertyOrDefault(\n    CoordinationUnitBase* cu,\n    const mojom::PropertyType property,\n    int64_t default_value) {\n  int64_t value \u003d 0;\n  if (cu-\u003eGetProperty(property, \u0026value))\n    return value;\n  return default_value;\n}\n\nThis code becomes:\n\nreturn\n    GetPropertyOrDefault(process_cu, mojom::PropertyType::kMainThreadTaskLoadIsLow, 0) \u0026\u0026\n    GetPropertyOrDefault(main_frame_cu, mojom::PropertyType::kNetworkAlmostIdle, 0);\n\nThe return and default value type could even be templated.",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 269,
+        "endChar": 19
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ae642d_e053286b",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "Since these are only used in PageSignalGeneratorImpl and tests, they could be private.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 4
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384f88a8_4248568f",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "#include \"base/gtest_prod_util.h\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bfa372_3acf4723",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T17:53:51Z",
+      "side": 1,
+      "message": "auto ?",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "df97736610a773e30ce6713a81d90b8264f0a069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
