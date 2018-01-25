@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e3ff5ffd_220e3b68",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-25T15:14:18Z",
+      "side": 1,
+      "message": "UILayoutGuide has a debugging-only method constraintsAffectingLayoutForAxis that I think will allow you to add a DCHECK.",
+      "parentUuid": "f06dd39b_1b963b0f",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 22
+      },
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b9d080_473d8f5a",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button.mm",
         "patchSetId": 2
