@@ -5,7 +5,6 @@
 module IPC.mojom;
 
 import "mojo/common/read_only_buffer.mojom";
-import "mojo/public/interfaces/bindings/native_struct.mojom";
 
 // A placeholder interface type since we don't yet support generic associated
 // message pipe handles.
@@ -18,7 +17,7 @@ interface Channel {
 
   // Transmits a classical Chrome IPC message.
   Receive(mojo.common.mojom.ReadOnlyBuffer data,
-          array<mojo.native.SerializedHandle>? handles);
+          array<SerializedHandle>? handles);
 
   // Requests a Channel-associated interface.
   GetAssociatedInterface(string name, associated GenericInterface& request);
@@ -26,3 +25,17 @@ interface Channel {
 
 // A strictly nominal interface used to identify Channel bootstrap requests.
 interface ChannelBootstrap {};
+
+struct SerializedHandle {
+  handle the_handle;
+
+  enum Type {
+    MOJO_HANDLE,
+    PLATFORM_FILE,
+    WIN_HANDLE,
+    MACH_PORT,
+    FUCHSIA_HANDLE,
+  };
+
+  Type type;
+};
