@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740cd3dd_98c33c16",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T07:57:11Z",
+      "side": 1,
+      "message": "IIUC, this is set to false at line 54. What happens if\n\n - User opens dialog once, and waits until all destinations are fetched (loadingDestinations_ is set back to false when the last updateDestinations_ callback is triggered).\n - User closes dialog and re-opens it. (loadingDestinations_ is set to true, but there is no callback anymore to set it back to false?)",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "9345d46cb44ae9107d4a6478e930623799e0fad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895f21f6_7d77b726",
+        "filename": "chrome/browser/resources/print_preview/new/destination_settings.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T07:57:11Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "9345d46cb44ae9107d4a6478e930623799e0fad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
