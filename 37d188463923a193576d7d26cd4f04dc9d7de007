@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0764d1_7dcaf39b",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "I put together a //chrome layer browser test, to get multiple tabs, DevTools and other things not available to me when running just //content layer browser tests.  At the same time, I want to test the service worker from content/test/data/cross_site_document_blocking/service_worker.js",
+      "range": {
+        "startLine": 738,
+        "startChar": 49,
+        "endLine": 738,
+        "endChar": 66
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d0b7afb_5b1f7a09",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This gets hit - this is good.",
+      "range": {
+        "startLine": 756,
+        "startChar": 25,
+        "endLine": 756,
+        "endChar": 45
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf5a591a_c4864c14",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This is null.  Not sure if I should be worried about this.",
+      "range": {
+        "startLine": 757,
+        "startChar": 34,
+        "endLine": 757,
+        "endChar": 68
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f432de5_795b0e42",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This is how I expected to get an \u0027opaque\u0027 response (that should be cleared/blocked by XSDB).  Does this look reasonable?",
+      "range": {
+        "startLine": 782,
+        "startChar": 20,
+        "endLine": 782,
+        "endChar": 40
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607f8bb6_6b5514bc",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "I always hit the \u0027failure\u0027 branch of the promise.  If I replace |url| with \"/blah\", then I see that the request goes to the embedded test server (i.e. to the network) instead of going to my service worker.  I have no idea why or how to debug this further :-(",
+      "range": {
+        "startLine": 788,
+        "startChar": 25,
+        "endLine": 788,
+        "endChar": 39
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d617710_5ad239c3",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This gets printed - this is good.",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 44
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb5f05c0_8f9a109b",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "Not sure if this is needed.  I\u0027ve cargo-culted this from the internet when trying to see if my trouble are somehow connected to the fact that |navigator.serviceWorker.controller| is always null AFAICT (even after reloading the 127.0.0.1:\u003cembedded test server\u0027s port\u003e in a new tab).",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 69
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92053220_d059b0c7",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This also gets hit - this is good.\nAdditionally, I see that the service worker is activated\n\n1. when I look at \"Application -\u003e Service Workers\" tab in DevTools (when running the test via CrossSiteDocumentBlockingServiceWorkerTest.LukaszA from chrome/browser/chrome_service_worker_browsertest.cc).\n\n2. when I look at chrome://serviceworker-internals/\n\n3. when I inspect the worker via chrome://inspect/#service-workers",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "971803cf_1fb035f0",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This is probably not needed.  Cargo culted as above... :-/",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e312b179_7d74e66a",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-25T22:21:21Z",
+      "side": 1,
+      "message": "This is NEVER hit and I have no idea why / how to debug this.  I stared for a while at the code in content/renderer/service_worker/ and content/browser/service_worker/ but didn\u0027t see any obvious starting point for debugging this further...\n\nMaybe this is because 127.0.0.1 is somehow special?  (but this is the hostname that embedded test server has got a valid ssl certificate for...  and I need https because service workers do not work on http-only pages...)\n\nHelp please? :-)",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
