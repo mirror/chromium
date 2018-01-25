@@ -32,9 +32,11 @@ struct DidOverscrollParams;
 
 namespace content {
 
+class RenderProcessHostImpl;
 class RenderWidgetHostViewAndroid;
 class SynchronousCompositorClient;
 class SynchronousCompositorBrowserFilter;
+class SynchronousCompositorHostBridge;
 struct SyncCompositorCommonRendererParams;
 
 class SynchronousCompositorHost : public SynchronousCompositor {
@@ -77,6 +79,8 @@ class SynchronousCompositorHost : public SynchronousCompositor {
 
   SynchronousCompositorClient* client() { return client_; }
 
+  RenderProcessHostImpl* GetProcess();
+
  private:
   class ScopedSendZeroMemory;
   struct SharedMemoryWithSize;
@@ -89,7 +93,6 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   bool DemandDrawSwInProc(SkCanvas* canvas);
   void SetSoftwareDrawSharedMemoryIfNeeded(size_t stride, size_t buffer_size);
   void SendZeroMemory();
-  SynchronousCompositorBrowserFilter* GetFilter();
 
   RenderWidgetHostViewAndroid* const rwhva_;
   SynchronousCompositorClient* const client_;
@@ -115,6 +118,8 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   bool need_animate_scroll_;
   uint32_t need_invalidate_count_;
   uint32_t did_activate_pending_tree_count_;
+
+  scoped_refptr<SynchronousCompositorHostBridge> bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorHost);
 };

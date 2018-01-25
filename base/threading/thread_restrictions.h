@@ -47,8 +47,8 @@ class ScopedAllowWaitForDebugURL;
 class SessionStorageDatabase;
 class SoftwareOutputDeviceMus;
 class SynchronousCompositor;
-class SynchronousCompositorBrowserFilter;
 class SynchronousCompositorHost;
+class SynchronousCompositorHostBridge;
 class TextInputClientMac;
 }  // namespace content
 namespace cronet {
@@ -295,6 +295,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitivesOutsideBlockingScope {
       ThreadRestrictionsTest,
       ScopedAllowBaseSyncPrimitivesOutsideBlockingScopeResetsState);
   friend class ::KeyStorageLinux;
+  friend class content::SynchronousCompositorHostBridge;
   friend class midi::TaskService;  // https://crbug.com/796830
 
   ScopedAllowBaseSyncPrimitivesOutsideBlockingScope()
@@ -398,7 +399,6 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
   friend class content::SynchronousCompositor;
-  friend class content::SynchronousCompositorBrowserFilter;
   friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
   friend class internal::TaskTracker;
