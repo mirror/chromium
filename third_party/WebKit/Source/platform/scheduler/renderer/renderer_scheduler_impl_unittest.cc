@@ -40,7 +40,7 @@ class FakeInputEvent : public blink::WebInputEvent {
       : WebInputEvent(sizeof(FakeInputEvent),
                       event_type,
                       modifiers,
-                      WebInputEvent::kTimeStampForTesting) {}
+                      WebInputEvent::GetStaticTimeStampForTests()) {}
 };
 
 void AppendToVectorTestTask(std::vector<std::string>* vector,

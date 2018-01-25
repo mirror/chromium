@@ -168,7 +168,7 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
           abstract_view,
           detail,
           static_cast<WebInputEvent::Modifiers>(event.GetModifiers()),
-          TimeTicksFromSeconds(event.TimeStampSeconds()),
+          event.TimeStamp(),
           abstract_view
               ? abstract_view->GetInputDeviceCapabilities()->FiresTouchEvents(
                     event.FromTouch())

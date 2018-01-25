@@ -1174,8 +1174,7 @@ void RenderWidgetCompositor::DidBeginMainFrame() {}
 
 void RenderWidgetCompositor::BeginMainFrame(const viz::BeginFrameArgs& args) {
   compositor_deps_->GetRendererScheduler()->WillBeginFrame(args);
-  double frame_time_sec = (args.frame_time - base::TimeTicks()).InSecondsF();
-  delegate_->BeginMainFrame(frame_time_sec);
+  delegate_->BeginMainFrame(args.frame_time);
 }
 
 void RenderWidgetCompositor::BeginMainFrameNotExpectedSoon() {
