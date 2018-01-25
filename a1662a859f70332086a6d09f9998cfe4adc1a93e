@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7759dce_3faa8df8",
+        "filename": "components/exo/shell_surface_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-25T00:24:59Z",
+      "side": 1,
+      "message": "nit: GetMinimumSize now that we no longer call a function that is a simple getter",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "a1662a859f70332086a6d09f9998cfe4adc1a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
