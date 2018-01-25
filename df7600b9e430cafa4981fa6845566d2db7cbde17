@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "527ba81b_3fb8cb64",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/IDeviceLogsProvider.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-25T00:40:32Z",
+      "side": 1,
+      "message": "My only concern is that it\u0027s harder to coordinate an API change like this if both the client and server exist, so now would be the best time to rename.",
+      "parentUuid": "f5fa7ddf_5bab1fd7",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "df7600b9e430cafa4981fa6845566d2db7cbde17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13915e87_b6ef298d",
         "filename": "chromecast/browser/android/apk/templates/BuildConfig.template",
         "patchSetId": 9
