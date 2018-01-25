@@ -8,6 +8,7 @@
 #include "base/feature_list.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/account_consistency_mode_manager.h"
+#include "chrome/browser/signin/chrome_signin_client.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/signin/core/browser/profile_management_switches.h"
@@ -26,8 +27,8 @@ ChromeSigninClientFactory::ChromeSigninClientFactory()
 ChromeSigninClientFactory::~ChromeSigninClientFactory() {}
 
 // static
-SigninClient* ChromeSigninClientFactory::GetForProfile(Profile* profile) {
-  return static_cast<SigninClient*>(
+ChromeSigninClient* ChromeSigninClientFactory::GetForProfile(Profile* profile) {
+  return static_cast<ChromeSigninClient*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
