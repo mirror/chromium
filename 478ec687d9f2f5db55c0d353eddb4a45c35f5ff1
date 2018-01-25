@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eec317e_02f6f82b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 51
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: Should we also add a line here talking about making MutatorImpl\nbe refcounted as opposed to garbage collected?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03eb1613_a8fdcfc3",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit:missing period.",
+      "range": {
+        "startLine": 68,
+        "startChar": 40,
+        "endLine": 68,
+        "endChar": 41
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b131856_91733293",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: missing period.",
+      "range": {
+        "startLine": 80,
+        "startChar": 40,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c53a00_66a06ead",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: missing period.",
+      "range": {
+        "startLine": 88,
+        "startChar": 40,
+        "endLine": 88,
+        "endChar": 41
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9841cd3_62e0f1e1",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: missing period.",
+      "range": {
+        "startLine": 105,
+        "startChar": 40,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ba057b_11c4b6ac",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: should this be moved to the cc file?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fcf336_7be02678",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: missing period",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe19e2d_4a5de713",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: missing period.",
+      "range": {
+        "startLine": 64,
+        "startChar": 61,
+        "endLine": 64,
+        "endChar": 62
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8688ab56_173c4add",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletThread.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: Should be capitalized. This is not really relevant to this CL so\nfeel free to ignore.",
+      "range": {
+        "startLine": 88,
+        "startChar": 40,
+        "endLine": 88,
+        "endChar": 41
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eea5357_5bb342e6",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: This comment seems superfluous.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 46
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d40f9a_837479a2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 51
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5004b2_907c380a",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: s/CreateClient/CreateClientOnMainThread/\nI think this is more consistent and clear.",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c064bd93_94eb30e2",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: I think this comment is more appropriate where we are actually \nposting the task using a pre-existing category (in AnimationWorkletProxyClientImpl.cpp)\nThere is not a lot of context here.",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 77
+      },
+      "revId": "478ec687d9f2f5db55c0d353eddb4a45c35f5ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

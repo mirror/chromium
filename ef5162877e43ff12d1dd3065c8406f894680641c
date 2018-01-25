@@ -225,6 +225,29 @@
     },
     {
       "key": {
+        "uuid": "fee2fdc9_30db2bae",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-25T17:03:23Z",
+      "side": 1,
+      "message": "nit: should end with .",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b01cf59_1e75796b",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 47
