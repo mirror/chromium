@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731205ea_e4b63dd9",
+        "filename": "base/time/time.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T18:27:10Z",
+      "side": 1,
+      "message": "I assume this is the source of the size regression? I\u0027m wondering if it\u0027s important for these to be constexpr; it seems like the main usage of constexpr would be to define constexpr TimeDelta / TimeTicks / Time constants, and not to go from a TimeDelta value to the value in nanoseconds. So maybe we should just leave these as non-constexpr?",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 0
+      },
+      "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
