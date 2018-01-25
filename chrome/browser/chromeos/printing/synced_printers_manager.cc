@@ -59,7 +59,8 @@ bool InsertIfNotPresent(std::unordered_map<std::string, Printer>* new_printers,
 }
 
 class SyncedPrintersManagerImpl : public SyncedPrintersManager,
-                                  public PrintersSyncBridge::Observer {
+                                  public PrintersSyncBridge::Observer,
+                                  public ExternalPrinters::Observer {
  public:
   SyncedPrintersManagerImpl(Profile* profile,
                             std::unique_ptr<PrintersSyncBridge> sync_bridge)
@@ -74,6 +75,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
         base::Bind(&SyncedPrintersManagerImpl::UpdateRecommendedPrinters,
                    base::Unretained(this)));
     if (base::FeatureList::IsEnabled(features::kBulkPrinters)) {
+      // TODO(skau): Add observer here.
       printers_observer_ = std::make_unique<ExternalPrintersPrefBridge>(
           UserPolicyNames(), profile_);
     }
@@ -152,6 +154,16 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
         FROM_HERE,
         &SyncedPrintersManager::Observer::OnConfiguredPrintersChanged,
         GetConfiguredPrinters());
+  }
+
+  // ExternalPrinters::Observer override
+  void OnPrintersChanged(
+      bool valid,
+      const std::map<const ::std::string, const Printer>& printers) override {
+    // User or device policy printers changed.  Update the lists.
+    // |valid| is safe to ignore here since we're recomputing and the cached
+    // printers are always cleared.
+    UpdateRecommendedPrinters();
   }
 
  private:
