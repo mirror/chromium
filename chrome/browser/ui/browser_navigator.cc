@@ -409,11 +409,7 @@ content::WebContents* CreateTargetContents(const NavigateParams& params,
     create_params.initially_hidden = true;
 
 #if defined(USE_AURA)
-  if (params.browser->window() &&
-      params.browser->window()->GetNativeWindow()) {
-    create_params.context =
-        params.browser->window()->GetNativeWindow();
-  }
+  create_params.context = params.browser->window()->GetNativeWindow();
 #endif
 
   WebContents* target_contents = WebContents::Create(create_params);
@@ -464,7 +460,7 @@ void Navigate(NavigateParams* params) {
 
   // The browser window may want to adjust the disposition.
   if (params->disposition == WindowOpenDisposition::NEW_POPUP &&
-      source_browser && source_browser->window()) {
+      source_browser) {
     params->disposition =
         source_browser->window()->GetDispositionForPopupBounds(
             params->window_bounds);

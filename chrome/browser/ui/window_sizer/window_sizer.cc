@@ -101,8 +101,9 @@ class DefaultStateProvider : public WindowSizer::StateProvider {
     // specially positioned.
     BrowserWindow* window = NULL;
     // Window may be null if browser is just starting up.
-    if (browser_ && browser_->window()) {
+    if (browser_) {
       window = browser_->window();
+      DCHECK(browser_->window());
     } else {
       // This code is only run on the native desktop (on the ash
       // desktop, GetTabbedBrowserBoundsAsh should take over below
