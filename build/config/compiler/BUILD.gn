@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/android/config.gni")
+import("//build/config/c++/c++.gni")
 import("//build/config/chrome_build.gni")
 import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
@@ -1491,7 +1492,9 @@ config("no_rtti") {
 config("exceptions") {
   if (is_win) {
     # Enables exceptions in the STL.
-    defines = [ "_HAS_EXCEPTIONS=1" ]
+    if (!use_custom_libcxx) {
+      defines = [ "_HAS_EXCEPTIONS=1" ]
+    }
     cflags_cc = [ "/EHsc" ]
   } else {
     cflags_cc = [ "-fexceptions" ]
@@ -1502,7 +1505,13 @@ config("exceptions") {
 config("no_exceptions") {
   if (is_win) {
     # Disables exceptions in the STL.
-    defines = [ "_HAS_EXCEPTIONS=0" ]
+    # libc++ uses a predefined macro to control whether to use exceptions, so
+    # defining this macro is unnecessary. Defining _HAS_EXCEPTIONS to 0 also
+    # breaks libc++ because it depends on MSVC headers that only provide certain
+    # declarations if _HAS_EXCEPTIONS is 1.
+    if (!use_custom_libcxx) {
+      defines = [ "_HAS_EXCEPTIONS=0" ]
+    }
   } else {
     cflags_cc = [ "-fno-exceptions" ]
     cflags_objcc = cflags_cc
