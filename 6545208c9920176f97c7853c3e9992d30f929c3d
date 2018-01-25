@@ -284,6 +284,30 @@
       "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e6dbee_6c485af6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7214,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-25T21:51:14Z",
+      "side": 1,
+      "message": "and fwiw nothing right now flowing from any chrome is ambiguous - since the cl that renumbered everything accidently is https://codereview.chromium.org/2631743004 which landed in 57.0.2986.0 - so updating the numbers here should reflect reality from all current data.\n\nas a further carrot, I offer to do all the work to add/fix the new histograms, add space for extra result codes in content/public/common/result_codes.h and unify the two enums.",
+      "parentUuid": "5ac0dab1_8f172cfc",
+      "range": {
+        "startLine": 7214,
+        "startChar": 14,
+        "endLine": 7214,
+        "endChar": 16
+      },
+      "revId": "6545208c9920176f97c7853c3e9992d30f929c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
