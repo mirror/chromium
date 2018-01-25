@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abea067c_dce07f60",
+        "filename": "services/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T16:33:58Z",
+      "side": 0,
+      "message": "Removed because the dependency is unconditionally added line 22.",
+      "revId": "e727615409d920915648eb7c6d2b6b3c0c6a6b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
