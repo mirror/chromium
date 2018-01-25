@@ -26,6 +26,8 @@ struct StructTraits<viz::mojom::PaintFilterDataView, sk_sp<cc::PaintFilter>> {
     writer.Write(filter.get());
     if (writer.size() == 0)
       return base::nullopt;
+
+    memory.resize(writer.size());
     return memory;
   }
 

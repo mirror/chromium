@@ -209,6 +209,14 @@ TEST_F(StructTraitsTest, FilterOperationReferenceFilter) {
   ExpectEqual(input, output);
 }
 
+TEST_F(StructTraitsTest, PaintFilterMessageSize) {
+  // Ensure that serializing a null filter has a reasonable message size.
+  sk_sp<cc::PaintFilter> filter;
+  auto message = mojo::Message(
+      mojom::PaintFilter::SerializeAsMessage(&filter).TakeMojoMessage());
+  EXPECT_LT(message.payload_num_bytes(), 64u);
+}
+
 TEST_F(StructTraitsTest, FilterOperations) {
   cc::FilterOperations input;
   input.Append(cc::FilterOperation::CreateBlurFilter(0.f));
