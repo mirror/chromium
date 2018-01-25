@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d1c6fd3_32218802",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T22:46:32Z",
+      "side": 1,
+      "message": "Should the network list be sorted on default network change here, too?",
+      "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9020c3c8_336240ad",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2018-01-25T19:28:56Z",
       "side": 1,
       "message": "Note: we set network_list_sorted_ \u003d false above on line 1177, which will trigger a sort on demand but with ensure_cellular \u003d false. Sorting the networks at the end of this function with ensure_cellular \u003d true whevever the default network changes (i.e. not just when its in an unexpected state) won\u0027t generally add any extra work.",
+      "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9b30da_0caf7505",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T22:46:32Z",
+      "side": 1,
+      "message": "can we DCHECK that default_network-\u003epath() matches default_network_path_, and rely on the caller to pass the correct default network in?\n\nOr maybe not pass default network at all, and add the following here:\nconst NetworkState* default_network \u003d GetDefaultNetwork();\n(though, this would require an additional network state lookup)",
       "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
