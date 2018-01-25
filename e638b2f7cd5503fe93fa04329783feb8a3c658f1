@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "043710fa_e77ded39",
+        "filename": "media/capture/video/win/capability_list_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-25T21:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9289f202_d234ad11",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a6c21f_c2b30411",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b68cab5_4964eb8f",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-25T21:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a6c21f_c2b30411",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ecc1c549_98d66f19",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-25T21:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd61d602_ca5b9e78",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffabc5da_3d78b9d8",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2ff0786d_2bd43832",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-25T21:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffabc5da_3d78b9d8",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e849f1b4_c2a61c6e",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ad8e16_5a52bc69",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-25T21:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e849f1b4_c2a61c6e",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
