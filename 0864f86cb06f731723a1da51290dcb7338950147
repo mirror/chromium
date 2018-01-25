@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10a68cff_9bf5ae37",
+        "filename": "ui/aura/env_input_state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T22:33:34Z",
+      "side": 1,
+      "message": "Sadrul is more familiar than I with this code, but based on your explanation I have to wonder if this fix is better done in the lower layers and not here? That is, at the event generation layer.\n\nSecond, it seems like you should always set the flags, but strip out what you don\u0027t care about.",
+      "range": {
+        "startLine": 21,
+        "startChar": 59,
+        "endLine": 24,
+        "endChar": 69
+      },
+      "revId": "0864f86cb06f731723a1da51290dcb7338950147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
