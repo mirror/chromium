@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/memory/linked_ptr.h"
+#include "base/time/time.h"
 
 namespace gcm  {
 
@@ -44,10 +45,12 @@ struct RegistrationInfo {
   // |registration_id| can be NULL if it is of no interest to the caller.
   virtual bool Deserialize(const std::string& serialized_key,
                            const std::string& serialized_value,
-                           std::string* registration_id) = 0;
+                           std::string* registration_id,
+                           base::Time* last_validated) = 0;
 
   // Every registration is associated with an application.
   std::string app_id;
+  base::Time last_validated;
 };
 
 // For GCM registration.
@@ -68,7 +71,8 @@ struct GCMRegistrationInfo : public RegistrationInfo {
       const std::string& registration_id) const override;
   bool Deserialize(const std::string& serialized_key,
                    const std::string& serialized_value,
-                   std::string* registration_id) override;
+                   std::string* registration_id,
+                   base::Time* last_validated) override;
 
   // List of IDs of the servers that are allowed to send the messages to the
   // application. These IDs are assigned by the Google API Console.
@@ -93,7 +97,8 @@ struct InstanceIDTokenInfo : public RegistrationInfo {
       const std::string& registration_id) const override;
   bool Deserialize(const std::string& serialized_key,
                    const std::string& serialized_value,
-                   std::string* registration_id) override;
+                   std::string* registration_id,
+                   base::Time* last_validated) override;
 
   // Entity that is authorized to access resources associated with the Instance
   // ID. It can be another Instance ID or a project ID assigned by the Google

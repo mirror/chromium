@@ -22,6 +22,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/crx_file/id_util.h"
 #include "components/gcm_driver/crypto/gcm_decryption_result.h"
@@ -92,6 +93,7 @@ const char kSubtypeKey[] = "subtype";
 const char kSendMessageFromValue[] = "gcm@chrome.com";
 const int64_t kDefaultUserSerialNumber = 0LL;
 const int kDestroyGCMStoreDelayMS = 5 * 60 * 1000;  // 5 minutes.
+const int kTokenInvalidationDurationMinutes = 10;
 
 GCMClient::Result ToGCMClientResult(MCSClient::MessageSendStatus status) {
   switch (status) {
@@ -888,6 +890,16 @@ void GCMClientImpl::Register(
       }
     }
 
+    // Check also whether Token in Registration Info is stale.
+    // If it is, then set matched to false. This assumes we have stored
+    // last_validated time in registration info. If we haven't then we assume
+    // that the info is stale.
+    auto last_validated_at = registrations_iter->first.get()->last_validated;
+    if (base::Time::Now() - last_validated_at >
+        base::TimeDelta::FromMinutes(kTokenInvalidationDurationMinutes)) {
+      matched = false;
+    }
+
     if (matched) {
       delegate_->OnRegisterFinished(
           registration_info, registrations_iter->second, SUCCESS);
@@ -983,6 +995,7 @@ void GCMClientImpl::OnRegisterCompleted(
     // registrations, the key consists of pair of app_id and sender_ids though
     // only app_id is used in the comparison.
     registrations_.erase(registration_info);
+    registration_info->last_validated = base::Time::Now();
     registrations_[registration_info] = registration_id;
 
     // Save it in the persistent store.
