@@ -100,14 +100,6 @@
   return omniboxViewIOS->IsPopupOpen();
 }
 
-#pragma mark - ToolbarCoordinating
-
-- (void)updateToolbarState {
-  // TODO(crbug.com/803383): This should be done inside the location bar.
-  [self.locationBarCoordinator updateOmniboxState];
-  [super updateToolbarState];
-}
-
 #pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
@@ -182,6 +174,7 @@
   self.locationBarCoordinator.dispatcher = self.dispatcher;
   self.locationBarCoordinator.URLLoader = self.URLLoader;
   self.locationBarCoordinator.delegate = self.delegate;
+  self.locationBarCoordinator.webStateList = self.webStateList;
   [self.locationBarCoordinator start];
 
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is

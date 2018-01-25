@@ -131,6 +131,7 @@
   self.locationBarCoordinator.dispatcher = self.dispatcher;
   self.locationBarCoordinator.URLLoader = self.URLLoader;
   self.locationBarCoordinator.delegate = self.delegate;
+  self.locationBarCoordinator.webStateList = self.webStateList;
   [self.locationBarCoordinator start];
 
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
@@ -216,12 +217,6 @@
 
 - (id<OmniboxFocuser>)omniboxFocuser {
   return self.locationBarCoordinator;
-}
-
-- (void)updateToolbarState {
-  // TODO(crbug.com/803383): This should be done inside the location bar.
-  // Updates the omnibox.
-  [self.locationBarCoordinator updateOmniboxState];
 }
 
 - (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState {
