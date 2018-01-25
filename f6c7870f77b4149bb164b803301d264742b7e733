@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e5b652_c11b503e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-25T23:47:04Z",
+      "side": 1,
+      "message": "The combination of this block and the one below it is confusing. I\u0027d suggest adding a comment explaining what the feature is supposed to mean in the context of this method, and I\u0027d want the two blocks to be combined e.g.,\n\nWebEnabledClientHints enabled_hints;\nif (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled()) {\n  if (!IsClientHintsAllowed(request.Url()) {\n    return;\n  }\n  if (GetContentSettingsClient() \u0026\u0026 AllowScriptFromSource(request.Url()) {\n    ....\n  }\n}\n\nBut I defer to kinuko on that stylistically.",
+      "revId": "f6c7870f77b4149bb164b803301d264742b7e733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
