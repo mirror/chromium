@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "64c70fc7_8a86a226",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T12:35:01Z",
+      "side": 1,
+      "message": "why not just change this to vpython instead?",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24db7d17_9e73053b",
         "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
         "patchSetId": 10
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I think the code is correct as-is. It should read as \"if we\u0027re not already in the virtual environment, we need to enter it via vpython\".\n\nI actually wondered whether it would be fine to just always use \"vpython\" unconditionally, as that should have the same effect?",
       "parentUuid": "24db7d17_9e73053b",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb5bd3e_667ac9be",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T12:35:01Z",
+      "side": 1,
+      "message": "ah ok. I thought this was supposed to be \"if we are in environment that support vpython, then use it\"",
+      "parentUuid": "22211bd0_9fe4d4bc",
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
