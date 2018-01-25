@@ -60,22 +60,17 @@
 
 namespace content {
 
-typedef std::vector<RenderFrameDevToolsAgentHost*> RenderFrameDevToolsArray;
-
 namespace {
-base::LazyInstance<RenderFrameDevToolsArray>::Leaky g_agent_host_instances =
+using RenderFrameDevToolsMap =
+    std::map<FrameTreeNode*, RenderFrameDevToolsAgentHost*>;
+base::LazyInstance<RenderFrameDevToolsMap>::Leaky g_agent_host_instances =
     LAZY_INSTANCE_INITIALIZER;
 
 RenderFrameDevToolsAgentHost* FindAgentHost(FrameTreeNode* frame_tree_node) {
   if (!g_agent_host_instances.IsCreated())
     return nullptr;
-  for (RenderFrameDevToolsArray::iterator it =
-           g_agent_host_instances.Get().begin();
-       it != g_agent_host_instances.Get().end(); ++it) {
-    if ((*it)->frame_tree_node() == frame_tree_node)
-      return *it;
-  }
-  return nullptr;
+  auto it = g_agent_host_instances.Get().find(frame_tree_node);
+  return it == g_agent_host_instances.Get().end() ? nullptr : it->second;
 }
 
 bool ShouldCreateDevToolsForHost(RenderFrameHost* rfh) {
@@ -270,16 +265,27 @@ void RenderFrameDevToolsAgentHost::WebContentsCreated(
 RenderFrameDevToolsAgentHost::RenderFrameDevToolsAgentHost(
     FrameTreeNode* frame_tree_node)
     : DevToolsAgentHostImpl(frame_tree_node->devtools_frame_token().ToString()),
-      frame_tree_node_(frame_tree_node) {
+      frame_tree_node_(nullptr) {
+  SetFrameTreeNode(frame_tree_node);
   frame_host_ = frame_tree_node->current_frame_host();
   render_frame_alive_ = frame_host_ && frame_host_->IsRenderFrameLive();
-  WebContentsObserver::Observe(
-      WebContentsImpl::FromFrameTreeNode(frame_tree_node));
-
-  g_agent_host_instances.Get().push_back(this);
-  AddRef();  // Balanced in RenderFrameHostDestroyed.
-
+  AddRef();  // Balanced in DestroyOnRenderFrameGone.
   NotifyCreated();
+}
+
+void RenderFrameDevToolsAgentHost::SetFrameTreeNode(
+    FrameTreeNode* frame_tree_node) {
+  if (frame_tree_node_)
+    g_agent_host_instances.Get().erase(frame_tree_node_);
+  frame_tree_node_ = frame_tree_node;
+  if (frame_tree_node_) {
+    DCHECK(g_agent_host_instances.Get().find(frame_tree_node_) ==
+           g_agent_host_instances.Get().end());
+    g_agent_host_instances.Get()[frame_tree_node] = this;
+  }
+  WebContentsObserver::Observe(
+      frame_tree_node_ ? WebContentsImpl::FromFrameTreeNode(frame_tree_node_)
+                       : nullptr);
 }
 
 BrowserContext* RenderFrameDevToolsAgentHost::GetBrowserContext() {
@@ -372,11 +378,7 @@ void RenderFrameDevToolsAgentHost::InspectElement(
 }
 
 RenderFrameDevToolsAgentHost::~RenderFrameDevToolsAgentHost() {
-  RenderFrameDevToolsArray::iterator it =
-      std::find(g_agent_host_instances.Get().begin(),
-                g_agent_host_instances.Get().end(), this);
-  if (it != g_agent_host_instances.Get().end())
-    g_agent_host_instances.Get().erase(it);
+  SetFrameTreeNode(nullptr);
 }
 
 void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
@@ -400,10 +402,10 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
   NavigationHandleImpl* handle =
       static_cast<NavigationHandleImpl*>(navigation_handle);
-  NotifyNavigated(FindAgentHost(handle->frame_tree_node()));
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
   navigation_handles_.erase(handle);
+  NotifyNavigated();
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
@@ -479,7 +481,8 @@ void RenderFrameDevToolsAgentHost::RevokePolicy() {
 
   bool process_has_agents = false;
   RenderProcessHost* process_host = frame_host_->GetProcess();
-  for (RenderFrameDevToolsAgentHost* agent : g_agent_host_instances.Get()) {
+  for (const auto& ftn_agent : g_agent_host_instances.Get()) {
+    RenderFrameDevToolsAgentHost* agent = ftn_agent.second;
     if (!agent->IsAttached())
       continue;
     if (agent->frame_host_ && agent->frame_host_ != frame_host_ &&
@@ -544,8 +547,7 @@ void RenderFrameDevToolsAgentHost::DestroyOnRenderFrameGone() {
   ForceDetachAllClients();
   frame_host_ = nullptr;
   agent_ptr_.reset();
-  frame_tree_node_ = nullptr;
-  WebContentsObserver::Observe(nullptr);
+  SetFrameTreeNode(nullptr);
   Release();
 }
 
@@ -632,9 +634,8 @@ void RenderFrameDevToolsAgentHost::DidReceiveCompositorFrame() {
 }
 
 void RenderFrameDevToolsAgentHost::DisconnectWebContents() {
-  frame_tree_node_ = nullptr;
   navigation_handles_.clear();
-  WebContentsObserver::Observe(nullptr);
+  SetFrameTreeNode(nullptr);
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(nullptr);
@@ -646,8 +647,7 @@ void RenderFrameDevToolsAgentHost::ConnectWebContents(WebContents* wc) {
   RenderFrameHostImpl* host =
       static_cast<RenderFrameHostImpl*>(wc->GetMainFrame());
   DCHECK(host);
-  frame_tree_node_ = host->frame_tree_node();
-  WebContentsObserver::Observe(wc);
+  SetFrameTreeNode(host->frame_tree_node());
   UpdateFrameHost(host);
   // UpdateFrameHost may destruct |this|.
 }
