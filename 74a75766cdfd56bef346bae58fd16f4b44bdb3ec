@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "825c442c_424f471d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 4236,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T11:01:50Z",
+      "side": 1,
+      "message": "This early exit is there to prevent against spurious calls of didBecome/didResign. I think we can omit calling the coordinator here. Lookup the mentioned bug for details.",
+      "revId": "74a75766cdfd56bef346bae58fd16f4b44bdb3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83287ce6_d850343b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 4262,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T11:01:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "74a75766cdfd56bef346bae58fd16f4b44bdb3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f135c8c_51b11ecf",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T11:01:50Z",
+      "side": 1,
+      "message": "nit: GURL supports comparison with constants, so this should be written\n\n  webState-\u003eGetVisibleURL() \u003d\u003d kChromeUINewTabURL",
+      "range": {
+        "startLine": 343,
+        "startChar": 48,
+        "endLine": 343,
+        "endChar": 72
+      },
+      "revId": "74a75766cdfd56bef346bae58fd16f4b44bdb3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
