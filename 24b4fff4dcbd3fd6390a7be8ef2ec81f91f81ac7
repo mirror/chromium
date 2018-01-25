@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "083d58bc_532671ce",
+        "filename": "components/omnibox/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-25T19:40:01Z",
+      "side": 1,
+      "message": "I\u0027d prefer to introduce this one with whatever CL is going to actually use it.",
+      "revId": "24b4fff4dcbd3fd6390a7be8ef2ec81f91f81ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddeb081d_c20324b7",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-25T19:40:01Z",
+      "side": 1,
+      "message": "I don\u0027t think this will do what you want. You need to change this line instead:\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/omnibox_popup_model.cc?l\u003d294\u0026rcl\u003dd087fdebcc91f3d19f117e4b3666fe24572176bb",
+      "revId": "24b4fff4dcbd3fd6390a7be8ef2ec81f91f81ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4a5f35_5107c733",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-25T19:40:01Z",
+      "side": 1,
+      "message": "This puts us in a confusing state. kBookmarkIcon and kStarIcon are expressing the same thing in different ways as are Page/Http (and omnibox::kSearchIcon vs. vector_icons::kSearchIcon is especially confusing).\n\nCan we name the new icons kTouchableBookmarkIcon or omnibox::touchable::kBookmarkIcon or something along those lines?",
+      "revId": "24b4fff4dcbd3fd6390a7be8ef2ec81f91f81ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
