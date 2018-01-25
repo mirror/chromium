@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46ddf8ee_f2f7646a",
+        "filename": "third_party/WebKit/public/platform/WebScrollAnchorData.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-25T23:51:01Z",
+      "side": 1,
+      "message": "You want\n\n  ScrollAnchorData() : ScrollAnchorData(WebString(), WebFloatPoint(0, 0), 0); {}\n\nhere. As is, this doesn\u0027t initialize anything, and the ctor body creates an unnamed object of type ScrollAnchorData which then goes out of scope and doesn\u0027t do anything.\n\n(I assume this ctor is either not used or not covered by tests?)\n\n(ref crbug.com/805881)",
+      "revId": "2352f5672ed01cdbdd6f9fecb3fdd1a625a9fbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
