@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a824d1b6_26d73f7a",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-25T17:28:23Z",
+      "side": 0,
+      "message": "Good catch :)",
+      "parentUuid": "ec3ae106_7b635e59",
+      "revId": "f6e20f64fb9d6bc4045aea5b24de4ab0b8bfb455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc268c0_dde36329",
         "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f6e20f64fb9d6bc4045aea5b24de4ab0b8bfb455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2be0726_de174126",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-25T17:28:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "5bc268c0_dde36329",
+      "revId": "f6e20f64fb9d6bc4045aea5b24de4ab0b8bfb455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
