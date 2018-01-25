@@ -16,6 +16,23 @@
       "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a03f3d_530568c1",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-25T21:29:51Z",
+      "side": 1,
+      "message": "I wonder if doing this on Linux will give us full stacks with line numbers for tests.",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
