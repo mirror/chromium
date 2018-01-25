@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b21c40_c2c3d3d8",
+        "filename": "tools/perf/benchmarks/start_with_url.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-25T09:29:32Z",
+      "side": 1,
+      "message": "nit: break the string using parenthesis rather than +\n\nsee: https://google.github.io/styleguide/pyguide.html?showone\u003dLine_length#Line_length",
+      "revId": "ba3c1d9bc9b12872c6214124acbf8255a8837f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
