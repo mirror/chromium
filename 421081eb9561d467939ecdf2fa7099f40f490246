@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6b2c9da_d03b665a",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T14:07:24Z",
+      "side": 1,
+      "message": "This is components/signin, the ones above are components/google.",
+      "parentUuid": "ec5de7bf_63593eb6",
+      "range": {
+        "startLine": 19,
+        "startChar": 74,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a479ba_d214e5a3",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b86b524c_70dea9ab",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T14:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a479ba_d214e5a3",
+      "range": {
+        "startLine": 216,
+        "startChar": 53,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5efe6c64_ed45dfae",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d52cf6_0e905abe",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T14:07:24Z",
+      "side": 1,
+      "message": "Done, I\u0027m setting |mode| to 0, which is PROFILE_MODE_DEFAULT. I don\u0027t want to just remove the header, since that would be a behavior change everywhere where the false setting is used. Also added comments to describe the meaning of the |mode| parameters.",
+      "parentUuid": "5efe6c64_ed45dfae",
+      "range": {
+        "startLine": 324,
+        "startChar": 13,
+        "endLine": 324,
+        "endChar": 19
+      },
+      "revId": "421081eb9561d467939ecdf2fa7099f40f490246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
