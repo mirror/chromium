@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233ffec0_84e2401d",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "maybe null out *r here?",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873c2b03_bdde662a",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "same with this out paramter.",
+      "range": {
+        "startLine": 180,
+        "startChar": 49,
+        "endLine": 180,
+        "endChar": 64
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3f4ffc_88543462",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "nit: 80 cols",
+      "range": {
+        "startLine": 180,
+        "startChar": 80,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96e6af6_ec976816",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "Is this really an enum of some sort?  Document the acceptable values?",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56ccb9e_9621b9f2",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "see above.",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 41
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7b367a_812cae2a",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-25T17:44:34Z",
+      "side": 1,
+      "message": "what means this?",
+      "range": {
+        "startLine": 193,
+        "startChar": 34,
+        "endLine": 193,
+        "endChar": 62
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
