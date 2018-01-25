@@ -45,6 +45,30 @@
       "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42930d6d_f0469890",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T18:29:36Z",
+      "side": 1,
+      "message": "Aha! Found the bot [1], under the \"default\" master in\nhttps://ci.chromium.org/p/chromium/g/chromium.fyi/console\n\n-- this means 10.13 code will be compiled, but no tests\nrun.\n\n\n[1] https://ci.chromium.org/buildbot/chromium.fyi/Chromium%20Mac%2010.13/",
+      "parentUuid": "83a20647_a5ea63e8",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
