@@ -73,7 +73,6 @@ GPUInfo::GPUInfo()
       software_rendering(false),
       direct_rendering(true),
       sandboxed(false),
-      process_crash_count(0),
       in_process_gpu(true),
       passthrough_cmd_decoder(false),
       basic_info_state(kCollectInfoNone),
@@ -94,8 +93,18 @@ GPUInfo::GPUInfo(const GPUInfo& other) = default;
 
 GPUInfo::~GPUInfo() = default;
 
+bool GPUInfo::NeedsCompleteInfoCollection() const {
+#if defined(OS_MACOSX)
+  return gl_vendor.empty();
+#elif defined(OS_WIN)
+  return dx_diagnostics.values.empty() && dx_diagnostics.children.empty();
+#else
+  return false;
+#endif
+}
+
 const GPUInfo::GPUDevice& GPUInfo::active_gpu() const {
-  if (gpu.active)
+  if (gpu.active || secondary_gpus.empty())
     return gpu;
   for (const GPUDevice& secondary_gpu : secondary_gpus) {
     if (secondary_gpu.active)
@@ -105,7 +114,8 @@ const GPUInfo::GPUDevice& GPUInfo::active_gpu() const {
   return gpu;
 }
 
-void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
+void GPUInfo::EnumerateFields(Enumerator* enumerator,
+                              int gpu_crash_count) const {
   struct GPUInfoKnownFields {
     base::TimeDelta initialization_time;
     bool optimus;
@@ -131,7 +141,6 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
     bool software_rendering;
     bool direct_rendering;
     bool sandboxed;
-    int process_crash_count;
     bool in_process_gpu;
     bool passthrough_cmd_decoder;
     bool direct_composition;
@@ -192,7 +201,6 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
   enumerator->AddBool("softwareRendering", software_rendering);
   enumerator->AddBool("directRendering", direct_rendering);
   enumerator->AddBool("sandboxed", sandboxed);
-  enumerator->AddInt("processCrashCount", process_crash_count);
   enumerator->AddBool("inProcessGpu", in_process_gpu);
   enumerator->AddBool("passthroughCmdDecoder", passthrough_cmd_decoder);
   enumerator->AddBool("directComposition", direct_composition);
@@ -218,6 +226,8 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
   enumerator->AddInt64("systemVisual", system_visual);
   enumerator->AddInt64("rgbaVisual", rgba_visual);
 #endif
+  // |gpu_crash_count| is not part of GPUInfo.
+  enumerator->AddInt("processCrashCount", gpu_crash_count);
   enumerator->EndAuxAttributes();
 }
 
