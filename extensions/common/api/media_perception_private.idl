@@ -210,6 +210,46 @@ namespace mediaPerceptionPrivate {
     PacketLatency[]? packetLatency;
   };
 
+  // An estimate of the direction that the sound is coming from.
+  dictionary AudioLocalization {
+    // An angle in radians.
+    double? azimuthRadians;
+
+    // A probability distribution for the current snapshot in time that shows
+    // the likelihood of a sound source being at a particular angle.
+    double[]? azimuthScores;
+  };
+
+  // Spectrogram of an audio frame.
+  dictionary AudioSpectrogram {
+    double[]? values;
+  };
+
+  // Detection of human presence close to the microphone.
+  dictionary AudioHumanPresenceDetection {
+    // Indicates probability that a human has caused a sound close to the
+    // microphone.
+    double? humanPresenceLikelihood;
+
+    // Estimate of the noise spectrogram.
+    AudioSpectrogram? noiseSpectrogram;
+
+    // Spectrogram of an audio frame.
+    AudioSpectrogram? frameSpectrogram;
+  };
+
+  // Audio perception results for an audio frame.
+  dictionary AudioPerception {
+    // A timestamp in microseconds attached when this message was generated.
+    double? timestampUs;
+
+    // Audio localization results.
+    AudioLocalization? audioLocalization;
+
+    // Audio human presence detection results.
+    AudioHumanPresenceDetection? audioHumanPresenceDetection;
+  };
+
   dictionary MediaPerception {
     // The time the media perception data was emitted by the media processing
     // pipeline. This value will be greater than the timestamp stored within
@@ -219,6 +259,9 @@ namespace mediaPerceptionPrivate {
 
     // An array of framePerceptions.
     FramePerception[]? framePerceptions;
+
+    // An array of audio perceptions.
+    AudioPerception[]? audioPerceptions;
   };
 
   enum ImageFormat {
@@ -247,6 +290,9 @@ namespace mediaPerceptionPrivate {
 
     // The image frame data for the associated FramePerception object.
     ImageFrame? imageFrame;
+
+    // The audio perception results for an audio frame.
+    AudioPerception? audio_perception;
   };
 
   dictionary Diagnostics {

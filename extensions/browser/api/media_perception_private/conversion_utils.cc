@@ -12,6 +12,73 @@ namespace media_perception_private {
 
 namespace {
 
+AudioSpectrogram AudioSpectrogramProtoToIdl(
+    const mri::AudioSpectrogram& spectrogram) {
+  AudioSpectrogram spectrogram_result;
+  if (spectrogram.values_size() > 0) {
+    spectrogram_result.values = std::make_unique<std::vector<double>>();
+    for (const auto& value : spectrogram.values()) {
+      spectrogram_result.values->emplace_back(value);
+    }
+  }
+  return spectrogram_result;
+}
+
+AudioHumanPresenceDetection AudioHumanPresenceDetectionProtoToIdl(
+    const mri::AudioHumanPresenceDetection& detection) {
+  AudioHumanPresenceDetection detection_result;
+  if (detection.has_human_presence_likelihood()) {
+    detection_result.human_presence_likelihood =
+        std::make_unique<double>(detection.human_presence_likelihood());
+  }
+  if (detection.has_noise_spectrogram()) {
+    detection_result.noise_spectrogram = std::make_unique<AudioSpectrogram>(
+        AudioSpectrogramProtoToIdl(detection.noise_spectrogram()));
+  }
+  if (detection.has_frame_spectrogram()) {
+    detection_result.frame_spectrogram = std::make_unique<AudioSpectrogram>(
+        AudioSpectrogramProtoToIdl(detection.frame_spectrogram()));
+  }
+  return detection_result;
+}
+
+AudioLocalization AudioLocalizationProtoToIdl(
+    const mri::AudioLocalization& localization) {
+  AudioLocalization localization_result;
+  if (localization.has_azimuth_radians()) {
+    localization_result.azimuth_radians =
+        std::make_unique<double>(localization.azimuth_radians());
+  }
+  if (localization.azimuth_scores_size() > 0) {
+    localization_result.azimuth_scores =
+        std::make_unique<std::vector<double>>();
+    for (const auto& score : localization.azimuth_scores()) {
+      localization_result.azimuth_scores->emplace_back(score);
+    }
+  }
+  return localization_result;
+}
+
+AudioPerception AudioPerceptionProtoToIdl(
+    const mri::AudioPerception& perception) {
+  AudioPerception perception_result;
+  if (perception.has_timestamp_us()) {
+    perception_result.timestamp_us =
+        std::make_unique<double>(perception.timestamp_us());
+  }
+  if (perception.has_audio_localization()) {
+    perception_result.audio_localization = std::make_unique<AudioLocalization>(
+        AudioLocalizationProtoToIdl(perception.audio_localization()));
+  }
+  if (perception.has_audio_human_presence_detection()) {
+    perception_result.audio_human_presence_detection =
+        std::make_unique<AudioHumanPresenceDetection>(
+            AudioHumanPresenceDetectionProtoToIdl(
+                perception.audio_human_presence_detection()));
+  }
+  return perception_result;
+}
+
 std::unique_ptr<Point> PointProtoToIdl(const mri::Point& point) {
   std::unique_ptr<Point> point_result = std::make_unique<Point>();
   if (point.has_x())
@@ -211,6 +278,11 @@ PerceptionSample PerceptionSampleProtoToIdl(
     perception_sample_result.image_frame = std::make_unique<ImageFrame>(
         ImageFrameProtoToIdl(perception_sample.image_frame()));
   }
+  if (perception_sample.has_audio_perception()) {
+    perception_sample_result.audio_perception =
+        std::make_unique<AudioPerception>(
+            AudioPerceptionProtoToIdl(perception_sample.audio_perception()));
+  }
   return perception_sample_result;
 }
 
@@ -330,6 +402,16 @@ MediaPerception MediaPerceptionProtoToIdl(
           FramePerceptionProtoToIdl(frame_perception));
     }
   }
+
+  if (media_perception.audio_perception_size() > 0) {
+    media_perception_result.audio_perceptions =
+        std::make_unique<std::vector<AudioPerception>>();
+    for (const auto& audio_perception : media_perception.audio_perception()) {
+      media_perception_result.audio_perceptions->emplace_back(
+          AudioPerceptionProtoToIdl(audio_perception));
+    }
+  }
+
   return media_perception_result;
 }
 
