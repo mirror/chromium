@@ -56,21 +56,54 @@
         height: 24px;
         width: 24px;
       }
+
+      .search-box {
+        position: relative;
+        user-select: none;
+      }
+
+      .search-box-icon {
+        display: inline-block;
+        height: 1em;
+        left: 8px;
+        position: absolute;
+        right: 8px;
+        top: 6px;
+        user-select: none;
+        width: 1em;
+      }
+
+      .search-box-input {
+        text-indent: 2em;
+        width: 100%;
+      }
     </style>
-    <dialog is="cr-dialog" id="dialog">
+    <dialog is="cr-dialog" id="dialog" on-cancel="onCancel_">
       <div slot="title">
         <span>$i18n{destinationSearchTitle}</span>
       </div>
       <div slot="body" scrollable>
+        <div class="search-box">
+          <img src="../images/search.png" class="search-box-icon" alt="">
+          <input type="text" class="search-box-input"
+              placeholder="$i18n{searchBoxPlaceholder}"
+              on-input="onSearchBoxInput_">
+        </div>
+        <print-preview-destination-list
+            destinations="[[recentDestinationList_]]"
+            search-query="[[searchQuery_]]"
+            title="$i18n{recentDestinationsTitle}"
+            on-destination-selected="onDestinationSelected_">
+        </print-preview-destination-list>
         <print-preview-destination-list destinations="[[destinations_]]"
             has-action-link=true loading-destinations="[[loadingDestinations_]]"
-            title="$i18n{printDestinationsTitle}">
+            search-query="[[searchQuery_]]"
+            title="$i18n{printDestinationsTitle}"
+            on-destination-selected="onDestinationSelected_">
         </print-preview-destination-list>
       </div>
       <div slot="button-container">
-        <button class="cancel-button" on-tap="onCancelButtonTap_">
-          $i18n{cancel}
-        </button>
+        <button class="cancel-button" on-tap="onCancel_">$i18n{cancel}</button>
       </div>
       <div class="cloudprint-promo" slot="footer">
         <img src="../images/cloud.png" class="icon" alt="">

@@ -11,6 +11,11 @@
 <dom-module id="print-preview-destination-list">
   <template>
     <style include="print-preview-shared action-link cr-hidden-style throbber">
+      :host {
+        padding: 0 14px 18px;
+        user-select: none;
+      }
+
       :host > header {
         -webkit-padding-end: 19px;
         -webkit-padding-start: 0;
@@ -177,9 +182,11 @@
       </div>
     </header>
     <ul>
-      <template is="dom-repeat" items="[[destinations]]">
+      <template is="dom-repeat" items="[[displayedDestinations_]]">
         <li class="destination-list-item"
-             hidden$="[[isDestinationHidden_(index, showAll_)]]">
+             title="[[item.displayName]]"
+             hidden$="[[isDestinationHidden_(index, showAll_)]]"
+             on-tap="onDestinationSelected_">
           <img class="destination-list-item-icon" alt=""
               src="[[item.iconUrl]]" srcset="[[item.srcSet]]">
           <span class="destination-list-item-name">
@@ -224,7 +231,7 @@
       <button class="show-all-button" on-tap="onShowAllTap_">
         $i18n{showAllButtonText}
       </button>
-      <span class="total">[[totalDestinations_(destinations)]]</span>
+      <span class="total">[[totalDestinations_(displayedDestinations_)]]</span>
     </footer>
   </template>
   <script src="destination_list.js"></script>
