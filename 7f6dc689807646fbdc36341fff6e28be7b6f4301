@@ -16,6 +16,24 @@
       "revId": "7f6dc689807646fbdc36341fff6e28be7b6f4301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6429a8_4f2c8f00",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 34
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T01:17:25Z",
+      "side": 1,
+      "message": "I have most if not all of the same questions :).",
+      "parentUuid": "8d92d43b_582dc5d7",
+      "revId": "7f6dc689807646fbdc36341fff6e28be7b6f4301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
