@@ -161,6 +161,8 @@
 /python_26
 /pywebsocket/src
 /pywebsocket/src
+/qemu/bin
+/qemu/share
 /re2/src
 /requests/src
 /robolectric/lib/
