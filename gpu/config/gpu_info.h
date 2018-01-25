@@ -129,6 +129,15 @@ struct GPU_EXPORT GPUInfo {
   GPUInfo(const GPUInfo& other);
   ~GPUInfo();
 
+  // This is platform specific. At the moment:
+  //   1) on MacOSX, if GL strings are missing, this returns true;
+  //   2) on Windows, if DxDiagnostics are missing, this returns true;
+  //   3) all other platforms, this returns false.
+  bool NeedsCompleteInfoCollection() const;
+
+  // The currently active gpu.
+  const GPUDevice& active_gpu() const;
+
   // The amount of time taken to get from the process starting to the message
   // loop being pumped.
   base::TimeDelta initialization_time;
@@ -144,9 +153,6 @@ struct GPU_EXPORT GPUInfo {
 
   // Secondary GPUs, for example, the integrated GPU in a dual GPU machine.
   std::vector<GPUDevice> secondary_gpus;
-
-  // The currently active gpu.
-  const GPUDevice& active_gpu() const;
 
   // The vendor of the graphics driver currently installed.
   std::string driver_vendor;
@@ -212,9 +218,6 @@ struct GPU_EXPORT GPUInfo {
 
   // Whether the gpu process is running in a sandbox.
   bool sandboxed;
-
-  // Number of GPU process crashes recorded.
-  int process_crash_count;
 
   // True if the GPU is running in the browser process instead of its own.
   bool in_process_gpu;
@@ -298,7 +301,7 @@ struct GPU_EXPORT GPUInfo {
   };
 
   // Outputs the fields in this structure to the provided enumerator.
-  void EnumerateFields(Enumerator* enumerator) const;
+  void EnumerateFields(Enumerator* enumerator, int gpu_crash_count) const;
 };
 
 }  // namespace gpu
