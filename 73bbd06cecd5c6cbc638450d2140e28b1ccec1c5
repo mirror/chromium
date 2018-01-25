@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0359b22a_85e54f64",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "Can you move this to the header with some more details?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb55c99_d0178edc",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "This too.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500f97c2_ecab72c9",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "If the item\u0027s |shortcut_key_codes| is empty?",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8252599_8ada511b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "You have at least two copies here: one at line 53, and another one here. You can do either:\n- On line 53 make_unique\u003c\u003e the entry, and then move it and emplace it here.\n- Or, make_unique\u003c\u003e and emplace rightaway on line 53, and access the element using shortcut_items_.back().",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 57
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4709394b_4fb2c1f2",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "Hmmm, so in all cases we want to make_unique\u003c\u003e and emplace the item, but in the above branch we need to modify shortcut_items_.back() I would unify this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 56
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50768e69_adb2eaac",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_model_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "Please document this, i.e. when it happens and what changes, and maybe what should clients do.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebef22bf_d3f21e08",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "As discussed offline, this model seems like an overkill. Let\u0027s simplify.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966be56f_c1d8c097",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "It would be better to override `void WindowClosing()` and null g_ksv_view there if it\u0027s equal to `this`.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852ae803_24754acb",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T18:12:31Z",
+      "side": 1,
+      "message": "If this is only meant to be constructed by Show() then maybe we should make the constructor private.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "73bbd06cecd5c6cbc638450d2140e28b1ccec1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
