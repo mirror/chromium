@@ -240,6 +240,46 @@ TEST(RuleSetTest, findBestRuleSetAndAdd_PlaceholderPseudo) {
   ASSERT_EQ(2u, rules->size());
 }
 
+TEST(RuleSetTest, findBestRuleSetAndAdd_PseudoMatches) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(".a :matches(.b+.c, .d>:matches(.e, .f)) { }");
+  RuleSet& rule_set = helper.GetRuleSet();
+  {
+    AtomicString str("c");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+  {
+    AtomicString str("e");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+  {
+    AtomicString str("f");
+    const TerminatedArray<RuleData>* rules = rule_set.ClassRules(str);
+    ASSERT_EQ(1u, rules->size());
+    ASSERT_EQ(str, rules->at(0).Selector().Value());
+  }
+}
+
+TEST(RuleSetTest, findBestRuleSetAndAdd_PseudoMatchesTooLarge) {
+  CSSTestHelper helper;
+
+  helper.AddCSSRules(
+      ":matches(.a, .b, .c, .d) + :matches(.e, .f, .g, .h) + "
+      ":matches(.i, .j, .k, .l) + :matches(.m, .n, .o, .p) + "
+      ":matches(.q, .r, .s, .t) + :matches(.u, .v, .w, .w) + "
+      ":matches(.x, .y, .z, #a) + :matches(#b, #c, #d, #e) + "
+      ":matches(#f, #g, #h, #i) + :matches(#j, #k, #l, #m) + "
+      "#n",
+      true);
+  RuleSet& rule_set = helper.GetRuleSet();
+  ASSERT_EQ(0u, rule_set.RuleCount());
+}
+
 TEST(RuleSetTest, SelectorIndexLimit) {
   StringBuilder builder;
 

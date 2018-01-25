@@ -182,7 +182,9 @@ class StyleRulePage : public StyleRuleBase {
 
   ~StyleRulePage();
 
-  const CSSSelector* Selector() const { return selector_list_.First(); }
+  const CSSSelector* Selector() const {
+    return selector_list_.FirstInMatchesTransform();
+  }
   const CSSPropertyValueSet& Properties() const { return *properties_; }
   MutableCSSPropertyValueSet& MutableProperties();
 

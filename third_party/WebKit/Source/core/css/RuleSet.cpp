@@ -259,8 +259,9 @@ void RuleSet::AddChildRules(const HeapVector<Member<StyleRuleBase>>& rules,
       StyleRule* style_rule = ToStyleRule(rule);
 
       const CSSSelectorList& selector_list = style_rule->SelectorList();
-      for (const CSSSelector* selector = selector_list.First(); selector;
-           selector = selector_list.Next(*selector)) {
+      for (const CSSSelector* selector =
+               selector_list.FirstInMatchesTransform();
+           selector; selector = selector_list.Next(*selector)) {
         size_t selector_index = selector_list.SelectorIndex(*selector);
         if (selector->HasDeepCombinatorOrShadowPseudo()) {
           deep_combinator_or_shadow_pseudo_rules_.push_back(
@@ -319,7 +320,9 @@ void RuleSet::AddRulesFromSheet(StyleSheetContents* sheet,
 }
 
 void RuleSet::AddStyleRule(StyleRule* rule, AddRuleFlags add_rule_flags) {
-  for (size_t selector_index = 0; selector_index != kNotFound;
+  for (size_t selector_index = rule->SelectorList().SelectorIndex(
+           *rule->SelectorList().FirstInMatchesTransform());
+       selector_index != kNotFound;
        selector_index =
            rule->SelectorList().IndexOfNextSelectorAfter(selector_index))
     AddRule(rule, selector_index, add_rule_flags);

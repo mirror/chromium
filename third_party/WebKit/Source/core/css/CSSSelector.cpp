@@ -1055,6 +1055,14 @@ bool CSSSelector::NeedsUpdatedDistribution() const {
       *this);
 }
 
+bool CSSSelector::HasPseudoMatches() const {
+  for (const CSSSelector* s = this; s; s = s->TagHistory()) {
+    if (s->GetPseudoType() == CSSSelector::kPseudoMatches)
+      return true;
+  }
+  return false;
+}
+
 CSSSelector::RareData::RareData(const AtomicString& value)
     : matching_value_(value),
       serializing_value_(value),
