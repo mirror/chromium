@@ -660,6 +660,9 @@ static void Write(TextStream& ts,
     }
   }
 
+  if (layer.NeedsRepaint())
+    ts << " needsRepaint";
+
   ts << "\n";
 
   if (paint_phase != kLayerPaintPhaseBackground)
