@@ -192,11 +192,18 @@ void SplitViewController::SnapWindow(aura::Window* window,
   else if (right_window_)
     state_ = RIGHT_SNAPPED;
 
-  StartObserving(window);
+  // SplitViewDivider needs to observe the window before its activation so that
+  // the window can be placed correctly on top of the snapped windows.
+  split_view_divider_->AddObservedWindow(window);
+
   const wm::WMEvent event((snap_position == LEFT) ? wm::WM_EVENT_SNAP_LEFT
                                                   : wm::WM_EVENT_SNAP_RIGHT);
-  wm::GetWindowState(window)->OnWMEvent(&event);
   wm::ActivateWindow(window);
+  wm::GetWindowState(window)->OnWMEvent(&event);
+
+  // SplitViewController needs to observe the window after its activation to
+  // avoid get unnecessary notification during window activation and snapping.
+  StartObserving(window);
 
   // Stack the other snapped window below the current active window so that
   // the snapped two windows are always the top two windows while resizing.
@@ -554,7 +561,6 @@ void SplitViewController::StartObserving(aura::Window* window) {
   if (window && !window->HasObserver(this)) {
     window->AddObserver(this);
     wm::GetWindowState(window)->AddObserver(this);
-    split_view_divider_->AddObservedWindow(window);
   }
 }
 
