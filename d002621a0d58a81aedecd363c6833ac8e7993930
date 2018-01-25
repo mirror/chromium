@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419e1f95_af622724",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5795,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-25T01:10:43Z",
+      "side": 1,
+      "message": "Note: this append triggered the DCHECK failure in SBRByPts l.90 before this change.",
+      "range": {
+        "startLine": 5795,
+        "startChar": 2,
+        "endLine": 5795,
+        "endChar": 26
+      },
+      "revId": "d002621a0d58a81aedecd363c6833ac8e7993930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
