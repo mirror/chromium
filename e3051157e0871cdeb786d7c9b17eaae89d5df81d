@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bb1c549_1c87cb65",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Are you sure we\u0027ll always have a frame?",
+      "range": {
+        "startLine": 2458,
+        "startChar": 7,
+        "endLine": 2458,
+        "endChar": 20
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b19a46_dc6e6b22",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "This is public only for tests. Make it private and use the FRIEND_TEST_ALL_PREFIXES macro.",
+      "range": {
+        "startLine": 381,
+        "startChar": 7,
+        "endLine": 381,
+        "endChar": 46
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4138df3_d97a3e4c",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "No need for this to be public.",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 47
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87c60f3_5b5ef667",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "This should be FocusedEditable rather than just Editable",
+      "range": {
+        "startLine": 487,
+        "startChar": 7,
+        "endLine": 487,
+        "endChar": 41
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0acb550_2de2d365",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Use VisualViewport::ViewportToRootFrame",
+      "range": {
+        "startLine": 1177,
+        "startChar": 10,
+        "endLine": 1177,
+        "endChar": 29
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a9c00f_c010284d",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Why the union? Shouldn\u0027t the carret already be bounded by the element bounds?",
+      "range": {
+        "startLine": 1180,
+        "startChar": 25,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c11c7a7_919c5c55",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "This is hard to follow, it looks like you\u0027re just making sure maximal_rect doesn\u0027t spill outside the frame rect? In that case:\n\nIntRect frame_rect \u003d IntRect(IntPoint(), frame_view-\u003eSize());\nmaximal_rect.Intersect(frame_rect);",
+      "range": {
+        "startLine": 1182,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 3
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489f62e3_ab10843b",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "DCHECK this at the top.",
+      "range": {
+        "startLine": 1193,
+        "startChar": 2,
+        "endLine": 1193,
+        "endChar": 16
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae8c958_e84ec64c",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Use rect_to_scroll here.",
+      "range": {
+        "startLine": 1202,
+        "startChar": 33,
+        "endLine": 1202,
+        "endChar": 45
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7785e85c_06dacdf6",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Why are you using proportions here (i.e. dividing by the maximal_rect size)? Couldn\u0027t you just store the caret_rect with location relative to maximal_rect (unscaled) and size as-is?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 51,
+        "endLine": 1204,
+        "endChar": 52
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3370ea2c_20b3600c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Any reason for this to pass through FrameView? Lets just call GetFrame().Client-\u003eApplyFinalZoomForRecursiveScroll()",
+      "range": {
+        "startLine": 753,
+        "startChar": 7,
+        "endLine": 753,
+        "endChar": 69
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a626ab3e_79b6836e",
+        "filename": "third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "This comment should be for zoom_into_final_rect and should say:\n\n\"If true, once the root frame scrolls into view it will zoom into the final scroll rect\"\n\nI\u0027m a bit confused as to the \"final scroll rect\", I\u0027m assuming it has something to do with relative_rect_of_interest? You should clarify in comments.",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea409978_69d2e805",
+        "filename": "third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "Please comment what this rect contains (and in which coordinate space) and what it\u0027s used for.",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8843a483_6c0f3d86",
+        "filename": "third_party/WebKit/public/web/WebFrameWidget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-25T17:37:47Z",
+      "side": 1,
+      "message": "nit: editable element",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
