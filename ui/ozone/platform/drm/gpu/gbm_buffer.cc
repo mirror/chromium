@@ -27,6 +27,9 @@
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 
+static_assert(gfx::NativePixmapPlane::kNoModifier == DRM_FORMAT_MOD_INVALID,
+              "mismatch");
+
 namespace ui {
 
 GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
