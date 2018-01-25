@@ -85,6 +85,7 @@ HOWTOs:
 
 
 Modifications:
+- Added support for mips64el.
 - Converted to utf-8 with: vim +"argdo write ++enc=utf-8" *.h *.c
 - Added support for android.
 - Use NULL instead of static_cast<uintptr_t>(0) in stack_trace_table.cc,
