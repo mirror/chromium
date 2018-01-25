@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2fa19fbd_6b002f1a",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-25T23:47:19Z",
+      "side": 1,
+      "message": "Added more comments both in this method and in background_loader_offliner.h file.",
+      "parentUuid": "ec50c672_aab33f58",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "9dbdde85ae0c637985cfb09aedb9792f5b9e5281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de1378e_2d414189",
         "filename": "components/offline_pages/content/background_loader/background_loader_contents.cc",
         "patchSetId": 6
