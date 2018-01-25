@@ -548,6 +548,7 @@ class CORE_EXPORT Node : public EventTarget {
   IntRect PixelSnappedBoundingBox() const {
     return PixelSnappedIntRect(BoundingBox());
   }
+  LayoutRect BoundingBoxForScrollIntoView() const;
 
   unsigned NodeIndex() const;
 
