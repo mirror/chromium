@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "14bab545_31cd0a96",
+        "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:02:41Z",
+      "side": 1,
+      "message": "nit: elim blank line here",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78415a7f_0bbf185a",
+        "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:02:41Z",
+      "side": 1,
+      "message": "combine ifs",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210fa283_23d86dd7",
+        "filename": "chromeos/network/onc/onc_translator_shill_to_onc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-25T21:02:41Z",
+      "side": 1,
+      "message": "combine ifs",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18dbc3d_08f005c1",
         "filename": "chromeos/test/data/network/shill_wifi_eap_ttls_with_password_variable.json",
         "patchSetId": 1
