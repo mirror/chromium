@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "06b9cc7f_f8706a69",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T00:23:11Z",
+      "side": 1,
+      "message": "Why do you need the override here? Isn\u0027t the default return value false?",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 14
+      },
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d57c29b_0a73396f",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 5
@@ -30,6 +53,29 @@
       "writtenOn": "2018-01-25T00:15:28Z",
       "side": 1,
       "message": "nit: maybe not in this CL, but it will be good to add some UMAs here to track the number of downloads that was intercepted",
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca47f84_4bf3af88",
+        "filename": "content/public/browser/download_manager_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T00:23:11Z",
+      "side": 1,
+      "message": "Document return type.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 18
+      },
       "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
