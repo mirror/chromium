@@ -283,6 +283,30 @@
       "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4875bc65_8162e094",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-25T07:54:12Z",
+      "side": 1,
+      "message": "Please resolve this before landing this CL. The Mirror feature should be only toggled from AccountConsistencyModeManager. We also need to fix all the other places that use an incorrect code, if any.\n\nAs a side note, Mirror is not generally supported on ChromeOS currently. If this is a new feature, do you have a design document? Also the timing is a bit unfortunate, because the sign-in team is currently very busy with multiple launches (including Mirror for child accounts on ChromeOS), and the code as so many moving pieces that it won\u0027t be easy to do more in parallel, unless we plan carefully.",
+      "parentUuid": "72534f2b_80980ae3",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
