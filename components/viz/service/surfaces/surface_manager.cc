@@ -27,11 +27,25 @@
 namespace viz {
 namespace {
 
-// Maximum bucket size for the UMA stat.
-constexpr int kUmaStatMax = 10;
+const char kUmaRemovedTemporaryReference[] =
+    "Compositing.SurfaceManager.RemovedTemporaryReference";
 
-const char kUmaNumOldTemporaryReferences[] =
-    "Compositing.SurfaceManager.NumOldTemporaryReferences";
+const char* ToString(SurfaceManager::RemovedReason reason) {
+  switch (reason) {
+    case SurfaceManager::RemovedReason::REPLACED:
+      return "RemovedReason::REPLACED";
+    case SurfaceManager::RemovedReason::EXPIRED:
+      return "RemovedReason::EXPIRED";
+    case SurfaceManager::RemovedReason::SKIPPED:
+      return "RemovedReason::SKIPPED";
+    case SurfaceManager::RemovedReason::DROPPED:
+      return "RemovedReason::DROPPED";
+    case SurfaceManager::RemovedReason::INVALIDATED:
+      return "RemovedReason::INVALIDATED";
+    default:
+      return "X";
+  }
+}
 
 }  // namespace
 
@@ -50,15 +64,9 @@ SurfaceManager::SurfaceManager(uint32_t number_of_frames_to_activation_deadline)
       weak_factory_(this) {
   thread_checker_.DetachFromThread();
 
-    // Android WebView doesn't have a task runner and doesn't need the timer.
-    if (base::SequencedTaskRunnerHandle::IsSet()) {
-      temporary_reference_timer_.Start(
-          FROM_HERE, base::TimeDelta::FromSeconds(10), this,
-          &SurfaceManager::MarkOldTemporaryReferences);
-    }
-    // TODO(kylechar): After collecting UMA stats on the number of old temporary
-    // references, we may want to turn the timer off when there are no temporary
-    // references to avoid waking the thread unnecessarily.
+  // Android WebView doesn't have a task runner and doesn't need the timer.
+  if (base::SequencedTaskRunnerHandle::IsSet())
+    expire_timer_.emplace();
 }
 
 SurfaceManager::~SurfaceManager() {
@@ -167,7 +175,7 @@ void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
   }
 
   for (auto& surface_id : temp_refs_to_clear)
-    RemoveTemporaryReference(surface_id, false);
+    RemoveTemporaryReference(surface_id, RemovedReason::INVALIDATED);
 
   GarbageCollectSurfaces();
 }
@@ -223,7 +231,7 @@ void SurfaceManager::DropTemporaryReference(const SurfaceId& surface_id) {
   if (!HasTemporaryReference(surface_id))
     return;
 
-  RemoveTemporaryReference(surface_id, false);
+  RemoveTemporaryReference(surface_id, RemovedReason::DROPPED);
 }
 
 void SurfaceManager::GarbageCollectSurfaces() {
@@ -323,7 +331,7 @@ void SurfaceManager::AddSurfaceReferenceImpl(const SurfaceId& parent_id,
   references_[child_id].parents.insert(parent_id);
 
   if (HasTemporaryReference(child_id))
-    RemoveTemporaryReference(child_id, true);
+    RemoveTemporaryReference(child_id, RemovedReason::REPLACED);
 }
 
 void SurfaceManager::RemoveSurfaceReferenceImpl(const SurfaceId& parent_id,
@@ -367,15 +375,27 @@ void SurfaceManager::AddTemporaryReference(const SurfaceId& surface_id) {
   temporary_references_[surface_id].owner = base::Optional<FrameSinkId>();
   temporary_reference_ranges_[surface_id.frame_sink_id()].push_back(
       surface_id.local_surface_id());
+
+  // Start timer to expire temporary references if it's not running.
+  if (expire_timer_ && !expire_timer_->IsRunning()) {
+    LOG(ERROR) << "Start timer.";
+    expire_timer_->Start(FROM_HERE, base::TimeDelta::FromSeconds(10), this,
+                         &SurfaceManager::MarkOldTemporaryReferences);
+  }
 }
 
 void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
-                                              bool remove_range) {
+                                              RemovedReason reason) {
   DCHECK(HasTemporaryReference(surface_id));
 
   const FrameSinkId& frame_sink_id = surface_id.frame_sink_id();
   std::vector<LocalSurfaceId>& frame_sink_temp_refs =
       temporary_reference_ranges_[frame_sink_id];
+
+  // If the temporary reference to |surface_id| is being removed because it is
+  // replaced by a surface reference, then we want to remove older temporary
+  // references with the same FrameSinkId.
+  const bool remove_range = (reason == RemovedReason::REPLACED);
 
   // Find the iterator to the range tracking entry for |surface_id|. Use that
   // iterator and |remove_range| to find the right begin and end iterators for
@@ -388,14 +408,32 @@ void SurfaceManager::RemoveTemporaryReference(const SurfaceId& surface_id,
   auto end_iter = surface_id_iter + 1;
 
   // Remove temporary references and range tracking information.
-  for (auto iter = begin_iter; iter != end_iter; ++iter)
+  for (auto iter = begin_iter; iter != end_iter; ++iter) {
     temporary_references_.erase(SurfaceId(frame_sink_id, *iter));
+
+    // If we are removing a range of N temporary references, then the first N-1
+    // are removed because they are being skipped and the last is removed
+    // because it is being replaced.
+    const bool was_skipped = (*iter != surface_id.local_surface_id());
+    UMA_HISTOGRAM_ENUMERATION(kUmaRemovedTemporaryReference,
+                              was_skipped ? RemovedReason::SKIPPED : reason,
+                              RemovedReason::COUNT);
+    LOG(ERROR) << SurfaceId(frame_sink_id, *iter) << " "
+               << ToString(was_skipped ? RemovedReason::SKIPPED : reason);
+  }
   frame_sink_temp_refs.erase(begin_iter, end_iter);
 
   // If last temporary reference is removed for |frame_sink_id| then cleanup
   // range tracking map entry.
   if (frame_sink_temp_refs.empty())
     temporary_reference_ranges_.erase(frame_sink_id);
+
+  // Stop the timer if there are no temporary references.
+  if (temporary_references_.empty() && expire_timer_ &&
+      expire_timer_->IsRunning()) {
+    LOG(ERROR) << "Stop timer.";
+    expire_timer_->Stop();
+  }
 }
 
 Surface* SurfaceManager::GetLatestInFlightSurface(
@@ -450,10 +488,8 @@ Surface* SurfaceManager::GetLatestInFlightSurface(
 }
 
 void SurfaceManager::MarkOldTemporaryReferences() {
-  if (temporary_references_.empty()) {
-    UMA_HISTOGRAM_EXACT_LINEAR(kUmaNumOldTemporaryReferences, 0, kUmaStatMax);
+  if (temporary_references_.empty())
     return;
-  }
 
   std::vector<SurfaceId> temporary_references_to_delete;
   for (auto& map_entry : temporary_references_) {
@@ -471,14 +507,8 @@ void SurfaceManager::MarkOldTemporaryReferences() {
     }
   }
 
-  // This number would ideally always be zero always but there is potential for
-  // a frame sink to get assigned a temporary reference and never use it.
-  UMA_HISTOGRAM_EXACT_LINEAR(kUmaNumOldTemporaryReferences,
-                             temporary_references_to_delete.size(),
-                             kUmaStatMax);
-
   for (auto& surface_id : temporary_references_to_delete)
-    RemoveTemporaryReference(surface_id, false);
+    RemoveTemporaryReference(surface_id, RemovedReason::EXPIRED);
 }
 
 Surface* SurfaceManager::GetSurfaceForId(const SurfaceId& surface_id) {
