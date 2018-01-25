@@ -53,8 +53,7 @@
                           frame:(CGRect)frame {
   InfoBarView* infoBarView;
   _translateInfoBarDelegate = delegate->AsTranslateInfoBarDelegate();
-  infoBarView =
-      [[InfoBarView alloc] initWithFrame:frame delegate:self.delegate];
+  infoBarView = [InfoBarView infoBarViewWithFrame:frame delegate:self.delegate];
   // Icon
   gfx::Image icon = _translateInfoBarDelegate->GetIcon();
   if (!icon.IsEmpty())

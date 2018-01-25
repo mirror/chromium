@@ -60,7 +60,7 @@ ConfirmInfoBarDelegate::InfoBarButton UITagToButton(NSUInteger tag) {
                           frame:(CGRect)frame {
   _confirmInfobarDelegate = delegate->AsConfirmInfoBarDelegate();
   InfoBarView* infoBarView =
-      [[InfoBarView alloc] initWithFrame:frame delegate:self.delegate];
+      [InfoBarView infoBarViewWithFrame:frame delegate:self.delegate];
   // Model data.
   gfx::Image modelIcon = _confirmInfobarDelegate->GetIcon();
   int buttons = _confirmInfobarDelegate->GetButtons();

@@ -12,7 +12,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface InfoBarView (Testing)
+@interface LegacyInfoBarView (Testing)
 - (CGFloat)buttonsHeight;
 - (CGFloat)buttonMargin;
 - (CGFloat)computeRequiredHeightAndLayoutSubviews:(BOOL)layout;
@@ -28,14 +28,14 @@ namespace {
 const int kShortStringLength = 4;
 const int kLongStringLength = 1000;
 
-class InfoBarViewTest : public PlatformTest {
+class LegacyInfoBarViewTest : public PlatformTest {
  protected:
   void SetUp() override {
     PlatformTest::SetUp();
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    infobarView_ =
-        [[InfoBarView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 0)
-                                  delegate:NULL];
+    infobarView_ = [[LegacyInfoBarView alloc]
+        initWithFrame:CGRectMake(0, 0, screenWidth, 0)
+             delegate:NULL];
     [infobarView_ addCloseButtonWithTag:0 target:nil action:nil];
   }
 
@@ -79,27 +79,27 @@ class InfoBarViewTest : public PlatformTest {
     }
   }
 
-  InfoBarView* infobarView_;
+  LegacyInfoBarView* infobarView_;
 };
 
-TEST_F(InfoBarViewTest, TestLayoutWithNoLabel) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithNoLabel) {
   // Do not call -addLabel: to test the case when there is no label.
   EXPECT_EQ(MinimumInfobarHeight(), InfobarHeight());
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithShortLabel) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithShortLabel) {
   [infobarView_ addLabel:ShortRandomString()];
   EXPECT_EQ(MinimumInfobarHeight(), InfobarHeight());
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithLongLabel) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithLongLabel) {
   [infobarView_ addLabel:LongRandomString()];
   EXPECT_LT(MinimumInfobarHeight(), InfobarHeight());
   EXPECT_EQ(0,
             [infobarView_ heightThatFitsButtonsUnderOtherWidgets:0 layout:NO]);
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithShortButtons) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithShortButtons) {
   [infobarView_ addLabel:ShortRandomString()];
   [infobarView_ addButton1:ShortRandomString()
                       tag1:0
@@ -112,7 +112,7 @@ TEST_F(InfoBarViewTest, TestLayoutWithShortButtons) {
             [infobarView_ heightThatFitsButtonsUnderOtherWidgets:0 layout:NO]);
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithOneLongButtonAndOneShortButton) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithOneLongButtonAndOneShortButton) {
   [infobarView_ addLabel:ShortRandomString()];
   [infobarView_ addButton1:LongRandomString()
                       tag1:0
@@ -126,20 +126,20 @@ TEST_F(InfoBarViewTest, TestLayoutWithOneLongButtonAndOneShortButton) {
             [infobarView_ heightThatFitsButtonsUnderOtherWidgets:0 layout:NO]);
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithShortLabelAndShortButton) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithShortLabelAndShortButton) {
   [infobarView_ addLabel:ShortRandomString()];
   [infobarView_ addButton:ShortRandomString() tag:0 target:nil action:nil];
   EXPECT_EQ(MinimumInfobarHeight(), InfobarHeight());
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithShortLabelAndLongButton) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithShortLabelAndLongButton) {
   [infobarView_ addLabel:ShortRandomString()];
   [infobarView_ addButton:LongRandomString() tag:0 target:nil action:nil];
   EXPECT_EQ(MinimumInfobarHeight() + ButtonsHeight() + ButtonMargin(),
             InfobarHeight());
 }
 
-TEST_F(InfoBarViewTest, TestLayoutWithLongLabelAndLongButtons) {
+TEST_F(LegacyInfoBarViewTest, TestLayoutWithLongLabelAndLongButtons) {
   [infobarView_ addLabel:LongRandomString()];
   [infobarView_ addButton1:ShortRandomString()
                       tag1:0
@@ -150,10 +150,10 @@ TEST_F(InfoBarViewTest, TestLayoutWithLongLabelAndLongButtons) {
   EXPECT_LT(MinimumInfobarHeight() + ButtonsHeight() * 2, InfobarHeight());
 }
 
-TEST_F(InfoBarViewTest, TestLinkDetection) {
+TEST_F(LegacyInfoBarViewTest, TestLinkDetection) {
   [infobarView_ addLabel:ShortRandomString()];
-  NSString* linkFoo = [InfoBarView stringAsLink:@"foo" tag:1];
-  NSString* linkBar = [InfoBarView stringAsLink:@"bar" tag:2];
+  NSString* linkFoo = [LegacyInfoBarView stringAsLink:@"foo" tag:1];
+  NSString* linkBar = [LegacyInfoBarView stringAsLink:@"bar" tag:2];
   std::vector<std::pair<NSUInteger, NSRange>> ranges;
   // No link.
   TestLinkDetectionHelper(@"", @"", ranges);
