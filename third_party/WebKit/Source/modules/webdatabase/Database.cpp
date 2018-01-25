@@ -248,7 +248,7 @@ Database::Database(DatabaseContext* database_context,
     name_ = "";
 
   {
-    MutexLocker locker(GuidMutex());
+    RecursiveMutexLocker locker(GuidMutex());
     guid_ = GuidForOriginAndName(GetSecurityOrigin()->ToString(), name);
     GuidCount().insert(guid_);
   }
@@ -373,7 +373,7 @@ void Database::InProgressTransactionCompleted() {
 }
 
 void Database::ScheduleTransaction() {
-  DCHECK(!transaction_in_progress_mutex_.TryLock());  // Locked by caller.
+  DCHECK(!transaction_in_progress_mutex_.Locked());  // Locked by caller.
   SQLTransactionBackend* transaction = nullptr;
 
   if (is_transaction_queue_enabled_ && !transaction_queue_.IsEmpty())
@@ -424,7 +424,7 @@ void Database::CloseDatabase() {
   // See comment at the top this file regarding calling removeOpenDatabase().
   DatabaseTracker::Tracker().RemoveOpenDatabase(this);
   {
-    MutexLocker locker(GuidMutex());
+    RecursiveMutexLocker locker(GuidMutex());
 
     DCHECK(GuidCount().Contains(guid_));
     if (GuidCount().erase(guid_)) {
@@ -490,7 +490,7 @@ bool Database::PerformOpenAndVerify(bool should_set_version_in_new_database,
 
   String current_version;
   {
-    MutexLocker locker(GuidMutex());
+    RecursiveMutexLocker locker(GuidMutex());
 
     GuidVersionMap::iterator entry = GuidToVersionMap().find(guid_);
     if (entry != GuidToVersionMap().end()) {
@@ -704,13 +704,13 @@ void Database::SetExpectedVersion(const String& version) {
 }
 
 String Database::GetCachedVersion() const {
-  MutexLocker locker(GuidMutex());
+  RecursiveMutexLocker locker(GuidMutex());
   return GuidToVersionMap().at(guid_).IsolatedCopy();
 }
 
 void Database::SetCachedVersion(const String& actual_version) {
   // Update the in memory database version map.
-  MutexLocker locker(GuidMutex());
+  RecursiveMutexLocker locker(GuidMutex());
   UpdateGuidVersionMap(guid_, actual_version);
 }
 
