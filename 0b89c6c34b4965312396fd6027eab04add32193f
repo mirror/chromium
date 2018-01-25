@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c97b27d_e957a03c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-25T01:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ed7f21_1ff09195",
+      "revId": "0b89c6c34b4965312396fd6027eab04add32193f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd07c3d1_fe46cb90",
         "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0b89c6c34b4965312396fd6027eab04add32193f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fbff98_f42b24fe",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-25T01:00:46Z",
+      "side": 1,
+      "message": "\u003e Do servers always immediately close notifications following an interaction? \n\nNo, I think it\u0027s impl dependent.\n\n\u003e Otherwise we\u0027d need a Close() call here. The CLOSE operation is just for informing features that a notification has been closed -- we need both.\n\nDone.  I had to remove the CLOSE op, otherwise I was hitting a DCHECK when we called CLOSE a second time in OnNotificationClosed()",
+      "parentUuid": "bd07c3d1_fe46cb90",
+      "revId": "0b89c6c34b4965312396fd6027eab04add32193f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
