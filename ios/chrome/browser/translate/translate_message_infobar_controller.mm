@@ -29,8 +29,7 @@
   InfoBarView* infoBarView;
   translate::TranslateInfoBarDelegate* translateInfoBarDelegate =
       delegate->AsTranslateInfoBarDelegate();
-  infoBarView =
-      [[InfoBarView alloc] initWithFrame:frame delegate:self.delegate];
+  infoBarView = [InfoBarView infoBarViewWithFrame:frame delegate:self.delegate];
   // Icon
   gfx::Image icon = translateInfoBarDelegate->GetIcon();
   if (!icon.IsEmpty())
