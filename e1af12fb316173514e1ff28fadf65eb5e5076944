@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "8a9dc9bc_10b96b84",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-25T12:48:59Z",
+      "side": 1,
+      "message": "Could you answer Marc\u0027s question about hardcoding all the parameters, this does not seem right and at the very least needs a detailed comment.\n\nI am also not sold about removing the cookie settings check, I updated the bug.",
+      "parentUuid": "124d0cf1_c2174909",
+      "range": {
+        "startLine": 208,
+        "startChar": 57,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec0f122_7ac4e7b1",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
         "patchSetId": 4
@@ -370,6 +394,30 @@
       "side": 1,
       "message": "I\u0027m in favor of using AccountConsistencyModeManager::IsMirrorEnabledForProfile and eventually fixing that do actually do the right thing in all cases, rather than adding special one-off code here.",
       "parentUuid": "4fe65908_2879474e",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "e1af12fb316173514e1ff28fadf65eb5e5076944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbb5f08_4710b5a4",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-25T12:48:59Z",
+      "side": 1,
+      "message": "Yes, please use the same function. This is pretty much the only way to do this correctly.\n\nAt all time you want mirror to be completely enabled or completely disabled for a profile. You never want to be in a situation where some code behaves like mirror is enabled and some code does not.\n\nWhen enabling Mirror for other use cases (such as policy or whatever), only the IsMirrorEnabledFunction will need to be updated. You could even put finch experiments there.",
+      "parentUuid": "8bef3c9a_67f96532",
       "range": {
         "startLine": 67,
         "startChar": 6,
