@@ -27,9 +27,7 @@
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 
-#ifndef DRM_FORMAT_MOD_INVALID
-#define DRM_FORMAT_MOD_INVALID	fourcc_mod_code(NONE, DRM_FORMAT_RESERVED)
-#endif
+static_assert(gfx::NativePixmapPlane::kNoModifier == DRM_FORMAT_MOD_INVALID, "mismatch");
 
 namespace ui {
 
