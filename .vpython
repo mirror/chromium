@@ -124,3 +124,15 @@ wheel: <
   name: "infra/python/wheels/simplejson/${vpython_platform}"
   version: "version:3.13.2"
 >
+
+# Used by:
+#   content/test/gpu/gpu_tests/color_profile_manager_mac.py
+# This is a Mac-specific wheel and there isn't yet a version built for
+# macOS versions older than this.
+wheel: <
+  name: "infra/python/wheels/pyobjc/${vpython_platform}"
+  version: "version:4.1"
+  match_tag: <
+    platform: "macosx_10_10_intel"
+  >
+>
