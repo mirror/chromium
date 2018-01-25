@@ -819,10 +819,12 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
   // Update the PreviewsState for main frame response if needed.
   if (info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME &&
       request->url().SchemeIsHTTPOrHTTPS()) {
-    // Annotate request if no-transform directive found in response headers.
+    // Annotate request if no-transform directive found in response headers
+    // and some preview type is enabled.
     if (request->response_headers() &&
         request->response_headers()->HasHeaderValue("cache-control",
-                                                    "no-transform")) {
+                                                    "no-transform") &&
+        previews::HasEnabledPreviews(response->head.previews_state)) {
       previews::PreviewsUserData* previews_user_data =
           previews::PreviewsUserData::GetData(*request);
       if (previews_user_data)
