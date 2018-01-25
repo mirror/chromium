@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51128ac4_0c290d89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T00:47:03Z",
+      "side": 1,
+      "message": "s/genering/generating/",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a924770b_0f3ccdc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T00:47:03Z",
+      "side": 1,
+      "message": "Nit: \"gn\" or \"GN\", but not \"Gn\".",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404a279b_c70bed52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T00:47:03Z",
+      "side": 1,
+      "message": "You lost me w/ this last sentence. exec_script() is core functionality and isn\u0027t going anywhere?",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
