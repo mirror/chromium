@@ -1,0 +1,625 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9750d2c_32d52710",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Are we rewriting scripts, or introducing the new \"v2\" scripts, as per the text below?",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883de604_fef2480f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Can we make clear whether:\na. We automatically generate both old-style and new _v2 suffixed scripts, OR\nb. We generate new-style runner scripts for test() targets with names ending in _v2?\nFrom the current wording it\u0027s unclear.  Also would be good to clarify that this will be a temporary state of affairs :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5769ad94_20a577f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: You mean \"virtual QEMU\", or \"QEMU VM\"?",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906babc5_8ae654a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: This is confusingly worded, because of the multiple levels of \u0027or\u0027.\n\nFrom the wording it sounds like the new runner can do one of three things:\n1. Launch, run and terminate a QEMU VM.\n2. Trigger an attached device to reboot and run the package.\n3. Run the package on an already-running device.\n\nIs that correct?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d647dc69_164040cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: \"then\" implies that the previous statement described an action, which wasn\u0027t the case because of the \"or continue\" bit.  Also \"on\" -\u003e \"onto\" or \"to\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675b665e_cce19af8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: It\u0027s a shame that some of these couldn\u0027t have been pulled out into separate CLs for smaller reviews. :P",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7d7718_d1078052",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Is this a name chosen to match some GN/Chromium convention, or something we\u0027ve chosen as a location for Fuchsia ARchives?",
+      "range": {
+        "startLine": 20,
+        "startChar": 38,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb000f0_8869fd5d",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Why do we need {pkg}.far to be in a {pkg}-named subdirectory? Will other files also be put in there alongside each archive?",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4430923_512a4c2b",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: runner_v2 for consistency with the naming we\u0027re using for the script output?",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c77dc1_a24025d9",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Suggest either new_runner_target+runner_target or runner_target+legacy_runner_target, rather than using both new_ and legacy_ prefixes.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e333d0_a0a2fbd1",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Remove data \u003d [] above, and just use \u003d here.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380ed024_f022b8be",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Suggest moving this to immediately after the if (!defined(deps)) check, above.\n\nIn general, I think it would help readability to keep the appended-to variables (e.g. deps, data_deps, runner_args) grouped, and then group the assigned-to variables (e.g. outputs, args), to make it clearer where things are internal to this rule, and where they are building on invoker-supplied parameters. There isn\u0027t really a perfect split, but arranging things in some systematic way will help. :)",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 5
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c119646_23ee5f02",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Remind me what this target is used for?  (Perhaps we should add some one-liner comments to explain each of these)",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 3
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07772a4_c6ea3a37",
+        "filename": "build/fuchsia/runner_v2/boot_image.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: The is CreateBootFS, the comment below talks about \"a bootfs image\", the file is called \"boot_image.py\", the file from the SDK is \"bootdata.bin\" and we store the path to that in a variable called \"base_boot_image\" (and then later put the output path in a variable called \"bootfs_path\".\n\nI think it would help future maintenance if we adopted more consistent naming (accepting that things like bootdata.bin are unlikely to change ;).",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dc1a2f_92937217",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: This and EvaluateCommonArgs are missing doc-strings to explain their function.\n\nShould we add these \"common\" arguments under an arg-parser \"group\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02ff9e1_af952ad8",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: As noted above, a comment to explain the purpose of this would be helpful.\n\nHowever, I think it would also help for this function to be renamed, e.g. ApplyLoggingArgs, since it doesn\u0027t actually do anything with any of the other arguments.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d45309_127704bf",
+        "filename": "build/fuchsia/runner_v2/create_runner_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "Do you really want str() here, or repr()?  I think repr() is the one intended to, if possible, emit a string that can be eval()\u0027d back into an object matching the original. (and for \u0027args\u0027)",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3c5384_73c44016",
+        "filename": "build/fuchsia/runner_v2/create_runner_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Please document the purpose of this chmod magic.",
+      "range": {
+        "startLine": 83,
+        "startChar": 36,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf020dc_55ebf816",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Does this need to be an IPv4 address, or can we use DNS \u0027localhost\u0027, to be compatible with IPv6-only host systems?",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c64c90_a4f025da",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Usually better to prefix the debug log output with something to identify the calling context, e.g. this could be hard to distinguish from RunPipeSsh output, or even from other debug lines - e.g. one of the other debug lines starts with \u0027exec ...\u0027 and \"exec\" is actually a valid shell command on some systems :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1520be54_59d20e48",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "Why do we only set the IPv6 flags for link-local IPv6 addresses?  Shouldn\u0027t we do it for _all_ IPv6 addresses?\n\nHowever, can we instead assume access to the \u0027ipaddress\u0027 module, in which case we can use that to check the IP version?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b563638_e7869f71",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: IIRC there is Python syntax (**dict, I think?) for supplying a function with parameters by-name, from a set of dictionary keys - we could accept a dictonary of popen parameters here, to pass-through to RunPipedSsh to pass to Popen.  WDYT?",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 67
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b267e8_833a2e24",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: Mention that they default to PIPE.",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6658428c_94751863",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we\u0027re exec()ing anything here, are we? Should this be \"Popen()\", or something more generic like \"running\" or \"launching\"?",
+      "range": {
+        "startLine": 52,
+        "startChar": 19,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7897dcaa_8ca4d6be",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: RunCommand is going to log a debug line; do we need the extra info log line as well?\n\nAlso, add a __doc__ comment to clarify that this sends a synchronous shutdown comment.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fa1b8c_767bbe0e",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "nit: _AssertIsStarted",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 20
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003c9f64_9bf4a38f",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T23:30:17Z",
+      "side": 1,
+      "message": "Can we give this a more descriptive name? e.g. _AttachToDevice or _AttachToRemote or _ConnectToRemote or _PingRemote?  \"Attach\" on its own doesn\u0027t convey what is being attached, or what attaching really means :)",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
