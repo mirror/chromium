@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "931d2f92_28f3a599",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-25T01:38:35Z",
+      "side": 1,
+      "message": "What do you think about having DCHECK(new_context) here? To me it looks better. You can do it by having ResourceFetcher::Create(void) and rewriting call sites. I don\u0027t know how many call sites are there though.",
+      "revId": "072ced2b51a84a876043cdfa6592ebce74148140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b945e9_7ac412cf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-25T01:38:35Z",
+      "side": 1,
+      "message": "Is just *context_ enough?",
+      "revId": "072ced2b51a84a876043cdfa6592ebce74148140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
