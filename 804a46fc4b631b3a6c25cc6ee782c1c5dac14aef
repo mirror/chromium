@@ -34,6 +34,24 @@
       "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d6b7c6_9cef99b1",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-25T21:33:51Z",
+      "side": 0,
+      "message": "Thanks, I see. Not sure I\u0027m following the logic as a whole - as it seems that, by design, the flags used for the UI don\u0027t really correspond to how settings from different sources are actually merged.\nBut LGTM\u0027ing as with your explanations the change sounds reasonable.",
+      "parentUuid": "f1a5cf83_e9df2e17",
+      "revId": "804a46fc4b631b3a6c25cc6ee782c1c5dac14aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
