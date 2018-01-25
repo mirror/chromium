@@ -329,11 +329,8 @@ void WebViewPlugin::WebViewHelper::ScheduleAnimation() {
   // lifecycle stages during later ones.
   if (plugin_->is_resizing_)
     return;
-  if (plugin_->container_) {
-    // This should never happen; see also crbug.com/545039 for context.
-    DCHECK(!plugin_->is_painting_);
+  if (plugin_->container_)
     plugin_->container_->ScheduleAnimation();
-  }
 }
 
 std::unique_ptr<blink::WebURLLoaderFactory>
