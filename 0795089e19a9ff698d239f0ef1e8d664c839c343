@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d3d14bd_47c95180",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-25T20:43:09Z",
+      "side": 1,
+      "message": "Would this conversion from SerializedBlob to WebBlobInfo be useful elsewhere (in which case maybe it should be factored out)? Or is it likely not to live long enough for that to matter (per the comment in .mojom)?",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
