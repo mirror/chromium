@@ -16,6 +16,24 @@
       "revId": "5378c834265e871594b6d75a9931f02adeaf9b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f5e933_a9475684",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-25T21:44:06Z",
+      "side": 1,
+      "message": "Oh, totally unrelated to this CL, just noticed it was wrong. If we\u0027re showing Doff when shutting down VR, we need to clean up the Doff state (hence the onExitVrResult(true) call). onExitVrResult in turn calls shutDownVr, but it would just return early, so we\u0027d never actually shut down VR properly.",
+      "parentUuid": "aefb610a_61bfc5fe",
+      "revId": "5378c834265e871594b6d75a9931f02adeaf9b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
