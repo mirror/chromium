@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bec5d1d_f771e7ca",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-25T01:41:22Z",
+      "side": 1,
+      "message": "TYPE_VPN was added in Lollipop, so it won\u0027t work for pre-Lollipop Android.  I think we can do this differently however:  What about on pre-Marshmallow devices, doing the following:\n1. break AddressTrackerLinux::IsTunnelInterface() into two functions, one that takes an interface index and another static public function that takes an interface name string.\n2. define a isVpnPresent() function that calls net::GetNetworkList() and runs all the interface names through the new AddressTrackerLinux::IsTunnelInterface() that takes a string.",
+      "range": {
+        "startLine": 246,
+        "startChar": 58,
+        "endLine": 246,
+        "endChar": 66
+      },
+      "revId": "d42449bf4d870d02162ac0602c5b2026732c6a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a1b8d7_5781bd72",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-25T01:41:22Z",
+      "side": 1,
+      "message": "This will return false positives in extremely rare cases.  Android has this idea of different users and VPNs can in rare cases only apply to certain users.  Anyhow the false positives should be so incredibly rare that taking the conservative/safe approach of disabling async DNS then is just fine.  I\u0027d update this function\u0027s comment to indicate that even though a current network is a VPN, it may not necessarily apply to the current user.",
+      "range": {
+        "startLine": 252,
+        "startChar": 80,
+        "endLine": 252,
+        "endChar": 0
+      },
+      "revId": "d42449bf4d870d02162ac0602c5b2026732c6a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
