@@ -114,12 +114,11 @@ public final class WarmupManager {
      */
     public void initializeViewHierarchy(Context baseContext, int toolbarContainerId,
             int toolbarId) {
-        TraceEvent.begin("WarmupManager.initializeViewHierarchy");
         // Inflating the view hierarchy causes StrictMode violations on some
         // devices. Since layout inflation should happen on the UI thread, allow
         // the disk reads. crbug.com/644243.
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-        try {
+        try (TraceEvent e = TraceEvent.scoped("WarmupManager.initializeViewHierarchy")) {
             ThreadUtils.assertOnUiThread();
             if (mMainView != null && mToolbarContainerId == toolbarContainerId) return;
             ContextThemeWrapper context =
@@ -140,7 +139,6 @@ public final class WarmupManager {
             mMainView = null;
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
-            TraceEvent.end("WarmupManager.initializeViewHierarchy");
         }
     }
 
@@ -186,7 +184,8 @@ public final class WarmupManager {
         new AsyncTask<String, Void, Void>() {
             @Override
             protected Void doInBackground(String... params) {
-                try {
+                try (TraceEvent e =
+                                TraceEvent.scoped("WarmupManager.prefetchDnsForUrlInBackground")) {
                     InetAddress.getByName(new URL(url).getHost());
                 } catch (MalformedURLException e) {
                     // We don't do anything with the result of the request, it
