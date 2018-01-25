@@ -2218,7 +2218,7 @@ crbug.com/796668 external/wpt/longtask-timing/longtask-in-sibling-iframe.html [ 
 crbug.com/796668 external/wpt/longtask-timing/longtask-in-sibling-iframe-crossorigin.html [ Skip ]
 
 # This test times out on debug builds, see https://crbug.com/755810
-crbug.com/626703 [ Debug ] external/wpt/html/semantics/tabular-data/processing-model-1/span-limits.html [ Skip ]
+crbug.com/626703 [ Debug Win7 ] external/wpt/html/semantics/tabular-data/processing-model-1/span-limits.html [ Skip ]
 
 crbug.com/666993 external/wpt/requestidlecallback/callback-idle-periods.html [ Timeout ]
 
