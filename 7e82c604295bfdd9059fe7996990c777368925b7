@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "79510a01_10457d2c",
+        "filename": "chrome/browser/logging_chrome_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-01-25T01:07:37Z",
+      "side": 1,
+      "message": "i\u0027m a little surprised there isn\u0027t a unittest module for logging_chrome.cc, but if there were, seems like this test belongs there instead of here.",
+      "revId": "7e82c604295bfdd9059fe7996990c777368925b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f1c1f4_568c4294",
         "filename": "chrome/browser/logging_chrome_unittest.cc",
         "patchSetId": 5
