@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca3c83f_51cca37a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-25T18:48:58Z",
+      "side": 1,
+      "message": "Do we need to worry about:\n1- Resize  (frame 1)\n2- DidCommit (frame 1)\n3- Resize (frame 2)  (resetting did_commit_after_resize_)\n4- DidCommitAndDraw (frame 1) (did_commit_after_resize_ is false, won\u0027t send the ack for frame 1)\n\nGenerally, RWHI would avoid 3 before the ack, but I think there are other paths to RenderWidget::Resize (e.g. for layout tests)\n\nMaybe only reset this if params.needs_resize_ack is set? I think the DCHECK on l.1336 guards against other cases.",
+      "revId": "86a212a1d8ad8d9a206cc6fefdcab08b80e2285d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
