@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21bb8331_6b395243",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-25T12:23:14Z",
+      "side": 1,
+      "message": "Nit: add new line before.",
+      "revId": "863e9c079ba3ecbce13a42b2dc9bf5d575ceffc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7209d1_0a4d439a",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-25T12:23:14Z",
+      "side": 1,
+      "message": "You can do: addAnimations:^{",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "863e9c079ba3ecbce13a42b2dc9bf5d575ceffc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
