@@ -36,7 +36,7 @@ class DesktopMediaPickerViewsBrowserTest : public DialogBrowserTest {
     picker_->Show(web_contents, native_window, nullptr,
                   base::ASCIIToUTF16("app_name"),
                   base::ASCIIToUTF16("target_name"), std::move(source_lists),
-                  true, DesktopMediaPicker::DoneCallback());
+                  true, false, DesktopMediaPicker::DoneCallback());
   }
 
  private:

@@ -43,6 +43,7 @@ class DesktopMediaPicker {
                     const base::string16& target_name,
                     std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
                     bool request_audio,
+                    bool system_modal,
                     const DoneCallback& done_callback) = 0;
 
  private:

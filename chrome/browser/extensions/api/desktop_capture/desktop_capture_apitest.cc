@@ -70,6 +70,7 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
             const base::string16& target_name,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
             bool request_audio,
+            bool system_modal,
             const DoneCallback& done_callback) override {
     bool show_screens = false;
     bool show_windows = false;
@@ -94,6 +95,7 @@ class FakeDesktopMediaPicker : public DesktopMediaPicker {
     EXPECT_EQ(expectation_->expect_windows, show_windows);
     EXPECT_EQ(expectation_->expect_tabs, show_tabs);
     EXPECT_EQ(expectation_->expect_audio, request_audio);
+    EXPECT_FALSE(system_modal);
 
     if (!expectation_->cancelled) {
       // Post a task to call the callback asynchronously.
