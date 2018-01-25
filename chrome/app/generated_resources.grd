@@ -4682,10 +4682,13 @@ Keep your key file in a safe place. You will need it to create new versions of y
           Sign In
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_SIGN_IN" desc="In Title Case: The title of the Sign in button in the bubble promoting Chrome sign-in.">
-          Sign In
+          Sign in to Chrome
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_NO_THANKS" desc="In Title Case: The title of the No Thanks button in the bubble promoting Chrome sign-in.">
           No Thanks
+        </message>
+        <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="In Title Case: Title text for Chrome sign-in promotion bubble. Confirms that the password has been saved (promotion text in dialog body offers to sign in).">
+          Password Saved
         </message>
       </if>
       <if expr="not use_titlecase">
@@ -4693,14 +4696,17 @@ Keep your key file in a safe place. You will need it to create new versions of y
           Sign in
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_SIGN_IN" desc="The title of the Sign in button in the bubble promoting Chrome sign-in.">
-          Sign in
+          Sign in to Chrome
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_NO_THANKS" desc="The title of the No Thanks button in the bubble promoting Chrome sign-in.">
           No thanks
         </message>
+        <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="Title text for Chrome sign-in promotion bubble. Confirms that the password has been saved (promotion text in dialog body offers to sign in).">
+          Password saved
+        </message>
       </if>
-      <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
-        Password saved. To get your passwords on all your devices, sign in to Chrome.
+      <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_LABEL" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
+        To get your passwords on all your devices, sign in to Chrome.
       </message>
       <message name="IDS_SAVE_PASSWORD" desc="The title of the save password bubble when a password can be saved.">
         Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for this site?
