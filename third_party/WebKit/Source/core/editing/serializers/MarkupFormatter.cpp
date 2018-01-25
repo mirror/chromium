@@ -375,15 +375,14 @@ void MarkupFormatter::AppendAttribute(StringBuilder& result,
         namespaces->Set(lookup_key, attribute.Value());
       }
     } else if (attribute.NamespaceURI() == XMLNames::xmlNamespaceURI) {
-      if (!attribute.Prefix())
-        prefixed_name.SetPrefix(g_xml_atom);
+      prefixed_name.SetPrefix(g_xml_atom);
     } else {
       if (attribute.NamespaceURI() == XLinkNames::xlinkNamespaceURI) {
-        if (!attribute.Prefix())
-          prefixed_name.SetPrefix(g_xlink_atom);
+        prefixed_name.SetPrefix(g_xlink_atom);
       }
 
-      if (namespaces && ShouldAddNamespaceAttribute(attribute, element)) {
+      if (!document_is_html && namespaces &&
+          ShouldAddNamespaceAttribute(attribute, element)) {
         if (!prefixed_name.Prefix()) {
           // This behavior is in process of being standardized. See
           // crbug.com/248044 and
