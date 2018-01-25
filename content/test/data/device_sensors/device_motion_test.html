@@ -2,8 +2,10 @@
   <head>
     <title>DeviceMotion test</title>
     <script type="text/javascript">
-      let expectedInterval = Math.floor(1000 / 60);
-      let kRadiansToDegrees = 180 / Math.PI;
+      const expectedInterval = Math.floor(1000 / 60);
+      const kRadiansToDegrees = 180 / Math.PI;
+      let eventTimeoutId; // To be set in start().
+
       function checkMotionEvent(event) {
         return event.acceleration.x == 1 &&
                event.acceleration.y == 2 &&
@@ -20,6 +22,7 @@
       function onMotion(event) {
         if (checkMotionEvent(event)) {
           window.removeEventListener('devicemotion', onMotion);
+          window.clearTimeout(eventTimeoutId);
           pass();
         } else {
           fail();
@@ -34,9 +37,14 @@
       function fail() {
         document.location = '#fail';
       }
+
+      function start() {
+        window.addEventListener('devicemotion', onMotion);
+        eventTimeoutId = window.setTimeout(fail, 100);
+      }
     </script>
   </head>
-  <body onLoad="window.addEventListener('devicemotion', onMotion)">
+  <body onLoad="start()">
     <div id="status">FAIL</div>
   </body>
 </html>
