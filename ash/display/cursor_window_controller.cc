@@ -114,19 +114,23 @@ void CursorWindowController::SetLargeCursorSizeInDip(
 }
 
 bool CursorWindowController::ShouldEnableCursorCompositing() {
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
+  if ((display_manager->is_multi_mirroring_enabled() &&
+       display_manager->IsInSoftwareMirrorMode()) ||
+      display_manager->IsInUnifiedMode()) {
+    return true;
+  }
+
   PrefService* prefs =
       Shell::Get()->session_controller()->GetActivePrefService();
   if (!prefs) {
     // The active pref service can be null early in startup.
     return false;
   }
-  display::DisplayManager* display_manager = Shell::Get()->display_manager();
   return prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
-         prefs->GetBoolean(prefs::kNightLightEnabled) ||
-         (display_manager->is_multi_mirroring_enabled() &&
-          display_manager->IsInSoftwareMirrorMode());
+         prefs->GetBoolean(prefs::kNightLightEnabled);
 }
 
 void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {
