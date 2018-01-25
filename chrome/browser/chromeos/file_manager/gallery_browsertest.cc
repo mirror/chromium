@@ -36,6 +36,12 @@ IN_PROC_BROWSER_TEST_F(GalleryBrowserTest,
   StartTest();
 }
 
+// http://crbug.com/508949
+#if defined(MEMORY_SANITIZER)
+#define MAYBE_OpenSingleImageOnDownloads DISABLED_OpenSingleImageOnDownloads
+#else
+#define MAYBE_OpenSingleImageOnDownloads OpenSingleImageOnDownloads
+#endif
 IN_PROC_BROWSER_TEST_F(GalleryBrowserTestInGuestMode,
                        MAYBE_OpenSingleImageOnDownloads) {
   set_test_case_name("openSingleImageOnDownloads");
