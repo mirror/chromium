@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b048de59_f61ff02b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-25T18:49:52Z",
+      "side": 1,
+      "message": "Deserves a comment for why it exists:\n// Check to make sure we don\u0027t send an IPC with the ad tag bit for ad frames\n// that are successfully filtered.",
+      "revId": "53c72ec9dc13b3d2801a25a26d9f7abbe2c35e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515be7a3_b177ba49",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-25T18:49:52Z",
+      "side": 1,
+      "message": "This is probably more accurate as \"false\" as a sort of default value, but it might make sense to include a comment saying that it isn\u0027t checked and is irrelevant to this check.",
+      "revId": "53c72ec9dc13b3d2801a25a26d9f7abbe2c35e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
