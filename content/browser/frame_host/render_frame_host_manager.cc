@@ -1250,9 +1250,10 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   // by the source SiteInstance, so it need not use it.
   GURL about_blank(url::kAboutBlankURL);
   GURL about_srcdoc(content::kAboutSrcDocURL);
-  bool dest_is_data_or_about = dest_url == about_srcdoc ||
-                               dest_url == about_blank ||
-                               dest_url.scheme() == url::kDataScheme;
+  GURL plugin_none(content::kPluginNoneURL);
+  bool dest_is_data_or_about =
+      dest_url == about_srcdoc || dest_url == about_blank ||
+      dest_url == plugin_none || dest_url.scheme() == url::kDataScheme;
   if (source_instance && dest_is_data_or_about && !was_server_redirect)
     return SiteInstanceDescriptor(source_instance);
 

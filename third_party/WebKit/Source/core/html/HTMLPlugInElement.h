@@ -56,6 +56,8 @@ class CORE_EXPORT HTMLPlugInElement
   bool HasPendingActivity() const final;
 
   void SetFocused(bool, WebFocusType) override;
+  bool AllowsNavigationToPluginNone() const override;
+  void ReadyToLoadPlugin();
   void ResetInstance();
   // TODO(dcheng): Consider removing this, since HTMLEmbedElementLegacyCall
   // and HTMLObjectElementLegacyCall usage is extremely low.
@@ -186,6 +188,7 @@ class CORE_EXPORT HTMLPlugInElement
   bool RequestObjectInternal(const Vector<String>& param_names,
                              const Vector<String>& param_values);
 
+  bool update_plugin_after_detach_ = false;
   v8::Global<v8::Object> plugin_wrapper_;
   bool needs_plugin_update_;
   bool should_prefer_plug_ins_for_images_;
