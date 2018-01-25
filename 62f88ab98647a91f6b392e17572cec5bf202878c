@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b547394_284de883",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-25T02:05:00Z",
+      "side": 1,
+      "message": "I\u0027m OK with moving kError to opaque here too... might want a comment about it.",
+      "revId": "62f88ab98647a91f6b392e17572cec5bf202878c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
