@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bf74c09_b96843d9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-25T01:14:12Z",
+      "side": 1,
+      "message": "Do we want to pass the entire bundle (i.e., factories from browser side + {blob, direct network loader factory} from renderer_blink_platform_impl) in this case? How about the worker case at line 3535?\n\nIt seems the correct behavior is to pass the entire bundle (as opposed to only passing factories from renderer_blink_platform_impl). Is my understanding correct?\n\nThis causes some test failures because this may end up cloning some URLLoaderFactory interfaces that are backed by URLLoaderInterceptor::Interceptor at the browser side. URLLoaderInterceptor::Interceptor doesn\u0027t support cloning for now. It shouldn\u0027t be hard to fix the interceptor. But I would like to make sure I understand the behavior correctly before making the fix.",
+      "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
