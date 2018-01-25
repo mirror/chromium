@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322810ac_66db6666",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-25T23:57:21Z",
+      "side": 1,
+      "message": "Are you sure? As per https://bugs.chromium.org/p/chromium/issues/detail?id\u003d324079#c8 I didn\u0027t see them in my 10.10 SDK.",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "b3db431ece4f7f94f89b62d581c506728328fb8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a02509_0aa807ab",
+        "filename": "base/mac/foundation_util.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-25T23:57:21Z",
+      "side": 1,
+      "message": "I\u0027d go with [dirs firstObject] :) but either way.",
+      "range": {
+        "startLine": 124,
+        "startChar": 31,
+        "endLine": 124,
+        "endChar": 38
+      },
+      "revId": "b3db431ece4f7f94f89b62d581c506728328fb8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
