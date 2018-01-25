@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1574b9c7_a313a111",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-25T00:52:52Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this comment is necessary anymore",
+      "range": {
+        "startLine": 1681,
+        "startChar": 0,
+        "endLine": 1681,
+        "endChar": 76
+      },
+      "revId": "9d9bfd4e94647def55338e1980f5f63527156e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
