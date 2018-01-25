@@ -102,8 +102,6 @@ size_t GetRegistryLengthImpl(base::StringPiece host,
   size_t prev_start = std::string::npos;
   size_t curr_start = host_check_begin;
   size_t next_dot = host.find('.', curr_start);
-  if (next_dot >= host_check_len)  // Catches std::string::npos as well.
-    return 0;  // This can't have a registry + domain.
   while (1) {
     const char* domain_str = host.data() + curr_start;
     size_t domain_length = host_check_len - curr_start;
@@ -131,8 +129,8 @@ size_t GetRegistryLengthImpl(base::StringPiece host,
           // "!foo").  This would only be valid if we had a corresponding
           // wildcard rule, which would have to be "*".  But we explicitly
           // disallow that case, so this kind of rule is invalid.
-          NOTREACHED() << "Invalid exception rule";
-          return 0;
+          // Treat as "registry doesn't exist".
+          return std::string::npos;
         }
         return host.length() - next_dot - 1;
       }
@@ -150,6 +148,10 @@ size_t GetRegistryLengthImpl(base::StringPiece host,
     curr_start = next_dot + 1;
     next_dot = host.find('.', curr_start);
   }
+  // If host is single word and didn't match look-up above, can't be registry.
+  // Return npos per policy for these.
+  if (curr_start == host_check_begin)
+    return std::string::npos;
 
   // No rule found in the registry.  curr_start now points to the first
   // character of the last subcomponent of the host, so if we allow unknown
@@ -375,8 +377,9 @@ size_t GetRegistryLength(
     const GURL& gurl,
     UnknownRegistryFilter unknown_filter,
     PrivateRegistryFilter private_filter) {
-  return GetRegistryLengthImpl(gurl.host_piece(), unknown_filter,
-                               private_filter);
+  size_t ret =
+      GetRegistryLengthImpl(gurl.host_piece(), unknown_filter, private_filter);
+  return (ret == std::string::npos ? 0 : ret);
 }
 
 bool HostHasRegistryControlledDomain(base::StringPiece host,
@@ -417,7 +420,9 @@ size_t GetCanonicalHostRegistryLength(base::StringPiece canon_host,
   DCHECK_EQ(net::CanonicalizeHost(canon_host, &host_info), canon_host);
 #endif
 
-  return GetRegistryLengthImpl(canon_host, unknown_filter, private_filter);
+  size_t ret =
+      GetRegistryLengthImpl(canon_host, unknown_filter, private_filter);
+  return (ret == std::string::npos ? 0 : ret);
 }
 
 size_t PermissiveGetHostRegistryLength(base::StringPiece host,
