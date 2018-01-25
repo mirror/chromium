@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd65f0f7_3a4a4ac1",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "Nit: consider using a range-based for loop, i.e.\n\nfor (auto\u0026 it : content_proxy_map) {\n  ...\n}",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 45
+      },
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ca3b74_b3b11f34",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "Perhaps this could use RenderFrameProxyHost::FromID(process_id, proxy_id)-\u003eframe_tree_node()-\u003erender_manager()-\u003ecurrent_frame_host()?\n\nI wonder if we need to worry about any potential races here: I think it\u0027s OK, because if a subframe navigates and we capture slightly different contents, that\u0027s still OK: it\u0027s still a subframe.",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912e342a_4e461612",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is to avoid printing nesting inside window.print()?",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b175f8a_6ea234bd",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "Nit: a cross-process subframe",
+      "range": {
+        "startLine": 1714,
+        "startChar": 31,
+        "endLine": 1714,
+        "endChar": 57
+      },
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73184c85_fbc47650",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "Is it sufficient to just keep passing nullptr like before?",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3db8bc_3a8ffddb",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "It\u0027s not super clear to me why this branch is needed or what its purpose is.",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dbda9a_fcd0fc9a",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "Can this document why pages_.size() should be 1?",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc56315d_f25a8034",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T10:55:39Z",
+      "side": 1,
+      "message": "I think this can return a const reference.",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
