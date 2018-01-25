@@ -229,6 +229,30 @@
       "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9e8e5f_64d7fdf8",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-25T20:08:55Z",
+      "side": 1,
+      "message": "\u003e\u003e\u003e\nFor example, for a request to remove from Chrome history a navigation to http://www.url1.com/, made at time t, then the contextual suggestion service can remove all logs corresponding to http://www.url1.com/ made at time t plus/minus a few seconds. What do you think?\n\u003e\u003e\u003e\nThat sounds fine to me.  I wasn\u0027t aware that you\u0027d be handling the deletions and would be able to write policies / code like that.  (The thread with the sync folks seemed to me to imply exact matches are necessary.)\n\nIf you truly need exact matches to delete, you should check with sync and privacy to see if they are concerned about clocks revisions.",
+      "parentUuid": "7d75c9d5_51f307b0",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
