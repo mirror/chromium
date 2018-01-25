@@ -464,7 +464,7 @@ TEST_F(NotificationViewMDTest, TestActionButtonClick) {
   EXPECT_EQ(1, delegate_->clicked_button_index());
 }
 
-TEST_F(NotificationViewMDTest, TestInlineReply) {
+TEST_F(NotificationViewMDTest, TestInlineReplyByEnterKey) {
   delegate_->set_expecting_reply_submission(true);
 
   std::vector<ButtonInfo> buttons = CreateButtons(2);
@@ -512,6 +512,67 @@ TEST_F(NotificationViewMDTest, TestInlineReply) {
     generator.PressKey(keycode, ui::EF_NONE);
     generator.ReleaseKey(keycode, ui::EF_NONE);
   }
+
+  EXPECT_EQ(1, delegate_->clicked_button_index());
+  EXPECT_EQ(base::ASCIIToUTF16("test"), delegate_->submitted_reply_string());
+}
+
+TEST_F(NotificationViewMDTest, TestInlineReplyByButton) {
+  delegate_->set_expecting_reply_submission(true);
+
+  std::vector<ButtonInfo> buttons = CreateButtons(2);
+  buttons[1].type = ButtonType::TEXT;
+  notification()->set_buttons(buttons);
+  UpdateNotificationViews();
+  widget()->Show();
+
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+
+  // Action buttons are hidden by collapsed state.
+  if (!notification_view()->expanded_)
+    notification_view()->ToggleExpanded();
+  EXPECT_TRUE(notification_view()->actions_row_->visible());
+
+  // Now construct a mouse click event 1 pixel inside the boundary of the action
+  // button.
+  gfx::Point cursor_location(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->action_buttons_[1],
+                                    &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
+
+  // Nothing should be submitted at this point.
+  EXPECT_EQ(-1, delegate_->clicked_button_index());
+
+  // Toggling should hide the inline textfield.
+  EXPECT_TRUE(notification_view()->inline_reply_->visible());
+  notification_view()->ToggleExpanded();
+  notification_view()->ToggleExpanded();
+  EXPECT_FALSE(notification_view()->inline_reply_->visible());
+
+  // Click the button again and focus on the inline textfield.
+  generator.ClickLeftButton();
+  generator.ClickLeftButton();
+  EXPECT_TRUE(notification_view()->inline_reply_->visible());
+  EXPECT_TRUE(notification_view()->inline_reply_->textfield()->visible());
+  EXPECT_TRUE(notification_view()->inline_reply_->textfield()->HasFocus());
+
+  // Type the text.
+  ui::KeyboardCode keycodes[] = {ui::VKEY_T, ui::VKEY_E, ui::VKEY_S,
+                                 ui::VKEY_T};
+
+  for (ui::KeyboardCode keycode : keycodes) {
+    generator.PressKey(keycode, ui::EF_NONE);
+    generator.ReleaseKey(keycode, ui::EF_NONE);
+  }
+
+  // Now construct a mouse click event 1 pixel inside the boundary of the reply
+  // button.
+  cursor_location = gfx::Point(1, 1);
+  views::View::ConvertPointToScreen(
+      notification_view()->inline_reply_->button(), &cursor_location);
+  generator.MoveMouseTo(cursor_location);
+  generator.ClickLeftButton();
 
   EXPECT_EQ(1, delegate_->clicked_button_index());
   EXPECT_EQ(base::ASCIIToUTF16("test"), delegate_->submitted_reply_string());

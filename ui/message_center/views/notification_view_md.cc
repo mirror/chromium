@@ -155,17 +155,27 @@ class ClickActivator : public ui::EventHandler {
   DISALLOW_COPY_AND_ASSIGN(ClickActivator);
 };
 
-class NotificationInputReplyButtonMD : public views::ImageView {
+class NotificationInputReplyButtonMD : public views::ImageButton,
+                                       public views::ButtonListener {
  public:
-  NotificationInputReplyButtonMD() {
-    SetImage(gfx::CreateVectorIcon(kNotificationInlineReplyIcon,
-                                   kInputReplyButtonSize,
-                                   kInputReplyButtonColor));
+  NotificationInputReplyButtonMD(NotificationInputDelegate* delegate)
+      : views::ImageButton(this), delegate_(delegate) {
+    SetImage(STATE_NORMAL, gfx::CreateVectorIcon(kNotificationInlineReplyIcon,
+                                                 kInputReplyButtonSize,
+                                                 kInputReplyButtonColor));
     SetBorder(views::CreateEmptyBorder(kInputReplyButtonPadding));
+    SetImageAlignment(ALIGN_CENTER, ALIGN_MIDDLE);
   }
   ~NotificationInputReplyButtonMD() override = default;
 
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override {
+    delegate_->OnNotificationInputSubmitByButton();
+    return;
+  }
+
  private:
+  NotificationInputDelegate* const delegate_;
+
   DISALLOW_COPY_AND_ASSIGN(NotificationInputReplyButtonMD);
 };
 
@@ -418,7 +428,7 @@ void NotificationInputTextfieldMD::set_placeholder(
 NotificationInputContainerMD::NotificationInputContainerMD(
     NotificationInputDelegate* delegate)
     : textfield_(new NotificationInputTextfieldMD(delegate)),
-      button_(new NotificationInputReplyButtonMD()) {
+      button_(new NotificationInputReplyButtonMD(delegate)) {
   auto* layout = SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
   SetBackground(views::CreateSolidBackground(kInputContainerBackgroundColor));
@@ -729,6 +739,11 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
     ToggleInlineSettings();
     return;
   }
+}
+
+void NotificationViewMD::OnNotificationInputSubmitByButton() {
+  OnNotificationInputSubmit(inline_reply_->textfield()->index(),
+                            inline_reply_->textfield()->text());
 }
 
 void NotificationViewMD::OnNotificationInputSubmit(size_t index,
