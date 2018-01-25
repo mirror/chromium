@@ -187,6 +187,7 @@ const wchar_t kChromeChildDll[] = L"chrome_child.dll";
 const wchar_t kChromeExe[] = L"chrome.exe";
 const wchar_t kChromeNewExe[] = L"new_chrome.exe";
 const wchar_t kChromeOldExe[] = L"old_chrome.exe";
+const wchar_t kChromeServerExe[] = L"chrome_server.exe";
 const wchar_t kCmdOnOsUpgrade[] = L"on-os-upgrade";
 const wchar_t kEULASentinelFile[] = L"EULA Accepted";
 const wchar_t kInstallBinaryDir[] = L"Application";
