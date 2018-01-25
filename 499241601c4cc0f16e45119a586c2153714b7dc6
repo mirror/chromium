@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385bdb87_4c5f6fcf",
+        "filename": "base/time/time_override.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T12:26:38Z",
+      "side": 1,
+      "message": "You\u0027ll need to move this inside the DCHECK_IS_ON() block to prevent compile error (yeah DCHECKs are weird, they still make the variable appear as used in non-dcheck builds -- this avoids variable-unused errors but then on the flipside throws compile error when using DCHECK_IS_ON() only state in non-dcheck build).",
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba10a7ca_d364b8b8",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T12:26:38Z",
+      "side": 1,
+      "message": "This was broken before right? Weird that it even worked..?!",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 9
+      },
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845af7eb_77d5992a",
+        "filename": "base/time/time_win.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T12:26:38Z",
+      "side": 1,
+      "message": "Doesn\u0027t setting it outside of time_override.cc breakdown when you undo the override? (setting it back to original default). I had proposed this not realizing some platforms needed a custom function); maybe we need to stick to keeping \"previous\" pointers in the override?",
+      "revId": "499241601c4cc0f16e45119a586c2153714b7dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
