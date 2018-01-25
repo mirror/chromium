@@ -4,9 +4,11 @@
 
 #include "content/common/throttling_url_loader.h"
 
+#include "base/feature_list.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "services/network/public/cpp/features.h"
 
 namespace content {
 
@@ -202,6 +204,14 @@ void ThrottlingURLLoader::SetPriority(net::RequestPriority priority,
   }
 
   url_loader_->SetPriority(priority, intra_priority_value);
+}
+
+void ThrottlingURLLoader::ProceedWithResponse() {
+  DCHECK(!base::FeatureList::IsEnabled(network::features::kNetworkService));
+  // TODO(https://crbug.com/791049): Remove this when NetworkService is
+  // enabled by default.
+  if (url_loader_)
+    url_loader_->ProceedWithResponse();
 }
 
 void ThrottlingURLLoader::DisconnectClient() {

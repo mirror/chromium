@@ -20,6 +20,7 @@
 #include "content/browser/appcache/appcache_url_request_job.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
 #include "content/common/navigation_subresource_loader_params.h"
+#include "content/common/throttling_url_loader.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
 #include "services/network/public/cpp/features.h"
@@ -601,7 +602,7 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
     const network::ResourceResponseHead& response,
     network::mojom::URLLoaderPtr* loader,
     network::mojom::URLLoaderClientRequest* client_request,
-    ThrottlingURLLoader* url_loader) {
+    std::unique_ptr<ThrottlingURLLoader>* url_loader) {
   // The sync interface of this method is inherited from the
   // URLLoaderRequestHandler class. The LoaderCallback created here is invoked
   // synchronously in fallback cases, and only when there really is a loader
@@ -625,6 +626,7 @@ bool AppCacheRequestHandler::MaybeCreateLoaderForResponse(
     return false;
   }
   DCHECK(was_called);
+  url_loader->reset();
   return true;
 }
 
