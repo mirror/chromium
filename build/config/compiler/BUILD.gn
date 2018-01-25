@@ -739,6 +739,9 @@ config("compiler_cpu_abi") {
           "-march=loongson3a",
           "-mno-branch-likely",
           "-Wa,-march=loongson3a",
+          # Disable madd.d and msub.d
+          # instructions generated on Loongson.
+          "-ffp-contract=off",
         ]
       }
 
@@ -846,6 +849,9 @@ config("compiler_cpu_abi") {
           "-march=loongson3a",
           "-mno-branch-likely",
           "-Wa,-march=loongson3a",
+          # Disable madd.d and msub.d
+          # instructions generated on Loongson.
+          "-ffp-contract=off",
         ]
       }
     } else if (current_cpu == "mips64") {
