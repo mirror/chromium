@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "65320ae9_181c1ee9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-25T19:25:55Z",
+      "side": 1,
+      "message": "Q: What stops a subclass from calling RouterHandlerFunction from its constructor?",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "d53ef59af32d03a21f5cd690ba0154d1c21907c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d71906_0e464310",
+        "filename": "extensions/renderer/object_backed_native_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-25T19:25:55Z",
+      "side": 1,
+      "message": "nit: here and below, InitializeRoutes is non-existent, fix.",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "d53ef59af32d03a21f5cd690ba0154d1c21907c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97939ff6_492d1671",
         "filename": "extensions/renderer/object_backed_native_handler.h",
         "patchSetId": 3
