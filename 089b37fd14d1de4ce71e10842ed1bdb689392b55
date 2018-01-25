@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "981f8b84_fc005c36",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T09:21:37Z",
+      "side": 1,
+      "message": "\"Calls |flush_callback_for_testing_|, in a lock-safe manner, if one is available.\"\n\notherwise it sounds like:   \"if one is *available in a lock-safe manner*\"",
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999a7084_fc7adb55",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T09:21:37Z",
+      "side": 1,
+      "message": "nit: same comment adjustment here",
+      "range": {
+        "startLine": 258,
+        "startChar": 64,
+        "endLine": 258,
+        "endChar": 72
+      },
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0f8fc1_e3d522c7",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-25T09:21:37Z",
+      "side": 1,
+      "message": "But this isn\u0027t what this test verifies (we already have a test that checks the undelayed task doesn\u0027t run). I think we should remove this check and have this one focus on the death test alone.",
+      "range": {
+        "startLine": 845,
+        "startChar": 2,
+        "endLine": 845,
+        "endChar": 78
+      },
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
