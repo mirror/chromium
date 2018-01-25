@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e228865_7582fda5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings_test_runner/PersistenceTestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T01:00:50Z",
+      "side": 1,
+      "message": "missing \u0027}\u0027",
+      "revId": "fb07c0909d8103c8e4194b4d872ad9c833a51210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
