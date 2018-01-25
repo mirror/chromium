@@ -26,15 +26,6 @@ enum class OptInActionType : int {
   // ARC was opted in by user.
   OPTED_IN = 1,
 
-  // ARC OptIn notification was accepted.
-  NOTIFICATION_ACCEPTED = 2,
-
-  // ARC OptIn notification was declined.
-  NOTIFICATION_DECLINED = 3,
-
-  // ARC OptIn notification was timed out.
-  NOTIFICATION_TIMED_OUT = 4,
-
   // User asked to retry OptIn.
   RETRY = 5,
 
