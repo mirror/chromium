@@ -392,9 +392,9 @@ NSString* const kCheckBoxCheckedImageName = @"checkbox_checked";
     WelcomeToChromeView* strongSelf = weakSelf;
     if (!strongSelf)
       return;
-    if (url == GURL("internal://terms-of-service")) {
+    if (url == "internal://terms-of-service") {
       [[strongSelf delegate] welcomeToChromeViewDidTapTOSLink];
-    } else if (url == GURL("internal://privacy-notice")) {
+    } else if (url == "internal://privacy-notice") {
       [[strongSelf delegate] welcomeToChromeViewDidTapPrivacyLink];
     } else {
       NOTREACHED();
