@@ -52,6 +52,24 @@
       "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3564664e_50b75608",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-25T21:46:14Z",
+      "side": 1,
+      "message": "Surprising that we need |data_deps| as well as |write_runtime_deps| - or is the issue that without copying |pkg.deps| into |data_deps|, the package\u0027s deps aren\u0027t regarded as runtime dependencies?\n\nI\u0027m still a little confused by this; don\u0027t we want to know the runtime_deps of the things on what we depend, rather than the write_manifest_target step\u0027s run-time dependencies?  e.g. write_manifest_target depends on inputs including the _runtime_deps_file, but presumably we don\u0027t expect that file to be listed inside itself? :)",
+      "parentUuid": "0968f677_2e870087",
+      "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
