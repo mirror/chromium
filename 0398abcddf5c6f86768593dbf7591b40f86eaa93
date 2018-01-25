@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4782b68d_ace75540",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-25T20:42:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f08d50f4_24067eaf",
+      "range": {
+        "startLine": 614,
+        "startChar": 19,
+        "endLine": 614,
+        "endChar": 34
+      },
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a401ba3_21306f89",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-17T15:21:24Z",
       "side": 1,
       "message": "It appears there are many places that call CanRequest. Is there a place that we could add a new call, IsAdResource(), such that it\u0027s only called once?",
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3534b75f_880f7f42",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-25T20:42:02Z",
+      "side": 1,
+      "message": "I believe something like https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/SubresourceFilter.cpp?dr\u0026l\u003d56 could be implemented and then queried.",
+      "parentUuid": "1a401ba3_21306f89",
       "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
