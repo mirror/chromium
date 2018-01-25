@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca128dc9_e05e2523",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "Let\u0027s add the usual warning about only using this for non-scheduler tasks because of starvation issues. Could we make this private for friends even?\n\n(Also would be nice to make this const, but looks like the underlying helper method isn\u0027t const either.)",
+      "range": {
+        "startLine": 67,
+        "startChar": 50,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b31ab5_db79edbd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "typo: obtains",
+      "range": {
+        "startLine": 27,
+        "startChar": 34,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cac41c_60509625",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "nit: visible or invisible",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 44,
+        "endChar": 70
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dbe350_a15c4f4b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "Should this be OnHandleDestroyed? Not sure what the parent object here is.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0cfed1_5a30ea17",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "Could you document the thread-affinity of these variables -- maybe by having a block for main vs. worker thread ones?",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d207367d_1e8c6a15",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "optional naming suggestion: \"Get()\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 71
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1398c8d_0a1c1950",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "DCHECK that it was registered?",
+      "range": {
+        "startLine": 579,
+        "startChar": 2,
+        "endLine": 579,
+        "endChar": 17
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12280da7_5af41f71",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2018-01-25T18:05:25Z",
+      "side": 1,
+      "message": "Did you mean to use the one from default_params.h here?",
+      "range": {
+        "startLine": 47,
+        "startChar": 24,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "e5ced755063d4b356630468f32a175bc6ae1672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
