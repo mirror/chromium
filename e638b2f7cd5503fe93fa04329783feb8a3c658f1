@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9289f202_d234ad11",
+        "filename": "media/capture/video/win/capability_list_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "Not away of any mention of this in coding style guidelines, but this is the first time I have seen a primitive initialized using a default constructor. I\u0027d prefer explicitly initializing it with 0.",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a6c21f_c2b30411",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "Is the #if needed here? I was assuming that the D in DPLOG already means that it resolves to no-op in debug builds.",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd61d602_ca5b9e78",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "Naming nit: |requester| sounds to me like it is referring to whoever is requesting. I propose to name this\n\nHRESULT ExecuteHresultCallbackWithRetries(base::RepeatingCallback\u003cHRESULT()\u003e callback)",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffabc5da_3d78b9d8",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "Since the method is now generalized, this comment should be moved to the invocation specific to GetAvailableDeviceMediaType.",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e849f1b4_c2a61c6e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "I recommend adding some comment explaining why we believe retrying is the best option we have here. If I understand correctly, it is because either MediaFoundation itself or the underlying device can be in a state where they reject these calls and there is no event sent by MediaFoundation that would tell us when that state is reached and how long it lasts.",
+      "revId": "e638b2f7cd5503fe93fa04329783feb8a3c658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
