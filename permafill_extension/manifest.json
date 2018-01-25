@@ -1,0 +1,10 @@
+{
+  "manifest_version": 2,
+  "name": "Permafill Prototype",
+  "version": "0.1",
+  "description": "Permafill Prototype backend storage implemented as an extension",
+  "key": "permafillprototypefoxnpastillage",
+  "web_accessible_resources": [
+    "*.*"
+  ]
+}
