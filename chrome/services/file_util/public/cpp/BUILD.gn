@@ -14,6 +14,8 @@ source_set("cpp") {
     sources = [
       "sandboxed_dmg_analyzer_mac.cc",
       "sandboxed_dmg_analyzer_mac.h",
+      "sandboxed_rar_analyzer.cc",
+      "sandboxed_rar_analyzer.h",
       "sandboxed_zip_analyzer.cc",
       "sandboxed_zip_analyzer.h",
     ]
