@@ -173,5 +173,18 @@ document.addEventListener('DOMContentLoaded', function() {
       renderTable();
     });
   }
+
+  // Add handler to 'copy all to clipboard' button
+  var copyAllToClipboardButton = $('copy-all-to-clipboard');
+  copyAllToClipboardButton.addEventListener('click', (e) => {
+    // Make sure nothing is selected
+    window.getSelection().removeAllRanges();
+
+    document.execCommand('selectAll');
+    document.execCommand('copy');
+
+    // And deselect everything at the end.
+    window.getSelection().removeAllRanges();
+  });
 });
 })();
