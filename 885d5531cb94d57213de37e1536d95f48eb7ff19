@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf6ea5be_a3f2787b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T16:44:19Z",
+      "side": 1,
+      "message": "Please fix description to correspond to the code.",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1744b540_4f775686",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T16:44:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
