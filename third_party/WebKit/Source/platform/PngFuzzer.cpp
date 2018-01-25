@@ -27,6 +27,9 @@
 #include "platform/image-decoders/png/PNGImageDecoder.h"
 #include "platform/testing/BlinkFuzzerTestSupport.h"
 
+static blink::BlinkFuzzerTestSupport test_support =
+    blink::BlinkFuzzerTestSupport();
+
 namespace blink {
 
 std::unique_ptr<ImageDecoder> CreateDecoder(
@@ -37,7 +40,6 @@ std::unique_ptr<ImageDecoder> CreateDecoder(
 }
 
 int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
-  static BlinkFuzzerTestSupport test_support = BlinkFuzzerTestSupport();
   auto buffer = SharedBuffer::Create(data, size);
   // TODO (scroggo): Also test ImageDecoder::AlphaNotPremultiplied?
   auto decoder = CreateDecoder(ImageDecoder::kAlphaPremultiplied);

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/libfuzzer/fuzzer_test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 copy("json_proto_copy") {
@@ -33,5 +34,33 @@ source_set("json_proto_converter") {
   ]
   deps = [
     ":json_proto",
+  ]
+}
+
+static_library("skia_image_filter_converter") {
+  sources = [
+    "skia_image_filter_proto_converter.cc",
+    "skia_image_filter_proto_converter.h",
+  ]
+  deps = [
+    ":skia_image_filter_proto",
+    "//skia",
+    "//third_party/libprotobuf-mutator",
+  ]
+  defines = [ "AVOID_MISBEHAVIOR=1" ]
+
+  #  Can't disable instrumentation because of container-overflow false positives
+  testonly = true
+
+  # Assertion failures in skia are usually uninteresting. And ubsan is not
+  # useful either.
+  if (is_debug || is_ubsan) {
+    all_dependent_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
+  }
+}
+
+proto_library("skia_image_filter_proto") {
+  sources = [
+    "skia_image_filter.proto",
   ]
 }
