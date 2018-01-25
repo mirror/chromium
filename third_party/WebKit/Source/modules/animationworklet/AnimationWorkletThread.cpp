@@ -40,6 +40,12 @@ AnimationWorkletThread::AnimationWorkletThread(
 
 AnimationWorkletThread::~AnimationWorkletThread() = default;
 
+WebThread* AnimationWorkletThread::GetSharedBackingThread() {
+  auto* instance = WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  DCHECK(instance);
+  return &(instance->GetThread()->BackingThread().PlatformThread());
+}
+
 WorkerBackingThread& AnimationWorkletThread::GetWorkerBackingThread() {
   return *WorkletThreadHolder<AnimationWorkletThread>::GetInstance()
               ->GetThread();
@@ -63,25 +69,23 @@ void AnimationWorkletThread::CollectAllGarbage() {
 }
 
 void AnimationWorkletThread::EnsureSharedBackingThread() {
-  DCHECK(IsMainThread());
   WorkletThreadHolder<AnimationWorkletThread>::EnsureInstance(
-      Platform::Current()->CompositorThread());
+      "AnimationWorkletThread");
 }
 
 void AnimationWorkletThread::ClearSharedBackingThread() {
-  DCHECK(IsMainThread());
   WorkletThreadHolder<AnimationWorkletThread>::ClearInstance();
 }
 
 void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
   WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
-      Platform::Current()->CompositorThread());
+      WebThreadCreationParams("AnimationWorkletThread"));
 }
 
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
-               "AnimationWorkletThread::createWorkerGlobalScope");
+               "AnimationWorkletThread::CreateWorkerGlobalScope");
   return AnimationWorkletGlobalScope::Create(std::move(creation_params),
                                              GetIsolate(), this);
 }
