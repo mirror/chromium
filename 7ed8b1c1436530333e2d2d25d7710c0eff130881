@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b68704_78de81b2",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-25T06:30:49Z",
+      "side": 1,
+      "message": "I think we can put some initial effort into ensuring the `build` and `build all` don\u0027t regress for go/macviewsbuilder\n\nin my gn config, this regresses build for chrome. The first duplicate symbol is this one:\n\nduplicate symbol __ZN6chrome17ShowConfirmBubbleEP8NSWindowP6NSViewRKN3gfx5PointENSt3__110unique_ptrI18ConfirmBubbleModelNS8_14default_deleteISA_EEEE in:\n    obj/chrome/browser/ui/libui.a(confirm_bubble_views_mac.o)\n    obj/chrome/browser/ui/libui.a(confirm_bubble_views.o)\n\nI think to fix it (both now and for the end state) we just don\u0027t move this file, since we can \"hardcode\" the views implementation of the dialog. Of course there are lots more :)\n\nThat email to chrome-mac-dev suggests we have developers relying at least on the `chrome` target of mac_views_builder not to regress, so landing this would be disruptive for their workflow.",
+      "revId": "7ed8b1c1436530333e2d2d25d7710c0eff130881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
