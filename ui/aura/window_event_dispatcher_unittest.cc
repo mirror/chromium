@@ -151,6 +151,33 @@ TEST_P(WindowEventDispatcherTest, OnHostMouseEvent) {
   EXPECT_TRUE(delegate1->mouse_event_flags() & ui::EF_IS_NON_CLIENT);
 }
 
+TEST_P(WindowEventDispatcherTest,
+       DoNotEnvSetMouseButtonFlagsForNonClientClick) {
+  std::unique_ptr<NonClientDelegate> delegate1(new NonClientDelegate());
+  const int kWindowWidth = 123;
+  const int kWindowHeight = 45;
+  gfx::Rect bounds1(100, 200, kWindowWidth, kWindowHeight);
+  std::unique_ptr<aura::Window> window1(CreateTestWindowWithDelegate(
+      delegate1.get(), -1234, bounds1, root_window()));
+
+  // Send a mouse event to window1.
+  gfx::Point point(101, 201);
+  ui::MouseEvent event1(ui::ET_MOUSE_PRESSED, point, point,
+                        ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON,
+                        ui::EF_LEFT_MOUSE_BUTTON);
+
+  int flags = event1.flags();
+  flags |= ui::EF_IS_NON_CLIENT;
+  event1.set_flags(flags);
+
+  DispatchEventUsingWindowDispatcher(&event1);
+
+  // Event was tested for non-client area for the target window.
+  EXPECT_EQ(1, delegate1->non_client_count());
+  EXPECT_TRUE(delegate1->mouse_event_flags() & ui::EF_IS_NON_CLIENT);
+  EXPECT_EQ(false, Env::GetInstance()->IsMouseButtonDown());
+}
+
 TEST_P(WindowEventDispatcherTest, RepostEvent) {
   // Test RepostEvent in RootWindow. It only works for Mouse Press and touch
   // press.
