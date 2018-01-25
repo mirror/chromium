@@ -113,6 +113,18 @@
       domAutomationController.send(hasStore);
     }
   }
+
+  function setHistory() {
+    history.pushState({}, "foo");
+    success_();
+  }
+
+  function hasHistory() {
+    // The current page and the new tab page are always present,
+    // setHistory() adds a third entry.
+    domAutomationController.send(history.length > 2);
+  }
+
 </script>
 
 <body>
