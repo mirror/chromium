@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5967a6_cd482fa0",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-25T01:24:24Z",
+      "side": 1,
+      "message": "[optional] My suggestion is to use the fixed configuration on all platforms (not just OS_LINUX).\n\n(If we need ability to specify proxy settings, we can do so with a separate command line flag).\n\nI realize this is just a code move, so feel free to disregard for this CL.",
+      "revId": "1ee3c112e1a85a32e3ccdc2a2a1687c6a4cf3ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef902cb3_303911ab",
+        "filename": "net/tools/cert_verify_tool/verify_using_path_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-25T01:24:24Z",
+      "side": 1,
+      "message": "We could perhaps add a --verify_flags\u003dXXX switch, which takes a VerifyFlags number.\n\nThen here would just be a matter of checking flags\u0026VERIFY_CERT_IO_ENABLED.",
+      "revId": "1ee3c112e1a85a32e3ccdc2a2a1687c6a4cf3ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
