@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3860a649_53e585de",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Done.  Wasn\u0027t sure about that - good to know, thanks!",
+      "parentUuid": "d0df78aa_e4035b37",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "617e0b57_7e0008d4",
         "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8c811e_be627638",
+        "filename": "chrome_elf/whitelist/whitelist_file_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "617e0b57_7e0008d4",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa6bd2_15a842a9",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Yup, that\u0027s what it does.  If nullptr is passed in, the DuplicateHandle bit is bypassed, and if there is an existing handle held in g_notification_event, it is closed below (before overwriting the global with |temp| \u003d\u003d nullptr).",
+      "parentUuid": "919e7b28_b719905f",
+      "range": {
+        "startLine": 244,
+        "startChar": 36,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +188,78 @@
     },
     {
       "key": {
+        "uuid": "aecf5211_e540d742",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169c0762_15c362d0",
+      "range": {
+        "startLine": 248,
+        "startChar": 41,
+        "endLine": 248,
+        "endChar": 62
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c4efaa7_5b2bf8e4",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f4c630_91aba397",
+      "range": {
+        "startLine": 248,
+        "startChar": 71,
+        "endLine": 248,
+        "endChar": 72
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d2c7070_5f4b7563",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Sure.  I\u0027ve received conflicting code review feedback on calls into system APIs.  I agree that FALSE is not the same as false.  I\u0027m often told to pass in \"nullptr\" instead of \"NULL\" (even though system APIs are documented to take in \"NULL\").  What is your full take on this Greg?",
+      "parentUuid": "8e1c3c1a_83e2cb2b",
+      "range": {
+        "startLine": 248,
+        "startChar": 64,
+        "endLine": 248,
+        "endChar": 69
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1de93ab3_f5499bb7",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 7
@@ -142,6 +274,24 @@
       "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9eb306_790160c4",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de93ab3_f5499bb7",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "70ac8b18_5e7e8430",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "Good call.  It was passing because of how I\u0027m handling a wait timeout in NotificationHandler in the test.  It was still doing a DrainLog... even though the event wasn\u0027t being fired.  FAIL.\n\nI\u0027ve changed it that so there can\u0027t be a success if there\u0027s a timeout in NotificationHandler, waiting on the event.  There shouldn\u0027t be any race condition with a reasonable timeout used - if the event is working.",
+      "parentUuid": "5b7da060_ed2299f3",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3cccdf_c86166da",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
         "patchSetId": 7
@@ -176,6 +344,24 @@
       "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2625b98c_88f9c174",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-25T20:23:46Z",
+      "side": 1,
+      "message": "1. Safety related to shutdown races (or just bad code up in chrome.dll).  Eg:  chrome.dll will shutdown before the elf.  Using an event handle that is duplicated prevents any mayhem if I fire the event after chrome.dll closes its handle.  The OS ensures my elf handle is valid regardless of nobody else listening.  A function pointer, on the other hand, is bad news if the address becomes invalid for any reason.\n\nand just as important\n\n2. The cross-module heap boundary pushed me/us to define the DrainLog API to require the caller to manage and pass in their own buffer, which then simply receives some data written into it.  (Like win system apis.)  There\u0027s no point (efficiency) in adding a function call into chrome.dll... just to then need that registered module to manage its own resources and call DrainLog back in elf.  I also don\u0027t want to deal with blocking on a function call outside of the elf.... and certainly not in a hook of NtMapViewofSection.  IMO, much cleaner, safer and efficient to just commit to triggering a notification event when log(s) are available.  Note that I did consider a function pointer early on.",
+      "parentUuid": "0d3cccdf_c86166da",
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
