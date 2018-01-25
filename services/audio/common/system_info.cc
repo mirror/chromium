@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/audio/system_info.h"
+#include "services/audio/common/system_info.h"
 
 namespace audio {
 

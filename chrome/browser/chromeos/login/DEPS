@@ -7,6 +7,8 @@ include_rules = [
   "+components/wallpaper",
   "+extensions/components/native_app_window",
   "+services/device/public/interfaces",
+  "+services/audio/common",
+  "+services/audio/public/interfaces",
 
   # Library used for calculating CRC-32 needed for HWID verification.
   "+third_party/zlib",
