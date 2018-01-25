@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dbf30fd_c1a08d81",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T21:20:33Z",
+      "side": 1,
+      "message": "Nit (optional): Maybe use .destination-list-item.stale -webkit-any(...) {...} instead?",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "c447bcdcf527e39fead6b54700b31a30ade03ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
