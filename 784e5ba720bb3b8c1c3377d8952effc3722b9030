@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a860a98_2e501b2f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T00:48:28Z",
+      "side": 1,
+      "message": "Good catch. I thought that service was being used in the following then as well.",
+      "parentUuid": "75c6139f_3ab7bbd2",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29df170c_4e4a68e5",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6695841f_6d08a696",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T00:48:28Z",
+      "side": 1,
+      "message": "I think this should also be singular.",
+      "parentUuid": "29df170c_4e4a68e5",
+      "range": {
+        "startLine": 10,
+        "startChar": 74,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd8c0232_53fc1eec",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a56af6_dc676767",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-01-25T00:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd8c0232_53fc1eec",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "784e5ba720bb3b8c1c3377d8952effc3722b9030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
