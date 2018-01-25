@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c4f56b2_fd70ef7c",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd65f0f7_3a4a4ac1",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 45
+      },
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ca3b74_b3b11f34",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 31
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fba91f50_08c9454d",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "I wanted to use that, it could be even shorter, like RenderFrameProxyHost::FromID(process_id, proxy_id)-\u003eframe_tree_node()-\u003ecurrent_frame_host(). But RenderFrameProxyHost is not exported, so I could not do so.\n\nIn fact, I have to use the unsafe version since it allows check cross process rfhs.",
+      "parentUuid": "67ca3b74_b3b11f34",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "912e342a_4e461612",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 31
@@ -56,6 +98,24 @@
       "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974c6728_93c318c6",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "It is just a way to make sure we are not doing recursive calling which the code was not designed for. More context can be found here https://cs.chromium.org/chromium/src/components/printing/renderer/print_render_frame_helper.cc?type\u003dcs\u0026q\u003dipc_nesting_level_\u0026l\u003d1035",
+      "parentUuid": "912e342a_4e461612",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ce0abab2_ae11af31",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b175f8a_6ea234bd",
+      "range": {
+        "startLine": 1714,
+        "startChar": 31,
+        "endLine": 1714,
+        "endChar": 57
+      },
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73184c85_fbc47650",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 31
@@ -96,6 +180,24 @@
       "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289c02ca_05a7049a",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Yes, skia will check whether it is nullptr. However, let\u0027s add it only when we have a meaningful function. Removed it for now.",
+      "parentUuid": "73184c85_fbc47650",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "76a60ded_41aff831",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Looks like FinishPage() is always called before this call. Removed it.",
+      "parentUuid": "7f3db8bc_3a8ffddb",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5dbda9a_fcd0fc9a",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 31
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "a1b34388_2cd64f77",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "e5dbda9a_fcd0fc9a",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc56315d_f25a8034",
         "filename": "printing/pdf_metafile_skia.h",
         "patchSetId": 31
@@ -147,6 +285,24 @@
       "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4217d7b5_4af60c70",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc56315d_f25a8034",
+      "revId": "fab035a13ebcb974fbc3c3246691f7b8d7361bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

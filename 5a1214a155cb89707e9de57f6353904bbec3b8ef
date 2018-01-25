@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "4bbb0982_718851d6",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "Good point, thanks. I added comments, also handled more carefully for the content.",
+      "parentUuid": "58914dd5_419c919b",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "533a7706_a4b0c320",
         "filename": "components/printing/browser/print_composite_client.h",
         "patchSetId": 27
@@ -611,6 +635,30 @@
       "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275635be_e6883f7b",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-25T21:56:18Z",
+      "side": 1,
+      "message": "right, I think checking whether render frame is gone is more useful here.",
+      "parentUuid": "b00311b9_e9513dc4",
+      "range": {
+        "startLine": 1473,
+        "startChar": 45,
+        "endLine": 1473,
+        "endChar": 57
+      },
+      "revId": "5a1214a155cb89707e9de57f6353904bbec3b8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
