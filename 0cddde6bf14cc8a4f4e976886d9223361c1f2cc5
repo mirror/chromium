@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b13c01d_e0d9da73",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-25T17:58:11Z",
+      "side": 1,
+      "message": "Please clarify - are you saying: \"if true, install the extension even if it\u0027s current in use\"?",
+      "range": {
+        "startLine": 145,
+        "startChar": 29,
+        "endLine": 146,
+        "endChar": 22
+      },
+      "revId": "0cddde6bf14cc8a4f4e976886d9223361c1f2cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
