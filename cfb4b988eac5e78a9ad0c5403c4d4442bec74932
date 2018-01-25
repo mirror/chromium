@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f63ac84f_3e4c0fdf",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T22:34:41Z",
+      "side": 1,
+      "message": "Good catch. Surprising that the asan build did not catch that (I had a similar leak with the image sanitizer that was caught).\nNow always calling CleanUp() when done and clearing the |json_parser_ptr_|.\nAlso added unit-tests to check it\u0027s not been leaked.",
+      "parentUuid": "2a558d13_476c21db",
+      "range": {
+        "startLine": 776,
+        "startChar": 43,
+        "endLine": 776,
+        "endChar": 47
+      },
+      "revId": "cfb4b988eac5e78a9ad0c5403c4d4442bec74932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6268b10e_3130c132",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d2729991_901647b2",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T22:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6268b10e_3130c132",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "cfb4b988eac5e78a9ad0c5403c4d4442bec74932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaedb7c6_c4395515",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "cfb4b988eac5e78a9ad0c5403c4d4442bec74932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f590484_95fa5493",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-25T22:34:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaedb7c6_c4395515",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 44
+      },
+      "revId": "cfb4b988eac5e78a9ad0c5403c4d4442bec74932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
