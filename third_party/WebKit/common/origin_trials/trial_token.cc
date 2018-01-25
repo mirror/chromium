@@ -22,6 +22,13 @@ namespace blink {
 
 namespace {
 
+// Tokens can be at most 4KB in size. The origin is the only part of the token
+// contents that is user-supplied. Even with the Base64 encoding overhead, this
+// limit allows for the origin to be ~2 KB, which is a limit for URLs (not just
+// origin) in some cases, e.g.:
+// https://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url-in-different-browsers
+const size_t kMaxTokenSize = 4096;
+
 // Version is a 1-byte field at offset 0.
 const size_t kVersionOffset = 0;
 const size_t kVersionSize = 1;
@@ -84,6 +91,12 @@ OriginTrialTokenStatus TrialToken::Extract(const std::string& token_text,
                                            std::string* out_token_payload,
                                            std::string* out_token_signature) {
   if (token_text.empty()) {
+    return OriginTrialTokenStatus::kMalformed;
+  }
+
+  if (token_text.length() > kMaxTokenSize) {
+    // Protection against attempting to parse arbitrarily large tokens.
+    // See crbug.com/802377.
     return OriginTrialTokenStatus::kMalformed;
   }
 

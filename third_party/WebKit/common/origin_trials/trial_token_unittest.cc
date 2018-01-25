@@ -197,6 +197,129 @@ const char* kInvalidTokens[] = {
     "1458766277}",
 };
 
+// Large valid token, size = 3052 chars. The feature name is 100 characters, and
+// the origin is 2048 chars.
+// Generate this token with the command:
+// generate_token.py --is-subdomain --expire-timestamp=1458766277 \
+//   https://www.<2027 random chars>.com:9999 \
+//   ThisTrialNameIs100CharactersLongIncludingPaddingAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+const char kLargeValidToken[] =
+    "Aq1wGS1wFPBT/"
+    "S0tRbXIhO6fntc3GuDacAPAcfTBMxkdXpgXJMERVcVEVNfZAu1laKHhMUjTp0pOIBi/"
+    "KyWXrAQAAAireyJvcmlnaW4iOiAiaHR0cHM6Ly93d3cuYWFhcHB0eXFpbm0wcGFsMWJpZnlpdH"
+    "Vkb2h4dThzbWh2Zmx4aTVnbmdsYTVzbWtwbmw2MnFpOWdscWlmanBpZ3V4bDlweHVkYXN6YnVz"
+    "Y3Ric3htaTd2MXRyYnhsdWd1YTdpeGp2dXZxM2ZoejVocnVmZmhmN2RocGVxeWN6Zjdzd3Zmcn"
+    "hscDBseWhpaHZ0bno3Mnl3a2FucWlqeGZjZ2l4M3d6Z25za3lhODlma2plaGgzZ3h6Y3dmY3Fn"
+    "aGI4NnZvNjFxeGhtNG5vc211ZXYyeGN0ajlkNG5hZHR4c3k1bHVld3RjZW5tM2pibWxsd3J1dW"
+    "hscGx2ejBmbXdpcm9leGdxc3IxbzJsaTRwYmF5eTJvamt2b3dhaGZ5Z3h1eTJwOWVlYW5zeXNp"
+    "YXQ5dzNrdzI1NmVuajRoeHZjZ3A1andleGJnN2liZHk1a2Y1bWlsY2hlZXp4OHhlcnN6Znc2ZW"
+    "RweHlzOG15bGl2bzZqcm9ja2JncmhhcWVzZmFod2JycnJoemZzamV4cm13bDF3ZmU1amFub3Rr"
+    "cmFidXR2a29tdXJhYXAwMXh0eXJjZThjdW9mZXRtdmFyaGZsYng5dnBhdTB3ZXZvbmV3MG95dz"
+    "gya3RlamtwNG9kc3NyM2h2cmh2NGx6ZmZodnBnc2hmbWxoaHl3NWdwejExdzB1ZmhjdzF5N2Fy"
+    "MGIwemVnYjZtZ3djYnJ1eGZhNDJmcXJscW50dWdocm9yZzdpNWV0cGhhZ3k0MXNydnUwbmJrdz"
+    "k5ZmxybXl4M2JyZTB6a3EyZmtwbGNibzVrZHg3YmQyZWNtd21veXp6c2R1ZnB1dXlucHhlMW13"
+    "MGd3NnVoeGljODdsb3VqZXd3Z3RtcXFyOXJlYXkxdjlhZ2dka2dhems0aGJka29yaXVsODhvaH"
+    "l1d2h1N2JqbW95aHB5c3Zsb2gxZWZvbm9ybXA1NDFuanRzMXhyZWpvNWo2d21pN2J3bW5obHd5"
+    "djJsaWdzdGFkY2k0YXR4MGJpdHJkYmVqYXJ0YnExZGRlNGlmb21wcjBrdHJsdHA5aWNjdm9mYW"
+    "ZrYzBjY3RjZWM4NmtmaG5meHNjcjZjcWlqcnV2aWtrdWJva2Zsc2hpcWV1emZ4aTJvbHNjYWUz"
+    "a2M5MDJpbjZmOW5qaTNrZGl3bzB2dGN3MzJrbm5qaXhuZm54MjNtOXN2emd6cnFmYmNpYjk2bj"
+    "JvZzdzdXhzZTZ2Y2U5a3Q1ZW1qeTVvYXFmcnpjZ3lvaXB3MGdmZWp1b2pvbXlqb3hzb2Nod3l3"
+    "eHg1Z2UyMmJndnVrenl2eThqbHk2NmwwaWdwODFvZXI2d2t1bjh5NnljdGR5bnRqZGtsZnF6NH"
+    "dqeG14eWduY3RnaGtneDF2eXJmeHlqcTAwNXprdnVkaDBxZnZqc2JyYmo0bng1bTd2Zm1rdnV6"
+    "b2k5a2Znb2djMnFhZ294eGFzb3JydXJtZzN2dG5pd3FxbTI4emZoOGp2bTR1MnZhMGhsb2huaW"
+    "81dGl0empxenp3dmxiZHpmN3pseXdsZ2JpbHB5eG5tbWlpcnk4Zzdpc3o0dm0zc3ZuanR5YXlj"
+    "bm9wOWhzd25ta3Njc2E1NmwwZTlqcjN5eXk5dzd0d2pycTdmcnFkempraHNyMGl1NmFucmFtbW"
+    "F5d2dscmdwb29ucTg0OWtvaG8zNWx0aDBzeml1ZzRrb2w4aTdicWtncWNmeG1rNnBoMGZuMjdn"
+    "Ymdsdml4dG9ucW14eGhoYzI5bGNodmhraWY4eXZkdmVkYXVybmt4dXB5bHN6N2NucGl2YjR3Ym"
+    "dya3JheWhpdzIwaGZiMWtjNGdudGtxaHBpbnR6c21pNDQ3ZnkyOWx5andsamJuc3hhaG1kYWVp"
+    "amVnYmM0aGZwbGZhOHdkMHE0cWpieHR1ZnNjaWJiamY2YXNnYjV2dWV6Y2FwenZ4bXhpdGVhc3"
+    "R4aXVpenVlaDV4cncxbHk3aHBzYnliaGltbmp6cDB4cDZwb2thc2hlYmhpcTMxZnZnbWVvdG9n"
+    "NHY0M2huc3Uzenp0bGRveGxobG9teGttNmZndHh3OHhtOHQ0dTJtemNmMWFwZXNxdXF3ejV5d3"
+    "ludXUwb2JyZWkycWlwcW5sdWVzaG01c3AxMndscTZoOW4wdTZ3cmF1cXRkN2hrZnJ1bmFleWVs"
+    "NWphNnptZWp6cGJkeXEyNnRncGo5eXY4bThtZXducmZxd29zZ2Y3aG5oNHI3aXZ5OGN4NXgxcG"
+    "lpd3NvZHh2ODVjeWltczU3MTE2Zm56YWcya3h0dG16cTc1dXJ6MWEydDBhazR5empxejRkNjZi"
+    "ZGJ5dmU0bmJoc2VsN2NwN2h3bnQ4NWIya3RiOGlwZG95Mmc1dmx0b29ydXB5NDN5aWhxdWd0cG"
+    "dhcGo2eXIzOWd5eGNlaW9vZ284cGM2c2lqZ2ZoYml1NmZ1aGIwcW9jeGprcHJvOHlycXphaXR3"
+    "d3l3b2xnZ2Fzbnl0bnhlazV3aHhwd3ZnMHA1aWRrbHBnNWZjaHlpbXJmYWx1Yzl2N3U0dWJvbW"
+    "hkaWlyajF1YjBnaTRlc2dxazhjdHJiajByOXBpNGM3eGoyMTR2bWQ2Mzhub3JxcDNtaGpob2Yw"
+    "NHVxbnJjaDRmbnN5emhyZmJlczZhY2VodW9qc2hucjd0OTFvam8xdno1ZHF2am83NzY5amJ5bn"
+    "p6dW02amkuY29tOjk5OTkiLCAiaXNTdWJkb21haW4iOiB0cnVlLCAiZmVhdHVyZSI6ICJUaGlz"
+    "VHJpYWxOYW1lSXMxMDBDaGFyYWN0ZXJzTG9uZ0luY2x1ZGluZ1BhZGRpbmdBQUFBQUFBQUFBQU"
+    "FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUEiLCAiZXhwaXJ5IjogMTQ1"
+    "ODc2NjI3N30=";
+const uint8_t kLargeValidTokenSignature[] = {
+    0xad, 0x70, 0x19, 0x2d, 0x70, 0x14, 0xf0, 0x53, 0xfd, 0x2d, 0x2d,
+    0x45, 0xb5, 0xc8, 0x84, 0xee, 0x9f, 0x9e, 0xd7, 0x37, 0x1a, 0xe0,
+    0xda, 0x70, 0x03, 0xc0, 0x71, 0xf4, 0xc1, 0x33, 0x19, 0x1d, 0x5e,
+    0x98, 0x17, 0x24, 0xc1, 0x11, 0x55, 0xc5, 0x44, 0x54, 0xd7, 0xd9,
+    0x02, 0xed, 0x65, 0x68, 0xa1, 0xe1, 0x31, 0x48, 0xd3, 0xa7, 0x4a,
+    0x4e, 0x20, 0x18, 0xbf, 0x2b, 0x25, 0x97, 0xac, 0x04};
+
+// Valid token that is too large, size = 4100 chars. The feature name is 100
+// characters, and the origin is 2833 chars.
+// Generate this token with the command:
+// generate_token.py --is-subdomain --expire-timestamp=1458766277 \
+//   https://www.<2812 random chars>.com:9999 \
+//   ThisTrialNameIs100CharactersLongIncludingPaddingAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+const char kTooLargeValidToken[] =
+    "AlhEg6tINOds/"
+    "zM5lcaQj4af+u3RengcVVquJJ9sVDK2Y+J6GVnTqOzYNR3kar+1nAEkLU5FGK+"
+    "l2lM6tFZppwkAAAu8eyJvcmlnaW4iOiAiaHR0cHM6Ly93d3cuYWFzc2t5bXp6azhsMW5pamp4c"
+    "2ptZmtoc3lxZHdpOWI4bXh5a3Fxdm56cHBzZ3Izb2o4enJuNTJoM3dudTdjeXJ0N2t4ZDZqdXZ"
+    "tOWthcDM0M3JwMzF5ZmU4anIwcjhqcDZyZmJnc2t6eTdpeWV2dnhydzNtdXY2ZXljZ2xwbzB2Y"
+    "jJtcnhnaWtzZXkyenhnc2Z2YnpvZzZnYmJuYnBkdWczenY1OXhnejM5d3JtY254cmtqeW13czc"
+    "yb251cGZraTRoZmJ0dnhueWFrMW5obGsyNHJ2bXl5b3hwNm44aHhrYW5uanJiMjIxbHlkaWpzd"
+    "TZkcGF5c2FvZW1vOXg2NGZ1YWx6Z3M1Ym9hYXB0cWNnN3FhMmgwdW5qZDNpZ2Jzb3htbXh5dDV"
+    "icjg0dnRhZWs4bDFpdnJyMGJkaWcza3dtd2V3c2p6eXNmbGxvd3E3cXBndGtoOGIycGxscnVya"
+    "GZnMmVtNGo2aWJmdm5tamd5aWdraXY2b2VnanpleXVpbWliam5kd2NwcG9xcTJseHAxZjBjcHl"
+    "raXo5azE3d25pMWdtMzd0czd0bWt3bmJnZXEwanlnaGFrZzZkMGtjbHdqZ3RuamRwbnl3ajA3c"
+    "ThpcWdnc3Z5cmZyZjI1cWlhaTNyazdmdml0eHpsZW1pYTRuNGRnZzlxa2p6dDNhaTh2ZzlycHJ"
+    "2eWthdGZva3dqZWxheW0wa254N28xbHh5bWd4bm96bGhveHJwcnFtanF6MGV0Zm50eHZlcDZxc"
+    "2o2bTBpYWxhMXVuaGlwNjN5Z2Fzc3praHJoYTRvb2dndmUzZXFxMXB3enliMjcyZ2ZhaTRtMXB"
+    "2OHI4MWdpY3Z6YWZqYjY2dWgzZWNjdGZzc3B4bzZrY2JqYmliMnhlcmptYXdwcW54dnZvNXpxY"
+    "m54aTZoYzlyanQ3OG12bWM2OXljN2xoYWNpbzBzanBqYWd4cmFscDM5aXl5MjNtMmd3amlrZXR"
+    "zc3picHV2cmlnbXN2M3U4YnV3aXVmaWd5OHp5amxrMnZibDQycHcxZXFmMDgyZWp3cHVtcXVvM"
+    "2YyZHBrbGJtNm1ub3diZHZ0cG54Zm1zdW9zeDFscXl3dGZ5cjR2b3F4eG54bXVrOXRzc3diOXV"
+    "pczY2NTh2bmtiaGU3OW9kOWt4MGJ2N21rbzVlMm93emg3am15N3BzMWhyeHUzcmd1a245MWhwc"
+    "3R6eXdyeGZnenlpbXltY2VsZG1lcmk1d3VzeDBtcTVwcmVnZmlpeWJ4end6Z2p3Z2h4ZGhiaDF"
+    "hZzQ4cnpraXZ3Y3k1ZG9uanlnczJlM2phamR6NW5xanlrdTJ3dnFvaWs4YXN1ZmppYW1iZnlqb"
+    "HVmdWl1OTByajFvenBta2dpZmt3ZjJzbHh6M29xMHNwZjY0ZjRtd3h2MDlvdnZvYmJ0MDhoamJ"
+    "zNHF4a3dmZ3B2eXFrM29mbWhlZndlOTEzcGhxYm41NWsxbDZ0bmZmbDV3MGtlMzhiczFpY2t1b"
+    "TN5dGpqY29wY2ZsZHB5dm9vaWhpbzY0dWtuaG0xanNwcmFlemdubjl3MHk4Zmc5YnRubTlrdXF"
+    "3dWJ1dmFnc3Q2ZTR1bXNpd2FicDU3bnVobGx3bW14OTltdmFhcGcyYmxwc2NvenZ3dXljdmlod"
+    "nlzeDZpdnJhbWRoNGdiYWluYmk2eHBhdWswbWFxd2ZhcHFyaWxqdmVheThxenFtZmdiYWVobHV"
+    "mcGp2aXBmZGlvcmswY2lxZmF0dTd4dWQ2ZnY4bDlqMmkzNDhidnZvNTV4ZXh2YXVmYnU5bW5wZ"
+    "WpqYXEyMHF4OHYxNXJjZmxyZjZmbHptamZhcmI1ZnR2dnV2d3JmdXZkcTZ3d2VmenlxNXFsYTZ"
+    "scG1jMG05cGl2OXh3Zno3dTIxZ3R4eXhuZnlpbTdja3N2Nm1kMHQ5aHJxa3p5Z2w2Y2s3Mmt2Z"
+    "XRqb2YxZXRsZjNzdG44dnVpM3BqbmNtcXlzNHVkdGplZTRiZmYxZTMwbWt6aHk1bDJjcHBuMTF"
+    "maDNiNmt5czFranI0cjUzd2hiNXhhbG91YTd2aWs4ZTNvcG56dGptZXhxZXVueng2ZmVraGVzb"
+    "2dheDNqd3J6cGdmbGIxcWZtdW9hYmJjeGpnY3lkbndib3BldWgzYnhpOXpzeDB5NXNvOHRpZjF"
+    "qZ3JwbWphNHB2bm9vZ3B3dnk4a3E0bHJ3Y2lncTJqaTE1YnB5Nm9veGU0cHh3cXA1b2lvaGFic"
+    "3ZpdWZ2cGFqbjBobHl5amxjZjY4b2FvNm9ycG9wdDF6NXpvamp3ZzNwa2NkdXNzemttbW51Zjh"
+    "yYWVzbXZlc3BjbmppcW8weHVneHV1ZXZzZmdoMmZteGU5b3B1bGpsc285dzhmNXdsOG9wdXgza"
+    "HRhcGhqMW9rZXI2ajE5aGdtN2JocGc2aXZ1Y2N3eGluN3E3dHZzdXZiMTU4aWxxdWd3YmpzZ2F"
+    "4b25ydHpldzlvbzZjanRoaWxseGtiemxyeGl3cW5td3hmbzFuazNlY3dobWh4anZiam5hc2Z0a"
+    "jU5dm1zajQwZXhidnQ1bmJtaXcwdHRmZTBqd2d6Y3d0b25wNTlrMG1sdWFvd2U5bWdwbXJ3ZHc"
+    "2cmxmeWV3dXhnd3ZsbmowczJwZ2JhYnljMWVtaWRyNmkydzY5cjdnMGtjZXE3ZW9xMmE1Z2lyN"
+    "jN2dGl0eGl1Z3R2eXp6aGlvY2pianh4NjMyY21uczZyYmpzOWVvamtoYXV3YnJ5NDh2aHZ6YnU"
+    "1b3d5eHNoc2VtY3ZwOGZ4bmJpbGtzc3Vvb2xjcXpmcHl1cWExZmkxc291bHIweXR5aDVwdHR1Z"
+    "3hoM29hc3J5MGxvYjVibG1kdmZrMndqcmF3d3k3aWJzZmMxbm5xYmd3Z2c1bGh3YnYzbW1zc2l"
+    "xa3R0dmRoeDFrdGIzMzV3ZW12dzFuYmN4eW1la3p1ZmZ5a3l1anpsdm4wdDNjcG42bnVjbWpic"
+    "3Y3cGNiZG5tZTZiamRybndhdzRsemdrYTNicHhkb2IyYnJuenpoYXJneHA3eHdhM2FnaW93bzF"
+    "5aWF3aG1wM3ltanRsZ24xNXdjcXJ1MDNvb2w5c3J4dHJobnZwcnJoY29yZmU2Nmh5MXp0Y2w5Z"
+    "XQ1eXRoMjZyNm5zbGJmamV2cmtuNWZwZmhqamFuN2hxbnJmaHFtcnlsazVrY2lyM3RrZDNscHc"
+    "wZ3M2Znl0NHFmamNxYjF1MXNjZnN2YnZybHJrbHpjajhkbmdiaGFhcXpjMDJidWlubHB3ZTZiN"
+    "zA3Y2pqcGt6Z3BqMmx2b3pjM2hrbzV0YTNra2dxdGpyc2tocGFmcTMyb3BhbWZpcXBjZjlmY2t"
+    "jOWdrZTFwdGR2Z3l5eDdpaXNneGxwbmp5MWJ6a3Zyc2VoNnpnbXBrajZ1bHM2dWJ6ZThhY2lwZ"
+    "mN5djB3Y3g5cXFxZmowYXRobmJjM29lZDB4eWlhYXlsY2F2bWNteWY2aXNxdHptZHM2ZmcxN3l"
+    "wZ2xtbmx4dmV4Mmt0MWIyZjY3NXZrdmdidmN4dzB1cXBhdDBnYnU4eXd3d2l3aHZ1bGhzM2k0d"
+    "GxtdGVyZWVzeXN3M2dncnpva2w0dWlndDFrbmt4bWYyaHhsMzhnZ3NpdHoyYTg5b3NpdDBkbWV"
+    "6ajRoZmJwcGwwMnJ3NmFjZ3pjMHJscmw0M2xncGVqam1qYXNic3QweThydDJidXYyaG9mZnJyc"
+    "HVzcmUxYWs3dXZ3aW5wNnRlYy5jb206OTk5OSIsICJpc1N1YmRvbWFpbiI6IHRydWUsICJmZWF"
+    "0dXJlIjogIlRoaXNUcmlhbE5hbWVJczEwMENoYXJhY3RlcnNMb25nSW5jbHVkaW5nUGFkZGluZ"
+    "0FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQSIsICJ"
+    "leHBpcnkiOiAxNDU4NzY2Mjc3fQ==";
+
 }  // namespace
 
 class TrialTokenTest : public testing::TestWithParam<const char*> {
@@ -293,9 +416,7 @@ class TrialTokenTest : public testing::TestWithParam<const char*> {
 // checking the included version identifier, payload length, and cryptographic
 // signature.
 
-// Test verification of signature and extraction of token JSON from signed
-// token.
-TEST_F(TrialTokenTest, ValidateValidSignature) {
+TEST_F(TrialTokenTest, ExtractValidSignature) {
   std::string token_payload;
   std::string token_signature;
   OriginTrialTokenStatus status = Extract(kSampleToken, correct_public_key(),
@@ -305,7 +426,7 @@ TEST_F(TrialTokenTest, ValidateValidSignature) {
   EXPECT_EQ(expected_signature_, token_signature);
 }
 
-TEST_F(TrialTokenTest, ValidateSubdomainValidSignature) {
+TEST_F(TrialTokenTest, ExtractSubdomainValidSignature) {
   std::string token_payload;
   std::string token_signature;
   OriginTrialTokenStatus status =
@@ -316,7 +437,7 @@ TEST_F(TrialTokenTest, ValidateSubdomainValidSignature) {
   EXPECT_EQ(expected_subdomain_signature_, token_signature);
 }
 
-TEST_F(TrialTokenTest, ValidateNonSubdomainValidSignature) {
+TEST_F(TrialTokenTest, ExtractNonSubdomainValidSignature) {
   std::string token_payload;
   std::string token_signature;
   OriginTrialTokenStatus status =
@@ -327,39 +448,57 @@ TEST_F(TrialTokenTest, ValidateNonSubdomainValidSignature) {
   EXPECT_EQ(expected_nonsubdomain_signature_, token_signature);
 }
 
-TEST_F(TrialTokenTest, ValidateInvalidSignature) {
+TEST_F(TrialTokenTest, ExtractInvalidSignature) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload(kInvalidSignatureToken, correct_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kInvalidSignature, status);
 }
 
-TEST_F(TrialTokenTest, ValidateSignatureWithIncorrectKey) {
+TEST_F(TrialTokenTest, ExtractSignatureWithIncorrectKey) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload(kSampleToken, incorrect_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kInvalidSignature, status);
 }
 
-TEST_F(TrialTokenTest, ValidateEmptyToken) {
+TEST_F(TrialTokenTest, ExtractEmptyToken) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload("", correct_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kMalformed, status);
 }
 
-TEST_F(TrialTokenTest, ValidateShortToken) {
+TEST_F(TrialTokenTest, ExtractShortToken) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload(kTruncatedToken, correct_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kMalformed, status);
 }
 
-TEST_F(TrialTokenTest, ValidateUnsupportedVersion) {
+TEST_F(TrialTokenTest, ExtractUnsupportedVersion) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload(kIncorrectVersionToken, correct_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kWrongVersion, status);
 }
 
-TEST_F(TrialTokenTest, ValidateSignatureWithIncorrectLength) {
+TEST_F(TrialTokenTest, ExtractSignatureWithIncorrectLength) {
   OriginTrialTokenStatus status =
       ExtractIgnorePayload(kIncorrectLengthToken, correct_public_key());
+  EXPECT_EQ(OriginTrialTokenStatus::kMalformed, status);
+}
+
+TEST_F(TrialTokenTest, ExtractLargeToken) {
+  std::string token_payload;
+  std::string token_signature;
+  OriginTrialTokenStatus status = Extract(
+      kLargeValidToken, correct_public_key(), &token_payload, &token_signature);
+  ASSERT_EQ(OriginTrialTokenStatus::kSuccess, status);
+  std::string expected_signature(
+      std::string(reinterpret_cast<const char*>(kLargeValidTokenSignature),
+                  arraysize(kLargeValidTokenSignature)));
+  EXPECT_EQ(expected_signature, token_signature);
+}
+
+TEST_F(TrialTokenTest, ExtractTooLargeToken) {
+  OriginTrialTokenStatus status =
+      ExtractIgnorePayload(kTooLargeValidToken, correct_public_key());
   EXPECT_EQ(OriginTrialTokenStatus::kMalformed, status);
 }
 
@@ -471,9 +610,9 @@ TEST_F(TrialTokenTest, SubdomainTokenIsValid) {
             token->IsValid(expected_origin_, invalid_timestamp_));
 }
 
-// Test overall extraction, to ensure output status matches returned token, and
-// signature is provided.
-TEST_F(TrialTokenTest, ExtractValidToken) {
+// Test overall extraction and parsing, to ensure output status matches returned
+// token, and signature is provided.
+TEST_F(TrialTokenTest, FromValidToken) {
   OriginTrialTokenStatus status;
   std::unique_ptr<TrialToken> token =
       TrialToken::From(kSampleToken, correct_public_key(), &status);
@@ -482,7 +621,7 @@ TEST_F(TrialTokenTest, ExtractValidToken) {
   EXPECT_EQ(expected_signature_, token->signature());
 }
 
-TEST_F(TrialTokenTest, ExtractInvalidSignature) {
+TEST_F(TrialTokenTest, FromInvalidSignature) {
   OriginTrialTokenStatus status;
   std::unique_ptr<TrialToken> token =
       TrialToken::From(kSampleToken, incorrect_public_key(), &status);
@@ -490,7 +629,7 @@ TEST_F(TrialTokenTest, ExtractInvalidSignature) {
   EXPECT_EQ(OriginTrialTokenStatus::kInvalidSignature, status);
 }
 
-TEST_F(TrialTokenTest, ExtractMalformedToken) {
+TEST_F(TrialTokenTest, FromMalformedToken) {
   OriginTrialTokenStatus status;
   std::unique_ptr<TrialToken> token =
       TrialToken::From(kIncorrectLengthToken, correct_public_key(), &status);
