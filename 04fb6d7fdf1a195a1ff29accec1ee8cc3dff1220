@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62f5fe09_3067a2fb",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-25T00:18:41Z",
+      "side": 1,
+      "message": "I\u0027ve added a \"allow_overlays\" flag to renderer settings for this. It\u0027s only affected by --disable-mac-overlays but in principle it could be extended to ozone.",
+      "parentUuid": "79f98da1_1adf8561",
+      "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9de961f1_2b07b27b",
         "filename": "ui/gfx/mojo/ca_layer_params.mojom",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T00:24:33Z",
       "side": 1,
       "message": "Would it make sense to union these then? I assume they\u0027re mutually exclusive.",
+      "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de07e75f_8995e85d",
+        "filename": "ui/gfx/mojo/ca_layer_params.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-25T00:18:41Z",
+      "side": 1,
+      "message": "Didn\u0027t know about mojo unions until now -- done!",
+      "parentUuid": "9de961f1_2b07b27b",
       "revId": "04fb6d7fdf1a195a1ff29accec1ee8cc3dff1220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
