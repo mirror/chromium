@@ -6,7 +6,8 @@
 
 #include "content/common/ax_content_node_data.h"
 #include "content/renderer/accessibility/render_accessibility_impl.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
+#include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_node.h"
 
 namespace content {
@@ -36,7 +37,7 @@ bool AomContentAxTree::ComputeAccessibilityTree() {
 blink::WebString AomContentAxTree::GetNameForAXNode(int32_t axID) {
   ui::AXNode* node = tree_.GetFromId(axID);
   return (node) ? blink::WebString::FromUTF8(
-                      node->data().GetStringAttribute(ui::AX_ATTR_NAME))
+                      node->data().GetStringAttribute(ax::mojom::StringAttribute::kName))
                 : blink::WebString();
 }
 
