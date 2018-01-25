@@ -271,7 +271,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           std::string() /* searchable_form_encoding */, initiator,
           GURL() /* client_side_redirect_url */),
       request_params, browser_initiated, false /* from_begin_navigation */,
-      &frame_entry, &entry));
+      &frame_entry, &entry, nullptr));
   return navigation_request;
 }
 
@@ -283,7 +283,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
     mojom::BeginNavigationParamsPtr begin_params,
     int current_history_list_offset,
     int current_history_list_length,
-    bool override_user_agent) {
+    bool override_user_agent,
+    mojom::NavigationClientPtr navigation_client) {
   // Only normal navigations to a different document or reloads are expected.
   // - Renderer-initiated fragment-navigations never take place in the browser,
   //   even with PlzNavigate.
@@ -316,7 +317,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
       frame_tree_node, common_params, std::move(begin_params), request_params,
       false,  // browser_initiated
       true,   // from_begin_navigation
-      nullptr, entry));
+      nullptr, entry, std::move(navigation_client)));
   return navigation_request;
 }
 
@@ -328,7 +329,8 @@ NavigationRequest::NavigationRequest(
     bool browser_initiated,
     bool from_begin_navigation,
     const FrameNavigationEntry* frame_entry,
-    const NavigationEntryImpl* entry)
+    const NavigationEntryImpl* entry,
+    mojom::NavigationClientPtr navigation_client)
     : frame_tree_node_(frame_tree_node),
       common_params_(common_params),
       begin_params_(std::move(begin_params)),
@@ -344,6 +346,7 @@ NavigationRequest::NavigationRequest(
       has_stale_copy_in_cache_(false),
       net_error_(net::OK),
       devtools_navigation_token_(base::UnguessableToken::Create()),
+      navigation_client_(std::move(navigation_client)),
       weak_factory_(this) {
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,

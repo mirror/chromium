@@ -93,7 +93,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                          const base::TimeTicks& proceed_time) override;
   void OnBeginNavigation(FrameTreeNode* frame_tree_node,
                          const CommonNavigationParams& common_params,
-                         mojom::BeginNavigationParamsPtr begin_params) override;
+                         mojom::BeginNavigationParamsPtr begin_params,
+                         mojom::NavigationClientPtr navigation_client) override;
   void OnAbortNavigation(FrameTreeNode* frame_tree_node) override;
   void LogResourceRequestTime(base::TimeTicks timestamp,
                               const GURL& url) override;

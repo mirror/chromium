@@ -1285,7 +1285,7 @@ void RenderFrameHostImpl::Init() {
   if (pending_navigate_) {
     frame_tree_node()->navigator()->OnBeginNavigation(
         frame_tree_node(), pending_navigate_->first,
-        std::move(pending_navigate_->second));
+        std::move(pending_navigate_->second), nullptr /* QUOI CA ? */);
     pending_navigate_.reset();
   }
 }
@@ -3011,7 +3011,8 @@ void RenderFrameHostImpl::IssueKeepAliveHandle(
 //  otherwise mojo bad message reporting.
 void RenderFrameHostImpl::BeginNavigation(
     const CommonNavigationParams& common_params,
-    mojom::BeginNavigationParamsPtr begin_params) {
+    mojom::BeginNavigationParamsPtr begin_params,
+    mojom::NavigationClientPtr navigation_client) {
   if (!is_active())
     return;
 
@@ -3049,7 +3050,8 @@ void RenderFrameHostImpl::BeginNavigation(
   }
 
   frame_tree_node()->navigator()->OnBeginNavigation(
-      frame_tree_node(), validated_params, std::move(begin_params));
+      frame_tree_node(), validated_params, std::move(begin_params),
+      std::move(navigation_client));
 }
 
 void RenderFrameHostImpl::SubresourceResponseStarted(const GURL& url,
