@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbe8b9fa_70edf03e",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_private_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T00:44:27Z",
+      "side": 1,
+      "message": "The MessageLoop removal is necessary in this cl, else they fail. Likely because ChromeBrowserMainParts is installing a threaded task handler earlier.",
+      "parentUuid": "0dcfdb26_3fee23b7",
+      "revId": "8f12f4c314ade48aab7f0646ac35f6a00a2d17d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d1b19e0_fc0f16ee",
         "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
         "patchSetId": 7
