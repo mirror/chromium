@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "257b052b_872e3a78",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T00:27:52Z",
+      "side": 1,
+      "message": "Ack, doing a rename refactor to follow this up sounds reasonable.",
+      "parentUuid": "c13542bf_6469db42",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcfad28_59dc0c35",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 21
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "Other than AbortAnimations which aborts all animations, the rest *ForTicker methods operate on a certain animation. e.g. when blink needs to pause an animation it provides an animation id. This animation is owned by one ticker, say id 1, and pausing it on ticker2 doesn\u0027t make sense. WDYT?",
       "parentUuid": "5dcfad28_59dc0c35",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7010f8d0_1fb90abc",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T00:27:52Z",
+      "side": 1,
+      "message": "Oh I see, all of the calls from blink currently come from a specific keyframe effect. I assume though all of the tickers on an AnimationPlayer will be for the same animation id given that it maps to blink::Animation and represents a group effect.",
+      "parentUuid": "b64d4cfd_38d9f915",
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -300,6 +336,24 @@
       "side": 1,
       "message": "SingleAnimationPlayer is not supposed to be parsed as SingleAnimation + Player. Rather, it should be AnimationPlayer which does Single Effect(as you mentioned last). Eventually we will have only one AnimationPlayer which handles both single and group effects. But ATM we have this class and call it SingleAP to match its base class AnimationPlayer. majidvp@ is about to rename the cc animation related classes to match their blink counterparts and \"AnimationPlayer\" will be renamed too. Maybe we should rename this class then?",
       "parentUuid": "444ee180_efe49695",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4317cf_7a5cf127",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T00:27:52Z",
+      "side": 1,
+      "message": "We could call this SingleTickerAnimationPlayer to be explicit that it is not a single *Animation*.",
+      "parentUuid": "b63664ab_78fed74a",
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
