@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b58187fc_25d31f98",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-25T02:08:26Z",
+      "side": 1,
+      "message": "That code is the same as in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/Histogram.h?q\u003dHistogram.h\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d80\n\nI don\u0027t see DEFINE_STATIC_LOCAL_IMPL calling CurrentTimeTicks though?",
+      "parentUuid": "3e4bebaa_34cb877b",
+      "range": {
+        "startLine": 210,
+        "startChar": 72,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "a43c221d8950038c5cb788ce6c95ec9a3d9f7aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0cc54e2_992d5783",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 7
