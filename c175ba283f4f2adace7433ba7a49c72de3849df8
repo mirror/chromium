@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "01440349_64862a31",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-25T15:08:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "257b052b_872e3a78",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcfad28_59dc0c35",
         "filename": "cc/animation/animation_player.h",
         "patchSetId": 21
@@ -257,6 +275,24 @@
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ff98f6_35ede00a",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-25T15:08:24Z",
+      "side": 1,
+      "message": "The animation used here is cc::Animation which is different from blink::Animation. Currently 1 blink::Animation may have N cc::AnimationPlayer, each of which has M cc::Animation.",
+      "parentUuid": "7010f8d0_1fb90abc",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -357,6 +393,24 @@
       "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a215c23c_5b0ac050",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2018-01-25T15:08:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4317cf_7a5cf127",
+      "revId": "c175ba283f4f2adace7433ba7a49c72de3849df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
