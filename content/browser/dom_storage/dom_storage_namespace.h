@@ -46,15 +46,11 @@ class CONTENT_EXPORT DOMStorageNamespace
 
   // Constructor for a SessionStorage namespace with a non-zero id and an
   // optional backing on disk via |session_storage_database| (may be NULL).
-  DOMStorageNamespace(int64_t namespace_id,
-                      const std::string& persistent_namespace_id,
+  DOMStorageNamespace(const std::string& namespace_id,
                       SessionStorageDatabase* session_storage_database,
                       DOMStorageTaskRunner* task_runner);
 
-  int64_t namespace_id() const { return namespace_id_; }
-  const std::string& persistent_namespace_id() const {
-    return persistent_namespace_id_;
-  }
+  const std::string& namespace_id() const { return namespace_id_; }
 
   // Returns the storage area for the given origin,
   // creating instance if needed. Each call to open
@@ -68,8 +64,7 @@ class CONTENT_EXPORT DOMStorageNamespace
   // Creates a clone of |this| namespace including
   // shallow copies of all contained areas.
   // Should only be called for session storage namespaces.
-  DOMStorageNamespace* Clone(int64_t clone_namespace_id,
-                             const std::string& clone_persistent_namespace_id);
+  DOMStorageNamespace* Clone(const std::string& clone_namespace_id);
 
   void DeleteLocalStorageOrigin(const GURL& origin);
   void DeleteSessionStorageOrigin(const GURL& origin);
@@ -111,8 +106,7 @@ class CONTENT_EXPORT DOMStorageNamespace
 
   void OnCloneStorageDone();
 
-  int64_t namespace_id_;
-  const std::string persistent_namespace_id_;
+  const std::string namespace_id_;
   base::FilePath directory_;
   AreaMap areas_;
   const scoped_refptr<DOMStorageTaskRunner> task_runner_;

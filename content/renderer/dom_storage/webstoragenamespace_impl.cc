@@ -21,9 +21,10 @@ WebStorageNamespaceImpl::WebStorageNamespaceImpl()
     : namespace_id_(kLocalStorageNamespaceId) {
 }
 
-WebStorageNamespaceImpl::WebStorageNamespaceImpl(int64_t namespace_id)
+WebStorageNamespaceImpl::WebStorageNamespaceImpl(
+    const std::string& namespace_id)
     : namespace_id_(namespace_id) {
-  DCHECK_NE(kInvalidSessionStorageNamespaceId, namespace_id);
+  DCHECK_NE(kLocalStorageNamespaceId, namespace_id);
 }
 
 WebStorageNamespaceImpl::~WebStorageNamespaceImpl() {
