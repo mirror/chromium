@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa159fd6_2ee3b719",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T03:27:42Z",
+      "side": 1,
+      "message": "This, and the similar constants in other files are probably candidates to move somewhere accessible by ash and chrome.",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f567d9_d82551d3",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T03:27:42Z",
+      "side": 1,
+      "message": "Do we need this ifdef?",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ad0c59_5f598e4b",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-25T03:27:42Z",
+      "side": 1,
+      "message": "I added this here based on your suggestion.",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
