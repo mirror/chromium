@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8044efc2_049f0d69",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233ffec0_84e2401d",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873c2b03_bdde662a",
         "filename": "services/network/public/interfaces/network_service.mojom",
         "patchSetId": 22
@@ -94,6 +118,78 @@
     },
     {
       "key": {
+        "uuid": "51414608_d3b04f22",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee3f4ffc_88543462",
+      "range": {
+        "startLine": 180,
+        "startChar": 80,
+        "endLine": 180,
+        "endChar": 90
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff85af7a_747bb7c6",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "The |net_error| and |signature| parameters correspond to:\nhttps://cs.chromium.org/chromium/src/net/ssl/ssl_private_key.h?l\u003d33\n\nI added documentation about these parameters.\n\nDone",
+      "parentUuid": "873c2b03_bdde662a",
+      "range": {
+        "startLine": 180,
+        "startChar": 49,
+        "endLine": 180,
+        "endChar": 64
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d182a81_4f26d6e7",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "The |algorithm| parameter corresponds to:\nhttps://cs.chromium.org/chromium/src/net/ssl/ssl_private_key.h?l\u003d45\n\nI added documentation about this parameter.\n\nDone",
+      "parentUuid": "a96e6af6_ec976816",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c56ccb9e_9621b9f2",
         "filename": "services/network/public/interfaces/network_service.mojom",
         "patchSetId": 22
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e70fc396_16c77319",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "The |algorithm_preferences| parameter corresponds to:\nhttps://cs.chromium.org/chromium/src/net/ssl/ssl_private_key.h?l\u003d58\n\nI added documentation about this parameter.\n\nDone",
+      "parentUuid": "c56ccb9e_9621b9f2",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 41
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d7b367a_812cae2a",
         "filename": "services/network/public/interfaces/network_service.mojom",
         "patchSetId": 22
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-25T17:44:34Z",
       "side": 1,
       "message": "what means this?",
+      "range": {
+        "startLine": 193,
+        "startChar": 34,
+        "endLine": 193,
+        "endChar": 62
+      },
+      "revId": "91417c26cc6aeedc89c7731dbc39dd22439ad4dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c67fc7d_3b40e38b",
+        "filename": "services/network/public/interfaces/network_service.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-25T19:22:02Z",
+      "side": 1,
+      "message": "This parameter was added according to the discussion at:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/848303/12/content/network/url_loader.cc#744\nin order to distinguish between the third case and the second case because the |x509_certificate| will be nullptr in both cases.\n\nI added some documentation here.\n\nDone",
+      "parentUuid": "4d7b367a_812cae2a",
       "range": {
         "startLine": 193,
         "startChar": 34,
