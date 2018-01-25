@@ -33,6 +33,24 @@
       "revId": "b7fa5cbea1e1a7b39ae9c49c7a453c13bf9d0eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d779d9f_ac43129a",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T19:27:26Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "47b40319_84cb1f02",
+      "revId": "b7fa5cbea1e1a7b39ae9c49c7a453c13bf9d0eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
