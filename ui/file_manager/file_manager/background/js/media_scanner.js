@@ -460,40 +460,37 @@ importer.DefaultScanResult.prototype.canceled = function() {
  *     rejected as a dupe.
  */
 importer.DefaultScanResult.prototype.addFileEntry = function(entry) {
-  return metadataProxy.getEntryMetadata(entry).then(
-      (/**
-       * @param {!Metadata} metadata
-       * @this {importer.DefaultScanResult}
-       */
-      function(metadata) {
-        console.assert(
-            'size' in metadata,
-            'size attribute missing from metadata.');
+  return metadataProxy.getEntryMetadata(entry, true)
+      .then((/**
+              * @param {!Metadata} metadata
+              * @this {importer.DefaultScanResult}
+              */
+             function(metadata) {
+               console.assert(
+                   'size' in metadata, 'size attribute missing from metadata.');
 
-        return this.createHashcode_(entry)
-            .then(
-                (/**
-                 * @param {string} hashcode
-                 * @this {importer.DefaultScanResult}
-                 */
-                function(hashcode) {
-                  this.lastScanActivity_ = new Date();
+               return this.createHashcode_(entry).then(
+                   (/**
+                     * @param {string} hashcode
+                     * @this {importer.DefaultScanResult}
+                     */
+                    function(hashcode) {
+                      this.lastScanActivity_ = new Date();
 
-                  if (hashcode in this.fileHashcodes_) {
-                    this.addDuplicateEntry(
-                        entry,
-                        importer.Disposition.SCAN_DUPLICATE);
-                    return false;
-                  }
+                      if (hashcode in this.fileHashcodes_) {
+                        this.addDuplicateEntry(
+                            entry, importer.Disposition.SCAN_DUPLICATE);
+                        return false;
+                      }
 
-                  entry.size = metadata.size;
-                  this.totalBytes_ += metadata.size;
-                  this.fileHashcodes_[hashcode] = entry;
-                  this.fileEntries_.push(entry);
-                  return true;
-                }).bind(this));
+                      entry.size = metadata.size;
+                      this.totalBytes_ += metadata.size;
+                      this.fileHashcodes_[hashcode] = entry;
+                      this.fileEntries_.push(entry);
+                      return true;
+                    }).bind(this));
 
-      }).bind(this));
+             }).bind(this));
 };
 
 /**
