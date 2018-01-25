@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bbcc9c2_864bbdf6",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T14:58:49Z",
+      "side": 1,
+      "message": "if you add \"\nimport inspect\nassert inspect.isclass(page_cls)\n\"\n\nYou will get a different error:\nAssertionError\n\nLocals:\n  inspect  : \u003cmodule \u0027inspect\u0027 from \u0027/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/inspect.pyc\u0027\u003e\n  page_cls : \u003cpage_sets.top_pages.GoogleWebSearchPage object at 0x10bfd4950\u003e",
+      "revId": "6256483fabade4413abca0a556822076c665e79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c2901a_f19878c0",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T14:58:49Z",
+      "side": 1,
+      "message": "this invocation is wrong, you want to change this to:\n\n_CreatePageClassWithSmoothInteractions(non_smooth_page_class) --\u003e this takes in a class and returns a new class\n\nthen:\n_CreatePageClassWithSmoothInteractions(non_smooth_page_class)(self, shared_page_state_class\u003ddesktop_state_class) --\u003e this return a page object.",
+      "revId": "6256483fabade4413abca0a556822076c665e79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e77efd_ed67f9cb",
+        "filename": "tools/perf/page_sets/top_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T14:58:49Z",
+      "side": 1,
+      "message": "If you add \"assert isinstance(name, str), \u0027Invalid name %s\u0027 % name\"\n\nYou will be able to debug other error",
+      "revId": "6256483fabade4413abca0a556822076c665e79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262bc8ce_8a4b160b",
+        "filename": "tools/perf/page_sets/top_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T14:58:49Z",
+      "side": 1,
+      "message": "when you add a new param in method call, always add it to the last item. Otherwise existing callsites of this will assign the wrong value to the \"name\" parameter :-)",
+      "revId": "6256483fabade4413abca0a556822076c665e79d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
