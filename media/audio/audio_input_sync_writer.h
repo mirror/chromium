@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_RENDERER_HOST_MEDIA_AUDIO_INPUT_SYNC_WRITER_H_
-#define CONTENT_BROWSER_RENDERER_HOST_MEDIA_AUDIO_INPUT_SYNC_WRITER_H_
+#ifndef MEDIA_AUDIO_AUDIO_INPUT_SYNC_WRITER_H_
+#define MEDIA_AUDIO_AUDIO_INPUT_SYNC_WRITER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -18,10 +18,10 @@
 #include "base/sync_socket.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "content/common/content_export.h"
 #include "media/audio/audio_input_controller.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_parameters.h"
+#include "media/base/media_export.h"
 
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
@@ -31,13 +31,13 @@ namespace base {
 class SharedMemory;
 }
 
-namespace content {
+namespace media {
 
 // A AudioInputController::SyncWriter implementation using SyncSocket. This
 // is used by AudioInputController to provide a low latency data source for
 // transmitting audio packets between the browser process and the renderer
 // process.
-class CONTENT_EXPORT AudioInputSyncWriter
+class MEDIA_EXPORT AudioInputSyncWriter
     : public media::AudioInputController::SyncWriter {
  public:
   // Maximum fifo size (|overflow_buses_| and |overflow_params_|) in number of
@@ -192,6 +192,6 @@ class CONTENT_EXPORT AudioInputSyncWriter
   DISALLOW_IMPLICIT_CONSTRUCTORS(AudioInputSyncWriter);
 };
 
-}  // namespace content
+}  // namespace media
 
-#endif  // CONTENT_BROWSER_RENDERER_HOST_MEDIA_AUDIO_INPUT_SYNC_WRITER_H_
+#endif  // MEDIA_AUDIO_AUDIO_INPUT_SYNC_WRITER_H_
