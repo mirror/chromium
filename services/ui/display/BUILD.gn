@@ -4,6 +4,7 @@
 
 import("//build/config/ui.gni")
 import("//testing/test.gni")
+import("//ui/ozone/ozone.gni")
 
 source_set("display") {
   sources = [
@@ -22,7 +23,7 @@ source_set("display") {
   ]
 
   if (use_ozone) {
-    if (is_chromeos) {
+    if (ozone_platform_gbm) {
       sources += [
         "output_protection.cc",
         "output_protection.h",
@@ -33,12 +34,15 @@ source_set("display") {
       ]
 
       deps += [
-        "//chromeos",
         "//services/ui/public/interfaces/display",
         "//ui/display/manager",
         "//ui/display/mojo:interfaces",
         "//ui/ozone",
       ]
+
+      if (is_chromeos) {
+        deps += [ "//chromeos" ]
+      }
     } else {
       sources += [
         "screen_manager_ozone_external.cc",
