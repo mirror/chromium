@@ -118,6 +118,7 @@
 #include "content/renderer/media/audio_device_factory.h"
 #include "content/renderer/media/audio_output_ipc_factory.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
+#include "content/renderer/media/media_resource_scheduler.h"
 #include "content/renderer/media/media_stream_device_observer.h"
 #include "content/renderer/media/user_media_client_impl.h"
 #include "content/renderer/mojo/blink_interface_registry_impl.h"
@@ -3488,9 +3489,34 @@ blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(
     blink::WebLayerTreeView* layer_tree_view) {
   const cc::LayerTreeSettings& settings =
       GetRenderWidget()->compositor()->GetLayerTreeSettings();
+
+  return MediaResourceScheduler::Get().CreateMediaPlayer(
+      base::BindOnce(
+          [](MediaFactory* media_factory,
+             const blink::WebMediaPlayerSource& source,
+             // WebMediaPlayerClient is moved last, since we don't provide it
+             // here.
+             WebMediaPlayerEncryptedMediaClient* encrypted_client,
+             WebContentDecryptionModule* initial_cdm,
+             const blink::WebString& sink_id,
+             blink::WebLayerTreeView* layer_tree_view,
+             const cc::LayerTreeSettings& settings,
+             WebMediaPlayerClient* client)
+              -> std::unique_ptr<blink::WebMediaPlayer> {
+            return base::WrapUnique<blink::WebMediaPlayer>(
+                media_factory->CreateMediaPlayer(
+                    source, client, encrypted_client, initial_cdm, sink_id,
+                    layer_tree_view, settings));
+          },
+          base::Unretained(&media_factory_), source,
+          base::Unretained(encrypted_client), base::Unretained(initial_cdm),
+          sink_id, base::Unretained(layer_tree_view), settings),
+      client);
+  /*
   return media_factory_.CreateMediaPlayer(source, client, encrypted_client,
                                           initial_cdm, sink_id, layer_tree_view,
                                           settings);
+                                          */
 }
 
 std::unique_ptr<blink::WebApplicationCacheHost>
