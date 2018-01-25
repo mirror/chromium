@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d89b4c7_b5de84dd",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-25T00:55:52Z",
+      "side": 1,
+      "message": "Same fix applied.",
+      "parentUuid": "48b60e35_122ad969",
+      "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c69e15a_44455285",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 49
@@ -33,6 +51,24 @@
       "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a15af9_77b51a8b",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 49
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-25T00:55:52Z",
+      "side": 1,
+      "message": "I\u0027m good with removing this, but I\u0027d just as soon leave the if on the event_ in the destructor since we don\u0027t check it on construction.",
+      "parentUuid": "8c69e15a_44455285",
+      "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ad371b_b6d46a4f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 49
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-25T00:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c2f9e22_91c68984",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "fa4e6199c5d3bcabe6998568e0ed17784c558c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
