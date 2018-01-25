@@ -60,6 +60,7 @@ class CONTENT_EXPORT LegacyInputRouterImpl
   ~LegacyInputRouterImpl() override;
 
   bool SendInput(std::unique_ptr<IPC::Message> message);
+  void SetTouchActionFromMain(cc::TouchAction touch_action);
 
   // InputRouter
   void SendMouseEvent(const MouseEventWithLatencyInfo& mouse_event) override;
@@ -83,7 +84,7 @@ class CONTENT_EXPORT LegacyInputRouterImpl
 
   void SetFrameTreeNodeId(int frameTreeNodeId) override;
 
-  cc::TouchAction AllowedTouchAction() override;
+  base::Optional<cc::TouchAction> AllowedTouchAction() override;
 
   void SetForceEnableZoom(bool enabled) override;
 
