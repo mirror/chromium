@@ -192,6 +192,39 @@ namespace mediaPerceptionPrivate {
     long? latencyUsec;
   };
 
+  // Type of lighting conditions.
+  enum LightCondition {
+    UNSPECIFIED,
+    // No noticeable change occurred.
+    NO_CHANGE,
+    // Light was switched on in room.
+    TURN_ON,
+    // Light was switched off in room.
+    TURN_OFF,
+    // Light gradually got dimmer (for example, due to sunset).
+    DIMMER,
+    // Light gradually got brighter (for example, due to sunrise).
+    BRIGHTER,
+    // Black frame detected, that is, only noise is present in the current
+    // frame.
+    BLACK_FRAME
+  };
+
+  // Detection of human presence close to the camera.
+  dictionary VideoHumanPresenceDetection {
+    // Indicates probability that a human is present in the video frame.
+    double? human_presence_likelihood;
+
+    // Indicates probability that motion has been detected in the video frame.
+    double? motion_detected_likelihood;
+
+    // Indicates lighting condition in the video frame.
+    LightCondition? light_condition;
+
+    // Indicates probablity of a lighting condition.
+    double? light_condition_likelihood;
+  };
+
   // The set of computer vision metadata for an image frame.
   dictionary FramePerception {
     long? frameId;
@@ -208,6 +241,49 @@ namespace mediaPerceptionPrivate {
 
     // Processing latency for a list of packets.
     PacketLatency[]? packetLatency;
+
+    // Human presence detection results for a video frame.
+    VideoHumanPresenceDetection? videoHumanPresenceDetection;
+  };
+
+  // An estimate of the direction that the sound is coming from.
+  dictionary AudioLocalization {
+    // An angle in radians.
+    double? azimuthRadians;
+
+    // A probability distribution for the current snapshot in time that shows
+    // the likelihood of a sound source being at a particular angle.
+    double[]? azimuthScores;
+  };
+
+  // Spectrogram of an audio frame.
+  dictionary AudioSpectrogram {
+    double[]? values;
+  };
+
+  // Detection of human presence close to the microphone.
+  dictionary AudioHumanPresenceDetection {
+    // Indicates probability that a human has caused a sound close to the
+    // microphone.
+    double? humanPresenceLikelihood;
+
+    // Estimate of the noise spectrogram.
+    AudioSpectrogram? noiseSpectrogram;
+
+    // Spectrogram of an audio frame.
+    AudioSpectrogram? frameSpectrogram;
+  };
+
+  // Audio perception results for an audio frame.
+  dictionary AudioPerception {
+    // A timestamp in microseconds attached when this message was generated.
+    double? timestampUs;
+
+    // Audio localization results for an audio frame.
+    AudioLocalization? audioLocalization;
+
+    // Audio human presence detection results for an audio frame.
+    AudioHumanPresenceDetection? audioHumanPresenceDetection;
   };
 
   dictionary MediaPerception {
@@ -219,6 +295,9 @@ namespace mediaPerceptionPrivate {
 
     // An array of framePerceptions.
     FramePerception[]? framePerceptions;
+
+    // An array of audio perceptions.
+    AudioPerception[]? audioPerceptions;
   };
 
   enum ImageFormat {
@@ -247,6 +326,9 @@ namespace mediaPerceptionPrivate {
 
     // The image frame data for the associated FramePerception object.
     ImageFrame? imageFrame;
+
+    // The audio perception results for an audio frame.
+    AudioPerception? audio_perception;
   };
 
   dictionary Diagnostics {
