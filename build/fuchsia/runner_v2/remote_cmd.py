@@ -57,14 +57,14 @@ def RunPipedSsh(config_path, host, port, command):
                           stdin=subprocess.PIPE)
 
 
-def RunScp(config_path, host, port, source, dest, direction):
+def RunScp(config_path, host, port, sources, dest, direction):
   """Copies a file to or from a remote host using SCP and blocks until
   completion.
 
   config_path: Full path to SSH configuration.
   host: The hostname or IP address of the remote host.
   port: The port to connect to.
-  source: The path of the file to be copied.
+  sources: Paths of the files to be copied, or a single path.
   dest: The path that |source| will be copied to.
   direction: Indicates whether the file should be copied to
              or from the remote side.
@@ -72,14 +72,20 @@ def RunScp(config_path, host, port, source, dest, direction):
 
   Function will raise an assertion if a failure occurred."""
 
+  if type(sources) is str:
+    sources = [sources]
+  elif type(sources) is tuple:
+    sources = list(sources)
+  elif type(sources) is not list:
+    raise ValueError("sources argument must be a list, a tuple or a string")
+
   if direction == COPY_TO_TARGET:
     dest = "%s:%s" % (host, dest)
   else:
-    source = "%s:%s" % (host, source)
+    sources = sources.map(lambda source : "%s:%s" % (host, source))
 
-  scp_command = _SCP + ['-F', config_path,
-                        '-P', str(port),
-                        source,
-                        dest]
+  scp_command = _SCP + ['-F', config_path, '-P', str(port)] + \
+      sources + [dest]
+
   devnull = open('/dev/null', 'w')
   subprocess.check_call(scp_command, stdout=devnull)
