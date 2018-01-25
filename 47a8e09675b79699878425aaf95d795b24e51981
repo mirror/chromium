@@ -34,6 +34,24 @@
       "revId": "47a8e09675b79699878425aaf95d795b24e51981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc88606_27459cfe",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-25T19:55:45Z",
+      "side": 1,
+      "message": "it\u0027d be better, but wouldn\u0027t help with typos.  But, hopefully the test catches that. :)\n\nI still think it\u0027d be cleaner as:\nlet kCorrupt: 1 \u003c\u003c 0;\nlet kSuspicious: 1 \u003c\u003c 1;\nlet kBlacklisted: 1 \u003c\u003c 2;\nlet kRuntime: 1 \u003c\u003c 3;\n\nfunction assertWarnings(mask) {\n  assertEquals(mask \u0026 Warnings.kCorrupt, isVisible(item, \u0027#corrupted-warning\u0027);\n  ...\n}\n\n...\nassertWarnings(kCorrupt);\n...\n\nassertWarnings(kCorrupt | kSuspicious | kBlacklisted);\n\netc.\n\nBut, I don\u0027t think it\u0027s worth blocking this CL on, as long as there\u0027s some kind of documentation (which your suggestion would achieve).  So I\u0027ll leave it up to you. :)",
+      "parentUuid": "4139ba70_e4f3fbf6",
+      "revId": "47a8e09675b79699878425aaf95d795b24e51981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
