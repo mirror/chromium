@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6dcbef0_6ef6a6ae",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-25T01:47:38Z",
+      "side": 1,
+      "message": "Perhaps this might be a better place to stop the expansion, e.g. if expanded_matches_length exceeds 10 000 return an empty selector list.\n\nSuppose the author\u0027s selector has 10 :matches, but each has 10 arguments. The current implementation would attempt to allocate gigabytes (10**10 * ...).",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d67428_37319960",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-25T01:47:38Z",
+      "side": 1,
+      "message": "Comment about motivation for returning early.",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
