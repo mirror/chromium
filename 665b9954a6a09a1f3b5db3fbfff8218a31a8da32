@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fd9ddff9_16c28e43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-25T10:43:51Z",
+      "side": 1,
+      "message": "I am not sure Proguard optimizes enums completely down to integers in all cases. At the very least in this instance, you are using the enum as a Serializable below, which means that not only does it have to be boxed, but it has to be the exact same class so that the serialization ends up with the same result.\n\nThe \"official\" guidance for Android is still to prefer @IntDef over enum, and in Chrome we follow that guidance also as a matter of style. It could be a worthwhile conversation to have to talk about whether we should change that style, but we would have to get general agreement on it and change everything at once (or at the very least officially change the style going forward).",
+      "parentUuid": "116f35f8_2b6f6606",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd274287_9cf39a54",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Could you be more specific, Bernhard? Which problems with serialization?",
       "parentUuid": "cf35b6cb_e78ff6bc",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf9302a_40efd5f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-25T10:43:51Z",
+      "side": 1,
+      "message": "In general, if you use serialization, you now have to care about backwards-compatibility with the serialization format, and also ensure that you trust the source, because an attacker could instantiate almost arbitrary objects. Those concerns might not apply here, but it still makes me somewhat uncomfortable to see it...",
+      "parentUuid": "efc8bbbd_52edcae9",
       "range": {
         "startLine": 128,
         "startChar": 13,
