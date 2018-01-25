@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98dffebe_ca482713",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-25T09:08:37Z",
+      "side": 1,
+      "message": "This is how it\u0027s computed, regardless of sample rate divisibility. APM always checks that the frame length is sample_rate_hz / 100. The surrounding Chromium code, the caller of this OnPlayoutData function, assumes so, too.\n\nThis means, though, that the frames aren\u0027t actually exactly 10 ms long for sample rates not divisible by 100.\n\nI should mention that sample rates {8, 16, 32, 48} kHz are preferable because then we don\u0027t need to do as expensive resampling as other rates.",
+      "parentUuid": "98f98509_555ee5c0",
+      "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5aeb58_465a4221",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed28af7_31c107be",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-25T09:08:37Z",
+      "side": 1,
+      "message": "No, you\u0027re right. This was the quickest way not to duplicate the code to store the AudioBus channels in an array, but it\u0027s better to do it without the buffer copy. Fixed.",
+      "parentUuid": "fe5aeb58_465a4221",
+      "revId": "9610536292f7c18f786f7e8f68c1e428cd002b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
