@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "7d370e6b_467e1bb0",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-25T02:18:17Z",
+      "side": 1,
+      "message": "I still prefer ScopedSignal or perhaps AutoSignal (to be similar to AutoReset) since this is consistent with other utilties but I\u0027m not blocking on this.",
+      "parentUuid": "8b51838a_d73d5735",
+      "revId": "ef5162877e43ff12d1dd3065c8406f894680641c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0706db46_9bc2f708",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorAnimator.h",
         "patchSetId": 47
