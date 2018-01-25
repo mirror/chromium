@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b150769e_d396d871",
+        "filename": "ios/chrome/browser/autofill/autofill_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-25T22:22:34Z",
+      "side": 1,
+      "message": "Consider making this a property; having a \"write-only\" property like this seems confusing. Not a blocker.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "140e66fa148b86d3e47d5e5e0f28831dedcf8ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
