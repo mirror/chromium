@@ -70,6 +70,30 @@
       "revId": "1dbe80c7b64d892ef657c6ccbdc5eda9ca80ca54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3109aa_199df706",
+        "filename": "components/password_manager/core/common/password_manager_features.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-25T10:59:52Z",
+      "side": 1,
+      "message": "Appended \"Mobile\" to all mentions in cross platform code.\n(In the Android-specific implementation and description, it\u0027s unnecessary)",
+      "parentUuid": "6bcc1136_7e2fd358",
+      "range": {
+        "startLine": 77,
+        "startChar": 40,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "1dbe80c7b64d892ef657c6ccbdc5eda9ca80ca54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
