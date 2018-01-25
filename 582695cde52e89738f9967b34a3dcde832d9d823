@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3915d129_63f7231e",
+        "filename": "content/renderer/crash_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-25T05:54:13Z",
+      "side": 1,
+      "message": "Oops. :) Fixed.",
+      "parentUuid": "6bb0822b_b40fee4d",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "582695cde52e89738f9967b34a3dcde832d9d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0407828_4671b16d",
         "filename": "content/renderer/crash_helpers.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "582695cde52e89738f9967b34a3dcde832d9d823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a39c05_271a7c08",
+        "filename": "content/renderer/crash_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-25T05:54:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e0407828_4671b16d",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "582695cde52e89738f9967b34a3dcde832d9d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
