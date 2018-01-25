@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6641b96f_2c8b5540",
+        "filename": "content/shell/renderer/shell_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T18:29:59Z",
+      "side": 1,
+      "message": "You don\u0027t need this.",
+      "revId": "febdfa9c16bf0c8e6008a16c266ee63cff9931c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b509f6c_d9d4c08e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3166,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T18:29:59Z",
+      "side": 1,
+      "message": "getAllTimeSamplingProfile?",
+      "revId": "febdfa9c16bf0c8e6008a16c266ee63cff9931c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
