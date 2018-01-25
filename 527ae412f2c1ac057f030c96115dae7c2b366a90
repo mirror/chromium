@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccf02d44_c0f8fac6",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_section.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Can fit in previous line.",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "527ae412f2c1ac057f030c96115dae7c2b366a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d48eaf7_30cad23a",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Maybe add link to the tracking bug, to make \"in the future\" more trace-able.",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "527ae412f2c1ac057f030c96115dae7c2b366a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

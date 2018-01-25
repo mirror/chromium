@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2949ae6_81e2f9d8",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Eh that indentation is very confusing, given that it only applies to \"not chromeos\".\n\nLet\u0027s split this as follows:\n\n   // \u003cif expr\u003d\"not chromeos\"\u003e\n   if (!this.diceEnabled) {\n     // If DICE-enabled, this button won\u0027t exist here.\n     cr.ui.focusWithoutInk(assert(this.$$(\u0027#disconnectButton\u0027)));\n   }\n   // \u003c/if\u003e\n\n   // \u003cif expr\u003d\"chromeos\"\u003e\n   cr.ui.focusWithoutInk(assert(this.$$(\u0027#disconnectButton\u0027)));\n   // \u003c/if\u003e",
+      "range": {
+        "startLine": 284,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 66
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2750d617_1bbe2142",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Is this the only reason we include iron-flex? If so, is it worth it, as opposed to just adding \"display: flex\" directly?",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d28f0b_46c793d5",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312e2be4_747a10c0",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1aabaf_6fc2aef8",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6416d25_c947b2a0",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Is the flattening/copying of |info| necessary? Could we just hold a reference to info like\n\nthis.info_ \u003d info\n\nand update the HTML accordingly? Like [[info_.name]] and [[info_.iconUrl]]",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8039da80_21449af8",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "Does this work correctly without preprocess\u003dtrue? How do the \u003cif expr\u003e statements get processed otherwise?",
+      "range": {
+        "startLine": 713,
+        "startChar": 25,
+        "endLine": 713,
+        "endChar": 73
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703f0f80_2e35c15f",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T00:25:39Z",
+      "side": 1,
+      "message": "I am realizing now, that all the booleans on settings-ui are here, because they need to be synced across siblings cr-drawer, cr-toolbar and settings-main.\n\nDon\u0027t see a good reason to put diceEnabled here (despite my previous suggestion) unless it also needs to be synced across siblings.",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
