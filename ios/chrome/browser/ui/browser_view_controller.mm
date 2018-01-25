@@ -499,9 +499,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // YES if Voice Search should be started when the new tab animation is
   // finished.
   BOOL _startVoiceSearchAfterNewTabAnimation;
-
-  // YES if the user interacts with the location bar.
-  BOOL _locationBarHasFocus;
   // YES if a load was cancelled due to typing in the location bar.
   BOOL _locationBarEditCancelledLoad;
   // YES if waiting for a foreground tab due to expectNewForegroundTab.
@@ -4230,9 +4227,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 #pragma mark - WebToolbarDelegate (Public)
 
 - (void)locationBarDidBecomeFirstResponder {
-  if (_locationBarHasFocus)
-    return;  // TODO(crbug.com/244366): This should not be necessary.
-  _locationBarHasFocus = YES;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kLocationBarBecomesFirstResponderNotification
                     object:nil];
@@ -4248,12 +4242,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
   [[OmniboxGeolocationController sharedInstance]
       locationBarDidBecomeFirstResponder:_browserState];
+
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:YES];
 }
 
 - (void)locationBarDidResignFirstResponder {
-  if (!_locationBarHasFocus)
-    return;  // TODO(crbug.com/244366): This should not be necessary.
-  _locationBarHasFocus = NO;
   [self.sideSwipeController setEnabled:YES];
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kLocationBarResignsFirstResponderNotification
@@ -4285,6 +4278,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
                                                false /* check_for_repost */);
   }
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:NO];
 }
 
 - (void)locationBarBeganEdit {
