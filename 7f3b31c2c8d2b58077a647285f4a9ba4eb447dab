@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19d19633_4202f806",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2949ae6_81e2f9d8",
+      "range": {
+        "startLine": 284,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 66
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2750d617_1bbe2142",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681cc130_2610cf94",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2750d617_1bbe2142",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "542088d7_caf57e30",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d28f0b_46c793d5",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "312e2be4_747a10c0",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 12
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "5a3eb85e_611387c4",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "312e2be4_747a10c0",
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1aabaf_6fc2aef8",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 12
@@ -102,6 +192,24 @@
       "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719d08bb_f98d27cb",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1aabaf_6fc2aef8",
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed757e9_9feed3ff",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "I copied this from people_page.js - I\u0027m guessing back then we\u0027re just more used to doing non-object properties directly. \n\nWill change for this file as you suggested.",
+      "parentUuid": "f6416d25_c947b2a0",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +318,30 @@
       "writtenOn": "2018-01-25T00:25:39Z",
       "side": 1,
       "message": "I am realizing now, that all the booleans on settings-ui are here, because they need to be synced across siblings cr-drawer, cr-toolbar and settings-main.\n\nDon\u0027t see a good reason to put diceEnabled here (despite my previous suggestion) unless it also needs to be synced across siblings.",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "7f3b31c2c8d2b58077a647285f4a9ba4eb447dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0a4cda_7206b01c",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-25T20:09:05Z",
+      "side": 1,
+      "message": "There will soon be more UI surfaces that depends on this, so can I keep it here for now? or would you prefer I move it back to people_page for now, and do this later?",
+      "parentUuid": "703f0f80_2e35c15f",
       "range": {
         "startLine": 83,
         "startChar": 9,
