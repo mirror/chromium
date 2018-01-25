@@ -11,6 +11,8 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/settings/device_settings_provider.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/stub_cros_settings_provider.h"
@@ -355,6 +357,9 @@ void CrosSettings::FireObservers(const std::string& path) {
 }
 
 ScopedTestCrosSettings::ScopedTestCrosSettings() {
+  g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->OnPreCreateThreads();
   CrosSettings::Initialize();
 }
 

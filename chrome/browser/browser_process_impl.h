@@ -34,6 +34,7 @@
 
 class ChromeChildProcessWatcher;
 class ChromeDeviceClient;
+class ChromeMetricsServicesManagerClient;
 class ChromeResourceDispatcherHostDelegate;
 class DevToolsAutoOpener;
 class RemoteDebuggingServer;
@@ -74,6 +75,9 @@ class BrowserProcessImpl : public BrowserProcess,
       base::SequencedTaskRunner* local_state_task_runner);
   ~BrowserProcessImpl() override;
 
+  // Called to complete initialization.
+  void Init();
+
   // Called before the browser threads are created.
   void PreCreateThreads(const base::CommandLine& command_line);
 
@@ -90,6 +94,10 @@ class BrowserProcessImpl : public BrowserProcess,
   void StartTearDown();
   void PostDestroyThreads();
 #endif
+
+  ChromeMetricsServicesManagerClient* metrics_services_manager_client() {
+    return metrics_services_manager_client_;
+  }
 
   // BrowserProcess implementation.
   void ResourceDispatcherHostCreated() override;
@@ -369,6 +377,9 @@ class BrowserProcessImpl : public BrowserProcess,
       physical_web_data_source_;
 
   std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
+
+  ChromeMetricsServicesManagerClient* metrics_services_manager_client_ =
+      nullptr;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

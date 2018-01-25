@@ -62,6 +62,7 @@ class BrowserPolicyConnectorChromeOS
   void Init(
       PrefService* local_state,
       scoped_refptr<net::URLRequestContextGetter> request_context) override;
+  void OnPreCreateThreads() override;
 
   // Shutdown() is called from BrowserProcessImpl::StartTearDown() but |this|
   // observes some objects that get destroyed earlier. PreShutdown() is called

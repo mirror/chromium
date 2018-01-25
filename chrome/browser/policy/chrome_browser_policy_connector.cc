@@ -95,6 +95,8 @@ void ChromeBrowserPolicyConnector::Init(
   SetPolicyProviders(std::move(providers));
 }
 
+void ChromeBrowserPolicyConnector::OnPreCreateThreads() {}
+
 ConfigurationPolicyProvider*
 ChromeBrowserPolicyConnector::GetPlatformProvider() {
   ConfigurationPolicyProvider* provider =
