@@ -1328,7 +1328,7 @@ int SSLClientSocketImpl::DoVerifyCertComplete(int result) {
         break;
       case TransportSecurityState::PKPStatus::BYPASSED:
         pkp_bypassed_ = true;
-      // Fall through.
+        FALLTHROUGH;
       case TransportSecurityState::PKPStatus::OK:
         // Do nothing.
         break;
@@ -1900,6 +1900,7 @@ void SSLClientSocketImpl::MessageCallback(int is_write,
       // See RFC 5246 section 6.2.3 for the maximum record size in TLS.
       UMA_HISTOGRAM_CUSTOM_COUNTS("Net.SSLRecordSizeRead", record_len, 1,
                                   16384 + 2048, 50);
+      break;
     }
     default:
       return;
