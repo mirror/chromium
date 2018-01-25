@@ -42,6 +42,7 @@
 #include "cc/trees/latency_info_swap_promise_monitor.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_mutator.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "cc/trees/swap_promise.h"
 #include "cc/trees/ukm_manager.h"
 #include "components/viz/common/features.h"
@@ -1300,6 +1301,12 @@ void RenderWidgetCompositor::NotifySwapTime(ReportTimeCallback callback) {
 
 void RenderWidgetCompositor::RequestBeginMainFrameNotExpected(bool new_state) {
   layer_tree_host_->RequestBeginMainFrameNotExpected(new_state);
+}
+
+void RenderWidgetCompositor::SetEnableRenderFrameObserver(
+    bool enabled,
+    scoped_refptr<cc::RenderFrameMetadataObserver> observer) {
+  layer_tree_host_->SetEnableRenderFrameObserver(enabled, observer);
 }
 
 void RenderWidgetCompositor::SetURLForUkm(const GURL& url) {

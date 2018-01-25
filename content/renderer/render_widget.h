@@ -88,6 +88,7 @@ struct WebPoint;
 }  // namespace blink
 
 namespace cc {
+class RenderFrameMetadataObserver;
 class SwapPromise;
 }
 
@@ -951,6 +952,9 @@ class CONTENT_EXPORT RenderWidget
   uint32_t current_content_source_id_;
 
   viz::LocalSurfaceId local_surface_id_;
+
+  scoped_refptr<cc::RenderFrameMetadataObserver>
+      render_frame_metadata_observer_;
 
   scoped_refptr<MainThreadEventQueue> input_event_queue_;
 

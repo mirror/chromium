@@ -75,6 +75,7 @@ class PendingTreeRasterDurationHistogramTimer;
 class RasterTilePriorityQueue;
 class RasterBufferProvider;
 class RenderFrameMetadata;
+class RenderFrameMetadataObserver;
 class RenderingStatsInstrumentation;
 class ResourcePool;
 class ScrollElasticityHelper;
@@ -654,6 +655,10 @@ class CC_EXPORT LayerTreeHostImpl
 
   void RenewTreePriorityForTesting() { client_->RenewTreePriority(); }
 
+  void SetEnableRenderFrameObserver(
+      bool enabled,
+      scoped_refptr<RenderFrameMetadataObserver> observer);
+
  protected:
   LayerTreeHostImpl(
       const LayerTreeSettings& settings,
@@ -965,6 +970,8 @@ class CC_EXPORT LayerTreeHostImpl
   base::Optional<ImageAnimationController> image_animation_controller_;
 
   std::unique_ptr<UkmManager> ukm_manager_;
+
+  scoped_refptr<RenderFrameMetadataObserver> render_frame_metadata_observer_;
 
   // Maps from presentation_token set on CF to the source frame that requested
   // it. Presentation tokens are requested if the active tree has

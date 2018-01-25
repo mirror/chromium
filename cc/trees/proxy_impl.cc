@@ -24,6 +24,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/proxy_main.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "cc/trees/task_runner_provider.h"
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
 #include "components/viz/common/gpu/context_provider.h"
@@ -755,6 +756,12 @@ void ProxyImpl::ClearHistoryOnNavigation() {
   DCHECK(IsImplThread());
   DCHECK(IsMainThreadBlocked());
   scheduler_->ClearHistoryOnNavigation();
+}
+
+void ProxyImpl::SetEnableRenderFrameObserver(
+    bool enabled,
+    scoped_refptr<RenderFrameMetadataObserver> observer) {
+  host_impl_->SetEnableRenderFrameObserver(enabled, observer);
 }
 
 }  // namespace cc
