@@ -1925,7 +1925,7 @@ void DXVAVideoDecodeAccelerator::DoDecode(const gfx::ColorSpace& color_space) {
         SetState(kStopped);
         return;
       } else {
-        NOTREACHED() << "Unhandled error in DoDecode()";
+        LOG(ERROR) << "Unhandled error in DoDecode(): " << hr;
         g_last_unhandled_error = hr;
         return;
       }
