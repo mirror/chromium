@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2b3574e_9d05c0b0",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T21:13:17Z",
+      "side": 1,
+      "message": "I rather not because we lack any control on what zlib will ship or define in the future.\n\nAnother advantage is that in this way this code can be easily tested standalone.",
+      "parentUuid": "3f4835ba_bab6d915",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5918de0c_7206cfd8",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
@@ -380,6 +398,24 @@
       "writtenOn": "2018-01-25T17:46:32Z",
       "side": 1,
       "message": "zlib solves with z_size_t, let\u0027s use that.",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018ad4f4_e1782e25",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-25T21:13:17Z",
+      "side": 1,
+      "message": "I rather not because we lack any control on what zlib will ship or define in the future.\n\nAnother advantage is that in this way this code can be easily tested standalone.\n\nFinally, I know for sure what is going to be the real size of a \u0027size_t\u0027 (something important while using NEON).",
+      "parentUuid": "bda70ef2_0431ead1",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
