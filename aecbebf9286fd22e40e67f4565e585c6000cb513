@@ -16,6 +16,24 @@
       "revId": "aecbebf9286fd22e40e67f4565e585c6000cb513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11f2a3b_f991a371",
+        "filename": "chrome/browser/extensions/extension_service_test_base.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-25T10:26:18Z",
+      "side": 1,
+      "message": "I discovered this issue in the parent cl (https://crrev.com/c/850214).\nLots of extension tests were failing: https://ci.chromium.org/buildbot/tryserver.chromium.linux/linux_chromium_asan_rel_ng/519201\n\nEvery extension test that uninstalls an extension and finishes before localstorage made multiple thread hops and initializes its database to discover that there is nothing to delete is affected. This might also lead to flaky asan tests if some other component in StoragePartition takes a bit longer at some point.\nThe call to StoragePartition is happening here: \n https://cs.chromium.org/chromium/src/chrome/browser/extensions/data_deleter.cc?l\u003d73\u0026rcl\u003d70d7b68f1669306da4c713c7e4d4b0be97a13ab8",
+      "parentUuid": "fd2abafc_7567b762",
+      "revId": "aecbebf9286fd22e40e67f4565e585c6000cb513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
