@@ -22,6 +22,30 @@
       "revId": "29a061b5ccf468a936c3b0ad937fea177b845d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f205546_d011eb0e",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-25T19:27:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d5abeb3b_ed13f9fb",
+      "range": {
+        "startLine": 363,
+        "startChar": 56,
+        "endLine": 363,
+        "endChar": 66
+      },
+      "revId": "29a061b5ccf468a936c3b0ad937fea177b845d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
