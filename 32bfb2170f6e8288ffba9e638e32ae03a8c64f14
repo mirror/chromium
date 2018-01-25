@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c4839f_849e7c8d",
+        "filename": "content/public/test/test_download_http_response.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T00:12:42Z",
+      "side": 1,
+      "message": "Is there a reason you need a separate class for this rather than adding a WaitUntilCompletion to TestDownloadResponseHandler?",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 4
+      },
+      "revId": "32bfb2170f6e8288ffba9e638e32ae03a8c64f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
