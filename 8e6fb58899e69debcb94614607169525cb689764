@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0f59e82_897f79d2",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-25T19:31:46Z",
+      "side": 1,
+      "message": "Yes, this will be highlighted in the UI. I\u0027m going to check w/ UX to make sure they\u0027re cool with this. I think it\u0027s also better b/c the highlight doesn\u0027t go away even when a user clicks somewhere else.",
+      "parentUuid": "82ea969c_933b1d10",
+      "revId": "8e6fb58899e69debcb94614607169525cb689764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32719a60_b97d97d5",
         "filename": "chrome/browser/resources/md_extensions/code_section.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T19:04:08Z",
       "side": 1,
       "message": "Perhaps a default of \"error\". Also, is this a placeholder? I don\u0027t see it getting populated anywhere. Finally, would it make sense to set focus to this span (e.g. tabindex\u003d-1) when you scroll to it below?",
+      "revId": "8e6fb58899e69debcb94614607169525cb689764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ae3fb15_6397c6a7",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-25T19:31:46Z",
+      "side": 1,
+      "message": "Yes, this is the placeholder text. I\u0027m thinking of having this say something like \"Error: Line X\" where x is the first line of the error. Some errors can be more than one line. Maybe if that happens, I should have it say \"Error: Lines X-Y\" or is just the first line of the error good enough? The only type of multi-line errors come from the manifest.json file.",
+      "parentUuid": "32719a60_b97d97d5",
       "revId": "8e6fb58899e69debcb94614607169525cb689764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
