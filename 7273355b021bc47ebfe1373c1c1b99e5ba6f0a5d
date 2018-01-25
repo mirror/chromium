@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20727e78_9f434c59",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-25T18:16:57Z",
+      "side": 1,
+      "message": "Out team decided on a small API change: the timestamp is associated with the url_entry and not with the request, hence this small change.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 78
+      },
+      "revId": "7273355b021bc47ebfe1373c1c1b99e5ba6f0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

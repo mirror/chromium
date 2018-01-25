@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "837c850d_a331f2d0",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2018-01-25T18:16:57Z",
+      "side": 1,
+      "message": "This was a weird typo that I overlooked in this patch. Fixed it in patch 8",
+      "range": {
+        "startLine": 185,
+        "startChar": 10,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "d324bfe157a6a33d498d15256fd557433c6f2824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
