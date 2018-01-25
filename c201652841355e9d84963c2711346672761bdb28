@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f18a5171_3c6cba6d",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T07:05:24Z",
+      "side": 1,
+      "message": "It\u0027s not wrong -- my point is just that those information makes sense only in the final atomic phase. i.e., the incremental marking won\u0027t need them.\n\nMaybe can we set the info when we start the final atomic phase?\n\n(Either way this CL looks good to me.)",
+      "parentUuid": "1283c5bd_c029cfa5",
+      "revId": "c201652841355e9d84963c2711346672761bdb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7789c39d_3ae4f4d1",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
