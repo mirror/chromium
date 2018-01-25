@@ -81,6 +81,24 @@
       "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7cdfc9_7ef74248",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-25T22:07:31Z",
+      "side": 1,
+      "message": "Sure, no problem. I mainly want to avoid stamping out copies of \"copy all the fields from this thing to that other thing\" if we can avoid it. :)",
+      "parentUuid": "6e52c289_11c9e055",
+      "revId": "0795089e19a9ff698d239f0ef1e8d664c839c343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
