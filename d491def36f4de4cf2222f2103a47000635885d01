@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb0ecd2b_1d8a2e85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-25T11:50:53Z",
+      "side": 1,
+      "message": "That sounds better than using the activity, thanks. I added a setter to CBDPreferences as I don\u0027t have control over the constructor in tests and Android Studio complained when I added a constructor with parameters to the fragment.",
+      "parentUuid": "d787552f_a477d4a1",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311ddf70_9367a0cb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7376f14a_963c7ddd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/Preferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-25T11:50:53Z",
+      "side": 1,
+      "message": "method removed",
+      "parentUuid": "311ddf70_9367a0cb",
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b9b53c_3a81d1c3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataFetcher.java",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "d491def36f4de4cf2222f2103a47000635885d01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf62f8e_dba5f989",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataFetcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-25T11:50:53Z",
+      "side": 1,
+      "message": "I added documentation for fetchImportantSites and requestInfoAboutOtherFormsOfHistory. Do we really need documentation for getter and setter? https://source.android.com/setup/code-style says they are not required.",
+      "parentUuid": "26b9b53c_3a81d1c3",
+      "revId": "d491def36f4de4cf2222f2103a47000635885d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
