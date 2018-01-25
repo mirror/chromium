@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21725291_65619b66",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-25T16:19:59Z",
+      "side": 1,
+      "message": "Hmm honestly all this logic is very hard to reason about.\nI personally find challenging having to deal with \u003e1 atomic variable.\nMy humble suggestion would be to use a mutex here, or you might end up having to debug this code for quite long time.\nAlso consider that a mutex, when not hit, is really an atomic increment + decrement, and here you have accumulated way more atomic ops than that, so it might even just be more performant.\n\nDon\u0027t get me wrong, I am not saying this is wrong. I am just saying that I can\u0027t tell what\u0027s going to happen in all the possible linearizations, and the fact itself that you had to put a MemoryBarrier() above might be a red flag.\n\nI\u0027d say either find a way to do all this with one atomic variable, or put a mutex and live happy :)",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
