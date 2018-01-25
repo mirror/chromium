@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a82290_f6b07257",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-25T20:24:31Z",
+      "side": 1,
+      "message": "Why should this be data_deps? My thinking is that all the stuff that\u0027s going to be in the far needs to be completely built by the point at which we generate the manifest file, otherwise the isdir() test could fail, right? But if it\u0027s data_deps, then all we know is that it\u0027ll be built sometime during the build, but not necessarily before this step. (I think?)",
+      "revId": "1fa15fe835073d67515d1b8b1b112a426e76afb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
