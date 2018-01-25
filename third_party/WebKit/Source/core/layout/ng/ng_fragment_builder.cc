@@ -204,8 +204,6 @@ NGPhysicalFragment::NGBoxType NGFragmentBuilder::BoxType() const {
   if (box_type_ != NGPhysicalFragment::NGBoxType::kNormalBox)
     return box_type_;
   // When implicit, compute from LayoutObject.
-  if (!layout_object_ || layout_object_->Style() != &Style())
-    return NGPhysicalFragment::NGBoxType::kAnonymousBox;
   if (layout_object_->IsFloating())
     return NGPhysicalFragment::NGBoxType::kFloating;
   if (layout_object_->IsOutOfFlowPositioned())

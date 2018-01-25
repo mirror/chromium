@@ -56,9 +56,6 @@ String StringForBoxType(NGPhysicalFragment::NGBoxType box_type,
     case NGPhysicalFragment::NGBoxType::kOutOfFlowPositioned:
       result.Append("out-of-flow-positioned");
       break;
-    case NGPhysicalFragment::NGBoxType::kAnonymousBox:
-      result.Append("anonymous");
-      break;
     default:
       NOTREACHED();
   }
