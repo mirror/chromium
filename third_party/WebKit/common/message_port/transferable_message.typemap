@@ -6,10 +6,14 @@ mojom = "//third_party/WebKit/common/message_port/message_port.mojom"
 public_headers = [
   "//third_party/WebKit/common/message_port/transferable_message.h",
   "//third_party/WebKit/common/message_port/message_port_channel.h",
+  "//skia/public/interfaces/bitmap_skbitmap_struct_traits.h",
 ]
 traits_headers = [ "//third_party/WebKit/common/message_port/transferable_message_struct_traits.h" ]
 
 deps = [
   "//mojo/common:struct_traits",
+  "//skia/public/interfaces",
 ]
-type_mappings = [ "blink.mojom.TransferableMessage=::blink::TransferableMessage[move_only]" ]
+type_mappings = [
+  "blink.mojom.TransferableMessage=::blink::TransferableMessage[move_only]",
+]
