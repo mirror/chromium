@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb0822b_b40fee4d",
+        "filename": "content/renderer/crash_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-25T05:29:53Z",
+      "side": 1,
+      "message": "Time to write \"2018\" on your checks :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "582695cde52e89738f9967b34a3dcde832d9d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0407828_4671b16d",
+        "filename": "content/renderer/crash_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-25T05:29:53Z",
+      "side": 1,
+      "message": "Comment perhaps in this file that these are in a separate file from where they\u0027re used to avoid inlining?\n\nSame as the CL description is OK but in the code.",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "582695cde52e89738f9967b34a3dcde832d9d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
