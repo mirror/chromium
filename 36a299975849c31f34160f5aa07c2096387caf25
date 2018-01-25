@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd4aabc_b3488c6a",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-25T17:03:04Z",
+      "side": 1,
+      "message": "nit: braces.",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f794cf_dae877d1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3714,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-25T17:03:04Z",
+      "side": 1,
+      "message": "why scoped_refptr? why not unique_ptr?",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74afbe2_e9403d04",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-25T17:03:04Z",
+      "side": 1,
+      "message": "Why is this refcounted?",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d6099_04631dff",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-25T17:03:04Z",
+      "side": 1,
+      "message": "Pass it along to host_impl_ for completeness.",
+      "revId": "36a299975849c31f34160f5aa07c2096387caf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
