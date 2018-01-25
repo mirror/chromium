@@ -1806,7 +1806,8 @@ TEST_F(VisibleUnitsTest, NextBoundaryOfEditableTableWithLeadingSpaceInOutput) {
   VisiblePosition pos = CreateVisiblePosition(SetCaretTextToBody(
       // The leading whitespace is necessary for bug repro
       "<output> <table contenteditable><!--|--></table></output>"));
-  Position result = NextBoundary(pos, MockBoundarySearch);
+  const Position& result =
+      NextBoundary(pos.DeepEquivalent(), MockBoundarySearch);
   EXPECT_EQ("<output> <table contenteditable>|</table></output>",
             GetCaretTextFromBody(result));
 }

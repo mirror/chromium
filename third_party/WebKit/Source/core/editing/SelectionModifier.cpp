@@ -230,8 +230,8 @@ VisiblePosition SelectionModifier::EndForPlatform() const {
 
 VisiblePosition SelectionModifier::NextWordPositionForPlatform(
     const VisiblePosition& original_position) {
-  VisiblePosition position_after_current_word =
-      NextWordPosition(original_position);
+  const VisiblePosition& position_after_current_word = CreateVisiblePosition(
+      NextWordPosition(original_position.DeepEquivalent()));
 
   if (!GetFrame().GetEditor().Behavior().ShouldSkipSpaceWhenMovingRight())
     return position_after_current_word;

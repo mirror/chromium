@@ -86,8 +86,9 @@ template <typename Strategy>
 static VisiblePositionTemplate<Strategy> EndOfSentenceAlgorithm(
     const VisiblePositionTemplate<Strategy>& c) {
   DCHECK(c.IsValid()) << c;
-  return CreateVisiblePosition(NextBoundary(c, EndSentenceBoundary),
-                               TextAffinity::kUpstreamIfPossible);
+  return CreateVisiblePosition(
+      NextBoundary(c.DeepEquivalent(), EndSentenceBoundary),
+      TextAffinity::kUpstreamIfPossible);
 }
 
 template <typename Strategy>
@@ -142,9 +143,9 @@ EphemeralRange ExpandRangeToSentenceBoundary(const EphemeralRange& range) {
 
 VisiblePosition NextSentencePosition(const VisiblePosition& c) {
   DCHECK(c.IsValid()) << c;
-  VisiblePosition next =
-      CreateVisiblePosition(NextBoundary(c, NextSentencePositionBoundary),
-                            TextAffinity::kUpstreamIfPossible);
+  const VisiblePosition& next = CreateVisiblePosition(
+      NextBoundary(c.DeepEquivalent(), NextSentencePositionBoundary),
+      TextAffinity::kUpstreamIfPossible);
   return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
 }
 

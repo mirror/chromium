@@ -73,7 +73,7 @@ PositionTemplate<Strategy> EndOfWordAlgorithm(
     return c.DeepEquivalent();
   }
 
-  return NextBoundary(p, EndWordBoundary);
+  return NextBoundary(p.DeepEquivalent(), EndWordBoundary);
 }
 
 unsigned NextWordPositionBoundary(
@@ -167,12 +167,11 @@ VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
                                TextAffinity::kUpstreamIfPossible);
 }
 
-VisiblePosition NextWordPosition(const VisiblePosition& c) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePosition next =
-      CreateVisiblePosition(NextBoundary(c, NextWordPositionBoundary),
+PositionWithAffinity NextWordPosition(const Position& position) {
+  const VisiblePosition& next =
+      CreateVisiblePosition(NextBoundary(position, NextWordPositionBoundary),
                             TextAffinity::kUpstreamIfPossible);
-  return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
+  return HonorEditingBoundaryAtOrAfter(next.ToPositionWithAffinity(), position);
 }
 
 VisiblePosition PreviousWordPosition(const VisiblePosition& c) {
