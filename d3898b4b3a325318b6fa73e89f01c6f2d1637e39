@@ -70,6 +70,30 @@
       "revId": "d3898b4b3a325318b6fa73e89f01c6f2d1637e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56266b9e_ec9614e6",
+        "filename": "third_party/WebKit/Source/core/frame/DOMWindow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-25T16:14:28Z",
+      "side": 1,
+      "message": "It is not yet specced. The intention is: if a page calls focus() then drop it from fullscreen if it is in fullscreen. This new behavior is intended to fix a security bug.\n\nPlease don\u0027t read too much into my implementation here. My Blink skills are not strong.",
+      "parentUuid": "0c4ec2fc_aba33fc8",
+      "range": {
+        "startLine": 412,
+        "startChar": 14,
+        "endLine": 412,
+        "endChar": 15
+      },
+      "revId": "d3898b4b3a325318b6fa73e89f01c6f2d1637e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
