@@ -837,18 +837,30 @@ TEST_P(TaskSchedulerTaskTrackerTest, ShutdownDuringFlushAsyncForTesting) {
   event.Wait();
 }
 
-TEST_P(TaskSchedulerTaskTrackerTest, DoublePendingFlushAsyncForTestingFails) {
+TEST_P(TaskSchedulerTaskTrackerTest, DoublePendingFlushAsyncForTesting) {
   Task undelayed_task(FROM_HERE, Bind(&DoNothing), TaskTraits(GetParam()),
                       TimeDelta());
   tracker_.WillPostTask(undelayed_task);
 
   // FlushAsyncForTesting() shouldn't callback before the undelayed task runs.
-  bool called_back = false;
+  WaitableEvent event1(WaitableEvent::ResetPolicy::MANUAL,
+                       WaitableEvent::InitialState::NOT_SIGNALED);
   tracker_.FlushAsyncForTesting(
-      BindOnce([](bool* called_back) { *called_back = true; },
-               Unretained(&called_back)));
-  EXPECT_FALSE(called_back);
-  EXPECT_DCHECK_DEATH({ tracker_.FlushAsyncForTesting(BindOnce([]() {})); });
+      BindOnce(&WaitableEvent::Signal, Unretained(&event1)));
+  EXPECT_FALSE(event1.IsSignaled());
+
+  WaitableEvent event2(WaitableEvent::ResetPolicy::MANUAL,
+                       WaitableEvent::InitialState::NOT_SIGNALED);
+  tracker_.FlushAsyncForTesting(
+      BindOnce(&WaitableEvent::Signal, Unretained(&event2)));
+  EXPECT_FALSE(event2.IsSignaled());
+
+  // Run the undelayed task.
+  DispatchAndRunTaskWithTracker(std::move(undelayed_task));
+
+  // FlushAsyncForTesting() should call all callbacks.
+  event1.Wait();
+  event2.Wait();
 }
 
 INSTANTIATE_TEST_CASE_P(

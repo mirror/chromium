@@ -8,6 +8,7 @@
 #include <functional>
 #include <memory>
 #include <queue>
+#include <vector>
 
 #include "base/atomicops.h"
 #include "base/base_export.h"
@@ -112,8 +113,7 @@ class BASE_EXPORT TaskTracker {
   // Returns and calls |flush_callback| when there are no incomplete undelayed
   // tasks. |flush_callback| may be called back on any thread and should not
   // perform a lot of work. May be used when additional work on the current
-  // thread needs to be performed during a flush. Only one
-  // FlushAsyncForTesting() may be pending at any given time.
+  // thread needs to be performed during a flush.
   void FlushAsyncForTesting(OnceClosure flush_callback);
 
   // Informs this TaskTracker that |task| is about to be posted. Returns true if
@@ -256,9 +256,9 @@ class BASE_EXPORT TaskTracker {
   // shutdown completes.
   const std::unique_ptr<ConditionVariable> flush_cv_;
 
-  // Invoked if non-null when |num_incomplete_undelayed_tasks_| is zero or when
-  // shutdown completes.
-  OnceClosure flush_callback_for_testing_;
+  // All invoked when |num_incomplete_undelayed_tasks_| is zero or when shutdown
+  // completes.
+  std::vector<OnceClosure> flush_callbacks_for_testing_;
 
   // Synchronizes access to shutdown related members below.
   mutable SchedulerLock shutdown_lock_;

@@ -270,9 +270,7 @@ void TaskTracker::FlushAsyncForTesting(OnceClosure flush_callback) {
   DCHECK(flush_callback);
   {
     AutoSchedulerLock auto_lock(flush_lock_);
-    DCHECK(!flush_callback_for_testing_)
-        << "Only one FlushAsyncForTesting() may be pending at any time.";
-    flush_callback_for_testing_ = std::move(flush_callback);
+    flush_callbacks_for_testing_.emplace_back(std::move(flush_callback));
   }
 
   if (subtle::Acquire_Load(&num_incomplete_undelayed_tasks_) == 0 ||
@@ -707,13 +705,13 @@ void TaskTracker::RecordTaskLatencyHistogram(const Task& task) {
 }
 
 void TaskTracker::CallFlushCallbackForTesting() {
-  OnceClosure flush_callback;
+  std::vector<OnceClosure> flush_callbacks;
   {
     AutoSchedulerLock auto_lock(flush_lock_);
-    flush_callback = std::move(flush_callback_for_testing_);
+    flush_callbacks = std::move(flush_callbacks_for_testing_);
   }
-  if (flush_callback)
-    std::move(flush_callback).Run();
+  for (auto& callback : flush_callbacks)
+    std::move(callback).Run();
 }
 
 }  // namespace internal
