@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fccfed2_cf60cace",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-25T02:36:01Z",
+      "side": 1,
+      "message": "You still need to call std::make_unique\u003c\u003e() here. Otherwise, BuildInstance() calls NewInstance(), which calls BuildInstance(), etc.\n\nLooks like this issue occurs in other classes as well, so please fix those.",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 70
+      },
+      "revId": "d018d9a0da5c869f6b28acc565f91e8cecc91604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
