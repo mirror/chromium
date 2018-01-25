@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c3b00f8_5f17caef",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-25T22:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e3ac3d_b4df7e27",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a11b2129_5188072f",
         "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0c7641a8_237fa5c6",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-25T22:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a11b2129_5188072f",
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d16710_f1889a4d",
         "filename": "chrome/browser/ui/app_list/search/app_search_provider.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f2f16c_98372977",
+        "filename": "chrome/browser/ui/app_list/search/app_search_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-25T22:16:10Z",
+      "side": 1,
+      "message": "Done.\nDoes this mean that the weak pointer got from |update_results_factory_.GetWeakPtr()| in L407 is no longer needed right after |base::BindOnce|?",
+      "parentUuid": "17d16710_f1889a4d",
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
