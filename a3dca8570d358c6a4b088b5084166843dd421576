@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9472492f_46cba9ce",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T14:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d65fac55_6628d523",
+      "range": {
+        "startLine": 209,
+        "startChar": 21,
+        "endLine": 209,
+        "endChar": 22
+      },
+      "revId": "a3dca8570d358c6a4b088b5084166843dd421576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facdf435_0df085df",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a3dca8570d358c6a4b088b5084166843dd421576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c502ac82_e9bf9b10",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-25T14:32:02Z",
+      "side": 1,
+      "message": "Done, removed variable.",
+      "parentUuid": "facdf435_0df085df",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "a3dca8570d358c6a4b088b5084166843dd421576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
