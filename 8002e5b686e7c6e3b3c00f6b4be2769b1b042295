@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "af438a5a_ee154409",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-25T16:16:44Z",
+      "side": 1,
+      "message": "True, however in JS we just want to follow what the spec is saying whatever fusion or fallback algorithm is applied on a particular platform, i.e. the client code must still require \"allow \u003d accelerometer; gyroscope\" for a cross-origin iframe to obtain orientation data on any platform.",
+      "parentUuid": "33203e60_7ca11b4e",
+      "revId": "8002e5b686e7c6e3b3c00f6b4be2769b1b042295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b41e0c2b_bd6bae95",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationController.cpp",
         "patchSetId": 4

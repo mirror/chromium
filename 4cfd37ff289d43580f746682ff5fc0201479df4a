@@ -16,6 +16,24 @@
       "revId": "4cfd37ff289d43580f746682ff5fc0201479df4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cffd7d8_0a49286d",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-01-25T16:16:44Z",
+      "side": 1,
+      "message": "I would keep this change: thus we make sure that FP check is not obviated.\nGetDocument().GetFrame() \u003d\u003d nullptr after Document::Shutdown() is called, IMO it is fine not to add event listeners at this time.",
+      "parentUuid": "ac96d136_0ac21e2c",
+      "revId": "4cfd37ff289d43580f746682ff5fc0201479df4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
