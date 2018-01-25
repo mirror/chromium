@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc491e95_365521fd",
+        "filename": "chrome/test/data/webui/settings/internet_detail_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T02:21:08Z",
+      "side": 1,
+      "message": "I\u0027d consider adding an assert the toggle is enabled, too",
+      "revId": "6ae36e0b5f2a81b0a0aa4022a322f40b9069d9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d99c05_f092a2cc",
+        "filename": "chrome/test/data/webui/settings/internet_detail_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T02:21:08Z",
+      "side": 1,
+      "message": "this is the same as the previous test.",
+      "revId": "6ae36e0b5f2a81b0a0aa4022a322f40b9069d9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
