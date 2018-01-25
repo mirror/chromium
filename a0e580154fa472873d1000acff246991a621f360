@@ -16,6 +16,24 @@
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22211bd0_9fe4d4bc",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-25T11:46:36Z",
+      "side": 1,
+      "message": "I think the code is correct as-is. It should read as \"if we\u0027re not already in the virtual environment, we need to enter it via vpython\".\n\nI actually wondered whether it would be fine to just always use \"vpython\" unconditionally, as that should have the same effect?",
+      "parentUuid": "24db7d17_9e73053b",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
