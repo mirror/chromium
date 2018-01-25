@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7e96c5_5ad69b31",
+        "filename": "components/assist_ranker/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-25T17:01:15Z",
+      "side": 1,
+      "message": "I think we will never need bucketized, and probably sparse feature weights since we are going with the preprocessing. We should plan to clean up the proto and the code.\n\nI created a crbug for this. Please add a TODO(crbug.com/805936)",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "33100f62a5a02f3d08a47479383c260a6e9b33e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2917678d_fc6b762d",
+        "filename": "components/assist_ranker/generic_logistic_regression_inference_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2018-01-25T17:01:15Z",
+      "side": 1,
+      "message": "maybe change the variable names to one_hot_elemX_weight?",
+      "range": {
+        "startLine": 28,
+        "startChar": 62,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "33100f62a5a02f3d08a47479383c260a6e9b33e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
