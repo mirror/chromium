@@ -16,6 +16,24 @@
       "revId": "febde2886da9d3b456a8e7db019e8b2a2a104063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15db767a_f079a09e",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-25T17:37:44Z",
+      "side": 1,
+      "message": "It has reference to \"need to be synced with histograms.xml\" added extra comment for protection",
+      "parentUuid": "723dc93b_a4036665",
+      "revId": "febde2886da9d3b456a8e7db019e8b2a2a104063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
