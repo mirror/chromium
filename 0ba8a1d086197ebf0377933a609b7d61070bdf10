@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1561b1cf_6687285d",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T19:02:26Z",
+      "side": 1,
+      "message": "maybe \"unlock cache entries\" rather than \"clear the cache\".",
+      "range": {
+        "startLine": 391,
+        "startChar": 44,
+        "endLine": 391,
+        "endChar": 49
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a495e5d_a791a05b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T19:02:26Z",
+      "side": 1,
+      "message": "I would keep this simple for now and just fall through to the code below. Yes we will keep this locked when it may not fit in cache, but if this one image is really too large for the cache, it will just be evicted the next time we call GetDecodedDrawImage. Otherwise this adds a weird bump every time we hit the limit and purge.",
+      "range": {
+        "startLine": 323,
+        "startChar": 11,
+        "endLine": 323,
+        "endChar": 31
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ef15f4_4314a823",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T19:02:26Z",
+      "side": 1,
+      "message": "I don\u0027t love this name, it makes it sound like we are clearing the cache, not just unlocking entries. Maybe \"ReleaseLockedImageCacheEntries\" to make it clear we\u0027re unlocking.",
+      "range": {
+        "startLine": 385,
+        "startChar": 29,
+        "endLine": 385,
+        "endChar": 44
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da81ce2f_8be7ece2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T19:02:26Z",
+      "side": 1,
+      "message": "Same here, maybe \"ReleaseLockedImages\"",
+      "range": {
+        "startLine": 387,
+        "startChar": 28,
+        "endLine": 387,
+        "endChar": 33
+      },
+      "revId": "0ba8a1d086197ebf0377933a609b7d61070bdf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
