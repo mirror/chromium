@@ -42,6 +42,12 @@ WebSerializedScriptValue WebSerializedScriptValue::FromString(
   return SerializedScriptValue::Create(s);
 }
 
+WebSerializedScriptValue WebSerializedScriptValue::FromData(
+    base::span<const uint8_t> data) {
+  return SerializedScriptValue::Create(
+      reinterpret_cast<const char*>(data.data()), data.length());
+}
+
 WebSerializedScriptValue WebSerializedScriptValue::Serialize(
     v8::Isolate* isolate,
     v8::Local<v8::Value> value) {
@@ -68,6 +74,10 @@ void WebSerializedScriptValue::Assign(const WebSerializedScriptValue& other) {
 
 WebString WebSerializedScriptValue::ToString() const {
   return private_->ToWireString();
+}
+
+base::span<const uint8_t> WebSerializedScriptValue::GetWireData() const {
+  return private_->GetWireData();
 }
 
 v8::Local<v8::Value> WebSerializedScriptValue::Deserialize(
