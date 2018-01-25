@@ -121,6 +121,8 @@ void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
 bool HTMLPlugInElement::RequestObjectInternal(
     const Vector<String>& param_names,
     const Vector<String>& param_values) {
+  update_plugin_after_detach_ = false;
+
   if (url_.IsEmpty() && service_type_.IsEmpty())
     return false;
 
@@ -128,13 +130,18 @@ bool HTMLPlugInElement::RequestObjectInternal(
     return false;
 
   KURL completed_url =
-      url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
-  if (!AllowedToLoadObject(completed_url, service_type_))
+      NeedsToDetachFrame()
+          ? PluginNoneURL()
+          : url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
+  update_plugin_after_detach_ = completed_url.IsPluginNoneURL();
+  if (!update_plugin_after_detach_ &&
+      !AllowedToLoadObject(completed_url, service_type_)) {
     return false;
+  }
 
   ObjectContentType object_type = GetObjectContentType();
   if (object_type == ObjectContentType::kFrame ||
-      object_type == ObjectContentType::kImage) {
+      object_type == ObjectContentType::kImage || ContentFrame()) {
     // If the plugin element already contains a subframe,
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
     // new frame and set it as the LayoutEmbeddedContent's EmbeddedContentView,
@@ -148,6 +155,14 @@ bool HTMLPlugInElement::RequestObjectInternal(
       object_type == ObjectContentType::kNone && HasFallbackContent();
   return LoadPlugin(completed_url, service_type_, param_names, param_values,
                     use_fallback, true);
+}
+
+bool HTMLPlugInElement::NeedsToDetachFrame() {
+  ObjectContentType object_type = GetObjectContentType();
+  if (object_type == ObjectContentType::kPlugin && ContentFrame())
+    return true;
+
+  return false;
 }
 
 bool HTMLPlugInElement::CanProcessDrag() const {
@@ -289,6 +304,17 @@ ParsedFeaturePolicy HTMLPlugInElement::ConstructContainerPolicy(Vector<String>*,
   whitelist.matches_all_origins = false;
   container_policy.push_back(whitelist);
   return container_policy;
+}
+
+bool HTMLPlugInElement::CanNavigateToPluginNone() const {
+  return update_plugin_after_detach_;
+}
+
+void HTMLPlugInElement::ReadyToLoadPlugin() {
+  DCHECK(update_plugin_after_detach_);
+  update_plugin_after_detach_ = false;
+  ContentFrame()->Detach(FrameDetachType::kRemove);
+  GetDocument().LoadPluginsSoon();
 }
 
 void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {

@@ -86,6 +86,9 @@ CONTENT_EXPORT extern const char kChromeUINetworkViewCacheURL[];
 CONTENT_EXPORT extern const char kChromeUIResourcesURL[];
 CONTENT_EXPORT extern const char kChromeUIShorthangURL[];
 
+// URL used for navigating plugin elements.
+CONTENT_EXPORT extern const char kPluginNoneURL[];
+
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_COMMON_URL_CONSTANTS_H_

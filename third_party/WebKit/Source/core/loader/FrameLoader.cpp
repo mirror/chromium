@@ -55,6 +55,7 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLPlugInElement.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
@@ -730,6 +731,11 @@ bool FrameLoader::PrepareRequestForThisFrame(FrameLoadRequest& request) {
   KURL url = request.GetResourceRequest().Url();
   if (frame_->GetScriptController().ExecuteScriptIfJavaScriptURL(url, nullptr))
     return false;
+
+  if (url == PluginNoneURL()) {
+    ToHTMLPlugInElement(frame_->DeprecatedLocalOwner())->ReadyToLoadPlugin();
+    return false;
+  }
 
   if (!request.OriginDocument()->GetSecurityOrigin()->CanDisplay(url)) {
     request.OriginDocument()->AddConsoleMessage(ConsoleMessage::Create(
