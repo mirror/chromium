@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8d74dd2_a68cf1b6",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-25T17:43:17Z",
+      "side": 1,
+      "message": "Not sure this optimization will give us much, as we\u0027re already on a \"slow\" pass and going to lock a mutex and record a sample in RecordAlloc.",
+      "parentUuid": "f70281fa_e739dafa",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "3169c332dcfc33b4d4faeeb4819e5a80865f3a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cfb387f_92aadaa7",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-25T16:32:36Z",
       "side": 1,
       "message": "not a huge deal, but these could be functions in the anonymous namespace in the .cc file",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "3169c332dcfc33b4d4faeeb4819e5a80865f3a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2114cbc_3591cbb8",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-25T17:43:17Z",
+      "side": 1,
+      "message": "I intentionally moved them here to eliminate SamplingNativeHeapProfiler:: in them as they make lots of references to the class members. It makes the code more readable.",
+      "parentUuid": "5cfb387f_92aadaa7",
       "range": {
         "startLine": 68,
         "startChar": 2,
