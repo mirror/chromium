@@ -67,6 +67,7 @@ class MEDIA_EXPORT EncryptionScheme {
   bool is_encrypted() const;
   CipherMode mode() const;
   const Pattern& pattern() const;
+  bool HasPattern() const;
 
  private:
   CipherMode mode_ = CIPHER_MODE_UNENCRYPTED;

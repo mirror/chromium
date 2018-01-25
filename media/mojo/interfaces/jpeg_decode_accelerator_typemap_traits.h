@@ -55,6 +55,11 @@ struct StructTraits<media::mojom::BitstreamBufferDataView,
     return input.subsamples();
   }
 
+  static const media::EncryptionScheme& encryption_scheme(
+      const media::BitstreamBuffer& input) {
+    return input.encryption_scheme();
+  }
+
   static bool Read(media::mojom::BitstreamBufferDataView input,
                    media::BitstreamBuffer* output);
 };

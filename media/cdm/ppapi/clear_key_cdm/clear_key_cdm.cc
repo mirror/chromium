@@ -21,6 +21,7 @@
 #include "media/base/cdm_key_information.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/decrypt_config.h"
+#include "media/base/media_util.h"
 #include "media/cdm/api/content_decryption_module_ext.h"
 #include "media/cdm/json_web_key.h"
 #include "media/cdm/ppapi/clear_key_cdm/cdm_file_io_test.h"
@@ -120,7 +121,7 @@ static scoped_refptr<media::DecoderBuffer> CopyDecoderBufferFrom(
                         input_buffer.key_id_size),
             std::string(reinterpret_cast<const char*>(input_buffer.iv),
                         input_buffer.iv_size),
-            subsamples));
+            subsamples, media::AesCtrEncryptionScheme()));
 
     output_buffer->set_decrypt_config(std::move(decrypt_config));
   }

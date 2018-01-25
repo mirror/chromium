@@ -15,6 +15,7 @@
 #include "media/base/decoder_buffer.h"
 #include "media/base/decrypt_config.h"
 #include "media/base/gmock_callback_support.h"
+#include "media/base/media_util.h"
 #include "media/base/mock_filters.h"
 #include "media/base/test_helpers.h"
 #include "media/base/video_frame.h"
@@ -41,7 +42,7 @@ static scoped_refptr<DecoderBuffer> CreateFakeEncryptedBuffer() {
       std::string(reinterpret_cast<const char*>(kFakeKeyId),
                   arraysize(kFakeKeyId)),
       std::string(reinterpret_cast<const char*>(kFakeIv), arraysize(kFakeIv)),
-      std::vector<SubsampleEntry>())));
+      std::vector<SubsampleEntry>(), AesCtrEncryptionScheme())));
   return buffer;
 }
 

@@ -160,6 +160,7 @@ struct DecryptConfig {
   string key_id;
   string iv;
   array<SubsampleEntry> subsamples;
+  EncryptionScheme encryption_scheme;
 };
 
 // This defines a mojo transport format for media::DecoderBuffer.

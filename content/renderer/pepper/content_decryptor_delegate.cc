@@ -96,6 +96,23 @@ bool CopyStringToArray(const std::string& str, uint8_t(&array)[array_size]) {
   return true;
 }
 
+bool SupportedEncryptionScheme(
+    const media::EncryptionScheme& encryption_scheme) {
+  switch (encryption_scheme.mode()) {
+    case media::EncryptionScheme::CIPHER_MODE_UNENCRYPTED:
+      return true;
+    case media::EncryptionScheme::CIPHER_MODE_AES_CTR:
+      // CTR is only supported without a pattern.
+      return !encryption_scheme.HasPattern();
+    case media::EncryptionScheme::CIPHER_MODE_AES_CBC:
+      // CBC is not supported.
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
 // Fills the |block_info| with information from |buffer|.
 //
 // Returns true if |block_info| is successfully filled. Returns false
@@ -614,6 +631,9 @@ bool ContentDecryptorDelegate::CancelDecrypt(
 bool ContentDecryptorDelegate::InitializeAudioDecoder(
     const media::AudioDecoderConfig& decoder_config,
     const Decryptor::DecoderInitCB& init_cb) {
+  if (!SupportedEncryptionScheme(decoder_config.encryption_scheme()))
+    return false;
+
   PP_AudioDecoderConfig pp_decoder_config;
   pp_decoder_config.codec =
       MediaAudioCodecToPpAudioCodec(decoder_config.codec());
@@ -644,6 +664,9 @@ bool ContentDecryptorDelegate::InitializeAudioDecoder(
 bool ContentDecryptorDelegate::InitializeVideoDecoder(
     const media::VideoDecoderConfig& decoder_config,
     const Decryptor::DecoderInitCB& init_cb) {
+  if (!SupportedEncryptionScheme(decoder_config.encryption_scheme()))
+    return false;
+
   PP_VideoDecoderConfig pp_decoder_config;
   pp_decoder_config.codec =
       MediaVideoCodecToPpVideoCodec(decoder_config.codec());
@@ -1155,6 +1178,11 @@ bool ContentDecryptorDelegate::MakeMediaBufferResource(
     *resource = nullptr;
     return true;
   }
+
+  // If an encryption scheme is specified, it must be something supported.
+  if (buffer->decrypt_config() &&
+      !SupportedEncryptionScheme(buffer->decrypt_config()->encryption_scheme()))
+    return false;
 
   DCHECK(stream_type == Decryptor::kAudio || stream_type == Decryptor::kVideo);
   scoped_refptr<PPB_Buffer_Impl>& media_resource =
