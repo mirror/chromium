@@ -69,6 +69,24 @@
       "revId": "d317958957b7060128deeed90dbee4f68edf6d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c219774_64e2cdaf",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-25T17:18:43Z",
+      "side": 1,
+      "message": "That should be fine, and seems to match what various other unit tests already do.  Thanks!",
+      "parentUuid": "d29998c6_9720fa66",
+      "revId": "d317958957b7060128deeed90dbee4f68edf6d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
