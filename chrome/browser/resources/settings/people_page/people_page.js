@@ -26,19 +26,7 @@ Polymer({
     },
 
     // <if expr="not chromeos">
-    /**
-     * This flag is used to conditionally show a set of new sign-in UIs to the
-     * profiles that have been migrated to be consistent with the web sign-ins.
-     * TODO(scottchen): In the future when all profiles are completely migrated,
-     * this should be removed, and UIs hidden behind it should become default.
-     * @private
-     */
-    diceEnabled_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('diceEnabled');
-      },
-    },
+    diceEnabled: Boolean,
     // </if>
 
     /**
@@ -49,16 +37,19 @@ Polymer({
 
     /**
      * The currently selected profile icon URL. May be a data URL.
+     * @private
      */
     profileIconUrl_: String,
 
     /**
      * The current profile name.
+     * @private
      */
     profileName_: String,
 
     /**
      * True if the current profile manages supervised users.
+     * @private
      */
     profileManagesSupervisedUsers_: Boolean,
 
@@ -66,16 +57,19 @@ Polymer({
      * The profile deletion warning. The message indicates the number of
      * profile stats that will be deleted if a non-zero count for the profile
      * stats is returned from the browser.
+     * @private
      */
     deleteProfileWarning_: String,
 
     /**
      * True if the profile deletion warning is visible.
+     * @private
      */
     deleteProfileWarningVisible_: Boolean,
 
     /**
      * True if the checkbox to delete the profile has been checked.
+     * @private
      */
     deleteProfile_: Boolean,
 
@@ -291,7 +285,17 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
+    // <if expr="not chromeos">
+    if (!this.diceEnabled) {
+      // If DICE-enabled, this button won't exist here.
+      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    }
+    // </if>
+
+    // <if expr="chromeos">
     cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
+    // </if>
+
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();
