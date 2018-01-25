@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867f3530_dc8e58bb",
+        "filename": "third_party/WebKit/Source/core/messaging/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "I don\u0027t know what is right or wrong, but other core/*:unit_tests target seem to have a bunch of configs specified (core, inside_blink, etc), and use non-public deps. Any reason for the divergence here?",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4535344e_b1403636",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "why do we need these fields? Aren\u0027t they part of the SerializedScriptValue already (from which the struct traits can read/write/convert as needed)?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71eb21f5_1637093f",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "please match the order of the .h file in the .cpp file",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2080f1_83241cb0",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "here too I\u0027d expect a return-by-value or return-by-const-ref",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 64
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5027c08_36af078d",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "do you actually need to make a copy here? Can\u0027t you return a base::span\u003cconst uint8_t\u003e or something instead?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fb2063_29ba4412",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "comment explaining what this struct is?",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7770408b_0fdbff4a",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "nit: formatting",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ac34f5_fe87c8fc",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8173e9f3_936332c6",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "nit: comments for these new fields",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c7c43f_0328a853",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "do you need these temporaries, or can you just read directly into out-\u003e ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3561e6fc_272ebf3a",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T22:04:55Z",
+      "side": 1,
+      "message": "It seems a bit weird to me for these methods to return non-const references to vectors? Either just std::move and return-by-value or return-by-const-reference would work just as well?",
+      "range": {
+        "startLine": 28,
+        "startChar": 68,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
