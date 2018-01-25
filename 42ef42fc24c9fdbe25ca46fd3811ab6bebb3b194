@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68d4cfc_949ec89f",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T01:35:56Z",
+      "side": 1,
+      "message": "Don\u0027t we need to call ReportError?",
+      "revId": "42ef42fc24c9fdbe25ca46fd3811ab6bebb3b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8376ff48_639282cb",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T01:35:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "42ef42fc24c9fdbe25ca46fd3811ab6bebb3b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58fc478_b2314eb4",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystemBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T01:35:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "42ef42fc24c9fdbe25ca46fd3811ab6bebb3b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce7e326_54680adf",
+        "filename": "third_party/WebKit/Source/modules/filesystem/DOMFileSystemBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T01:35:56Z",
+      "side": 1,
+      "message": "You\u0027ll need to check IsContextDestroyed(). The same comment for other parts in this file.",
+      "revId": "42ef42fc24c9fdbe25ca46fd3811ab6bebb3b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a361ac_e9f39858",
+        "filename": "third_party/WebKit/Source/modules/filesystem/WorkerGlobalScopeFileSystem.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T01:35:56Z",
+      "side": 1,
+      "message": "Don\u0027t we need to throw an error?",
+      "revId": "42ef42fc24c9fdbe25ca46fd3811ab6bebb3b194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
