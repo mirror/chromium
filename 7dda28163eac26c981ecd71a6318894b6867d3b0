@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "bef92d08_a0ef8577",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T23:16:51Z",
+      "side": 1,
+      "message": "I\u0027m not talking about the mojom file, that part looks fine. I\u0027m wondering why these need to be separate fields in this structs, when afaik they can be derived from the SerializedScriptValue that is also in this struct?",
+      "parentUuid": "d5c13c1a_692df180",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71eb21f5_1637093f",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 21
