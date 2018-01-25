@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "21e50cf7_e8832136",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10971,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-25T15:42:54Z",
+      "side": 1,
+      "message": "I believe this sentence was added in response to my request. We used to end every policy description with \"if you set this, users cannot change or override it.\" We have been very inconsistent with that lately - happy to drop it if we feel it adds no value.",
+      "parentUuid": "6ccb6957_42fe3230",
+      "range": {
+        "startLine": 10971,
+        "startChar": 6,
+        "endLine": 10971,
+        "endChar": 97
+      },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c29b09c2_b6a969d9",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
