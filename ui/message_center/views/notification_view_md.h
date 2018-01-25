@@ -12,6 +12,7 @@
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -137,6 +138,7 @@ class NotificationButtonMD : public views::LabelButton {
 
 class NotificationInputDelegate {
  public:
+  virtual void OnNotificationInputSubmitByButton() = 0;
   virtual void OnNotificationInputSubmit(size_t index,
                                          const base::string16& text) = 0;
   virtual ~NotificationInputDelegate() = default;
@@ -154,6 +156,8 @@ class NotificationInputTextfieldMD : public views::Textfield,
   void set_index(size_t index) { index_ = index; }
   void set_placeholder(const base::string16& placeholder);
 
+  size_t index() const { return index_; };
+
  private:
   NotificationInputDelegate* const delegate_;
 
@@ -170,10 +174,11 @@ class NotificationInputContainerMD : public views::View {
   ~NotificationInputContainerMD() override;
 
   NotificationInputTextfieldMD* textfield() const { return textfield_; };
+  views::ImageButton* button() const { return button_; };
 
  private:
   NotificationInputTextfieldMD* const textfield_;
-  views::ImageView* const button_;
+  views::ImageButton* const button_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationInputContainerMD);
 };
@@ -214,6 +219,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   void OnSettingsButtonPressed() override;
 
   // Overridden from NotificationInputDelegate:
+  void OnNotificationInputSubmitByButton() override;
   void OnNotificationInputSubmit(size_t index,
                                  const base::string16& text) override;
 
@@ -226,7 +232,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UpdateButtonsStateTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UpdateButtonCountTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestActionButtonClick);
-  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestInlineReply);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestInlineReplyByEnterKey);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestInlineReplyByButton);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, ExpandLongMessage);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestAccentColor);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UseImageAsIcon);
