@@ -129,9 +129,11 @@ scoped_refptr<PlatformSharedBuffer> Broker::GetSharedBuffer(size_t num_bytes) {
   BOOL result = ::WriteFile(sync_channel_.get().handle, out_message->data(),
                             static_cast<DWORD>(out_message->data_num_bytes()),
                             &bytes_written, nullptr);
+  auto last_error = ::GetLastError();
   if (!result ||
       static_cast<size_t>(bytes_written) != out_message->data_num_bytes()) {
-    LOG(ERROR) << "Error sending sync broker message";
+    LOG(ERROR) << "Error sending sync broker message, error code = "
+               << last_error;
     return nullptr;
   }
 
