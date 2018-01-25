@@ -2503,14 +2503,19 @@ void RenderFrameImpl::OnPostMessageEvent(
     V8ValueConverterImpl converter;
     converter.SetDateAllowed(true);
     converter.SetRegExpAllowed(true);
-    std::unique_ptr<base::Value> value(new base::Value(params.data));
+    base::string16 data;
+    data.resize(params.message->data.encoded_message.length() /
+                sizeof(base::char16));
+    std::memcpy(&data[0], params.message->data.encoded_message.data(),
+                data.length() * sizeof(base::char16));
+    std::unique_ptr<base::Value> value(new base::Value(data));
     v8::Local<v8::Value> result_value = converter.ToV8Value(value.get(),
                                                              context);
     serialized_script_value =
         WebSerializedScriptValue::Serialize(isolate, result_value);
   } else {
-    serialized_script_value =
-        WebSerializedScriptValue::FromString(WebString::FromUTF16(params.data));
+    serialized_script_value = WebSerializedScriptValue::FromData(
+        params.message->data.encoded_message);
   }
 
   // We must pass in the target_origin to do the security check on this side,
@@ -2521,9 +2526,10 @@ void RenderFrameImpl::OnPostMessageEvent(
         WebString::FromUTF16(params.target_origin));
   }
 
-  WebDOMMessageEvent msg_event(
-      serialized_script_value, WebString::FromUTF16(params.source_origin),
-      source_frame, frame_->GetDocument(), std::move(params.message_ports));
+  WebDOMMessageEvent msg_event(serialized_script_value,
+                               WebString::FromUTF16(params.source_origin),
+                               source_frame, frame_->GetDocument(),
+                               std::move(params.message->data.ports));
   frame_->DispatchMessageEventWithOriginCheck(target_origin, msg_event);
 }
 

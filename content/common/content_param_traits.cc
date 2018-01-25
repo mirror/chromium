@@ -7,10 +7,14 @@
 #include <stddef.h>
 
 #include "base/strings/string_number_conversions.h"
+#include "ipc/ipc_message_attachment.h"
 #include "ipc/ipc_mojo_message_helper.h"
 #include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/ip_endpoint.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/common/message_port/transferable_message.h"
+#include "third_party/WebKit/common/message_port/transferable_message_struct_traits.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
@@ -132,6 +136,60 @@ bool ParamTraits<scoped_refptr<storage::BlobHandle>>::Read(
 void ParamTraits<scoped_refptr<storage::BlobHandle>>::Log(const param_type& p,
                                                           std::string* l) {
   l->append("<storage::BlobHandle>");
+}
+
+void ParamTraits<scoped_refptr<base::RefCountedData<
+    blink::TransferableMessage>>>::Write(base::Pickle* m, const param_type& p) {
+  mojo::Message mojo_message =
+      blink::mojom::TransferableMessage::SerializeAsMessage(&p->data);
+  mojo_message = mojo::Message(mojo_message.TakeMojoMessage());
+  m->WriteData(reinterpret_cast<const char*>(mojo_message.payload()),
+               mojo_message.payload_num_bytes());
+  WriteParam(m, base::checked_cast<int>(mojo_message.handles()->size()));
+  for (mojo::ScopedHandle& handle : *mojo_message.mutable_handles()) {
+    m->WriteAttachment(MessageAttachment::CreateFromMojoHandle(
+        std::move(handle), MessageAttachment::Type::MOJO_HANDLE));
+  }
+}
+
+bool ParamTraits<
+    scoped_refptr<base::RefCountedData<blink::TransferableMessage>>>::
+    Read(const base::Pickle* m, base::PickleIterator* iter, param_type* r) {
+  const char* data;
+  int length;
+  if (!iter->ReadData(&data, &length))
+    return false;
+  int handle_count;
+  if (!iter->ReadLength(&handle_count))
+    return false;
+  std::vector<mojo::ScopedHandle> handles(handle_count);
+  for (auto& handle : handles) {
+    scoped_refptr<base::Pickle::Attachment> attachment;
+    if (!m->ReadAttachment(iter, &attachment))
+      return false;
+
+    if (static_cast<MessageAttachment*>(attachment.get())->GetType() !=
+        MessageAttachment::Type::MOJO_HANDLE) {
+      return false;
+    }
+    handle =
+        static_cast<MessageAttachment*>(attachment.get())->TakeMojoHandle();
+  }
+
+  mojo::Message mojo_message(0, 0, 0, 0, &handles);
+  mojo_message.payload_buffer()->Allocate(length);
+  std::memcpy(mojo_message.mutable_payload(), data, length);
+  *r = new base::RefCountedData<blink::TransferableMessage>();
+  if (!blink::mojom::TransferableMessage::DeserializeFromMessage(
+          std::move(mojo_message), &(*r)->data))
+    return false;
+  return true;
+}
+
+void ParamTraits<scoped_refptr<
+    base::RefCountedData<blink::TransferableMessage>>>::Log(const param_type& p,
+                                                            std::string* l) {
+  l->append("<blink::TransferableMessage>");
 }
 
 }  // namespace IPC

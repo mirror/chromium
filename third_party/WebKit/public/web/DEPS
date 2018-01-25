@@ -1,5 +1,6 @@
 include_rules = [
     "+base/callback.h",
+    "+base/containers/span.h",
     "+base/optional.h",
     "+base/memory/ref_counted.h",
     "+base/memory/scoped_refptr.h",
