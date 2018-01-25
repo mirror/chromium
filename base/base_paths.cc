@@ -23,9 +23,7 @@ bool PathProvider(int key, FilePath* result) {
       *result = result->DirName();
       return true;
     case DIR_TEMP:
-      if (!GetTempDir(result))
-        return false;
-      return true;
+      return GetTempDir(result);
     case base::DIR_HOME:
       *result = GetHomeDir();
       return true;
