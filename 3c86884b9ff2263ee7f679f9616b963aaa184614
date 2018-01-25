@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f48f549_caf3224c",
+        "filename": "chrome/browser/prerender/prerender_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "nit: no need for explicit default-initialization of std::string",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccb0555_c47e79d7",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "Do you happen to know if there is a reason this is a std::unique_ptr rather than just a straight up std::vector? Or is that just a left-over from the past to support moving it around without std::vector having to be movable itself?",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6918377_a1674cda",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "update this comment too?",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f116fd24_a7509da8",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "update comment?",
+      "range": {
+        "startLine": 47,
+        "startChar": 55,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c75cc15_cbfbd7fe",
+        "filename": "content/browser/dom_storage/dom_storage_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "this comment seems no longer accurate?",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baba94bc_9cad17c9",
+        "filename": "content/browser/dom_storage/dom_storage_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "nit: no longer used I assume?",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38e6648_51529bdb",
+        "filename": "content/browser/dom_storage/session_storage_namespace_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "nit: since this is not just used for coning now, probably makes sense to rename this to something other than |clone|?",
+      "range": {
+        "startLine": 49,
+        "startChar": 72,
+        "endLine": 49,
+        "endChar": 77
+      },
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b0cb15_03cdac67",
+        "filename": "content/common/dom_storage/dom_storage_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "nit: you can probably get rid of the localstorage part of this comment, since those events should already never go over this IPC anymore... I just haven\u0027t gotten around to try to figure out which part of localstorage I can safely rip out... Although probably also fine to leave like this until we do get around to ripping out more old code.",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd3a7bc_1e83d4f9",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "especially since we should be able to get rid of kLocalStorageNamespaceId already it probably makes sense to keep this as kInvalidSessionStorageNamespaceId?",
+      "range": {
+        "startLine": 304,
+        "startChar": 46,
+        "endLine": 304,
+        "endChar": 70
+      },
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27351b7f_dc64d8ca",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "nit: maybe also DCHECK(!namespace_id.empty())? not that it matters too much...",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1e44c5_3c0476f1",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-25T19:43:06Z",
+      "side": 1,
+      "message": "from string_piece.h \"// Prefer passing StringPieces by value:\"",
+      "revId": "3c86884b9ff2263ee7f679f9616b963aaa184614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
