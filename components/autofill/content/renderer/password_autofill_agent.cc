@@ -185,11 +185,8 @@ bool FindFormInputElement(
           // one.
           (*result)[field_name] = input_element;
         }
-        continue;
       }
-
-      found_input = false;
-      break;
+      continue;
     }
 
     (*result)[field_name] = input_element;
