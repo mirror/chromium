@@ -22,11 +22,12 @@ class GoogleWebSearchPage(TopPages):
 
   """ Why: top google property; a google tab is often open """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GoogleWebSearchPage, self).__init__(
         url='https://www.google.com/#hl=en&q=barack+obama',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -38,11 +39,12 @@ class GoogleImageSearchPage(TopPages):
 
   """ Why: tough image case; top google properties """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GoogleImageSearchPage, self).__init__(
         'https://www.google.com/search?q=cats&tbm=isch',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -54,11 +56,12 @@ class GmailPage(TopPages):
 
   """ Why: productivity, top google properties """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GmailPage, self).__init__(
         url='https://mail.google.com/mail/',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -73,11 +76,12 @@ class GoogleCalendarPage(TopPages):
 
   """ Why: productivity, top google properties """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GoogleCalendarPage, self).__init__(
         url='https://www.google.com/calendar/',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -99,13 +103,13 @@ class GoogleDocPage(TopPages):
 
   """ Why: productivity, top google properties; Sample doc in the link """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Docs_(1_open_document_tab)',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GoogleDocPage, self).__init__(
         # pylint: disable=line-too-long
         url='https://docs.google.com/document/d/1X-IKNjtEnx-WW5JIKRLsyhz5sbsat3mfTpAPUSX3_s4/view',
         page_set=page_set,
-        name='Docs_(1_open_document_tab)',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -120,11 +124,12 @@ class GooglePlusPage(TopPages):
 
   """ Why: social; top google property; Public profile; infinite scrolls """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(GooglePlusPage, self).__init__(
         url='https://plus.google.com/110031535020051778989/posts',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -137,11 +142,12 @@ class YoutubePage(TopPages):
 
   """ Why: #3 (Alexa global) """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(YoutubePage, self).__init__(
         url='http://www.youtube.com',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -155,12 +161,12 @@ class BlogspotPage(TopPages):
   """ Why: #11 (Alexa global), google property; some blogger layouts have
   infinite scroll but more interesting """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Blogger',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(BlogspotPage, self).__init__(
         url='http://googlewebmastercentral.blogspot.com/',
         page_set=page_set,
-        name='Blogger',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -172,13 +178,13 @@ class WordpressPage(TopPages):
 
   """ Why: #18 (Alexa global), Picked an interesting post """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Wordpress',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(WordpressPage, self).__init__(
         # pylint: disable=line-too-long
         url='http://en.blog.wordpress.com/2012/09/04/freshly-pressed-editors-picks-for-august-2012/',
         page_set=page_set,
-        name='Wordpress',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -192,12 +198,12 @@ class FacebookPage(TopPages):
 
   """ Why: top social,Public profile """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Facebook',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(FacebookPage, self).__init__(
         url='https://www.facebook.com/barackobama',
         page_set=page_set,
-        name='Facebook',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -209,11 +215,11 @@ class LinkedinPage(TopPages):
 
   """ Why: #12 (Alexa global), Public profile. """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='LinkedIn',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(LinkedinPage, self).__init__(
         url='http://www.linkedin.com/in/linustorvalds', page_set=page_set,
-        name='LinkedIn',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
 
@@ -221,11 +227,11 @@ class WikipediaPage(TopPages):
 
   """ Why: #6 (Alexa) most visited worldwide,Picked an interesting page. """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Wikipedia_(1_tab)',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(WikipediaPage, self).__init__(
         url='http://en.wikipedia.org/wiki/Wikipedia', page_set=page_set,
-        name='Wikipedia_(1_tab)',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
 
@@ -233,12 +239,12 @@ class TwitterPage(TopPages):
 
   """ Why: #8 (Alexa global),Picked an interesting page """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Twitter',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(TwitterPage, self).__init__(
         url='https://twitter.com/katyperry',
         page_set=page_set,
-        name='Twitter',
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
@@ -250,50 +256,51 @@ class PinterestPage(TopPages):
 
   """ Why: #37 (Alexa global) """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Pinterest',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(PinterestPage, self).__init__(
         url='http://pinterest.com',
         page_set=page_set,
-        shared_page_state_class=shared_page_state_class,
-        name='Pinterest')
+        name=name,
+        shared_page_state_class=shared_page_state_class)
 
 
 class ESPNPage(TopPages):
 
   """ Why: #1 sports """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='ESPN',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(ESPNPage, self).__init__(
         url='http://espn.go.com',
         page_set=page_set,
-        shared_page_state_class=shared_page_state_class,
-        name='ESPN')
+        name=name,
+        shared_page_state_class=shared_page_state_class)
 
 
 class WeatherPage(TopPages):
 
   """ Why: #7 (Alexa news); #27 total time spent, picked interesting page. """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='Weather.com',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(WeatherPage, self).__init__(
         url='http://www.weather.com/weather/right-now/Mountain+View+CA+94043',
         page_set=page_set,
-        shared_page_state_class=shared_page_state_class,
-        name='Weather.com')
+        name=name,
+        shared_page_state_class=shared_page_state_class)
 
 
 class YahooGamesPage(TopPages):
 
   """ Why: #1 games according to Alexa (with actual games in it) """
 
-  def __init__(self, page_set,
+  def __init__(self, page_set, name='',
                shared_page_state_class=shared_page_state.SharedPageState):
     super(YahooGamesPage, self).__init__(
         url='http://games.yahoo.com',
         page_set=page_set,
+        name=name,
         shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
