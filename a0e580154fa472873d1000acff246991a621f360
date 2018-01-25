@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24db7d17_9e73053b",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-25T11:18:29Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"if os.getenv(\u0027VIRTUAL_ENV\u0027)\" ?",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
