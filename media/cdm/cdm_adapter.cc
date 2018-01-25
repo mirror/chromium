@@ -347,6 +347,26 @@ ASSERT_ENUM_EQ(OutputProtection::LinkTypes::NETWORK, cdm::kLinkTypeNetwork);
 ASSERT_ENUM_EQ(OutputProtection::ProtectionType::NONE, cdm::kProtectionNone);
 ASSERT_ENUM_EQ(OutputProtection::ProtectionType::HDCP, cdm::kProtectionHDCP);
 
+// Determine if |encryption_scheme| is supported or not.
+// TODO(crbug.com/657950). Pass |encryption_scheme| to the CDM and let it
+// determine if it is supported or not.
+bool SupportedEncryptionScheme(
+    const media::EncryptionScheme& encryption_scheme) {
+  switch (encryption_scheme.mode()) {
+    case media::EncryptionScheme::CIPHER_MODE_UNENCRYPTED:
+      return true;
+    case media::EncryptionScheme::CIPHER_MODE_AES_CTR:
+      // CTR is only supported without a pattern.
+      return !encryption_scheme.HasPattern();
+    case media::EncryptionScheme::CIPHER_MODE_AES_CBC:
+      // CBC is not supported.
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
 // Fill |input_buffer| based on the values in |encrypted|. |subsamples|
 // is used to hold some of the data. |input_buffer| will contain pointers
 // to data contained in |encrypted| and |subsamples|, so the lifetime of
@@ -686,6 +706,14 @@ void CdmAdapter::Decrypt(StreamType stream_type,
 
   TRACE_EVENT0("media", "CdmAdapter::Decrypt");
 
+  if (!encrypted->end_of_stream() && encrypted->decrypt_config() &&
+      !SupportedEncryptionScheme(
+          encrypted->decrypt_config()->encryption_scheme())) {
+    DVLOG(1) << __func__ << ": Encryption scheme not supported";
+    decrypt_cb.Run(Decryptor::kError, nullptr);
+    return;
+  }
+
   cdm::InputBuffer input_buffer;
   std::vector<cdm::SubsampleEntry> subsamples;
   std::unique_ptr<DecryptedBlockImpl> decrypted_block(new DecryptedBlockImpl());
@@ -716,6 +744,12 @@ void CdmAdapter::InitializeAudioDecoder(const AudioDecoderConfig& config,
                                         const DecoderInitCB& init_cb) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(audio_init_cb_.is_null());
+
+  if (!SupportedEncryptionScheme(config.encryption_scheme())) {
+    DVLOG(1) << __func__ << ": Encryption scheme not supported";
+    init_cb.Run(false);
+    return;
+  }
 
   cdm::AudioDecoderConfig cdm_decoder_config;
   cdm_decoder_config.codec = ToCdmAudioCodec(config.codec());
@@ -751,6 +785,12 @@ void CdmAdapter::InitializeVideoDecoder(const VideoDecoderConfig& config,
                                         const DecoderInitCB& init_cb) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(video_init_cb_.is_null());
+
+  if (!SupportedEncryptionScheme(config.encryption_scheme())) {
+    DVLOG(1) << __func__ << ": Encryption scheme not supported";
+    init_cb.Run(false);
+    return;
+  }
 
   cdm::VideoDecoderConfig cdm_decoder_config;
   cdm_decoder_config.codec = ToCdmVideoCodec(config.codec());
@@ -789,6 +829,15 @@ void CdmAdapter::DecryptAndDecodeAudio(
 
   TRACE_EVENT0("media", "CdmAdapter::DecryptAndDecodeAudio");
 
+  const Decryptor::AudioFrames empty_frames;
+  if (!encrypted->end_of_stream() && encrypted->decrypt_config() &&
+      !SupportedEncryptionScheme(
+          encrypted->decrypt_config()->encryption_scheme())) {
+    DVLOG(1) << __func__ << ": Encryption scheme not supported";
+    audio_decode_cb.Run(Decryptor::kError, empty_frames);
+    return;
+  }
+
   cdm::InputBuffer input_buffer;
   std::vector<cdm::SubsampleEntry> subsamples;
   std::unique_ptr<AudioFramesImpl> audio_frames(new AudioFramesImpl());
@@ -797,7 +846,6 @@ void CdmAdapter::DecryptAndDecodeAudio(
   cdm::Status status =
       cdm_->DecryptAndDecodeSamples(input_buffer, audio_frames.get());
 
-  const Decryptor::AudioFrames empty_frames;
   if (status != cdm::kSuccess) {
     DVLOG(1) << __func__ << ": status = " << status;
     audio_decode_cb.Run(ToMediaDecryptorStatus(status), empty_frames);
@@ -823,6 +871,14 @@ void CdmAdapter::DecryptAndDecodeVideo(
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   TRACE_EVENT0("media", "CdmAdapter::DecryptAndDecodeVideo");
+
+  if (!encrypted->end_of_stream() && encrypted->decrypt_config() &&
+      !SupportedEncryptionScheme(
+          encrypted->decrypt_config()->encryption_scheme())) {
+    DVLOG(1) << __func__ << ": Encryption scheme not supported";
+    video_decode_cb.Run(Decryptor::kError, nullptr);
+    return;
+  }
 
   cdm::InputBuffer input_buffer;
   std::vector<cdm::SubsampleEntry> subsamples;

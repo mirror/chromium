@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
+#include "media/base/media_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace media {
@@ -115,10 +116,11 @@ TEST(DecoderBufferTest, DecryptConfig) {
   subsamples.push_back(SubsampleEntry(10, 5));
   subsamples.push_back(SubsampleEntry(15, 7));
 
-  DecryptConfig decrypt_config(kKeyId, kIv, subsamples);
+  DecryptConfig decrypt_config(kKeyId, kIv, subsamples,
+                               AesCtrEncryptionScheme());
 
-  buffer->set_decrypt_config(
-      std::make_unique<DecryptConfig>(kKeyId, kIv, subsamples));
+  buffer->set_decrypt_config(std::make_unique<DecryptConfig>(
+      kKeyId, kIv, subsamples, AesCtrEncryptionScheme()));
 
   EXPECT_TRUE(buffer->decrypt_config());
   EXPECT_TRUE(buffer->decrypt_config()->Matches(decrypt_config));

@@ -5,7 +5,9 @@
 #include "media/mojo/interfaces/jpeg_decode_accelerator_typemap_traits.h"
 
 #include "base/logging.h"
+#include "media/base/encryption_scheme.h"
 #include "media/base/ipc/media_param_traits_macros.h"
+#include "media/mojo/interfaces/encryption_scheme_struct_traits.h"
 #include "mojo/common/time_struct_traits.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
@@ -102,6 +104,10 @@ bool StructTraits<
   if (!input.ReadSubsamples(&subsamples))
     return false;
 
+  media::EncryptionScheme encryption_scheme;
+  if (!input.ReadEncryptionScheme(&encryption_scheme))
+    return false;
+
   mojo::ScopedSharedBufferHandle handle = input.TakeMemoryHandle();
   if (!handle.is_valid())
     return false;
@@ -117,7 +123,7 @@ bool StructTraits<
       base::checked_cast<off_t>(input.offset()), timestamp);
   if (key_id.size()) {
     bitstream_buffer.SetDecryptConfig(
-        media::DecryptConfig(key_id, iv, subsamples));
+        media::DecryptConfig(key_id, iv, subsamples, encryption_scheme));
   }
   *output = bitstream_buffer;
 

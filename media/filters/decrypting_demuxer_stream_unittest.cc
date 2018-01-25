@@ -46,7 +46,8 @@ static scoped_refptr<DecoderBuffer> CreateFakeEncryptedStreamBuffer(
   buffer->set_decrypt_config(std::unique_ptr<DecryptConfig>(
       new DecryptConfig(std::string(reinterpret_cast<const char*>(kFakeKeyId),
                                     arraysize(kFakeKeyId)),
-                        iv, std::vector<SubsampleEntry>())));
+                        iv, std::vector<SubsampleEntry>(),
+                        is_clear ? Unencrypted() : AesCtrEncryptionScheme())));
   return buffer;
 }
 

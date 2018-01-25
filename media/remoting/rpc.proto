@@ -247,6 +247,7 @@ message DecryptConfig {
   optional bytes key_id = 1;
   optional bytes iv = 2;
   repeated SubSample sub_samples = 3;
+  optional EncryptionScheme encryption_scheme = 4;
 }
 
 message PipelineStatistics {

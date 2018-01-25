@@ -29,6 +29,7 @@ struct BitstreamBuffer {
   string key_id;
   string iv;
   array<SubsampleEntry> subsamples;
+  EncryptionScheme encryption_scheme;
 };
 
 // GPU process interface exposed to the browser for decoding JPEG images.

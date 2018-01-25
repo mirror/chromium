@@ -155,6 +155,7 @@ struct MEDIA_EXPORT ProtectionSchemeInfo : Box {
   SchemeInfo info;
 
   bool HasSupportedScheme() const;
+  bool IsAesCtrScheme() const;
 };
 
 struct MEDIA_EXPORT MovieHeader : Box {

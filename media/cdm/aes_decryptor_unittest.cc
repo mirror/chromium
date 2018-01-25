@@ -25,6 +25,7 @@
 #include "media/base/decrypt_config.h"
 #include "media/base/decryptor.h"
 #include "media/base/media_switches.h"
+#include "media/base/media_util.h"
 #include "media/base/mock_filters.h"
 #include "media/cdm/cdm_module.h"
 #include "media/media_features.h"
@@ -222,8 +223,9 @@ scoped_refptr<DecoderBuffer> CreateEncryptedBuffer(
       key_id.size());
   std::string iv_string(
       reinterpret_cast<const char*>(iv.empty() ? NULL : &iv[0]), iv.size());
-  encrypted_buffer->set_decrypt_config(std::unique_ptr<DecryptConfig>(
-      new DecryptConfig(key_id_string, iv_string, subsample_entries)));
+  encrypted_buffer->set_decrypt_config(std::make_unique<DecryptConfig>(
+      key_id_string, iv_string, subsample_entries,
+      iv.empty() ? Unencrypted() : AesCtrEncryptionScheme()));
   return encrypted_buffer;
 }
 

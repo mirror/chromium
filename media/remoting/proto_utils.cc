@@ -11,6 +11,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "media/base/encryption_scheme.h"
+#include "media/base/media_util.h"
 #include "media/base/timestamp_constants.h"
 #include "media/remoting/proto_enum_utils.h"
 
@@ -22,6 +23,23 @@ namespace {
 constexpr size_t kPayloadVersionFieldSize = sizeof(uint8_t);
 constexpr size_t kProtoBufferHeaderSize = sizeof(uint16_t);
 constexpr size_t kDataBufferHeaderSize = sizeof(uint32_t);
+
+void ConvertEncryptionSchemeToProto(const EncryptionScheme& encryption_scheme,
+                                    pb::EncryptionScheme* message) {
+  DCHECK(message);
+  message->set_mode(
+      ToProtoEncryptionSchemeCipherMode(encryption_scheme.mode()).value());
+  message->set_encrypt_blocks(encryption_scheme.pattern().encrypt_blocks());
+  message->set_skip_blocks(encryption_scheme.pattern().skip_blocks());
+}
+
+EncryptionScheme ConvertProtoToEncryptionScheme(
+    const pb::EncryptionScheme& message) {
+  return EncryptionScheme(
+      ToMediaEncryptionSchemeCipherMode(message.mode()).value(),
+      EncryptionScheme::Pattern(message.encrypt_blocks(),
+                                message.skip_blocks()));
+}
 
 std::unique_ptr<DecryptConfig> ConvertProtoToDecryptConfig(
     const pb::DecryptConfig& config_message) {
@@ -37,9 +55,16 @@ std::unique_ptr<DecryptConfig> ConvertProtoToDecryptConfig(
                        config_message.sub_samples(i).cypher_bytes()));
   }
 
-  std::unique_ptr<DecryptConfig> decrypt_config(
-      new DecryptConfig(config_message.key_id(), config_message.iv(), entries));
-  return decrypt_config;
+  EncryptionScheme encryption_scheme;
+  if (config_message.has_encryption_scheme()) {
+    encryption_scheme =
+        ConvertProtoToEncryptionScheme(config_message.encryption_scheme());
+  } else {
+    encryption_scheme = Unencrypted();
+  }
+
+  return std::make_unique<DecryptConfig>(
+      config_message.key_id(), config_message.iv(), entries, encryption_scheme);
 }
 
 scoped_refptr<DecoderBuffer> ConvertProtoToDecoderBuffer(
@@ -111,6 +136,11 @@ void ConvertDecryptConfigToProto(const DecryptConfig& decrypt_config,
     sub_sample->set_clear_bytes(entry.clear_bytes);
     sub_sample->set_cypher_bytes(entry.cypher_bytes);
   }
+
+  pb::EncryptionScheme* encryption_scheme_message =
+      config_message->mutable_encryption_scheme();
+  ConvertEncryptionSchemeToProto(decrypt_config.encryption_scheme(),
+                                 encryption_scheme_message);
 }
 
 void ConvertDecoderBufferToProto(const DecoderBuffer& decoder_buffer,
@@ -203,23 +233,6 @@ std::vector<uint8_t> DecoderBufferToByteArray(
   // Reset buffer since serialization of the data failed.
   buffer.clear();
   return buffer;
-}
-
-void ConvertEncryptionSchemeToProto(const EncryptionScheme& encryption_scheme,
-                                    pb::EncryptionScheme* message) {
-  DCHECK(message);
-  message->set_mode(
-      ToProtoEncryptionSchemeCipherMode(encryption_scheme.mode()).value());
-  message->set_encrypt_blocks(encryption_scheme.pattern().encrypt_blocks());
-  message->set_skip_blocks(encryption_scheme.pattern().skip_blocks());
-}
-
-EncryptionScheme ConvertProtoToEncryptionScheme(
-    const pb::EncryptionScheme& message) {
-  return EncryptionScheme(
-      ToMediaEncryptionSchemeCipherMode(message.mode()).value(),
-      EncryptionScheme::Pattern(message.encrypt_blocks(),
-                                message.skip_blocks()));
 }
 
 void ConvertAudioDecoderConfigToProto(const AudioDecoderConfig& audio_config,

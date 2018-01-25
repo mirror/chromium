@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "media/base/encryption_scheme.h"
 #include "media/base/media_export.h"
 #include "media/base/subsample_entry.h"
 
@@ -30,14 +31,20 @@ class MEDIA_EXPORT DecryptConfig {
   // |subsamples| defines the clear and encrypted portions of the sample as
   //   described above. A decrypted buffer will be equal in size to the sum
   //   of the subsample sizes.
+  // |encryption_scheme| defines the cipher mode and pattern used to encrypt
+  //   the sample.
   DecryptConfig(const std::string& key_id,
                 const std::string& iv,
-                const std::vector<SubsampleEntry>& subsamples);
+                const std::vector<SubsampleEntry>& subsamples,
+                const EncryptionScheme& encryption_scheme);
   ~DecryptConfig();
 
   const std::string& key_id() const { return key_id_; }
   const std::string& iv() const { return iv_; }
   const std::vector<SubsampleEntry>& subsamples() const { return subsamples_; }
+  const EncryptionScheme& encryption_scheme() const {
+    return encryption_scheme_;
+  }
 
   // Returns true if the corresponding decoder buffer requires decryption and
   // false if that buffer is clear despite the presense of DecryptConfig.
@@ -58,6 +65,8 @@ class MEDIA_EXPORT DecryptConfig {
   // Subsample information. May be empty for some formats, meaning entire frame
   // (less data ignored by data_offset_) is encrypted.
   const std::vector<SubsampleEntry> subsamples_;
+
+  EncryptionScheme encryption_scheme_;
 
   DISALLOW_COPY_AND_ASSIGN(DecryptConfig);
 };
