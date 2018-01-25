@@ -22,6 +22,30 @@
       "revId": "558cf85ce5e4713cf0d684f71bc81eea835144f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a91449_131fc85e",
+        "filename": "third_party/WebKit/Source/core/css/MediaQueryExp.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2018-01-25T11:26:51Z",
+      "side": 1,
+      "message": "Done.\n\nStill waiting for local test builds to complete. :(",
+      "parentUuid": "86ce4e8a_63f4f1b0",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "558cf85ce5e4713cf0d684f71bc81eea835144f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
