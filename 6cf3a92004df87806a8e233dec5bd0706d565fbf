@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "00c7563d_6ea508e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-25T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722afe2c_1bd824e2",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 61
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fd33a3b_34b21e2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-25T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9679f59_654ad456",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c115f6_65bc1324",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf1c53b_2dee41af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-25T00:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c115f6_65bc1324",
+      "range": {
+        "startLine": 612,
+        "startChar": 16,
+        "endLine": 614,
+        "endChar": 17
+      },
+      "revId": "6cf3a92004df87806a8e233dec5bd0706d565fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
