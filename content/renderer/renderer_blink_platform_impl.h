@@ -59,7 +59,7 @@ class Connector;
 
 namespace content {
 class BlinkInterfaceProviderImpl;
-class ChildURLLoaderFactoryGetter;
+class ChildURLLoaderFactoryBundle;
 class LocalStorageCachedAreas;
 class NotificationDispatcher;
 class PlatformEventObserverBase;
@@ -261,8 +261,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // Returns non-null.
   // It is invalid to call this in an incomplete env where
   // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
-  scoped_refptr<ChildURLLoaderFactoryGetter>
-  CreateDefaultURLLoaderFactoryGetter();
+  scoped_refptr<ChildURLLoaderFactoryBundle>
+  CreateDefaultURLLoaderFactoryBundle();
 
   // This class does *not* own the compositor thread. It is the responsibility
   // of the caller to ensure that the compositor thread is cleared before it is
