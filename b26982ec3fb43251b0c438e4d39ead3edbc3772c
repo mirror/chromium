@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "1c6196ff_10f41809",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T01:47:30Z",
+      "side": 1,
+      "message": "remove (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "b26982ec3fb43251b0c438e4d39ead3edbc3772c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5990515d_5d315a56",
         "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
         "patchSetId": 18
