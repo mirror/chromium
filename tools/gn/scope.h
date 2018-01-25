@@ -14,6 +14,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/synchronization/lock.h"
 #include "tools/gn/err.h"
 #include "tools/gn/pattern.h"
 #include "tools/gn/source_dir.h"
@@ -363,6 +364,7 @@ class Scope {
   // for more.
   unsigned mode_flags_;
 
+  mutable base::Lock values_lock_;
   RecordMap values_;
 
   // Note that this can't use string pieces since the names are constructed from

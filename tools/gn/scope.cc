@@ -71,6 +71,7 @@ void Scope::DetachFromContaining() {
 
 bool Scope::HasValues(SearchNested search_nested) const {
   DCHECK(search_nested == SEARCH_CURRENT);
+  base::AutoLock lock(values_lock_);
   return !values_.empty();
 }
 
@@ -92,12 +93,15 @@ const Value* Scope::GetValueWithScope(const base::StringPiece& ident,
     }
   }
 
-  RecordMap::iterator found = values_.find(ident);
-  if (found != values_.end()) {
-    if (counts_as_used)
-      found->second.used = true;
-    *found_in_scope = this;
-    return &found->second.value;
+  {
+    base::AutoLock lock(values_lock_);
+    RecordMap::iterator found = values_.find(ident);
+    if (found != values_.end()) {
+      if (counts_as_used)
+        found->second.used = true;
+      *found_in_scope = this;
+      return &found->second.value;
+    }
   }
 
   // Search in the parent scope.
@@ -114,11 +118,14 @@ Value* Scope::GetMutableValue(const base::StringPiece& ident,
                               SearchNested search_mode,
                               bool counts_as_used) {
   // Don't do programmatic values, which are not mutable.
-  RecordMap::iterator found = values_.find(ident);
-  if (found != values_.end()) {
-    if (counts_as_used)
-      found->second.used = true;
-    return &found->second.value;
+  {
+    base::AutoLock lock(values_lock_);
+    RecordMap::iterator found = values_.find(ident);
+    if (found != values_.end()) {
+      if (counts_as_used)
+        found->second.used = true;
+      return &found->second.value;
+    }
   }
 
   // Search in the parent mutable scope if requested, but not const one.
@@ -130,9 +137,12 @@ Value* Scope::GetMutableValue(const base::StringPiece& ident,
 }
 
 base::StringPiece Scope::GetStorageKey(const base::StringPiece& ident) const {
-  RecordMap::const_iterator found = values_.find(ident);
-  if (found != values_.end())
-    return found->first;
+  {
+    base::AutoLock lock(values_lock_);
+    RecordMap::const_iterator found = values_.find(ident);
+    if (found != values_.end())
+      return found->first;
+  }
 
   // Search in parent scope.
   if (containing())
@@ -147,10 +157,13 @@ const Value* Scope::GetValue(const base::StringPiece& ident) const {
 
 const Value* Scope::GetValueWithScope(const base::StringPiece& ident,
                                       const Scope** found_in_scope) const {
-  RecordMap::const_iterator found = values_.find(ident);
-  if (found != values_.end()) {
-    *found_in_scope = this;
-    return &found->second.value;
+  {
+    base::AutoLock lock(values_lock_);
+    RecordMap::const_iterator found = values_.find(ident);
+    if (found != values_.end()) {
+      *found_in_scope = this;
+      return &found->second.value;
+    }
   }
   if (containing())
     return containing()->GetValueWithScope(ident, found_in_scope);
@@ -160,6 +173,7 @@ const Value* Scope::GetValueWithScope(const base::StringPiece& ident,
 Value* Scope::SetValue(const base::StringPiece& ident,
                        Value v,
                        const ParseNode* set_node) {
+  base::AutoLock lock(values_lock_);
   Record& r = values_[ident];  // Clears any existing value.
   r.value = std::move(v);
   r.value.set_origin(set_node);
@@ -167,6 +181,7 @@ Value* Scope::SetValue(const base::StringPiece& ident,
 }
 
 void Scope::RemoveIdentifier(const base::StringPiece& ident) {
+  base::AutoLock lock(values_lock_);
   RecordMap::iterator found = values_.find(ident);
   if (found != values_.end())
     values_.erase(found);
@@ -178,6 +193,7 @@ void Scope::RemovePrivateIdentifiers() {
   // I'm not sure if all of them support mutating while iterating. Since this
   // is not perf-critical, do the safe thing.
   std::vector<base::StringPiece> to_remove;
+  base::AutoLock lock(values_lock_);
   for (const auto& cur : values_) {
     if (IsPrivateVar(cur.first))
       to_remove.push_back(cur.first);
@@ -204,6 +220,7 @@ const Template* Scope::GetTemplate(const std::string& name) const {
 }
 
 void Scope::MarkUsed(const base::StringPiece& ident) {
+  base::AutoLock lock(values_lock_);
   RecordMap::iterator found = values_.find(ident);
   if (found == values_.end()) {
     NOTREACHED();
@@ -213,11 +230,13 @@ void Scope::MarkUsed(const base::StringPiece& ident) {
 }
 
 void Scope::MarkAllUsed() {
+  base::AutoLock lock(values_lock_);
   for (auto& cur : values_)
     cur.second.used = true;
 }
 
 void Scope::MarkAllUsed(const std::set<std::string>& excluded_values) {
+  base::AutoLock lock(values_lock_);
   for (auto& cur : values_) {
     if (!excluded_values.empty() &&
         excluded_values.find(cur.first.as_string()) != excluded_values.end()) {
@@ -228,6 +247,7 @@ void Scope::MarkAllUsed(const std::set<std::string>& excluded_values) {
 }
 
 void Scope::MarkUnused(const base::StringPiece& ident) {
+  base::AutoLock lock(values_lock_);
   RecordMap::iterator found = values_.find(ident);
   if (found == values_.end()) {
     NOTREACHED();
@@ -237,6 +257,7 @@ void Scope::MarkUnused(const base::StringPiece& ident) {
 }
 
 bool Scope::IsSetButUnused(const base::StringPiece& ident) const {
+  base::AutoLock lock(values_lock_);
   RecordMap::const_iterator found = values_.find(ident);
   if (found != values_.end()) {
     if (!found->second.used) {
@@ -247,6 +268,7 @@ bool Scope::IsSetButUnused(const base::StringPiece& ident) const {
 }
 
 bool Scope::CheckForUnusedVars(Err* err) const {
+  base::AutoLock lock(values_lock_);
   for (const auto& pair : values_) {
     if (!pair.second.used) {
       std::string help =
@@ -270,6 +292,7 @@ bool Scope::CheckForUnusedVars(Err* err) const {
 }
 
 void Scope::GetCurrentScopeValues(KeyValueMap* output) const {
+  base::AutoLock lock(values_lock_);
   for (const auto& pair : values_)
     (*output)[pair.first] = pair.second.value;
 }
@@ -280,40 +303,43 @@ bool Scope::NonRecursiveMergeTo(Scope* dest,
                                 const char* desc_for_err,
                                 Err* err) const {
   // Values.
-  for (const auto& pair : values_) {
-    const base::StringPiece& current_name = pair.first;
-    if (options.skip_private_vars && IsPrivateVar(current_name))
-      continue;  // Skip this private var.
-    if (!options.excluded_values.empty() &&
-        options.excluded_values.find(current_name.as_string()) !=
-            options.excluded_values.end()) {
-      continue;  // Skip this excluded value.
-    }
-
-    const Value& new_value = pair.second.value;
-    if (!options.clobber_existing) {
-      const Value* existing_value = dest->GetValue(current_name);
-      if (existing_value && new_value != *existing_value) {
-        // Value present in both the source and the dest.
-        std::string desc_string(desc_for_err);
-        *err = Err(node_for_err, "Value collision.",
-                   "This " + desc_string + " contains \"" +
-                       current_name.as_string() + "\"");
-        err->AppendSubErr(
-            Err(pair.second.value, "defined here.",
-                "Which would clobber the one in your current scope"));
-        err->AppendSubErr(
-            Err(*existing_value, "defined here.",
-                "Executing " + desc_string +
-                    " should not conflict with anything "
-                    "in the current\nscope unless the values are identical."));
-        return false;
+  {
+    base::AutoLock lock(values_lock_);
+    for (const auto& pair : values_) {
+      const base::StringPiece& current_name = pair.first;
+      if (options.skip_private_vars && IsPrivateVar(current_name))
+        continue;  // Skip this private var.
+      if (!options.excluded_values.empty() &&
+          options.excluded_values.find(current_name.as_string()) !=
+              options.excluded_values.end()) {
+        continue;  // Skip this excluded value.
       }
-    }
-    dest->values_[current_name] = pair.second;
 
-    if (options.mark_dest_used)
-      dest->MarkUsed(current_name);
+      const Value& new_value = pair.second.value;
+      if (!options.clobber_existing) {
+        const Value* existing_value = dest->GetValue(current_name);
+        if (existing_value && new_value != *existing_value) {
+          // Value present in both the source and the dest.
+          std::string desc_string(desc_for_err);
+          *err = Err(node_for_err, "Value collision.",
+                     "This " + desc_string + " contains \"" +
+                         current_name.as_string() + "\"");
+          err->AppendSubErr(
+              Err(pair.second.value, "defined here.",
+                  "Which would clobber the one in your current scope"));
+          err->AppendSubErr(Err(
+              *existing_value, "defined here.",
+              "Executing " + desc_string +
+                  " should not conflict with anything "
+                  "in the current\nscope unless the values are identical."));
+          return false;
+        }
+      }
+      dest->values_[current_name] = pair.second;
+
+      if (options.mark_dest_used)
+        dest->MarkUsed(current_name);
+    }
   }
 
   // Target defaults are owning pointers.
