@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ba68d0_f8b4968e",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-25T18:39:56Z",
+      "side": 1,
+      "message": "nit: Can this be called only when format or color_space does change?",
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938e3e31_06599dea",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-25T18:39:56Z",
+      "side": 1,
+      "message": "Could the |refresh_frame_retry_timer_| be running at this time? Maybe need add checking here?",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 13
+      },
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
