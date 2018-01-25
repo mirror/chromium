@@ -384,7 +384,10 @@ void WorkspaceWindowResizer::Drag(const gfx::Point& location_in_parent,
 void WorkspaceWindowResizer::CompleteDrag() {
   if (!did_move_or_resize_)
     return;
-
+  gfx::Point last_mouse_location_in_screen = last_mouse_location_;
+  ::wm::ConvertPointToScreen(GetTarget()->parent(),
+                             &last_mouse_location_in_screen);
+  window_state()->OnCompleteDrag(last_mouse_location_in_screen);
   window_state()->set_bounds_changed_by_user(true);
   snap_phantom_window_controller_.reset();
 
@@ -440,6 +443,10 @@ void WorkspaceWindowResizer::CompleteDrag() {
 }
 
 void WorkspaceWindowResizer::RevertDrag() {
+  gfx::Point last_mouse_location_in_screen = last_mouse_location_;
+  ::wm::ConvertPointToScreen(GetTarget()->parent(),
+                             &last_mouse_location_in_screen);
+  window_state()->OnRevertDrag(last_mouse_location_in_screen);
   window_state()->set_bounds_changed_by_user(initial_bounds_changed_by_user_);
   snap_phantom_window_controller_.reset();
 
