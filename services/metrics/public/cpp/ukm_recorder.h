@@ -22,6 +22,7 @@ class FromGWSPageLoadMetricsLogger;
 class IOSChromePasswordManagerClient;
 class LocalNetworkRequestsPageLoadMetricsObserver;
 class MediaEngagementSession;
+class PermissionUmaUtil;
 class PluginInfoHostImpl;
 class ServiceWorkerPageLoadMetricsObserver;
 class SubresourceFilterMetricsObserver;
@@ -121,6 +122,7 @@ class METRICS_EXPORT UkmRecorder {
   friend IOSChromePasswordManagerClient;
   friend LocalNetworkRequestsPageLoadMetricsObserver;
   friend MediaEngagementSession;
+  friend PermissionUmaUtil;
   friend PluginInfoHostImpl;
   friend ServiceWorkerPageLoadMetricsObserver;
   friend SubresourceFilterMetricsObserver;
