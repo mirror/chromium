@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1f2605_1d210d24",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T11:18:25Z",
+      "side": 1,
+      "message": "style: Move this with the other member variables.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "ad08f617f03bab78a1f7c1e166c4658c64d52ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bacc0c_8de92466",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T11:18:25Z",
+      "side": 1,
+      "message": "nit: you can use auto here\n\n  auto navigation_manager \u003d std::make_unique\u003cToolbarTestNavigationManager\u003e();\n  ...",
+      "revId": "ad08f617f03bab78a1f7c1e166c4658c64d52ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
