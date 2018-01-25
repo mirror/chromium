@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d93aef76_38f80743",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-25T06:16:47Z",
+      "side": 1,
+      "message": "Done. https://chromium-review.googlesource.com/c/chromium/src/+/882348 landed.",
+      "parentUuid": "5a20c42a_8df6b190",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3cf97f3_d617d697",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2e2ff7a5_0ba615ee",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-25T06:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d2d491_8c7d4371",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e6f65ed_1e5dc76a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "8e6f65ed_1e5dc76a",
+      "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d0d911b_ea82a996",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-25T06:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831e7c33_5cab8238",
       "revId": "db14df088016ed51e054f5c39c29e2521f8ad2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
