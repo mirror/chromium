@@ -11,6 +11,10 @@
 #include "media/audio/audio_debug_recording_session.h"
 #include "media/base/media_export.h"
 
+namespace base {
+class FilePath;
+}  // namespace base
+
 namespace media {
 
 class MEDIA_EXPORT AudioDebugRecordingSessionImpl
