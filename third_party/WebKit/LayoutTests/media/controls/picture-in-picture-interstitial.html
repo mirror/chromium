@@ -28,7 +28,7 @@ async_test(t => {
         checkPictureInPictureInterstitialDoesNotExist(video);
 
         button.onclick = setTimeout(t.step_func_done(function() {
-            // Interstitial should appear when picture in picture button is clicked.
+            Interstitial should appear when picture in picture button is clicked.
             var interstitial = pictureInPictureInterstitial(video);
             assert_equals(interstitial.style.display, '',
                 'interstitial should be visible when the video is not playing');
