@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f220af_b9772c36",
+        "filename": "content/public/test/test_download_http_response.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T16:38:38Z",
+      "side": 1,
+      "message": "optional: move to header (easy to see the default).",
+      "range": {
+        "startLine": 464,
+        "startChar": 6,
+        "endLine": 464,
+        "endChar": 24
+      },
+      "revId": "adc51131d2d0801fe3d45c2092f038cea68d2478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
