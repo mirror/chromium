@@ -16,6 +16,24 @@
       "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf89bbc_7fb8acfc",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2018-01-25T17:28:19Z",
+      "side": 1,
+      "message": "I believe it\u0027s okay. On Windows for an LTR locale, the strings are not adjusted for locale direction [1]. I\u0027m not sure what the reasoning is behind this. Jungshik, do you know? \n\nhttps://chromium.googlesource.com/chromium/src/+/3ad9a223c97c9c3334ebd01d8f4b0a73fa6848f7/base/i18n/rtl.cc#272",
+      "parentUuid": "4f15ed8a_046b2351",
+      "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
