@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5abeb3b_ed13f9fb",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-25T16:29:00Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned that window base coordinates happen to be same as the root view coordinates for now, but that won\u0027t necessarily guaranteed in the future.\n\nMaybe what we want here is [self.tableView convertRect:bounds toCoordinateSpace:UIScreen.mainScreen.coordinateSpace], but that seems like it\u0027s more complicated than needed?",
+      "range": {
+        "startLine": 363,
+        "startChar": 56,
+        "endLine": 363,
+        "endChar": 66
+      },
+      "revId": "29a061b5ccf468a936c3b0ad937fea177b845d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
