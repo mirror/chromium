@@ -585,17 +585,21 @@ HttpServerPropertiesImpl::server_network_stats_map() const {
 bool HttpServerPropertiesImpl::SetQuicServerInfo(
     const QuicServerId& server_id,
     const std::string& server_info) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id_no_tag);
   bool changed =
       (it == quic_server_info_map_.end() || it->second != server_info);
-  quic_server_info_map_.Put(server_id, server_info);
+  quic_server_info_map_.Put(server_id_no_tag, server_info);
   UpdateCanonicalServerInfoMap(server_id);
   return changed;
 }
 
 const std::string* HttpServerPropertiesImpl::GetQuicServerInfo(
     const QuicServerId& server_id) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id_no_tag);
   if (it != quic_server_info_map_.end()) {
     // Since |canonical_server_info_map_| should always map to the most
     // recent host, update it with the one that became MRU in
@@ -660,6 +664,7 @@ void HttpServerPropertiesImpl::SetMaxServerConfigsStoredInProperties(
   canonical_server_info_map_ = CanonicalServerInfoMap();
   for (QuicServerInfoMap::reverse_iterator it = quic_server_info_map_.rbegin();
        it != quic_server_info_map_.rend(); ++it) {
+    DCHECK(it->first.socket_tag() == SocketTag());
     temp_map.Put(it->first, it->second);
     UpdateCanonicalServerInfoMap(it->first);
   }

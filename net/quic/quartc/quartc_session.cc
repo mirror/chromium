@@ -7,6 +7,7 @@
 #include "net/quic/core/tls_client_handshaker.h"
 #include "net/quic/core/tls_server_handshaker.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 
 using std::string;
 
@@ -229,7 +230,8 @@ void QuartcSession::OnConnectionClosed(QuicErrorCode error,
 
 void QuartcSession::StartCryptoHandshake() {
   if (perspective_ == Perspective::IS_CLIENT) {
-    QuicServerId server_id(unique_remote_server_id_, kQuicServerPort);
+    QuicServerId server_id(unique_remote_server_id_, kQuicServerPort,
+                           QuicSocketTag());
     QuicCryptoClientStream* crypto_stream =
         new QuicCryptoClientStream(server_id, this, new ProofVerifyContext(),
                                    quic_crypto_client_config_.get(), this);
