@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1983165_6499d5c5",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T01:15:55Z",
+      "side": 1,
+      "message": "Nit: I\u0027d probably write this as\n\n_KNOWN_ROBOTS \u003d tuple(\u0027%s-chromium-autoroll@skia-buildbots.google.com.iam.gserviceaccount.com\u0027 for s in (\n  \u0027angle\u0027, \u0027depot-tools\u0027, \u0027nacl\u0027, \u0027pdfium\u0027, \u0027skia\u0027, \u0027src-internal\u0027, \u0027webrtc\u0027))",
+      "revId": "d4f009e99bbfbee564a3427fff1173704deb2d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
