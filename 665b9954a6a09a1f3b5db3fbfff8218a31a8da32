@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8a5c3e61_e71e00f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-25T21:29:37Z",
+      "side": 1,
+      "message": "Thanks, Bernhard, for the detail and context. The explanation about the boxing and serialization helped me learn more. The fact that IntDef is actually a global Android guidance makes it easy to decide between IntDef and an enum. :)\n\nI changed ReauthScope to IntDef here. I did not touch OverrideState, because it has nothing to do with this CL (also, it is not being serialized). I\u0027m happy to do it in a follow-up CL, if you are happy to review that. :)",
+      "parentUuid": "fd9ddff9_16c28e43",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd274287_9cf39a54",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
         "patchSetId": 1
@@ -282,6 +306,30 @@
       "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfbd4f8_4a4d1f04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ReauthenticationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-25T21:29:37Z",
+      "side": 1,
+      "message": "Thanks for clarifying the concerns, Bernhard!\nI would say that neither backwards compatibility nor trust in source are a concern in the current state of code, but I\u0027ve seen code with undocumented assumptions to break.\nAlso, I\u0027m following your advice with IntDef, so this changes to putInt.",
+      "parentUuid": "ccf9302a_40efd5f2",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "665b9954a6a09a1f3b5db3fbfff8218a31a8da32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
