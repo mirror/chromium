@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fc077ea4_9ce28742",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/matches.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-25T02:31:37Z",
+      "side": 1,
+      "message": "If you have written the colors in comments why not set the colors to the keywords?",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f643d_c65339cc",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-25T02:31:37Z",
+      "side": 1,
+      "message": "Change the name MutableTagHistory()?\n\nAnd then call this in TagHistorty()?",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6dcbef0_6ef6a6ae",
         "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
         "patchSetId": 7
@@ -34,6 +68,24 @@
       "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cac903c_1b713b0c",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-25T02:31:37Z",
+      "side": 1,
+      "message": "+1 - we definitely need an early exit in the expansions - and relevant tests for that as well",
+      "parentUuid": "f6dcbef0_6ef6a6ae",
+      "revId": "ea5ad5682039f268323d773a968ac9f942151e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
