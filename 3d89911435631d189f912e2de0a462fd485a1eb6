@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9a435831_d136c0e0",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-25T22:08:06Z",
+      "side": 1,
+      "message": "I guess I\u0027m the owner, but I haven\u0027t really looked at this code since I wrote it. It looks to be the fix for the stated issue, and I can take a look at doing  a follow up to address the issue you raised.",
+      "parentUuid": "8e4a359a_381e044f",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "050f6d44_92167a1a",
         "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
         "patchSetId": 2
