@@ -339,6 +339,11 @@ void AppListView::SetAppListOverlayVisible(bool visible) {
   }
 }
 
+void AppListView::ScrollToFirstPage() {
+  if (GetAppsGridView()->pagination_model()->selected_page() != 0)
+    GetAppsGridView()->pagination_model()->SelectPage(0, true);
+}
+
 gfx::Size AppListView::CalculatePreferredSize() const {
   return app_list_main_view_->GetPreferredSize();
 }
@@ -507,6 +512,10 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
 }
 
 void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
+  LOG(ERROR) << "Coords!: " << event->location().ToString();
+  if (is_tablet_mode_)
+    return;  // omris tablet mode.
+
   // No-op if app list is on fullscreen all apps state and the event location is
   // within apps grid view's bounds.
   if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&
@@ -898,6 +907,8 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       break;
     case ui::ET_SCROLL_FLING_START:
     case ui::ET_GESTURE_SCROLL_BEGIN:
+      if (is_tablet_mode_)
+        return;  // omris tablet mode.
       if (is_side_shelf_)
         return;
       // There may be multiple scroll begin events in one drag because the
@@ -910,6 +921,9 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       event->SetHandled();
       break;
     case ui::ET_GESTURE_SCROLL_UPDATE:
+
+      if (is_tablet_mode_)
+        return;  // omris tablet mode.
       if (is_side_shelf_)
         return;
       SetIsInDrag(true);
@@ -918,6 +932,9 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       event->SetHandled();
       break;
     case ui::ET_GESTURE_END:
+
+      if (is_tablet_mode_)
+        return;  // omris tablet mode.
       if (!is_in_drag_)
         break;
       if (is_side_shelf_)
