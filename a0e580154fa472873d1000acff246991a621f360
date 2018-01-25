@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "71ffbb39_9140bd01",
+        "filename": ".vpython",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2018-01-25T13:09:15Z",
+      "side": 1,
+      "message": "This is actually incorrect; as of two days ago, I have a 2.5.1 wheel built and available: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d804174#c8\n\nAFAIK the only reason it can\u0027t be integrated ATM is that it\u0027s blocked on the roll-out of a \"vpython\" version with the \"not_match_tag\" field support. Once that rolls, you can add a separate wheel entry to include this version:\n\n# On OSX versions 10.6 through 10.9, use pyobjc version 2.5.1.\nwheel: \u003c\n  name: \"infra/python/wheels/pyobjc/${vpython_platform}\"\n  version: \"version:4.1\"\n  match_tag: \u003c platform: \"macosx_10_6_intel\" \u003e\n  not_match_tag: \u003c platform: \"macosx_10_10_intel\" \u003e\n\u003e\n\nNot sure what the roll status is ATM. Perhaps create a bug for rolling it and note in the comment here that it is blocked on that bug?",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 131,
+        "endChar": 33
+      },
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57aeb19c_59c441c0",
+        "filename": ".vpython",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2018-01-25T13:09:15Z",
+      "side": 1,
+      "message": "nit: cosmetically, I\u0027ve started favoring one-lining these:\n\nmatch_tag: \u003c platform: \"macosx_10_10_intel\" \u003e\n\nTotally up to you, just wanted to make sure you were aware of the option.",
+      "range": {
+        "startLine": 135,
+        "startChar": 14,
+        "endLine": 137,
+        "endChar": 2
+      },
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64c70fc7_8a86a226",
         "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
         "patchSetId": 10
@@ -13,6 +59,24 @@
       "writtenOn": "2018-01-25T12:35:01Z",
       "side": 1,
       "message": "why not just change this to vpython instead?",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6aae030_222dbb40",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2018-01-25T13:09:15Z",
+      "side": 1,
+      "message": "Well, this pertains to launching *this script* with vpython. A problem can arise if this script ever uses a different vpython spec than the bootstrapped script (if that\u0027s ever possible), as then \"sys.executable\" would point to *this script*\u0027s VirtualEnv\u0027s Python, side-stepping the ability to run the bootstrapped script under its own spec.\n\nThere\u0027s no reason *not* to run this script under vpython, though, so updating this to say \"/usr/bin/env vpython\" would be fine. However, note that any launchers that explicitly run the script with \"python\" (e.g., isolate spec, recipe, etc.) would also have to be updated to launch with \"vpython\" instead. Also note that iannucci@\u0027s \"vpython-as-python\" sidesteps this entirely, since it makes it so \"python\", \"python2\", and \"python2.7\" are all really vpython.\n\nI\u0027d chat with iannucci@ or nodir@ and get a feel for whether or not \"vpython-as-python\" is rolling out and, if so, when.\n- If it\u0027s rolling out soon (or has already rolled out), I\u0027d leave this as-is. This would let systems without \"vpython-as-python\" still run, and work if they have the right wheels, and systems with \"vpython-as-python\" magically work.\n- If it\u0027s not rolling out for a while, changing this to \"/usr/bin/env vpython\" and changing recipe invocation sites to use \"venv\u003dTrue\" flag would be the way to go for now.",
+      "parentUuid": "64c70fc7_8a86a226",
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -66,6 +130,24 @@
       "side": 1,
       "message": "ah ok. I thought this was supposed to be \"if we are in environment that support vpython, then use it\"",
       "parentUuid": "22211bd0_9fe4d4bc",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397e6c02_ec013284",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2018-01-25T13:09:15Z",
+      "side": 1,
+      "message": "See comment above. There are a lot of options to consider, unfortunately, since vpython is in a transitory integration state.\n\n1) If we can rely on \"vpython-as-python\" (ping nodir@, iannucci@ for status), we can actually just make this \"python\".\n2) Otherwise, we should make this \"vpython\" and add a \"crbug.com/XXX\" link to update after vpython-as-python rolls 100%.\n\nEither way, I\u0027d remove the conditional.\n\nPerhaps code in \"common.run_command\" could also take the initiative of massaging \"python\" into \"vpython\" (or not) and scripts using \"common\" could just use \"python\" to express their intent to start a new interpreter.\n\nJust ideas, up to you :)",
+      "parentUuid": "8cb5bd3e_667ac9be",
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
