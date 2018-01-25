@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3ac77ae_094378f1",
+        "filename": "content/renderer/loader/child_url_loader_factory_bundle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-25T18:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17853538_a0796b2a",
+      "revId": "552c2c412ad6f9cc07f24b8aba9828520020f6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60336f90_d2242f9e",
         "filename": "content/renderer/loader/child_url_loader_factory_bundle.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "552c2c412ad6f9cc07f24b8aba9828520020f6f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fae672f_881174c3",
+        "filename": "content/renderer/loader/child_url_loader_factory_bundle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-25T18:54:11Z",
+      "side": 1,
+      "message": "Right. We could get a default blob factory getter from renderer_blink_platform_impl but also a blob factory from CommitNavigation for the frame. In that case, I clear the getter so subsequent calls to Init...() will return directly.",
+      "parentUuid": "60336f90_d2242f9e",
+      "revId": "552c2c412ad6f9cc07f24b8aba9828520020f6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
