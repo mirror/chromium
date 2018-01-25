@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e6d6601_dd9b007a",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-25T16:59:56Z",
+      "side": 1,
+      "message": "nit: while it\u0027s less code this way, I think it\u0027s much more readable to have separate methods and assert each.  I immediately understand\n\n      expectFalse(hasCorruptedWarning());\n      expectTrue(hasSuspiciousWarning());\n      expectFalse(hasBlacklistedWarning());\n      expectFalse(hasRuntimeWarnings());\n\nBut have to look back at the method declaration each time to figure out what\n\n      assertWarnings(false, true, false, false);\n\nis.\n\nI\u0027d much rather we have a few more lines, but have it be more readable (particularly in test code).\n\nIf you wanted a compromise, I could also see a bitmask, so that we could say:\n\nassertWarnings(kNone);\n\u003cadd corrupt and suspicious warnings\u003e\nassertWarnings(kCorrupt | kSuspicious);  // Expect corrupt and suspicious warnings\n\nThat would be readable and condensed.  Not sure if you\u0027d feel like that\u0027s over-architecting, though.",
+      "revId": "47a8e09675b79699878425aaf95d795b24e51981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
