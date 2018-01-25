@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7db710_39958836",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-25T00:59:47Z",
+      "side": 1,
+      "message": "Remove the reference to a star from the description.",
+      "revId": "48a4a9e786ffd45641e7b4f0e2e0903ada70642a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68204bab_04354250",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-25T00:59:47Z",
+      "side": 1,
+      "message": "Change to \u0027This folder is empty\u0027.",
+      "revId": "48a4a9e786ffd45641e7b4f0e2e0903ada70642a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2cc8fe_a58c90de",
+        "filename": "chrome/browser/ui/webui/md_bookmarks/md_bookmarks_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-25T00:59:47Z",
+      "side": 1,
+      "message": "This is insufficient, We want this message any time a bookmark folder is not editable. There are many different reasons for this. Add a separate string and then use canEditNode from chrome/browser/resources/md_bookmarks/util.js when displaying the message in the bookmark list.\n\nAlso, change the string to EMPTY_UNMODIFIABLE_LIST or something.",
+      "revId": "48a4a9e786ffd45641e7b4f0e2e0903ada70642a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
