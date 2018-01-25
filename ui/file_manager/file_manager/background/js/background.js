@@ -43,14 +43,25 @@ function FileBrowserBackgroundImpl() {
 
   /**
    * Event handler for C++ sides notifications.
-   * @private {!DeviceHandler}
+   * @private {DeviceHandler}
    */
-  this.deviceHandler_ = new DeviceHandler();
+  this.deviceHandler_ = null;
 
   // Handle device navigation requests.
-  this.deviceHandler_.addEventListener(
-      DeviceHandler.VOLUME_NAVIGATION_REQUESTED,
-      this.handleViewEvent_.bind(this));
+  chrome.fileManagerPrivate.getProfiles((profiles) => {
+    // If this background page is in the incognito context of a regular user
+    // session, shouldn't handle events or it'll duplicate with the other
+    // background page for the regular user's context.
+    const enableUiEventHandlers =
+        (profiles[0] && profiles[0].profileId == '$guest') ||
+        !chrome.extension.inIncognitoContext;
+    this.deviceHandler_ = new DeviceHandler(enableUiEventHandlers);
+    if (enableUiEventHandlers) {
+      this.deviceHandler_.addEventListener(
+          DeviceHandler.VOLUME_NAVIGATION_REQUESTED,
+          this.handleViewEvent_.bind(this));
+    }
+  });
 
   /**
    * Drive sync handler.
