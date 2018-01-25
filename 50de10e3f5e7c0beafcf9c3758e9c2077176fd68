@@ -34,6 +34,24 @@
       "revId": "50de10e3f5e7c0beafcf9c3758e9c2077176fd68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8740b06_29b25aa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-25T22:20:58Z",
+      "side": 1,
+      "message": "\u003e All cross process communication for Chrome IPC goes over top of mojo. OnChannelError is only called from the IO thread. It won\u0027t call ChannelClosing until the UI thread actually reads something off the channel.\n\nwahh, that\u0027s a pretty big problem for webview. mind filing a bug and merging this back to 65?\n\nalso I think the description should make clear that ChannelClosing is called from Send, which may UI action, hence the deadlock\n\n\u003e \n\u003e If the UI thread is blocked on an object and the remote side closes. The IO thread will get a read error on the mojo pipe and it will call OnChannelError(...) mainly from here: https://cs.chromium.org/chromium/src/ipc/ipc_message_pipe_reader.cc?sq\u003dpackage:chromium\u0026l\u003d105\n\u003e \n\u003e but it won\u0027t call OnChannelClosing until the UI thread is unblocked. This is why SyncChannel cancels all pending sends in it\u0027s on ChannelError (https://cs.chromium.org/chromium/src/ipc/ipc_sync_channel.cc?q\u003dipc_sync_channel\u0026dr\u003dC\u0026l\u003d491)\n\u003e \n\u003e And the sync compositor browser filter is very similar to the sync channel.",
+      "parentUuid": "a40ed8a1_785e14b7",
+      "revId": "50de10e3f5e7c0beafcf9c3758e9c2077176fd68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
