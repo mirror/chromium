@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee4ea64_24d12cda",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T19:30:31Z",
+      "side": 0,
+      "message": "Why is this being removed?",
+      "revId": "3806eaaeb33fa8c9a9f091c31cb3579fb5b499ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c1f9a0_bffc633d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T19:30:31Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "3806eaaeb33fa8c9a9f091c31cb3579fb5b499ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d581c0f_86f37e01",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-25T19:30:31Z",
+      "side": 0,
+      "message": "Please leave this with a sample of how you can trigger enableForTest.",
+      "revId": "3806eaaeb33fa8c9a9f091c31cb3579fb5b499ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
