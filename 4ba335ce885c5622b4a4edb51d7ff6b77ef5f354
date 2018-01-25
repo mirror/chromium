@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204e24db_7f211b67",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-25T21:01:35Z",
+      "side": 1,
+      "message": "Adding this clause is the only change from the original version that was reverted.",
+      "revId": "4ba335ce885c5622b4a4edb51d7ff6b77ef5f354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
