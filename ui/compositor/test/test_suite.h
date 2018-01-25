@@ -9,6 +9,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 
 namespace base {
@@ -32,6 +33,7 @@ class CompositorTestSuite : public base::TestSuite {
 
  private:
   std::unique_ptr<base::test::ScopedTaskEnvironment> scoped_task_environment_;
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(CompositorTestSuite);
 };

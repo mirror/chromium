@@ -18,6 +18,10 @@ namespace aura {
 class Window;
 }
 
+namespace ui {
+class Shadow;
+}
+
 namespace wm {
 
 class ActivationClient;
@@ -33,7 +37,7 @@ class WM_CORE_EXPORT ShadowController : public ActivationChangeObserver {
       ShadowElevation::LARGE;
 
   // Returns the shadow for the |window|, or NULL if no shadow exists.
-  static Shadow* GetShadowForWindow(aura::Window* window);
+  static ui::Shadow* GetShadowForWindow(aura::Window* window);
 
   explicit ShadowController(ActivationClient* activation_client);
   ~ShadowController() override;
