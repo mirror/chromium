@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee80983f_83334b7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac730d1_45b98f51",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3feb81d_e932406e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40468537_9b64f47e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3feb81d_e932406e",
+      "range": {
+        "startLine": 90,
+        "startChar": 46,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1841420f_2fcc3e79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "I made a setter.",
+      "parentUuid": "826a06a7_51e0034d",
+      "range": {
+        "startLine": 117,
+        "startChar": 83,
+        "endLine": 117,
+        "endChar": 95
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b558de_23338a70",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81445fa7_42a5181a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b558de_23338a70",
+      "range": {
+        "startLine": 304,
+        "startChar": 12,
+        "endLine": 304,
+        "endChar": 87
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3884f00c_a745a53e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "In my current setup, no, but it wouldn\u0027t be hard to do. Updated.",
+      "parentUuid": "842ebb73_1e98810c",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b08d4a_8711f92e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-24T22:51:59Z",
       "side": 1,
       "message": "@NotNull if this can\u0027t be null, otherwise we could have null mean \"no visible representation on the screen.",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e28504_cf34a0b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "I\u0027d rather keep two separate methods, so that onRectHidden is more explicit. I don\u0027t see @NotNull in our (non-test) code base. Can you send me a pointer?\n\nIn the mean time, I updated the code comment.",
+      "parentUuid": "26b08d4a_8711f92e",
       "range": {
         "startLine": 26,
         "startChar": 27,
@@ -160,6 +304,30 @@
       "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9488f2_c66a1ff6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c2c74a8_5e2a44a0",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "5c77ff92feeff9e0c87a3496a028ea267315e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

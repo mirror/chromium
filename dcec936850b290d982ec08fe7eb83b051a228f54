@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e1dc25d_01e5b16c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e63bb07_581323ef",
+      "range": {
+        "startLine": 242,
+        "startChar": 30,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "dcec936850b290d982ec08fe7eb83b051a228f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f3d7cc1_37567761",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/RectProvider.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "723f4ead_90144199",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/RectProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3d7cc1_37567761",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "dcec936850b290d982ec08fe7eb83b051a228f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cdb8b5_0609504e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "dcec936850b290d982ec08fe7eb83b051a228f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433ec4f5_48e45974",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:16:29Z",
+      "side": 1,
+      "message": "Done.\n\nI created some extra TextBubble constructors as helpers for classes that don\u0027t need to set insetPx or change the anchor Rect after creating the TextBubble. There may be too many constructors now... let me know.",
+      "parentUuid": "67cdb8b5_0609504e",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 47
+      },
+      "revId": "dcec936850b290d982ec08fe7eb83b051a228f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
