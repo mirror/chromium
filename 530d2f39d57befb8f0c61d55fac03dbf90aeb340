@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "344624dd_40047550",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166475
+      },
+      "writtenOn": "2018-01-25T01:23:59Z",
+      "side": 1,
+      "message": "I think we should have a \"Protect your account\" section here, that states how if your account is compromised, an attacker can push malicious code to all your users.  Specific advice would be to definitely use two-factor authentication, preferably with a security key.\n\nThis section could also include the group publishing, below.",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90474c2_10e02018",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166475
+      },
+      "writtenOn": "2018-01-25T01:23:59Z",
+      "side": 1,
+      "message": "I think we should tweak the order here to emphasize different ones first.  My suggestion:\nProtect Your Account (see above)\nNever use HTTP, Ever\nRequest Minimal Permissions\u003c/h2\u003e\nLimit Manifest Fields\u003c\nInclude A CSP\nAvoid Executable APIs\nUse Content Scripts Carefully\nRegister and Sanitize Inputs\nWrite Clear and Commented Code (maybe)",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e9f63d_bf106abf",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1166475
+      },
+      "writtenOn": "2018-01-25T01:23:59Z",
+      "side": 1,
+      "message": "nit: no \u0027 (i.e., just APIs)",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 6
+      },
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f891dba_df3ee346",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1166475
+      },
+      "writtenOn": "2018-01-25T01:23:59Z",
+      "side": 1,
+      "message": "This is always nice, but I\u0027m not quite sure it belongs in a security doc?",
+      "revId": "530d2f39d57befb8f0c61d55fac03dbf90aeb340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
