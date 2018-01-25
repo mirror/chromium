@@ -8,9 +8,9 @@
 #include <pthread.h>
 
 #include "crazy_linker_library_list.h"
+#include "crazy_linker_pointer_set.h"
 #include "crazy_linker_rdebug.h"
 #include "crazy_linker_search_path_list.h"
-#include "crazy_linker_util.h"
 
 // All crazy linker globals are declared in this header.
 
@@ -34,6 +34,11 @@ class Globals {
   static RDebug* GetRDebug() { return &Get()->rdebug_; }
 
   static int* GetSDKBuildVersion() { return &sdk_build_version_; }
+
+  // Set of valid handles returned by the dlopen() wrapper. This is
+  // required to deal with rare cases where the wrapper is passed
+  // a handle that was opened with the system linker by mistake.
+  PointerSet valid_dlopen_handles;
 
  private:
   pthread_mutex_t lock_;
