@@ -16,9 +16,9 @@
 #include "core/input/EventHandler.h"
 #include "core/input/EventHandlingUtil.h"
 #include "core/input/InputDeviceCapabilities.h"
+#include "core/input/UnhandledTapInfo.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
-#include "public/web/WebTappedInfo.h"
 
 namespace blink {
 
@@ -301,9 +301,9 @@ WebInputEventResult GestureManager::HandleGestureTap(
     IntPoint tapped_position_in_viewport =
         frame_->GetPage()->GetVisualViewport().RootFrameToViewport(
             tapped_position);
-    WebTappedInfo tapped_info(dom_tree_changed, style_changed, tapped_node,
-                              tapped_position_in_viewport);
-    frame_->GetChromeClient().ShowUnhandledTapUIIfNeeded(tapped_info);
+    UnhandledTapInfo info(*frame_);
+    info.ShowUnhandledTapUIIfNeeded(dom_tree_changed, style_changed,
+                                    tapped_node, tapped_position_in_viewport);
   }
   return event_result;
 }
