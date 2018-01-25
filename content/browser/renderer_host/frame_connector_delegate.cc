@@ -65,6 +65,7 @@ bool FrameConnectorDelegate::IsSubtreeThrottled() const {
 }
 
 void FrameConnectorDelegate::SetRect(const gfx::Rect& frame_rect) {
+  has_frame_rect_ = true;
   if (use_zoom_for_device_scale_factor_) {
     frame_rect_in_pixels_ = frame_rect;
     frame_rect_in_dip_ = gfx::ScaleToEnclosingRect(
