@@ -291,40 +291,112 @@ other specs (for example Javascript callback based effects).
 [Timing]: https://cs.chromium.org/search/?q=class:blink::Timing$
 [UpdateInheritedTime()]: https://cs.chromium.org/search/?q=function:%5CbAnimationEffectReadOnly::UpdateInheritedTime
 
-#### Lifecycle of an [Interpolation][]
+#### Lifecycle of a CSS [Interpolation][]
 
 [Interpolation][] is the data structure that [style
 resolution][styleForElement()] uses to resolve what animated value to apply
 to an animated element's [ComputedStyle][].
 
-1.   [Interpolation][]s are lazily
-     [instantiated][EnsureInterpolationEffectPopulated()] prior to sampling.
-2.   [KeyframeEffectModel][]s are [sampled][Sample()] every frame (or as
-     necessary) for a stack of [Interpolation][]s to
-     [apply][ApplyAnimatedStandardProperties()] to the associated [Element][]
-     and stashed away in the [Element][]'s [ElementAnimations][]'
-     [EffectStack][]'s [SampledEffect][]s.
-3.   During [style resolution][styleForElement()] on the target [Element][] all
-     the [Interpolation][]s are [collected and organised by
-     category][AdoptActiveInterpolations] according to whether it's a transition
-     or not (transitions in Blink are
-     [suppressed][CalculateTransitionUpdateForProperty()] in the presence of
-     non-transition animations on the same property) and whether it affects
-     custom properties or not (animated custom properties are
-     [animation-tainted](https://www.w3.org/TR/css-variables-1/#animation-tainted)
-     and affect the [processing of animation
-     properties][animation-tainted-processing].
-4.   TODO(alancutter): Describe what happens in processing a stack of
-     interpolations.
+1.  [Interpolation][]s are lazily
+    [instantiated][EnsureInterpolationEffectPopulated()] prior to sampling.
+2.  [KeyframeEffectModel][]s are [sampled][Sample()] every frame (or as
+    necessary) for a stack of [Interpolation][]s to
+    [apply][ApplyAnimatedStandardProperties()] to the associated [Element][]
+    and stashed away in the [Element][]'s [ElementAnimations][]'
+    [EffectStack][]'s [SampledEffect][]s.
+3.  During [style resolution][styleForElement()] on the target [Element][] all
+    the [Interpolation][]s are [collected and organised by
+    category][AdoptActiveInterpolations] according to whether it's a transition
+    or not (transitions in Blink are
+    [suppressed][CalculateTransitionUpdateForProperty()] in the presence of
+    non-transition animations on the same property) and whether it affects
+    custom properties or not (animated custom properties are
+    [animation-tainted](https://www.w3.org/TR/css-variables-1/#animation-tainted)
+    and affect the [processing of animation
+    properties][animation-tainted-processing].
+4.  [Style resolution][styleForElement()] then applies the active
+    [Interpolation][]s for [custom properties][ApplyAnimatedCustomProperties()]
+    followed by [standard properties][ApplyAnimatedStandardProperties()] onto
+    the element's [ComputedStyle][].
 
+    If any given property is being transitioned then there will only be a single
+    [TransitionInterpolation][] to [apply][TransitionInterpolation::Apply()].
+    This is guaranteed as transitions are
+    [suppressed][CalculateTransitionUpdateForProperty()] by the presence of any
+    other animation on the same property.
+
+    For non-transition animations the [Interpolation][]s are all
+    [InvalidatableInterpolation][]s. This [stack is
+    applied][InvalidatableInterpolation::ApplyStack()] by taking the underlying
+    non-animated CSS value and compositing each [InvalidatableInterpolation][]'s
+    current value ontop in turn to produce a final animated value for the
+    property.  
+    Example:
+    ```Javascript
+    element.style.left = '10px';
+
+    // Start two additive animations on left and seek each to halfway through.
+    element.animate({
+        left: ['0px', '100px'],
+        composite: 'add',
+      }, 1000).currentTime = 500;
+    element.animate({
+        left: ['0px', '200px'],
+        composite: 'add',
+      }, 1000).currentTime = 500;
+
+    console.log(getComputedStyle(element).left); // 10px + 50px + 100px == 160px
+    ```
+
+[ApplyStack()]: https://cs.chromium.org/search/?q=function:blink::InvalidatableInterpolation::ApplyStack
 [AdoptActiveInterpolations]: https://cs.chromium.org/search/?q=AdoptActiveInterpolations%5Cw%2B
 [animation-tainted-processing]: https://cs.chromium.org/search/?q=function:blink::StyleBuilder::ApplyProperty+animation_tainted
+[TransitionInterpolation::Apply()]: https://cs.chromium.org/search/?q=function:blink::TransitionInterpolation::Apply
+[InvalidatableInterpolation::ApplyStack()]: https://cs.chromium.org/search/?q=function:blink::InvalidatableInterpolation::ApplyStack()
 [CalculateTransitionUpdateForProperty()]: https://cs.chromium.org/search/?q=function:blink::CSSAnimations::CalculateTransitionUpdateForProperty
 [ElementAnimations]: https://cs.chromium.org/search/?q=class:blink::ElementAnimations
 [EnsureInterpolationEffectPopulated()]: https://cs.chromium.org/search/?q=function:KeyframeEffectModelBase::EnsureInterpolationEffectPopulated
 [Interpolation]: https://cs.chromium.org/search/?q=class:blink::Interpolation$
 [InterpolationEffect]: https://cs.chromium.org/search/?q=class:blink::InterpolationEffect
+[InvalidatableInterpolation]: https://cs.chromium.org/search/?q=class:blink::InvalidatableInterpolation$
 [Sample()]: https://cs.chromium.org/search/?q=function:KeyframeEffectModelBase::Sample
+[TransitionInterpolation]: https://cs.chromium.org/search/?q=class:blink::TransitionInterpolation
+
+### [InvalidatableInterpolation][]s
+
+An [InvalidatableInterpolation][] represents the value of an interpolation
+between two property specific keyframes (CSS or SVG).
+
+There are four things that the interpolated value can be dynamically affected by
+and must be responsive to during an animation:
+
+1.  The __percentage progress__ of the interpolation.  
+    This is the typical way interpolated values change, through the passage of
+    time or animations being seeked causing the timing state of the animation
+    engine to update.
+2.  The interpolation's __underlying value__.  
+    The underlying value for an interpolation is either the non-animated value
+    for the element's property or the result of an interpolation lower in the
+    stack. Interpolations are only affected by underlying values if they
+    include `composite: 'add'` keyframes (which includes [neutral keyframe][]s).
+3.  
+
+*   Keyframes can be `composite: 'add'` meaning their value is added onto the
+    underlying value ("add" means different things for different types of
+    values).
+*   The "shape" of an interpolation can depend on the values of the two
+    keyframes, not just the type of value being interpolated. E.g.
+    [repeatable list][]s interpolate values of different lengths by repeating
+    each side until a lowest common multiple is reached.
+*   The types of values associated with a custom property can change at runtime.
+    [Example](http://jsbin.com/suxupewijo/edit?html,css,js,output): A step
+    animation between raw parser tokens could turn into a smooth interpolation
+    between colours halfway through a custom property animation.
+
+
+
+[repeatable list]: https://www.w3.org/TR/css-transitions-1/#animtype-repeatable-list
+[neutral keyframe]: https://drafts.csswg.org/web-animations/#neutral-value-for-composition
 
 ## Testing pointers
 
