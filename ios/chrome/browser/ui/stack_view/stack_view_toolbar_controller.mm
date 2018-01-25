@@ -35,6 +35,8 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
   __weak id<ApplicationCommands, BrowserCommands> _dispatcher;
 }
 
+@dynamic stackButton;
+
 - (instancetype)initWithDispatcher:
     (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher {
   self = [super initWithStyle:ToolbarControllerStyleDarkMode
@@ -72,10 +74,6 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
 
     [_stackViewToolbar addSubview:_openNewTabButton];
     [self.contentView addSubview:_stackViewToolbar];
-
-    [[self stackButton] addTarget:_dispatcher
-                           action:@selector(dismissTabSwitcher)
-                 forControlEvents:UIControlEventTouchUpInside];
   }
   return self;
 }
