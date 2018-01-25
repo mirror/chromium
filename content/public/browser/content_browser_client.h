@@ -773,10 +773,10 @@ class CONTENT_EXPORT ContentBrowserClient {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) {}
 
-  // (Currently called only from GPUProcessHost, move somewhere more central).
-  // Called when a request to bind |interface_name| on |interface_pipe| is
-  // received from |source_info.identity|. If the request is bound,
-  // |interface_pipe| will become invalid (taken by the client).
+  // (Currently called from GPUProcessHost and UtilityProcessHostImpl, move
+  // somewhere more central). Called when a request to bind |interface_name| on
+  // |interface_pipe| is received from |source_info.identity|. If the request is
+  // bound, |interface_pipe| will become invalid (taken by the client).
   virtual void BindInterfaceRequest(
       const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,

@@ -834,6 +834,10 @@ ChromeContentBrowserClient::ChromeContentBrowserClient()
   gpu_binder_registry_.AddInterface(
       base::Bind(&metrics::CallStackProfileCollector::Create,
                  metrics::CallStackProfileParams::GPU_PROCESS));
+
+  utility_binder_registry_.AddInterface(
+      base::Bind(&metrics::CallStackProfileCollector::Create,
+                 metrics::CallStackProfileParams::UTILITY_PROCESS));
 }
 
 ChromeContentBrowserClient::~ChromeContentBrowserClient() {
@@ -3150,6 +3154,8 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
     mojo::ScopedMessagePipeHandle* interface_pipe) {
   if (source_info.identity.name() == content::mojom::kGpuServiceName)
     gpu_binder_registry_.TryBindInterface(interface_name, interface_pipe);
+  else if (source_info.identity.name() == content::mojom::kUtilityServiceName)
+    utility_binder_registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
 void ChromeContentBrowserClient::RegisterInProcessServices(

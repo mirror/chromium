@@ -15,6 +15,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/browser_child_process_host_delegate.h"
 #include "content/public/browser/utility_process_host.h"
+#include "content/public/common/connection_filter.h"
 #include "services/service_manager/public/cpp/identity.h"
 
 namespace base {
@@ -70,6 +71,8 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   void SetLaunchCallback(base::OnceCallback<void(base::ProcessId)> callback);
 
  private:
+  class ConnectionFilterImpl;
+
   // Starts the child process if needed, returns true on success.
   bool StartProcess();
 

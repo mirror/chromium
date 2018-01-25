@@ -16,6 +16,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/browser/browser_child_process_host_impl.h"
+#include "content/browser/field_trial_recorder.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/service_manager/service_manager_context.h"
 #include "content/common/child_process_host_impl.h"
@@ -48,6 +49,36 @@
 #endif
 
 namespace content {
+
+class UtilityProcessHostImpl::ConnectionFilterImpl : public ConnectionFilter {
+ public:
+  ConnectionFilterImpl() {
+    auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
+    registry_.AddInterface(base::Bind(&FieldTrialRecorder::Create),
+                           task_runner);
+#if defined(OS_ANDROID)
+    registry_.AddInterface(
+        base::Bind(&BindJavaInterface<media::mojom::AndroidOverlayProvider>),
+        task_runner);
+#endif
+  }
+
+ private:
+  // ConnectionFilter:
+  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle* interface_pipe,
+                       service_manager::Connector* connector) override {
+    if (!registry_.TryBindInterface(interface_name, interface_pipe)) {
+      GetContentClient()->browser()->BindInterfaceRequest(
+          source_info, interface_name, interface_pipe);
+    }
+  }
+
+  service_manager::BinderRegistry registry_;
+
+  DISALLOW_COPY_AND_ASSIGN(ConnectionFilterImpl);
+};
 
 // NOTE: changes to this class need to be reviewed by the security team.
 class UtilitySandboxedProcessLauncherDelegate
@@ -235,6 +266,12 @@ bool UtilityProcessHostImpl::StartProcess() {
     return true;
 
   started_ = true;
+
+  if (ServiceManagerConnection::GetForProcess()) {
+    ServiceManagerConnection::GetForProcess()->AddConnectionFilter(
+        std::make_unique<ConnectionFilterImpl>());
+  }
+
   process_->SetName(name_);
   process_->GetHost()->CreateChannelMojo();
 
