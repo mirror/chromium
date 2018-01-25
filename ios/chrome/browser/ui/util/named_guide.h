@@ -15,6 +15,12 @@ typedef NSString GuideName;
 
 // A guide that is constrained to match the frame of the omnibox.
 extern GuideName* const kOmniboxGuide;
+
+// For all layout guide in this group, all of the constraints to them are
+// dropped upon size class changes and rotations. Any view constrained to them
+// is expected to be dismissed on such events. For example, the tools menu is
+// closed upon rotation.
+
 // A guide that is constrained to match the frame of the back button's image.
 extern GuideName* const kBackButtonGuide;
 // A guide that is constrained to match the frame of the forward button's image.
