@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a3cb279_d5555821",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T01:22:27Z",
+      "side": 0,
+      "message": "Pretty sure this was a no-op because ClippingTextFieldContainer doesn\u0027t implement |intrinsicContentSize|.  Removed it without effect.",
+      "revId": "d639081151c08b096a18b084e48f022ce377512e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
