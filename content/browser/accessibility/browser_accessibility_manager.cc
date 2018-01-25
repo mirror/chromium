@@ -1204,7 +1204,7 @@ void BrowserAccessibilityManager::UseCustomDeviceScaleFactorForTesting(
 BrowserAccessibility* BrowserAccessibilityManager::CachingAsyncHitTest(
     const gfx::Point& screen_point) {
   gfx::Point scaled_point =
-      UseZoomForDSFEnabled()
+      IsUseZoomForDSFEnabled()
           ? ScaleToRoundedPoint(screen_point, device_scale_factor())
           : screen_point;
 
