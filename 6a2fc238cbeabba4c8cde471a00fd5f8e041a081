@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff17324_b13191a4",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T21:59:36Z",
+      "side": 1,
+      "message": "nit: no tab.\nShould we add a todo to remove this once we roll a new version of libdrm?",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c98e3f1_a02347a2",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T21:59:36Z",
+      "side": 1,
+      "message": "Is this necessary? We can probably always set it, and if modifier is DRM_FORMAT_MOD_INVALID it\u0027ll just get ignored since we won\u0027t pass DRM_MODE_FB_MODIFIERS flag.",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43aba26_0ea43024",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T21:59:36Z",
+      "side": 1,
+      "message": "Does this mean that if we create a bo via minigbm, without explicitly passing modifiers, addfb2 should work without passing DRM_MODE_FB_MODIFIERS?",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b995c2_454b93e9",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-25T21:59:36Z",
+      "side": 1,
+      "message": "Could this be a bool at this point? Something like use_modifier.\nIf it\u0027s false, we don\u0027t set DRM_MODE_FB_MODIFIERS, if it\u0027s true, we do set it and we can get the modifiers from the bo with gbm_bo_get_plane_format_modifier(bo, i) inside CreateBufferForBO.",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
