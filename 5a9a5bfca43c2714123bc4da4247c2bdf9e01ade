@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7917b2b_70cbe639",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:01:14Z",
+      "side": 1,
+      "message": "How about making NotificationInputContainerMD a ButtonListener? By doing so, you can at least avoid adding OnNotificationInputSubmitByButton.",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94ff12b_ef034175",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:01:14Z",
+      "side": 1,
+      "message": "nit: We can use forward declaration like L21-25 and include image_button.h. It\u0027s better to avoid including in .h and wherever possible do including in .cc.\n\n  namespace views {\n  ...\n  class ImageButton;\n  ...(alphabetical order)\n  }",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee55a605_95ee2ada",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:01:14Z",
+      "side": 1,
+      "message": "We don\u0027t have to add OnNotificationInputSubmitByButton. We can just always use OnNotificationInputSubmit.\n\nNot only it\u0027s more simple, but having a button or not is implementation detail of NotificationInputContainer, so the interface it offers should not be affected by that.",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578fb412_acf48c04",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:01:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67318f1b_df0f6968",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-25T08:01:14Z",
+      "side": 1,
+      "message": "Most of the code are same as TestInlineReplyByEnterKey, and we want to avoid code duplication. Can we just add the test of reply button clicking to TestInlineReply?",
+      "revId": "5a9a5bfca43c2714123bc4da4247c2bdf9e01ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
