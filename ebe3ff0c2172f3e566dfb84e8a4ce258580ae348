@@ -22,6 +22,29 @@
       "revId": "ebe3ff0c2172f3e566dfb84e8a4ce258580ae348",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc9776d_f899acbd",
+        "filename": "chrome/test/data/vr/e2e_test_files/html/webxr_test_presentation_promise_unresolved_during_don.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-25T15:16:44Z",
+      "side": 1,
+      "message": "nit: X?",
+      "range": {
+        "startLine": 3,
+        "startChar": 45,
+        "endLine": 3,
+        "endChar": 46
+      },
+      "revId": "ebe3ff0c2172f3e566dfb84e8a4ce258580ae348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
