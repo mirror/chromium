@@ -103,8 +103,8 @@
   DCHECK(self.buttonFactory);
   DCHECK(self.topSafeAnchor);
 
-  self.backgroundColor =
-      self.buttonFactory.toolbarConfiguration.backgroundColor;
+  self.backgroundColor = [UIColor clearColor];
+  //      self.buttonFactory.toolbarConfiguration.backgroundColor;
   self.translatesAutoresizingMaskIntoConstraints = NO;
 
   [self setUpLocationBar];
