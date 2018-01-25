@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f52adb0d_00dc92c7",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "the room",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0478d4ef_8c9bcd8f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "TURNED_ON?",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d01ac27_ce16810b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "a sunset",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4066a554_6b5f011a",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "a sunrise",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4314873d_b7ee59e1",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "Black frame was detected - the current frame contains only noise.",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd98036_c3d232df",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "is this in [0, 1] interval? can you specify that?",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f4b813_74284d75",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "this is the correct style: motionDetectionLikelihood (here and throughout)",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4f6387_6183efb4",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "given that we only have azimuth, it only detects direction in 2d, right?\nor does azimuthScores refer to distribution for source angle in vertical plain?",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf227607_5ac8ba44",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T23:32:49Z",
+      "side": 1,
+      "message": "now is the distribution specified?",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
