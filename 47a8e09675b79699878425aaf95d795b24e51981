@@ -16,6 +16,24 @@
       "revId": "47a8e09675b79699878425aaf95d795b24e51981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4139ba70_e4f3fbf6",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-25T18:15:59Z",
+      "side": 1,
+      "message": "Given that the assertWarnings method is a helper defined just a few lines above, within the same test(), I don\u0027t see the \"have to look back\" as a big problem. Would you be OK, with something as follows?\n\nassertWarnings(\n    false /* corrupt */, false /* suspicious */,\n    false /* blacklisted */, false /* runtime */);",
+      "parentUuid": "7e6d6601_dd9b007a",
+      "revId": "47a8e09675b79699878425aaf95d795b24e51981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
