@@ -24,7 +24,7 @@ typedef base::Callback<void(DriveApiErrorCode error,
 // All functions must be called on UI thread.
 class AuthServiceInterface {
  public:
-  virtual ~AuthServiceInterface() {}
+  virtual ~AuthServiceInterface() = default;
 
   // Adds and removes the observer.
   virtual void AddObserver(AuthServiceObserver* observer) = 0;

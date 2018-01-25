@@ -64,7 +64,7 @@ class MockUrlFetcherFactory : public ScopedURLFetcherFactory,
                               public URLFetcherFactory {
  public:
   MockUrlFetcherFactory() : ScopedURLFetcherFactory(this) {}
-  virtual ~MockUrlFetcherFactory() {}
+  virtual ~MockUrlFetcherFactory() = default;
 
   MOCK_METHOD5(
       CreateURLFetcherMock,
@@ -87,8 +87,8 @@ class MockUrlFetcherFactory : public ScopedURLFetcherFactory,
 
 class MockOAuth2AccessTokenConsumer : public OAuth2AccessTokenConsumer {
  public:
-  MockOAuth2AccessTokenConsumer() {}
-  ~MockOAuth2AccessTokenConsumer() {}
+  MockOAuth2AccessTokenConsumer() = default;
+  ~MockOAuth2AccessTokenConsumer() = default;
 
   MOCK_METHOD2(OnGetTokenSuccess,
                void(const std::string& access_token,
@@ -107,7 +107,7 @@ class OAuth2AccessTokenFetcherImplTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
-  ~OAuth2AccessTokenFetcherImplTest() override {}
+  ~OAuth2AccessTokenFetcherImplTest() override = default;
 
   virtual TestURLFetcher* SetupGetAccessToken(bool fetch_succeeds,
                                               int response_code,

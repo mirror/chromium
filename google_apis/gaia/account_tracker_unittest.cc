@@ -99,8 +99,8 @@ namespace gaia {
 
 class AccountTrackerObserver : public AccountTracker::Observer {
  public:
-  AccountTrackerObserver() {}
-  virtual ~AccountTrackerObserver() {}
+  AccountTrackerObserver() = default;
+  virtual ~AccountTrackerObserver() = default;
 
   testing::AssertionResult CheckEvents();
   testing::AssertionResult CheckEvents(const TrackingEvent& e1);
@@ -244,9 +244,9 @@ testing::AssertionResult AccountTrackerObserver::CheckEvents(
 
 class IdentityAccountTrackerTest : public testing::Test {
  public:
-  IdentityAccountTrackerTest() {}
+  IdentityAccountTrackerTest() = default;
 
-  ~IdentityAccountTrackerTest() override {}
+  ~IdentityAccountTrackerTest() override = default;
 
   void SetUp() override {
     fake_oauth2_token_service_.reset(new FakeOAuth2TokenService());

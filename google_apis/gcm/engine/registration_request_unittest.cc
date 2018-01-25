@@ -64,7 +64,7 @@ RegistrationRequestTest::RegistrationRequestTest()
       status_(RegistrationRequest::SUCCESS),
       callback_called_(false) {}
 
-RegistrationRequestTest::~RegistrationRequestTest() {}
+RegistrationRequestTest::~RegistrationRequestTest() = default;
 
 void RegistrationRequestTest::RegistrationCallback(
     RegistrationRequest::Status status,
@@ -90,11 +90,9 @@ class GCMRegistrationRequestTest : public RegistrationRequestTest {
   void CreateRequest(const std::string& sender_ids);
 };
 
-GCMRegistrationRequestTest::GCMRegistrationRequestTest() {
-}
+GCMRegistrationRequestTest::GCMRegistrationRequestTest() = default;
 
-GCMRegistrationRequestTest::~GCMRegistrationRequestTest() {
-}
+GCMRegistrationRequestTest::~GCMRegistrationRequestTest() = default;
 
 void GCMRegistrationRequestTest::CreateRequest(const std::string& sender_ids) {
   RegistrationRequest::RequestInfo request_info(kAndroidId, kSecurityToken,
@@ -454,11 +452,9 @@ class InstanceIDGetTokenRequestTest : public RegistrationRequestTest {
                      const std::map<std::string, std::string>& options);
 };
 
-InstanceIDGetTokenRequestTest::InstanceIDGetTokenRequestTest() {
-}
+InstanceIDGetTokenRequestTest::InstanceIDGetTokenRequestTest() = default;
 
-InstanceIDGetTokenRequestTest::~InstanceIDGetTokenRequestTest() {
-}
+InstanceIDGetTokenRequestTest::~InstanceIDGetTokenRequestTest() = default;
 
 void InstanceIDGetTokenRequestTest::CreateRequest(
     bool use_subtype,

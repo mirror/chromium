@@ -280,7 +280,7 @@ GCMStoreImpl::Backend::Backend(
       foreground_task_runner_(foreground_task_runner),
       encryptor_(std::move(encryptor)) {}
 
-GCMStoreImpl::Backend::~Backend() {}
+GCMStoreImpl::Backend::~Backend() = default;
 
 LoadStatus GCMStoreImpl::Backend::OpenStoreAndLoadData(StoreOpenMode open_mode,
                                                        LoadResult* result) {
@@ -1172,7 +1172,7 @@ GCMStoreImpl::GCMStoreImpl(
       blocking_task_runner_(blocking_task_runner),
       weak_ptr_factory_(this) {}
 
-GCMStoreImpl::~GCMStoreImpl() {}
+GCMStoreImpl::~GCMStoreImpl() = default;
 
 void GCMStoreImpl::Load(StoreOpenMode open_mode, const LoadCallback& callback) {
   blocking_task_runner_->PostTask(

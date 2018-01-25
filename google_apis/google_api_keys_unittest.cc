@@ -59,7 +59,7 @@ GoogleAPIKeysTest::GoogleAPIKeysTest() : env_(base::Environment::Create()) {
   env_cache_[10].variable_name = "GOOGLE_DEFAULT_CLIENT_SECRET";
 }
 
-GoogleAPIKeysTest::~GoogleAPIKeysTest() {}
+GoogleAPIKeysTest::~GoogleAPIKeysTest() = default;
 
 void GoogleAPIKeysTest::SetUp() {
   // Unset all environment variables that can affect these tests,

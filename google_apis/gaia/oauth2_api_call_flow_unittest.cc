@@ -62,7 +62,7 @@ class MockUrlFetcherFactory : public ScopedURLFetcherFactory,
   MockUrlFetcherFactory()
       : ScopedURLFetcherFactory(this) {
   }
-  virtual ~MockUrlFetcherFactory() {}
+  virtual ~MockUrlFetcherFactory() = default;
 
   MOCK_METHOD5(
       CreateURLFetcherMock,
@@ -85,8 +85,8 @@ class MockUrlFetcherFactory : public ScopedURLFetcherFactory,
 
 class MockApiCallFlow : public OAuth2ApiCallFlow {
  public:
-  MockApiCallFlow() {}
-  ~MockApiCallFlow() {}
+  MockApiCallFlow() = default;
+  ~MockApiCallFlow() = default;
 
   MOCK_METHOD0(CreateApiCallUrl, GURL ());
   MOCK_METHOD0(CreateApiCallBody, std::string ());

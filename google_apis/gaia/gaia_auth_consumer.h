@@ -65,7 +65,7 @@ class GaiaAuthConsumer {
     bool is_child_account;
   };
 
-  virtual ~GaiaAuthConsumer() {}
+  virtual ~GaiaAuthConsumer() = default;
 
   virtual void OnClientLoginSuccess(const ClientLoginResult& result) {}
   virtual void OnClientLoginFailure(const GoogleServiceAuthError& error) {}

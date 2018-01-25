@@ -58,8 +58,7 @@ UbertokenFetcher::UbertokenFetcher(
   DCHECK(request_context);
 }
 
-UbertokenFetcher::~UbertokenFetcher() {
-}
+UbertokenFetcher::~UbertokenFetcher() = default;
 
 void UbertokenFetcher::StartFetchingToken(const std::string& account_id) {
   DCHECK(!account_id.empty());

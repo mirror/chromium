@@ -77,7 +77,7 @@ AuthRequest::AuthRequest(
           this);
 }
 
-AuthRequest::~AuthRequest() {}
+AuthRequest::~AuthRequest() = default;
 
 // Callback for OAuth2AccessTokenFetcher on success. |access_token| is the token
 // used to start fetching user data.

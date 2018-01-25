@@ -269,8 +269,7 @@ ResponseWriter::ResponseWriter(base::SequencedTaskRunner* file_task_runner,
   }
 }
 
-ResponseWriter::~ResponseWriter() {
-}
+ResponseWriter::~ResponseWriter() = default;
 
 void ResponseWriter::DisownFile() {
   DCHECK(file_writer_);
@@ -343,7 +342,7 @@ UrlFetchRequestBase::UrlFetchRequestBase(RequestSender* sender)
       weak_ptr_factory_(this) {
 }
 
-UrlFetchRequestBase::~UrlFetchRequestBase() {}
+UrlFetchRequestBase::~UrlFetchRequestBase() = default;
 
 void UrlFetchRequestBase::Start(const std::string& access_token,
                                 const std::string& custom_user_agent,
@@ -572,7 +571,7 @@ EntryActionRequest::EntryActionRequest(RequestSender* sender,
   DCHECK(!callback_.is_null());
 }
 
-EntryActionRequest::~EntryActionRequest() {}
+EntryActionRequest::~EntryActionRequest() = default;
 
 void EntryActionRequest::ProcessURLFetchResults(const URLFetcher* source) {
   callback_.Run(GetErrorCode());
@@ -599,7 +598,7 @@ InitiateUploadRequestBase::InitiateUploadRequestBase(
   DCHECK_GE(content_length_, 0);
 }
 
-InitiateUploadRequestBase::~InitiateUploadRequestBase() {}
+InitiateUploadRequestBase::~InitiateUploadRequestBase() = default;
 
 void InitiateUploadRequestBase::ProcessURLFetchResults(
     const URLFetcher* source) {
@@ -646,8 +645,7 @@ UploadRangeResponse::UploadRangeResponse(DriveApiErrorCode code,
       start_position_received(start_position_received),
       end_position_received(end_position_received) {}
 
-UploadRangeResponse::~UploadRangeResponse() {
-}
+UploadRangeResponse::~UploadRangeResponse() = default;
 
 //========================== UploadRangeRequestBase ==========================
 
@@ -658,7 +656,7 @@ UploadRangeRequestBase::UploadRangeRequestBase(RequestSender* sender,
       weak_ptr_factory_(this) {
 }
 
-UploadRangeRequestBase::~UploadRangeRequestBase() {}
+UploadRangeRequestBase::~UploadRangeRequestBase() = default;
 
 GURL UploadRangeRequestBase::GetURL() const {
   // This is very tricky to get json from this request. To do that, &alt=json
@@ -756,7 +754,7 @@ ResumeUploadRequestBase::ResumeUploadRequestBase(
   DCHECK_LE(start_position_, end_position_);
 }
 
-ResumeUploadRequestBase::~ResumeUploadRequestBase() {}
+ResumeUploadRequestBase::~ResumeUploadRequestBase() = default;
 
 std::vector<std::string>
 ResumeUploadRequestBase::GetExtraRequestHeaders() const {
@@ -809,7 +807,7 @@ GetUploadStatusRequestBase::GetUploadStatusRequestBase(RequestSender* sender,
     : UploadRangeRequestBase(sender, upload_url),
       content_length_(content_length) {}
 
-GetUploadStatusRequestBase::~GetUploadStatusRequestBase() {}
+GetUploadStatusRequestBase::~GetUploadStatusRequestBase() = default;
 
 std::vector<std::string>
 GetUploadStatusRequestBase::GetExtraRequestHeaders() const {
@@ -849,8 +847,7 @@ MultipartUploadRequestBase::MultipartUploadRequestBase(
   DCHECK(!callback.is_null());
 }
 
-MultipartUploadRequestBase::~MultipartUploadRequestBase() {
-}
+MultipartUploadRequestBase::~MultipartUploadRequestBase() = default;
 
 std::vector<std::string> MultipartUploadRequestBase::GetExtraRequestHeaders()
     const {
@@ -963,7 +960,7 @@ DownloadFileRequestBase::DownloadFileRequestBase(
   // get_content_callback may be null.
 }
 
-DownloadFileRequestBase::~DownloadFileRequestBase() {}
+DownloadFileRequestBase::~DownloadFileRequestBase() = default;
 
 // Overridden from UrlFetchRequestBase.
 GURL DownloadFileRequestBase::GetURL() const {

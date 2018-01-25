@@ -29,7 +29,7 @@ GCMUnregistrationRequestHandler::GCMUnregistrationRequestHandler(
     : app_id_(app_id) {
 }
 
-GCMUnregistrationRequestHandler::~GCMUnregistrationRequestHandler() {}
+GCMUnregistrationRequestHandler::~GCMUnregistrationRequestHandler() = default;
 
 void GCMUnregistrationRequestHandler::BuildRequestBody(std::string* body){
   BuildFormEncoding(kUnregistrationCallerKey, kUnregistrationCallerValue, body);

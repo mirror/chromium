@@ -39,8 +39,7 @@ OAuth2TokenService::RequestParameters::RequestParameters(
 OAuth2TokenService::RequestParameters::RequestParameters(
     const RequestParameters& other) = default;
 
-OAuth2TokenService::RequestParameters::~RequestParameters() {
-}
+OAuth2TokenService::RequestParameters::~RequestParameters() = default;
 
 bool OAuth2TokenService::RequestParameters::operator<(
     const RequestParameters& p) const {
@@ -366,17 +365,14 @@ const std::string& OAuth2TokenService::Fetcher::GetAccountId() const {
   return account_id_;
 }
 
-OAuth2TokenService::Request::Request() {
-}
+OAuth2TokenService::Request::Request() = default;
 
-OAuth2TokenService::Request::~Request() {
-}
+OAuth2TokenService::Request::~Request() = default;
 
 OAuth2TokenService::Consumer::Consumer(const std::string& id)
     : id_(id) {}
 
-OAuth2TokenService::Consumer::~Consumer() {
-}
+OAuth2TokenService::Consumer::~Consumer() = default;
 
 OAuth2TokenService::OAuth2TokenService(
     std::unique_ptr<OAuth2TokenServiceDelegate> delegate)

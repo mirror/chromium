@@ -48,8 +48,7 @@ GCMRequestTestBase::GCMRequestTestBase()
       retry_count_(0) {
 }
 
-GCMRequestTestBase::~GCMRequestTestBase() {
-}
+GCMRequestTestBase::~GCMRequestTestBase() = default;
 
 const net::BackoffEntry::Policy& GCMRequestTestBase::GetBackoffPolicy() const {
   return kDefaultBackoffPolicy;

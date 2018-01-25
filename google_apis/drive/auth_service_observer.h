@@ -15,7 +15,7 @@ class AuthServiceObserver {
   virtual void OnOAuth2RefreshTokenChanged() = 0;
 
  protected:
-  virtual ~AuthServiceObserver() {}
+  virtual ~AuthServiceObserver() = default;
 };
 
 }  // namespace google_apis

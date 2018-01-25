@@ -149,7 +149,7 @@ class MyTestURLRequestContext : public net::TestURLRequestContext {
     Init();
   }
 
-  ~MyTestURLRequestContext() override {}
+  ~MyTestURLRequestContext() override = default;
 };
 
 class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
@@ -167,7 +167,7 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
   }
 
  private:
-  ~MyTestURLRequestContextGetter() override {}
+  ~MyTestURLRequestContextGetter() override = default;
 
   std::unique_ptr<MyTestURLRequestContext> context_;
 };
@@ -175,8 +175,8 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
 // A cert verifier that access all certificates.
 class MyTestCertVerifier : public net::CertVerifier {
  public:
-  MyTestCertVerifier() {}
-  ~MyTestCertVerifier() override {}
+  MyTestCertVerifier() = default;
+  ~MyTestCertVerifier() override = default;
 
   int Verify(const RequestParams& params,
              net::CRLSet* crl_set,
@@ -190,8 +190,8 @@ class MyTestCertVerifier : public net::CertVerifier {
 
 class MCSProbeAuthPreferences : public net::HttpAuthPreferences {
  public:
-  MCSProbeAuthPreferences() {}
-  ~MCSProbeAuthPreferences() override {}
+  MCSProbeAuthPreferences() = default;
+  ~MCSProbeAuthPreferences() override = default;
 
   bool IsSupportedScheme(const std::string& scheme) const override {
     return scheme == std::string(net::kBasicAuthScheme);

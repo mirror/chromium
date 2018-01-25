@@ -161,8 +161,7 @@ TestGetContentCallback::TestGetContentCallback()
                            base::Unretained(this))) {
 }
 
-TestGetContentCallback::~TestGetContentCallback() {
-}
+TestGetContentCallback::~TestGetContentCallback() = default;
 
 std::string TestGetContentCallback::GetConcatenatedData() const {
   std::string result;

@@ -84,7 +84,7 @@ class AuthenticatedRequestInterface {
   typedef base::Callback<void(AuthenticatedRequestInterface* request)>
       ReAuthenticateCallback;
 
-  virtual ~AuthenticatedRequestInterface() {}
+  virtual ~AuthenticatedRequestInterface() = default;
 
   // Starts the request with |access_token|. User-Agent header will be set
   // to |custom_user_agent| if the value is not empty.
@@ -269,7 +269,7 @@ class UrlFetchRequestBase : public AuthenticatedRequestInterface,
 // |BatchUploadRequest|.
 class BatchableDelegate {
  public:
-  virtual ~BatchableDelegate() {}
+  virtual ~BatchableDelegate() = default;
 
   // See UrlFetchRequestBase.
   virtual GURL GetURL() const = 0;

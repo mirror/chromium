@@ -36,8 +36,8 @@ using GaiaAuthFetcherFactory = base::Callback<std::unique_ptr<GaiaAuthFetcher>(
 // Callback for the |UbertokenFetcher| class.
 class UbertokenConsumer {
  public:
-  UbertokenConsumer() {}
-  virtual ~UbertokenConsumer() {}
+  UbertokenConsumer() = default;
+  virtual ~UbertokenConsumer() = default;
   virtual void OnUbertokenSuccess(const std::string& token) {}
   virtual void OnUbertokenFailure(const GoogleServiceAuthError& error) {}
 };

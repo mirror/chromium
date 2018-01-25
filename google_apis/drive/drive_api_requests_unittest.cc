@@ -125,8 +125,7 @@ void EmptyClosure() {
 
 class DriveApiRequestsTest : public testing::Test {
  public:
-  DriveApiRequestsTest() {
-  }
+  DriveApiRequestsTest() = default;
 
   void SetUp() override {
     request_context_getter_ = new net::TestURLRequestContextGetter(

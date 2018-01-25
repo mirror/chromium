@@ -96,7 +96,7 @@ class OAuth2MintTokenFlow : public OAuth2ApiCallFlow {
     virtual void OnMintTokenFailure(const GoogleServiceAuthError& error) {}
 
    protected:
-    virtual ~Delegate() {}
+    virtual ~Delegate() = default;
   };
 
   OAuth2MintTokenFlow(Delegate* delegate, const Parameters& parameters);

@@ -95,10 +95,10 @@ static GoogleServiceAuthError CreateAuthError(const net::URLFetcher* source) {
 
 }  // namespace
 
-IssueAdviceInfoEntry::IssueAdviceInfoEntry() {}
+IssueAdviceInfoEntry::IssueAdviceInfoEntry() = default;
 IssueAdviceInfoEntry::IssueAdviceInfoEntry(const IssueAdviceInfoEntry& other) =
     default;
-IssueAdviceInfoEntry::~IssueAdviceInfoEntry() {}
+IssueAdviceInfoEntry::~IssueAdviceInfoEntry() = default;
 
 bool IssueAdviceInfoEntry::operator ==(const IssueAdviceInfoEntry& rhs) const {
   return description == rhs.description && details == rhs.details;
@@ -121,14 +121,14 @@ OAuth2MintTokenFlow::Parameters::Parameters(
 
 OAuth2MintTokenFlow::Parameters::Parameters(const Parameters& other) = default;
 
-OAuth2MintTokenFlow::Parameters::~Parameters() {}
+OAuth2MintTokenFlow::Parameters::~Parameters() = default;
 
 OAuth2MintTokenFlow::OAuth2MintTokenFlow(Delegate* delegate,
                                          const Parameters& parameters)
     : delegate_(delegate), parameters_(parameters), weak_factory_(this) {
 }
 
-OAuth2MintTokenFlow::~OAuth2MintTokenFlow() { }
+OAuth2MintTokenFlow::~OAuth2MintTokenFlow() = default;
 
 void OAuth2MintTokenFlow::ReportSuccess(const std::string& access_token,
                                         int time_to_live) {

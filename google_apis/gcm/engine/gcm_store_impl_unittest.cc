@@ -83,7 +83,7 @@ GCMStoreImplTest::GCMStoreImplTest()
   EXPECT_TRUE(temp_directory_.CreateUniqueTempDir());
 }
 
-GCMStoreImplTest::~GCMStoreImplTest() {}
+GCMStoreImplTest::~GCMStoreImplTest() = default;
 
 std::unique_ptr<GCMStoreImpl> GCMStoreImplTest::BuildGCMStore() {
   // Pass an non-existent directory as store path to match the exact behavior in

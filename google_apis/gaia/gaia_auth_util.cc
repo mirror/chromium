@@ -58,12 +58,11 @@ class GaiaURLRequestUserData : public base::SupportsUserData::Data {
 
 }  // namespace
 
-
-ListedAccount::ListedAccount() {}
+ListedAccount::ListedAccount() = default;
 
 ListedAccount::ListedAccount(const ListedAccount& other) = default;
 
-ListedAccount::~ListedAccount() {}
+ListedAccount::~ListedAccount() = default;
 
 std::string CanonicalizeEmail(const std::string& email_address) {
   // CanonicalizeEmail() is called to process email strings that are eventually

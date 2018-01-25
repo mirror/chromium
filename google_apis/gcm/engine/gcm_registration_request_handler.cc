@@ -21,7 +21,7 @@ GCMRegistrationRequestHandler::GCMRegistrationRequestHandler(
     : senders_(senders) {
 }
 
-GCMRegistrationRequestHandler::~GCMRegistrationRequestHandler() {}
+GCMRegistrationRequestHandler::~GCMRegistrationRequestHandler() = default;
 
 void GCMRegistrationRequestHandler::BuildRequestBody(std::string* body){
   BuildFormEncoding(kSenderKey, senders_, body);

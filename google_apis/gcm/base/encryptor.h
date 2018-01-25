@@ -19,7 +19,7 @@ class GCM_EXPORT Encryptor {
   virtual bool DecryptString(const std::string& ciphertext,
                              std::string* plaintext) = 0;
 
-  virtual ~Encryptor() {}
+  virtual ~Encryptor() = default;
 };
 
 }  // namespace gcm

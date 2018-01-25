@@ -63,7 +63,7 @@ const char kQuotaExceededErrorResource[] =
 
 class FilesListRequestRunnerTest : public testing::Test {
  public:
-  FilesListRequestRunnerTest() {}
+  FilesListRequestRunnerTest() = default;
 
   void SetUp() override {
     request_context_getter_ =

@@ -34,8 +34,7 @@ MCSMessageTest::MCSMessageTest()
     task_runner_handle_(task_runner_) {
 }
 
-MCSMessageTest::~MCSMessageTest() {
-}
+MCSMessageTest::~MCSMessageTest() = default;
 
 TEST_F(MCSMessageTest, Invalid) {
   MCSMessage message;

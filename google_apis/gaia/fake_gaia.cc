@@ -166,7 +166,7 @@ FakeGaia::FakeGaia() : issue_oauth_code_cookie_(false) {
       &embedded_setup_chromeos_response_));
 }
 
-FakeGaia::~FakeGaia() {}
+FakeGaia::~FakeGaia() = default;
 
 void FakeGaia::SetFakeMergeSessionParams(
     const std::string& email,

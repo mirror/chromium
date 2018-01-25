@@ -6,10 +6,8 @@
 
 namespace gcm {
 
-ConnectionHandler::ConnectionHandler() {
-}
+ConnectionHandler::ConnectionHandler() = default;
 
-ConnectionHandler::~ConnectionHandler() {
-}
+ConnectionHandler::~ConnectionHandler() = default;
 
 }  // namespace gcm

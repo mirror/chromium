@@ -6,21 +6,18 @@
 
 #include <memory>
 
-FakeOAuth2TokenService::PendingRequest::PendingRequest() {
-}
+FakeOAuth2TokenService::PendingRequest::PendingRequest() = default;
 
 FakeOAuth2TokenService::PendingRequest::PendingRequest(
     const PendingRequest& other) = default;
 
-FakeOAuth2TokenService::PendingRequest::~PendingRequest() {
-}
+FakeOAuth2TokenService::PendingRequest::~PendingRequest() = default;
 
 FakeOAuth2TokenService::FakeOAuth2TokenService()
     : OAuth2TokenService(
           std::make_unique<FakeOAuth2TokenServiceDelegate>(nullptr)) {}
 
-FakeOAuth2TokenService::~FakeOAuth2TokenService() {
-}
+FakeOAuth2TokenService::~FakeOAuth2TokenService() = default;
 
 void FakeOAuth2TokenService::FetchOAuth2Token(
     RequestImpl* request,

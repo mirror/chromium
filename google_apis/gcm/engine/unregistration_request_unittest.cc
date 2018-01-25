@@ -62,7 +62,7 @@ UnregistrationRequestTest::UnregistrationRequestTest()
       callback_called_(false),
       status_(UnregistrationRequest::UNREGISTRATION_STATUS_COUNT) {}
 
-UnregistrationRequestTest::~UnregistrationRequestTest() {}
+UnregistrationRequestTest::~UnregistrationRequestTest() = default;
 
 void UnregistrationRequestTest::UnregistrationCallback(
     UnregistrationRequest::Status status) {
@@ -85,11 +85,9 @@ class GCMUnregistrationRequestTest : public UnregistrationRequestTest {
   void CreateRequest();
 };
 
-GCMUnregistrationRequestTest::GCMUnregistrationRequestTest() {
-}
+GCMUnregistrationRequestTest::GCMUnregistrationRequestTest() = default;
 
-GCMUnregistrationRequestTest::~GCMUnregistrationRequestTest() {
-}
+GCMUnregistrationRequestTest::~GCMUnregistrationRequestTest() = default;
 
 void GCMUnregistrationRequestTest::CreateRequest() {
   UnregistrationRequest::RequestInfo request_info(kAndroidId, kSecurityToken,
@@ -327,11 +325,9 @@ class InstaceIDDeleteTokenRequestTest : public UnregistrationRequestTest {
                      const std::string& scope);
 };
 
-InstaceIDDeleteTokenRequestTest::InstaceIDDeleteTokenRequestTest() {
-}
+InstaceIDDeleteTokenRequestTest::InstaceIDDeleteTokenRequestTest() = default;
 
-InstaceIDDeleteTokenRequestTest::~InstaceIDDeleteTokenRequestTest() {
-}
+InstaceIDDeleteTokenRequestTest::~InstaceIDDeleteTokenRequestTest() = default;
 
 void InstaceIDDeleteTokenRequestTest::CreateRequest(
     bool use_subtype,

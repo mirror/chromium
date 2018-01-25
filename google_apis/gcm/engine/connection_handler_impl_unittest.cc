@@ -198,8 +198,7 @@ GCMConnectionHandlerImplTest::GCMConnectionHandlerImplTest()
       net::IPAddress::IPv4Localhost(), kMCSPort);
 }
 
-GCMConnectionHandlerImplTest::~GCMConnectionHandlerImplTest() {
-}
+GCMConnectionHandlerImplTest::~GCMConnectionHandlerImplTest() = default;
 
 net::StreamSocket* GCMConnectionHandlerImplTest::BuildSocket(
     const ReadList& read_list,

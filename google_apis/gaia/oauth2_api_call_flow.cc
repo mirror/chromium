@@ -33,7 +33,7 @@ static std::string MakeAuthorizationHeader(const std::string& auth_token) {
 OAuth2ApiCallFlow::OAuth2ApiCallFlow() : state_(INITIAL) {
 }
 
-OAuth2ApiCallFlow::~OAuth2ApiCallFlow() {}
+OAuth2ApiCallFlow::~OAuth2ApiCallFlow() = default;
 
 void OAuth2ApiCallFlow::Start(net::URLRequestContextGetter* context,
                               const std::string& access_token) {

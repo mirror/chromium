@@ -140,8 +140,7 @@ GaiaUrls::GaiaUrls() {
   gaia_login_form_realm_ = gaia_url_;
 }
 
-GaiaUrls::~GaiaUrls() {
-}
+GaiaUrls::~GaiaUrls() = default;
 
 const GURL& GaiaUrls::google_url() const {
   return google_url_;

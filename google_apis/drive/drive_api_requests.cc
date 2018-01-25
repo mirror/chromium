@@ -153,8 +153,7 @@ std::string CreateMultipartUploadMetadataJson(
 MultipartHttpResponse::MultipartHttpResponse() : code(HTTP_SUCCESS) {
 }
 
-MultipartHttpResponse::~MultipartHttpResponse() {
-}
+MultipartHttpResponse::~MultipartHttpResponse() = default;
 
 // The |response| must be multipart/mixed format that contains child HTTP
 // response of drive batch request.
@@ -290,8 +289,7 @@ bool ParseMultipartResponse(const std::string& content_type,
 Property::Property() : visibility_(VISIBILITY_PRIVATE) {
 }
 
-Property::~Property() {
-}
+Property::~Property() = default;
 
 //============================ DriveApiPartialFieldRequest ====================
 
@@ -299,8 +297,7 @@ DriveApiPartialFieldRequest::DriveApiPartialFieldRequest(
     RequestSender* sender) : UrlFetchRequestBase(sender) {
 }
 
-DriveApiPartialFieldRequest::~DriveApiPartialFieldRequest() {
-}
+DriveApiPartialFieldRequest::~DriveApiPartialFieldRequest() = default;
 
 GURL DriveApiPartialFieldRequest::GetURL() const {
   GURL url = GetURLInternal();
@@ -322,7 +319,7 @@ FilesGetRequest::FilesGetRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesGetRequest::~FilesGetRequest() {}
+FilesGetRequest::~FilesGetRequest() = default;
 
 GURL FilesGetRequest::GetURLInternal() const {
   return url_generator_.GetFilesGetUrl(file_id_,
@@ -341,7 +338,7 @@ FilesAuthorizeRequest::FilesAuthorizeRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesAuthorizeRequest::~FilesAuthorizeRequest() {}
+FilesAuthorizeRequest::~FilesAuthorizeRequest() = default;
 
 net::URLFetcher::RequestType FilesAuthorizeRequest::GetRequestType() const {
   return net::URLFetcher::POST;
@@ -363,7 +360,7 @@ FilesInsertRequest::FilesInsertRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesInsertRequest::~FilesInsertRequest() {}
+FilesInsertRequest::~FilesInsertRequest() = default;
 
 net::URLFetcher::RequestType FilesInsertRequest::GetRequestType() const {
   return net::URLFetcher::POST;
@@ -425,7 +422,7 @@ FilesPatchRequest::FilesPatchRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesPatchRequest::~FilesPatchRequest() {}
+FilesPatchRequest::~FilesPatchRequest() = default;
 
 net::URLFetcher::RequestType FilesPatchRequest::GetRequestType() const {
   return net::URLFetcher::PATCH;
@@ -494,8 +491,7 @@ FilesCopyRequest::FilesCopyRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesCopyRequest::~FilesCopyRequest() {
-}
+FilesCopyRequest::~FilesCopyRequest() = default;
 
 net::URLFetcher::RequestType FilesCopyRequest::GetRequestType() const {
   return net::URLFetcher::POST;
@@ -549,7 +545,7 @@ TeamDriveListRequest::TeamDriveListRequest(
   DCHECK(!callback.is_null());
 }
 
-TeamDriveListRequest::~TeamDriveListRequest() {}
+TeamDriveListRequest::~TeamDriveListRequest() = default;
 
 GURL TeamDriveListRequest::GetURLInternal() const {
   return url_generator_.GetTeamDriveListUrl(max_results_, page_token_);
@@ -567,7 +563,7 @@ FilesListRequest::FilesListRequest(RequestSender* sender,
   DCHECK(!callback.is_null());
 }
 
-FilesListRequest::~FilesListRequest() {}
+FilesListRequest::~FilesListRequest() = default;
 
 GURL FilesListRequest::GetURLInternal() const {
   return url_generator_.GetFilesListUrl(max_results_, page_token_, corpora_,
@@ -583,8 +579,7 @@ FilesListNextPageRequest::FilesListNextPageRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesListNextPageRequest::~FilesListNextPageRequest() {
-}
+FilesListNextPageRequest::~FilesListNextPageRequest() = default;
 
 GURL FilesListNextPageRequest::GetURLInternal() const {
   return next_link_;
@@ -601,7 +596,7 @@ FilesDeleteRequest::FilesDeleteRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesDeleteRequest::~FilesDeleteRequest() {}
+FilesDeleteRequest::~FilesDeleteRequest() = default;
 
 net::URLFetcher::RequestType FilesDeleteRequest::GetRequestType() const {
   return net::URLFetcher::DELETE_REQUEST;
@@ -629,7 +624,7 @@ FilesTrashRequest::FilesTrashRequest(
   DCHECK(!callback.is_null());
 }
 
-FilesTrashRequest::~FilesTrashRequest() {}
+FilesTrashRequest::~FilesTrashRequest() = default;
 
 net::URLFetcher::RequestType FilesTrashRequest::GetRequestType() const {
   return net::URLFetcher::POST;
@@ -650,7 +645,7 @@ AboutGetRequest::AboutGetRequest(
   DCHECK(!callback.is_null());
 }
 
-AboutGetRequest::~AboutGetRequest() {}
+AboutGetRequest::~AboutGetRequest() = default;
 
 GURL AboutGetRequest::GetURLInternal() const {
   return url_generator_.GetAboutGetUrl();
@@ -670,7 +665,7 @@ ChangesListRequest::ChangesListRequest(
   DCHECK(!callback.is_null());
 }
 
-ChangesListRequest::~ChangesListRequest() {}
+ChangesListRequest::~ChangesListRequest() = default;
 
 GURL ChangesListRequest::GetURLInternal() const {
   return url_generator_.GetChangesListUrl(include_deleted_, max_results_,
@@ -687,8 +682,7 @@ ChangesListNextPageRequest::ChangesListNextPageRequest(
   DCHECK(!callback.is_null());
 }
 
-ChangesListNextPageRequest::~ChangesListNextPageRequest() {
-}
+ChangesListNextPageRequest::~ChangesListNextPageRequest() = default;
 
 GURL ChangesListNextPageRequest::GetURLInternal() const {
   return next_link_;
@@ -707,7 +701,7 @@ AppsListRequest::AppsListRequest(
   DCHECK(!callback.is_null());
 }
 
-AppsListRequest::~AppsListRequest() {}
+AppsListRequest::~AppsListRequest() = default;
 
 GURL AppsListRequest::GetURLInternal() const {
   return url_generator_.GetAppsListUrl(use_internal_endpoint_);
@@ -723,7 +717,7 @@ AppsDeleteRequest::AppsDeleteRequest(RequestSender* sender,
   DCHECK(!callback.is_null());
 }
 
-AppsDeleteRequest::~AppsDeleteRequest() {}
+AppsDeleteRequest::~AppsDeleteRequest() = default;
 
 net::URLFetcher::RequestType AppsDeleteRequest::GetRequestType() const {
   return net::URLFetcher::DELETE_REQUEST;
@@ -744,7 +738,7 @@ ChildrenInsertRequest::ChildrenInsertRequest(
   DCHECK(!callback.is_null());
 }
 
-ChildrenInsertRequest::~ChildrenInsertRequest() {}
+ChildrenInsertRequest::~ChildrenInsertRequest() = default;
 
 net::URLFetcher::RequestType ChildrenInsertRequest::GetRequestType() const {
   return net::URLFetcher::POST;
@@ -778,7 +772,7 @@ ChildrenDeleteRequest::ChildrenDeleteRequest(
   DCHECK(!callback.is_null());
 }
 
-ChildrenDeleteRequest::~ChildrenDeleteRequest() {}
+ChildrenDeleteRequest::~ChildrenDeleteRequest() = default;
 
 net::URLFetcher::RequestType ChildrenDeleteRequest::GetRequestType() const {
   return net::URLFetcher::DELETE_REQUEST;
@@ -803,7 +797,7 @@ InitiateUploadNewFileRequest::InitiateUploadNewFileRequest(
       parent_resource_id_(parent_resource_id),
       title_(title) {}
 
-InitiateUploadNewFileRequest::~InitiateUploadNewFileRequest() {}
+InitiateUploadNewFileRequest::~InitiateUploadNewFileRequest() = default;
 
 GURL InitiateUploadNewFileRequest::GetURL() const {
   return url_generator_.GetInitiateUploadNewFileUrl(!modified_date_.is_null());
@@ -858,7 +852,8 @@ InitiateUploadExistingFileRequest::InitiateUploadExistingFileRequest(
       resource_id_(resource_id),
       etag_(etag) {}
 
-InitiateUploadExistingFileRequest::~InitiateUploadExistingFileRequest() {}
+InitiateUploadExistingFileRequest::~InitiateUploadExistingFileRequest() =
+    default;
 
 GURL InitiateUploadExistingFileRequest::GetURL() const {
   return url_generator_.GetInitiateUploadExistingFileUrl(
@@ -934,7 +929,7 @@ ResumeUploadRequest::ResumeUploadRequest(
   DCHECK(!callback_.is_null());
 }
 
-ResumeUploadRequest::~ResumeUploadRequest() {}
+ResumeUploadRequest::~ResumeUploadRequest() = default;
 
 void ResumeUploadRequest::OnRangeRequestComplete(
     const UploadRangeResponse& response,
@@ -963,7 +958,7 @@ GetUploadStatusRequest::GetUploadStatusRequest(
   DCHECK(!callback.is_null());
 }
 
-GetUploadStatusRequest::~GetUploadStatusRequest() {}
+GetUploadStatusRequest::~GetUploadStatusRequest() = default;
 
 void GetUploadStatusRequest::OnRangeRequestComplete(
     const UploadRangeResponse& response,
@@ -1002,8 +997,7 @@ MultipartUploadNewFileDelegate::MultipartUploadNewFileDelegate(
       has_modified_date_(!modified_date.is_null()),
       url_generator_(url_generator) {}
 
-MultipartUploadNewFileDelegate::~MultipartUploadNewFileDelegate() {
-}
+MultipartUploadNewFileDelegate::~MultipartUploadNewFileDelegate() = default;
 
 GURL MultipartUploadNewFileDelegate::GetURL() const {
   return url_generator_.GetMultipartUploadNewFileUrl(has_modified_date_);
@@ -1048,8 +1042,8 @@ MultipartUploadExistingFileDelegate::MultipartUploadExistingFileDelegate(
       has_modified_date_(!modified_date.is_null()),
       url_generator_(url_generator) {}
 
-MultipartUploadExistingFileDelegate::~MultipartUploadExistingFileDelegate() {
-}
+MultipartUploadExistingFileDelegate::~MultipartUploadExistingFileDelegate() =
+    default;
 
 std::vector<std::string>
 MultipartUploadExistingFileDelegate::GetExtraRequestHeaders() const {
@@ -1088,8 +1082,7 @@ DownloadFileRequest::DownloadFileRequest(
           output_file_path) {
 }
 
-DownloadFileRequest::~DownloadFileRequest() {
-}
+DownloadFileRequest::~DownloadFileRequest() = default;
 
 //========================== PermissionsInsertRequest ==========================
 
@@ -1103,8 +1096,7 @@ PermissionsInsertRequest::PermissionsInsertRequest(
       role_(PERMISSION_ROLE_READER) {
 }
 
-PermissionsInsertRequest::~PermissionsInsertRequest() {
-}
+PermissionsInsertRequest::~PermissionsInsertRequest() = default;
 
 GURL PermissionsInsertRequest::GetURL() const {
   return url_generator_.GetPermissionsInsertUrl(id_);
@@ -1167,8 +1159,7 @@ SingleBatchableDelegateRequest::SingleBatchableDelegateRequest(
       delegate_(std::move(delegate)),
       weak_ptr_factory_(this) {}
 
-SingleBatchableDelegateRequest::~SingleBatchableDelegateRequest() {
-}
+SingleBatchableDelegateRequest::~SingleBatchableDelegateRequest() = default;
 
 GURL SingleBatchableDelegateRequest::GetURL() const {
   return delegate_->GetURL();
@@ -1221,8 +1212,7 @@ BatchUploadChildEntry::BatchUploadChildEntry(BatchableDelegate* request)
     : request(request), prepared(false), data_offset(0), data_size(0) {
 }
 
-BatchUploadChildEntry::~BatchUploadChildEntry() {
-}
+BatchUploadChildEntry::~BatchUploadChildEntry() = default;
 
 BatchUploadRequest::BatchUploadRequest(
     RequestSender* sender,
@@ -1235,8 +1225,7 @@ BatchUploadRequest::BatchUploadRequest(
       weak_ptr_factory_(this) {
 }
 
-BatchUploadRequest::~BatchUploadRequest() {
-}
+BatchUploadRequest::~BatchUploadRequest() = default;
 
 void BatchUploadRequest::SetBoundaryForTesting(const std::string& boundary) {
   boundary_ = boundary;

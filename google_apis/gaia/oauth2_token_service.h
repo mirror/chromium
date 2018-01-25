@@ -112,7 +112,7 @@ class OAuth2TokenService {
     virtual void OnEndBatchChanges() {}
 
    protected:
-    virtual ~Observer() {}
+    virtual ~Observer() = default;
   };
 
   // Classes that want to monitor status of access token and access token

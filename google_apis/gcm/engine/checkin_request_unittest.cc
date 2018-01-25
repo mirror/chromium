@@ -62,7 +62,7 @@ CheckinRequestTest::CheckinRequestTest()
       checkin_device_type_(0) {
 }
 
-CheckinRequestTest::~CheckinRequestTest() {}
+CheckinRequestTest::~CheckinRequestTest() = default;
 
 void CheckinRequestTest::FetcherCallback(
     net::HttpStatusCode response_code,

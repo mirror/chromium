@@ -94,7 +94,7 @@ CheckinRequest::RequestInfo::RequestInfo(
 
 CheckinRequest::RequestInfo::RequestInfo(const RequestInfo& other) = default;
 
-CheckinRequest::RequestInfo::~RequestInfo() {}
+CheckinRequest::RequestInfo::~RequestInfo() = default;
 
 CheckinRequest::CheckinRequest(
     const GURL& checkin_url,
@@ -112,7 +112,7 @@ CheckinRequest::CheckinRequest(
       weak_ptr_factory_(this) {
 }
 
-CheckinRequest::~CheckinRequest() {}
+CheckinRequest::~CheckinRequest() = default;
 
 void CheckinRequest::Start() {
   DCHECK(!url_fetcher_.get());

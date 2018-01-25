@@ -257,7 +257,7 @@ AboutResource::AboutResource()
       quota_bytes_total_(0),
       quota_bytes_used_aggregate_(0) {}
 
-AboutResource::~AboutResource() {}
+AboutResource::~AboutResource() = default;
 
 // static
 std::unique_ptr<AboutResource> AboutResource::CreateFrom(
@@ -300,7 +300,7 @@ bool AboutResource::Parse(const base::Value& value) {
 
 DriveAppIcon::DriveAppIcon() : category_(UNKNOWN), icon_side_length_(0) {}
 
-DriveAppIcon::~DriveAppIcon() {}
+DriveAppIcon::~DriveAppIcon() = default;
 
 // static
 void DriveAppIcon::RegisterJSONConverter(
@@ -356,7 +356,7 @@ AppResource::AppResource()
       removable_(false) {
 }
 
-AppResource::~AppResource() {}
+AppResource::~AppResource() = default;
 
 // static
 void AppResource::RegisterJSONConverter(
@@ -403,9 +403,9 @@ bool AppResource::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // AppList implementation
 
-AppList::AppList() {}
+AppList::AppList() = default;
 
-AppList::~AppList() {}
+AppList::~AppList() = default;
 
 // static
 void AppList::RegisterJSONConverter(
@@ -456,7 +456,7 @@ TeamDriveCapabilities::TeamDriveCapabilities()
 TeamDriveCapabilities::TeamDriveCapabilities(const TeamDriveCapabilities& src) =
     default;
 
-TeamDriveCapabilities::~TeamDriveCapabilities(){}
+TeamDriveCapabilities::~TeamDriveCapabilities() = default;
 
 // static
 void TeamDriveCapabilities::RegisterJSONConverter(
@@ -488,9 +488,9 @@ void TeamDriveCapabilities::RegisterJSONConverter(
 ////////////////////////////////////////////////////////////////////////////////
 // TeamDriveResource implementation
 
-TeamDriveResource::TeamDriveResource() {}
+TeamDriveResource::TeamDriveResource() = default;
 
-TeamDriveResource::~TeamDriveResource() {}
+TeamDriveResource::~TeamDriveResource() = default;
 
 // static
 std::unique_ptr<TeamDriveResource> TeamDriveResource::CreateFrom(
@@ -525,9 +525,9 @@ bool TeamDriveResource::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // TeamDriveList implementation
 
-TeamDriveList::TeamDriveList() {}
+TeamDriveList::TeamDriveList() = default;
 
-TeamDriveList::~TeamDriveList() {}
+TeamDriveList::~TeamDriveList() = default;
 
 // static
 void TeamDriveList::RegisterJSONConverter(
@@ -566,9 +566,9 @@ bool TeamDriveList::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // ParentReference implementation
 
-ParentReference::ParentReference() {}
+ParentReference::ParentReference() = default;
 
-ParentReference::~ParentReference() {}
+ParentReference::~ParentReference() = default;
 
 // static
 void ParentReference::RegisterJSONConverter(
@@ -604,7 +604,7 @@ FileResource::FileResource() : shared_(false), file_size_(kUnsetFileSize) {}
 
 FileResource::FileResource(const FileResource& other) = default;
 
-FileResource::~FileResource() {}
+FileResource::~FileResource() = default;
 
 // static
 void FileResource::RegisterJSONConverter(
@@ -688,9 +688,9 @@ bool FileResource::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // FileList implementation
 
-FileList::FileList() {}
+FileList::FileList() = default;
 
-FileList::~FileList() {}
+FileList::~FileList() = default;
 
 // static
 void FileList::RegisterJSONConverter(
@@ -732,7 +732,7 @@ bool FileList::Parse(const base::Value& value) {
 ChangeResource::ChangeResource()
     : change_id_(0), type_(UNKNOWN), deleted_(false) {}
 
-ChangeResource::~ChangeResource() {}
+ChangeResource::~ChangeResource() = default;
 
 // static
 void ChangeResource::RegisterJSONConverter(
@@ -791,7 +791,7 @@ bool ChangeResource::GetType(base::StringPiece type_name,
 
 ChangeList::ChangeList() : largest_change_id_(0) {}
 
-ChangeList::~ChangeList() {}
+ChangeList::~ChangeList() = default;
 
 // static
 void ChangeList::RegisterJSONConverter(
@@ -837,7 +837,7 @@ FileLabels::FileLabels()
     : trashed_(false),
       starred_(false) {}
 
-FileLabels::~FileLabels() {}
+FileLabels::~FileLabels() = default;
 
 // static
 void FileLabels::RegisterJSONConverter(
@@ -873,7 +873,7 @@ ImageMediaMetadata::ImageMediaMetadata()
       height_(-1),
       rotation_(-1) {}
 
-ImageMediaMetadata::~ImageMediaMetadata() {}
+ImageMediaMetadata::~ImageMediaMetadata() = default;
 
 // static
 void ImageMediaMetadata::RegisterJSONConverter(

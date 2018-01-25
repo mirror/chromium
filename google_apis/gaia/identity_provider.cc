@@ -4,9 +4,9 @@
 
 #include "google_apis/gaia/identity_provider.h"
 
-IdentityProvider::Observer::~Observer() {}
+IdentityProvider::Observer::~Observer() = default;
 
-IdentityProvider::~IdentityProvider() {}
+IdentityProvider::~IdentityProvider() = default;
 
 void IdentityProvider::AddActiveAccountRefreshTokenObserver(
     OAuth2TokenService::Observer* observer) {

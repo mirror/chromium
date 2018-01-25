@@ -22,7 +22,7 @@ GaiaAuthConsumer::ClientLoginResult::ClientLoginResult(
 GaiaAuthConsumer::ClientLoginResult::ClientLoginResult(
     const ClientLoginResult& other) = default;
 
-GaiaAuthConsumer::ClientLoginResult::~ClientLoginResult() {}
+GaiaAuthConsumer::ClientLoginResult::~ClientLoginResult() = default;
 
 bool GaiaAuthConsumer::ClientLoginResult::operator==(
     const ClientLoginResult &b) const {

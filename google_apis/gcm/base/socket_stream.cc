@@ -32,8 +32,7 @@ SocketInputStream::SocketInputStream(net::StreamSocket* socket)
   DCHECK(socket->IsConnected());
 }
 
-SocketInputStream::~SocketInputStream() {
-}
+SocketInputStream::~SocketInputStream() = default;
 
 bool SocketInputStream::Next(const void** data, int* size) {
   if (GetState() != EMPTY && GetState() != READY) {
@@ -226,8 +225,7 @@ SocketOutputStream::SocketOutputStream(
   DCHECK(socket->IsConnected());
 }
 
-SocketOutputStream::~SocketOutputStream() {
-}
+SocketOutputStream::~SocketOutputStream() = default;
 
 bool SocketOutputStream::Next(void** data, int* size) {
   DCHECK_NE(GetState(), CLOSED);

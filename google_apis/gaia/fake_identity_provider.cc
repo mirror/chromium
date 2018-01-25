@@ -10,8 +10,7 @@ FakeIdentityProvider::FakeIdentityProvider(OAuth2TokenService* token_service)
     : token_service_(token_service) {
 }
 
-FakeIdentityProvider::~FakeIdentityProvider() {
-}
+FakeIdentityProvider::~FakeIdentityProvider() = default;
 
 void FakeIdentityProvider::LogIn(const std::string& account_id) {
   account_id_ = account_id;

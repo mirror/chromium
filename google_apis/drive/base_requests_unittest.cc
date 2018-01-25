@@ -42,7 +42,7 @@ class FakeUrlFetchRequest : public UrlFetchRequestBase {
         url_(url) {
   }
 
-  ~FakeUrlFetchRequest() override {}
+  ~FakeUrlFetchRequest() override = default;
 
  protected:
   GURL GetURL() const override { return url_; }
@@ -81,7 +81,7 @@ class FakeMultipartUploadRequest : public MultipartUploadRequestBase {
         upload_content_type_(upload_content_type),
         upload_content_data_(upload_content_data) {}
 
-  ~FakeMultipartUploadRequest() override {}
+  ~FakeMultipartUploadRequest() override = default;
 
   net::URLFetcher::RequestType GetRequestType() const override {
     return net::URLFetcher::POST;

@@ -88,7 +88,7 @@ MockFetcher::MockFetcher(const GURL& url,
   SetResponseString(results);
 }
 
-MockFetcher::~MockFetcher() {}
+MockFetcher::~MockFetcher() = default;
 
 void MockFetcher::Start() {
   delegate()->OnURLFetchComplete(this);
@@ -170,8 +170,8 @@ class GaiaAuthFetcherTest : public testing::Test {
 
 class MockGaiaConsumer : public GaiaAuthConsumer {
  public:
-  MockGaiaConsumer() {}
-  ~MockGaiaConsumer() {}
+  MockGaiaConsumer() = default;
+  ~MockGaiaConsumer() = default;
 
   MOCK_METHOD1(OnClientLoginSuccess, void(const ClientLoginResult& result));
   MOCK_METHOD2(OnIssueAuthTokenSuccess, void(const std::string& service,

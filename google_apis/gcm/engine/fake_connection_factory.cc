@@ -17,8 +17,7 @@ FakeConnectionFactory::FakeConnectionFactory()
       connection_listener_(nullptr) {
 }
 
-FakeConnectionFactory::~FakeConnectionFactory() {
-}
+FakeConnectionFactory::~FakeConnectionFactory() = default;
 
 void FakeConnectionFactory::Initialize(
     const BuildLoginRequestCallback& request_builder,

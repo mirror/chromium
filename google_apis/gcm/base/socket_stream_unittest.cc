@@ -86,7 +86,7 @@ GCMSocketStreamTest::GCMSocketStreamTest() {
       net::IPAddress::IPv4Localhost(), 5228);
 }
 
-GCMSocketStreamTest::~GCMSocketStreamTest() {}
+GCMSocketStreamTest::~GCMSocketStreamTest() = default;
 
 void GCMSocketStreamTest::BuildSocket(const ReadList& read_list,
                                       const WriteList& write_list) {

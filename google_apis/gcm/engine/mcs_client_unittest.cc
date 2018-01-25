@@ -106,7 +106,7 @@ class TestMCSClient : public MCSClient {
 class TestConnectionListener : public ConnectionFactory::ConnectionListener {
  public:
   TestConnectionListener() : disconnect_counter_(0) { }
-  ~TestConnectionListener() override { }
+  ~TestConnectionListener() override = default;
 
   void OnConnected(const GURL& current_server,
                    const net::IPEndPoint& ip_endpoint) override { }
@@ -197,7 +197,7 @@ MCSClientTest::MCSClientTest()
   clock_.Advance(base::TimeDelta::FromSeconds(1));
 }
 
-MCSClientTest::~MCSClientTest() {}
+MCSClientTest::~MCSClientTest() = default;
 
 void MCSClientTest::SetUp() {
   testing::Test::SetUp();

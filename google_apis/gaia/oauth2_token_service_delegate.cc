@@ -21,8 +21,7 @@ OAuth2TokenServiceDelegate::OAuth2TokenServiceDelegate()
     : batch_change_depth_(0) {
 }
 
-OAuth2TokenServiceDelegate::~OAuth2TokenServiceDelegate() {
-}
+OAuth2TokenServiceDelegate::~OAuth2TokenServiceDelegate() = default;
 
 bool OAuth2TokenServiceDelegate::ValidateAccountId(
     const std::string& account_id) const {

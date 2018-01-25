@@ -6,11 +6,9 @@
 
 namespace gcm {
 
-FakeGCMStatsRecorder::FakeGCMStatsRecorder() {
-}
+FakeGCMStatsRecorder::FakeGCMStatsRecorder() = default;
 
-FakeGCMStatsRecorder::~FakeGCMStatsRecorder() {
-}
+FakeGCMStatsRecorder::~FakeGCMStatsRecorder() = default;
 
 void FakeGCMStatsRecorder::RecordCheckinInitiated(uint64_t android_id) {}
 

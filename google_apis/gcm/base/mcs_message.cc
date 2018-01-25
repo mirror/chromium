@@ -11,7 +11,7 @@
 
 namespace gcm {
 
-MCSMessage::Core::Core() {}
+MCSMessage::Core::Core() = default;
 
 MCSMessage::Core::Core(uint8_t tag,
                        const google::protobuf::MessageLite& protobuf) {
@@ -26,7 +26,7 @@ MCSMessage::Core::Core(
   protobuf_ = std::move(protobuf);
 }
 
-MCSMessage::Core::~Core() {}
+MCSMessage::Core::~Core() = default;
 
 const google::protobuf::MessageLite& MCSMessage::Core::Get() const {
   return *protobuf_;
@@ -57,8 +57,7 @@ MCSMessage::MCSMessage(
 
 MCSMessage::MCSMessage(const MCSMessage& other) = default;
 
-MCSMessage::~MCSMessage() {
-}
+MCSMessage::~MCSMessage() = default;
 
 bool MCSMessage::IsValid() const {
   return core_.get() != NULL;

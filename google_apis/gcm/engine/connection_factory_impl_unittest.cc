@@ -291,7 +291,7 @@ ConnectionFactoryImplTest::ConnectionFactoryImplTest()
       ConnectionHandler::ProtoReceivedCallback(),
       ConnectionHandler::ProtoSentCallback());
 }
-ConnectionFactoryImplTest::~ConnectionFactoryImplTest() {}
+ConnectionFactoryImplTest::~ConnectionFactoryImplTest() = default;
 
 void ConnectionFactoryImplTest::WaitForConnections() {
   run_loop_->Run();

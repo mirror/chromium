@@ -63,7 +63,7 @@ GServicesSettingsTest::GServicesSettingsTest()
     : gservices_settings_() {
 }
 
-GServicesSettingsTest::~GServicesSettingsTest() {}
+GServicesSettingsTest::~GServicesSettingsTest() = default;
 
 void GServicesSettingsTest::CheckAllSetToDefault() {
   EXPECT_EQ(base::TimeDelta::FromSeconds(kDefaultCheckinInterval),

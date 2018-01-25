@@ -48,7 +48,7 @@ class MockURLFetcherFactory : public net::URLFetcherFactory,
       : net::ScopedURLFetcherFactory(this),
         success_(true) {
   }
-  ~MockURLFetcherFactory() {}
+  ~MockURLFetcherFactory() = default;
   std::unique_ptr<net::URLFetcher> CreateURLFetcher(
       int id,
       const GURL& url,

@@ -40,8 +40,8 @@ class GCM_EXPORT GCMStatsRecorder {
     virtual void OnActivityRecorded() = 0;
   };
 
-  GCMStatsRecorder() {}
-  virtual ~GCMStatsRecorder() {}
+  GCMStatsRecorder() = default;
+  virtual ~GCMStatsRecorder() = default;
 
   // Records that a check-in has been initiated.
   virtual void RecordCheckinInitiated(uint64_t android_id) = 0;

@@ -18,8 +18,7 @@ OAuth2AccessTokenFetcherImmediateError::FailCaller::FailCaller(
                  this));
 }
 
-OAuth2AccessTokenFetcherImmediateError::FailCaller::~FailCaller() {
-}
+OAuth2AccessTokenFetcherImmediateError::FailCaller::~FailCaller() = default;
 
 void OAuth2AccessTokenFetcherImmediateError::FailCaller::run() {
   if (fetcher_) {

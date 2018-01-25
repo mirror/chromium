@@ -25,7 +25,7 @@ class OAuth2AccessTokenConsumer {
   virtual void OnGetTokenFailure(const GoogleServiceAuthError& error) {}
 
  protected:
-  virtual ~OAuth2AccessTokenConsumer() {}
+  virtual ~OAuth2AccessTokenConsumer() = default;
 };
 
 #endif  // GOOGLE_APIS_GAIA_OAUTH2_ACCESS_TOKEN_CONSUMER_H_

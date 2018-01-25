@@ -51,7 +51,7 @@ class MockOAuthFetcher : public net::TestURLFetcher {
     SetResponseString(results);
   }
 
-  ~MockOAuthFetcher() override {}
+  ~MockOAuthFetcher() override = default;
 
   void Start() override {
     if ((GetResponseCode() != net::HTTP_OK) && (max_failure_count_ != -1) &&
@@ -90,7 +90,7 @@ class MockOAuthFetcherFactory : public net::URLFetcherFactory,
         response_code_(net::HTTP_OK),
         complete_immediately_(true) {
   }
-  ~MockOAuthFetcherFactory() override {}
+  ~MockOAuthFetcherFactory() override = default;
   std::unique_ptr<net::URLFetcher> CreateURLFetcher(
       int id,
       const GURL& url,
@@ -204,8 +204,8 @@ class GaiaOAuthClientTest : public testing::Test {
 
 class MockGaiaOAuthClientDelegate : public gaia::GaiaOAuthClient::Delegate {
  public:
-  MockGaiaOAuthClientDelegate() {}
-  ~MockGaiaOAuthClientDelegate() {}
+  MockGaiaOAuthClientDelegate() = default;
+  ~MockGaiaOAuthClientDelegate() = default;
 
   MOCK_METHOD3(OnGetTokensResponse, void(const std::string& refresh_token,
                                          const std::string& access_token,

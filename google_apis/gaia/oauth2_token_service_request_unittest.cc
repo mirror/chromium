@@ -50,8 +50,8 @@ TestingOAuth2TokenServiceConsumer::TestingOAuth2TokenServiceConsumer()
       last_error_(GoogleServiceAuthError::AuthErrorNone()) {
 }
 
-TestingOAuth2TokenServiceConsumer::~TestingOAuth2TokenServiceConsumer() {
-}
+TestingOAuth2TokenServiceConsumer::~TestingOAuth2TokenServiceConsumer() =
+    default;
 
 void TestingOAuth2TokenServiceConsumer::OnGetTokenSuccess(
     const OAuth2TokenService::Request* request,
@@ -114,8 +114,7 @@ MockOAuth2TokenService::MockOAuth2TokenService()
       num_invalidate_token_(0) {
 }
 
-MockOAuth2TokenService::~MockOAuth2TokenService() {
-}
+MockOAuth2TokenService::~MockOAuth2TokenService() = default;
 
 void MockOAuth2TokenService::SetResponse(const GoogleServiceAuthError& error,
                                          const std::string& access_token,
@@ -204,8 +203,7 @@ OAuth2TokenService* OAuth2TokenServiceRequestTest::Provider::GetTokenService() {
   return token_service_;
 }
 
-OAuth2TokenServiceRequestTest::Provider::~Provider() {
-}
+OAuth2TokenServiceRequestTest::Provider::~Provider() = default;
 
 TEST_F(OAuth2TokenServiceRequestTest, CreateAndStart_Failure) {
   oauth2_service_->SetResponse(

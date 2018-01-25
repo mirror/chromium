@@ -84,7 +84,7 @@ class GaiaOAuthClient::Core
     USER_INFO,
   };
 
-  ~Core() override {}
+  ~Core() override = default;
 
   void GetUserInfoImpl(RequestType type,
                        const std::string& oauth_access_token,
@@ -475,8 +475,7 @@ GaiaOAuthClient::GaiaOAuthClient(net::URLRequestContextGetter* context_getter) {
   core_ = new Core(context_getter);
 }
 
-GaiaOAuthClient::~GaiaOAuthClient() {
-}
+GaiaOAuthClient::~GaiaOAuthClient() = default;
 
 void GaiaOAuthClient::GetTokensFromAuthCode(
     const OAuthClientInfo& oauth_client_info,

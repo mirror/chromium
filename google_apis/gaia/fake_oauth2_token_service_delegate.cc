@@ -15,8 +15,7 @@ FakeOAuth2TokenServiceDelegate::FakeOAuth2TokenServiceDelegate(
     : request_context_(request_context) {
 }
 
-FakeOAuth2TokenServiceDelegate::~FakeOAuth2TokenServiceDelegate() {
-}
+FakeOAuth2TokenServiceDelegate::~FakeOAuth2TokenServiceDelegate() = default;
 
 OAuth2AccessTokenFetcher*
 FakeOAuth2TokenServiceDelegate::CreateAccessTokenFetcher(

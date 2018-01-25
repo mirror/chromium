@@ -23,8 +23,7 @@ FilesListRequestRunner::FilesListRequestRunner(
       weak_ptr_factory_(this) {
 }
 
-FilesListRequestRunner::~FilesListRequestRunner() {
-}
+FilesListRequestRunner::~FilesListRequestRunner() = default;
 
 CancelCallback FilesListRequestRunner::CreateAndStartWithSizeBackoff(
     int max_results,

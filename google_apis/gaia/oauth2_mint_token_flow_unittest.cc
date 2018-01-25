@@ -127,8 +127,8 @@ static IssueAdviceInfo CreateIssueAdvice() {
 
 class MockDelegate : public OAuth2MintTokenFlow::Delegate {
  public:
-  MockDelegate() {}
-  ~MockDelegate() {}
+  MockDelegate() = default;
+  ~MockDelegate() = default;
 
   MOCK_METHOD2(OnMintTokenSuccess, void(const std::string& access_token,
                                         int time_to_live));
@@ -143,7 +143,7 @@ class MockMintTokenFlow : public OAuth2MintTokenFlow {
   explicit MockMintTokenFlow(MockDelegate* delegate,
                              const OAuth2MintTokenFlow::Parameters& parameters)
       : OAuth2MintTokenFlow(delegate, parameters) {}
-  ~MockMintTokenFlow() {}
+  ~MockMintTokenFlow() = default;
 
   MOCK_METHOD0(CreateAccessTokenFetcher, OAuth2AccessTokenFetcher*());
 };
@@ -152,8 +152,8 @@ class MockMintTokenFlow : public OAuth2MintTokenFlow {
 
 class OAuth2MintTokenFlowTest : public testing::Test {
  public:
-  OAuth2MintTokenFlowTest() {}
-  virtual ~OAuth2MintTokenFlowTest() { }
+  OAuth2MintTokenFlowTest() = default;
+  virtual ~OAuth2MintTokenFlowTest() = default;
 
  protected:
   void CreateFlow(OAuth2MintTokenFlow::Mode mode) {

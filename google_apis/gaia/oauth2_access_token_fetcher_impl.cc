@@ -170,7 +170,7 @@ OAuth2AccessTokenFetcherImpl::OAuth2AccessTokenFetcherImpl(
       refresh_token_(refresh_token),
       state_(INITIAL) {}
 
-OAuth2AccessTokenFetcherImpl::~OAuth2AccessTokenFetcherImpl() {}
+OAuth2AccessTokenFetcherImpl::~OAuth2AccessTokenFetcherImpl() = default;
 
 void OAuth2AccessTokenFetcherImpl::CancelRequest() { fetcher_.reset(); }
 

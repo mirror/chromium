@@ -40,7 +40,7 @@ InstanceIDGetTokenRequestHandler::InstanceIDGetTokenRequestHandler(
   DCHECK(!scope.empty());
 }
 
-InstanceIDGetTokenRequestHandler::~InstanceIDGetTokenRequestHandler() {}
+InstanceIDGetTokenRequestHandler::~InstanceIDGetTokenRequestHandler() = default;
 
 void InstanceIDGetTokenRequestHandler::BuildRequestBody(std::string* body){
   BuildFormEncoding(kScopeKey, scope_, body);

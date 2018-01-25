@@ -15,11 +15,11 @@
 #include "google_apis/gaia/google_service_auth_error.h"
 #include "google_apis/gaia/oauth2_access_token_consumer.h"
 
-OAuth2TokenServiceRequest::TokenServiceProvider::TokenServiceProvider() {
-}
+OAuth2TokenServiceRequest::TokenServiceProvider::TokenServiceProvider() =
+    default;
 
-OAuth2TokenServiceRequest::TokenServiceProvider::~TokenServiceProvider() {
-}
+OAuth2TokenServiceRequest::TokenServiceProvider::~TokenServiceProvider() =
+    default;
 
 // Core serves as the base class for OAuth2TokenService operations.  Each
 // operation should be modeled as a derived type.
@@ -99,8 +99,7 @@ OAuth2TokenServiceRequest::Core::Core(
   DCHECK(token_service_task_runner_.get());
 }
 
-OAuth2TokenServiceRequest::Core::~Core() {
-}
+OAuth2TokenServiceRequest::Core::~Core() = default;
 
 void OAuth2TokenServiceRequest::Core::Start() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -217,8 +216,7 @@ RequestCore::RequestCore(
   DCHECK(!scopes_.empty());
 }
 
-RequestCore::~RequestCore() {
-}
+RequestCore::~RequestCore() = default;
 
 void RequestCore::StartOnTokenServiceThread() {
   DCHECK(token_service_task_runner()->BelongsToCurrentThread());
@@ -312,8 +310,7 @@ InvalidateCore::InvalidateCore(
   DCHECK(!scopes.empty());
 }
 
-InvalidateCore::~InvalidateCore() {
-}
+InvalidateCore::~InvalidateCore() = default;
 
 void InvalidateCore::StartOnTokenServiceThread() {
   DCHECK(token_service_task_runner()->BelongsToCurrentThread());

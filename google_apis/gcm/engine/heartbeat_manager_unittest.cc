@@ -28,8 +28,8 @@ mcs_proto::HeartbeatConfig BuildHeartbeatConfig(int interval_ms) {
 
 class TestHeartbeatManager : public HeartbeatManager {
  public:
-  TestHeartbeatManager() {}
-  ~TestHeartbeatManager() override {}
+  TestHeartbeatManager() = default;
+  ~TestHeartbeatManager() override = default;
 
   // Bypass the heartbeat timer, and send the heartbeat now.
   void TriggerHearbeat();
@@ -49,7 +49,7 @@ void TestHeartbeatManager::TriggerMissedHeartbeatCheck() {
 class HeartbeatManagerTest : public testing::Test {
  public:
   HeartbeatManagerTest();
-  ~HeartbeatManagerTest() override {}
+  ~HeartbeatManagerTest() override = default;
 
   TestHeartbeatManager* manager() const { return manager_.get(); }
   int heartbeats_sent() const { return heartbeats_sent_; }

@@ -26,7 +26,7 @@ class MockUbertokenConsumer : public UbertokenConsumer {
         last_error_(GoogleServiceAuthError::AuthErrorNone()),
         nb_error_(0) {
   }
-  ~MockUbertokenConsumer() override {}
+  ~MockUbertokenConsumer() override = default;
 
   void OnUbertokenSuccess(const std::string& token) override {
     last_token_ = token;

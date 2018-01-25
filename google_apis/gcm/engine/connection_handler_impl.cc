@@ -61,8 +61,7 @@ ConnectionHandlerImpl::ConnectionHandlerImpl(
       weak_ptr_factory_(this) {
 }
 
-ConnectionHandlerImpl::~ConnectionHandlerImpl() {
-}
+ConnectionHandlerImpl::~ConnectionHandlerImpl() = default;
 
 void ConnectionHandlerImpl::Init(
     const mcs_proto::LoginRequest& login_request,

@@ -8,7 +8,7 @@ OAuth2AccessTokenFetcher::OAuth2AccessTokenFetcher(
     OAuth2AccessTokenConsumer* consumer)
     : consumer_(consumer) {}
 
-OAuth2AccessTokenFetcher::~OAuth2AccessTokenFetcher() {}
+OAuth2AccessTokenFetcher::~OAuth2AccessTokenFetcher() = default;
 
 void OAuth2AccessTokenFetcher::FireOnGetTokenSuccess(
     const std::string& access_token,

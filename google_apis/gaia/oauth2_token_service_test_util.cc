@@ -26,8 +26,8 @@ TestingOAuth2TokenServiceConsumer::TestingOAuth2TokenServiceConsumer()
       number_of_errors_(0) {
 }
 
-TestingOAuth2TokenServiceConsumer::~TestingOAuth2TokenServiceConsumer() {
-}
+TestingOAuth2TokenServiceConsumer::~TestingOAuth2TokenServiceConsumer() =
+    default;
 
 void TestingOAuth2TokenServiceConsumer::OnGetTokenSuccess(
     const OAuth2TokenService::Request* request,

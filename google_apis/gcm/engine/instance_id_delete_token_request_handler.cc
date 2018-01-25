@@ -41,7 +41,8 @@ InstanceIDDeleteTokenRequestHandler::InstanceIDDeleteTokenRequestHandler(
   DCHECK(!scope.empty());
 }
 
-InstanceIDDeleteTokenRequestHandler::~InstanceIDDeleteTokenRequestHandler() {}
+InstanceIDDeleteTokenRequestHandler::~InstanceIDDeleteTokenRequestHandler() =
+    default;
 
 void InstanceIDDeleteTokenRequestHandler::BuildRequestBody(std::string* body){
   BuildFormEncoding(kInstanceIDKey, instance_id_, body);

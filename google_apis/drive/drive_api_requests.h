@@ -141,7 +141,7 @@ class DriveApiDataRequest : public DriveApiPartialFieldRequest {
         weak_ptr_factory_(this) {
     DCHECK(!callback_.is_null());
   }
-  ~DriveApiDataRequest() override {}
+  ~DriveApiDataRequest() override = default;
 
  protected:
   // UrlFetchRequestBase overrides.

@@ -61,7 +61,7 @@ class GaiaOAuthClient {
     virtual void OnNetworkError(int response_code) = 0;
 
    protected:
-    virtual ~Delegate() {}
+    virtual ~Delegate() = default;
   };
 
   GaiaOAuthClient(net::URLRequestContextGetter* context_getter);

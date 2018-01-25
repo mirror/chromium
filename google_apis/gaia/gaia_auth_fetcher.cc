@@ -197,7 +197,7 @@ GaiaAuthFetcher::GaiaAuthFetcher(GaiaAuthConsumer* consumer,
       deprecated_client_login_to_oauth2_gurl_(
           GaiaUrls::GetInstance()->deprecated_client_login_to_oauth2_url()) {}
 
-GaiaAuthFetcher::~GaiaAuthFetcher() {}
+GaiaAuthFetcher::~GaiaAuthFetcher() = default;
 
 bool GaiaAuthFetcher::HasPendingFetch() {
   return fetch_pending_;

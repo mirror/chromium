@@ -39,8 +39,7 @@ FakeConnectionHandler::FakeConnectionHandler(
       had_error_(false) {
 }
 
-FakeConnectionHandler::~FakeConnectionHandler() {
-}
+FakeConnectionHandler::~FakeConnectionHandler() = default;
 
 void FakeConnectionHandler::Init(
     const mcs_proto::LoginRequest& login_request,

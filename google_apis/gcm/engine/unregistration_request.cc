@@ -94,11 +94,11 @@ UnregistrationRequest::RequestInfo::RequestInfo(uint64_t android_id,
   DCHECK(!category.empty());
 }
 
-UnregistrationRequest::RequestInfo::~RequestInfo() {}
+UnregistrationRequest::RequestInfo::~RequestInfo() = default;
 
-UnregistrationRequest::CustomRequestHandler::CustomRequestHandler() {}
+UnregistrationRequest::CustomRequestHandler::CustomRequestHandler() = default;
 
-UnregistrationRequest::CustomRequestHandler::~CustomRequestHandler() {}
+UnregistrationRequest::CustomRequestHandler::~CustomRequestHandler() = default;
 
 UnregistrationRequest::UnregistrationRequest(
     const GURL& registration_url,
@@ -123,7 +123,7 @@ UnregistrationRequest::UnregistrationRequest(
   DCHECK_GE(max_retry_count, 0);
 }
 
-UnregistrationRequest::~UnregistrationRequest() {}
+UnregistrationRequest::~UnregistrationRequest() = default;
 
 void UnregistrationRequest::Start() {
   DCHECK(!callback_.is_null());

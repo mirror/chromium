@@ -111,11 +111,11 @@ RegistrationRequest::RequestInfo::RequestInfo(uint64_t android_id,
   DCHECK(!category.empty());
 }
 
-RegistrationRequest::RequestInfo::~RequestInfo() {}
+RegistrationRequest::RequestInfo::~RequestInfo() = default;
 
-RegistrationRequest::CustomRequestHandler::CustomRequestHandler() {}
+RegistrationRequest::CustomRequestHandler::CustomRequestHandler() = default;
 
-RegistrationRequest::CustomRequestHandler::~CustomRequestHandler() {}
+RegistrationRequest::CustomRequestHandler::~CustomRequestHandler() = default;
 
 RegistrationRequest::RegistrationRequest(
     const GURL& registration_url,
@@ -140,7 +140,7 @@ RegistrationRequest::RegistrationRequest(
   DCHECK_GE(max_retry_count, 0);
 }
 
-RegistrationRequest::~RegistrationRequest() {}
+RegistrationRequest::~RegistrationRequest() = default;
 
 void RegistrationRequest::Start() {
   DCHECK(!callback_.is_null());

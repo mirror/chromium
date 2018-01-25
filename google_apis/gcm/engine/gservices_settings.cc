@@ -204,8 +204,7 @@ GServicesSettings::GServicesSettings() : weak_ptr_factory_(this) {
   digest_ = CalculateDigest(settings_);
 }
 
-GServicesSettings::~GServicesSettings() {
-}
+GServicesSettings::~GServicesSettings() = default;
 
 bool GServicesSettings::UpdateFromCheckinResponse(
     const checkin_proto::AndroidCheckinResponse& checkin_response) {

@@ -31,7 +31,7 @@ class RetryingTestingOAuth2TokenServiceConsumer
       const std::string& account_id)
       : oauth2_service_(oauth2_service),
         account_id_(account_id) {}
-  ~RetryingTestingOAuth2TokenServiceConsumer() override {}
+  ~RetryingTestingOAuth2TokenServiceConsumer() override = default;
 
   void OnGetTokenFailure(const OAuth2TokenService::Request* request,
                          const GoogleServiceAuthError& error) override {

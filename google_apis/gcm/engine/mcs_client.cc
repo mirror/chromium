@@ -101,7 +101,7 @@ CollapseKey::CollapseKey(const mcs_proto::DataMessageStanza& message)
       app_id_(message.category()),
       device_user_id_(message.device_user_id()) {}
 
-CollapseKey::~CollapseKey() {}
+CollapseKey::~CollapseKey() = default;
 
 bool CollapseKey::IsValid() const {
   // Device user id is optional, but the application id and token are not.
@@ -136,7 +136,7 @@ struct ReliablePacketInfo {
 ReliablePacketInfo::ReliablePacketInfo()
   : stream_id(0), tag(0) {
 }
-ReliablePacketInfo::~ReliablePacketInfo() {}
+ReliablePacketInfo::~ReliablePacketInfo() = default;
 
 int MCSClient::GetSendQueueSize() const {
   return to_send_.size();
@@ -182,8 +182,7 @@ MCSClient::MCSClient(const std::string& version_string,
       weak_ptr_factory_(this) {
 }
 
-MCSClient::~MCSClient() {
-}
+MCSClient::~MCSClient() = default;
 
 void MCSClient::Initialize(
     const ErrorCallback& error_callback,

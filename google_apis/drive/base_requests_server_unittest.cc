@@ -32,8 +32,7 @@ const char kTestUserAgent[] = "test-user-agent";
 
 class BaseRequestsServerTest : public testing::Test {
  protected:
-  BaseRequestsServerTest() {
-  }
+  BaseRequestsServerTest() = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());

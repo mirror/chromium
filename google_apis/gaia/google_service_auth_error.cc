@@ -27,8 +27,7 @@ GoogleServiceAuthError::Captcha::Captcha(
 
 GoogleServiceAuthError::Captcha::Captcha(const Captcha& other) = default;
 
-GoogleServiceAuthError::Captcha::~Captcha() {
-}
+GoogleServiceAuthError::Captcha::~Captcha() = default;
 
 bool GoogleServiceAuthError::Captcha::operator==(const Captcha& b) const {
   return (token == b.token &&
@@ -52,8 +51,7 @@ GoogleServiceAuthError::SecondFactor::SecondFactor(
 GoogleServiceAuthError::SecondFactor::SecondFactor(const SecondFactor& other) =
     default;
 
-GoogleServiceAuthError::SecondFactor::~SecondFactor() {
-}
+GoogleServiceAuthError::SecondFactor::~SecondFactor() = default;
 
 bool GoogleServiceAuthError::SecondFactor::operator==(
     const SecondFactor& b) const {

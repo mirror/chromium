@@ -65,8 +65,7 @@ AccountMapping::AccountMapping() : status(NEW) {
 
 AccountMapping::AccountMapping(const AccountMapping& other) = default;
 
-AccountMapping::~AccountMapping() {
-}
+AccountMapping::~AccountMapping() = default;
 
 std::string AccountMapping::SerializeAsString() const {
   std::string value;

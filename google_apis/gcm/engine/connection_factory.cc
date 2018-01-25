@@ -6,10 +6,10 @@
 
 namespace gcm {
 
-ConnectionFactory::ConnectionListener::ConnectionListener() {}
-ConnectionFactory::ConnectionListener::~ConnectionListener() {}
+ConnectionFactory::ConnectionListener::ConnectionListener() = default;
+ConnectionFactory::ConnectionListener::~ConnectionListener() = default;
 
-ConnectionFactory::ConnectionFactory() {}
-ConnectionFactory::~ConnectionFactory() {}
+ConnectionFactory::ConnectionFactory() = default;
+ConnectionFactory::~ConnectionFactory() = default;
 
 }  // namespace gcm

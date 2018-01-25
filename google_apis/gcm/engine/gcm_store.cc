@@ -13,7 +13,7 @@ GCMStore::LoadResult::LoadResult()
       device_security_token(0) {
 }
 
-GCMStore::LoadResult::~LoadResult() {}
+GCMStore::LoadResult::~LoadResult() = default;
 
 void GCMStore::LoadResult::Reset() {
   device_android_id = 0;
@@ -33,8 +33,8 @@ void GCMStore::LoadResult::Reset() {
   instance_id_data.clear();
 }
 
-GCMStore::GCMStore() {}
+GCMStore::GCMStore() = default;
 
-GCMStore::~GCMStore() {}
+GCMStore::~GCMStore() = default;
 
 }  // namespace gcm
