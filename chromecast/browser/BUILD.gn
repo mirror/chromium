@@ -101,6 +101,7 @@ cast_source_set("browser") {
     "//chromecast/media/service",
     "//chromecast/net",
     "//chromecast/service",
+    "//components/download/public/core",
     "//components/metrics",
     "//components/metrics:gpu",
     "//components/metrics:net",
