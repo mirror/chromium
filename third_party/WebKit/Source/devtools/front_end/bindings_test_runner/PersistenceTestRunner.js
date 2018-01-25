@@ -9,12 +9,23 @@
 
 Persistence.PersistenceBinding.prototype.toString = function() {
   var lines = [
+    '{',
+    '       network: ' + this.network.url(),
+    '    fileSystem: ' + this.fileSystem.url(),
+  ];
+
+  return lines.join('\n');
+};
+
+Persistence.AutomappingBinding.prototype.toString = function() {
+  var lines = [
     '{', '       network: ' + this.network.url(), '    fileSystem: ' + this.fileSystem.url(),
     '    exactMatch: ' + this.exactMatch, '}'
   ];
 
   return lines.join('\n');
 };
+
 
 BindingsTestRunner.waitForBinding = function(fileName) {
   var uiSourceCodes = Workspace.workspace.uiSourceCodes();
@@ -68,7 +79,7 @@ class TestMapping {
 
     var networkUISourceCode = await TestRunner.waitForUISourceCode(urlSuffix, Workspace.projectTypes.Network);
     var fileSystemUISourceCode = await TestRunner.waitForUISourceCode(urlSuffix, Workspace.projectTypes.FileSystem);
-    var binding = new Persistence.PersistenceBinding(networkUISourceCode, fileSystemUISourceCode, false);
+    var binding = new Persistence.AutomappingBinding(networkUISourceCode, fileSystemUISourceCode, false);
     this._bindings.add(binding);
     this._onBindingAdded.call(null, binding);
   }
