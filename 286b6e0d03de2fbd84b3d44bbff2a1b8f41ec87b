@@ -16,6 +16,74 @@
       "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5b7d38_67cd0df1",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:02:04Z",
+      "side": 1,
+      "message": "It looks like this is false during the tests:\n\n[ RUN      ] LocationBarCoordinatorTest.Stops\n  [13941:771:0124/101543.115384:15786913237460:FATAL:location_bar_mediator.mm(156)] Check failed: webStateList.\n  0   ios_chrome_unittests                0x0000000111c7403d base::debug::StackTrace::StackTrace(unsigned long) + 157\n  1   ios_chrome_unittests                0x0000000111c7407d base::debug::StackTrace::StackTrace(unsigned long) + 29\n  2   ios_chrome_unittests                0x0000000111c72c2c base::debug::StackTrace::StackTrace() + 28\n  3   ios_chrome_unittests                0x0000000111cd2cef logging::LogMessage::~LogMessage() + 479\n  4   ios_chrome_unittests                0x0000000111cd0b15 logging::LogMessage::~LogMessage() + 21\n  5   ios_chrome_unittests                0x0000000111730efc -[LocationBarMediator setWebStateList:] + 348\n  6   ios_chrome_unittests                0x000000011172e45a -[LocationBarCoordinator start] + 3450\n  7   ios_chrome_unittests                0x0000000110301106 (anonymous namespace)::LocationBarCoordinatorTest_Stops_Test::TestBody() + 822\n  8   ios_chrome_unittests                0x00000001107256ce void testing::internal::HandleSehExceptionsInMethodIfSupported\u003ctesting::Test, void\u003e(testing::Test*, void (testing::Test::*)(), char const*) + 126\n  9   ios_chrome_unittests                0x0000000110700fc2 void testing::internal::HandleExceptionsInMethodIfSupported\u003ctesting::Test, void\u003e(testing::Test*, void (testing::Test::*)(), char const*) + 114\n  10  ios_chrome_unittests                0x0000000110700ef6 testing::Test::Run() + 198\n  11  ios_chrome_unittests                0x0000000110701e6d testing::TestInfo::Run() + 221\n  12  ios_chrome_unittests                0x000000011070317c testing::TestCase::Run() + 236\n  13  ios_chrome_unittests                0x0000000110710739 testing::internal::UnitTestImpl::RunAllTests() + 921\n  14  ios_chrome_unittests                0x000000011072847e bool testing::internal::HandleSehExceptionsInMethodIfSupported\u003ctesting::internal::UnitTestImpl, bool\u003e(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) + 126\n  15  ios_chrome_unittests                0x0000000110710322 bool testing::internal::HandleExceptionsInMethodIfSupported\u003ctesting::internal::UnitTestImpl, bool\u003e(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) + 114\n  16  ios_chrome_unittests                0x0000000110710219 testing::UnitTest::Run() + 377\n  17  ios_chrome_unittests                0x0000000111fe5c41 RUN_ALL_TESTS() + 17\n  18  ios_chrome_unittests                0x0000000111fe507e base::TestSuite::Run() + 334\n  19  ios_chrome_unittests                0x0000000111feb591 -[ChromeUnitTestDelegate runTests] + 33\n  20  Foundation                          0x000000011fd23f35 __NSFireDelayedPerform + 409\n  21  CoreFoundation                      0x000000011eeab174 __CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__ + 20\n  22  CoreFoundation                      0x000000011eeaae32 __CFRunLoopDoTimer + 1026\n  23  CoreFoundation                      0x000000011eeaa9ea __CFRunLoopDoTimers + 266\n  24  CoreFoundation                      0x000000011eea2404 __CFRunLoopRun + 2308\n  25  CoreFoundation                      0x000000011eea1889 CFRunLoopRunSpecific + 409\n  26  GraphicsServices                    0x0000000124e3c9c6 GSEventRunModal + 62\n  27  UIKit                               0x000000011cc815d6 UIApplicationMain + 159\n  28  ios_chrome_unittests                0x0000000111feb8d2 base::RunTestsFromIOSApp() + 66\n  29  ios_chrome_unittests                0x0000000111fe4f4f base::TestSuite::Run() + 31\n  30  ios_chrome_unittests                0x000000010fd1482d int base::internal::FunctorTraits\u003cint (base::TestSuite::*)(), void\u003e::Invoke\u003cIOSChromeUnitTestSuite*\u003e(int (base::TestSuite::*)(), IOSChromeUnitTestSuite*\u0026\u0026) + 125\n  31  ios_chrome_unittests                0x000000010fd14774 int base::internal::InvokeHelper\u003cfalse, int\u003e::MakeItSo\u003cint (base::TestSuite::* const\u0026)(), IOSChromeUnitTestSuite*\u003e(int (base::TestSuite::* const\u0026\u0026\u0026)(), IOSChromeUnitTestSuite*\u0026\u0026) + 68\n  32  ios_chrome_unittests                0x000000010fd14725 int base::internal::Invoker\u003cbase::internal::BindState\u003cint (base::TestSuite::*)(), base::internal::UnretainedWrapper\u003cIOSChromeUnitTestSuite\u003e \u003e, int ()\u003e::RunImpl\u003cint (base::TestSuite::* const\u0026)(), std::__1::tuple\u003cbase::internal::UnretainedWrapper\u003cIOSChromeUnitTestSuite\u003e \u003e const\u0026, 0ul\u003e(int (base::TestSuite::* const\u0026\u0026\u0026)(), std::__1::tuple\u003cbase::internal::UnretainedWrapper\u003cIOSChromeUnitTestSuite\u003e \u003e const\u0026\u0026\u0026, std::__1::integer_sequence\u003cunsigned long, 0ul\u003e) + 85\n  33  ios_chrome_unittests                0x000000010fd1463c base::internal::Invoker\u003cbase::internal::BindState\u003cint (base::TestSuite::*)(), base::internal::UnretainedWrapper\u003cIOSChromeUnitTestSuite\u003e \u003e, int ()\u003e::Run(base::internal::BindStateBase*) + 44\n  34  ios_chrome_unittests                0x0000000111feda1d base::RepeatingCallback\u003cint ()\u003e::Run() const \u0026 + 61\n  35  ios_chrome_unittests                0x0000000111fed99d base::LaunchUnitTests(int, char**, base::RepeatingCallback\u003cint ()\u003e const\u0026) + 973\n  36  ios_chrome_unittests                0x000000010fd1440d main + 205\n  37  libdyld.dylib                       0x0000000126201d81 start + 1\n  38  ???                                 0x0000000000000006 0x0 + 6",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05495d93_8510ae5d",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:02:04Z",
+      "side": 1,
+      "message": "There is a DCHECK(webStateList) above before assignment to _webStateList. So either remove the DCHECK or remove the check as the code should not handle impossible states.",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2115da49_4b1de449",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:02:04Z",
+      "side": 1,
+      "message": "Move this member field with all the others.",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291a0f55_828793b3",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-25T10:02:04Z",
+      "side": 1,
+      "message": "Why do you check your code works with a WebState that is not in a WebStateList? AFAIK this should never happen in how the class is really used (and in production the only situation this can happen is when there is a pre-rendered tab and there is no LocationBar to manage for that tab).",
+      "revId": "286b6e0d03de2fbd84b3d44bbff2a1b8f41ec87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
