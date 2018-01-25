@@ -22,6 +22,53 @@
       "revId": "50dee4be387b94a7168f767257566bae303e65b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7223eb4e_862504eb",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-25T00:52:53Z",
+      "side": 1,
+      "message": "Icon and tooltip are tied together (mostly). Can we combine the logic to pick them?\nMaybe rename this function to iconType_ and use in both |iconUrl| and |iconTooltip|?",
+      "parentUuid": "78284b3f_c0d95784",
+      "range": {
+        "startLine": 575,
+        "startChar": 4,
+        "endLine": 575,
+        "endChar": 19
+      },
+      "revId": "50dee4be387b94a7168f767257566bae303e65b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004827dc_36c8301a",
+        "filename": "chrome/browser/resources/print_preview/new/destination_settings.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-25T00:52:53Z",
+      "side": 1,
+      "message": "Remove alt since alt will override title in a screen reader",
+      "range": {
+        "startLine": 70,
+        "startChar": 43,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "50dee4be387b94a7168f767257566bae303e65b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
