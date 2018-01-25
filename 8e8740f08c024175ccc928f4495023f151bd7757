@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1b0884_8907f4df",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-25T01:22:29Z",
+      "side": 1,
+      "message": "nit: for posterity, could you file a bug that explains the dependencies to cut before we can remove it?",
+      "revId": "8e8740f08c024175ccc928f4495023f151bd7757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
