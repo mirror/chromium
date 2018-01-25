@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430fbff2_1fbc6964",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-25T23:05:57Z",
+      "side": 1,
+      "message": "nit: I wonder if it\u0027s a bit more readable like this:\n\nbool can_lock \u003d ...\nbool is_lost \u003d ...\nif (!is_lost \u0026\u0026 !can_lock) {\n  ++it;\n  continue;\n}\n\nif (is_lost || evict) {\n  Delete\n} else {\n  DCHECK(can_lock);\n  DidFinish\n}\nerase\n\nwhat you have is equivalent though, so up to you.",
+      "revId": "6024952a9f3658f1ac0be25752ed1c5dcf4a5466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

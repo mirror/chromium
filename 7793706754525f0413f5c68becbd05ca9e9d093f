@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d94654_a5d84bf3",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-25T23:05:57Z",
+      "side": 0,
+      "message": ":D",
+      "range": {
+        "startLine": 477,
+        "startChar": 44,
+        "endLine": 478,
+        "endChar": 38
+      },
+      "revId": "7793706754525f0413f5c68becbd05ca9e9d093f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
