@@ -16,7 +16,6 @@
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
-#include "chrome/browser/vr/elements/controller.h"
 #include "chrome/browser/vr/elements/disc_button.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/environment/background.h"
@@ -29,6 +28,7 @@
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/omnibox_formatting.h"
+#include "chrome/browser/vr/elements/procedural_controller.h"
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/repositioner.h"
 #include "chrome/browser/vr/elements/reticle.h"
@@ -1292,26 +1292,49 @@ void UiSceneCreator::CreateController() {
           base::Unretained(group.get()))));
   scene_->AddUiElement(kControllerRoot, std::move(group));
 
-  auto controller = std::make_unique<Controller>();
+  // auto controller = std::make_unique<Controller>();
+  // controller->SetDrawPhase(kPhaseForeground);
+  // controller->AddBinding(VR_BIND_FUNC(gfx::Transform, Model, model_,
+  //                                     model->controller.transform,
+  //                                     Controller, controller.get(),
+  //                                     set_local_transform));
+  // controller->AddBinding(VR_BIND_FUNC(
+  //     bool, Model, model_,
+  //     model->controller.touchpad_button_state == UiInputManager::DOWN,
+  //     Controller, controller.get(), set_touchpad_button_pressed));
+  // controller->AddBinding(
+  //     VR_BIND_FUNC(bool, Model, model_,
+  //                  model->controller.app_button_state ==
+  //                  UiInputManager::DOWN, Controller, controller.get(),
+  //                  set_app_button_pressed));
+  // controller->AddBinding(
+  //     VR_BIND_FUNC(bool, Model, model_,
+  //                  model->controller.home_button_state ==
+  //                  UiInputManager::DOWN, Controller, controller.get(),
+  //                  set_home_button_pressed));
+  // controller->AddBinding(VR_BIND_FUNC(float, Model, model_,
+  //                                     model->controller.opacity, Controller,
+  //                                     controller.get(), SetOpacity));
+  auto controller = std::make_unique<ProceduralController>();
   controller->SetDrawPhase(kPhaseForeground);
-  controller->AddBinding(VR_BIND_FUNC(gfx::Transform, Model, model_,
-                                      model->controller.transform, Controller,
-                                      controller.get(), set_local_transform));
+  controller->AddBinding(VR_BIND_FUNC(
+      gfx::Transform, Model, model_, model->controller.transform,
+      ProceduralController, controller.get(), set_local_transform));
   controller->AddBinding(VR_BIND_FUNC(
       bool, Model, model_,
       model->controller.touchpad_button_state == UiInputManager::DOWN,
-      Controller, controller.get(), set_touchpad_button_pressed));
+      ProceduralController, controller.get(), set_touchpad_button_pressed));
+  controller->AddBinding(VR_BIND_FUNC(
+      bool, Model, model_,
+      model->controller.app_button_state == UiInputManager::DOWN,
+      ProceduralController, controller.get(), set_app_button_pressed));
+  controller->AddBinding(VR_BIND_FUNC(
+      bool, Model, model_,
+      model->controller.home_button_state == UiInputManager::DOWN,
+      ProceduralController, controller.get(), set_home_button_pressed));
   controller->AddBinding(
-      VR_BIND_FUNC(bool, Model, model_,
-                   model->controller.app_button_state == UiInputManager::DOWN,
-                   Controller, controller.get(), set_app_button_pressed));
-  controller->AddBinding(
-      VR_BIND_FUNC(bool, Model, model_,
-                   model->controller.home_button_state == UiInputManager::DOWN,
-                   Controller, controller.get(), set_home_button_pressed));
-  controller->AddBinding(VR_BIND_FUNC(float, Model, model_,
-                                      model->controller.opacity, Controller,
-                                      controller.get(), SetOpacity));
+      VR_BIND_FUNC(float, Model, model_, model->controller.opacity,
+                   ProceduralController, controller.get(), SetOpacity));
 
   auto callout_group = Create<UiElement>(kNone, kPhaseNone);
   callout_group->SetVisible(false);
