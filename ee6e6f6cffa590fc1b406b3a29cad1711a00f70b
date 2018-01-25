@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2bbe61a8_d87f2735",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T21:47:51Z",
+      "side": 1,
+      "message": "Yep. The issue here is that I explicitly want this function to return an empty value if there is no active frame yet, so the capturer won\u0027t attempt any CopyOutputRequests yet.\n\nI changed the return statement, but I added a DCHECK() to future-proof the code since the invariant is being enforced in another code module. That way, in official builds, the fast accessor will be used. :)",
+      "parentUuid": "2c6f254d_9834260e",
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ba68d0_f8b4968e",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f0f37006_29ececd4",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T21:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ba68d0_f8b4968e",
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "938e3e31_06599dea",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 5
@@ -65,6 +101,30 @@
       "writtenOn": "2018-01-25T18:39:56Z",
       "side": 1,
       "message": "Could the |refresh_frame_retry_timer_| be running at this time? Maybe need add checking here?",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 13
+      },
+      "revId": "ee6e6f6cffa590fc1b406b3a29cad1711a00f70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a616abe3_12ae6713",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-25T21:47:51Z",
+      "side": 1,
+      "message": "Yes, but that\u0027s accounted for (implicitly) in the logic: RefreshSoon() cannot return without having either called MaybeCaptureFrame(), which stops the timer, or calling ScheduleRefreshFrame() which cancels and re-starts the timer. I added a method comment in the header file for RefreshSoon() to mention this behavior.",
+      "parentUuid": "938e3e31_06599dea",
       "range": {
         "startLine": 275,
         "startChar": 2,
