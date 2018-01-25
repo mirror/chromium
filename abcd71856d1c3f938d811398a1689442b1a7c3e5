@@ -190,6 +190,30 @@
       "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1599346_7c204cb0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-25T01:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dfd0e90_c2e3b65b",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "abcd71856d1c3f938d811398a1689442b1a7c3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
