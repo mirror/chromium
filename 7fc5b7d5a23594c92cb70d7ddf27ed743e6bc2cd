@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668fd9c8_361f6b36",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-25T16:36:23Z",
+      "side": 0,
+      "message": "This AddDataPackFromPath() now happens in PreCreateThreads, so the rest of this function will not run with resources.pak added. But I don’t think that anything else reachable from this function actually needs anything from resources.pak.",
+      "revId": "7fc5b7d5a23594c92cb70d7ddf27ed743e6bc2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

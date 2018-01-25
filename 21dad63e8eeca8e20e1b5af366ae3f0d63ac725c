@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c984707b_e675589d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-25T16:36:23Z",
+      "side": 1,
+      "message": "Fix indent (overcome clang-format’s brain death).",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
