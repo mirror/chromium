@@ -811,7 +811,7 @@ void PaintOpReader::ReadMatrixConvolutionPaintFilter(
   Read(&tile_mode_int);
   Read(&convolve_alpha);
   Read(&input);
-  if (tile_mode_int > SkMatrixConvolutionImageFilter::kMax_TileMode)
+  if (tile_mode_int > SkMatrixConvolutionImageFilter::kLast_TileMode)
     SetInvalid();
   if (!valid_)
     return;
