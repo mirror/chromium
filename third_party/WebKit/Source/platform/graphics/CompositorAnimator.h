@@ -16,6 +16,8 @@ class PLATFORM_EXPORT CompositorAnimator : public GarbageCollectedMixin {
   // Runs the animation frame callback.
   virtual void Mutate(const CompositorMutatorInputState&) = 0;
   virtual void Trace(blink::Visitor* visitor) {}
+  // Closes any outbound communication.
+  virtual void Seal() {}
 };
 
 }  // namespace blink
