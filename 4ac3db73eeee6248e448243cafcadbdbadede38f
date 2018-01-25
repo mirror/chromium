@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5717dd8c_3feba7e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/TextPrompt.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-25T21:29:13Z",
+      "side": 1,
+      "message": "Looks strange!",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "4ac3db73eeee6248e448243cafcadbdbadede38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
