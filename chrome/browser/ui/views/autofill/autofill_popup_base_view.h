@@ -35,6 +35,11 @@ class AutofillPopupBaseView : public views::WidgetDelegateView,
   // Hide the widget and delete |this|.
   void DoHide();
 
+  // Grows |bounds| to account for the border of the popup.
+  void AdjustBoundsForBorder(gfx::Rect* bounds) const;
+
+  gfx::Rect GetBoundsFromDelegate();
+
   // Update size of popup and paint (virtual for testing).
   virtual void DoUpdateBoundsAndRedrawPopup();
 
