@@ -346,6 +346,30 @@
       "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984215ce_e9e9ccaf",
+        "filename": "components/arc/test/fake_arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2018-01-25T04:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9399c966_a547701c",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "3ea063844e5fa0628b21ea08f4890d43ce06cb79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
