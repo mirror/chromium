@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5d021ed_c4c829ae",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3874,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-25T16:39:37Z",
+      "side": 1,
+      "message": "another nit: \n\n  std::find_if(InputIt first, InputIt last, UnaryPredicate p) !\u003d last;\n\ncan be replaced by\n\n  std::any_of(InputIt first, InputIt last, UnaryPredicate p);",
+      "parentUuid": "e24cc47b_acd547d0",
+      "range": {
+        "startLine": 3874,
+        "startChar": 53,
+        "endLine": 3874,
+        "endChar": 60
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "698b318b_df108f61",
         "filename": "device/u2f/u2f_apdu_command.h",
         "patchSetId": 2
