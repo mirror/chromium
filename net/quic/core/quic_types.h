@@ -308,6 +308,7 @@ enum StreamSendingState {
 // Information about a newly acknowledged packet.
 struct AckedPacket {
   AckedPacket(QuicPacketNumber packet_number,
+#include <cstddef>
               QuicPacketLength bytes_acked,
               QuicTime receive_timestamp)
       : packet_number(packet_number),
@@ -339,7 +340,13 @@ struct LostPacket {
 // A vector of lost packets.
 typedef std::vector<LostPacket> LostPacketVector;
 
-enum class QuicIetfTransportErrorCodes : uint16_t {
+enum class QuicHttpTestErrorCode : uint16_t {
+  HTTP2_NO_ERROR = 0x0,
+  PROTOCOL_ERROR = 0x1,
+  CONNECT_ERROR = 0xa,
+};
+
+enum QuicIetfTransportErrorCodes : uint16_t {
   NO_ERROR = 0x0,
   INTERNAL_ERROR = 0x1,
   FLOW_CONTROL_ERROR = 0x3,
