@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7c0a2281_d50924d1",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-25T03:46:01Z",
+      "side": 1,
+      "message": "sure, but relying on specific behavior in that code is not really better. Can we bridge this in a way that allows us to potentially make it work without the existence of //content? e.g. move the logic to exo::FileHelper?",
+      "parentUuid": "f72a20e3_3d839e9c",
+      "range": {
+        "startLine": 56,
+        "startChar": 57,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0de28a2_45384f31",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
