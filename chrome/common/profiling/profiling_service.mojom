@@ -38,6 +38,8 @@ interface ProfilingService {
   //
   // |stack_mode| refers to the type of stacks that the client should record for
   // allocations.
+  // |include_thread_names| indicates whether to include thread names in NATIVE
+  // stack_mode. It has no effect when stack_mode != NATIVE.
   AddProfilingClient(mojo.common.mojom.ProcessId pid,
                      ProfilingClient client,
                      handle memlog_pipe_sender,
