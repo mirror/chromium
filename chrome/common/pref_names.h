@@ -912,6 +912,8 @@ extern const char kSitePerProcess[];
 // Preference for controlling whether or not third party blocking is enabled on
 // Windows.
 extern const char kThirdPartyBlockingEnabled[];
+
+extern const char kProblematicPrograms[];
 #endif
 
 }  // namespace prefs

@@ -99,8 +99,13 @@ class InstalledPrograms {
   // Given a |file|, checks if it matches an installed program on the user's
   // machine and appends all the matching programs to |programs|. Do not call
   // this before the initialization is done.
-  bool GetInstalledPrograms(const base::FilePath& file,
-                            std::vector<ProgramInfo>* programs) const;
+  // Virtual to allow mocking.
+  virtual bool GetInstalledPrograms(const base::FilePath& file,
+                                    std::vector<ProgramInfo>* programs) const;
+
+  // Returns true if this instance is initialized and GetInstalledPrograms() can
+  // be called.
+  bool initialized() const { return initialized_; }
 
  protected:
   // Protected so that tests can subclass InstalledPrograms and access it.
