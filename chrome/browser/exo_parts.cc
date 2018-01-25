@@ -21,7 +21,9 @@
 #include "components/exo/file_helper.h"
 #include "components/exo/wayland/server.h"
 #include "components/exo/wm_helper.h"
+#include "content/browser/web_contents/web_contents_view_aura.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/drop_data.h"
 #include "ui/arc/notification/arc_notification_surface_manager_impl.h"
 
 namespace {
@@ -45,6 +47,18 @@ class ChromeFileHelper : public exo::FileHelper {
   bool GetUrlFromFileSystemUrl(const std::string& app_id,
                                const GURL& url,
                                GURL* out) override {
+    return false;
+  }
+  bool ReadFileSystemUrlsFromPickle(const base::Pickle& pickle,
+                                    std::vector<GURL>* urls) override {
+    std::vector<content::DropData::FileSystemFileInfo> files;
+    if (content::WebContentsViewAura::ReadDropDataFileSystemFilesFromPickle(
+            pickle, &files)) {
+      for (const auto& file : files) {
+        urls->push_back(file.url);
+      }
+      return true;
+    }
     return false;
   }
 };
