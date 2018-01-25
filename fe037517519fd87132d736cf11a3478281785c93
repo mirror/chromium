@@ -34,6 +34,24 @@
       "revId": "fe037517519fd87132d736cf11a3478281785c93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212d1185_0e4f56f9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-25T23:27:02Z",
+      "side": 1,
+      "message": "txt file linked from https://bugs.chromium.org/p/chromium/issues/detail?id\u003d805881 (maybe you can use that in your Bug: line).",
+      "parentUuid": "899368f8_ac3d6b4f",
+      "revId": "fe037517519fd87132d736cf11a3478281785c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
