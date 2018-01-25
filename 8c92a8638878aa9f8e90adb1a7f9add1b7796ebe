@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "623bdc57_1044bd42",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:38:45Z",
+      "side": 1,
+      "message": "Add a comment about this.",
+      "revId": "8c92a8638878aa9f8e90adb1a7f9add1b7796ebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
