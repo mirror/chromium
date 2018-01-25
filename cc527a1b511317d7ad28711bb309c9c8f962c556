@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dc5095e1_23991f09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-25T15:43:05Z",
+      "side": 1,
+      "message": "LargeIconBridge#getLargeIconForUrl() should be relatively quick because it does a lookup in local SQLite database. I have not timed the fetch though",
+      "parentUuid": "e059c814_95be589f",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeced039_e283ebd5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 3
