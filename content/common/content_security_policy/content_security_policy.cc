@@ -16,6 +16,7 @@ static CSPDirective::Name CSPFallback(CSPDirective::Name directive) {
     case CSPDirective::DefaultSrc:
     case CSPDirective::FormAction:
     case CSPDirective::UpgradeInsecureRequests:
+    case CSPDirective::NavigationTo:
       return CSPDirective::Unknown;
 
     case CSPDirective::FrameSrc:
@@ -69,6 +70,8 @@ void ReportViolation(CSPContext* context,
     message << "Refused to send form data to '";
   else if (directive_name == CSPDirective::FrameSrc)
     message << "Refused to frame '";
+  else if (directive_name == CSPDirective::NavigationTo)
+    message << "Refused to navigate to '";
 
   message << ElideURLForReportViolation(safe_url)
           << "' because it violates the following Content Security Policy "

@@ -99,6 +99,7 @@ class CORE_EXPORT ContentSecurityPolicy
     kImgSrc,
     kManifestSrc,
     kMediaSrc,
+    kNavigationTo,
     kObjectSrc,
     kPluginTypes,
     kPrefetchSrc,
@@ -306,6 +307,12 @@ class CORE_EXPORT ContentSecurityPolicy
                       SecurityViolationReportingPolicy =
                           SecurityViolationReportingPolicy::kReport) const;
   bool IsFrameAncestorsEnforced() const;
+
+  bool AllowNavigationTo(const KURL&,
+                         RedirectStatus = RedirectStatus::kNoRedirect,
+                         SecurityViolationReportingPolicy =
+                             SecurityViolationReportingPolicy::kReport,
+                         CheckHeaderType = CheckHeaderType::kCheckAll) const;
 
   bool AllowRequestWithoutIntegrity(
       WebURLRequest::RequestContext,

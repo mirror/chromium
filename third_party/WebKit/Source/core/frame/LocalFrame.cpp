@@ -830,7 +830,16 @@ void LocalFrame::ScheduleVisualUpdateUnlessThrottled() {
 }
 
 bool LocalFrame::CanNavigate(const Frame& target_frame,
-                             const KURL& destination_url) {
+                             const KURL& destination_url,
+                             ResourceRequest::RedirectStatus redirect_status) {
+  if (target_frame.GetSecurityContext() &&
+      target_frame.GetSecurityContext()->GetContentSecurityPolicy() &&
+      !target_frame.GetSecurityContext()
+           ->GetContentSecurityPolicy()
+           ->AllowNavigationTo(destination_url, redirect_status)) {
+    return false;
+  }
+
   String error_reason;
   const bool is_allowed_navigation =
       CanNavigateWithoutFramebusting(target_frame, error_reason);

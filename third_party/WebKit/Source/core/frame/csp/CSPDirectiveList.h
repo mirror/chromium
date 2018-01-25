@@ -141,6 +141,9 @@ class CORE_EXPORT CSPDirectiveList
                       ContentSecurityPolicy::InlineType) const;
   bool AllowDynamic() const;
   bool AllowDynamicWorker() const;
+  bool AllowNavigationTo(const KURL&,
+                         ResourceRequest::RedirectStatus,
+                         SecurityViolationReportingPolicy) const;
 
   bool AllowRequestWithoutIntegrity(WebURLRequest::RequestContext,
                                     const KURL&,
@@ -360,6 +363,7 @@ class CORE_EXPORT CSPDirectiveList
   Member<SourceListDirective> script_src_;
   Member<SourceListDirective> style_src_;
   Member<SourceListDirective> worker_src_;
+  Member<SourceListDirective> navigation_to_;
 
   uint8_t require_sri_for_;
 

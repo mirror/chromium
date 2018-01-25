@@ -38,6 +38,7 @@
 #include "core/editing/Forward.h"
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/FrameTree.h"
 #include "platform/Supplementable.h"
@@ -227,7 +228,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // destination_url is only used when a navigation is blocked due to
   // framebusting defenses, in order to give the option of restarting the
   // navigation at a later time.
-  bool CanNavigate(const Frame&, const KURL& destination_url = KURL());
+  bool CanNavigate(
+      const Frame&,
+      const KURL& destination_url = KURL(),
+      ResourceRequest::RedirectStatus = RedirectStatus::kNoRedirect);
 
   service_manager::InterfaceProvider& GetInterfaceProvider();
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }

@@ -282,6 +282,7 @@ void Location::SetLocation(const String& url,
     }
     return;
   }
+
   if (exception_state && !completed_url.IsValid()) {
     exception_state->ThrowDOMException(kSyntaxError,
                                        "'" + url + "' is not a valid URL.");

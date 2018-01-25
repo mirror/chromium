@@ -1002,6 +1002,7 @@ TEST_F(ContentSecurityPolicyTest, DirectiveType) {
       {ContentSecurityPolicy::DirectiveType::kImgSrc, "img-src"},
       {ContentSecurityPolicy::DirectiveType::kManifestSrc, "manifest-src"},
       {ContentSecurityPolicy::DirectiveType::kMediaSrc, "media-src"},
+      {ContentSecurityPolicy::DirectiveType::kNavigationTo, "navigation-to"},
       {ContentSecurityPolicy::DirectiveType::kObjectSrc, "object-src"},
       {ContentSecurityPolicy::DirectiveType::kPluginTypes, "plugin-types"},
       {ContentSecurityPolicy::DirectiveType::kReportURI, "report-uri"},
@@ -1336,6 +1337,49 @@ TEST_F(ContentSecurityPolicyTest, IsValidCSPAttrTest) {
       "report-uri relative-path/reporting;"
       "base-uri http://example.com 'self'"));
   // TODO(andypaicu): when `report-to` is implemented, add tests here.
+}
+
+TEST_F(ContentSecurityPolicyTest, NavigationTo) {
+  struct TestCase {
+    const String& header;
+    const KURL& url;
+    WebURLRequest::RequestContext context;
+    bool expected;
+  } cases[] = {
+      // `navigation-to` alone
+      {"navigation-to 'none'", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextHyperlink, false},
+      {"navigation-to 'none'", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextLocation, false},
+      {"navigation-to https://example.test", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextHyperlink, true},
+      {"navigation-to https://example.test", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextLocation, true},
+      {"navigation-to https://example.test", KURL("https://not-example.test"),
+       WebURLRequest::RequestContext::kRequestContextHyperlink, false},
+      {"navigation-to https://example.test", KURL("https://not-example.test"),
+       WebURLRequest::RequestContext::kRequestContextLocation, false},
+      {"navigation-to 'self'", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextHyperlink, true},
+      {"navigation-to 'self'", KURL("https://example.test"),
+       WebURLRequest::RequestContext::kRequestContextLocation, true},
+
+  };
+
+  for (const auto& test : cases) {
+    ContentSecurityPolicy* csp = ContentSecurityPolicy::Create();
+    ExecutionContext* exec =
+        ContentSecurityPolicyTest::CreateExecutionContext();
+    csp->BindToExecutionContext(exec);
+    csp->DidReceiveHeader(test.header, kContentSecurityPolicyHeaderTypeEnforce,
+                          kContentSecurityPolicyHeaderSourceMeta);
+
+    EXPECT_EQ(test.expected,
+              csp->AllowRequest(
+                  test.context, test.url, String(), IntegrityMetadataSet(),
+                  kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
+                  SecurityViolationReportingPolicy::kSuppressReporting));
+  }
 }
 
 }  // namespace blink

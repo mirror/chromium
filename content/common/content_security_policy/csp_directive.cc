@@ -30,6 +30,8 @@ std::string CSPDirective::NameToString(CSPDirective::Name name) {
       return "form-action";
     case UpgradeInsecureRequests:
       return "upgrade-insecure-requests";
+    case NavigationTo:
+      return "navigation-to";
     case Unknown:
       return "";
   }
@@ -49,6 +51,8 @@ CSPDirective::Name CSPDirective::StringToName(const std::string& name) {
     return CSPDirective::FormAction;
   if (name == "upgrade-insecure-requests")
     return CSPDirective::UpgradeInsecureRequests;
+  if (name == "navigation-to")
+    return CSPDirective::NavigationTo;
   return CSPDirective::Unknown;
 }
 

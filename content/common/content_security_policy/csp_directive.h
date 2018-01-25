@@ -27,6 +27,7 @@ struct CONTENT_EXPORT CSPDirective {
     FrameSrc,
     FormAction,
     UpgradeInsecureRequests,
+    NavigationTo,
 
     Unknown,
     NameLast = Unknown,

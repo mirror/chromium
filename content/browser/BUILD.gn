@@ -810,6 +810,8 @@ jumbo_source_set("browser") {
     "frame_host/navigation_request.h",
     "frame_host/navigation_request_info.cc",
     "frame_host/navigation_request_info.h",
+    "frame_host/navigation_to_throttle.cc",
+    "frame_host/navigation_to_throttle.h",
     "frame_host/navigator.cc",
     "frame_host/navigator.h",
     "frame_host/navigator_delegate.cc",

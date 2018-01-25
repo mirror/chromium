@@ -791,11 +791,13 @@ bool ContentSecurityPolicy::AllowRequest(
     case WebURLRequest::kRequestContextStyle:
       return AllowStyleFromSource(url, nonce, redirect_status, reporting_policy,
                                   check_header_type);
+    case WebURLRequest::kRequestContextHyperlink:
+    case WebURLRequest::kRequestContextLocation:
+      return AllowNavigationTo(url, redirect_status, reporting_policy,
+                               check_header_type);
     case WebURLRequest::kRequestContextCSPReport:
     case WebURLRequest::kRequestContextDownload:
-    case WebURLRequest::kRequestContextHyperlink:
     case WebURLRequest::kRequestContextInternal:
-    case WebURLRequest::kRequestContextLocation:
     case WebURLRequest::kRequestContextPlugin:
     case WebURLRequest::kRequestContextUnspecified:
       return true;
@@ -1085,6 +1087,25 @@ bool ContentSecurityPolicy::AllowAncestors(
   bool is_allowed = true;
   for (const auto& policy : policies_)
     is_allowed &= policy->AllowAncestors(frame, url, reporting_policy);
+  return is_allowed;
+}
+
+bool ContentSecurityPolicy::AllowNavigationTo(
+    const KURL& url,
+    RedirectStatus redirect_status,
+    SecurityViolationReportingPolicy reporting_policy,
+    CheckHeaderType check_header_type) const {
+  if (ShouldBypassContentSecurityPolicy(url, execution_context_))
+    return true;
+
+  bool is_allowed = true;
+  for (const auto& policy : policies_) {
+    if (!CheckHeaderTypeMatches(check_header_type, policy->HeaderType()))
+      continue;
+    is_allowed &=
+        policy->AllowNavigationTo(url, redirect_status, reporting_policy);
+  }
+
   return is_allowed;
 }
 
@@ -1733,6 +1754,8 @@ const char* ContentSecurityPolicy::GetDirectiveName(const DirectiveType& type) {
       return "worker-src";
     case DirectiveType::kReportTo:
       return "report-to";
+    case DirectiveType::kNavigationTo:
+      return "navigation-to";
     case DirectiveType::kUndefined:
       NOTREACHED();
       return "";
@@ -1794,6 +1817,8 @@ ContentSecurityPolicy::DirectiveType ContentSecurityPolicy::GetDirectiveType(
     return DirectiveType::kWorkerSrc;
   if (name == "report-to")
     return DirectiveType::kReportTo;
+  if (name == "navigation-to")
+    return DirectiveType::kNavigationTo;
 
   return DirectiveType::kUndefined;
 }

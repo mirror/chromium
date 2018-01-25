@@ -3998,6 +3998,15 @@ void Document::MaybeHandleHttpRefresh(const String& content,
                                              kErrorMessageLevel, message));
     return;
   }
+
+  if (!GetContentSecurityPolicy()->AllowNavigationTo(
+          refresh_url, RedirectStatus::kNoRedirect,
+          SecurityViolationReportingPolicy::kReport)) {
+    // Console messages should be handled by the above call, no need to add a
+    // console message here.
+    return;
+  }
+
   frame_->GetNavigationScheduler().ScheduleRedirect(delay, refresh_url,
                                                     http_refresh_type);
 }

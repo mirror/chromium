@@ -179,6 +179,13 @@ static NavigationPolicy MaybeCheckCSP(
     return kNavigationPolicyIgnore;
   }
 
+  if (!browser_side_navigation_enabled &&
+      !frame->GetDocument()->GetContentSecurityPolicy()->AllowNavigationTo(
+          request.Url(), request.GetRedirectStatus(),
+          SecurityViolationReportingPolicy::kReport, check_header_type)) {
+    return kNavigationPolicyIgnore;
+  }
+
   return policy;
 }
 

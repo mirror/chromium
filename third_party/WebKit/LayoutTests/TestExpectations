@@ -1639,6 +1639,12 @@ crbug.com/694525 external/wpt/content-security-policy/style-src/inline-style-all
 crbug.com/694525 external/wpt/content-security-policy/style-src/style-blocked.sub.html [ Skip ]
 crbug.com/694525 external/wpt/content-security-policy/unsafe-eval/eval-blocked-in-about-blank-iframe.sub.html [ Skip ]
 
+# Redirects and 'navigation-to'
+crbug.com/700964 external/wpt/content-security-policy/navigation-to/navigation-to-blocked-form-redirected.sub.html [ Skip ]
+crbug.com/700964 external/wpt/content-security-policy/navigation-to/navigation-to-blocked-href-location-redirected.sub.html [ Skip ]
+crbug.com/700964 external/wpt/content-security-policy/navigation-to/navigation-to-blocked-link-click-redirected.sub.html [ Skip ]
+crbug.com/700964 external/wpt/content-security-policy/navigation-to/navigation-to-blocked-meta-refresh-redirected.sub.html [ Skip ]
+
 # These tests will be added back soon:
 crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-cross-origin-aux-frame-navigation.sub.html [ Skip ]
 crbug.com/706350 external/wpt/html/browsers/browsing-the-web/history-traversal/window-name-after-cross-origin-main-frame-navigation.sub.html [ Skip ]
