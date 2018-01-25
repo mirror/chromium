@@ -93,9 +93,12 @@ UrlDownloader::UrlDownloader(
     : request_(std::move(request)),
       delegate_(delegate),
       core_(request_.get(), this, is_parallel_request, download_source),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  LOG(ERROR) << "@@@ URL downloader Ctor!";
+}
 
 UrlDownloader::~UrlDownloader() {
+  LOG(ERROR) << "@@@ URL downloader dtor!";
 }
 
 void UrlDownloader::Start() {
