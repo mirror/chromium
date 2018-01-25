@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "723dc93b_a4036665",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-25T17:32:29Z",
+      "side": 1,
+      "message": "Because we have to keep values 2-4 missing here, could you comment those are no longer used (and should never be reused)?",
+      "revId": "febde2886da9d3b456a8e7db019e8b2a2a104063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
