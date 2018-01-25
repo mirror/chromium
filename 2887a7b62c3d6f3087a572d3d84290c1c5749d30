@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "773804b5_a37ee6b9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10957,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-25T15:39:28Z",
+      "side": 1,
+      "message": "If there is no UI for this pref, can_be_recommended makes no sense. can_be_recommended would mean that the admin can change the default, which the user can then override.",
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be9153ad_e30b28f4",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -88,6 +105,23 @@
         "endLine": 10971,
         "endChar": 97
       },
+      "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29b09c2_b6a969d9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10999,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-25T15:39:28Z",
+      "side": 1,
+      "message": "As above, this seems wrong.",
       "revId": "2887a7b62c3d6f3087a572d3d84290c1c5749d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
