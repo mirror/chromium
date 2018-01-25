@@ -2557,6 +2557,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
       layer_tree_frame_sink_->context_provider();
   if (!compositor_context_provider) {
     // This ResourcePool will vend software resources.
+    CHECK(!settings_.is_renderer);
     *resource_pool = std::make_unique<ResourcePool>(
         resource_provider_.get(), GetTaskRunner(),
         ResourcePool::kDefaultExpirationDelay,
@@ -2591,6 +2592,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
           worker_context_provider->ContextCapabilities().supports_oop_raster;
     }
 
+    //CHECK(!settings_.is_renderer || oop_raster_enabled);
     *raster_buffer_provider = std::make_unique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
@@ -2598,6 +2600,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
+  CHECK(!settings_.is_renderer);
   bool use_zero_copy = settings_.use_zero_copy;
   // TODO(reveman): Remove this when mojo supports worker contexts.
   // crbug.com/522440

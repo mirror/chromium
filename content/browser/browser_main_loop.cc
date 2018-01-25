@@ -12,6 +12,8 @@
 #include <utility>
 #include <vector>
 
+#include "gpu/config/gpu_switches.h"
+
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -1516,6 +1518,11 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
   InitializeMojo();
+
+  //base::CommandLine::ForCurrentProcess()->AppendSwitch(
+    //  switches::kEnableOOPRasterization);
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kForceGpuRasterization);
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {
