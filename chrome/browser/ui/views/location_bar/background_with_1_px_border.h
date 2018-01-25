@@ -23,7 +23,7 @@ class View;
 class BackgroundWith1PxBorder : public views::Background {
  public:
   // Corner radius of the inside edge of the roundrect border stroke.
-  static constexpr int kCornerRadius = 2;
+  static constexpr int kBorderRadius = 2;
 
   // The thickness of the location bar's border in DIP.
   static constexpr int kLocationBarBorderThicknessDip = 1;
@@ -32,10 +32,13 @@ class BackgroundWith1PxBorder : public views::Background {
 
   void Paint(gfx::Canvas* canvas, views::View* view) const override;
 
- private:
+ protected:
+  virtual int GetBorderRadiusInternal(int height) const;
+
   // Color for the one pixel border.
   SkColor border_color_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(BackgroundWith1PxBorder);
 };
 

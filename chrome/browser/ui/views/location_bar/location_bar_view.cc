@@ -39,13 +39,13 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
+#include "chrome/browser/ui/views/location_bar/omnibox_background_border.h"
 #include "chrome/browser/ui/views/location_bar/selected_keyword_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
@@ -612,6 +612,13 @@ void LocationBarView::Layout() {
         location_bounds.right(), location_bounds.y(),
         std::min(width, entry_width), location_bounds.height());
   }
+
+  // While input is in progress, no trailing decorations are displayed,
+  // including |StarView|. Add some padding to prevent long typed URLs or
+  // searches going too close to the ending edge. This is also a workaround to
+  // avoid having to clip the corners of |omnibox_view_|.
+  if (GetToolbarModel()->input_in_progress())
+    location_bounds.Inset(0, 0, location_bounds.height() / 4, 0);
   omnibox_view_->SetBoundsRect(location_bounds);
 }
 
@@ -623,7 +630,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   } else {
     // This border color will be blended on top of the toolbar (which may use an
     // image in the case of themes).
-    SetBackground(std::make_unique<BackgroundWith1PxBorder>(
+    SetBackground(std::make_unique<OmniboxBackgroundBorder>(
         GetColor(BACKGROUND), GetBorderColor()));
   }
   SchedulePaint();
@@ -715,11 +722,11 @@ SkColor LocationBarView::GetBorderColor() const {
 int LocationBarView::GetHorizontalEdgeThickness() const {
   return is_popup_mode_
              ? 0
-             : BackgroundWith1PxBorder::kLocationBarBorderThicknessDip;
+             : OmniboxBackgroundBorder::kLocationBarBorderThicknessDip;
 }
 
 int LocationBarView::GetTotalVerticalPadding() const {
-  return BackgroundWith1PxBorder::kLocationBarBorderThicknessDip +
+  return OmniboxBackgroundBorder::kLocationBarBorderThicknessDip +
          GetLayoutConstant(LOCATION_BAR_ELEMENT_PADDING);
 }
 
@@ -1052,16 +1059,8 @@ void LocationBarView::OnPaint(gfx::Canvas* canvas) {
   View::OnPaint(canvas);
 
   if (show_focus_rect_ && omnibox_view_->HasFocus()) {
-    cc::PaintFlags flags;
-    flags.setAntiAlias(true);
-    flags.setColor(GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::NativeTheme::kColorId_FocusedBorderColor));
-    flags.setStyle(cc::PaintFlags::kStroke_Style);
-    flags.setStrokeWidth(1);
-    gfx::RectF focus_rect(GetLocalBounds());
-    focus_rect.Inset(gfx::InsetsF(0.5f));
-    canvas->DrawRoundRect(focus_rect,
-                          BackgroundWith1PxBorder::kCornerRadius + 0.5f, flags);
+    OmniboxBackgroundBorder::PaintFocusRing(canvas, GetNativeTheme(),
+                                            GetLocalBounds());
   }
 }
 
