@@ -16,6 +16,24 @@
       "revId": "6795ed9049950dc696295de42008143acd4c7ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790b233e_b9cfdf11",
+        "filename": "chrome/browser/media/cast_transport_host_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-25T17:20:30Z",
+      "side": 1,
+      "message": "It _is_ arbitrary. There are a thousand files or so grouped together in the \"chrome\" target and those define tens of thousands of symbols in some kind of global scope. Most of those cause no problem for jumbo. A few cause problems because of repetitive code, and a few are just unlucky. For those unlucky ones, the author did nothing wrong. It just happened to be an unlucky name.\n\nAssuming some kind of ideal distribution, that means that for every added global symbol in the chrome target there is a \u003e0.01% risk to be unlucky. It is a low risk but it is not zero. When that happens, someone that uses jumbo will have to do something to keep compiling, like this suggested CL. Just bad luck (though I see it differently when people copy/paste code).",
+      "parentUuid": "3dff0364_ab7e2a1a",
+      "revId": "6795ed9049950dc696295de42008143acd4c7ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
