@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2e4130c_ac7c34a2",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-25T01:12:47Z",
+      "side": 1,
+      "message": "Actually, this will be the place where offline_pages will check if the mime_type is \"text/html\" and intercept the download. Currently they use offline_pages::downloads::ResourceThrottle. After this CL, they will move that code to this function.",
+      "parentUuid": "06b9cc7f_f8706a69",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 14
+      },
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d57c29b_0a73396f",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7ac46395_ad454c19",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-25T01:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d57c29b_0a73396f",
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac04387f_fafab490",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3daf8db_8d6895a5",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-25T01:12:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac04387f_fafab490",
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
