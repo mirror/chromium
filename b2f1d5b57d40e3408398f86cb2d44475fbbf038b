@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2551b46e_c4874192",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T18:21:50Z",
+      "side": 1,
+      "message": "just base::TimeDelta\nhttps://cs.chromium.org/chromium/src/base/time/time.h?l\u003d25\u0026rcl\u003d3c99fd2f086503c85ab59c5c68cb7e7c33077af8",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba0a059_86687601",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T18:21:50Z",
+      "side": 1,
+      "message": "return base::ContainsValue(kTabUsageReportingIntervals, interval);",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee92ddc9_6bc427de",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-25T18:21:50Z",
+      "side": 1,
+      "message": "I believe that TabStatsTracker would be simpler if:\n\n- TabDetachedAt(): Do nothing.\n- TabClosingAt(): Do nothing.\n- TabInsertedAt(): Call TabStatsDataStore::OnTabAdded(), which would no-op if the WebContents is already in |existing_tabs_|.\n- TabReplacedAt(): Call TabStatsDataStore::OnTabReplaced() and update |web_contents_usage_observer_|.\n- WebContentsDestroyed(): Call TabStatsDataStore::OnTabRemoved().\n\nNotes:\n- There is only one call site per TabStatsDataStore method.\n- You don\u0027t need |detached_tabs_| or |webcontentes_being_destroyed_|.\n\nI might have missed something that makes this solution impractical :)",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 1
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
