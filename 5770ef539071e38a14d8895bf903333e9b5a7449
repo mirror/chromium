@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcb1c57_4a92ef7a",
+        "filename": "chrome/browser/ui/views/passwords/password_auto_sign_in_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-25T03:13:48Z",
+      "side": 1,
+      "message": "Sorry these weren\u0027t detected as renames. I\u0027ve changed the ifndef and class name.",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "5770ef539071e38a14d8895bf903333e9b5a7449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
