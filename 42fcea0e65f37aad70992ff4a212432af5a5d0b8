@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84119297_46e6a77c",
+        "filename": "base/base_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-25T16:19:36Z",
+      "side": 1,
+      "message": "These ifs seem unrelated and aren\u0027t explained in the CL description?",
+      "revId": "42fcea0e65f37aad70992ff4a212432af5a5d0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da92ffc_8a93dcb0",
+        "filename": "base/base_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-25T16:19:36Z",
+      "side": 1,
+      "message": "mind changing this to just return GetTempDir while you\u0027re here? :)",
+      "revId": "42fcea0e65f37aad70992ff4a212432af5a5d0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
