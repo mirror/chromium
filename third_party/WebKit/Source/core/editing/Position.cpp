@@ -126,10 +126,13 @@ PositionTemplate<Strategy>::PositionTemplate(const Node* anchor_node,
     : anchor_node_(const_cast<Node*>(anchor_node)),
       offset_(offset),
       anchor_type_(PositionAnchorType::kOffsetInAnchor) {
-  if (anchor_node_)
-    DCHECK_GE(offset, 0);
-  else
+  if (!anchor_node_) {
     DCHECK_EQ(offset, 0);
+    return;
+  }
+  DCHECK_GE(offset, 0);
+  if (anchor_node_->IsTextNode())
+    DCHECK_LE(static_cast<unsigned>(offset), ToText(anchor_node_)->length());
 #if DCHECK_IS_ON()
   DCHECK(CanBeAnchorNode<Strategy>(anchor_node_.Get())) << anchor_node_;
 #endif
