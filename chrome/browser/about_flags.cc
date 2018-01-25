@@ -3655,6 +3655,10 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kSoleIntegration)},
 #endif  // defined(OS_ANDROID)
 
+    {"stacked-tab-strip", flag_descriptions::kStackedTabStripName,
+     flag_descriptions::kStackedTabStripDescription, kOsWin,
+     FEATURE_VALUE_TYPE(features::kStackedTabStrip)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the

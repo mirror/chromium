@@ -32,6 +32,7 @@
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -67,15 +68,21 @@ using content::WebContents;
 
 namespace {
 
+bool ShouldAllowStackedTabStripLayout() {
+#if defined(OS_CHROMEOS)
+  return true;
+#else
+  return base::FeatureList::IsEnabled(features::kStackedTabStrip);
+#endif
+}
+
 bool DetermineTabStripLayoutStacked(PrefService* prefs, bool* adjust_layout) {
   *adjust_layout = false;
-  // For ash, always allow entering stacked mode.
-#if defined(OS_CHROMEOS)
-  *adjust_layout = true;
-  return prefs->GetBoolean(prefs::kTabStripStackedLayout);
-#else
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kForceStackedTabStripLayout);
+  if (ShouldAllowStackedTabStripLayout()) {
+    *adjust_layout = true;
+    return prefs->GetBoolean(prefs::kTabStripStackedLayout);
+  }
+  return false;
 #endif
 }
 
