@@ -25,6 +25,18 @@ class AccountConsistencyModeManager {
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
+  // Returns the account consistency method for the current profile.
+  signin::AccountConsistencyMethod GetAccountConsistencyMethod();
+
+  // Helper method, shorthand for calling GetAccountConsistencyMethod().
+  static signin::AccountConsistencyMethod GetMethodForProfile(Profile* profile);
+
+  // Returns the account consistency method for the current profile. Can be
+  // called from any thread, with a PrefMember created with
+  // signin::CreateDicePrefMember().
+  static signin::AccountConsistencyMethod GetMethodForPrefMember(
+      BooleanPrefMember* dice_pref_member);
+
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   // Schedules migration to happen at next startup.
   void SetReadyForDiceMigration(bool is_ready);
@@ -35,13 +47,13 @@ class AccountConsistencyModeManager {
   // Returns false if |profile| is in Guest or Incognito mode.
   // A given |profile| will have only one of Mirror or Dice consistency
   // behaviour enabled.
-  static bool IsDiceEnabledForProfile(const Profile* profile);
+  static bool IsDiceEnabledForProfile(Profile* profile);
 
   // Returns |true| if Mirror account consistency is enabled for |profile|.
   // Can only be used on the UI thread.
   // A given |profile| will have only one of Mirror or Dice consistency
   // behaviour enabled.
-  static bool IsMirrorEnabledForProfile(const Profile* profile);
+  static bool IsMirrorEnabledForProfile(Profile* profile);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(AccountConsistencyModeManagerTest,
