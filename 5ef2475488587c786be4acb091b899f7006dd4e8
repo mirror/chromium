@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "104b5d76_432ce731",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-25T01:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51128ac4_0c290d89",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a924770b_0f3ccdc6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "efa8ae00_030a480e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-25T01:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a924770b_0f3ccdc6",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "404a279b_c70bed52",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8511d92a_be290d9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-25T01:29:06Z",
+      "side": 1,
+      "message": "Removed that sentence.  I thought we were trying to get rid of it:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d474506\nhttps://cs.chromium.org/chromium/src/.gn?rcl\u003d86b919fd59a1f8e317d121c41adc9db86a34487b\u0026l\u003d184\nThe exec_script_whitelist doesn\u0027t have that much stuff in it, and most of the entries are commented with TODOs to remove them.",
+      "parentUuid": "404a279b_c70bed52",
+      "revId": "5ef2475488587c786be4acb091b899f7006dd4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
