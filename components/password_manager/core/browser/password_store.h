@@ -259,10 +259,14 @@ class PasswordStore : protected PasswordStoreSync,
                           PasswordReuseDetectorConsumer* consumer);
 
   // Saves a hash of |password| for password reuse checking.
-  virtual void SaveSyncPasswordHash(const base::string16& password);
+  // |event| is used for metric logging.
+  virtual void SaveSyncPasswordHash(const base::string16& password,
+                                    metrics_util::SyncPasswordHashChange event);
 
   // Saves |sync_password_data| for password reuse checking.
-  virtual void SaveSyncPasswordHash(const SyncPasswordData& sync_password_data);
+  // |event| is used for metric logging.
+  virtual void SaveSyncPasswordHash(const SyncPasswordData& sync_password_data,
+                                    metrics_util::SyncPasswordHashChange event);
 
   // Clears the saved sync password hash.
   virtual void ClearSyncPasswordHash();

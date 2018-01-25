@@ -36,7 +36,10 @@ bool SyncPasswordData::MatchesPassword(const base::string16& password) {
 
 HashPasswordManager::HashPasswordManager(PrefService* prefs) : prefs_(prefs) {}
 
-bool HashPasswordManager::SavePasswordHash(const base::string16& password) {
+#if defined(SYNC_PASSWORD_REUSE_DETECTION_ENABLED)
+bool HashPasswordManager::SavePasswordHash(
+    const base::string16& password,
+    metrics_util::SyncPasswordHashChange event) {
   if (!prefs_)
     return false;
 
@@ -48,22 +51,28 @@ bool HashPasswordManager::SavePasswordHash(const base::string16& password) {
     return true;
   }
 
-  return SavePasswordHash(SyncPasswordData(password, true));
+  return SavePasswordHash(SyncPasswordData(password, true), event);
 }
 
 bool HashPasswordManager::SavePasswordHash(
-    const SyncPasswordData& sync_password_data) {
+    const SyncPasswordData& sync_password_data,
+    metrics_util::SyncPasswordHashChange event) {
   bool should_save = sync_password_data.force_update ||
                      !prefs_->HasPrefPath(prefs::kSyncPasswordHash);
-  return should_save ? (EncryptAndSaveToPrefs(
-                            prefs::kSyncPasswordHash,
+
+  bool result =
+      should_save &&
+      EncryptAndSaveToPrefs(prefs::kSyncPasswordHash,
                             base::NumberToString(sync_password_data.hash)) &&
-                        EncryptAndSaveToPrefs(
-                            prefs::kSyncPasswordLengthAndHashSalt,
+      EncryptAndSaveToPrefs(prefs::kSyncPasswordLengthAndHashSalt,
                             LengthAndSaltToString(sync_password_data.salt,
-                                                  sync_password_data.length)))
-                     : false;
+                                                  sync_password_data.length));
+  if (result)
+    metrics_util::LogSyncPasswordHashChange(event);
+
+  return result;
 }
+#endif
 
 void HashPasswordManager::ClearSavedPasswordHash() {
   if (prefs_)
