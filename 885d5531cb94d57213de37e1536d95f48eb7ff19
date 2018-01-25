@@ -33,6 +33,91 @@
       "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e4f844_8de7fcbb",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T19:35:36Z",
+      "side": 1,
+      "message": "Can you add comments for this struct?",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8605e7e4_a304c2dd",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T19:35:36Z",
+      "side": 1,
+      "message": "Can we just mention in the comments for LayoutSides that the type supports bitwise operators, then move these operator implementations to the .mm file?  I feel like exposing this manipulation of the enum class\u0027s underlying type in the public interface encourages users of this API to also do so, which works against the type safety added by using enum classes.  The whole point of enum classes is to obfuscate the underlying type so the values.",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc863c5_53680eb1",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T19:35:36Z",
+      "side": 1,
+      "message": "Is this example usage correct?  Shouldn\u0027t it be using the | operator?",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012c36ce_7a2f6fc7",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T19:35:36Z",
+      "side": 1,
+      "message": "Same issue with the | operator.",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c086c1_1ab3e29d",
+        "filename": "ios/chrome/browser/ui/util/constraints_ui_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-25T19:35:36Z",
+      "side": 1,
+      "message": "Should we also mention that edge insets that don\u0027t correspond to |side_flags| are ignored?",
+      "revId": "885d5531cb94d57213de37e1536d95f48eb7ff19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
