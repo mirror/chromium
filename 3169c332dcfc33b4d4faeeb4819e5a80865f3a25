@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f70281fa_e739dafa",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-25T16:32:36Z",
+      "side": 1,
+      "message": "consider that this GetInstance() has an AcquireLoad inside singleton in order to deal with thread-safe initialization (the same even if you use a c++11 static local)\nIIRC:\n1) this singleton is leaky\n2) the shim functions are registered only after the singleton is initialized.\n\nGiven this what I\u0027d do is:\n- In the singleton ctor set a global raw pointer (\nnamespace { \nSamplingNativeHeapProfiler* g_instance\n}\n\nctor() {\ng_instance \u003d this;\n}\n\nthat will avoid a useless acquire_load in this getinstance.\nAlso given the way base::singleton works I am not sure the getInstance itself will be necessarily inlined.",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "3169c332dcfc33b4d4faeeb4819e5a80865f3a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfb387f_92aadaa7",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-25T16:32:36Z",
+      "side": 1,
+      "message": "not a huge deal, but these could be functions in the anonymous namespace in the .cc file",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "3169c332dcfc33b4d4faeeb4819e5a80865f3a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
