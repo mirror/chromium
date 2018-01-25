@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83809556_4e72614a",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:11:14Z",
+      "side": 1,
+      "message": "Oh, right, we can rely on our own copy of libdrm, which already have it. I\u0027ll just drop this part.",
+      "parentUuid": "4ff17324_b13191a4",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c98e3f1_a02347a2",
         "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T21:59:36Z",
       "side": 1,
       "message": "Is this necessary? We can probably always set it, and if modifier is DRM_FORMAT_MOD_INVALID it\u0027ll just get ignored since we won\u0027t pass DRM_MODE_FB_MODIFIERS flag.",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab93247_931840a6",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:11:14Z",
+      "side": 1,
+      "message": "No, the kernel requires these to be 0 if DRM_MODE_FB_MODIFIERS is unset:\n\n                if (r-\u003emodifier[i] \u0026\u0026 !(r-\u003eflags \u0026 DRM_MODE_FB_MODIFIERS)) {\n                        DRM_DEBUG_KMS(\"bad fb modifier %llu for plane %d\\n\",\n                                      r-\u003emodifier[i], i);\n                        return -EINVAL;\n                }",
+      "parentUuid": "7c98e3f1_a02347a2",
       "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d2bd0a47_cc55ce2f",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:11:14Z",
+      "side": 1,
+      "message": "Yes, as long as we pass the SCANOUT use flag when allocating.",
+      "parentUuid": "e43aba26_0ea43024",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51b995c2_454b93e9",
         "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-25T21:59:36Z",
       "side": 1,
       "message": "Could this be a bool at this point? Something like use_modifier.\nIf it\u0027s false, we don\u0027t set DRM_MODE_FB_MODIFIERS, if it\u0027s true, we do set it and we can get the modifiers from the bo with gbm_bo_get_plane_format_modifier(bo, i) inside CreateBufferForBO.",
+      "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63849bf5_48e8eec5",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-25T22:11:14Z",
+      "side": 1,
+      "message": "Yes, that\u0027s another way to do it.",
+      "parentUuid": "51b995c2_454b93e9",
       "revId": "6a2fc238cbeabba4c8cde471a00fd5f8e041a081",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
