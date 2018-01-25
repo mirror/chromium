@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c22cce5_6ce3c288",
+        "filename": "tools/gn/builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-25T06:48:12Z",
+      "side": 0,
+      "message": "Ha!",
+      "revId": "c074d0bd1e3223703f3239c5a2dab8b0ecdce9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
