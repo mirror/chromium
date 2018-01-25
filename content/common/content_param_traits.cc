@@ -7,11 +7,13 @@
 #include <stddef.h>
 
 #include "base/strings/string_number_conversions.h"
+#include "content/common/frame_message_structs.h"
 #include "ipc/ipc_mojo_message_helper.h"
 #include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/ip_endpoint.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 #include "ui/accessibility/ax_modes.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
 namespace IPC {
@@ -132,6 +134,39 @@ bool ParamTraits<scoped_refptr<storage::BlobHandle>>::Read(
 void ParamTraits<scoped_refptr<storage::BlobHandle>>::Log(const param_type& p,
                                                           std::string* l) {
   l->append("<storage::BlobHandle>");
+}
+
+// static
+void ParamTraits<content::FrameMsg_ViewChanged_Params>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  DCHECK(switches::IsMusHostingViz() ||
+         (p.frame_sink_id.has_value() && p.frame_sink_id->is_valid()));
+  WriteParam(m, p.frame_sink_id);
+}
+
+bool ParamTraits<content::FrameMsg_ViewChanged_Params>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* r) {
+  base::Optional<viz::FrameSinkId> frame_sink_id;
+  if (!ReadParam(m, iter, &frame_sink_id))
+    return false;
+  if (!switches::IsMusHostingViz() &&
+      (!frame_sink_id || !frame_sink_id->is_valid())) {
+    NOTREACHED();
+    return false;
+  }
+  r->frame_sink_id = std::move(frame_sink_id);
+  return true;
+}
+
+// static
+void ParamTraits<content::FrameMsg_ViewChanged_Params>::Log(const param_type& p,
+                                                            std::string* l) {
+  l->append("(");
+  LogParam(p.frame_sink_id, l);
+  l->append(")");
 }
 
 }  // namespace IPC
