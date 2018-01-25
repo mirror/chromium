@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f07f4a3_0d34a928",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "The comment is not quite relevant here, since AudioManager does not exist in this context: it\u0027s usage is hidden by the interface, and all lifetime issues should be addressed/discussed there.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7a71ad_056019d3",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "DCHECK(!audio_debug_recording_session_)",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f300c80_381fb360",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "This should be a part of interface descriptions, and we don\u0027t need to repeat it here.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66edd519_7370b2ea",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcd562e_930b95a6",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Used for controlling debug recording.\n(not only enabling, and not only output)",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef82c3ac_45c36e70",
+        "filename": "content/browser/webrtc/webrtc_internals.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0f76c4_5dd4b5d0",
+        "filename": "content/browser/webrtc/webrtc_internals.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bf9cc2_44486d92",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Is it formatted correctly?",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601e166c_c64e811c",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ced8ce2_327d67e6",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Posting AudioManager::Get() as unretained will be safe here, since AudioManager::Shutdown() (called before AM destruction) shuts down AudioManager thread.\n(Just make sure you check AM::Get for nullptr)",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d460afbd_af1d9f9c",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f364dfdc_554a375d",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Please split into two headesr: we don\u0027t want the users of interface to be exposed to implementation details.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e810fd6d_18ad52dd",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Create()",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e933d7df_fce6545b",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49473b04_65283bbf",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "If you make it to call AudioManager::Get() each time instead of holding a pointer to it, it will always be safe to use, not matter what AudioManager lifetime is.\nAlso note that we cannot restrict a contract for implementation (comparing to the interface): it will be a violation of \"is-a\" relationship. So we either need to restring the usage of the interface, or make the implementation to not depend on AudioManager lifetime.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d343c0_843c2599",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "const pointer?",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0cec6f_b768638c",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0879b1d8_7b9015cd",
+        "filename": "media/audio/audio_debug_recording_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adba8aab_21ffcda2",
+        "filename": "media/audio/audio_debug_recording_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "The file should be named *_impl_unittests.cc.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7662df_80499473",
+        "filename": "media/audio/audio_debug_recording_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Note that if you use AudioManager::Get() directly (per my recommendation) the tests still work, since Get will be returning a pointer to the mock manager.",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4929ec0_f318882a",
+        "filename": "media/audio/audio_debug_recording_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "Having 1 test sequence split into SetUp() and TearDown() looks a bit strange, but up to you.\n(Note that mock expectations can be made InSequence)",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ccdedf_f7472cc7",
+        "filename": "media/audio/audio_debug_recording_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-25T10:15:52Z",
+      "side": 1,
+      "message": "If you make suggested modifications (AM::Get()), could you add a test that Enable/Disable are not called after AM::Shutdown()?",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
