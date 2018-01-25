@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "0c00de2a_a1405453",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-25T07:43:21Z",
+      "side": 1,
+      "message": "Actually, decided to abandon crrev.com/c/885689 and take a different approach. Working on it..",
+      "parentUuid": "8cbf4b6e_91cfa47a",
+      "range": {
+        "startLine": 56,
+        "startChar": 57,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0de28a2_45384f31",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
