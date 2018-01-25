@@ -22,6 +22,30 @@
       "revId": "87a3acd94267e595c50d5fdff545529b11e2b4a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a114ee73_f8b52bb9",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-25T07:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b48dfd_6bea2a42",
+      "range": {
+        "startLine": 97,
+        "startChar": 49,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "87a3acd94267e595c50d5fdff545529b11e2b4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
