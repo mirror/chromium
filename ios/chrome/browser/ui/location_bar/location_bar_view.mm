@@ -68,6 +68,23 @@ const CGFloat kTextFieldTrailingOffset = 3;
 // should not be managed directly, instead the location bar uses this container.
 // This is required to achieve desired text clipping of long URLs.
 @property(nonatomic, strong) ClippingTextFieldContainer* textFieldContainer;
+// Unsafe version of |layoutMargins|.  UIView's implementation intercepts
+// setting |layoutMargins| and updates the value stored in the property to be
+// within |safeAreaLayoutGuide|.  Since it's expected that the location bar will
+// sometimes be outside of the safe area during fullscreen animations, a
+// separate, "unsafe" version is also necessary.
+@property(nonatomic, assign) UIEdgeInsets unsafeLayoutMargins;
+// The layout guide created by setting |unsafeLayoutMargins|.
+@property(nonatomic, strong, readonly) UILayoutGuide* unsafeLayoutMarginsGuide;
+// Constraints used to lay out |unsafeLayoutMarginsGuide|.
+@property(nonatomic, strong, readonly)
+    NSLayoutConstraint* unsafeLayoutMarginsGuideTopConstraint;
+@property(nonatomic, strong, readonly)
+    NSLayoutConstraint* unsafeLayoutMarginsGuideBottomConstraint;
+@property(nonatomic, strong, readonly)
+    NSLayoutConstraint* unsafeLayoutMarginsGuideLeadingConstraint;
+@property(nonatomic, strong, readonly)
+    NSLayoutConstraint* unsafeLayoutMarginsGuideTrailingConstraint;
 @end
 
 @implementation LocationBarView
@@ -77,6 +94,16 @@ const CGFloat kTextFieldTrailingOffset = 3;
 @synthesize incognito = _incognito;
 @synthesize leadingButtonLeadingConstraint = _leadingButtonLeadingConstraint;
 @synthesize textFieldContainer = _textFieldContainer;
+@synthesize unsafeLayoutMargins = _unsafeLayoutMargins;
+@synthesize unsafeLayoutMarginsGuide = _unsafeLayoutMarginsGuide;
+@synthesize unsafeLayoutMarginsGuideTopConstraint =
+    _unsafeLayoutMarginsGuideTopConstraint;
+@synthesize unsafeLayoutMarginsGuideBottomConstraint =
+    _unsafeLayoutMarginsGuideBottomConstraint;
+@synthesize unsafeLayoutMarginsGuideLeadingConstraint =
+    _unsafeLayoutMarginsGuideLeadingConstraint;
+@synthesize unsafeLayoutMarginsGuideTrailingConstraint =
+    _unsafeLayoutMarginsGuideTrailingConstraint;
 
 #pragma mark - Public properties
 
@@ -108,6 +135,32 @@ const CGFloat kTextFieldTrailingOffset = 3;
                                                   textColor:textColor
                                                   tintColor:tintColor];
 
+    // Create the unsafe layout guide and its constraints.
+    _unsafeLayoutMarginsGuide = [[UILayoutGuide alloc] init];
+    [self addLayoutGuide:_unsafeLayoutMarginsGuide];
+    _unsafeLayoutMarginsGuideTopConstraint =
+        [_unsafeLayoutMarginsGuide.topAnchor
+            constraintEqualToAnchor:self.topAnchor
+                           constant:0.0];
+    _unsafeLayoutMarginsGuideBottomConstraint =
+        [_unsafeLayoutMarginsGuide.bottomAnchor
+            constraintEqualToAnchor:self.bottomAnchor
+                           constant:0.0];
+    _unsafeLayoutMarginsGuideLeadingConstraint =
+        [_unsafeLayoutMarginsGuide.leadingAnchor
+            constraintEqualToAnchor:self.leadingAnchor
+                           constant:0.0];
+    _unsafeLayoutMarginsGuideTrailingConstraint =
+        [_unsafeLayoutMarginsGuide.trailingAnchor
+            constraintEqualToAnchor:self.trailingAnchor
+                           constant:0.0];
+    [NSLayoutConstraint activateConstraints:@[
+      _unsafeLayoutMarginsGuideTopConstraint,
+      _unsafeLayoutMarginsGuideBottomConstraint,
+      _unsafeLayoutMarginsGuideLeadingConstraint,
+      _unsafeLayoutMarginsGuideTrailingConstraint,
+    ]];
+
     if (base::FeatureList::IsEnabled(kClippingTextfield)) {
       // When clipping is enabled, the text field is put into a container.
 
@@ -115,7 +168,7 @@ const CGFloat kTextFieldTrailingOffset = 3;
       // background is managed by this view and not toolbar controller. These
       // insets allow the gradient masking of the omnibox to not extend beyond
       // the omnibox background's visible frame.
-      self.layoutMargins = UIEdgeInsetsMake(3, 3, 3, 3);
+      self.unsafeLayoutMargins = UIEdgeInsetsMake(3, 3, 3, 3);
 
       _textFieldContainer = [[ClippingTextFieldContainer alloc]
           initWithClippingTextField:_textField];
@@ -127,19 +180,17 @@ const CGFloat kTextFieldTrailingOffset = 3;
 
       [NSLayoutConstraint activateConstraints:@[
         [_textFieldContainer.trailingAnchor
-            constraintEqualToAnchor:self.layoutMarginsGuide.trailingAnchor],
+            constraintEqualToAnchor:self.unsafeLayoutMarginsGuide
+                                        .trailingAnchor],
         [_textFieldContainer.topAnchor
-            constraintEqualToAnchor:self.layoutMarginsGuide.topAnchor],
+            constraintEqualToAnchor:self.unsafeLayoutMarginsGuide.topAnchor],
         [_textFieldContainer.bottomAnchor
-            constraintEqualToAnchor:self.layoutMarginsGuide.bottomAnchor],
+            constraintEqualToAnchor:self.unsafeLayoutMarginsGuide.bottomAnchor],
         _leadingTextfieldConstraint,
       ]];
 
       _textFieldContainer.translatesAutoresizingMaskIntoConstraints = NO;
-      [_textFieldContainer
-          setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
-                                          forAxis:
-                                              UILayoutConstraintAxisHorizontal];
+      self.preservesSuperviewLayoutMargins = NO;
     } else {
       // Contain the text field directly, with no clipping container.
       [self addSubview:_textField];
@@ -302,6 +353,23 @@ const CGFloat kTextFieldTrailingOffset = 3;
     [self layoutIfNeeded];
   }];
   [self.textField addContractOmniboxAnimations:animator];
+}
+
+#pragma mark - Private properties
+
+- (void)setUnsafeLayoutMargins:(UIEdgeInsets)unsafeLayoutMargins {
+  if (UIEdgeInsetsEqualToEdgeInsets(_unsafeLayoutMargins, unsafeLayoutMargins))
+    return;
+  _unsafeLayoutMargins = unsafeLayoutMargins;
+  // Update the unsafe layout guide constraints.
+  self.unsafeLayoutMarginsGuideTopConstraint.constant =
+      _unsafeLayoutMargins.top;
+  self.unsafeLayoutMarginsGuideBottomConstraint.constant =
+      _unsafeLayoutMargins.bottom;
+  self.unsafeLayoutMarginsGuideLeadingConstraint.constant =
+      UIEdgeInsetsGetLeading(_unsafeLayoutMargins);
+  self.unsafeLayoutMarginsGuideTrailingConstraint.constant =
+      UIEdgeInsetsGetTrailing(_unsafeLayoutMargins);
 }
 
 #pragma mark - Private methods
