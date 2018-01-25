@@ -22,6 +22,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/crx_file/id_util.h"
 #include "components/gcm_driver/crypto/gcm_decryption_result.h"
@@ -92,6 +93,7 @@ const char kSubtypeKey[] = "subtype";
 const char kSendMessageFromValue[] = "gcm@chrome.com";
 const int64_t kDefaultUserSerialNumber = 0LL;
 const int kDestroyGCMStoreDelayMS = 5 * 60 * 1000;  // 5 minutes.
+const int kTokenInvalidationDurationMinutes = 10;
 
 GCMClient::Result ToGCMClientResult(MCSClient::MessageSendStatus status) {
   switch (status) {
@@ -868,31 +870,20 @@ void GCMClientImpl::Register(
            chrome_build_info_.product_category_for_subtypes);
 
   // Find and use the cached registration ID.
-  RegistrationInfoMap::const_iterator registrations_iter =
-      registrations_.find(registration_info);
-  if (registrations_iter != registrations_.end()) {
-    bool matched = true;
-
-    // For GCM registration, we also match the sender IDs since multiple
-    // registrations are not supported.
-    const GCMRegistrationInfo* gcm_registration_info =
-        GCMRegistrationInfo::FromRegistrationInfo(registration_info.get());
-    if (gcm_registration_info) {
-      const GCMRegistrationInfo* cached_gcm_registration_info =
-          GCMRegistrationInfo::FromRegistrationInfo(
-              registrations_iter->first.get());
-      DCHECK(cached_gcm_registration_info);
-      if (gcm_registration_info->sender_ids !=
-          cached_gcm_registration_info->sender_ids) {
-        matched = false;
-      }
-    }
-
-    if (matched) {
-      delegate_->OnRegisterFinished(
-          registration_info, registrations_iter->second, SUCCESS);
-      return;
-    }
+  // Check also whether Token in Registration Info is stale.
+  // If it is, then get a fresh token. This assumes we have stored
+  // last_validated_time in registration info. If we haven't then we assume
+  // that the info is stale.
+  bool app_id_matches = false;
+  bool sender_ids_match_or_irrelevant = false;
+  bool token_is_stale = true;
+  FindFreshMatchInRegistrationInfoMapAndCheckIfStale(
+      registrations_, registration_info, &app_id_matches,
+      &sender_ids_match_or_irrelevant, &token_is_stale);
+  if (app_id_matches && sender_ids_match_or_irrelevant && token_is_stale) {
+    delegate_->OnRegisterFinished(registration_info, registrations_iter->second,
+                                  SUCCESS);
+    return;
   }
 
   std::unique_ptr<RegistrationRequest::CustomRequestHandler> request_handler;
@@ -983,6 +974,7 @@ void GCMClientImpl::OnRegisterCompleted(
     // registrations, the key consists of pair of app_id and sender_ids though
     // only app_id is used in the comparison.
     registrations_.erase(registration_info);
+    registration_info->last_validated = base::Time::Now();
     registrations_[registration_info] = registration_id;
 
     // Save it in the persistent store.
