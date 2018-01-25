@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5de0196_47268e6e",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2018-01-25T21:59:58Z",
+      "side": 1,
+      "message": "Steven, I\u0027m neither the original author nor maintainer of this code, so I don\u0027t know why base::Unretained was used here in the first place and if it\u0027s safe to do so. But that\u0027s a separate issue from what I\u0027m fixing in this CL. Let\u0027s fix the crash due to evaluation order first, since that is known to cause issues (see crbug.com/734325). And then the use of base::Unretained and other issues can be fixed in separate CLs.",
+      "parentUuid": "ceae03d6_84fa7704",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "050f6d44_92167a1a",
         "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94682585_3f721067",
+        "filename": "extensions/browser/api/networking_private/networking_private_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2018-01-25T21:59:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "050f6d44_92167a1a",
+      "revId": "3d89911435631d189f912e2de0a462fd485a1eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
