@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "174abd19_d1499484",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-25T14:15:03Z",
+      "side": 1,
+      "message": "Oh, there are DEPS rules preventing hit_test/ from using frame_sinks/. That makes sense for why HTAD exists.\n\nWhy do these messages have to be routed through CFSS at all? Like, all CFSS does is add in the FrameSinkId and forward it to FSMI? Why not just have FSMI be a HTAD and HTA know it\u0027s FrameSinkId? There is one less step in the middle that way.",
+      "parentUuid": "2de90325_c329d2fa",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4ecf970_24a1019c",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 4
