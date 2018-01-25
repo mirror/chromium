@@ -668,10 +668,11 @@ class CORE_EXPORT WebViewImpl final
 
   FloatSize elastic_overscroll_;
 
-  // This is owned by the LayerTreeHostImpl, and should only be used on the
-  // compositor thread. The LayerTreeHostImpl is indirectly owned by this
-  // class so this pointer should be valid until this class is destructed.
-  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+  // This is owned by a CompositorMutatorClient, which is owned by a
+  // LayerTreeHostImpl layer_tree_view. That LayerTreeHostImpl also indirectly
+  // owns this WebViewImpl, so this pointer should be valid until this class is
+  // destroyed.
+  CompositorMutatorImpl* mutator_;
 
   Persistent<EventListener> popup_mouse_wheel_event_listener_;
 
