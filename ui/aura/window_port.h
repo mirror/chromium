@@ -63,8 +63,10 @@ class AURA_EXPORT WindowPort {
 
   virtual void OnVisibilityChanged(bool visible) = 0;
 
-  virtual void OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                 const gfx::Rect& new_bounds) = 0;
+  virtual void OnDidChangeBounds(
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      const viz::LocalSurfaceId& id_for_autoresize) = 0;
 
   virtual void OnDidChangeTransform(const gfx::Transform& old_transform,
                                     const gfx::Transform& new_transform) = 0;
@@ -92,6 +94,9 @@ class AURA_EXPORT WindowPort {
   // CompositorFrame submission in anticipation of a synchronization operation
   // that does not involve a resize or a device scale factor change.
   virtual void AllocateLocalSurfaceId() = 0;
+
+  virtual void SetLocalSurfaceId(
+      const viz::LocalSurfaceId& local_surface_id) = 0;
 
   // Gets the current viz::LocalSurfaceId. The viz::LocalSurfaceId is allocated
   // lazily on call, and will be updated on changes to size or device scale

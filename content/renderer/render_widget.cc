@@ -611,6 +611,17 @@ void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
 }
 #endif
 
+void RenderWidget::HandlePotentialLocalSurfaceIdConflict(
+    viz::LocalSurfaceId parent_generated_local_surface_id) {
+  child_local_surface_id_allocator_.SetParent(
+      parent_generated_local_surface_id);
+
+  if (local_surface_id_.is_valid() &&
+      parent_generated_local_surface_id.parent_sequence_number() >=
+          local_surface_id_.parent_sequence_number())
+    local_surface_id_ = parent_generated_local_surface_id;
+}
+
 void RenderWidget::SetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
     const content::ScreenInfo& screen_info,
@@ -637,8 +648,10 @@ void RenderWidget::SetLocalSurfaceIdForAutoResize(
   // We should receive a new LocalSurfaceId later.
   if (content_source_id != current_content_source_id_)
     AutoResizeCompositor(viz::LocalSurfaceId());
-  else
+  else {
+    HandlePotentialLocalSurfaceIdConflict(local_surface_id);
     AutoResizeCompositor(local_surface_id);
+  }
 }
 
 void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
@@ -1340,6 +1353,7 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // LocalSurfaceId until the right one comes.
   if (params.local_surface_id &&
       params.content_source_id == current_content_source_id_) {
+    HandlePotentialLocalSurfaceIdConflict(*params.local_surface_id);
     local_surface_id_ = *params.local_surface_id;
   }
 
@@ -2287,7 +2301,9 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       window_screen_rect_ = new_pos;
     }
 
-    AutoResizeCompositor(viz::LocalSurfaceId());
+    viz::LocalSurfaceId local_surface_id =
+        child_local_surface_id_allocator_.GenerateId();
+    AutoResizeCompositor(local_surface_id);
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_resize_ack_for_auto_resize_ = true;
@@ -2639,6 +2655,8 @@ void RenderWidget::DidResizeOrRepaintAck() {
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
+  if (local_surface_id_.is_valid())
+    params.optional_local_surface_id = local_surface_id_;
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
