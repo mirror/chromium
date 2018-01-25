@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a555da8f_b612b2f2",
+        "filename": "buildbucket.config",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T15:37:36Z",
+      "side": 1,
+      "message": "I removed these two fellas in favour of lines 60-61:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/835131",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "cb45053867b0725d43cce859e6aae1bee7f5c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9e4e4a_a0b1c915",
+        "filename": "buildbucket.config",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-25T15:37:36Z",
+      "side": 1,
+      "message": "In the past the webrtc bots never quite worked against ToT, did you \ntry them this time?  What\u0027s the rationale for adding them? \nOtherwise let\u0027s not bulk import and try to keep only meaningful\nbots to avoid confusion, especially for external users (i.e. \nprevent the conversation \nA: \"bot XYZ is red for me, what\u0027s the matter?\"\nB: \"ah, that bot never quite worked/ is broken/ is dead/...\"",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 45
+      },
+      "revId": "cb45053867b0725d43cce859e6aae1bee7f5c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
