@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05219807_e9410054",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-25T22:38:03Z",
+      "side": 1,
+      "message": "I thought I moved this check earlier. I don\u0027t think you need to check for window here. It can\u0027t be null because of the conditional on 1488 and the early out on 1499.",
+      "range": {
+        "startLine": 1540,
+        "startChar": 29,
+        "endLine": 1540,
+        "endChar": 36
+      },
+      "revId": "559f930f073da75a43cfc5b19cef2bc8c4e00b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
