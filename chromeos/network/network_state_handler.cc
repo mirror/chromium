@@ -36,7 +36,7 @@ namespace chromeos {
 
 namespace {
 
-bool ConnectionStateChanged(NetworkState* network,
+bool ConnectionStateChanged(const NetworkState* network,
                             const std::string& prev_connection_state,
                             bool prev_is_captive_portal) {
   if (network->is_captive_portal() != prev_is_captive_portal)
@@ -992,11 +992,11 @@ const NetworkState* NetworkStateHandler::GetEAPForEthernet(
                        true /* configured_only */, false /* visible_only */,
                        1 /* limit */, &list);
   if (list.empty()) {
-    NET_LOG_ERROR("GetEAPForEthernet",
-                  base::StringPrintf(
-                      "Ethernet service %s connected using EAP, but no "
-                      "EAP service found.",
-                      service_path.c_str()));
+    NET_LOG_ERROR(
+        "GetEAPForEthernet",
+        base::StringPrintf("Ethernet service %s connected using EAP, but no "
+                           "EAP service found.",
+                           service_path.c_str()));
     return nullptr;
   }
   return list.front();
@@ -1152,6 +1152,7 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
     const std::string& service_path,
     const std::string& key,
     const base::Value& value) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   SCOPED_NET_LOG_IF_SLOW();
   bool changed = false;
   NetworkState* network = GetModifiableNetworkState(service_path);
@@ -1168,15 +1169,22 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
   // gets created.
   bool request_update =
       prev_profile_path.empty() && !network->profile_path().empty();
-
+  bool sort_networks = false;
   bool notify_default = network->path() == default_network_path_;
+  bool notify_connection_state = false;
 
   if (key == shill::kStateProperty || key == shill::kVisibleProperty) {
     network_list_sorted_ = false;
     if (ConnectionStateChanged(network, prev_connection_state,
                                prev_is_captive_portal)) {
-      if (OnNetworkConnectionStateChanged(network))
-        notify_default = false;  // already notified
+      notify_connection_state = true;
+      if (notify_default)
+        notify_default = VerifyDefaultNetworkConnectionStateChange(network);
+      // If the default network connection state changed, sort networks now
+      // and ensure that a default cellular network exists.
+      if (notify_default)
+        sort_networks = true;
+
       // If the connection state changes, other properties such as IPConfig
       // may have changed, so request a full update.
       request_update = true;
@@ -1202,9 +1210,13 @@ void NetworkStateHandler::UpdateNetworkServiceProperty(
   }
 
   LogPropertyUpdated(network, key, value);
+  if (notify_connection_state)
+    NotifyNetworkConnectionStateChanged(network);
   if (notify_default)
     NotifyDefaultNetworkChanged(network);
   NotifyNetworkPropertiesUpdated(network);
+  if (sort_networks)
+    SortNetworkList(true /* ensure_cellular */);
 }
 
 void NetworkStateHandler::UpdateDeviceProperty(const std::string& device_path,
@@ -1586,31 +1598,42 @@ NetworkStateHandler::ManagedStateList* NetworkStateHandler::GetManagedList(
   return nullptr;
 }
 
-bool NetworkStateHandler::OnNetworkConnectionStateChanged(
+void NetworkStateHandler::OnNetworkConnectionStateChanged(
     NetworkState* network) {
-  SCOPED_NET_LOG_IF_SLOW();
   DCHECK(network);
-  bool notify_default = false;
-  if (network->path() == default_network_path_) {
-    if (network->IsConnectedState()) {
-      notify_default = true;
-    } else if (network->IsConnectingState()) {
-      // Wait until the network is actually connected to notify that the default
-      // network changed.
-      NET_LOG(EVENT) << "Default network is not connected: "
-                     << GetLogName(network)
-                     << "State: " << network->connection_state();
-    } else {
-      NET_LOG(ERROR) << "Default network in unexpected state: "
-                     << GetLogName(network)
-                     << "State: " << network->connection_state();
-      default_network_path_.clear();
-      SortNetworkList(true /* ensure_cellular */);
-      NotifyDefaultNetworkChanged(nullptr);
-    }
+  bool default_changed = false;
+  if (network->path() == default_network_path_)
+    default_changed = VerifyDefaultNetworkConnectionStateChange(network);
+  NotifyNetworkConnectionStateChanged(network);
+  if (default_changed)
+    NotifyDefaultNetworkChanged(network);
+}
+
+bool NetworkStateHandler::VerifyDefaultNetworkConnectionStateChange(
+    NetworkState* network) {
+  DCHECK(network->path() == default_network_path_);
+  if (network->IsConnectedState())
+    return true;
+  if (network->IsConnectingState()) {
+    // Wait until the network is actually connected to notify that the default
+    // network changed.
+    NET_LOG(EVENT) << "Default network is connecting: " << GetLogName(network)
+                   << "State: " << network->connection_state();
+    return false;
   }
+  NET_LOG(ERROR) << "Default network in unexpected state: "
+                 << GetLogName(network)
+                 << "State: " << network->connection_state();
+  default_network_path_.clear();
+  return true;
+}
+
+void NetworkStateHandler::NotifyNetworkConnectionStateChanged(
+    NetworkState* network) {
+  DCHECK(network);
+  SCOPED_NET_LOG_IF_SLOW();
   std::string desc = "NetworkConnectionStateChanged";
-  if (notify_default)
+  if (network->path() == default_network_path_)
     desc = "Default" + desc;
   NET_LOG(EVENT) << "NOTIFY: " << desc << ": " << GetLogName(network) << ": "
                  << network->connection_state();
@@ -1618,14 +1641,15 @@ bool NetworkStateHandler::OnNetworkConnectionStateChanged(
   for (auto& observer : observers_)
     observer.NetworkConnectionStateChanged(network);
   notifying_network_observers_ = false;
-  if (notify_default)
-    NotifyDefaultNetworkChanged(network);
-  return notify_default;
 }
 
 void NetworkStateHandler::NotifyDefaultNetworkChanged(
     const NetworkState* default_network) {
   SCOPED_NET_LOG_IF_SLOW();
+  // If the default network is in an invalid state, |default_network_path_|
+  // will be cleared; call DefaultNetworkChanged(nullptr).
+  if (default_network && default_network->path() != default_network_path_)
+    default_network = nullptr;
   NET_LOG_EVENT("NOTIFY:DefaultNetworkChanged", GetLogName(default_network));
   notifying_network_observers_ = true;
   for (auto& observer : observers_)
