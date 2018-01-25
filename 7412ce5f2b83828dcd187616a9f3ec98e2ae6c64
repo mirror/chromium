@@ -116,6 +116,24 @@
       "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8893e545_658420a5",
+        "filename": "chrome/browser/ui/app_list/search/app_search_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-25T22:33:25Z",
+      "side": 1,
+      "message": "Oops. You are right. This runs in the callback so we could not InvalidateWeakPtrs in UpdateResults where the callback is scheduled. Otherwise, the callback would never run. :p\n\nLet\u0027s restore what we have in this PS, i.e. InvalidateWeakPtrs is in UpdateRecommendedResults and UpdateQueriedResults. Sorry about that.",
+      "parentUuid": "70f2f16c_98372977",
+      "revId": "7412ce5f2b83828dcd187616a9f3ec98e2ae6c64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
