@@ -5776,6 +5776,46 @@ TEST_P(SourceBufferStreamTest, NonZeroDurationBuffersThenIncreasingFudgeRoom) {
   CheckNoNextBuffer();
 }
 
+TEST_P(SourceBufferStreamTest,
+       SapType2WithRangeGapOneMicrosecondLargerThanFudgeRoom) {
+  NewCodedFrameGroupAppend("0D10K");
+  CheckExpectedRangesByTimestamp("{ [0,10) }");
+
+  NewCodedFrameGroupAppend("25001uD10K 15001u|35001uD1");
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedRangesByTimestamp("{ [0,10000) [25001,36001) }",
+                                   TimeGranularity::kMicrosecond);
+  } else {
+    CheckExpectedRangesByTimestamp("{ [0,10000) [25001,35001) }",
+                                   TimeGranularity::kMicrosecond);
+  }
+
+  // Fudge room should be 2 * 10ms.
+  // Increase it to be 2 * 12.5ms, which when buffering by PTS is 1 microsecond
+  // less than the buffered range gap between the buffered end time of the first
+  // range (10000us) and the next buffer time at the end of the second range
+  // (35001us). Accomplish this increase by using a buffer duration of 12.5ms
+  // and a DTS delta of 11ms.
+
+  // BIG TODO: The following triggers DCHECK in SBRByPts l.90 (when buffering by
+  // PTS).
+  // BIG TODO: Note that durations of 12499us and 500us trigger same error!
+  // Investigate to see if the 11ms DTS delta is causing this still (12500us DTS
+  // delta with 0 duration triggers this, too, so possible....)
+  // NewCodedFrameGroupAppend("35001u|36000uD12500uK");
+  NewCodedFrameGroupAppend("35001u|36000uD500uK");
+
+  if (buffering_api_ == BufferingApi::kLegacyByDts) {
+    CheckExpectedRangesByTimestamp("{ [0,10000) [25001,48500) }",
+                                   TimeGranularity::kMicrosecond);
+  } else {
+    // BIG TODO: Adjust the following expectation once the code is fixed to get
+    // beyond the crash, above, when buffering by PTS.
+    CheckExpectedRangesByTimestamp("{ [0,10000) [25001,35002) }",
+                                   TimeGranularity::kMicrosecond);
+  }
+}
+
 INSTANTIATE_TEST_CASE_P(LegacyByDts,
                         SourceBufferStreamTest,
                         Values(BufferingApi::kLegacyByDts));
