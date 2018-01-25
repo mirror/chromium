@@ -623,6 +623,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnLoginStatusChanged(LoginStatus login_status) override;
   void OnLockStateChanged(bool locked) override;
+  void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // Callback for prefs::ConnectToPrefService.
   void OnLocalStatePrefServiceInitialized(

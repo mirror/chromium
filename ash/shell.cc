@@ -1324,6 +1324,14 @@ void Shell::OnLockStateChanged(bool locked) {
 #endif
 }
 
+void Shell::OnActiveUserPrefServiceChanged(PrefService* pref_service) {
+  LOG(ERROR) << " == Shell::OnActiveUserPrefServiceChanged()";
+  // Cursor compositing state is controlled by a pref, but we do the first
+  // setting before we have a pref store loaded, which means we have to perform
+  // another update once we have a valid store / whenever we switch users.
+  UpdateCursorCompositingEnabled();
+}
+
 void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
   DCHECK(!local_state_);
