@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f4af8d_5160b5c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:40:57Z",
+      "side": 1,
+      "message": "As long as you are here, you might want to swap the two checks as the android version might be faster than checking for low end device.",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e059c814_95be589f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:40:57Z",
+      "side": 1,
+      "message": "Hmm, I wish I or someone in my team was added to review this. How long is the fetch from the LargeIconBridge? Can this be noticeable by users?",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeced039_e283ebd5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:40:57Z",
+      "side": 1,
+      "message": "Can you move this above `setUp()`? Also, add a comment explaining the purpose of this class?",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bd2f93_aef90ff0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:40:57Z",
+      "side": 1,
+      "message": "Can you split this giant block into smaller blocks? This is really hard to read :(",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0224dff_8fd538f4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-25T13:40:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cc527a1b511317d7ad28711bb309c9c8f962c556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
