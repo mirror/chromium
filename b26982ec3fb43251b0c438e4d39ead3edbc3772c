@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4bc13c4_d4aa41e4",
+        "filename": "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T01:46:06Z",
+      "side": 1,
+      "message": "nit: would something like this work:\n\nfor (int j \u003d 0; i \u003c image.attribution_sis(); ++j)\n  image_info.display_text.push_back(image.attribution()[j].text());",
+      "range": {
+        "startLine": 220,
+        "startChar": 15,
+        "endLine": 220,
+        "endChar": 27
+      },
+      "revId": "b26982ec3fb43251b0c438e4d39ead3edbc3772c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5990515d_5d315a56",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T01:46:06Z",
+      "side": 1,
+      "message": "this is the same as get_images_info :)",
+      "range": {
+        "startLine": 875,
+        "startChar": 7,
+        "endLine": 875,
+        "endChar": 55
+      },
+      "revId": "b26982ec3fb43251b0c438e4d39ead3edbc3772c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690e2e92_99301566",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-25T01:46:06Z",
+      "side": 1,
+      "message": "run this",
+      "revId": "b26982ec3fb43251b0c438e4d39ead3edbc3772c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
