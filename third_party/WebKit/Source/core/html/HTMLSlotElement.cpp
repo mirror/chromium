@@ -251,9 +251,9 @@ void HTMLSlotElement::DispatchSlotChangeEvent() {
 }
 
 Node* HTMLSlotElement::AssignedNodeNextTo(const Node& node) const {
-  DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
-  ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
   // TODO(crbug.com/776656): Assert that assigned_nodes_ is up-to-date.
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
   size_t index = assigned_nodes_.Find(&node);
@@ -264,9 +264,9 @@ Node* HTMLSlotElement::AssignedNodeNextTo(const Node& node) const {
 }
 
 Node* HTMLSlotElement::AssignedNodePreviousTo(const Node& node) const {
-  DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
-  ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
   // TODO(crbug.com/776656): Assert that assigned_nodes_ is up-to-date.
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
   size_t index = assigned_nodes_.Find(&node);
@@ -319,17 +319,15 @@ void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
 
 const HeapVector<Member<Node>>&
 HTMLSlotElement::ChildrenInFlatTreeIfAssignmentIsSupported() {
-  return RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
-             ? AssignedNodes()
-             : distributed_nodes_;
+  return RuntimeEnabledFeatures::SlotInFlatTreeEnabled() ? AssignedNodes()
+                                                         : distributed_nodes_;
 }
 
 void HTMLSlotElement::DetachLayoutTree(const AttachContext& context) {
   if (SupportsAssignment()) {
     const HeapVector<Member<Node>>& flat_tree_children =
-        RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
-            ? assigned_nodes_
-            : distributed_nodes_;
+        RuntimeEnabledFeatures::SlotInFlatTreeEnabled() ? assigned_nodes_
+                                                        : distributed_nodes_;
     for (auto& node : flat_tree_children)
       node->LazyReattachIfAttached();
   }
@@ -417,7 +415,7 @@ void HTMLSlotElement::RemovedFrom(ContainerNode* insertion_point) {
 }
 
 void HTMLSlotElement::WillRecalcStyle(StyleRecalcChange change) {
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+  if (RuntimeEnabledFeatures::SlotInFlatTreeEnabled())
     return;
   if (change < kIndependentInherit &&
       GetStyleChangeType() < kSubtreeStyleChange) {
@@ -432,7 +430,7 @@ void HTMLSlotElement::WillRecalcStyle(StyleRecalcChange change) {
 }
 
 void HTMLSlotElement::DidRecalcStyle(StyleRecalcChange change) {
-  if (!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+  if (!RuntimeEnabledFeatures::SlotInFlatTreeEnabled())
     return;
   if (change < kIndependentInherit)
     return;
