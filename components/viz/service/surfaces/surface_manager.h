@@ -182,6 +182,15 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // next display frame. We will notify SurfaceObservers accordingly.
   void SurfaceWillBeDrawn(Surface* surface);
 
+  enum class RemovedReason {
+    REPLACED,
+    DROPPED,
+    SKIPPED,
+    INVALIDATED,
+    EXPIRED,
+    COUNT
+  };
+
  private:
   friend class test::SurfaceSynchronizationTest;
   friend class test::SurfaceReferencesTest;
@@ -240,7 +249,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // Removes temporary reference to |surface_id|. If |remove_range| is true then
   // all temporary references to surfaces with the same FrameSinkId as
   // |surface_id| that were added before |surface_id| will also be removed.
-  void RemoveTemporaryReference(const SurfaceId& surface_id, bool remove_range);
+  void RemoveTemporaryReference(const SurfaceId& surface_id,
+                                RemovedReason reason);
 
   // Marks old temporary references for logging and deletion.
   void MarkOldTemporaryReferences();
@@ -311,6 +321,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
 
   // Timer that ticks every 10 seconds and calls MarkTemporaryReference().
   base::RepeatingTimer temporary_reference_timer_;
+  const bool use_timer_;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 
