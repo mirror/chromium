@@ -16,7 +16,7 @@
 #include "ui/compositor/compositor.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/platform_window/stub/stub_window.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ash {
 
 // Performs event targeting and dispatching for events in unified mode.
@@ -31,6 +31,8 @@ class MusUnifiedEventTargeter : public aura::WindowTargeter {
 
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
                                       ui::Event* event) override {
+    if (event->target() && event->IsLocatedEvent())
+      ui::Event::DispatcherApi(event).set_target(nullptr);
     if (root == src_root_) {
       delegate_->SetCurrentEventTargeterSourceHost(src_root_->GetHost());
 
@@ -41,10 +43,10 @@ class MusUnifiedEventTargeter : public aura::WindowTargeter {
         // Pass the root location (now relative to the unified display) into the
         // event dispatch pipeline, that finds local coordinates for the target.
         ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
+        LOG(ERROR) << "MSW " << located_event->type() << " " << located_event->location().ToString() << " " << located_event->root_location().ToString(); 
+        // base::debug::StackTrace().Print(); 
         located_event->set_location_f(located_event->root_location_f());
       }
-      if (event->target())
-        ui::Event::DispatcherApi(event).set_target(nullptr);
       ignore_result(
           dst_root_->GetHost()->event_sink()->OnEventFromSource(event));
 

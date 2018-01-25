@@ -14,6 +14,11 @@ EventProcessor::EventProcessor() : weak_ptr_factory_(this) {}
 EventProcessor::~EventProcessor() {}
 
 EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
+  static int msw_static = 0;
+  msw_static++;
+  int msw = msw_static;
+
+  LOG(ERROR) << "MSW OnEventFromSource A" << msw; 
   base::WeakPtr<EventProcessor> weak_this = weak_ptr_factory_.GetWeakPtr();
   // If |event| is in the process of being dispatched or has already been
   // dispatched, then dispatch a copy of the event instead. We expect event
@@ -29,10 +34,12 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
 
   EventDispatchDetails details;
   OnEventProcessingStarted(event_to_dispatch);
+  LOG(ERROR) << "MSW OnEventFromSource AA" << msw; 
   // GetInitialEventTarget() may handle the event.
   EventTarget* initial_target = event_to_dispatch->handled()
                                     ? nullptr
                                     : GetInitialEventTarget(event_to_dispatch);
+  LOG(ERROR) << "MSW OnEventFromSource AB" << msw << " " << event_to_dispatch->handled() << " " << initial_target; 
   if (!event_to_dispatch->handled()) {
     EventTarget* target = initial_target;
     EventTargeter* targeter = nullptr;
@@ -45,6 +52,7 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
         target = targeter->FindTargetForEvent(root, event_to_dispatch);
       } else {
         targeter = GetDefaultEventTargeter();
+        // LOG(ERROR) << "MSW OnEventFromSource E" << msw << " " << event_to_dispatch->target(); 
         if (event_to_dispatch->target())
           target = root;
         else
@@ -81,6 +89,7 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
     }
   }
   OnEventProcessingFinished(event);
+  LOG(ERROR) << "MSW OnEventFromSource Z" << msw; 
   return details;
 }
 

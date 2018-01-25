@@ -169,11 +169,20 @@ std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
 // Set the |target| to be the target window of this |event| and send it to
 // the EventSink.
 void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
-  ui::Event::DispatcherApi dispatch_helper(event);
+  // ui::Event::DispatcherApi dispatch_helper(event);
   // Ignore the target for key events. They need to go to the focused window,
   // which may have changed by the time we process the event.
-  if (!event->IsKeyEvent())
-    dispatch_helper.set_target(target->GetWindow());
+  // MSW: Do not set a target in unified mode! Avoid priority handling via initial target... Dispatch to the mirror
+  if (display::Screen::GetScreen()->GetPrimaryDisplay().id() == display::kUnifiedDisplayId && event->IsLocatedEvent()) {
+    ui::Event::DispatcherApi(event).set_target(nullptr);
+    ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
+    // LOG(ERROR) << "MSW " << located_event->type() << " " << located_event->location().ToString() << " " << located_event->root_location().ToString(); 
+    // base::debug::StackTrace().Print(); 
+    located_event->set_location_f(located_event->root_location_f());
+  } else if (!event->IsKeyEvent()) {
+    ui::Event::DispatcherApi(event).set_target(target->GetWindow());
+    // LOG(ERROR) << "MSW SETTING TARGET: " << target->GetWindow() << " " << event->target(); 
+  }
   GetWindowTreeHostMus(target)->SendEventToSink(event);
 }
 
@@ -1483,7 +1492,7 @@ void WindowTreeClient::OnWindowInputEvent(
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
   DCHECK(event);
-
+  // LOG(ERROR) << "MSW WTC OnWindowInputEvent A"; 
   WindowMus* window = GetWindowByServerId(window_id);  // May be null.
 
   if (matches_pointer_watcher && has_pointer_watcher_) {
@@ -1556,6 +1565,7 @@ void WindowTreeClient::OnWindowInputEvent(
     // allows Ash to determine the event position in the unified desktop mode,
     // where each physical display mirrors part of a single virtual display.
     // This paralells the behavior of unified desktop mode in classic Ash mode.
+    LOG(ERROR) << "MSW WTC DispatchEventToTarget " << event->target() << " " << display_root_window << " " << event->type() << " " << event->AsLocatedEvent()->location().ToString() << " " << event->AsLocatedEvent()->root_location().ToString(); ; 
     DispatchEventToTarget(event_to_dispatch, display_root_window);
   } else {
     DispatchEventToTarget(event_to_dispatch, window);

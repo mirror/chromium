@@ -69,6 +69,8 @@ EventDispatchDetails EventSource::SendEventToSink(Event* event) {
 
 EventDispatchDetails EventSource::DeliverEventToSink(Event* event) {
   EventSink* sink = GetEventSink();
+  // if (event->IsLocatedEvent())
+  //   LOG(ERROR) << "MSW DeliverEventToSink " << sink << " " << event->target() << " " << event->AsLocatedEvent()->location().ToString() << " " << event->AsLocatedEvent()->root_location().ToString(); 
   CHECK(sink);
   return sink->OnEventFromSource(event);
 }

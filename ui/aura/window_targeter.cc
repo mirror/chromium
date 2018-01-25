@@ -73,14 +73,14 @@ Window* WindowTargeter::GetPriorityTargetInRootWindow(
       return dispatcher->touchpad_pinch_handler();
   }
 
-  if (event.IsTouchEvent()) {
-    // Query the gesture-recognizer to find targets for touch events.
-    const ui::TouchEvent& touch = *event.AsTouchEvent();
-    ui::GestureConsumer* consumer =
-        ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch);
-    if (consumer)
-      return static_cast<Window*>(consumer);
-  }
+  // if (event.IsTouchEvent()) {
+  //   // Query the gesture-recognizer to find targets for touch events.
+  //   const ui::TouchEvent& touch = *event.AsTouchEvent();
+  //   ui::GestureConsumer* consumer =
+  //       ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch);
+  //   if (consumer)
+  //     return static_cast<Window*>(consumer);
+  // }
 
   return nullptr;
 }
@@ -97,7 +97,7 @@ Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
     // Query the gesture-recognizer to find targets for touch events.
     const ui::TouchEvent& touch = *event.AsTouchEvent();
     // GetTouchLockedTarget() is handled in GetPriorityTargetInRootWindow().
-    DCHECK(!ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch));
+    // DCHECK(!ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch)); 
     ui::GestureConsumer* consumer =
         ui::GestureRecognizer::Get()->GetTargetForLocation(
             event.location_f(), touch.source_device_id());

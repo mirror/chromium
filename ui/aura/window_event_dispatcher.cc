@@ -456,18 +456,23 @@ void WindowEventDispatcher::ReleaseNativeCapture() {
 
 ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
     ui::Event* event) {
+  LOG(ERROR) << "MSW GetInitialEventTarget A"; 
+  // MSW: Do not set a target in unified mode! Avoid priority handling via initial target... Dispatch to the mirror
   if (Env::GetInstance()->mode() == Env::Mode::LOCAL ||
       !event->IsLocatedEvent() || !event->target()) {
+    LOG(ERROR) << "MSW GetInitialEventTarget B"; 
     return nullptr;
   }
+  LOG(ERROR) << "MSW GetInitialEventTarget C"; 
 
   ui::LocatedEvent* located_event = event->AsLocatedEvent();
 
   Window* priority_target = static_cast<Window*>(
       event_targeter_->GetPriorityTargetInRootWindow(window(), *located_event));
-  if (!priority_target)
+  if (!priority_target) {
+    LOG(ERROR) << "MSW GetInitialEventTarget D"; 
     return nullptr;
-
+  }
   Window* original_target = static_cast<Window*>(event->target());
 
   // The event has a target but we need to dispatch it using the normal path.
@@ -477,6 +482,7 @@ ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
   located_event->set_location_f(located_event->root_location_f());
   if (event_targeter_->ProcessEventIfTargetsDifferentRootWindow(
           window(), static_cast<Window*>(priority_target), event)) {
+    LOG(ERROR) << "MSW GetInitialEventTarget E"; 
     // Make sure the event was marked handled so that EventProcessor doesn't
     // attempt to process the event as well.
     event->SetHandled();
@@ -489,6 +495,7 @@ ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
     located_event->ConvertLocationToTarget(original_target, window());
     located_event->ConvertLocationToTarget(window(), priority_target);
   }
+  LOG(ERROR) << "MSW GetInitialEventTarget Z " << located_event->location().ToString() << " " << located_event->root_location().ToString(); 
   return priority_target;
 }
 
@@ -522,6 +529,7 @@ ui::EventTarget* WindowEventDispatcher::GetRootForEvent(ui::Event* event) {
 }
 
 void WindowEventDispatcher::OnEventProcessingStarted(ui::Event* event) {
+  // LOG(ERROR) << "MSW WindowEventDispatcher::OnEventProcessingStarted " << !is_dispatched_held_event(*event) << " " << mus_mouse_location_updater_.get(); 
   // The held events are already in |window()|'s coordinate system. So it is
   // not necessary to apply the transform to convert from the host's
   // coordinate system to |window()|'s coordinate system.
@@ -548,7 +556,7 @@ ui::EventDispatchDetails WindowEventDispatcher::PreDispatchEvent(
     ui::EventTarget* target,
     ui::Event* event) {
   Window* target_window = static_cast<Window*>(target);
-  CHECK(window()->Contains(target_window));
+  // CHECK(window()->Contains(target_window));
 
   if (!(event->flags() & ui::EF_IS_SYNTHESIZED)) {
     fraction_of_time_without_user_input_recorder_.RecordEventAtTime(
