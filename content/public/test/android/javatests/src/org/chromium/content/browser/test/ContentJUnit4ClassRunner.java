@@ -51,7 +51,7 @@ public class ContentJUnit4ClassRunner extends BaseJUnit4ClassRunner {
 
     @Override
     protected void initCommandLineForTest() {
-        CommandLineInitUtil.initCommandLine(
-                InstrumentationRegistry.getTargetContext(), CommandLineFlags.getTestCmdLineFile());
+        CommandLineInitUtil.initCommandLine(InstrumentationRegistry.getTargetContext(),
+                CommandLineFlags.getTestCmdLineFile(), false);
     }
 }
