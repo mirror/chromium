@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569528f3_ca960c54",
+        "filename": "tools/clang/plugins/tests/auto_raw_pointer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T02:40:27Z",
+      "side": 1,
+      "message": "This test could be done without adding UniquePtr right?\n\nint foo;\nauto lambda \u003d [foo_ptr \u003d \u0026foo] { return *foo_ptr; };",
+      "revId": "5ae98eae6e23d16c83ba94fc1f9e3fae3968ebbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
