@@ -171,6 +171,11 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
                                     .Build());
 }
 
+void FrameSelection::DismissTouchHandles() {
+  is_handle_visible_ = false;
+  ScheduleVisualUpdateForPaintInvalidationIfNeeded();
+}
+
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
                                   const SetSelectionOptions& data) {
   if (SetSelectionDeprecated(selection, data))

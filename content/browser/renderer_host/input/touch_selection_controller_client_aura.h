@@ -83,6 +83,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientAura
   void MoveRangeSelectionExtent(const gfx::PointF& extent) override;
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent) override;
+  void DismissTouchHandles() override;
   void OnSelectionEvent(ui::SelectionEventType event) override;
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override;
   void DidScroll() override;
@@ -106,6 +107,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientAura
     void MoveRangeSelectionExtent(const gfx::PointF& extent) final;
     void SelectBetweenCoordinates(const gfx::PointF& base,
                                   const gfx::PointF& extent) final;
+    void DismissTouchHandles() final;
     void OnSelectionEvent(ui::SelectionEventType event) final;
     std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() final;
     void DidScroll() override;

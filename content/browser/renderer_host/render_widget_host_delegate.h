@@ -142,6 +142,8 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Request the renderer to Move the caret to the new position.
   virtual void MoveCaret(const gfx::Point& extent) {}
 
+  virtual void DismissTouchHandles() {}
+
   virtual RenderWidgetHostInputEventRouter* GetInputEventRouter();
 
   // Send page-level focus state to all SiteInstances involved in rendering the

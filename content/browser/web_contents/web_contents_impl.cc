@@ -2843,6 +2843,14 @@ void WebContentsImpl::MoveCaret(const gfx::Point& extent) {
   focused_frame->GetFrameInputHandler()->MoveCaret(extent);
 }
 
+void WebContentsImpl::DismissTouchHandles() {
+  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  if (!focused_frame)
+    return;
+
+  focused_frame->GetFrameInputHandler()->DismissTouchHandles();
+}
+
 void WebContentsImpl::AdjustSelectionByCharacterOffset(
     int start_adjust,
     int end_adjust,

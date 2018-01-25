@@ -64,9 +64,7 @@ TouchSelectionController::TouchSelectionController(
       anchor_drag_to_selection_start_(false),
       longpress_drag_selector_(this),
       selection_handle_dragged_(false),
-      consume_touch_sequence_(false),
-      show_touch_handles_(true)
-{
+      consume_touch_sequence_(false) {
   DCHECK(client_);
 }
 
@@ -80,8 +78,7 @@ void TouchSelectionController::OnSelectionBoundsChanged(
     return;
 
   if (start.type() == gfx::SelectionBound::EMPTY ||
-      end.type() == gfx::SelectionBound::EMPTY ||
-      !show_touch_handles_) {
+      end.type() == gfx::SelectionBound::EMPTY) {
     HideHandles();
     return;
   }
@@ -204,9 +201,8 @@ void TouchSelectionController::HideHandles() {
   end_orientation_ = ToTouchHandleOrientation(end_.type());
 }
 
-void TouchSelectionController::HideAndDisallowShowingAutomatically() {
-  HideHandles();
-  show_touch_handles_ = false;
+void TouchSelectionController::DismissTouchHandles() {
+  client_->DismissTouchHandles();
 }
 
 void TouchSelectionController::SetTemporarilyHidden(bool hidden) {
@@ -289,7 +285,6 @@ const gfx::PointF& TouchSelectionController::GetEndPosition() const {
 
 bool TouchSelectionController::WillHandleTouchEventImpl(
     const MotionEvent& event) {
-  show_touch_handles_ = true;
   if (config_.enable_longpress_drag_selection &&
       longpress_drag_selector_.WillHandleTouchEvent(event)) {
     return true;

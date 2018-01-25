@@ -84,6 +84,8 @@ class CORE_EXPORT FrameSelection final
   // An implementation of |WebFrame::moveCaretSelection()|
   void MoveCaretSelection(const IntPoint&);
 
+  void DismissTouchHandles();
+
   VisibleSelection ComputeVisibleSelectionInDOMTree() const;
   VisibleSelectionInFlatTree ComputeVisibleSelectionInFlatTree() const;
 

@@ -85,7 +85,7 @@ void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnKeyEvent(
   DCHECK_NE(ui::TouchSelectionController::INACTIVE,
             selection_controller_->active_status());
 
-  selection_controller_->HideAndDisallowShowingAutomatically();
+  selection_controller_->DismissTouchHandles();
 }
 
 void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnMouseEvent(
@@ -109,7 +109,7 @@ void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnMouseEvent(
   aura::client::CursorClient* cursor_client =
       aura::client::GetCursorClient(window_->GetRootWindow());
   if (!cursor_client || cursor_client->IsMouseEventsEnabled())
-    selection_controller_->HideAndDisallowShowingAutomatically();
+    selection_controller_->DismissTouchHandles();
 }
 
 void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnScrollEvent(
@@ -117,7 +117,7 @@ void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnScrollEvent(
   DCHECK_NE(ui::TouchSelectionController::INACTIVE,
             selection_controller_->active_status());
 
-  selection_controller_->HideAndDisallowShowingAutomatically();
+  selection_controller_->DismissTouchHandles();
 }
 
 TouchSelectionControllerClientAura::TouchSelectionControllerClientAura(
@@ -188,7 +188,7 @@ bool TouchSelectionControllerClientAura::HandleContextMenu(
   if (from_touch && !params.selection_text.empty())
     return true;
 
-  rwhva_->selection_controller()->HideAndDisallowShowingAutomatically();
+  rwhva_->selection_controller()->DismissTouchHandles();
   return false;
 }
 
@@ -375,6 +375,18 @@ void TouchSelectionControllerClientAura::InternalClient::
   }
 }
 
+void TouchSelectionControllerClientAura::DismissTouchHandles() {
+  active_client_->DismissTouchHandles();
+}
+
+void TouchSelectionControllerClientAura::InternalClient::DismissTouchHandles() {
+  RenderWidgetHostDelegate* host_delegate =
+      rwhva_->GetRenderWidgetHostImpl()->delegate();
+  if (host_delegate) {
+    host_delegate->DismissTouchHandles();
+  }
+}
+
 void TouchSelectionControllerClientAura::OnSelectionEvent(
     ui::SelectionEventType event) {
   // This function (implicitly) uses active_menu_client_, so we don't go to the
@@ -468,7 +480,7 @@ bool TouchSelectionControllerClientAura::IsCommandIdEnabled(
 
 void TouchSelectionControllerClientAura::ExecuteCommand(int command_id,
                                                         int event_flags) {
-  rwhva_->selection_controller()->HideAndDisallowShowingAutomatically();
+  rwhva_->selection_controller()->DismissTouchHandles();
   RenderWidgetHostDelegate* host_delegate =
       rwhva_->GetRenderWidgetHostImpl()->delegate();
   if (!host_delegate)
@@ -502,7 +514,7 @@ void TouchSelectionControllerClientAura::RunContextMenu() {
   // Hide selection handles after getting rect-between-bounds from touch
   // selection controller; otherwise, rect would be empty and the above
   // calculations would be invalid.
-  rwhva_->selection_controller()->HideAndDisallowShowingAutomatically();
+  rwhva_->selection_controller()->DismissTouchHandles();
 }
 
 }  // namespace content

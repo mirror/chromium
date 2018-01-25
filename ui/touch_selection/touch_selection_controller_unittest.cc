@@ -81,6 +81,8 @@ class TouchSelectionControllerTest : public testing::Test,
     caret_position_ = position;
   }
 
+  void DismissTouchHandles() override {}
+
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent) override {
     if (base == selection_end_ && extent == selection_start_)
@@ -388,7 +390,7 @@ TEST_F(TouchSelectionControllerTest, InsertionDeactivatedWhileDragging) {
   EXPECT_EQ(start_offset + gfx::Vector2dF(0, 5), GetLastCaretPosition());
 
   // Deactivate touch selection to end dragging.
-  controller().HideAndDisallowShowingAutomatically();
+  controller().DismissTouchHandles();
   EXPECT_THAT(GetAndResetEvents(), ElementsAre(INSERTION_HANDLE_DRAG_STOPPED,
                                                INSERTION_HANDLE_CLEARED));
 
@@ -883,7 +885,7 @@ TEST_F(TouchSelectionControllerTest, Animation) {
   EXPECT_TRUE(GetAndResetNeedsAnimate());
 
   // If the handles are explicity hidden, no animation should be triggered.
-  controller().HideAndDisallowShowingAutomatically();
+  controller().DismissTouchHandles();
   EXPECT_FALSE(GetAndResetNeedsAnimate());
 
   // If the client doesn't support animation, no animation should be triggered.

@@ -72,6 +72,7 @@ class FrameInputHandlerImpl : public mojom::FrameInputHandler {
   void MoveRangeSelectionExtent(const gfx::Point& extent) override;
   void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect) override;
   void MoveCaret(const gfx::Point& point) override;
+  void DismissTouchHandles() override;
   void GetWidgetInputHandler(
       mojom::WidgetInputHandlerAssociatedRequest interface_request,
       mojom::WidgetInputHandlerHostPtr host) override;

@@ -1352,6 +1352,10 @@ void RenderWidgetHostViewAndroid::MoveCaret(const gfx::PointF& position) {
   MoveCaret(gfx::Point(position.x(), position.y()));
 }
 
+void RenderWidgetHostViewAndroid::DismissTouchHandles() {
+  MoveCaret();
+}
+
 void RenderWidgetHostViewAndroid::MoveRangeSelectionExtent(
     const gfx::PointF& extent) {
   DCHECK(selection_popup_controller_);
@@ -2029,7 +2033,7 @@ void RenderWidgetHostViewAndroid::ShowContextMenuAtPoint(
 
 void RenderWidgetHostViewAndroid::DismissTextHandles() {
   if (touch_selection_controller_)
-    touch_selection_controller_->HideAndDisallowShowingAutomatically();
+    touch_selection_controller_->DismissTouchHandles();
 }
 
 void RenderWidgetHostViewAndroid::SetTextHandlesTemporarilyHidden(bool hidden) {
