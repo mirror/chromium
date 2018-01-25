@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d57c29b_0a73396f",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-25T00:15:28Z",
+      "side": 1,
+      "message": "nit:no need for const, bool is primitive type",
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac04387f_fafab490",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-25T00:15:28Z",
+      "side": 1,
+      "message": "nit: maybe not in this CL, but it will be good to add some UMAs here to track the number of downloads that was intercepted",
+      "revId": "8dbcd68e89f9034c62020cddd40b3e42415dd30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
