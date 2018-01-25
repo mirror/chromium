@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94686645_806fe481",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-25T19:10:10Z",
+      "side": 1,
+      "message": "I feel the relation between CdmAdapter, the helper, and the proxy is a bit convoluted. I tried to fix it but it\u0027s not trivial. I\u0027ll have to think about it more. Suggestions welcome!",
+      "revId": "0105ddc61c35a2db2774b69c74fc783b82087a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
