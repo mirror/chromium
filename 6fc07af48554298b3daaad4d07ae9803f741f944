@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d331c3d0_64c58053",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-25T18:04:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure that the inline text box index is that stable either.\n\nImagine that a web page is completely static, but while the user\nis reading, they resize the browser window. That will completely\nchange the inline text boxes as the paragraph shapes changes and\nlines wrap in different ways, but the static text nodes will be\ncompletely stable.\n\nI think the best thing to store is just the character index into the\nstatic text node. It\u0027s easy to iterate over the inline text boxes to\nfind the one corresponding to a given character index.",
+      "revId": "6fc07af48554298b3daaad4d07ae9803f741f944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
