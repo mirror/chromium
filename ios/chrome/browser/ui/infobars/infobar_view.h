@@ -13,6 +13,10 @@ class InfoBarViewDelegate;
 // UIView representing a single infobar.
 @interface InfoBarView : BidiContainerView
 
+// Returns a new instance of InfoBarView or of its subclass.
++ (instancetype)infoBarViewWithFrame:(CGRect)frame
+                            delegate:(InfoBarViewDelegate*)delegate;
+
 - (instancetype)initWithFrame:(CGRect)frame
                      delegate:(InfoBarViewDelegate*)delegate;
 

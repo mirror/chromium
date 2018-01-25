@@ -8,6 +8,8 @@ source_set("infobars") {
     "infobar_view.h",
     "infobar_view.mm",
     "infobar_view_delegate.h",
+    "legacy_infobar_view.h",
+    "legacy_infobar_view.mm",
   ]
   deps = [
     "resources:infobar_close",
@@ -40,6 +42,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "infobar_view_unittest.mm",
+    "legacy_infobar_view_unittest.mm",
   ]
   deps = [
     ":infobars",

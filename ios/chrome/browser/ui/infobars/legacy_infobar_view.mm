@@ -1,8 +1,8 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Copyright (c) 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/infobars/infobar_view.h"
+#import "ios/chrome/browser/ui/infobars/legacy_infobar_view.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
@@ -16,7 +16,6 @@
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/fancy_ui/bidi_container_view.h"
 #import "ios/chrome/browser/ui/infobars/infobar_view_delegate.h"
-#import "ios/chrome/browser/ui/infobars/legacy_infobar_view.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/label_link_controller.h"
@@ -62,7 +61,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 }  // namespace
 
 // UIView containing a switch and a label.
-@interface InfobarSwitchView : BidiContainerView
+@interface SwitchView : BidiContainerView
 
 // Initialize the view's label with |labelText|.
 - (id)initWithLabel:(NSString*)labelText isOn:(BOOL)isOn;
@@ -80,7 +79,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 
 @end
 
-@implementation InfobarSwitchView {
+@implementation SwitchView {
   UILabel* label_;
   UISwitch* switch_;
   CGFloat preferredTotalWidth_;
@@ -179,7 +178,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 
 @end
 
-@interface InfoBarView (Testing)
+@interface LegacyInfoBarView (Testing)
 // Returns the buttons' height.
 - (CGFloat)buttonsHeight;
 // Returns the button margin applied in some views.
@@ -209,7 +208,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 - (const std::vector<std::pair<NSUInteger, NSRange>>&)linkRanges;
 @end
 
-@interface InfoBarView ()
+@interface LegacyInfoBarView ()
 
 // Returns the marker delimiting the start of a link.
 + (NSString*)openingMarkerForLink;
@@ -218,7 +217,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 
 @end
 
-@implementation InfoBarView {
+@implementation LegacyInfoBarView {
   // Delegates UIView events.
   InfoBarViewDelegate* delegate_;  // weak.
   // The current height of this infobar (used for animations where part of the
@@ -231,7 +230,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   // Close button.
   UIButton* closeButton_;
   // View containing the switch and its label.
-  InfobarSwitchView* switchView_;
+  SwitchView* switchView_;
   // We are using a LabelLinkController with an UILabel to be able to have
   // parts of the label underlined and clickable. This label_ may be nil if
   // the delegate returns an empty string for GetMessageText().
@@ -253,11 +252,6 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 
 @synthesize visibleHeight = visibleHeight_;
 
-+ (instancetype)infoBarViewWithFrame:(CGRect)frame
-                            delegate:(InfoBarViewDelegate*)delegate {
-  return [[LegacyInfoBarView alloc] initWithFrame:frame delegate:delegate];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
                      delegate:(InfoBarViewDelegate*)delegate {
   self = [super initWithFrame:frame];
@@ -273,7 +267,6 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   }
   return self;
 }
-
 
 - (NSString*)markedLabel {
   return markedLabel_;
@@ -664,7 +657,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
                        target:(id)target
                        action:(SEL)action {
   DCHECK(!closeButton_);
-  // TODO(crbug/228611): Add IDR_ constant and use GetNativeImageNamed().
+  // TODO(crbug.com/228611): Add IDR_ constant and use GetNativeImageNamed().
   UIImage* image = [UIImage imageNamed:@"infobar_close"];
   closeButton_ = [UIButton buttonWithType:UIButtonTypeCustom];
   [closeButton_ setExclusiveTouch:YES];
@@ -682,7 +675,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
                        tag:(NSInteger)tag
                     target:(id)target
                     action:(SEL)action {
-  switchView_ = [[InfobarSwitchView alloc] initWithLabel:label isOn:isOn];
+  switchView_ = [[SwitchView alloc] initWithLabel:label isOn:isOn];
   [switchView_ setTag:tag target:target action:action];
   [self addSubview:switchView_];
 }
@@ -700,7 +693,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   for (;;) {
     // Find the opening marker, followed by the tag between parentheses.
     NSRange startingRange =
-        [string rangeOfString:[[InfoBarView openingMarkerForLink]
+        [string rangeOfString:[[LegacyInfoBarView openingMarkerForLink]
                                   stringByAppendingString:@"("]];
     if (!startingRange.length)
       return [string copy];
@@ -722,7 +715,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
     startingRange.length =
         closingParenthesis.location - startingRange.location + 1;
     NSRange endingRange =
-        [string rangeOfString:[InfoBarView closingMarkerForLink]];
+        [string rangeOfString:[LegacyInfoBarView closingMarkerForLink]];
     DCHECK(endingRange.length);
     // Compute range of link in stripped string and add it to the array.
     NSRange rangeOfLinkInStrippedString =
@@ -907,8 +900,9 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 + (NSString*)stringAsLink:(NSString*)string tag:(NSUInteger)tag {
   DCHECK_NE(0u, tag);
   return [NSString stringWithFormat:@"%@(%" PRIuNS ")%@%@",
-                                    [InfoBarView openingMarkerForLink], tag,
-                                    string, [InfoBarView closingMarkerForLink]];
+                                    [LegacyInfoBarView openingMarkerForLink],
+                                    tag, string,
+                                    [LegacyInfoBarView closingMarkerForLink]];
 }
 
 #pragma mark - Testing
