@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c84541dc_9ec16dde",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 3812,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "??",
+      "parentUuid": "333b99be_1dc04196",
+      "range": {
+        "startLine": 3812,
+        "startChar": 6,
+        "endLine": 3812,
+        "endChar": 41
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32e4dac0_fb1eac28",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 8
@@ -718,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "14317d5d_268cb0a0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "I agree and welcome having one state if and only if ManagePasswordsBubbleModel doesn\u0027t know about what \"Sign in\" button does. That is, \nManagePasswordsBubbleModel::OnEnableSyncClicked - deleted, ManagePasswordsBubbleModel::OnSignInToChromeClicked(UnknownClass* something) just passes |something| further to delegate_-\u003eNavigateToChromeSignIn that passes it further to signin_ui_util which knows what to do.",
+      "parentUuid": "e122d99e_7f429480",
+      "range": {
+        "startLine": 378,
+        "startChar": 26,
+        "endLine": 378,
+        "endChar": 74
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94ab40c8_bce75343",
         "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
         "patchSetId": 8
@@ -894,6 +942,30 @@
       "side": 1,
       "message": "The advantage of the current approach is that I can avoid including build/buildflag.h and components/signin/core/browser/signin_features.h in the header file as I no longer need if defined(ENABLE_DICE_SUPPORT).",
       "parentUuid": "1ac54a99_33776d2a",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "817fcd13650e11de88b04efec7c7e000de116240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efe7932_3e49ccfa",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure what changes with the nested class. You still define it in .cc. It just becomes \nManagePasswordPendingView::ManagePasswordBubbleSyncPromoDelegate.\n\nNote that we dropped \u0027Manage\u0027 from the name as redundant.",
+      "parentUuid": "98c1ea12_47012e12",
       "range": {
         "startLine": 43,
         "startChar": 2,

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e3b080f_bb9240a9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 4714,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "It\u0027s exactly the same as above. Deliberately?",
+      "range": {
+        "startLine": 4714,
+        "startChar": 10,
+        "endLine": 4714,
+        "endChar": 24
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e93d9a_a254d058",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "Why do we need it?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 6
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7579c599_2c415b85",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "Why do you set all the fields if you check only account_id? Should we check everything instead?",
+      "range": {
+        "startLine": 430,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 32
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afdbee2_e5629480",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "Do we really need it?",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 56
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16090d1_8dab895f",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "Where is it used?\n\nYou seemed to unite sign_in_promo_ and dice_sync_promo_delegate_. I like the idea actually but it\u0027s not finished.",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 3
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5c600c_54fd6b4b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-25T19:28:03Z",
+      "side": 1,
+      "message": "Why doesn\u0027t DiceBubbleSyncPromoView know the string? If they are different across embedders, does it make sense to pass an enum?",
+      "range": {
+        "startLine": 480,
+        "startChar": 10,
+        "endLine": 480,
+        "endChar": 56
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
