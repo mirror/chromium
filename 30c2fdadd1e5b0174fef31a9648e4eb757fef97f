@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ae8259f0_aef76444",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 63
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-25T23:09:44Z",
+      "side": 1,
+      "message": "The definitions you gave for no_symbols/minimal_symbols/symbols are correct. If we can relatively cheaply get line numbers in stack traces as part of minimal_symbols I would want that as well.\n\nI would expect that minimal_symbols would make it hard to debug; you wouldn\u0027t have full line number information, you wouldn\u0027t have definitions and values for local variables, etc. All that should be present in \":symbols\".",
+      "parentUuid": "66bee8b1_daf35ff7",
+      "revId": "30c2fdadd1e5b0174fef31a9648e4eb757fef97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a03f3d_530568c1",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 63
