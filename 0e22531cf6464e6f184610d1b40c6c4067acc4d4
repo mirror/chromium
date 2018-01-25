@@ -16,6 +16,24 @@
       "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e88f065_0d6bfd36",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T07:33:05Z",
+      "side": 1,
+      "message": "For ServiceWorker case only passing direct network loader factory seems actually fine. (We used to use blob one too but no longer do that, and we won\u0027t need other factories)\n\nFor worker context case we need the entire bundle though, so we probably need to support Clone in Interceptor?",
+      "parentUuid": "3bf74c09_b96843d9",
+      "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

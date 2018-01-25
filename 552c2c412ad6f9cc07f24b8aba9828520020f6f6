@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17853538_a0796b2a",
+        "filename": "content/renderer/loader/child_url_loader_factory_bundle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T07:33:05Z",
+      "side": 1,
+      "message": "Mind having some separator comment between the BundleInfo and Bundle impl? (up to you)",
+      "revId": "552c2c412ad6f9cc07f24b8aba9828520020f6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60336f90_d2242f9e",
+        "filename": "content/renderer/loader/child_url_loader_factory_bundle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-25T07:33:05Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure when this code is needed... oh because we have URLLoaderFactoryBundle::RegisterFactory?  Should we just have DCHECK() instead?\n\n(I read on) well no, we may call Update later if it\u0027s given. Ok never mind.",
+      "revId": "552c2c412ad6f9cc07f24b8aba9828520020f6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
