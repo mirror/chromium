@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf1ac83_5987d722",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-25T15:32:13Z",
+      "side": 1,
+      "message": "I\u0027d have a mild preference for naming this something like \"content-shell-websocket-delay-ms\". It\u0027s long and verbose, but since we have a ton of PHP scripts used for Layout Tests it won\u0027t be obvious to a reader where this throttle is being applied.",
+      "revId": "7f760ab618e83a88eb1c0f9793e5b4f8a2518f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5597e45_221d2400",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-25T15:32:13Z",
+      "side": 1,
+      "message": "~TestWebSocketHandleThrottle() override \u003d default;",
+      "revId": "7f760ab618e83a88eb1c0f9793e5b4f8a2518f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0ee9c1_936da41a",
+        "filename": "content/shell/renderer/layout_test/test_websocket_handshake_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-25T15:32:13Z",
+      "side": 1,
+      "message": "nit: please name the arguments.",
+      "revId": "7f760ab618e83a88eb1c0f9793e5b4f8a2518f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
