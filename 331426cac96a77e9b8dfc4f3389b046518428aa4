@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6e3986_f05dbf47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-25T01:52:34Z",
+      "side": 1,
+      "message": "Do you mean non-master devices?",
+      "revId": "331426cac96a77e9b8dfc4f3389b046518428aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c54888_9d1ce639",
+        "filename": "ui/events/devices/x11/touch_factory_x11.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-25T01:52:34Z",
+      "side": 1,
+      "message": "Summarize the CL description here in a comment please (maybe with link back to the bug).",
+      "revId": "331426cac96a77e9b8dfc4f3389b046518428aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
