@@ -4,6 +4,8 @@
 
 #include "chrome/browser/search/one_google_bar/one_google_bar_service_factory.h"
 
+#include <string>
+
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
@@ -13,6 +15,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_service.h"
+#include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/common/chrome_features.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
@@ -61,5 +64,6 @@ KeyedService* OneGoogleBarServiceFactory::BuildServiceInstanceFor(
       cookie_service,
       base::MakeUnique<OneGoogleBarFetcherImpl>(
           profile->GetRequestContext(), google_url_tracker,
-          g_browser_process->GetApplicationLocale(), override_api_url));
+          g_browser_process->GetApplicationLocale(), override_api_url,
+          AccountConsistencyModeManager::IsMirrorEnabledForProfile(profile)));
 }
