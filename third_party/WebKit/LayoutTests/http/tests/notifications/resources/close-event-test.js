@@ -15,6 +15,7 @@ async_test(function(test) {
     });
 
     notification.addEventListener('close', function() {
+        assert_unreached('The close event');
         test.done();
     });
 
