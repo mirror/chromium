@@ -16,6 +16,24 @@
       "revId": "bc2f1e88806e6daebd5b66d84d2e4bdeee516701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7a1e94_03888f39",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-25T16:42:21Z",
+      "side": 1,
+      "message": "I had it there but realized it is not needed. In fact, non of the RegisterXXX methods are there. It makes sense though since the Trace method should not be instantiated. It even has a static_assert that will fail for PartitionAllocator.",
+      "parentUuid": "2e8000e7_4ba7b5f8",
+      "revId": "bc2f1e88806e6daebd5b66d84d2e4bdeee516701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
