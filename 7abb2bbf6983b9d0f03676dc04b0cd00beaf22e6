@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b3de52_5368bfca",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2018-01-25T18:27:33Z",
+      "side": 1,
+      "message": "Maybe rephrase the comment. Such as:\n|install_immediately| - Install the extension if it is currently in use.",
+      "revId": "7abb2bbf6983b9d0f03676dc04b0cd00beaf22e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478346ad_4981f286",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2018-01-25T18:27:33Z",
+      "side": 1,
+      "message": "I wonder if the code looks more straightforward if written like:\n* set the install_source if needed\n* insert the object.",
+      "revId": "7abb2bbf6983b9d0f03676dc04b0cd00beaf22e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
