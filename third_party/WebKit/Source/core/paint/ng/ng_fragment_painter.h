@@ -25,6 +25,9 @@ class NGFragmentPainter : public ObjectPainterBase {
 
   void PaintOutline(const PaintInfo&, const LayoutPoint& paint_offset);
 
+  void PaintDescendantOutlines(const PaintInfo&,
+                               const LayoutPoint& paint_offset);
+
  private:
   const NGPaintFragment& paint_fragment_;
 };
