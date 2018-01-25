@@ -16,6 +16,24 @@
       "revId": "1f2c9a4341caa2104d3666d5935e83df7d2d6af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db42bfc_7a90db01",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1168184
+      },
+      "writtenOn": "2018-01-25T02:09:26Z",
+      "side": 1,
+      "message": "linux_use_bundled_binutils is declared in BUILD.gn. gn complains that linux_use_bundled_binutils is undefined after I moved all the logics into compiler.gni. So I tried to move everything into declare_args() within BUILD.gn.",
+      "parentUuid": "0abed872_7c122dd9",
+      "revId": "1f2c9a4341caa2104d3666d5935e83df7d2d6af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
