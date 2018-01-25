@@ -52,9 +52,7 @@ class ReloadButtonTest : public CocoaTest {
     [[test_window() contentView] addSubview:button_];
   }
 
-  bool IsMouseInside() {
-    return [[button_ cell] isMouseInside];
-  }
+  bool IsMouseInside() { return [[button_ cell] isMouseInside]; }
 
   void MouseEnter() {
     [[button_ cell] mouseEntered:cocoa_test_event_utils::EnterEvent()];
@@ -89,9 +87,9 @@ TEST_F(ReloadButtonTest, IgnoredMultiClick) {
   // Expect the action once.
   [[mock_target expect] anAction:button_];
 
-  const std::pair<NSEvent*,NSEvent*> click_one =
+  const std::pair<NSEvent*, NSEvent*> click_one =
       cocoa_test_event_utils::MouseClickInView(button_, 1);
-  const std::pair<NSEvent*,NSEvent*> click_two =
+  const std::pair<NSEvent*, NSEvent*> click_two =
       cocoa_test_event_utils::MouseClickInView(button_, 2);
   [NSApp postEvent:click_one.second atStart:YES];
   [button_ mouseDown:click_one.first];
@@ -257,7 +255,7 @@ TEST_F(ReloadButtonTest, StopAfterReloadSet) {
 
   // Clicking in stop mode should send the action and transition to
   // reload mode.
-  const std::pair<NSEvent*,NSEvent*> click =
+  const std::pair<NSEvent*, NSEvent*> click =
       cocoa_test_event_utils::MouseClickInView(button_, 1);
   [NSApp postEvent:click.second atStart:YES];
   [button_ mouseDown:click.first];
