@@ -228,7 +228,7 @@
   web::NavigationItem* item =
       webState->GetNavigationManager()->GetVisibleItem();
   GURL URL = item ? item->GetURL().GetOrigin() : GURL::EmptyGURL();
-  BOOL isNTP = (URL == GURL(kChromeUINewTabURL));
+  BOOL isNTP = (URL == kChromeUINewTabURL);
 
   // Don't do anything for a live non-ntp tab.
   if (webState == [self getWebState] && !isNTP) {
@@ -356,7 +356,7 @@
   DCHECK(!IsIPadIdiom());
   // Hide the toolbar if the NTP is currently displayed.
   web::WebState* webState = [self getWebState];
-  if (webState && (webState->GetVisibleURL() == GURL(kChromeUINewTabURL))) {
+  if (webState && (webState->GetVisibleURL() == kChromeUINewTabURL)) {
     self.viewController.view.hidden = YES;
   }
 }
