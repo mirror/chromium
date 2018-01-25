@@ -13,6 +13,7 @@
 #include "chrome/browser/signin/account_consistency_mode_manager.h"
 #include "chrome/browser/signin/signin_ui_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/sync/dice_signin_button.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/label.h"
@@ -33,12 +34,13 @@ DiceBubbleSyncPromoView::DiceBubbleSyncPromoView(
 
   std::unique_ptr<views::BoxLayout> layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(),
-      ChromeLayoutProvider::Get()->GetDistanceMetric(
-          views::DISTANCE_RELATED_CONTROL_VERTICAL));
+      ChromeLayoutProvider::Get()
+          ->GetDialogInsetsForContentType(views::TEXT, views::TEXT)
+          .bottom());
   SetLayoutManager(std::move(layout));
 
   base::string16 title_text = l10n_util::GetStringUTF16(title_resource_id);
-  views::Label* title = new views::Label(title_text);
+  views::Label* title = new views::Label(title_text, CONTEXT_BODY_TEXT_LARGE);
   title->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_LEFT);
   title->SetMultiLine(true);
   AddChildView(title);
