@@ -24,3 +24,18 @@ blink_core_sources("messaging") {
     "//third_party/WebKit/common:mojo_bindings_blink",
   ]
 }
+
+jumbo_source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "BlinkCloneableMessageStructTraits.cpp",
+    "BlinkTransferableMessageStructTraits.cpp",
+    "BlinkTransferableMessageStructTraitsTest.cpp",
+  ]
+
+  public_deps = [
+    "//testing/gmock",
+    "//testing/gtest",
+    "//third_party/WebKit/Source/core",
+  ]
+}
