@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1390b5d8_175842f8",
+        "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-25T01:25:12Z",
+      "side": 1,
+      "message": "In a sample app from an Android developer [i], I saw them using View#getRootWindowInsets() to determine where the bottom navigation was currently located (since it can be at the bottom or on the sides of the app).\n\nI\u0027m not convinced it\u0027d work for this application, and it\u0027s only available in API 23+, but it may be worth looking into.\n\n\n[i] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d797027#c5",
+      "range": {
+        "startLine": 217,
+        "startChar": 8,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "ecbfd3a3870a5384a4f888f1f6efc32c3817f274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e7167c3_2bba62a6",
         "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
         "patchSetId": 1
