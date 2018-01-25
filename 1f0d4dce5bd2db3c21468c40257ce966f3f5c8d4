@@ -22,6 +22,30 @@
       "revId": "1f0d4dce5bd2db3c21468c40257ce966f3f5c8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a76a383_714c0fe4",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-25T17:05:26Z",
+      "side": 1,
+      "message": "Even when the hook has already been installed, but the allocation was not sampled address is pointing to the beginning of the allocated region. The check relies on the fact that an underlying allocator stores some internal data right before an allocated region.",
+      "parentUuid": "799d92a4_15dbb56f",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 60
+      },
+      "revId": "1f0d4dce5bd2db3c21468c40257ce966f3f5c8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
