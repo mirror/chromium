@@ -16,6 +16,40 @@
       "revId": "c201652841355e9d84963c2711346672761bdb28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79cb174_0410f96d",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:51:48Z",
+      "side": 1,
+      "message": "None of these BlinkGC types would make sense for incremental marking phases...\n\nYou might want to refactor this in a follow-up CL.",
+      "revId": "c201652841355e9d84963c2711346672761bdb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7789c39d_3ae4f4d1",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-25T06:51:48Z",
+      "side": 1,
+      "message": "Do we really need to abort here?\n\nI guess it wouldn\u0027t be hard to just finish the current incremental marking. Maybe you just need to call IncrementalMarkingFinalize?",
+      "revId": "c201652841355e9d84963c2711346672761bdb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
