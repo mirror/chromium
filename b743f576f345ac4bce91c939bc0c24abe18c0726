@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7833bd79_3ae07ee1",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-25T21:58:36Z",
+      "side": 1,
+      "message": "I considered this carefully... I decided not to in this CL because:\n a) The experiment really is more about the Omnibox than the \"toolbar\" concept.\n b) Android code does include omnibox_field_trial already... so I\u0027m not sure what the toolbar component\u0027s purpose is yet.\n c) I think we will discover the correct refactoring / division of this logic as we work on it some more... This seems okay for now.",
+      "parentUuid": "7489cf2b_cafe9f81",
+      "revId": "b743f576f345ac4bce91c939bc0c24abe18c0726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b68b43b_f7cfab86",
         "filename": "components/omnibox/browser/omnibox_edit_controller.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b743f576f345ac4bce91c939bc0c24abe18c0726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d291435c_a4549ebb",
+        "filename": "components/omnibox/browser/omnibox_edit_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-25T21:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b68b43b_f7cfab86",
+      "revId": "b743f576f345ac4bce91c939bc0c24abe18c0726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
