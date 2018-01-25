@@ -277,6 +277,30 @@
       "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24e18ca0_b52b9f52",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-25T21:32:52Z",
+      "side": 1,
+      "message": "Ack.\n\nGlad my hard questions turned out to help!",
+      "parentUuid": "20c23bbf_8b2dcf52",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 75
+      },
+      "revId": "4d8e3198fddd04a71ff3381e8be827872747ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
