@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6fba8b_4b9d8fb8",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2018-01-25T02:25:25Z",
+      "side": 1,
+      "message": "This causes a DCHECK in MessageLoop::AddTaskObserver because MessageLoop::current() is null.",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 29
+      },
+      "revId": "f745a0df0cae5d0107e9dc093dd53ed50457627a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
