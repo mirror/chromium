@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25a53bc_70c68b3d",
+        "filename": "tools/chrome_proxy/webdriver/video.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-25T23:06:04Z",
+      "side": 1,
+      "message": "I thought the flag worked like this:\n--autoplay-policy\u003dno-user-gesture-required\n\nAt least, that is what I see if I\n(i) Go to chrome://flags.\n(ii) Search for \"autoplay\". Set the dropdown to user gesture required.\n(iii) Restart Chrome.\n(iv) Go to chrome://version to see the flags that are set.",
+      "range": {
+        "startLine": 249,
+        "startChar": 21,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "149b678164c4143c7344aa2466420b530f7bd4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
