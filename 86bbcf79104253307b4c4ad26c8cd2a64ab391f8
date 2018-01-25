@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19c42a7_2d5f441e",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_rar_analyzer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-25T20:10:38Z",
+      "side": 1,
+      "message": "Please don\u0027t refer to \"utility process\" here or elsewhere. That\u0027s an implementation detail and it will change soon.\n\nI\u0027d say could instead write that it uses the sandboxed \"file_util\" service, but then I think that\u0027s a bit redundant since this is part of file_util\u0027s client library...",
+      "range": {
+        "startLine": 23,
+        "startChar": 46,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "86bbcf79104253307b4c4ad26c8cd2a64ab391f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
