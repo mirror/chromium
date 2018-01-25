@@ -72,8 +72,7 @@ class GpuMemoryBufferImplGbm : public gfx::GpuMemoryBuffer {
       handle_.native_pixmap_handle.planes.push_back(gfx::NativePixmapPlane(
           gbm_bo_get_plane_stride(buffer_object, i),
           gbm_bo_get_plane_offset(buffer_object, i),
-          gbm_bo_get_plane_size(buffer_object, i),
-          gbm_bo_get_plane_format_modifier(buffer_object, i)));
+          gbm_bo_get_plane_size(buffer_object, i)));
     }
   }
 
