@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c0b123b_015b1f0c",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_box_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-25T04:28:03Z",
+      "side": 1,
+      "message": "I maybe wrong but with Ian\u0027s line-by-line layout, a box fragment for BlockFlow with ChildrenInline() may contain floats/abspos in addition to line boxes as direct children, no?",
+      "revId": "eb39162499189c81c92e107db61d421ed28184e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
