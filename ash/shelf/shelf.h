@@ -151,6 +151,10 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   ShelfView* GetShelfViewForTesting();
   LoginShelfView* GetLoginShelfViewForTesting();
 
+  // Returns whether this shelf should be hidden on secondary display in a given
+  // |state|.
+  bool ShouldHideOnSecondaryDisplay(session_manager::SessionState state);
+
  protected:
   // ShelfLayoutManagerObserver:
   void WillDeleteShelfLayoutManager() override;

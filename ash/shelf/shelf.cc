@@ -362,4 +362,9 @@ void Shelf::OnBackgroundUpdated(ShelfBackgroundType background_type,
     observer.OnBackgroundTypeChanged(background_type, change_type);
 }
 
+bool Shelf::ShouldHideOnSecondaryDisplay(session_manager::SessionState state) {
+  return !(this == Shell::GetPrimaryRootWindowController()->shelf() ||
+           state == session_manager::SessionState::ACTIVE);
+}
+
 }  // namespace ash

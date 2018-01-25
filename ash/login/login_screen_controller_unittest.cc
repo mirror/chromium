@@ -26,14 +26,20 @@ namespace ash {
 namespace {
 using LoginScreenControllerTest = AshTestBase;
 
-void HideSystemTray() {
-  Shell::GetPrimaryRootWindowController()
+enum WindowType { kPrimary, kSecondary };
+
+void SetVisibilityOfSystemTrayForWindow(WindowType index, bool visible) {
+  auto root_windows = Shell::GetAllRootWindows();
+  RootWindowController::ForWindow(root_windows[index])
       ->GetStatusAreaWidget()
-      ->SetSystemTrayVisibility(false);
+      ->SetSystemTrayVisibility(visible);
 }
 
-bool IsPrimarySystemTrayVisible() {
-  return Shell::GetPrimaryRootWindowController()->GetSystemTray()->visible();
+bool IsSystemTrayForWindowVisible(WindowType index) {
+  auto root_windows = Shell::GetAllRootWindows();
+  return RootWindowController::ForWindow(root_windows[index])
+      ->GetSystemTray()
+      ->visible();
 }
 
 TEST_F(LoginScreenControllerTest, RequestAuthentication) {
@@ -176,12 +182,20 @@ TEST_F(LoginScreenControllerTest,
   EXPECT_FALSE(show_login(session_manager::SessionState::LOGIN_SECONDARY));
 }
 
-TEST_F(LoginScreenControllerTest, ShowSystemTrayWhenLoginScreenShown) {
-  // Hide system tray to make sure it is shown later.
+TEST_F(LoginScreenControllerTest, ShowSystemTrayOnPrimaryLoginScreen) {
+  // Create setup with 2 displays primary and secondary.
+  UpdateDisplay("800x600,800x600");
+  auto root_windows = Shell::GetAllRootWindows();
+  ASSERT_EQ(2u, root_windows.size());
+
+  // Hide primary and show secondary system tray to make sure their visibility
+  // changes later.
   GetSessionControllerClient()->SetSessionState(SessionState::UNKNOWN);
-  HideSystemTray();
+  SetVisibilityOfSystemTrayForWindow(kPrimary, false);
+  SetVisibilityOfSystemTrayForWindow(kSecondary, true);
   EXPECT_FALSE(ash::LockScreen::IsShown());
-  EXPECT_FALSE(IsPrimarySystemTrayVisible());
+  EXPECT_FALSE(IsSystemTrayForWindowVisible(kPrimary));
+  EXPECT_TRUE(IsSystemTrayForWindowVisible(kSecondary));
 
   // Show login screen.
   GetSessionControllerClient()->SetSessionState(SessionState::LOGIN_PRIMARY);
@@ -197,18 +211,27 @@ TEST_F(LoginScreenControllerTest, ShowSystemTrayWhenLoginScreenShown) {
   EXPECT_TRUE(result.has_value());
 
   EXPECT_TRUE(ash::LockScreen::IsShown());
-  EXPECT_TRUE(IsPrimarySystemTrayVisible());
+  EXPECT_TRUE(IsSystemTrayForWindowVisible(kPrimary));
+  EXPECT_FALSE(IsSystemTrayForWindowVisible(kSecondary));
 
   if (*result)
     ash::LockScreen::Get()->Destroy();
 }
 
-TEST_F(LoginScreenControllerTest, ShowSystemTrayWhenLockScreenShown) {
-  // Hide system tray to make sure it is shown later.
+TEST_F(LoginScreenControllerTest, ShowSystemTrayOnPrimaryLockScreen) {
+  // Create setup with 2 displays primary and secondary.
+  UpdateDisplay("800x600,800x600");
+  auto root_windows = Shell::GetAllRootWindows();
+  ASSERT_EQ(2u, root_windows.size());
+
+  // Hide primary and show secondary system tray to make sure their visibility
+  // changes later.
   GetSessionControllerClient()->SetSessionState(SessionState::ACTIVE);
-  HideSystemTray();
+  SetVisibilityOfSystemTrayForWindow(kPrimary, false);
+  SetVisibilityOfSystemTrayForWindow(kSecondary, true);
   EXPECT_FALSE(ash::LockScreen::IsShown());
-  EXPECT_FALSE(IsPrimarySystemTrayVisible());
+  EXPECT_FALSE(IsSystemTrayForWindowVisible(kPrimary));
+  EXPECT_TRUE(IsSystemTrayForWindowVisible(kSecondary));
 
   // Show lock screen.
   GetSessionControllerClient()->SetSessionState(SessionState::LOCKED);
@@ -224,7 +247,8 @@ TEST_F(LoginScreenControllerTest, ShowSystemTrayWhenLockScreenShown) {
   EXPECT_TRUE(result.has_value());
 
   EXPECT_TRUE(ash::LockScreen::IsShown());
-  EXPECT_TRUE(IsPrimarySystemTrayVisible());
+  EXPECT_TRUE(IsSystemTrayForWindowVisible(kPrimary));
+  EXPECT_FALSE(IsSystemTrayForWindowVisible(kSecondary));
 
   if (*result)
     ash::LockScreen::Get()->Destroy();

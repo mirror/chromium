@@ -417,27 +417,45 @@ class ShelfWidgetViewsVisibilityTest : public AshTestBase {
   };
 
   void InitShelfVariables() {
-    ShelfWidget* shelf_widget = GetShelfWidget();
-    ASSERT_NE(nullptr, shelf_widget);
-    shelf_view_ = shelf_widget->shelf_view_for_testing();
-    ASSERT_NE(nullptr, shelf_view_);
-    login_shelf_view_ = shelf_widget->login_shelf_view_for_testing();
-    ASSERT_NE(nullptr, login_shelf_view_);
+    // Create setup with 2 displays primary and secondary.
+    UpdateDisplay("800x600,800x600");
+    auto root_windows = Shell::GetAllRootWindows();
+    ASSERT_EQ(2u, root_windows.size());
+    primary_shelf_widget_ = Shelf::ForWindow(root_windows[0])->shelf_widget();
+    ASSERT_NE(nullptr, primary_shelf_widget_);
+    secondary_shelf_widget_ = Shelf::ForWindow(root_windows[1])->shelf_widget();
+    ASSERT_NE(nullptr, secondary_shelf_widget_);
   };
 
-  void ExpectVisible(session_manager::SessionState state,
-                     ShelfVisibility shelf_visibility) {
-    GetSessionControllerClient()->SetSessionState(state);
-    EXPECT_EQ(shelf_visibility == kNone, !GetShelfWidget()->IsVisible());
+  void ExpectPrimaryVisible(ShelfVisibility shelf_visibility) {
+    EXPECT_EQ(shelf_visibility == kNone, !primary_shelf_widget_->IsVisible());
     if (shelf_visibility != kNone) {
-      EXPECT_EQ(shelf_visibility == kLoginShelf, login_shelf_view_->visible());
-      EXPECT_EQ(shelf_visibility == kShelf, shelf_view_->visible());
+      EXPECT_EQ(
+          shelf_visibility == kLoginShelf,
+          primary_shelf_widget_->login_shelf_view_for_testing()->visible());
+      EXPECT_EQ(shelf_visibility == kShelf,
+                primary_shelf_widget_->shelf_view_for_testing()->visible());
     }
   }
 
+  void ExpectSecondaryVisible(ShelfVisibility shelf_visibility) {
+    EXPECT_EQ(shelf_visibility == kNone, !secondary_shelf_widget_->IsVisible());
+    if (shelf_visibility != kNone) {
+      EXPECT_EQ(
+          shelf_visibility == kLoginShelf,
+          secondary_shelf_widget_->login_shelf_view_for_testing()->visible());
+      EXPECT_EQ(shelf_visibility == kShelf,
+                secondary_shelf_widget_->shelf_view_for_testing()->visible());
+    }
+  }
+
+  void SetSessionState(session_manager::SessionState state) {
+    GetSessionControllerClient()->SetSessionState(state);
+  }
+
  private:
-  LoginShelfView* login_shelf_view_;
-  ShelfView* shelf_view_;
+  ShelfWidget* primary_shelf_widget_;
+  ShelfWidget* secondary_shelf_widget_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfWidgetViewsVisibilityTest);
 };
@@ -447,19 +465,44 @@ TEST_F(ShelfWidgetViewsVisibilityTest, LoginWebUiLockViews) {
   ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
 
   // Both shelf views are hidden when session state hasn't been initialized.
-  ExpectVisible(SessionState::UNKNOWN, kNone);
+  SetSessionState(SessionState::UNKNOWN);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
   // Web UI login is used, so views shelf is not visible during login.
-  ExpectVisible(SessionState::OOBE, kNone);
-  ExpectVisible(SessionState::LOGIN_PRIMARY, kNone);
+  SetSessionState(SessionState::OOBE);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::LOGIN_PRIMARY);
+  ExpectPrimaryVisible(kNone);
+  ExpectPrimaryVisible(kNone);
 
   SimulateUserLogin("user1@test.com");
 
-  ExpectVisible(SessionState::LOGGED_IN_NOT_ACTIVE, kNone);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOCKED, kLoginShelf);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOGIN_SECONDARY, kLoginShelf);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
+  SetSessionState(SessionState::LOGGED_IN_NOT_ACTIVE);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOCKED);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOGIN_SECONDARY);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
 }
 
 TEST_F(ShelfWidgetViewsVisibilityTest, LoginViewsLockViews) {
@@ -468,18 +511,43 @@ TEST_F(ShelfWidgetViewsVisibilityTest, LoginViewsLockViews) {
       switches::kShowViewsLogin);
   ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
 
-  ExpectVisible(SessionState::UNKNOWN, kNone);
-  ExpectVisible(SessionState::OOBE, kNone);
-  ExpectVisible(SessionState::LOGIN_PRIMARY, kLoginShelf);
+  SetSessionState(SessionState::UNKNOWN);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::OOBE);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::LOGIN_PRIMARY);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
 
   SimulateUserLogin("user1@test.com");
 
-  ExpectVisible(SessionState::LOGGED_IN_NOT_ACTIVE, kLoginShelf);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOCKED, kLoginShelf);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOGIN_SECONDARY, kLoginShelf);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
+  SetSessionState(SessionState::LOGGED_IN_NOT_ACTIVE);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOCKED);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOGIN_SECONDARY);
+  ExpectPrimaryVisible(kLoginShelf);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
 }
 
 TEST_F(ShelfWidgetViewsVisibilityTest, LoginWebUiLockWebUi) {
@@ -489,19 +557,44 @@ TEST_F(ShelfWidgetViewsVisibilityTest, LoginWebUiLockWebUi) {
   ASSERT_NO_FATAL_FAILURE(InitShelfVariables());
 
   // Views based shelf is never visible.
-  ExpectVisible(SessionState::UNKNOWN, kNone);
-  ExpectVisible(SessionState::OOBE, kNone);
-  ExpectVisible(SessionState::LOGIN_PRIMARY, kNone);
+  SetSessionState(SessionState::UNKNOWN);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::OOBE);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::LOGIN_PRIMARY);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
 
   SimulateUserLogin("user1@test.com");
 
   // Views based shelf is only visible on non-lock screen (ACTIVE session).
-  ExpectVisible(SessionState::LOGGED_IN_NOT_ACTIVE, kNone);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOCKED, kNone);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
-  ExpectVisible(SessionState::LOGIN_SECONDARY, kNone);
-  ExpectVisible(SessionState::ACTIVE, kShelf);
+  SetSessionState(SessionState::LOGGED_IN_NOT_ACTIVE);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOCKED);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
+
+  SetSessionState(SessionState::LOGIN_SECONDARY);
+  ExpectPrimaryVisible(kNone);
+  ExpectSecondaryVisible(kNone);
+
+  SetSessionState(SessionState::ACTIVE);
+  ExpectPrimaryVisible(kShelf);
+  ExpectSecondaryVisible(kShelf);
 }
 
 }  // namespace
