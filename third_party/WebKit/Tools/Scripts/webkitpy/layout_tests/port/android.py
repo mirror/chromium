@@ -1108,8 +1108,8 @@ class ChromiumAndroidDriver(driver.Driver):
         if command.startswith('/'):
             fs = self._port.host.filesystem
             # FIXME: what happens if command lies outside of the layout_tests_dir on the host?
-            relative_test_filename = fs.relpath(command, fs.dirname(self._port.layout_tests_dir()))
-            command = DEVICE_WEBKIT_BASE_DIR + relative_test_filename
+            relative_test_filename = os.path.relpath(command, self._port.layout_tests_dir())
+            command = 'http://127.0.0.1:8000/all-tests/' + relative_test_filename
         return command
 
     def _read_prompt(self, deadline):
