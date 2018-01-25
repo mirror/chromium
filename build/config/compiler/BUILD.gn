@@ -1973,6 +1973,8 @@ config("symbols") {
 }
 
 # Minimal symbols.
+# This config guarantees to hold symbol for stack trace which are shown to user
+# when crash happens in unittests running on buildbot.
 config("minimal_symbols") {
   if (is_win) {
     # Linker symbols for backtraces only.
@@ -1985,7 +1987,14 @@ config("minimal_symbols") {
       # TODO(thakis): Remove this again once dump_syms is fixed.
       cflags += [ "-gdwarf-3" ]
     }
-    cflags += [ "-g1" ]
+
+    if (is_linux && is_clang) {
+      # "-g0" does not drop symbols to show stack trace.
+      cflags += [ "-g0" ]
+    } else {
+      cflags += [ "-g1" ]
+    }
+
     ldflags = []
     if (is_android && is_clang) {
       # Android defaults to symbol_level=1 builds in production builds
