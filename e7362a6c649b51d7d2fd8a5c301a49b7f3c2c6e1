@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579910c5_197f3983",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-25T01:02:47Z",
+      "side": 1,
+      "message": "Is there are bug tracking the failing on the debug bot? It would be great to file one and include details, including some details explaining why the flaky failure is limited to the debug bot. It would be nice to have some general idea what is going on before moving forward.",
+      "range": {
+        "startLine": 1397,
+        "startChar": 46,
+        "endLine": 1397,
+        "endChar": 50
+      },
+      "revId": "e7362a6c649b51d7d2fd8a5c301a49b7f3c2c6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
