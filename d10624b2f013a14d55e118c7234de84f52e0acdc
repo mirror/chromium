@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340fc270_f46d973f",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-25T15:58:49Z",
+      "side": 1,
+      "message": "Bug:  On 404 errors, response_body won\u0027t be populated, but ResponseInfo will be.  So this code makes it so we no longer retry on 404 errors.\n\nCould either call SetAllowHttpErrorResults(true) on the simple_loader_ to change that (Which would mean we unnecessarily read the response body in that case and save it to a string - admittedly, probably not much overhead), or modify this code to make the retry check not depend on response_body being non-null.",
+      "range": {
+        "startLine": 649,
+        "startChar": 6,
+        "endLine": 649,
+        "endChar": 20
+      },
+      "revId": "d10624b2f013a14d55e118c7234de84f52e0acdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
