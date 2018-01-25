@@ -3,6 +3,16 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "Scrolling Layer",
+      "bounds": [800, 600],
+      "drawsContent": false
+    },
+    {
+      "name": "Scrolling Contents Layer",
+      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
@@ -19,7 +29,7 @@
         {
           "object": "LayoutSVGText text",
           "rect": [16, 42, 784, 170],
-          "reason": "full"
+          "reason": "style change"
         }
       ]
     }
@@ -31,11 +41,11 @@
     },
     {
       "object": "LayoutSVGText text",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "RootInlineBox",
-      "reason": "full"
+      "reason": "style change"
     },
     {
       "object": "LayoutSVGInlineText #text",
