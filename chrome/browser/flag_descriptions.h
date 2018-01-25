@@ -1277,6 +1277,9 @@ extern const char kOfflinePagesSvelteConcurrentLoadingDescription[];
 extern const char kOffliningRecentPagesName[];
 extern const char kOffliningRecentPagesDescription[];
 
+extern const char kOpenCustomContextMenuInLinkTabName[];
+extern const char kOpenCustomContextMenuInLinkTabDescription[];
+
 extern const char kPayWithGoogleV1Name[];
 extern const char kPayWithGoogleV1Description[];
 

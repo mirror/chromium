@@ -305,10 +305,15 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
         Set<ContextMenuItem> disabledOptions = getDisabledOptions(params);
         // Split the items into their respective groups.
         List<Pair<Integer, List<ContextMenuItem>>> groupedItems = new ArrayList<>();
-        if (params.isAnchor()
-                && !ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)) {
-            populateItemGroup(LINK, R.string.contextmenu_link_title, groupedItems, supportedOptions,
-                    disabledOptions);
+        if (params.isAnchor()) {
+            if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)
+                    || (ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)
+                               && ChromeFeatureList.isEnabled(
+                                          ChromeFeatureList
+                                                  .OPEN_CUSTOM_CONTEXT_MENU_IN_LINK_TAB))) {
+                populateItemGroup(LINK, R.string.contextmenu_link_title, groupedItems,
+                        supportedOptions, disabledOptions);
+            }
         }
         if (params.isImage()) {
             populateItemGroup(IMAGE, R.string.contextmenu_image_title, groupedItems,
@@ -318,10 +323,13 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
             populateItemGroup(VIDEO, R.string.contextmenu_video_title, groupedItems,
                     supportedOptions, disabledOptions);
         }
-        if (params.isAnchor()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)) {
-            populateItemGroup(LINK, R.string.contextmenu_link_title, groupedItems, supportedOptions,
-                    disabledOptions);
+        if (params.isAnchor()) {
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)
+                    && !ChromeFeatureList.isEnabled(
+                               ChromeFeatureList.OPEN_CUSTOM_CONTEXT_MENU_IN_LINK_TAB)) {
+                populateItemGroup(LINK, R.string.contextmenu_link_title, groupedItems,
+                        supportedOptions, disabledOptions);
+            }
         }
 
         // If there are no groups there still needs to be a way to add items from the OTHER_GROUP

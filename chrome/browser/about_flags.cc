@@ -3093,6 +3093,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableCustomContextMenuName,
      flag_descriptions::kEnableCustomContextMenuDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
+
+    {"open-custom-context-menu-in-link-tab",
+     flag_descriptions::kOpenCustomContextMenuInLinkTabName,
+     flag_descriptions::kOpenCustomContextMenuInLinkTabDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kOpenCustomContextMenuInLinkTab)},
 #endif  // OS_ANDROID
 
 #if defined(OS_CHROMEOS)
