@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "815bc9f8_8a7b7d83",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T22:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7abfb66b_201adcf1",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "4bd2d7936bb818c3dba3a34acc1e98baabada007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03626d02_b6f68a9f",
         "filename": "cc/raster/raster_source.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fb08e9a7_7e07e4a5",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T22:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03626d02_b6f68a9f",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "4bd2d7936bb818c3dba3a34acc1e98baabada007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "355fdf48_a5d1068a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-25T21:22:53Z",
       "side": 1,
       "message": "Optional: It\u0027s fine to use more human-friendly labels, e.g. \"No clear\".",
+      "range": {
+        "startLine": 36790,
+        "startChar": 24,
+        "endLine": 36790,
+        "endChar": 32
+      },
+      "revId": "4bd2d7936bb818c3dba3a34acc1e98baabada007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee556205_670c0486",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36790,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-25T22:29:44Z",
+      "side": 1,
+      "message": "good suggestion. done.",
+      "parentUuid": "355fdf48_a5d1068a",
       "range": {
         "startLine": 36790,
         "startChar": 24,
