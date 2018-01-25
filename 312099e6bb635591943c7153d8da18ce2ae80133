@@ -34,6 +34,24 @@
       "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201b8a80_b5f68b38",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-25T01:16:26Z",
+      "side": 1,
+      "message": "\u003e Maybe I get the question, maybe not. Let me try :-)\n\u003e \n\u003e gles3.0 says (and opengl 4.2 too)\n\u003e  format  type                         internal_format\n\u003e  RGBA    UNSIGNED_INT_2_10_10_10_REV  RGB10_A2\n\u003e \n\u003e so that\u0027s what we need to use here to satisfy glTexImage2D().\n\u003e \n\u003e Mac, special as it is, needs for CGLTexImageIOSurface2D() [1]\n\u003e  format  type                         internal_format\n\u003e  BGRA    UNSIGNED_INT_2_10_10_10_REV  RGB10_A2\n\u003e \n\u003e which has a different |format| type.\n\u003e \n\u003e In both cases, IIUC, we use an unsized internal format, so ISO \n\u003e RGB10_A2 we just say GL_RGBA and it \"just works\".\n\u003e \n\u003e In both cases, 2_10_10_10 is (should be) interpreted as \n\u003e 2A:10B:10G:10R in decreasing bit index (bit 31..bit 0).\n\nI don\u0027t think that\u0027s true - the format changes how the data is interpreted. According to the spec,\nGL_RGBA/GL_UNSIGNED_INT_2_10_10_10_REV means R gets bits 0:9 (out of a 32 bit unsigned int in native endianness)\nGL_BGRA/GL_UNSIGNED_INT_2_10_10_10_REV means R is bits 20:29 (out of a 32 bit unsigned int in native endianness)\n\n(see e.g. https://www.khronos.org/registry/OpenGL/specs/gl/glspec45.core.pdf p.190)",
+      "parentUuid": "21fc9a35_98812fea",
+      "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
