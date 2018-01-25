@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ea586c_e7291916",
+        "filename": "content/public/browser/devtools_agent_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T08:05:16Z",
+      "side": 1,
+      "message": "Any frame? Or only a frame root?",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e28fa4_772ddcf1",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T08:05:16Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand the purpose of this.",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda6b19c_473e68dc",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T08:05:16Z",
+      "side": 1,
+      "message": "So it\u0027s possible to inspect a WebViewImpl that\u0027s not attached to anything? That\u0027s a bit surprising…",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb8b478_cd5e4b12",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T08:05:16Z",
+      "side": 1,
+      "message": "This is actually in seconds, btw.",
+      "range": {
+        "startLine": 606,
+        "startChar": 33,
+        "endLine": 606,
+        "endChar": 63
+      },
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ad5bdd_35abdd12",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-25T08:05:16Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand how the different devtools pieces work together: what\u0027s a session and how is it different than the agent? How would I be able to trigger an inspect element with no session (presumably an instance of devtools) open?",
+      "revId": "4aa32890a5f48b4911b06ee86ebe7c5c40882459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
