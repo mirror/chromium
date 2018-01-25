@@ -16,6 +16,24 @@
       "revId": "7ac55c770814a375ce8ea4a4bdc8a61044271296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c2f7b3_d35f2a9f",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-25T23:11:10Z",
+      "side": 1,
+      "message": "Yes.  That would be very important.",
+      "parentUuid": "f0cf0270_88fa62c6",
+      "revId": "7ac55c770814a375ce8ea4a4bdc8a61044271296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
