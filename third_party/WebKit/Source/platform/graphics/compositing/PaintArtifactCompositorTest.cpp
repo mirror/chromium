@@ -544,11 +544,11 @@ TEST_F(PaintArtifactCompositorTest, OneClip) {
 TEST_F(PaintArtifactCompositorTest, NestedClips) {
   scoped_refptr<ClipPaintPropertyNode> clip1 = ClipPaintPropertyNode::Create(
       ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      FloatRoundedRect(100, 100, 700, 700), nullptr,
+      FloatRoundedRect(100, 100, 700, 700), nullptr, nullptr,
       CompositingReason::kOverflowScrollingTouch);
   scoped_refptr<ClipPaintPropertyNode> clip2 = ClipPaintPropertyNode::Create(
       clip1, TransformPaintPropertyNode::Root(),
-      FloatRoundedRect(200, 200, 700, 700), nullptr,
+      FloatRoundedRect(200, 200, 700, 700), nullptr, nullptr,
       CompositingReason::kOverflowScrollingTouch);
 
   TestPaintArtifact artifact;
@@ -2590,7 +2590,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipSimple) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   TestPaintArtifact artifact;
@@ -2647,7 +2647,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipContiguous) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   TestPaintArtifact artifact;
@@ -2719,7 +2719,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipDiscontiguous) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   TestPaintArtifact artifact;
@@ -2809,7 +2809,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipAcrossChildEffect) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   scoped_refptr<EffectPaintPropertyNode> e1 = EffectPaintPropertyNode::Create(
@@ -2882,7 +2882,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipRespectOutputClip) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   CompositorFilterOperations non_trivial_filter;
@@ -2989,7 +2989,7 @@ TEST_F(PaintArtifactCompositorTest, SynthesizedClipDelegateBlending) {
   FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
                          corner);
   scoped_refptr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
-      c0(), t0(), rrect, nullptr,
+      c0(), t0(), rrect, nullptr, nullptr,
       CompositingReason::kWillChangeCompositingHint);
 
   scoped_refptr<EffectPaintPropertyNode> e1 = EffectPaintPropertyNode::Create(
