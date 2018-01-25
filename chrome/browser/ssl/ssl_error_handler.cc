@@ -726,21 +726,21 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
-  // Ideally, a captive portal interstitial should only be displayed if the only
-  // SSL error is a name mismatch error. However, captive portal detector always
-  // opens a new tab if it detects a portal ignoring the types of SSL errors. To
-  // be consistent with captive portal detector, use the result of OS detection
-  // without checking only_error_is_name_mismatch.
-  if (IsCaptivePortalInterstitialEnabled() &&
+  const bool only_error_is_name_mismatch =
+      IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
+
+  // Some OSes (e.g. Windows, Android) report a captive portal even if the
+  // portal serves a bad SSL certificate. To prevent undesired scenarios where
+  // users get to the portal login page just to see another captive portal
+  // interstitial, check OS reported captive portal status iff the only error is
+  // name-mismatch.
+  if (only_error_is_name_mismatch && IsCaptivePortalInterstitialEnabled() &&
       (g_config.Pointer()->DoesOSReportCaptivePortalForTesting() ||
        delegate_->DoesOSReportCaptivePortal())) {
     RecordUMA(OS_REPORTS_CAPTIVE_PORTAL);
     ShowCaptivePortalInterstitial(GURL());
     return;
   }
-
-  const bool only_error_is_name_mismatch =
-      IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
 
   // Check known captive portal certificate list if the only error is
   // name-mismatch. If there are multiple errors, it indicates that the captive
