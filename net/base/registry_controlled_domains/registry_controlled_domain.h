@@ -160,6 +160,8 @@ enum UnknownRegistryFilter {
   INCLUDE_UNKNOWN_REGISTRIES
 };
 
+NET_EXPORT bool IsTLD(std::string url, PrivateRegistryFilter private_filter);
+
 // Returns the registered, organization-identifying host and all its registry
 // information, but no subdomains, from the given GURL.  Returns an empty
 // string if the GURL is invalid, has no host (e.g. a file: URL), has multiple

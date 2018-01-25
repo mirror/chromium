@@ -84,8 +84,13 @@ ChromeOmniboxNavigationObserver::ChromeOmniboxNavigationObserver(
       request_context_(nullptr),
       load_state_(LOAD_NOT_SEEN),
       fetch_state_(FETCH_NOT_COMPLETE) {
-  if (alternate_nav_match_.destination_url.is_valid())
+  if (alternate_nav_match_.destination_url.is_valid() &&
+      // Don't ping TLDs which might have a destination.
+      !net::registry_controlled_domains::IsTLD(
+          alternate_nav_match_.destination_url.host(),
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
     CreateFetcher(alternate_nav_match_.destination_url);
+  }
 
   // We need to start by listening to AllSources, since we don't know which tab
   // the navigation might occur in.

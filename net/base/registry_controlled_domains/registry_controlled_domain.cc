@@ -330,6 +330,14 @@ bool SameDomainOrHost(base::StringPiece host1,
 
 }  // namespace
 
+bool IsTLD(std::string url, PrivateRegistryFilter private_filter) {
+  int type =
+      LookupStringInFixedSet(g_graph, g_graph_length, url.c_str(), url.size());
+  return type != kDafsaNotFound &&
+         (!(type & kDafsaPrivateRule) ||
+          private_filter == INCLUDE_PRIVATE_REGISTRIES);
+}
+
 std::string GetDomainAndRegistry(const GURL& gurl,
                                  PrivateRegistryFilter filter) {
   return GetDomainAndRegistryAsStringPiece(gurl.host_piece(), filter)
