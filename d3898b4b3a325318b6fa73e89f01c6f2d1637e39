@@ -46,6 +46,30 @@
       "revId": "d3898b4b3a325318b6fa73e89f01c6f2d1637e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4ec2fc_aba33fc8",
+        "filename": "third_party/WebKit/Source/core/frame/DOMWindow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-25T07:00:20Z",
+      "side": 1,
+      "message": "In short, I\u0027d like people to call such a thing \"incumbent window\" rather than \"calling window\" which is not that clear nor well-defined IMHO.  \"calling window\" makes it difficult to distinguish \"incumbent\" from \"current\".\n\n[CrossOrigin] + [CurrentWindow] is an unfortunate hack to support an Incumbent realm.  Although the IDL file says \"[CrossOrigin, CurrentWindow]\", what you get is the Incumbent window, which is what you call \"calling window\".  We apologize this confusion, and I\u0027m now actively working to get rid of this.\n\n    [CurrentWindow] \u003d\u003e Current window\n    [CrossOrigin, CurrentWindow] \u003d\u003e Incumbent window\n\n(It\u0027s a long story why this happens.  Please don\u0027t ask details.)\n\n\u003e avi@, what is the intended behavior here if there are multiple windows involved on the calling stack. Is it the next one up, or the topmost one?\n\nThe original implementation uses \"next one up\", so I renamed the variable \"incumbent_window\" in my past CL.  If avi@ has no intention to change any behavior, I\u0027d like to ask not to change the name.\n\nIn general, when \"incumbent\" or \"entry\" gets involved, it\u0027s security sensitive more or less (otherwise you must not need to use \"incumbent\" nor \"entry\" at all).  Given that it\u0027s security sensitive, exactness/correctness is much more important than intuitiveness, I think.  So I\u0027d prefer to call it \"incumbent\" following the spec terms.\n\nSee also a comment at:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/595788/9/third_party/WebKit/Source/core/frame/Window.idl\n\nI\u0027m curious why we are checking the incumbent window.  Which part of the spec is saying that we should check it?  Is it Blink-specific security check?  Or is it spec\u0027ed?",
+      "parentUuid": "2b1570c7_97ebc1a9",
+      "range": {
+        "startLine": 412,
+        "startChar": 14,
+        "endLine": 412,
+        "endChar": 15
+      },
+      "revId": "d3898b4b3a325318b6fa73e89f01c6f2d1637e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
