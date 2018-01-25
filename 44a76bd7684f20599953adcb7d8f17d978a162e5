@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f551d3ce_cea15c06",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-25T16:27:10Z",
+      "side": 1,
+      "message": "You can get rid of this class entirely now.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "44a76bd7684f20599953adcb7d8f17d978a162e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
