@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762eb92d_0336b7f0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-25T18:15:57Z",
+      "side": 1,
+      "message": "We set the infobar\u0027s frame here as well.  Does this need updates?",
+      "revId": "ec6ff67c0f039a6cbe77a8bf2bbbf217dc5c391a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
