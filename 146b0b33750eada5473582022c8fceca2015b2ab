@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e24cc47b_acd547d0",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3874,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-25T15:17:46Z",
+      "side": 1,
+      "message": "nit: Can we just omit this?",
+      "range": {
+        "startLine": 3874,
+        "startChar": 53,
+        "endLine": 3874,
+        "endChar": 60
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698b318b_df108f61",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-25T15:17:46Z",
+      "side": 1,
+      "message": "Is there any spec we could link here that defines this? Also, is this a term defined by that spec?",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "daab6094_3d21d341",
         "filename": "device/u2f/u2f_apdu_unittest.cc",
         "patchSetId": 2
