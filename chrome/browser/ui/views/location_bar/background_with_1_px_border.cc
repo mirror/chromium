@@ -25,35 +25,30 @@ void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
   gfx::ScopedCanvas scoped_canvas(canvas);
   const float scale = canvas->UndoDeviceScaleFactor();
   border_rect_f.Scale(scale);
-  // Draw the border as a 1px thick line aligned with the inside edge of the
-  // kLocationBarBorderThicknessDip region. This line needs to be snapped to the
-  // pixel grid, so the result of the scale-up needs to be snapped to an integer
-  // value. Using floor() instead of round() ensures that, for non-integral
-  // scale factors, the border will still be drawn inside the BORDER_THICKNESS
-  // region instead of being partially inside it.
-  border_rect_f.Inset(
-      gfx::InsetsF(std::floor(kLocationBarBorderThicknessDip * scale) - 0.5f));
 
-  SkPath path;
-  const SkScalar scaled_corner_radius =
-      SkFloatToScalar(kCornerRadius * scale + 0.5f);
-  path.addRoundRect(gfx::RectFToSkRect(border_rect_f), scaled_corner_radius,
-                    scaled_corner_radius);
+  SkRRect round_rect;
+  const SkScalar outer_border_radius =
+      SkFloatToScalar(GetBorderRadiusInternal(border_rect_f.height() * scale));
+  round_rect.setRectXY(gfx::RectFToSkRect(border_rect_f), outer_border_radius,
+                       outer_border_radius);
 
   cc::PaintFlags flags;
-  flags.setStyle(cc::PaintFlags::kStroke_Style);
-  flags.setStrokeWidth(1);
   flags.setAntiAlias(true);
 
-  SkPath stroke_path;
-  flags.getFillPath(path, &stroke_path);
-
-  SkPath fill_path;
-  Op(path, stroke_path, kDifference_SkPathOp, &fill_path);
+  // Draw a round rect for the stroke, then shrink by the stroke width and
+  // paint again for the fill.
   flags.setStyle(cc::PaintFlags::kFill_Style);
-  flags.setColor(get_color());
-  canvas->sk_canvas()->drawPath(fill_path, flags);
-
   flags.setColor(border_color_);
-  canvas->sk_canvas()->drawPath(stroke_path, flags);
+  canvas->sk_canvas()->drawRRect(round_rect, flags);
+
+  // std::floor is used here in order to snap the fill border to the pixel grid.
+  const SkScalar inset_amount =
+      std::floor(kLocationBarBorderThicknessDip * scale);
+  round_rect.inset(inset_amount, inset_amount);
+  flags.setColor(get_color());
+  canvas->sk_canvas()->drawRRect(round_rect, flags);
+}
+
+int BackgroundWith1PxBorder::GetBorderRadiusInternal(int height) const {
+  return kBorderRadius;
 }
