@@ -12,9 +12,14 @@
 
 #include <vector>
 
+#include "ui/gl/gl_implementation.h"
+
 class GLTestHelper {
  public:
   static const uint8_t kCheckClearValue = 123u;
+
+  static bool InitializeGL(gl::GLImplementation gl_impl);
+  static bool InitializeGLDefault();
 
   static bool HasExtension(const char* extension);
   static bool CheckGLError(const char* msg, int line);
