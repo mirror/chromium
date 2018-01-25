@@ -65,8 +65,7 @@ namespace blink {
 namespace {
 
 bool ConsiderAnimationAsIncompatible(const Animation& animation,
-                                     const Animation& animation_to_add,
-                                     const EffectModel& effect_to_add) {
+                                     const Animation& animation_to_add) {
   if (&animation == &animation_to_add)
     return false;
 
@@ -78,10 +77,7 @@ bool ConsiderAnimationAsIncompatible(const Animation& animation,
       return true;
     case Animation::kPaused:
     case Animation::kFinished:
-      if (Animation::HasLowerPriority(&animation, &animation_to_add)) {
-        return effect_to_add.AffectedByUnderlyingAnimations();
-      }
-      return true;
+      return Animation::HasLowerPriority(&animation_to_add, &animation);
     default:
       NOTREACHED();
       return true;
@@ -107,12 +103,6 @@ bool IsTransformRelatedAnimation(const Element& target_element,
 bool HasIncompatibleAnimations(const Element& target_element,
                                const Animation& animation_to_add,
                                const EffectModel& effect_to_add) {
-  if (!target_element.HasAnimations())
-    return false;
-
-  ElementAnimations* element_animations = target_element.GetElementAnimations();
-  DCHECK(element_animations);
-
   const bool affects_opacity =
       effect_to_add.Affects(PropertyHandle(GetCSSPropertyOpacity()));
   const bool affects_transform = effect_to_add.IsTransformRelatedEffect();
@@ -121,12 +111,16 @@ bool HasIncompatibleAnimations(const Element& target_element,
   const bool affects_backdrop_filter =
       effect_to_add.Affects(PropertyHandle(GetCSSPropertyBackdropFilter()));
 
+  if (!target_element.HasAnimations())
+    return false;
+
+  ElementAnimations* element_animations = target_element.GetElementAnimations();
+  DCHECK(element_animations);
+
   for (const auto& entry : element_animations->Animations()) {
     const Animation* attached_animation = entry.key;
-    if (!ConsiderAnimationAsIncompatible(*attached_animation, animation_to_add,
-                                         effect_to_add)) {
+    if (!ConsiderAnimationAsIncompatible(*attached_animation, animation_to_add))
       continue;
-    }
 
     if ((affects_opacity && attached_animation->Affects(
                                 target_element, GetCSSPropertyOpacity())) ||
@@ -136,9 +130,8 @@ bool HasIncompatibleAnimations(const Element& target_element,
          attached_animation->Affects(target_element, GetCSSPropertyFilter())) ||
         (affects_backdrop_filter &&
          attached_animation->Affects(target_element,
-                                     GetCSSPropertyBackdropFilter()))) {
+                                     GetCSSPropertyBackdropFilter())))
       return true;
-    }
   }
 
   return false;
@@ -345,10 +338,8 @@ void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
 
   for (const auto& entry : element_animations->Animations()) {
     Animation* attached_animation = entry.key;
-    if (!ConsiderAnimationAsIncompatible(*attached_animation, animation_to_add,
-                                         effect_to_add)) {
+    if (!ConsiderAnimationAsIncompatible(*attached_animation, animation_to_add))
       continue;
-    }
 
     if ((affects_opacity && attached_animation->Affects(
                                 target_element, GetCSSPropertyOpacity())) ||
@@ -358,9 +349,8 @@ void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
          attached_animation->Affects(target_element, GetCSSPropertyFilter())) ||
         (affects_backdrop_filter &&
          attached_animation->Affects(target_element,
-                                     GetCSSPropertyBackdropFilter()))) {
+                                     GetCSSPropertyBackdropFilter())))
       attached_animation->CancelAnimationOnCompositor();
-    }
   }
 }
 
