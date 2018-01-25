@@ -18,10 +18,13 @@ void ConnectionHandler::OnVideoCaptureServiceConnected(
     video_capture::mojom::DeviceFactoryPtr device_factory) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   device_factory_ = std::move(device_factory);
-  device_factory_.set_connection_error_handler(base::BindOnce(
-      []() { LOG(WARNING) << "Connection to DeviceFactory lost"; }));
+  device_factory_.set_connection_error_handler(
+      base::BindOnce(&ConnectionHandler::OnVideoCaptureServiceDisconnected,
+                     base::Unretained(this)));
   OpenFirstCameraAndLoopVideoBackIntoNewVirtualDevice();
 }
+
+void ConnectionHandler::OnVideoCaptureServiceDisconnected() {}
 
 void ConnectionHandler::OpenFirstCameraAndLoopVideoBackIntoNewVirtualDevice() {
   device_factory_->GetDeviceInfos(base::BindOnce(

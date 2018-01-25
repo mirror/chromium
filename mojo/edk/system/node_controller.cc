@@ -416,6 +416,7 @@ void NodeController::AcceptBrokerClientInvitationOnIOThread(
 
   {
     base::AutoLock lock(parent_lock_);
+    // LOG(ERROR) << "Checking if parent_name_ is kInvalidNodeName in " << this;
     DCHECK(parent_name_ == ports::kInvalidNodeName);
 
     // At this point we don't know the parent's name, so we can't yet insert it
@@ -763,6 +764,8 @@ void NodeController::OnAcceptChild(const ports::NodeName& from_node,
   {
     base::AutoLock lock(parent_lock_);
     if (bootstrap_parent_channel_ && parent_name_ == ports::kInvalidNodeName) {
+      // LOG(ERROR) << "Setting parent_name_ to " << parent_name << " in " <<
+      // this;
       parent_name_ = parent_name;
       parent = bootstrap_parent_channel_;
     }
@@ -927,6 +930,8 @@ void NodeController::OnAcceptBrokerClient(const ports::NodeName& from_node,
     parent = bootstrap_parent_channel_;
     bootstrap_parent_channel_ = nullptr;
   }
+  // LOG(ERROR) << "Here, parent_name must be the same as from_node. parent_name
+  // == " << parent_name << ", from_node == " << from_node;
   DCHECK(parent_name == from_node);
   DCHECK(parent);
 
@@ -1301,6 +1306,8 @@ void NodeController::AttemptShutdownIfRequested() {
     callback = shutdown_callback_;
     shutdown_callback_.Reset();
     shutdown_callback_flag_.Set(false);
+    // LOG(ERROR) << "Resetting parent_name_ in " << this;
+    parent_name_ = ports::kInvalidNodeName;
   }
 
   DCHECK(!callback.is_null());

@@ -18,7 +18,8 @@ int main(int argc, char** argv) {
       base::BindRepeating(&video_capture::example_plugin::ConnectionHandler::
                               OnVideoCaptureServiceConnected,
                           base::Unretained(&handler)));
-  dispatcher.StartListeningForIncomingConnection();
+  dispatcher.Init();
+  dispatcher.RunConnectionAttemptLoop();
 
   // Run forever!
   base::RunLoop().Run();

@@ -8,37 +8,37 @@
 #include "base/threading/thread.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/video_capture/public/interfaces/plugin.mojom.h"
+#include "services/video_capture/public/interfaces/device_factory_provider.mojom.h"
 
 namespace video_capture {
 namespace example_plugin {
 
-// Listens for incoming connections from the Chromium video capture service.
+// Attempts to establish a Mojo connection to a Chromium instance running on the
+// local machine. Repeats attempts at regular intervals.
 // Invokes |device_factory_registered_cb| when a connection has been established
 // successfully.
-class ConnectionDispatcher
-    : public video_capture::mojom::PluginConnectionDispatcher {
+class ConnectionDispatcher {
  public:
-  using DeviceFactoryRegisteredCallback =
+  using ConnectionEstablishedCallback =
       base::RepeatingCallback<void(video_capture::mojom::DeviceFactoryPtr)>;
 
-  ConnectionDispatcher(
-      DeviceFactoryRegisteredCallback device_factory_registered_cb);
-  ~ConnectionDispatcher() override;
+  ConnectionDispatcher(ConnectionEstablishedCallback connection_established_cb);
+  ~ConnectionDispatcher();
 
-  void StartListeningForIncomingConnection();
-
-  // video_capture::mojom::PluginConnectionDispatcher implementation.
-  void RegisterDeviceFactory(
-      video_capture::mojom::DeviceFactoryPtr device_factory) override;
+  void Init();
+  void RunConnectionAttemptLoop();
 
  private:
+  void OnConnectionLost();
+  void RestartConnectionAttemptLoop();
+
   std::unique_ptr<base::Thread> ipc_thread_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
 
-  mojo::BindingSet<video_capture::mojom::PluginConnectionDispatcher>
-      binding_set_;
-  DeviceFactoryRegisteredCallback device_factory_registered_cb_;
+  ConnectionEstablishedCallback connection_established_cb_;
+  mojom::DeviceFactoryProviderPtr provider_;
+
+  THREAD_CHECKER(thread_checker_);
 };
 
 }  // namespace example_plugin

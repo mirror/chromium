@@ -23,6 +23,7 @@ class ConnectionHandler {
 
   void OnVideoCaptureServiceConnected(
       video_capture::mojom::DeviceFactoryPtr device_factory);
+  void OnVideoCaptureServiceDisconnected();
 
  private:
   void OpenFirstCameraAndLoopVideoBackIntoNewVirtualDevice();
