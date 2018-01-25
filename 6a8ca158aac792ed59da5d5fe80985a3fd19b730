@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fed4cbf4_78301890",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-25T04:43:13Z",
+      "side": 1,
+      "message": "Should we be doing this on button up? For example, if I click on a text field, and release out of the text field, this looks like it\u0027ll not take your initial click position as the cursor position?",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 65
+      },
+      "revId": "6a8ca158aac792ed59da5d5fe80985a3fd19b730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb4263f_67334747",
+        "filename": "chrome/browser/vr/text_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-25T04:43:13Z",
+      "side": 1,
+      "message": "the default constructor sets selection_start \u003d selection_end \u003d text.length. Its weird to not have selection_end \u003c selection_start. We could probably just do something like info.selection_end - 1 (same for selection_start) and do it that way.\n\nAlso, it looks like element-\u003eUpdateInput(info) sets the cursor pos to selection_end. We should probably add a dcheck for selection_start \u003d selection_end until we support selection.",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 20
+      },
+      "revId": "6a8ca158aac792ed59da5d5fe80985a3fd19b730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
