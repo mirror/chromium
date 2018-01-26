@@ -4,9 +4,10 @@
 
 #include "chrome/browser/previews/previews_service.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/files/file_path.h"
-#include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/common/chrome_constants.h"
@@ -112,16 +113,16 @@ void PreviewsService::Initialize(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND});
 
-  previews_ui_service_ = base::MakeUnique<previews::PreviewsUIService>(
+  previews_ui_service_ = std::make_unique<previews::PreviewsUIService>(
       previews_io_data, io_task_runner,
-      base::MakeUnique<previews::PreviewsOptOutStoreSQL>(
+      std::make_unique<previews::PreviewsOptOutStoreSQL>(
           io_task_runner, background_task_runner,
           profile_path.Append(chrome::kPreviewsOptOutDBFilename),
           GetEnabledPreviews()),
       optimization_guide_service
-          ? base::MakeUnique<previews::PreviewsOptimizationGuide>(
+          ? std::make_unique<previews::PreviewsOptimizationGuide>(
                 optimization_guide_service, io_task_runner)
           : nullptr,
       base::Bind(&IsPreviewsTypeEnabled),
-      base::MakeUnique<previews::PreviewsLogger>());
+      std::make_unique<previews::PreviewsLogger>());
 }
