@@ -82,11 +82,9 @@
 #include "base/posix/global_descriptors.h"
 #include "content/public/common/content_descriptors.h"
 
-#if !defined(OS_MACOSX)
-#include "content/public/common/zygote_fork_delegate_linux.h"
-#endif
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-#include "content/zygote/zygote_main.h"
+#include "content/public/common/zygote_fork_delegate_linux.h"
+#include "content/zygote/zygote_main_linux.h"
 #include "sandbox/linux/services/libc_interceptor.h"
 #endif
 

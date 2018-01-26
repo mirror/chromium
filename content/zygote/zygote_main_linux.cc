@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/zygote/zygote_main.h"
+#include "content/zygote/zygote_main_linux.h"
 
 #include <dlfcn.h>
 #include <fcntl.h>
