@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2362beec_b672f3fc",
+        "filename": "gpu/config/gpu_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-26T18:59:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "177d17c6_90520d09",
+      "revId": "32e6b79116182fed248510a1f3341eee15ec0fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618804d8_83009f1d",
         "filename": "gpu/config/gpu_info.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T01:02:26Z",
       "side": 1,
       "message": "nit: as GPUInfo is a value type, I\u0027d suggest naming based on the value (e.g. HasCompleteInfo() ) rather than on the behavior of GpuDataManager.",
+      "revId": "32e6b79116182fed248510a1f3341eee15ec0fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d406b50_603bc34f",
+        "filename": "gpu/config/gpu_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-26T18:59:10Z",
+      "side": 1,
+      "message": "HasCompleteInfo() has slightly different semantic. For example, if I have a empty GPUInfo on Linux, HasCompleteInfo() should return false, but NeedsCompleteInfoCollection() returns false.\n\nBut you are right, NeedsCompleteInfoCollection() is more GpuDataManager() language. Let me just move it to GpuDataManager.",
+      "parentUuid": "618804d8_83009f1d",
       "revId": "32e6b79116182fed248510a1f3341eee15ec0fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
