@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8914600_0ac6907b",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "Do you expect multiple calls to this method? It seems to me that inlining it would continue to be clearer, even if the method becomes quite long.",
+      "range": {
+        "startLine": 880,
+        "startChar": 3,
+        "endLine": 880,
+        "endChar": 49
+      },
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bc616a_cbfb5943",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "nit: all the reader needs to know is that we can\u0027t rely on it being there because the timestamp was added later. Mentioning that probably has more value than pointing to the issue.",
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76db696c_b25cf40e",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "nit: I\u0027d extract \u0027#\u0027 to some constant. Maybe kSerializedValidationTimeSeparator?",
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a259f9f_8f8a35cc",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "I\u0027d just require all arguments to be passed, and add a DCHECK() to make sure of that. It avoids a lot of branches in this method.",
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cfb41e_5791b814",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "nit: range-based for loops are the best:\n\n    for (const auto\u0026 pair : map) { }",
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e18865_3697fd0d",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T14:42:25Z",
+      "side": 1,
+      "message": "I think this relates to my question from yesterday - we\u0027d want to revalidate every week, not every ten minutes, right?",
+      "revId": "e8466694fd214e3f7477c5fb8466ef44c6c87a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
