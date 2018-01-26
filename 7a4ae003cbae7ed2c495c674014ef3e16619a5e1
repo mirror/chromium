@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42f7cb7_c968a240",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:07:24Z",
+      "side": 1,
+      "message": "I am noticing that this call to powerwash is not guarded by the |allow_powerwash| check below. This is regressing https://bugs.chromium.org/p/chromium/issues/detail?id\u003d554648.\n\nShould lines 82-89 be moved before line 66 (in this or in a follow up CL)?",
+      "revId": "7a4ae003cbae7ed2c495c674014ef3e16619a5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

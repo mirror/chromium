@@ -81,6 +81,24 @@
       "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527b0b26_4b37deb0",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:07:24Z",
+      "side": 1,
+      "message": "Thanks for the link.",
+      "parentUuid": "d4cca514_5a9ff01a",
+      "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
