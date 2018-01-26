@@ -48,7 +48,6 @@ class UiSceneCreator {
   void CreateViewportAwareRoot();
   void CreateUrlBar();
   void CreateLoadingIndicator();
-  void CreateSnackbars();
   void CreateOmnibox();
   void CreateCloseButton();
   void CreateExitPrompt();
