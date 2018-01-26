@@ -105,6 +105,24 @@
       "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc378dd_80c92ea8",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-26T22:17:37Z",
+      "side": 1,
+      "message": "So what you are saying is that I shouldn\u0027t call UnregisterHost if frame_futures is non empty but wait until I get the channel error/closing message.",
+      "parentUuid": "c3f567e5_482d99b8",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
