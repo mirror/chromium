@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be575f4_2ce5e938",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-26T22:37:25Z",
+      "side": 1,
+      "message": "This comment will no longer be true with the changes you are making.",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f1656a_ba1bb84c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-26T22:37:25Z",
+      "side": 1,
+      "message": "I think this logic is specific to DIAL only. Maybe this should be a static method in this class?",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8492d999_a9d7d381",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-26T22:37:25Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to do this for Cast.",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f7adc6_e6bfce28",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-26T22:37:25Z",
+      "side": 1,
+      "message": "Can this be done with base::StartsWith()?",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8e278d_05bac7a0",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-26T22:37:25Z",
+      "side": 1,
+      "message": "const ref",
+      "range": {
+        "startLine": 107,
+        "startChar": 63,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
