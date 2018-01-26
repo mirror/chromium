@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ab3093d_75bf3f75",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2018-01-26T12:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ddfb413_908e15ed",
+      "revId": "8e7ff6e5904a21447679e566a4360e898941c9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3805dd1c_78dcb339",
         "filename": "third_party/WebKit/public/platform/web_feature.mojom",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8e7ff6e5904a21447679e566a4360e898941c9f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c2e553_808c9fcb",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2018-01-26T12:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3805dd1c_78dcb339",
+      "revId": "8e7ff6e5904a21447679e566a4360e898941c9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
