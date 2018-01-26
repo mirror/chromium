@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14fc666d_145d3ca6",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-26T13:50:39Z",
+      "side": 1,
+      "message": "Can we move this check to the Filter instead?",
+      "range": {
+        "startLine": 851,
+        "startChar": 7,
+        "endLine": 851,
+        "endChar": 65
+      },
+      "revId": "8f8a3cccb07926af9a75012884d42e5b7cc3439b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
