@@ -23,6 +23,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/network_change_notifier.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket_factory.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -112,6 +113,7 @@ class P2PSocketDispatcherHost
 
   content::ResourceContext* resource_context_;
   scoped_refptr<net::URLRequestContextGetter> url_context_;
+  network::ProxyResolvingClientSocketFactory proxy_resolving_socket_factory_;
 
   SocketsMap sockets_;
 
