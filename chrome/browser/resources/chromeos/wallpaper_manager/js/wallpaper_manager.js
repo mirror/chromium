@@ -780,12 +780,15 @@ WallpaperManager.prototype.setWallpaperAttribution_ = function(selectedItem) {
             img.addEventListener('load', function(e) {
               window.URL.revokeObjectURL(this.src);
             });
+            img.hidden = false;
           } else {
             img.src = '';
+            // Empty |data| is treated as error. Hide the image to avoid showing
+            // a broken thumbnail.
+            img.hidden = true;
           }
         });
     $('wallpaper-attribute').hidden = false;
-    $('attribute-image').hidden = false;
     return;
   }
   $('wallpaper-attribute').hidden = true;
