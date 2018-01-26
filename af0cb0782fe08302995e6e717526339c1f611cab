@@ -370,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "d946a78c_14ff5ca0",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T13:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec202fe_638a0b7b",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f954fa5e_8881d0cc",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 7
@@ -472,6 +490,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f441cb_a2cd0d38",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T13:22:28Z",
+      "side": 1,
+      "message": "Sorry I thought I answered it. This is needed by MOCK_METHOD1, because when the macro is expanded it needs to know the size of FilePath type, so fw declaration is not enough.",
+      "parentUuid": "274fd74f_c9cb0040",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
