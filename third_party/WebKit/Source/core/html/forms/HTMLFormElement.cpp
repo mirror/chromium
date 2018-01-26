@@ -661,6 +661,18 @@ const AtomicString& HTMLFormElement::Action() const {
   return getAttribute(actionAttr);
 }
 
+String HTMLFormElement::action() const {
+  Document& document = GetDocument();
+  KURL action_url = document.CompleteURL(attributes_.Action().IsEmpty()
+                                             ? document.Url().GetString()
+                                             : attributes_.Action());
+  return action_url.GetString().IsolatedCopy();
+}
+
+void HTMLFormElement::setAction(const AtomicString& value) {
+  setAttribute(actionAttr, value);
+}
+
 void HTMLFormElement::setEnctype(const AtomicString& value) {
   setAttribute(enctypeAttr, value);
 }
