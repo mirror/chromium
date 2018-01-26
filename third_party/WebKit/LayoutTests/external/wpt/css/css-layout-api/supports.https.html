@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<link rel="help" href="https://drafts.css-houdini.org/css-layout-api/#valdef-display-layout">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+test(function() {
+  assert_true(CSS.supports('display', 'layout(foo)'));
+});
+</script>
