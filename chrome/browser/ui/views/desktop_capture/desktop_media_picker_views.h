@@ -31,7 +31,8 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
       const base::string16& app_name,
       const base::string16& target_name,
       std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
-      bool request_audio);
+      bool request_audio,
+      bool system_modal);
   ~DesktopMediaPickerDialogView() override;
 
   // Called by parent (DesktopMediaPickerViews) when it's destroyed.
@@ -79,6 +80,7 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
   views::TabbedPane* pane_;
   std::vector<DesktopMediaListView*> list_views_;
   std::vector<content::DesktopMediaID::Type> source_types_;
+  bool system_modal_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopMediaPickerDialogView);
 };
@@ -99,6 +101,7 @@ class DesktopMediaPickerViews : public DesktopMediaPicker {
             const base::string16& target_name,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
             bool request_audio,
+            bool system_modal,
             const DoneCallback& done_callback) override;
 
   DesktopMediaPickerDialogView* GetDialogViewForTesting() const {
