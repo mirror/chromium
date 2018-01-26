@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b391ef49_baba9d50",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-26T23:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5600ba9_2601a3d2",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7aa73f5_ff8432bf",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T05:47:27Z",
       "side": 1,
       "message": "Sorry, still wasn\u0027t sure if \u0027keepalive\u0027 makes sense here or not.\n\nGiven what we do with this flag wdyt if we simply call this, say, SetCanFreeze(bool can_freeze)?",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92675173_47c45993",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-26T23:01:24Z",
+      "side": 1,
+      "message": "canfreeze sounds too specific -- as this is only one signal into that decision, besides background state, stopping-enabled etc.\nwe could call it SetSchedulerKeepAliveForFetchOrWorker -- but this is getting clunky.\nI\u0027ll defer to altimin on naming.",
+      "parentUuid": "c7aa73f5_ff8432bf",
       "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
