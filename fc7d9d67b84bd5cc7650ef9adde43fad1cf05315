@@ -36,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "2ae6f8fd_c2d62635",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-26T22:53:18Z",
+      "side": 1,
+      "message": "it\u0027s not clear to me what this actually does?",
+      "parentUuid": "e926c547_2b08cb39",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe8b05f6_9d4f6004",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-26T22:53:18Z",
+      "side": 1,
+      "message": "do not want.",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "686754e5_a3d15fde",
         "filename": "tools/mac/rewrite_modern_objc.py",
         "patchSetId": 3
