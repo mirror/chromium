@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "5f9e2409_28f32fb2",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "id is unused, can we remove it?",
+      "range": {
+        "startLine": 63,
+        "startChar": 38,
+        "endLine": 63,
+        "endChar": 52
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80eaab09_d06e5ba5",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
         "patchSetId": 8
@@ -47,6 +70,29 @@
       "writtenOn": "2018-01-25T19:18:59Z",
       "side": 1,
       "message": "One line: /** The error ... */",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3071ee1_349a6e1d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "nit: exportErrorMessage: String,\n\nThe default doesn\u0027t matter for this property.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 5
+      },
       "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +201,52 @@
     },
     {
       "key": {
+        "uuid": "5c1d27b2_ea10ab7a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "nit: private functions end with an _",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d589b9_1668af34",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "nit: can we keep |attached| above other functions since it\u0027s an @override",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 10
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1d069a_3dff5555",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
         "patchSetId": 8
@@ -206,6 +298,29 @@
     },
     {
       "key": {
+        "uuid": "690db822_5630f616",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "Could we just pass the |lastError| as a param on the callback? Checking lastError when we don\u0027t have an error feels a bit weird to me.",
+      "range": {
+        "startLine": 178,
+        "startChar": 10,
+        "endLine": 179,
+        "endChar": 34
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f47b131_5f6ded7c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
         "patchSetId": 8
@@ -217,6 +332,52 @@
       "writtenOn": "2018-01-25T19:18:59Z",
       "side": 1,
       "message": "@param {...} progress",
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b35d233_7fc0b3d7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "nit: this.progressTask.bind(this), no need for a function that just calls a function. Here and elsewhere :-)",
+      "range": {
+        "startLine": 192,
+        "startChar": 43,
+        "endLine": 194,
+        "endChar": 7
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d01d15_71dd6f4b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T02:27:08Z",
+      "side": 1,
+      "message": "Would it make sense to simplify this a bit to 2 dialogs?\n\n1st dialog can be used for running the export/showing the error.\n2nd dialog should be a different element that can show itself after a delay then hide if it\u0027s been shown for longer. See sample code here: http://jsbin.com/zebehob/9/edit?html,output\n\nThis has the advantage that we decoupe the progress logic from the show/hide logic. When an export is happening we show the dialog (it figures out when based on the delay) and hide it when it\u0027s done (the dialog takes care of when to hide if it\u0027s already shown or to now show at all)",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 40
+      },
       "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
