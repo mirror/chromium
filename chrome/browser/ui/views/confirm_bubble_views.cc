@@ -113,7 +113,6 @@ void ConfirmBubbleViews::ButtonPressed(views::Button* sender,
 
 namespace chrome {
 
-#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 void ShowConfirmBubble(gfx::NativeWindow window,
                        gfx::NativeView anchor_view,
                        const gfx::Point& origin,
@@ -122,6 +121,5 @@ void ShowConfirmBubble(gfx::NativeWindow window,
       new ConfirmBubbleViews(std::move(model)), window)
       ->Show();
 }
-#endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 }  // namespace chrome
