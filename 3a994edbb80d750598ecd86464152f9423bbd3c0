@@ -16,6 +16,24 @@
       "revId": "3a994edbb80d750598ecd86464152f9423bbd3c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8ea626_d197e949",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-26T04:09:11Z",
+      "side": 0,
+      "message": "Oh, interesting. The lifecycle is not a no-op in the presence of animations, I should\nhave thought of that. Therefore, not only is there a DCHECK, but the current code\nwill update animations twice as fast as the containing page (because the lifecycle\nfor plugins is run twice during lifecycle of the containing page).\n\nAnyway, I have good news for you: there are only two callers of blink::PaintInternal:\nwebview_plugin and render_view_impl. CL coming your way shortly to fix them to not\nforce the lifecycle.",
+      "parentUuid": "5300b855_bd391a60",
+      "revId": "3a994edbb80d750598ecd86464152f9423bbd3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
