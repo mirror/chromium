@@ -120,7 +120,9 @@ TouchSelectionMenuRunnerViews::Menu::Menu(TouchSelectionMenuRunnerViews* owner,
   SetAnchorRect(adjusted_anchor_rect);
 
   BubbleDialogDelegateView::CreateBubble(this);
-  GetWidget()->Show();
+  Widget* widget = GetWidget();
+  widget->SetBoundsConstrained(widget->GetWindowBoundsInScreen());
+  widget->Show();
 }
 
 bool TouchSelectionMenuRunnerViews::Menu::IsMenuAvailable(
