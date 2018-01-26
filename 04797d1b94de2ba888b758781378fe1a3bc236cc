@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80afdbe7_f457ab5f",
+        "filename": "tools/perf/page_sets/top_pages.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-26T00:27:17Z",
+      "side": 1,
+      "message": "Some have the default set to empty. Is that deliberate?",
+      "revId": "04797d1b94de2ba888b758781378fe1a3bc236cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
