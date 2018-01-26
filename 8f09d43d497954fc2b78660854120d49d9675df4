@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ec6b3b_a7845e18",
+        "filename": "content/public/common/drop_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-26T05:53:00Z",
+      "side": 1,
+      "message": "Do you mind changing this to use a range-based for loop while you\u0027re moving this code anyway?",
+      "revId": "8f09d43d497954fc2b78660854120d49d9675df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
