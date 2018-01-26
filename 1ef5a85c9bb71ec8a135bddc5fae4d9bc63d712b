@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b78fd4b_90291ff4",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-26T20:01:57Z",
+      "side": 1,
+      "message": "It looks like the return value from base::BarrierClosure is not being used. (and barrier is not defined).",
+      "revId": "1ef5a85c9bb71ec8a135bddc5fae4d9bc63d712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
