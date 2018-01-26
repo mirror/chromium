@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fbd361f_b642740e",
+        "filename": "components/metrics/clean_exit_beacon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9eadd68_d0fe707d",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fee596ef_7a3a076c",
         "filename": "components/metrics/metrics_pref_names.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82474dd1_a80016eb",
+        "filename": "components/metrics/metrics_pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee596ef_7a3a076c",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f24a1551_7a1f08e6",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "This is intended to be invoked at metrics initialization on Windows, once the machinery is in place to make use of it. I think it\u0027s important to test this, which has the side effect of also testing the UpdateLastLive function.",
+      "parentUuid": "062ecc04_7ce0825b",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23c7e72_a2a68684",
         "filename": "components/metrics/metrics_service_unittest.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a388107_065da1d2",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23c7e72_a2a68684",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "288e130f_8c35b492",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "Well, time-based comparisons tend to make flaky tests :/. I added a spin loop to avoid flakiness, in my testing it doesn\u0027t loop, but it might in release builds and such. A microsecond is a long, long time :).",
+      "parentUuid": "1b90f38e_5c334860",
+      "range": {
+        "startLine": 423,
+        "startChar": 24,
+        "endLine": 423,
+        "endChar": 33
+      },
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05a6df7c_5741e8d0",
         "filename": "components/metrics/metrics_service_unittest.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb96fc05_8b162725",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-26T16:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a6df7c_5741e8d0",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
