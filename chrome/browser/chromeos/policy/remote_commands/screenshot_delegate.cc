@@ -63,6 +63,24 @@ std::unique_ptr<UploadJob> ScreenshotDelegate::CreateUploadJob(
       upload_url, robot_account_id, device_oauth2_token_service,
       system_request_context, delegate,
       base::WrapUnique(new UploadJobImpl::RandomMimeBoundaryGenerator),
+      net::DefineNetworkTrafficAnnotation("remote_command_screenshot", R"(
+        semantics {
+          sender: "Chrome OS Remote Commands"
+          description: "Admins of kiosks are able to request screenshots "
+              "of the current screen shown on the kiosk, which is uploaded to "
+              "the device management sever."
+          trigger: "Admin requests remote screenshot on the Admin Console."
+          data: "Screenshot of the current screen shown on the kiosk."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "Only sent on kiosk devices, on explicit admin request and "
+              "when no user interaction or media capture happened since last "
+              "reboot."
+          policy_exception_justification = "Requires explicit admin action."
+        }
+      )"),
       base::ThreadTaskRunnerHandle::Get()));
 }
 

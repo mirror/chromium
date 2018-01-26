@@ -153,6 +153,26 @@ std::unique_ptr<UploadJob> SystemLogDelegate::CreateUploadJob(
       upload_url, robot_account_id, device_oauth2_token_service,
       system_request_context, delegate,
       std::make_unique<UploadJobImpl::RandomMimeBoundaryGenerator>(),
+      net::DefineNetworkTrafficAnnotation("policy_system_logs", R"(
+        semantics {
+          sender: "Chrome OS system log uploader"
+          description:
+              "Admins can ask for uploaded system logs of their devices."
+          trigger: "After reboot and every 12 hours."
+          data: "Non-user specific, anonymized system logs from /var/log/."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "Only can be enabled by the admin through policy, default "
+              "is disabled."
+          chrome_policy {
+            LogUploadEnabled {
+                LogUploadEnabled: false
+            }
+          }
+        }
+      )"),
       task_runner_);
 }
 
